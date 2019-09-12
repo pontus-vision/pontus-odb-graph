@@ -22,21 +22,6 @@ import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.apache.tinkerpop.shaded.jackson.databind.ObjectMapper
 import org.apache.tinkerpop.shaded.jackson.databind.node.ObjectNode
 import org.apache.tinkerpop.shaded.jackson.databind.node.TextNode
-import org.janusgraph.core.Cardinality
-import org.janusgraph.core.EdgeLabel
-import org.janusgraph.core.JanusGraph
-import org.janusgraph.core.JanusGraphTransaction
-import org.janusgraph.core.Multiplicity
-import org.janusgraph.core.PropertyKey
-import org.janusgraph.core.attribute.Geoshape
-import org.janusgraph.core.schema.EdgeLabelMaker
-import org.janusgraph.core.schema.JanusGraphIndex
-import org.janusgraph.core.schema.JanusGraphManagement
-import org.janusgraph.core.schema.JanusGraphSchemaType
-import org.janusgraph.core.schema.SchemaAction
-import org.janusgraph.core.schema.VertexLabelMaker
-import org.janusgraph.core.schema.JanusGraphManagement.IndexBuilder
-import org.janusgraph.graphdb.database.StandardJanusGraph
 
 /**
  * Janusgraph datatype mapping table
@@ -57,7 +42,6 @@ class TypeMap {
         MAP.put("Integer", Integer.class)
         MAP.put("Long", Long.class)
         MAP.put("Float", Float.class)
-        MAP.put("Geoshape", Geoshape.class)
         MAP.put("UUID", UUID.class)
         MAP.put("Date", Date.class)
     }

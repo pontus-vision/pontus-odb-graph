@@ -34,12 +34,18 @@
         <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
         <pontus-natty.version>100.14</pontus-natty.version>
         <netty-version>4.0.56.Final</netty-version>
+        <orientdb-version>3.0.22</orientdb-version>
         <!--<apache.directory-api-version>
             1.0.0
         </apache.directory-api-version>-->
 
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orientdb-client</artifactId>
+            <version>${orientdb-version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.tinkerpop</groupId>

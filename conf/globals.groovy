@@ -1,3 +1,8 @@
+import com.orientechnologies.orient.core.db.OrientDB
+import com.orientechnologies.orient.core.db.ODatabaseSession
+import com.orientechnologies.orient.core.metadata.schema.OClass
+import com.orientechnologies.orient.core.metadata.schema.OProperty
+import com.orientechnologies.orient.core.metadata.schema.OType
 import com.pontusvision.utils.ElasticSearchHelper
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
@@ -9,9 +14,9 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.structure.Edge
 import org.apache.tinkerpop.gremlin.structure.Vertex
-import org.janusgraph.core.*
-import org.janusgraph.core.schema.*
-import org.janusgraph.graphdb.types.vertices.JanusGraphSchemaVertex
+//import org.janusgraph.core.*
+//import org.janusgraph.core.schema.*
+//import org.janusgraph.graphdb.types.vertices.JanusGraphSchemaVertex
 
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -21,10 +26,12 @@ globals << [mgmt: ((JanusGraph) graph).openManagement() as JanusGraphManagement]
 
 
 @CompileStatic
-def loadSchema(JanusGraph graph, String... files) {
+def loadSchema(OrientDB orient, String... files) {
   StringBuffer sb = new StringBuffer()
 
-  JanusGraphManagement mgmt = graph.openManagement();
+  ODatabaseSession mgmt = orient.open("test", "admin", "admin");
+
+//  JanusGraphManagement mgmt = graph.openManagement();
   Map<String, PropertyKey> propsMap = [:]
   for (f in files) {
     try {
@@ -37,9 +44,9 @@ def loadSchema(JanusGraph graph, String... files) {
         sb?.append("\nLoading File ${f}\n")
 
 
-        sb?.append("\nAbout to create elastic search templates\n")
-
-        createElasticTemplates(json, sb);
+//        sb?.append("\nAbout to create elastic search templates\n")
+//
+//        createElasticTemplates(json, sb);
 
         sb?.append("\nAbout to create vertex labels\n")
 
@@ -177,7 +184,7 @@ def addIndexes(JanusGraphManagement mgmt, def json, boolean isEdge, Map<String, 
   }
 }
 
-def addVertexLabels(JanusGraphManagement mgmt, def json, StringBuffer sb = null) {
+def addVertexLabels(ODatabaseSession mgmt, def json, StringBuffer sb = null) {
   json['vertexLabels'].each {
     String name = it.name
     createVertexLabel(mgmt, name)
@@ -213,23 +220,35 @@ String getClass(def type) {
 }
 
 
+
 @CompileStatic
-PropertyKey createProp(JanusGraphManagement mgmt, String keyName, Class<?> classType, org.janusgraph.core.Cardinality card) {
+OProperty createProp(OClass oClass, String keyName, Class<?> classType, org.janusgraph.core.Cardinality card) {
 
   try {
-    PropertyKey key;
-    if (!mgmt.containsPropertyKey(keyName)) {
-      key = mgmt.makePropertyKey(keyName).dataType(classType).cardinality(card).make();
-      Long id = ((JanusGraphSchemaVertex) key).id() as Long;
 
-      System.out.println("keyName = ${keyName}, keyID = " + id)
-    } else {
-      key = mgmt.getPropertyKey(keyName);
-      Long id = ((JanusGraphSchemaVertex) key).id() as Long;
-      System.out.println("keyName = ${keyName}, keyID = " + id)
+    OType oType = OType.getTypeByClass(classType);
+
+    OProperty prop = oClass.getProperty(keyName)
+    if (prop == null){
+      prop = oClass.createProperty(keyName, oType)
 
     }
-    return key;
+    System.out.println("keyName = ${keyName}, keyID = " + prop.getId())
+
+    return prop
+
+//    if (!mgmt.containsPropertyKey(keyName)) {
+//      key = mgmt.makePropertyKey(keyName).dataType(classType).cardinality(card).make();
+//      Long id = ((JanusGraphSchemaVertex) key).id() as Long;
+//
+//      System.out.println("keyName = ${keyName}, keyID = " + id)
+//    } else {
+//      key = mgmt.getPropertyKey(keyName);
+//      Long id = ((JanusGraphSchemaVertex) key).id() as Long;
+//      System.out.println("keyName = ${keyName}, keyID = " + id)
+//
+//    }
+//    return key;
   }
   catch (Throwable t) {
     t.printStackTrace();
@@ -238,14 +257,19 @@ PropertyKey createProp(JanusGraphManagement mgmt, String keyName, Class<?> class
 }
 
 @CompileStatic
-JanusGraphIndex createCompIdx(JanusGraphManagement mgmt, String idxName, boolean isUnique, PropertyKey... props) {
-  return createCompIdx(mgmt, idxName, false, isUnique, props)
+JanusGraphIndex createCompIdx(OClass oClass, String idxName, boolean isUnique, OProperty... props) {
+  return createCompIdx(oClass, idxName, false, isUnique, props)
 }
 
 @CompileStatic
-JanusGraphIndex createCompIdx(JanusGraphManagement mgmt, String idxName, boolean isEdge, boolean isUnique, PropertyKey... props) {
+JanusGraphIndex createCompIdx(OClass oClass, String idxName, boolean isEdge, boolean isUnique, OProperty... props) {
 
   try {
+
+    oClass.createIndex()
+    if (!oClass.getIndexes().hasProperty(idxName)){
+
+    }
     if (!mgmt.containsGraphIndex(idxName)) {
       def clazz = isEdge ? Edge.class : Vertex.class
       JanusGraphManagement.IndexBuilder ib = mgmt.buildIndex(idxName, clazz)
@@ -444,13 +468,15 @@ JanusGraphIndex createMixedIdx(JanusGraphManagement mgmt, String idxName, boolea
 }
 
 
-PropertyKey createVertexLabel(JanusGraphManagement mgmt, String labelName) {
+PropertyKey createVertexLabel(ODatabaseSession mgmt, String labelName) {
 
   try {
-    if (!mgmt.containsVertexLabel(labelName)) {
-      mgmt.makeVertexLabel(labelName).make()
-    }
-    return createProp(mgmt, "Metadata.Type." + labelName, String.class, org.janusgraph.core.Cardinality.SINGLE);
+    OClass oClass = mgmt.createClassIfNotExist(labelName)
+
+//    if (!mgmt.containsVertexLabel(labelName)) {
+//      mgmt.makeVertexLabel(labelName).make()
+//    }
+    return createProp(oClass, "Metadata.Type." + labelName, String.class, org.janusgraph.core.Cardinality.SINGLE);
 
   }
   catch (Throwable t) {
