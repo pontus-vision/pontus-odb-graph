@@ -18,7 +18,7 @@ public class GraphReply
     edges = null;
   }
 
-  public GraphReply(Vertex vtx,Set<Vertex> inNodes, Set<Vertex> outNodes, Set<Edge> inEdges, Set<Edge> outEdges)
+  public GraphReply(Vertex vtx, Set<Vertex> inNodes, Set<Vertex> outNodes, Set<Edge> inEdges, Set<Edge> outEdges)
   {
     Set<GraphNode> nodes = new HashSet<>();
 

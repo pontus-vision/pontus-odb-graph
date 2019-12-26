@@ -2,6 +2,7 @@ package com.pontusvision.gdpr;
 
 //import com.netflix.astyanax.connectionpool.exceptions.ThrottledException;
 
+import org.apache.tinkerpop.gremlin.orientdb.OrientGraph;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.server.GraphManager;
 import org.apache.tinkerpop.gremlin.server.GremlinServer;
@@ -12,7 +13,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-import org.janusgraph.core.JanusGraph;
+//import org.janusgraph.core.JanusGraph;
 import org.jhades.JHades;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +24,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class App
 {
-  private static final Logger logger = LoggerFactory.getLogger(App.class);
-  public static JanusGraph graph;
+  private static final Logger        logger = LoggerFactory.getLogger(App.class);
+  public static        OrientGraph   graph;
   //    public static JanusGraphManagement graphMgmt;
-  public static GremlinServer gserver;
+  public static        GremlinServer gserver;
   public static GraphTraversalSource g;
   public static Settings settings;
 
@@ -88,7 +89,7 @@ public class App
       for (String graphName : graphNames)
       {
         logger.debug("Found Graph: " + graphName);
-        graph = (JanusGraph) graphMgr.getGraph(graphName);
+        graph = (OrientGraph) graphMgr.getGraph(graphName);
         //                graphMgmt = graph.openManagement();
         g = graph.traversal();
       }

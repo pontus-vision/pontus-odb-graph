@@ -1,7 +1,5 @@
 package com.pontusvision.gdpr;
 
-import org.janusgraph.core.VertexLabel;
-
 import java.util.LinkedList;
 import java.util.regex.Pattern;
 
@@ -14,38 +12,54 @@ import java.util.regex.Pattern;
 
     }
  */
-public class NodePropertyNamesReply {
+public class NodePropertyNamesReply
+{
 
+  ReactSelectOptions[] labels;
 
+  // must have this default constructor to get this class serialized as a reply!!!
 
-    ReactSelectOptions[] labels;
+  public NodePropertyNamesReply()
+  {
 
-    // must have this default constructor to get this class serialized as a reply!!!
+  }
 
-    public NodePropertyNamesReply(){
+  public NodePropertyNamesReply(Iterable<String> vertexProperties)
+  {
 
+    LinkedList<ReactSelectOptions> labelsList = new LinkedList<>();
 
+    for (String vertexLabel : vertexProperties)
+    {
+      if (vertexLabel.startsWith("@"))
+      {
+          String cleanLabel = vertexLabel.replaceFirst("^@", "");
+          cleanLabel = cleanLabel.replaceAll("@.*", "");
+          labelsList.add(new ReactSelectOptions(cleanLabel,
+              vertexLabel));
+
+      }
+      else
+      {
+        String cleanLabel = vertexLabel.replaceFirst("^#", "");
+        cleanLabel = cleanLabel.replaceAll(Pattern.quote("."), " ");
+
+        labelsList.add(new ReactSelectOptions(cleanLabel,
+            vertexLabel));
+      }
     }
-    public NodePropertyNamesReply(Iterable<String> vertexProperties) {
+    labels = new ReactSelectOptions[labelsList.size()];
+    labels = labelsList.toArray(labels);
 
-        LinkedList<ReactSelectOptions> labelsList = new LinkedList<>();
+  }
 
-        for (String vertexLabel: vertexProperties){
+  public ReactSelectOptions[] getLabels()
+  {
+    return labels;
+  }
 
-            labelsList.add(new ReactSelectOptions(vertexLabel.replaceAll(Pattern.quote(".")," "),
-                    vertexLabel));
-
-        }
-        labels = new ReactSelectOptions[labelsList.size()];
-        labels = labelsList.toArray(labels);
-
-    }
-
-    public ReactSelectOptions [] getLabels() {
-        return labels;
-    }
-
-    public void setLabels(ReactSelectOptions[] labels) {
-        this.labels = labels;
-    }
+  public void setLabels(ReactSelectOptions[] labels)
+  {
+    this.labels = labels;
+  }
 }

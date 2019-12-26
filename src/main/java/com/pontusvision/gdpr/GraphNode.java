@@ -2,11 +2,9 @@ package com.pontusvision.gdpr;
 
 import com.google.common.escape.Escaper;
 import com.google.common.net.PercentEscaper;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.structure.VertexProperty;
 
-import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
@@ -47,8 +45,8 @@ public class GraphNode
     Iterator<VertexProperty<Object>> properties = v.properties();
     while (properties.hasNext())
     {
-      VertexProperty<Object> prop = properties.next();
-      String label = prop.label();
+      VertexProperty<Object> prop  = properties.next();
+      String                 label = prop.label();
 
       sb.append("<tr><td class=\"tg-yw4l\">");
 

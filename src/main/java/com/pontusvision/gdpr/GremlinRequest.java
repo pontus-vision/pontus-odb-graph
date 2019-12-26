@@ -1,7 +1,6 @@
 package com.pontusvision.gdpr;
 
 import javax.script.Bindings;
-import java.util.Map;
 
 public class GremlinRequest
 {

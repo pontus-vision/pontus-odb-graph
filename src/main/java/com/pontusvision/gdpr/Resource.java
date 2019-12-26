@@ -3,33 +3,29 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.orientechnologies.orient.core.metadata.schema.OClass;
 import org.apache.commons.lang.StringUtils;
-import org.apache.tinkerpop.gremlin.process.traversal.Order;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
-import org.apache.tinkerpop.gremlin.server.util.ServerGremlinExecutor;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
-import org.janusgraph.core.EdgeLabel;
-import org.janusgraph.core.PropertyKey;
-import org.janusgraph.core.schema.JanusGraphManagement;
-import org.keycloak.KeycloakSecurityContext;
 
-import javax.inject.Inject;
-import javax.script.CompiledScript;
-import javax.script.ScriptException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.BiConsumer;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
+import static org.apache.tinkerpop.gremlin.process.traversal.P.eq;
 import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
-import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
+
+//import org.janusgraph.core.EdgeLabel;
+//import org.janusgraph.core.PropertyKey;
+//import org.janusgraph.core.schema.JanusGraphIndex;
+//import org.janusgraph.core.schema.JanusGraphManagement;
+//import org.janusgraph.core.schema.SchemaStatus;
+//import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
 
 //import org.json.JSONArray;
 //import org.json.JSONObject;
@@ -37,10 +33,8 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
 @Path("home") public class Resource
 {
 
-//  @Inject
-//  KeycloakSecurityContext keycloakSecurityContext;
-
-
+  //  @Inject
+  //  KeycloakSecurityContext keycloakSecurityContext;
 
   public Resource()
   {
@@ -56,168 +50,64 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
 
   GsonBuilder gsonBuilder = new GsonBuilder();
 
-  @POST @Path("gremlin") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
-  public RecordReply gremlin(GremlinRequest req)
-  {
-    ServerGremlinExecutor executor = App.gserver.getServerGremlinExecutor();
-    try
-    {
-      Optional<CompiledScript> script = executor.getGremlinExecutor().compile(req.gremlin);
-
-      script.get().eval(req.bindings);
-    }
-    catch (ScriptException e)
-    {
-      e.printStackTrace();
-    }
-
-    return null;
-
-  }
-
-
-  public static String getIndexMetadataTypeStr(String vertexType)
+  @POST @Path("agrecords") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
+  public RecordReply agrecords(RecordRequest req)
   {
 
-    StringBuilder sb = new StringBuilder();
-
-    sb.append("v.\"Metadata.Type.").append(vertexType).append("\":").append(vertexType);
-
-
-    return sb.toString();
-  }
-
-  public static String getIndexSearchStr(RecordRequest req)
-  {
-    StringBuilder sb = new StringBuilder();
-
-    PVGridColumn[] cols = req.search.cols;
-
-    for (int i = 0, ilen = cols.length; i < ilen; i++)
+    if (req.cols != null && req.dataType != null)
     {
-      PVGridColumn col = cols[i];
-      if (i > 0)
+
+      Set<String> valsSet          = new HashSet<>();
+      Set<String> reportButtonsSet = new HashSet<>();
+
+      for (int i = 0, ilen = req.cols.length; i < ilen; i++)
       {
-        sb.append(" OR ");
-      }
-      sb.append("v.\"").append(col.id).append("\":").append(req.search.searchStr);
-    }
-
-    return sb.toString();
-          /*
-          {
-   "search":{
-      "searchStr":"Mickey",
-      "searchExact":true,
-      "cols":[
-         {
-            "name":"Person Full_Name",
-            "resizable":true,
-            "sortable":true,
-            "minWidth":30,
-            "rerenderOnResize":false,
-            "headerCssClass":null,
-            "defaultSortAsc":true,
-            "focusable":true,
-            "selectable":true,
-            "width":624,
-            "id":"Person.Natural.Full_Name",
-            "field":"Person.Natural.Full_Name"
-         },
-         {
-            "name":"Person Nationality",
-            "resizable":true,
-            "sortable":true,
-            "minWidth":30,
-            "rerenderOnResize":false,
-            "headerCssClass":null,
-            "defaultSortAsc":true,
-            "focusable":true,
-            "selectable":true,
-            "width":623,
-            "id":"Person.Natural.Nationality",
-            "field":"Person.Natural.Nationality"
-         }
-      ],
-      "extraSearch":{
-         "label":"Person.Natural",
-         "value":"Person.Natural"
-      }
-   },
-   "from":0,
-   "to":600,
-   "sortCol":null,
-   "sortDir":"+asc"
-}
-           */
-
-  }
-
-  @POST @Path("records") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
-  public RecordReply records(RecordRequest req)
-  {
-
-    if (req.search != null && req.search.cols != null)
-    {
-
-      String[] vals = new String[req.search.cols.length];
-
-      for (int i = 0, ilen = req.search.cols.length; i < ilen; i++)
-      {
-        vals[i] = req.search.cols[i].id;
+        if (!req.cols[i].id.startsWith("@"))
+        {
+          valsSet.add(req.cols[i].id);
+        }
+        else
+        {
+          reportButtonsSet.add(req.cols[i].id);
+        }
 
       }
+
+      String[] vals = valsSet.toArray(new String[valsSet.size()]);
 
       try
       {
 
-        String searchStr = req.search.getSearchStr();
-        String dataType  = req.search.extraSearch[0].value;
+        String sqlQueryCount = req.getSQL(true);
 
+        String sqlQueryData = req.getSQL(false);
 
+        String dataType = req.dataType; //req.search.extraSearch[0].value;
 
-        Long count = StringUtils.isEmpty(searchStr) ?
-            App.graph.indexQuery(dataType + ".MixedIdx", getIndexMetadataTypeStr(dataType)).vertexTotals():
-//            App.g.V()
-//                 .has("Metadata.Type." + dataType, P.eq(dataType))
-//                 .range(req.from, req.to + req.to - req.from)
-//                 .count().toList()
-//                 .get(0) + req.from :
-            App.graph.indexQuery(dataType + ".MixedIdx", getIndexSearchStr(req)).vertexTotals();
+        boolean hasFilters = req.filters != null && req.filters.length > 0;
 
-        GraphTraversal resSet = App.g.V(); //.has("Metadata.Type", "Person.Natural");
+        Long count =
+            App.graph.executeSql(sqlQueryCount).iterator().next().getProperty("count");
 
         if (count > 0)
         {
 
-          if (StringUtils.isNotEmpty(searchStr))
-          {
+          List<Map<String, Object>> res = new LinkedList<Map<String, Object>>();
 
-            int        limit    = req.to.intValue() - req.from.intValue();
-            List<Long> vertices = new ArrayList<>(limit);
-
-            App.graph.indexQuery(req.search.extraSearch[0].value + ".MixedIdx", getIndexSearchStr(req))
-                     .vertexStream().forEachOrdered(jgvr -> vertices.add(jgvr.getElement().longId()));
-
-            resSet = App.g.V(vertices);
-
-            //          resSet.has("Person.Natural.FullName", textContainsFuzzy(searchStr));
-
-          }
-          else
-          {
-            resSet = resSet.has("Metadata.Type." + dataType, dataType);
-
-          }
-
-          if (StringUtils.isNotEmpty(req.sortCol))
-          {
-            resSet = resSet.order().by(req.sortCol, "+asc".equalsIgnoreCase(req.sortDir) ? Order.incr : Order.decr);
-          }
-          resSet.valueMap(true, vals)
-                .range(req.from, req.to);
-
-          List<Map<String, Object>> res = resSet.toList();
+          App.graph.executeSql(sqlQueryData)
+                   .forEach(oGremlinResult ->
+                       oGremlinResult.getVertex()
+                                     .ifPresent(orientVertex -> {
+                                           Map<String, Object> props = new HashMap<>();
+                                           orientVertex.properties(orientVertex.keys().toArray(new String[] {}))
+                                                       .forEachRemaining(objectVertexProperty ->
+                                                           props.put(objectVertexProperty.key(),
+                                                               objectVertexProperty.value())
+                                                       );
+                                           res.add(props);
+                                         }
+                                     )
+                   );
 
           String[]     recs      = new String[res.size()];
           ObjectMapper objMapper = new ObjectMapper();
@@ -225,8 +115,6 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
           for (int i = 0, ilen = res.size(); i < ilen; i++)
           {
             Map<String, Object> map = res.get(i);
-
-            //          recs[i] = new Record();
             Map<String, String> rec = new HashMap<>();
             for (Map.Entry<String, Object> entry : map.entrySet())
             {
@@ -243,7 +131,6 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
               else
               {
                 rec.put(entry.getKey(), val.toString());
-
               }
 
             }
@@ -255,7 +142,6 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
           return reply;
 
         }
-        //        Long count = Long.parseLong(countStr);
 
         RecordReply reply = new RecordReply(req.from, req.to, count, new String[0]);
 
@@ -291,73 +177,70 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
 
   Map<String, Pattern> compiledPatterns = new HashMap<>();
 
-
-
-  @GET @Path ("vertex_prop_values") @Produces(MediaType.APPLICATION_JSON)
+  @GET @Path("vertex_prop_values") @Produces(MediaType.APPLICATION_JSON)
   public FormioSelectResults getVertexPropertyValues(
-       @QueryParam("search") String search
-      ,@QueryParam("limit") Long limit
-      ,@QueryParam("skip") Long skip
+      @QueryParam("search") String search
+      , @QueryParam("limit") Long limit
+      , @QueryParam("skip") Long skip
 
   )
   {
-//    final  String bizCtx = "BizCtx";
-//
-//    final AtomicBoolean matches = new AtomicBoolean(false);
-//
-//    keycloakSecurityContext.getAuthorizationContext().getPermissions().forEach(perm -> perm.getClaims().forEach(
-//        (s, strings) -> {
-//          if (bizCtx.equals(s)){
-//            strings.forEach( allowedVal -> {
-//              Pattern patt = compiledPatterns.computeIfAbsent(allowedVal, Pattern::compile);
-//              matches.set(patt.matcher(search).matches());
-//
-//            }  );
-//          }
-//        }));
-//
-//    if (matches.get()){
+    //    final  String bizCtx = "BizCtx";
+    //
+    //    final AtomicBoolean matches = new AtomicBoolean(false);
+    //
+    //    keycloakSecurityContext.getAuthorizationContext().getPermissions().forEach(perm -> perm.getClaims().forEach(
+    //        (s, strings) -> {
+    //          if (bizCtx.equals(s)){
+    //            strings.forEach( allowedVal -> {
+    //              Pattern patt = compiledPatterns.computeIfAbsent(allowedVal, Pattern::compile);
+    //              matches.set(patt.matcher(search).matches());
+    //
+    //            }  );
+    //          }
+    //        }));
+    //
+    //    if (matches.get()){
 
-    if (limit == null){
+    if (limit == null)
+    {
       limit = 100L;
     }
 
-    if (skip == null){
+    if (skip == null)
+    {
       skip = 0L;
     }
 
+    List<Map<String, Object>> querRes = App
+        .g.V()
+          .has(search, neq(""))
+          .limit(limit + skip)
+          .skip(skip)
+          .as("matches")
+          .match(
+              __.as("matches").values(search).as("val")
+              , __.as("matches").id().as("id")
+          )
+          .select("id", "val")
+          .toList();
 
-      List<Map<String, Object>> querRes = App
-          .g.V()
-            .has(search,neq(""))
-            .limit(limit + skip)
-            .skip(skip)
-            .as("matches")
-            .match(
-               __.as("matches").values(search).as("val")
-              ,__.as("matches").id().as("id")
-             )
-            .select("id", "val")
-            .toList();
+    List<ReactSelectOptions> selectOptions = new ArrayList<>(querRes.size());
 
-      List<ReactSelectOptions> selectOptions = new ArrayList<>(querRes.size());
+    for (Map<String, Object> res : querRes)
+    {
+      selectOptions.add(new ReactSelectOptions(res.get("val").toString(), res.get("id").toString()));
+    }
 
+    FormioSelectResults retVal = new FormioSelectResults(selectOptions);
 
-      for (Map<String, Object> res : querRes)
-      {
-        selectOptions.add(new ReactSelectOptions(res.get("val").toString(), res.get("id").toString()));
-      }
+    return retVal;
 
-      FormioSelectResults retVal = new FormioSelectResults(selectOptions);
-
-      return retVal;
-
-//    }
-//
-//    return new FormioSelectResults();
+    //    }
+    //
+    //    return new FormioSelectResults();
 
   }
-
 
   @POST @Path("vertex_labels") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
 
@@ -365,11 +248,10 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
   {
     try
     {
-      JanusGraphManagement mgt = App.graph.openManagement();
 
-      VertexLabelsReply reply = new VertexLabelsReply(mgt.getVertexLabels());
+      VertexLabelsReply reply = new VertexLabelsReply(
+          App.graph.getRawDatabase().getMetadata().getSchema().getClasses());
 
-      mgt.commit();
       return reply;
     }
     catch (Exception e)
@@ -399,7 +281,7 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
 
         List<Map<String, Long>> res =
             StringUtils.isNotEmpty(searchStr) ?
-                resSet.has("Person.Natural.FullName", textContainsFuzzy(searchStr)).values("Person.Natural.Nationality")
+                resSet.has("Person.Natural.FullName", P.eq(searchStr)).values("Person.Natural.Nationality")
                       .groupCount()
                       .toList() :
                 resSet.has("Person.Natural.Nationality").values("Person.Natural.Nationality").groupCount().toList();
@@ -435,30 +317,56 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
 
         //        String[] labels = new String[req.labels.length - 1];
         //        String label0 = req.labels[0].value;
-//        GraphTraversal g = App.g.V();
-//        for (int i = 0, ilen = req.labels.length; i < ilen; i++)
-//        {
-//          g = g.has("Metadata.Type", req.labels[i].value).range(0, 1);
-//
-//          //          labels[i] = (req.labels[i + 1].value);
-//
-//        }
+        //        GraphTraversal g = App.g.V();
+        //        for (int i = 0, ilen = req.labels.length; i < ilen; i++)
+        //        {
+        //          g = g.has("Metadata.Type", req.labels[i].value).range(0, 1);
+        //
+        //          //          labels[i] = (req.labels[i + 1].value);
+        //
+        //        }
 
         Set<String>  props = new HashSet<>();
         final String label = req.labels[0].value;
-        App.graph.openManagement().getRelationTypes(PropertyKey.class).forEach(
-            propertyKey ->
+
+        OClass oClass = App.graph.getRawDatabase().getMetadata().getSchema().getClass(label);
+
+        oClass.properties().forEach(oProperty ->
             {
-              if (propertyKey.isPropertyKey())
+              String currLabel = oProperty.getFullName();
+              if (currLabel.startsWith(label))
               {
-                String currLabel = propertyKey.name();
-                if (currLabel.startsWith(label))
+                String labelPrefix = "#";
+                try
                 {
-                  props.add(currLabel);
+                  if (!oClass.areIndexed(currLabel))
+                  {
+                    labelPrefix = "";
+                  }
                 }
+                catch (Throwable t)
+                {
+                  labelPrefix = "";
+                }
+
+                props.add(labelPrefix + currLabel);
               }
+
             }
+
         );
+
+        List<Map<Object, Object>> notificationTemplates = App.g.V()
+                                                               .has("Object.Notification_Templates.Types", eq(label))
+                                                               .valueMap("Object.Notification_Templates.Label",
+                                                                   "Object.Notification_Templates.Text")
+                                                               .toList();
+
+        notificationTemplates.forEach(map -> {
+          props.add("@" + map.get("Object.Notification_Templates.Label") + "@" + map
+              .get("Object.Notification_Templates.Text"));
+
+        });
 
         NodePropertyNamesReply reply = new NodePropertyNamesReply(props);
         return reply;
@@ -476,13 +384,8 @@ import static org.janusgraph.core.attribute.Text.textContainsFuzzy;
 
   public EdgeLabelsReply edgeLabels(String str)
   {
-    Iterable<EdgeLabel> labels     =  App.graph.openManagement().getRelationTypes(EdgeLabel.class);
 
-    Set<String> labelNames = new HashSet<>();
-
-    labels.forEach( label -> labelNames.add(label.name()));
-
-    EdgeLabelsReply reply = new EdgeLabelsReply(labelNames);
+    EdgeLabelsReply reply = new EdgeLabelsReply(App.graph.getRawDatabase().getMetadata().getSchema().getClasses());
 
     return reply;
   }

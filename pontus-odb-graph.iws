@@ -11,6 +11,8 @@
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVExcelRenderer.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVOutTable" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PontusComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridFilterCondition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridFilters.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-gen" beforeDir="false" afterPath="$PROJECT_DIR$/../data-gen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../janusgraph" beforeDir="false" afterPath="$PROJECT_DIR$/../janusgraph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/.github/PULL_REQUEST_TEMPLATE.md" beforeDir="false" />
@@ -5886,48 +5888,32 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-docker-lib.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-docker-lib.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/bootstrap.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/bootstrap.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/gdpr-schema.groovy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/globals.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/globals.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datadir/datadir.tar.gz-aa" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datadir/datadir.tar.gz-ab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datadir/datadir.tar.gz-ac" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datadir/datadir.tar.gz-ad" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/datadir/datadir.tar.gz-ae" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-lib/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker-lib/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/gremlin-server-nifi.yml" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gremlin-server-nifi.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/gremlin-server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gremlin-server.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/matching.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/matching.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-gdpr-graph (1).iml" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-gdpr-graph (1).iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pontus-gdpr-graph.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/HBaseMultiUserCompat1_0.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/HBaseMultiUserConnection1_0.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/HttpJWTGremlinEndpointHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/JWTClaim.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/JWTToKerberosAuthenticator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/JWTTokenNeeded.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/JWTTokenNeededFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/JanusGraphSchemaImporter.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/JanusGraphSchemaImporter.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/WsAndHttpJWTAuthenticationHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/WsAndHttpJWTAuthenticationHandlerNoZk.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/WsAndHttpJWTChannelizer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/WsAndHttpJWTChannelizerHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/apache/hadoop/conf/Configuration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/ldap/LdapService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/ldap/LdapServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/ldap/LdapServiceSambaImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/AuthenticationService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/AuthenticationServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/CDPShadowUserPasswordGenerator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/CDPShadowUserPasswordGeneratorImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/CDPShadowUserSaltKey.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/exception/AuthenticationFailureException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/exception/LdapGroupNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/exception/LdapServiceException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/exception/PasswordGenerationFailedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/util/CreateJKSFromJWK.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/util/KeyStoreCreator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/uk/gov/cdp/shadow/user/auth/util/PropertiesUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/uk/gov/cdp/shadow/user/auth/AuthenticationServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/uk/gov/cdp/shadow/user/auth/AuthenticationServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/CreateGraphSchema.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/EdgeLabelsReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/EdgeLabelsReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/JanusGraphSchemaImporter.groovy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/NodePropertyNamesReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/NodePropertyNamesReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Record.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Record.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/SchemaLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/VertexLabelsReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/VertexLabelsReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/utils/ElasticSearchHelper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/package-lock.json" beforeDir="false" />
@@ -6014,7 +6000,6 @@
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/src/slick.grid.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/yarn.lock" beforeDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -6030,12 +6015,12 @@
   <component name="FavoritesManager">
     <favorites_list name="pontus-odb-graph" />
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>janus</find>
-      <find>TYPES_BY_CLASS</find>
-      <find>createProp</find>
-    </findStrings>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -6052,9 +6037,14 @@
   </component>
   <component name="ProjectId" id="1Ollj8uSCGYEX5pl9C1sKzpjXsO" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -6063,18 +6053,15 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="C:/Program Files/nodejs/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../pontus-gdpr-graph/src/main/java/com/pontusvision/gdpr/RecordRequest.java" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.pontusvision.gdpr" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\src\main\java\com\pontusvision\gdpr" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="Applet">
@@ -6115,6 +6102,18 @@
       </method>
     </configuration>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="StructureViewFactory">
     <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR,SHOW_INHERITED" />
   </component>
@@ -6135,6 +6134,8 @@
       <workItem from="1564999273272" duration="598000" />
       <workItem from="1565081217434" duration="651000" />
       <workItem from="1565083493439" duration="604000" />
+      <workItem from="1577042750191" duration="11804000" />
+      <workItem from="1577122395465" duration="23337000" />
     </task>
     <servers />
   </component>
@@ -6167,6 +6168,32 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="450" y="153" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1577119113857">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="450" y="153" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.834@0.0.1536.834" timestamp="1577119113857" />
+    <state x="94" y="94" width="1349" height="646" key="DiffContextDialog" timestamp="1577207773617">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="94" y="94" width="1349" height="646" key="DiffContextDialog/0.0.1536.834@0.0.1536.834" timestamp="1577207773617" />
+    <state x="550" y="172" key="FileChooserDialogImpl" timestamp="1577207739296">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1577207739296" />
+    <state x="467" y="243" key="com.intellij.ide.util.TipDialog" timestamp="1577122651437">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="467" y="243" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1577122651437" />
+    <state x="461" y="154" width="858" height="536" key="find.popup" timestamp="1577370766253">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="461" y="154" width="858" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1577370766253" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1577375818457">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1577375818457" />
   </component>
   <component name="masterDetails">
     <states>

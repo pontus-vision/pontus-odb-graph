@@ -16,7 +16,7 @@ scriptEngines: {
     plugins: { org.apache.tinkerpop.gremlin.server.jsr223.GremlinServerGremlinPlugin: {},
                org.apache.tinkerpop.gremlin.tinkergraph.jsr223.TinkerGraphGremlinPlugin: {},
                org.apache.tinkerpop.gremlin.jsr223.ImportGremlinPlugin: {classImports: [java.lang.Math, com.pontusvision.gdpr.CIDRUtils, com.joestelmach.natty.DateGroup, com.joestelmach.natty.Parser, com.pontusvision.jpostal.AddressParser ,com.pontusvision.jpostal.ParsedComponent, com.pontusvision.utils.PostCode], methodImports: [java.lang.Math#*]},
-               org.apache.tinkerpop.gremlin.jsr223.ScriptFileGremlinPlugin: {files: [/opt/pontus-graphdb/graphdb-current//conf/globals.groovy ,/opt/pontus-graphdb/graphdb-current//conf/gdpr-schema.groovy,/opt/pontus-graphdb/graphdb-current//conf/matching.groovy,/opt/pontus-graphdb/graphdb-current//conf/formio.groovy   ,  /opt/pontus-graphdb/graphdb-current//conf/gdpr.groovy, /opt/pontus-graphdb/graphdb-current//conf/bootstrap.groovy]}
+               org.apache.tinkerpop.gremlin.jsr223.ScriptFileGremlinPlugin: {files: [/opt/pontus-graphdb/graphdb-current/conf/globals.groovy ,/opt/pontus-graphdb/graphdb-current/conf/matching.groovy,/opt/pontus-graphdb/graphdb-current/conf/formio.groovy   ,  /opt/pontus-graphdb/graphdb-current/conf/gdpr.groovy, /opt/pontus-graphdb/graphdb-current/conf/bootstrap.groovy]}
                }}}
 
 serializers:

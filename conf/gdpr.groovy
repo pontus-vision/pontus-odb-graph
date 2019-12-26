@@ -14,17 +14,21 @@
 import com.pontusvision.utils.LocationAddress
 import org.apache.commons.math3.distribution.EnumeratedDistribution
 import org.apache.commons.math3.util.Pair
+import org.apache.tinkerpop.gremlin.orientdb.OrientGraph
 import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
+import org.apache.tinkerpop.gremlin.structure.Graph
 import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.apache.tinkerpop.gremlin.structure.Vertex
-import org.janusgraph.core.JanusGraph
+import org.apache.tinkerpop.gremlin.structure.util.AbstractTransaction
+
+//import org.janusgraph.core.OrientGraph
 
 import java.text.SimpleDateFormat
 
-def addRandomUserData(graph, g, pg_dob, pg_metadataController, pg_metadataProcessor, pg_metadataLineage, pg_metadataRedaction, pg_metadataVersion, pg_metadataStatus, pg_metadataGDPRStatus, pg_metadataLineageServerTag, pg_metadataLineageLocationTag, pg_login_username, pg_login_sha256, pg_id_name, pg_id_value, pg_name_first, pg_name_last, pg_gender, pg_nat, pg_name_title, pg_email, pg_location_street, pg_location_city, pg_location_state, pg_location_postcode) {
+def addRandomUserData(OrientGraph graph, GraphTraversal g, pg_dob, pg_metadataController, pg_metadataProcessor, pg_metadataLineage, pg_metadataRedaction, pg_metadataVersion, pg_metadataStatus, pg_metadataGDPRStatus, pg_metadataLineageServerTag, pg_metadataLineageLocationTag, pg_login_username, pg_login_sha256, pg_id_name, pg_id_value, pg_name_first, pg_name_last, pg_gender, pg_nat, pg_name_title, pg_email, pg_location_street, pg_location_city, pg_location_state, pg_location_postcode) {
 
   metadataCreateDate = new Date()
   metadataUpdateDate = new Date()
@@ -42,7 +46,7 @@ def addRandomUserData(graph, g, pg_dob, pg_metadataController, pg_metadataProces
     }
   }
 
-  trans = graph.tx()
+  AbstractTransaction trans = graph.tx()
   try {
     if (!trans.isOpen()) {
       trans.open();
@@ -179,7 +183,7 @@ listOfMaps.add(map2);
 
 addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
-def addCampaignAwarenessBulk(JanusGraph graph, GraphTraversalSource g, List<Map<String, String>> listOfMaps) {
+def addCampaignAwarenessBulk(OrientGraph graph, GraphTraversalSource g, List<Map<String, String>> listOfMaps) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
@@ -373,7 +377,7 @@ def addCampaignAwarenessBulk(JanusGraph graph, GraphTraversalSource g, List<Map<
 }
 
 
-def addRandomUserDataBulk(graph, g, List<Map<String, String>> listOfMaps) {
+def addRandomUserDataBulk(OrientGraph graph,GraphTraversal g, List<Map<String, String>> listOfMaps) {
 
   metadataCreateDate = new Date()
   metadataUpdateDate = new Date()
@@ -733,7 +737,7 @@ def ingestCRMData(graph, g, List<Map<String, String>> listOfMaps, StringBuffer s
   }
 }
 
-def addDataSources(JanusGraph graph, GraphTraversalSource g) {
+def addDataSources(OrientGraph graph, GraphTraversalSource g) {
 
 
 //  Transaction trans = graph.tx()
@@ -871,7 +875,7 @@ def addRandomDataProcedures(graph, g) {
 
 }
 
-def addDataSourcesToAWSInstances(JanusGraph graph, GraphTraversalSource g) {
+def addDataSourcesToAWSInstances(OrientGraph graph, GraphTraversalSource g) {
 
   //  def trans = graph.tx()
   try {
@@ -920,7 +924,7 @@ def addDataSourcesToAWSInstances(JanusGraph graph, GraphTraversalSource g) {
 
 }
 
-def addEdgesPiaDataSourcesPrivNotices(JanusGraph graph, GraphTraversalSource g) {
+def addEdgesPiaDataSourcesPrivNotices(OrientGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -969,7 +973,7 @@ def addEdgesPiaDataSourcesPrivNotices(JanusGraph graph, GraphTraversalSource g) 
 }
 
 
-def addRandomDataBreachEvents(JanusGraph graph, GraphTraversalSource g) {
+def addRandomDataBreachEvents(OrientGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -1054,7 +1058,7 @@ def addRandomDataBreachEvents(JanusGraph graph, GraphTraversalSource g) {
 }
 
 
-def addRandomSARs(JanusGraph graph, GraphTraversalSource g) {
+def addRandomSARs(OrientGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -1145,7 +1149,7 @@ def addRandomSARs(JanusGraph graph, GraphTraversalSource g) {
 }
 
 
-def addDataBreachToAWSInstances(JanusGraph graph, GraphTraversalSource g) {
+def addDataBreachToAWSInstances(OrientGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -1442,7 +1446,7 @@ eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.
 }
 
 
-def addContracts(JanusGraph graph, GraphTraversalSource g) {
+def addContracts(OrientGraph graph, GraphTraversalSource g) {
 
   def randVal = new Random();
 
@@ -1497,7 +1501,7 @@ def addContracts(JanusGraph graph, GraphTraversalSource g) {
 }
 
 
-def addPrivacyImpactAssessment(JanusGraph graph, GraphTraversalSource g) {
+def addPrivacyImpactAssessment(OrientGraph graph, GraphTraversalSource g) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
@@ -1673,7 +1677,7 @@ the end of the process.
  */
 
 
-def addLawfulBasisAndPrivacyNotices(JanusGraph graph, GraphTraversalSource g) {
+def addLawfulBasisAndPrivacyNotices(OrientGraph graph, GraphTraversalSource g) {
 
   metadataCreateDate = new Date()
   metadataUpdateDate = new Date()
@@ -1880,7 +1884,7 @@ def createForms() {
 
 }
 
-def addOrganisations(JanusGraph graph, GraphTraversalSource g) {
+def addOrganisations(OrientGraph graph, GraphTraversalSource g) {
 
   def orgData = [
     [
@@ -1980,7 +1984,7 @@ def addOrganisations(JanusGraph graph, GraphTraversalSource g) {
 }
 
 
-def createDataProtectionAuthorities(JanusGraph graph, GraphTraversalSource g) {
+def createDataProtectionAuthorities(OrientGraph graph, GraphTraversalSource g) {
 
   def authData = [
     [
@@ -2664,7 +2668,7 @@ def createNotificationTemplates() {
 
 
 def __addVPCEdgesFromUserIdGroupPairs(
-  JanusGraph graph, GraphTraversalSource g,
+  OrientGraph graph, GraphTraversalSource g,
   Long origVpcVid,
   userIdGroupPairs,
   String origGroupIdStr,
@@ -2752,7 +2756,7 @@ def __addSecGroupEdgesFromUserIdGroupPairs(graph, g, Long origSecGroupVid, userI
   return sb.toString()
 }
 
-def __addSecGroupEdges(JanusGraph graph, GraphTraversalSource g, aws_sec_groups) {
+def __addSecGroupEdges(OrientGraph graph, GraphTraversalSource g, aws_sec_groups) {
 
   StringBuilder sb = new StringBuilder();
 
@@ -3125,7 +3129,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
 
 }
 
-def addRandomDataInit(JanusGraph graph, GraphTraversalSource g) {
+def addRandomDataInit(OrientGraph graph, GraphTraversalSource g) {
   def listOfMaps = new LinkedList<HashMap<String, String>>()
 
   def map1 = [pg_metadataProcessor: '', pg_metadataLineage: '', pg_metadataRedaction: '', pg_metadataVersion: 1, pg_metadataStatus: '', pg_metadataGDPRStatus: '', pg_metadataLineageServerTag: '', pg_metadataLineageLocationTag: '', pg_metadataController: 'controller123', "pg_gender": "male", "pg_name_title": "mr", "pg_name_first": "quoc", "pg_name_last": "bastiaansen", "pg_location_street": "7247 lucasbolwerk", "pg_location_city": "epe", "pg_location_state": "flevoland", "pg_location_postcode": "92775", "pg_email": "quoc.bastiaansen@example.com", "pg_login_username": "heavybear983", "pg_login_password": "writer", "pg_login_salt": "avKgfb4e", "pg_login_md5": "d918e55da9d17937c718b9f7688821cb", "pg_login_sha1": "2cb2bba91deef25c64f15a6ac96d84c21c1189e3", "pg_login_sha256": "2945552ed13c3cf2a845d2f6af78ad7bbb161569af8e08dc3bfa36a3fa09b6df", "pg_dob": "1955-12-01 16:58:49", "pg_registered": "2012-07-15 09:50:59", "pg_phone": "(668)-056-6802", "pg_cell": "(859)-113-0976", "pg_id_name": "BSN", "pg_id_value": "94173707", "pg_picture_large": "https://randomuser.me/api/portraits/men/63.jpg", "pg_picture_medium": "https://randomuser.me/api/portraits/med/men/63.jpg", "pg_picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/63.jpg", "pg_nat": "NL"]

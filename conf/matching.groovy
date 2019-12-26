@@ -12,9 +12,6 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.codehaus.groovy.runtime.StringGroovyMethods
-import org.janusgraph.core.JanusGraph
-import org.janusgraph.core.JanusGraphIndexQuery
-import org.janusgraph.core.JanusGraphVertex
 
 import java.util.concurrent.ConcurrentHashMap
 import java.util.regex.Pattern
@@ -152,7 +149,7 @@ PVConvMixin dummy = null
 String.mixin(PVConvMixin)
 
 
-def class PVValTemplate {
+class PVValTemplate {
   private static GStringTemplateEngine engine = new GStringTemplateEngine(PVValTemplate.class.getClassLoader())
 
   private static Map<String, Template> templateMap = new ConcurrentHashMap<>();
@@ -198,20 +195,20 @@ class MatchReq<T> {
       return P.&gte
     } else if ("lte".equals(predicateStr)) {
       return P.&lte
-    } else if ("textContains".equals(predicateStr)) {
-      return org.janusgraph.core.attribute.Text.&textContains
-    } else if ("textContainsPrefix".equals(predicateStr)) {
-      return org.janusgraph.core.attribute.Text.&textContainsPrefix
-    } else if ("textContainsRegex".equals(predicateStr)) {
-      return org.janusgraph.core.attribute.Text.&textContainsRegex
-    } else if ("textContainsFuzzy".equals(predicateStr)) {
-      return org.janusgraph.core.attribute.Text.&textContainsFuzzy
-    } else if ("textPrefix".equals(predicateStr)) {
-      return org.janusgraph.core.attribute.Text.&textPrefix
-    } else if ("textRegex".equals(predicateStr)) {
-      return org.janusgraph.core.attribute.Text.&textRegex
-    } else if ("textFuzzy".equals(predicateStr)) {
-      return org.janusgraph.core.attribute.Text.&textFuzzy
+//    } else if ("textContains".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textContains
+//    } else if ("textContainsPrefix".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textContainsPrefix
+//    } else if ("textContainsRegex".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textContainsRegex
+//    } else if ("textContainsFuzzy".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textContainsFuzzy
+//    } else if ("textPrefix".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textPrefix
+//    } else if ("textRegex".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textRegex
+//    } else if ("textFuzzy".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textFuzzy
     } else return P.&eq;
 
   }

@@ -1,7 +1,5 @@
 package com.pontusvision.gdpr;
 
-import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONIo;
-
 public class GremlinReply
 {
 //    {

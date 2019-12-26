@@ -1,10 +1,11 @@
 package com.pontusvision.gdpr;
 
-import org.janusgraph.core.EdgeLabel;
-//import org.janusgraph.core.EdgeLabel;
+import com.orientechnologies.orient.core.metadata.schema.OClass;
 
+import java.util.Collection;
 import java.util.LinkedList;
-import java.util.regex.Pattern;
+
+//import org.janusgraph.core.EdgeLabel;
 
 /*
 {
@@ -15,38 +16,42 @@ import java.util.regex.Pattern;
 
     }
  */
-public class EdgeLabelsReply {
+public class EdgeLabelsReply
+{
 
+  ReactSelectOptions[] labels;
 
+  // must have this default constructor to get this class serialized as a reply!!!
 
-    ReactSelectOptions[] labels;
+  public EdgeLabelsReply()
+  {
 
-    // must have this default constructor to get this class serialized as a reply!!!
+  }
 
-    public EdgeLabelsReply(){
+  public EdgeLabelsReply(Collection<OClass> edgeLabels)
+  {
 
+    LinkedList<ReactSelectOptions> labelsList = new LinkedList<>();
 
-    }
-    public EdgeLabelsReply(Iterable<String> edgeLabels) {
+    for (OClass edgeLabel : edgeLabels)
+    {
 
-        LinkedList<ReactSelectOptions> labelsList = new LinkedList<>();
-
-        for (String edgeLabel: edgeLabels){
-
-            labelsList.add(new ReactSelectOptions(edgeLabel,
-                    edgeLabel));
-
-        }
-        labels = new ReactSelectOptions[labelsList.size()];
-        labels = labelsList.toArray(labels);
+      labelsList.add(new ReactSelectOptions(edgeLabel.getName(),
+          edgeLabel.getName()));
 
     }
+    labels = new ReactSelectOptions[labelsList.size()];
+    labels = labelsList.toArray(labels);
 
-    public ReactSelectOptions [] getLabels() {
-        return labels;
-    }
+  }
 
-    public void setLabels(ReactSelectOptions[] labels) {
-        this.labels = labels;
-    }
+  public ReactSelectOptions[] getLabels()
+  {
+    return labels;
+  }
+
+  public void setLabels(ReactSelectOptions[] labels)
+  {
+    this.labels = labels;
+  }
 }

@@ -142,7 +142,6 @@ const records = [{name: 'Jackson Turner', street: '217 Tawny End', img: 'men_1.j
 //import com.google.gson.JsonObject;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Record extends JSONObject
