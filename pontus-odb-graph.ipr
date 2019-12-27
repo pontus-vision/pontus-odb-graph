@@ -548,15 +548,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/jcabi/jcabi-manifests/1.1/jcabi-manifests-1.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.nimbusds:nimbus-jose-jwt:5.7">
+    <library name="Maven: com.nimbusds:nimbus-jose-jwt:8.4">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/5.7/nimbus-jose-jwt-5.7.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.4/nimbus-jose-jwt-8.4.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/5.7/nimbus-jose-jwt-5.7-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.4/nimbus-jose-jwt-8.4-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/5.7/nimbus-jose-jwt-5.7-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.4/nimbus-jose-jwt-8.4-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.ning:compress-lzf:1.0.3">
@@ -812,59 +812,70 @@
         <root url="jar://$MAVEN_REPOSITORY$/io/dropwizard/metrics/metrics-jvm/3.1.5/metrics-jvm-3.1.5-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: io.netty:netty-all:4.0.56.Final">
+    <library name="Maven: io.netty:netty-all:5.0.0.Alpha2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.0.56.Final/netty-all-4.0.56.Final.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/5.0.0.Alpha2/netty-all-5.0.0.Alpha2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.0.56.Final/netty-all-4.0.56.Final-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/5.0.0.Alpha2/netty-all-5.0.0.Alpha2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/4.0.56.Final/netty-all-4.0.56.Final-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-all/5.0.0.Alpha2/netty-all-5.0.0.Alpha2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: io.netty:netty-buffer:4.0.56.Final">
+    <library name="Maven: io.netty:netty-buffer:5.0.0.Alpha2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-buffer/4.0.56.Final/netty-buffer-4.0.56.Final.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-buffer/5.0.0.Alpha2/netty-buffer-5.0.0.Alpha2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-buffer/4.0.56.Final/netty-buffer-4.0.56.Final-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-buffer/5.0.0.Alpha2/netty-buffer-5.0.0.Alpha2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-buffer/4.0.56.Final/netty-buffer-4.0.56.Final-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-buffer/5.0.0.Alpha2/netty-buffer-5.0.0.Alpha2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: io.netty:netty-common:4.0.56.Final">
+    <library name="Maven: io.netty:netty-common:5.0.0.Alpha2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/4.0.56.Final/netty-common-4.0.56.Final.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/5.0.0.Alpha2/netty-common-5.0.0.Alpha2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/4.0.56.Final/netty-common-4.0.56.Final-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/5.0.0.Alpha2/netty-common-5.0.0.Alpha2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/4.0.56.Final/netty-common-4.0.56.Final-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/5.0.0.Alpha2/netty-common-5.0.0.Alpha2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: io.netty:netty-transport-native-epoll:linux-x86_64:4.0.56.Final">
+    <library name="Maven: io.netty:netty-resolver:5.0.0.Alpha2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-native-epoll/4.0.56.Final/netty-transport-native-epoll-4.0.56.Final-linux-x86_64.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-resolver/5.0.0.Alpha2/netty-resolver-5.0.0.Alpha2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-native-epoll/4.0.56.Final/netty-transport-native-epoll-4.0.56.Final-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-resolver/5.0.0.Alpha2/netty-resolver-5.0.0.Alpha2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-native-epoll/4.0.56.Final/netty-transport-native-epoll-4.0.56.Final-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-resolver/5.0.0.Alpha2/netty-resolver-5.0.0.Alpha2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: io.netty:netty-transport:4.0.56.Final">
+    <library name="Maven: io.netty:netty-transport-native-epoll:linux-x86_64:5.0.0.Alpha2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.0.56.Final/netty-transport-4.0.56.Final.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-native-epoll/5.0.0.Alpha2/netty-transport-native-epoll-5.0.0.Alpha2-linux-x86_64.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.0.56.Final/netty-transport-4.0.56.Final-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-native-epoll/5.0.0.Alpha2/netty-transport-native-epoll-5.0.0.Alpha2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.0.56.Final/netty-transport-4.0.56.Final-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-native-epoll/5.0.0.Alpha2/netty-transport-native-epoll-5.0.0.Alpha2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: io.netty:netty-transport:5.0.0.Alpha2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/5.0.0.Alpha2/netty-transport-5.0.0.Alpha2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/5.0.0.Alpha2/netty-transport-5.0.0.Alpha2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/5.0.0.Alpha2/netty-transport-5.0.0.Alpha2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: io.netty:netty:3.9.9.Final">

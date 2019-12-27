@@ -33,7 +33,7 @@
         <jukito.version>1.5</jukito.version>
         <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
         <pontus-natty.version>100.14</pontus-natty.version>
-        <netty-version>4.0.56.Final</netty-version>
+        <netty-version>[4.1.42,)</netty-version>
         <orientdb-version>3.1.0-beta1</orientdb-version>
         <!--<apache.directory-api-version>
             1.0.0
@@ -196,7 +196,7 @@
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
-            <version>5.7</version>
+            <version>[7.9,)</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.ow2.asm</groupId>
