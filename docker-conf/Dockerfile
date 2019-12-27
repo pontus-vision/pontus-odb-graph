@@ -1,12 +1,13 @@
 FROM alpine as builder
 RUN apk add git
 
-RUN git clone  --depth 1 --single-branch  --branch master https://github.com/pontusvision/pontus-gdpr-graph.git
+#RUN git clone  --depth 1 --single-branch  --branch master https://github.com/pontus-vision/pontus-odb-graph.git
+COPY . /pontus-odb-graph
 
 
 FROM alpine
 
-COPY --from=builder  /pontus-gdpr-graph/conf /pontus-gdpr-graph/conf
-COPY --from=builder  /pontus-gdpr-graph/bin /pontus-gdpr-graph/bin
+COPY --from=builder  /pontus-odb-graph/conf /pontus-odb-graph/conf
+COPY --from=builder  /pontus-odb-graph/bin /pontus-odb-graph/bin
 
 

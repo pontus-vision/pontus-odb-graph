@@ -11,8 +11,6 @@
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVExcelRenderer.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVOutTable" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PontusComponent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridFilterCondition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridFilters.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-gen" beforeDir="false" afterPath="$PROJECT_DIR$/../data-gen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../janusgraph" beforeDir="false" afterPath="$PROJECT_DIR$/../janusgraph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/.github/PULL_REQUEST_TEMPLATE.md" beforeDir="false" />
@@ -5888,32 +5886,7 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/bootstrap.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/bootstrap.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gdpr-schema.groovy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/globals.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/globals.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gremlin-server-nifi.yml" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gremlin-server-nifi.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gremlin-server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gremlin-server.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/matching.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/matching.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pontus-gdpr-graph (1).iml" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-gdpr-graph (1).iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pontus-odb-graph.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/CreateGraphSchema.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/EdgeLabelsReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/EdgeLabelsReply.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphReply.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinReply.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/JanusGraphSchemaImporter.groovy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/NodePropertyNamesReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/NodePropertyNamesReply.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Record.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Record.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/SchemaLoader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/VertexLabelsReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/VertexLabelsReply.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/utils/ElasticSearchHelper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/package-lock.json" beforeDir="false" />
@@ -6135,7 +6108,7 @@
       <workItem from="1565081217434" duration="651000" />
       <workItem from="1565083493439" duration="604000" />
       <workItem from="1577042750191" duration="11804000" />
-      <workItem from="1577122395465" duration="23337000" />
+      <workItem from="1577122395465" duration="24653000" />
     </task>
     <servers />
   </component>
