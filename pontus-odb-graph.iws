@@ -11,7 +11,6 @@
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVExcelRenderer.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVOutTable" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PontusComponent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/apache/tinkerpop/gremlin/orientdb/OrientEmbeddedFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-gen" beforeDir="false" afterPath="$PROJECT_DIR$/../data-gen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../janusgraph" beforeDir="false" afterPath="$PROJECT_DIR$/../janusgraph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/.github/PULL_REQUEST_TEMPLATE.md" beforeDir="false" />
@@ -5887,25 +5886,11 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-docker-lib.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-docker-lib.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/formio.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/formio.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/globals.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/globals.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gremlin-server-nifi.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gremlin-server.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/hbase-drop.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/hbase-grant.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/jaas.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/janusgraph-embedded-cassandra-es-nifi.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/janusgraph-embedded-cassandra-es.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/janusgraph-hbase-es-nifi.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/janusgraph-hbase-es.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/matching.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/matching.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-lib/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker-lib/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pontus-odb-graph.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/package-lock.json" beforeDir="false" />
@@ -6037,7 +6022,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../pontus-gdpr-graph/conf/matching.groovy" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/conf" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -6142,7 +6127,7 @@
       <workItem from="1565081217434" duration="651000" />
       <workItem from="1565083493439" duration="604000" />
       <workItem from="1577042750191" duration="11804000" />
-      <workItem from="1577122395465" duration="52639000" />
+      <workItem from="1577122395465" duration="62604000" />
     </task>
     <servers />
   </component>
@@ -6193,10 +6178,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="94" y="94" width="1349" height="646" key="DiffContextDialog/0.0.1536.834@0.0.1536.834" timestamp="1577534574694" />
-    <state x="550" y="172" key="FileChooserDialogImpl" timestamp="1577534402240">
+    <state x="550" y="172" key="FileChooserDialogImpl" timestamp="1577543967150">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1577534402240" />
+    <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1577543967150" />
     <state width="1493" height="204" key="GridCell.Tab.0.bottom" timestamp="1577534332048">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6245,10 +6230,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="467" y="243" key="com.intellij.ide.util.TipDialog/0.0.1536.834@0.0.1536.834" timestamp="1577122651437" />
-    <state x="461" y="154" width="901" height="536" key="find.popup" timestamp="1577533450826">
+    <state x="461" y="154" width="901" height="536" key="find.popup" timestamp="1577556319393">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="461" y="154" width="901" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1577533450826" />
+    <state x="461" y="154" width="901" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1577556319392" />
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1577375818457">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

@@ -283,7 +283,7 @@ def updateFormData(def gtrav, String dataFromFormInJSON, String dataType, String
                     try {
                         def prop = localMgmt.getPropertyKey(key);
                         if (prop == null) {
-                            prop = createProp(localMgmt, val, String.class, org.janusgraph.core.Cardinality.SINGLE);
+//                            prop = createProp(localMgmt, val, String.class, org.janusgraph.core.Cardinality.SINGLE);
                         }
 
                         if (prop != null) {
@@ -395,7 +395,7 @@ def createPropsIfNotThere(mgmt, String key, boolean createIdxIfNotPresent = fals
     if (prop == null) {
         sb.append("\nDid not find prop $key")
 
-        prop = createProp(mgmt, val, String.class, org.janusgraph.core.Cardinality.SINGLE);
+//        prop = createProp(mgmt, val, String.class, org.janusgraph.core.Cardinality.SINGLE);
         if (createIdxIfNotPresent) {
             sb.append("\nAbout to add prop $key to index ${key}CompIdx")
 
@@ -471,7 +471,7 @@ def addFormData(def gtrav, String dataFromFormInJSON, String dataType, StringBuf
                 try {
                     def prop = mgmt.getPropertyKey(key);
                     if (prop == null) {
-                        prop = createProp(mgmt, val, String.class, org.janusgraph.core.Cardinality.SINGLE);
+//                        prop = createProp(mgmt, val, String.class, org.janusgraph.core.Cardinality.SINGLE);
                     }
 
                     if (prop != null) {

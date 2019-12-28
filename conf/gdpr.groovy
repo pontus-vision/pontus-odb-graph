@@ -21,14 +21,12 @@ import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
-import org.apache.tinkerpop.gremlin.structure.Graph
 import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.apache.tinkerpop.gremlin.structure.Vertex
-import org.apache.tinkerpop.gremlin.structure.util.AbstractTransaction
-
-//import org.janusgraph.core.OrientStandardGraph
 
 import java.text.SimpleDateFormat
+
+//import org.OrientStandardGraph.core.OrientStandardGraph
 
 def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_metadataController, pg_metadataProcessor, pg_metadataLineage, pg_metadataRedaction, pg_metadataVersion, pg_metadataStatus, pg_metadataGDPRStatus, pg_metadataLineageServerTag, pg_metadataLineageLocationTag, pg_login_username, pg_login_sha256, pg_id_name, pg_id_value, pg_name_first, pg_name_last, pg_gender, pg_nat, pg_name_title, pg_email, pg_location_street, pg_location_city, pg_location_state, pg_location_postcode) {
 
@@ -379,7 +377,7 @@ def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, 
 }
 
 
-def addRandomUserDataBulk(OrientStandardGraph graph,GraphTraversal g, List<Map<String, String>> listOfMaps) {
+def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<String, String>> listOfMaps) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
@@ -1405,8 +1403,8 @@ def __addConsentForPrivacyNotice(OrientStandardGraph graph, GraphTraversal g, Ve
     /*
         orgLabel = createVertexLabel(mgmt, "Event.Consent")
 
-eventConsentDate = createProp(mgmt, "Event.Consent.Date", Date.class, org.janusgraph.core.Cardinality.SINGLE)
-eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.janusgraph.core.Cardinality.SINGLE)
+eventConsentDate = createProp(mgmt, "Event.Consent.Date", Date.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
+eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
 
      */
 
@@ -1678,7 +1676,7 @@ have a voice.
 the end of the process.
  */
 
-def addLawfulBasisAndPrivacyNoticesPt(JanusGraph graph, GraphTraversalSource g) {
+def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalSource g) {
 
   metadataCreateDate = new Date()
   metadataUpdateDate = new Date()
@@ -1819,7 +1817,7 @@ def addLawfulBasisAndPrivacyNoticesPt(JanusGraph graph, GraphTraversalSource g) 
 }
 
 
-def addLawfulBasisAndPrivacyNotices(JanusGraph graph, GraphTraversalSource g) {
+def addLawfulBasisAndPrivacyNotices(OrientStandardGraph graph, GraphTraversalSource g) {
 
   if (new File("conf/i18n_pt_translation.json").exists()) {
     return addLawfulBasisAndPrivacyNoticesPt(graph, g);
@@ -1964,12 +1962,12 @@ def createForms() {
 
 //    objectFormLabel = createVertexLabel(mgmt, "Object.Form");
 //
-//    objectFormProp00 = createProp(mgmt, "Object.Form.Metadata_Owner", String.class, org.janusgraph.core.Cardinality.SINGLE);
-//    objectFormProp01 = createProp(mgmt, "Object.Form.Metadata_Create_Date", String.class, org.janusgraph.core.Cardinality.SINGLE);
-//    objectFormProp01 = createProp(mgmt, "Object.Form.Metadata_GUID", String.class, org.janusgraph.core.Cardinality.SINGLE);
-//    objectFormProp02 = createProp(mgmt, "Object.Form.URL", String.class, org.janusgraph.core.Cardinality.SINGLE);
-//    objectFormProp03 = createProp(mgmt, "Object.Form.Text", String.class, org.janusgraph.core.Cardinality.SINGLE);
-//    objectFormProp04 = createProp(mgmt, "Object.Form.Vertex_Label", String.class, org.janusgraph.core.Cardinality.SINGLE);
+//    objectFormProp00 = createProp(mgmt, "Object.Form.Metadata_Owner", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp01 = createProp(mgmt, "Object.Form.Metadata_Create_Date", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp01 = createProp(mgmt, "Object.Form.Metadata_GUID", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp02 = createProp(mgmt, "Object.Form.URL", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp03 = createProp(mgmt, "Object.Form.Text", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp04 = createProp(mgmt, "Object.Form.Vertex_Label", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
 //
 //    objectNotificationTemplatesIdx01 = createMixedIdx(mgmt, "objectFormIdx01", objectFormLabel, objectFormProp00,objectFormProp01,objectFormProp02,objectFormProp04);
 
@@ -3501,10 +3499,10 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
         String sgStr = sg.GroupId;
 
         /*
-            objectAWSProp00 = createProp(mgmt, "Object.AWS_Security_Group.GroupName", String.class, org.janusgraph.core.Cardinality.SINGLE)
-      objectAWSProp01 = createProp(mgmt, "Object.AWS_Security_Group.GroupId", String.class, org.janusgraph.core.Cardinality.SINGLE)
-      objectAWSProp02 = createProp(mgmt, "Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges", String.class, org.janusgraph.core.Cardinality.SET)
-      objectAWSProp03 = createProp(mgmt, "Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges", String.class, org.janusgraph.core.Cardinality.SET)
+            objectAWSProp00 = createProp(mgmt, "Object.AWS_Security_Group.GroupName", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
+      objectAWSProp01 = createProp(mgmt, "Object.AWS_Security_Group.GroupId", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
+      objectAWSProp02 = createProp(mgmt, "Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges", String.class, org.OrientStandardGraph.core.Cardinality.SET)
+      objectAWSProp03 = createProp(mgmt, "Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges", String.class, org.OrientStandardGraph.core.Cardinality.SET)
 
         */
         def sgvId = null;
@@ -3549,8 +3547,8 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
               property("Object.AWS_Security_Group.GroupName", sg.GroupName).
               next().
               // property("Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges", sg.).
-              // property("Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges",   iid.LaunchTime).
-              id();
+                // property("Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges",   iid.LaunchTime).
+                id();
 
 //    trans.commit()
           } catch (Throwable t) {
@@ -3572,23 +3570,23 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
           if (newEntries) {
 
 
-          sb.append("retrieving ").append(sgvId).append('\n');
-          sb.append("retrieving ").append(sgvId.class).append('\n');
+            sb.append("retrieving ").append(sgvId).append('\n');
+            sb.append("retrieving ").append(sgvId.class).append('\n');
 
-          sgv = g.V(sgvId).next();
-          awsi = g.V(awsiId).next();
-          vpc = g.V(vpcId).next();
+            sgv = g.V(sgvId).next();
+            awsi = g.V(awsiId).next();
+            vpc = g.V(vpcId).next();
 
-          g.addE("Has_Server")
-            .from(sgv)
-            .to(awsi)
-            .next();
+            g.addE("Has_Server")
+              .from(sgv)
+              .to(awsi)
+              .next();
 
-          sgv = g.V(sgvId).next();
+            sgv = g.V(sgvId).next();
 
-          g.addE("Has_Security_Group")
-            .from(vpc)
-            .to(sgv).next();
+            g.addE("Has_Security_Group")
+              .from(vpc)
+              .to(sgv).next();
           }
 //    trans.commit()
         } catch (Throwable t) {
@@ -3737,8 +3735,7 @@ def getAwarenessScores(def scoresMap) {
       scoreValue -= (10L * firstReminder / numEvents)
 
       // add a bit of a score, after all there was at least some training.
-      if (scoreValue == 0)
-      {
+      if (scoreValue == 0) {
         scoreValue = 10L
       }
 
@@ -4433,7 +4430,7 @@ def calculatePOLECounts() {
     , "Person.Employee"
     , "Person.Organisation"
 
-  ] ;
+  ];
 
 
   StringBuffer sb = new StringBuffer("[")
@@ -4455,10 +4452,10 @@ def calculatePOLECounts() {
   Long numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
   sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
-  try{
-  numEntries =   App.g.V().has('Object.Data_Source.Type', P.eq('Structured')).out().out().in().has('Metadata.Type.Person.Identity',P.eq('Person.Identity')).dedup().count().next();
-  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-  } catch (e){
+  try {
+    numEntries = App.g.V().has('Object.Data_Source.Type', P.eq('Structured')).out().out().in().has('Metadata.Type.Person.Identity', P.eq('Person.Identity')).dedup().count().next();
+    sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+  } catch (e) {
 
   }
 
@@ -4471,15 +4468,13 @@ def calculatePOLECounts() {
   sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Columns')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-
   var = "v.\"Object.Data_Source.Type\": Unstructured"
   numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
   sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-  numEntries =   App.g.V().has('Object.Data_Source.Type', P.eq('Unstructured')).out().out().in().has('Metadata.Type.Person.Identity',P.eq('Person.Identity')).dedup().count().next();
+  numEntries = App.g.V().has('Object.Data_Source.Type', P.eq('Unstructured')).out().out().in().has('Metadata.Type.Person.Identity', P.eq('Person.Identity')).dedup().count().next();
   sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-
 
 
   var = "v.\"Object.Data_Source.Type\": Mixed"
@@ -4489,10 +4484,6 @@ def calculatePOLECounts() {
   var = "v.\"Object.Data_Source.Type\": Unstructured"
   numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
   sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-
-
-
-
 
 
   sb.append(']')
@@ -4884,7 +4875,7 @@ class Discovery {
   }
 
 
-  static addDiscoveryDataFromDB(JanusGraph graph, GraphTraversalSource g,
+  static addDiscoveryDataFromDB(OrientStandardGraph graph, GraphTraversalSource g,
                                 String dbURL, String dbTableName, String colMetadataStr,
                                 String colDiscoveryDataStr, Long dataSourceId) {
 
