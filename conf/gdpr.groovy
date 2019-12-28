@@ -11,10 +11,12 @@
 
 // res
 
+import com.pontusvision.gdpr.App
 import com.pontusvision.utils.LocationAddress
+import groovy.json.JsonSlurper
 import org.apache.commons.math3.distribution.EnumeratedDistribution
 import org.apache.commons.math3.util.Pair
-import org.apache.tinkerpop.gremlin.orientdb.OrientGraph
+import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
@@ -24,14 +26,14 @@ import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.apache.tinkerpop.gremlin.structure.util.AbstractTransaction
 
-//import org.janusgraph.core.OrientGraph
+//import org.janusgraph.core.OrientStandardGraph
 
 import java.text.SimpleDateFormat
 
-def addRandomUserData(OrientGraph graph, GraphTraversal g, pg_dob, pg_metadataController, pg_metadataProcessor, pg_metadataLineage, pg_metadataRedaction, pg_metadataVersion, pg_metadataStatus, pg_metadataGDPRStatus, pg_metadataLineageServerTag, pg_metadataLineageLocationTag, pg_login_username, pg_login_sha256, pg_id_name, pg_id_value, pg_name_first, pg_name_last, pg_gender, pg_nat, pg_name_title, pg_email, pg_location_street, pg_location_city, pg_location_state, pg_location_postcode) {
+def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_metadataController, pg_metadataProcessor, pg_metadataLineage, pg_metadataRedaction, pg_metadataVersion, pg_metadataStatus, pg_metadataGDPRStatus, pg_metadataLineageServerTag, pg_metadataLineageLocationTag, pg_login_username, pg_login_sha256, pg_id_name, pg_id_value, pg_name_first, pg_name_last, pg_gender, pg_nat, pg_name_title, pg_email, pg_location_street, pg_location_city, pg_location_state, pg_location_postcode) {
 
-  metadataCreateDate = new Date()
-  metadataUpdateDate = new Date()
+  Date metadataCreateDate = new Date()
+  Date metadataUpdateDate = new Date()
 
   try {
     dob = new SimpleDateFormat("yyyy-MM-dd").parse((String) item.get("pg_dob"))
@@ -46,7 +48,7 @@ def addRandomUserData(OrientGraph graph, GraphTraversal g, pg_dob, pg_metadataCo
     }
   }
 
-  AbstractTransaction trans = graph.tx()
+  Transaction trans = graph.tx()
   try {
     if (!trans.isOpen()) {
       trans.open();
@@ -183,7 +185,7 @@ listOfMaps.add(map2);
 
 addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
-def addCampaignAwarenessBulk(OrientGraph graph, GraphTraversalSource g, List<Map<String, String>> listOfMaps) {
+def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, List<Map<String, String>> listOfMaps) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
@@ -377,11 +379,11 @@ def addCampaignAwarenessBulk(OrientGraph graph, GraphTraversalSource g, List<Map
 }
 
 
-def addRandomUserDataBulk(OrientGraph graph,GraphTraversal g, List<Map<String, String>> listOfMaps) {
+def addRandomUserDataBulk(OrientStandardGraph graph,GraphTraversal g, List<Map<String, String>> listOfMaps) {
 
-  metadataCreateDate = new Date()
-  metadataUpdateDate = new Date()
-  trans = graph.tx()
+  Date metadataCreateDate = new Date()
+  Date metadataUpdateDate = new Date()
+  Transaction trans = graph.tx()
   try {
     if (!trans.isOpen()) {
       trans.open()
@@ -542,11 +544,11 @@ def addRandomUserDataBulk(OrientGraph graph,GraphTraversal g, List<Map<String, S
  */
 
 
-def ingestCRMData(graph, g, List<Map<String, String>> listOfMaps, StringBuffer sb = null) {
+def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOfMaps, StringBuffer sb = null) {
 
-  metadataCreateDate = new Date()
-  metadataUpdateDate = new Date()
-  trans = graph.tx()
+  Date metadataCreateDate = new Date()
+  Date metadataUpdateDate = new Date()
+  Transaction trans = graph.tx()
   try {
     if (!trans.isOpen()) {
       trans.open()
@@ -737,7 +739,7 @@ def ingestCRMData(graph, g, List<Map<String, String>> listOfMaps, StringBuffer s
   }
 }
 
-def addDataSources(OrientGraph graph, GraphTraversalSource g) {
+def addDataSources(OrientStandardGraph graph, GraphTraversalSource g) {
 
 
 //  Transaction trans = graph.tx()
@@ -875,7 +877,7 @@ def addRandomDataProcedures(graph, g) {
 
 }
 
-def addDataSourcesToAWSInstances(OrientGraph graph, GraphTraversalSource g) {
+def addDataSourcesToAWSInstances(OrientStandardGraph graph, GraphTraversalSource g) {
 
   //  def trans = graph.tx()
   try {
@@ -924,7 +926,7 @@ def addDataSourcesToAWSInstances(OrientGraph graph, GraphTraversalSource g) {
 
 }
 
-def addEdgesPiaDataSourcesPrivNotices(OrientGraph graph, GraphTraversalSource g) {
+def addEdgesPiaDataSourcesPrivNotices(OrientStandardGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -973,7 +975,7 @@ def addEdgesPiaDataSourcesPrivNotices(OrientGraph graph, GraphTraversalSource g)
 }
 
 
-def addRandomDataBreachEvents(OrientGraph graph, GraphTraversalSource g) {
+def addRandomDataBreachEvents(OrientStandardGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -1058,7 +1060,7 @@ def addRandomDataBreachEvents(OrientGraph graph, GraphTraversalSource g) {
 }
 
 
-def addRandomSARs(OrientGraph graph, GraphTraversalSource g) {
+def addRandomSARs(OrientStandardGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -1149,7 +1151,7 @@ def addRandomSARs(OrientGraph graph, GraphTraversalSource g) {
 }
 
 
-def addDataBreachToAWSInstances(OrientGraph graph, GraphTraversalSource g) {
+def addDataBreachToAWSInstances(OrientStandardGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -1194,7 +1196,7 @@ def addDataBreachToAWSInstances(OrientGraph graph, GraphTraversalSource g) {
 }
 
 
-def addRandomChildUserDataBulk(graph, g, List<Map<String, String>> listOfMaps) {
+def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, String>> listOfMaps) {
 
   metadataCreateDate = new Date();
   metadataUpdateDate = new Date();
@@ -1346,10 +1348,10 @@ def addRandomChildUserDataBulk(graph, g, List<Map<String, String>> listOfMaps) {
 }
 
 
-def addDataBulk(graph, g, List<Map<String, String>> listOfMaps) {
+def addDataBulk(OrientStandardGraph graph, g, List<Map<String, String>> listOfMaps) {
 
-  metadataCreateDate = new Date()
-  metadataUpdateDate = new Date()
+  def metadataCreateDate = new Date()
+  def metadataUpdateDate = new Date()
 //  Transaction trans = graph.tx()
   try {
 //    if (!trans.isOpen()) {
@@ -1377,7 +1379,7 @@ def addDataBulk(graph, g, List<Map<String, String>> listOfMaps) {
 
 }
 
-def __addConsentForPrivacyNotice(graph, g, Vertex privNoticeVertex) {
+def __addConsentForPrivacyNotice(OrientStandardGraph graph, GraphTraversal g, Vertex privNoticeVertex) {
 
   def randVal = new Random()
   def randVal1 = randVal.nextInt(30)
@@ -1446,7 +1448,7 @@ eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.
 }
 
 
-def addContracts(OrientGraph graph, GraphTraversalSource g) {
+def addContracts(OrientStandardGraph graph, GraphTraversalSource g) {
 
   def randVal = new Random();
 
@@ -1501,7 +1503,7 @@ def addContracts(OrientGraph graph, GraphTraversalSource g) {
 }
 
 
-def addPrivacyImpactAssessment(OrientGraph graph, GraphTraversalSource g) {
+def addPrivacyImpactAssessment(OrientStandardGraph graph, GraphTraversalSource g) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
@@ -1676,11 +1678,155 @@ have a voice.
 the end of the process.
  */
 
-
-def addLawfulBasisAndPrivacyNotices(OrientGraph graph, GraphTraversalSource g) {
+def addLawfulBasisAndPrivacyNoticesPt(JanusGraph graph, GraphTraversalSource g) {
 
   metadataCreateDate = new Date()
   metadataUpdateDate = new Date()
+//  Transaction trans = graph.tx()
+  try {
+//    if (!trans.isOpen()) {
+//      trans.open()
+//
+//    }
+
+
+    def definitions = new String[10]
+
+
+    definitions[0] = "Consentimento pelo titular"
+    definitions[1] = "Para o cumprimento de obrigação legal ou regulatória pelo controlador"
+    definitions[2] = "Pela administração pública, para o tratamento e uso compartilhado de dados necessários à execução de políticas públicas previstas em leis e regulamentos ou respaldadas em contratos, convênios ou instrumentos congêneres, observadas as disposições do Capítulo IV desta Lei"
+    definitions[3] = "Para a realização de estudos por órgão de pesquisa, garantida, sempre que possível, a anonimização dos dados pessoais"
+    definitions[4] = "Quando necessário para a execução de contrato ou de procedimentos preliminares relacionados a contrato do qual seja parte o titular, a pedido do titular dos dados"
+    definitions[5] = "Para o exercício regular de direitos em processo judicial, administrativo ou arbitral, esse último nos termos da Lei nº 9.307/96 (Lei de Arbitragem)"
+    definitions[6] = "Para a proteção da vida ou da incolumidade física do titular ou de terceiro"
+    definitions[7] = "Para a tutela da saúde, exclusivamente, em procedimento realizado por profissionais de saúde, serviços de saúde ou autoridade sanitária"
+    definitions[8] = "Quando necessário para atender aos interesses legítimos do controlador ou de terceiro, exceto no caso de prevalecerem direitos e liberdades fundamentais do titular que exijam a proteção dos dados pessoais"
+    definitions[9] = "Para a proteção do crédito, inclusive quanto ao disposto na legislação pertinente"
+
+    def lawfulBasisVertices = new Vertex[10]
+
+    int ilen = definitions.length
+
+
+    for (int i = 0; i < ilen; i++) {
+
+
+      GraphTraversal lawfulBasis1 = g.V().has("Object.Lawful_Basis.Description", P.eq(definitions[i]))
+
+      if (lawfulBasis1.hasNext()) {
+        lawfulBasisVertices[i] = lawfulBasis1.next();
+      } else {
+        lawfulBasisVertices[i] = g.addV("Object.Lawful_Basis").
+          property("Metadata.Lineage", "https://gdpr-info.eu/art-6-gdpr/").
+          property("Metadata.Redaction", "/data/protection/officer").
+          property("Metadata.Version", 1).
+          property("Metadata.Status", "new").
+          property("Metadata.GDPR_Status", "n/a").
+          property("Metadata.Lineage_Server_Tag", "AWS_AAA").
+          property("Metadata.Lineage_Location_Tag", "GB").
+          property("Metadata.Type", "Object.Lawful_Basis").
+          property("Metadata.Type.Object.Lawful_Basis", "Object.Lawful_Basis").
+          property("Object.Lawful_Basis.Id", i).
+          property("Object.Lawful_Basis.Description", definitions[i]).
+          next()
+      }
+
+    }
+
+    String[] privNoticeDesc = ["This is a sample Privacy Notice", "This is another sample Privacy Notice"];
+    String[] privNoticeText = ["This is a sample Privacy Notice Text; the legal terms go here",
+                               "This is another sample Privacy Notice Text; the legal terms go here"];
+
+    ilen = privNoticeDesc.length;
+
+
+    for (int i = 0; i < ilen; i++) {
+
+
+      GraphTraversal privNotice = g.V().has("Object.Privacy_Notice.Description", P.eq(privNoticeDesc[i]))
+
+      if (privNotice.hasNext()) {
+        privNotice.next();
+      } else {
+        g.addV("Object.Privacy_Notice").
+          property("Metadata.Type", "Object.Privacy_Notice").
+          property("Metadata.Type.Object.Privacy_Notice", "Object.Privacy_Notice").
+          property("Object.Privacy_Notice.Text", privNoticeText[i]).
+          property("Object.Privacy_Notice.Description", privNoticeDesc[i]).
+          property("Object.Privacy_Notice.Effect_On_Individuals", "low").
+          property("Object.Privacy_Notice.Who_Is_Collecting", "ABG Inc").
+          property("Object.Privacy_Notice.Info_Collected", "Emails").
+          property("Object.Privacy_Notice.URL", "http://www.abg.com/data").
+          property("Object.Privacy_Notice.Id", i).
+          property("Object.Privacy_Notice.Why_Is_It_Collected", "required for BAU").
+          property("Object.Privacy_Notice.Expiry_Date", new Date()).
+          property("Object.Privacy_Notice.How_Is_It_Collected", "Electronic Form").
+          property("Object.Privacy_Notice.How_Will_It_Be_Used", "Research and Development").
+          property("Object.Privacy_Notice.Who_Will_It_Be_Shared", "GAB ltd").
+          property("Object.Privacy_Notice.Likely_To_Complain", "no").
+          property("Object.Privacy_Notice.Delivery_Date", new Date()).
+          next()
+      }
+
+    }
+
+
+    /*
+
+    What information is being collected? - InfoCollected
+    Who is collecting it? - WhoIsCollecting
+    How is it collected? - HowIsItCollected
+      - Electronic Form (Two types: layering, just-in-time)
+      - Telephone
+      - Paper Form
+
+    Why is it being collected? - WhyIsItCollected
+    How will it be used? - HowWillItBeUsed
+    Who will it be shared with? - WhoWillItBeShared
+    What will be the effect of this on the individuals concerned? - EffectOnIndividuals
+    Is the intended use likely to cause individuals to object or complain? - LikelyToComplain
+    */
+
+
+    Vertex pn = g.V().has("Metadata.Type.Object.Privacy_Notice", P.eq("Object.Privacy_Notice"))
+      .order().by(Order.shuffle).range(0, 1).next();
+
+    int numLawfulBasis = lawfulBasisVertices.length;
+
+    int index = new Random().nextInt(numLawfulBasis);
+
+    g.addE("Has_Lawful_Basis_On").from(pn).to(lawfulBasisVertices[index]).next()
+
+
+//        __addConsentForPrivacyNotice(graph, g, g.V(pnId0).next())
+//        __addConsentForPrivacyNotice(graph, g, g.V(pnId1).next())
+
+//
+//        __addPrivacyImpactAssessment(graph, g, g.V(pnId0).next())
+//        __addPrivacyImpactAssessment(graph, g, g.V(pnId1).next())
+
+
+//    trans.commit()
+  } catch (Throwable t) {
+//    trans.rollback()
+    throw t
+  } finally {
+//    trans.close()
+  }
+
+
+}
+
+
+def addLawfulBasisAndPrivacyNotices(JanusGraph graph, GraphTraversalSource g) {
+
+  if (new File("conf/i18n_pt_translation.json").exists()) {
+    return addLawfulBasisAndPrivacyNoticesPt(graph, g);
+  }
+
+  Date metadataCreateDate = new Date()
+  Date metadataUpdateDate = new Date()
 //  Transaction trans = graph.tx()
   try {
 //    if (!trans.isOpen()) {
@@ -1884,7 +2030,7 @@ def createForms() {
 
 }
 
-def addOrganisations(OrientGraph graph, GraphTraversalSource g) {
+def addOrganisations(OrientStandardGraph graph, GraphTraversalSource g) {
 
   def orgData = [
     [
@@ -1984,7 +2130,7 @@ def addOrganisations(OrientGraph graph, GraphTraversalSource g) {
 }
 
 
-def createDataProtectionAuthorities(OrientGraph graph, GraphTraversalSource g) {
+def createDataProtectionAuthorities(OrientStandardGraph graph, GraphTraversalSource g) {
 
   def authData = [
     [
@@ -2486,11 +2632,75 @@ def createNotificationTemplates() {
 //      trans.open()
 //
 //    }
+    if (new File("conf/i18n_pt_translation.json").exists()) {
+      return createNotificationTemplatesPt();
+    }
 
     Long count = g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
 
 
     if (count == 0) {
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "INGESTION BUSINESS RULES")
+        .property("Object.Notification_Templates.Text", ("{{ pv:businessRulesTable(context.Event_Ingestion_Business_Rules) }}").bytes.encodeBase64().toString())
+        .property("Object.Notification_Templates.Types", "Event.Ingestion")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "Business Rules")
+        .next();
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "MATCHES")
+        .property("Object.Notification_Templates.Text", ("\n" +
+          "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0}') %}\n" +
+          "{% set numMatches = possibleMatches.size() %}\n" +
+          "{{ context.Person_Natural_Full_Name}} Potentially matches {{ numMatches }}\n" +
+          "\n" +
+          "{% if numMatches > 0 %}\n" +
+          "\n" +
+          "\n" +
+          "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Percentage</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Labels In Match</th></tr>\" }}\n" +
+          "  {% for item in possibleMatches.entrySet() %}\n" +
+          "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%.2f%%</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (item.key.Person_Natural_Full_Name , item.value * 100.0, item.key.Labels_For_Match ) }}\n" +
+          "  {% endfor %}\n" +
+          "  {{ \"</table>\" }}\n" +
+          "\n" +
+          "{% endif %}").bytes.encodeBase64().toString())
+        .property("Object.Notification_Templates.Types", "Person.Natural")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "Matches")
+        .next();
+
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "MATCHES")
+        .property("Object.Notification_Templates.Text", ("\n" +
+          "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0}') %}\n" +
+          "{% set numMatches = possibleMatches.size() %}\n" +
+          "{{ context.Person_Identity_Full_Name}} Potentially matches {{ numMatches }}\n" +
+          "\n" +
+          "{% if numMatches > 0 %}\n" +
+          "\n" +
+          "\n" +
+          "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>ID</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Percentage</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Similar Entries</th></tr>\" }}\n" +
+          "  {% for item in possibleMatches.entrySet() %}\n" +
+          "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%.2f%%</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (item.key.Person_Identity_Full_Name , item.key.Person_Identity_ID , item.value * 100.0, item.key.Labels_For_Match ) }}\n" +
+          "  {% endfor %}\n" +
+          "  {{ \"</table>\" }}\n" +
+          "\n" +
+          "{% endif %}\n" +
+          "").bytes.encodeBase64().toString())
+        .property("Object.Notification_Templates.Types", "Person.Identity")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "Matches")
+        .next();
+
 
       g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
@@ -2666,9 +2876,271 @@ def createNotificationTemplates() {
 
 }
 
+def createNotificationTemplatesPt() {
+//  Transaction trans = graph.tx()
+  try {
+//    if (!trans.isOpen()) {
+//      trans.open()
+//
+//    }
+
+    Long count = g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
+
+
+    if (count == 0) {
+
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "PIA REPORT")
+        .property("Object.Notification_Templates.Types", "Object.Privacy_Impact_Assessment")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "Relatório")
+        .property("Object.Notification_Templates.Text", ("Esta avaliação de impacto na privacidade cobre " +
+          "{{ pv:getNumSensitiveInfoForPIA(context.id).size() }} dado(s) sensiveis e" +
+          "{{ pv:getNumNaturalPersonForPIA(context.id).size() }} titulares.").bytes.encodeBase64().toString())
+        .next();
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "Privacy Notice Report")
+        .property("Object.Notification_Templates.Types", "Object.Privacy_Notice")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "Relatório")
+        .property("Object.Notification_Templates.Text", ("Esta avaliação de impacto na privacidade cobre " +
+          "{{ pv:getNumSensitiveInfoForPIA(context.id).size() }} dado(s) sensiveis e" +
+          "{{ pv:getNumNaturalPersonForPIA(context.id).size() }} titulares.").bytes.encodeBase64().toString())
+        .next();
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "Bases Legais")
+        .property("Object.Notification_Templates.Types", "Object.Lawful_Basis")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "Relatório")
+        .property("Object.Notification_Templates.Text", ("<h1>Relatorio para a base legal:</h1>\n" +
+          "<hr/>\n" +
+          "\n" +
+          "<h4>{{ context.Object_Lawful_Basis_Description }}</h4>\n" +
+          "\n" +
+          "<hr/>\n" +
+          "<h2> Resumo </h2>\n" +
+          "{% set dsList = pv:getDataSourcesForLawfulBasis(context.id) %}\n" +
+          "<h4> Numero de fontes de dados: {{ dsList.size() }} </h4>\n" +
+          "<h4> Numero de Titulares: {{ pv:getNumNaturalPersonForLawfulBasis(context.id) }} </h4>\n" +
+          "<hr/>\n" +
+          "{% if (dsList.size() > 0) %}\n" +
+          "<h2> Detalhes </h2>\n" +
+          "  <br/>\n" +
+          "\n" +
+          "{% for ds in dsList %}\n" +
+          "\n" +
+          "<h4>Detalhes da fonte \"{{ ds.Object_Data_Source_Name }}\":</h4>\n" +
+          "  <br/>\n" +
+          "   {{ pv:htmlTable(ds) }}\n" +
+          "{% endfor %}\n" +
+          "\n" +
+          "{% endif %}").bytes.encodeBase64().toString())
+        .next();
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "Fontes de Dados")
+        .property("Object.Notification_Templates.Types", "Object.Data_Source")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/")
+        .property("Object.Notification_Templates.Label", "Relatório")
+        .property("Object.Notification_Templates.Text", ("").bytes.encodeBase64().toString())
+        .next();
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "Contratos")
+        .property("Object.Notification_Templates.Types", "Object.Contract")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/")
+        .property("Object.Notification_Templates.Label", "Relatório")
+        .property("Object.Notification_Templates.Text", ("").bytes.encodeBase64().toString())
+        .next();
+
+
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "Regras de Negócio")
+        .property("Object.Notification_Templates.Text", ("{{ pv:businessRulesTable(context.Event_Ingestion_Business_Rules) }}").bytes.encodeBase64().toString())
+        .property("Object.Notification_Templates.Types", "Event.Ingestion")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "Regras de Negócio")
+        .next();
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "Corresponde")
+        .property("Object.Notification_Templates.Text", ("\n" +
+          "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0, \"Object.Senstive_Data\": 10.0, \"Object.Health\": 1.0, \"Object.Biometric\": 50.0 , \"Object.Insurance_Policy\": 1.0}') %}\n" +
+          "{% set numMatches = possibleMatches.size() %}\n" +
+          "{{ context.Person_Natural_Full_Name}} Corresponde potencialmente a {{ numMatches }} registro{%- if numMatches != 1 -%}s{% endif %}.\n" +
+          "\n" +
+          "{% if numMatches > 0 %}\n" +
+          "\n" +
+          "\n" +
+          "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Titular</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Percentual</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Propriedades em Comum</th></tr>\" }}\n" +
+          "  {% for item in possibleMatches.entrySet() %}\n" +
+          "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%.2f%%</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (item.key.Person_Natural_Full_Name , item.value * 100.0, item.key.Labels_For_Match ) }}\n" +
+          "  {% endfor %}\n" +
+          "  {{ \"</table>\" }}\n" +
+          "\n" +
+          "{% endif %}").bytes.encodeBase64().toString())
+        .property("Object.Notification_Templates.Types", "Person.Natural")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "Corresponde")
+        .next();
+
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "Corresponde")
+        .property("Object.Notification_Templates.Text", ("\n" +
+          "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0, \"Object.Senstive_Data\": 10.0, \"Object.Health\": 1.0, \"Object.Biometric\": 50.0 , \"Object.Insurance_Policy\": 1.0}') %}\n" +
+          "{% set numMatches = possibleMatches.size() %}\n" +
+          "{{ context.Person_Identity_Full_Name}} Corresponde potencialmente a {{ numMatches }} registro{%- if numMatches != 1 -%}s{% endif %}.\n" +
+          "\n" +
+          "{% if numMatches > 0 %}\n" +
+          "\n" +
+          "\n" +
+          "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Titular</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Percentual</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Propriedades em Comum</th></tr>\" }}\n" +
+          "  {% for item in possibleMatches.entrySet() %}\n" +
+          "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%.2f%%</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (item.key.Person_Identity_Full_Name , item.value * 100.0, item.key.Labels_For_Match ) }}\n" +
+          "  {% endfor %}\n" +
+          "  {{ \"</table>\" }}\n" +
+          "\n" +
+          "{% endif %}").bytes.encodeBase64().toString())
+        .property("Object.Notification_Templates.Types", "Person.Identity")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "Corresponde")
+        .next();
+
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "DSAR")
+        .property("Object.Notification_Templates.Text", ("<p>{{ context.Person_Natural_Title | capitalize }} {{ context.Person_Natural_Last_Name |capitalize }}, </p>\n" +
+          "\n" +
+          "\n" +
+          "  Segue abaixo um resumo dos dados que possuímos sobre você:\n" +
+          "  \n" +
+          "  <p><br></p><p>\n" +
+          "  <h3>{{pv:t( context.Metadata_Type |replace('.',' ')|replace('_',' ') )}}</h3>\n" +
+          "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de dado</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>\" }}\n" +
+          "  {% for key, value in context.items() %}\n" +
+          "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (  pv:t(key.replaceAll('_',' ')) , value )}}\n" +
+          "  {% endfor %}\n" +
+          "  {{ \"</table>\" }}\n" +
+          "  {% endfor %}\n" +
+          "  \n" +
+          "  \n" +
+          "  {% for mainkey in connected_data %}\n" +
+          "  <h3>{{ pv:t(mainkey.Metadata_Type |replace('.',' ')|replace('_',' ')) }}</h3>\n" +
+          "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de dado</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>\" }}\n" +
+          "  {% for key, value in mainkey.items() %}\n" +
+          "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (pv:t(key.replaceAll('_',' ')) , value )}}\n" +
+          "  {% endfor %}\n" +
+          "  {{ \"</table>\" }}\n" +
+          "  {% endfor %}").bytes.encodeBase64().toString())
+        .property("Object.Notification_Templates.Types", "Person.Natural")
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
+        .property("Object.Notification_Templates.Label", "DSAR")
+        .next();
+
+
+      g.addV("Object.Notification_Templates")
+        .property("Metadata.Type", "Object.Notification_Templates")
+        .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+        .property("Object.Notification_Templates.Id", "VIOLAÇÃO DE DADOS")
+        .property("Object.Notification_Templates.Text", ("\"<div style='padding: 10px; background: black'>\n" +
+          "<hr/>\n" +
+          "\n" +
+          "<h1> Resumo da  VIOLAÇÃO DE DADOS </h1>\n" +
+          "<hr/>\n" +
+          "  Titulares: {{ impacted_people | length }}<br/>\n" +
+          "  Fontes de dados: {{ impacted_data_sources | length }}<br/>\n" +
+          "  Servidores : {{ impacted_servers | length }}<br/>\n" +
+          "\n" +
+          "<hr/>\n" +
+          "<hr/>\n" +
+          "\n" +
+          "\n" +
+          "{% if impacted_people[0] is defined %}\n" +
+          "  <h2> Lista de {{ impacted_people | length }} Titulares </h2>\n" +
+          "  <table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Data de Nascimento</th></tr>\n" +
+          "\n" +
+          " {% for mainkey in impacted_people %}\n" +
+          "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (mainkey['Person_Natural_Full_Name'] , mainkey['Person_Natural_Date_Of_Birth'] )}}\n" +
+          "  {% endfor %}\n" +
+          "    {{ \"</table>\" }}\n" +
+          "\n" +
+          "{% else %}\n" +
+          "  <h2> Nenhum titular afetado </h2>\n" +
+          "{% endif %}\n" +
+          "\n" +
+          "\n" +
+          "{% if impacted_data_sources[0] is defined %}\n" +
+          "  <h2> Lista de  {{ impacted_data_sources | length }} Fontes de Dados </h2>\n" +
+          "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Fonte De Dados</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Data do Update</th></tr>\" }}\n" +
+          "\n" +
+          " {% for mainkey in impacted_data_sources %}\n" +
+          "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (mainkey['Object_Data_Source_Name'] , mainkey['Object_Data_Source_Update_Date'] )}}\n" +
+          "  {% endfor %}\n" +
+          "    {{ \"</table>\" }}\n" +
+          "\n" +
+          "{% else %}\n" +
+          "  <h2> Nenhuma fonte de dados afetada </h2>\n" +
+          "{% endif %}\n" +
+          "    \n" +
+          "{% if impacted_servers[0] is defined %}\n" +
+          "  <h2> Lista de {{ impacted_servers | length }} Servidores afetados </h2>\n" +
+          "\n" +
+          " {% for mainkey in impacted_servers %}\n" +
+          "  <h3>{{ pv:t(mainkey.Metadata_Type |replace('.',' ')|replace('_',' ')) }}</h3>\n" +
+          "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Propriedade</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>\" }}\n" +
+          "  {% for key, value in mainkey.items() %}\n" +
+          "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (pv:t(key.toString().replaceAll(\"_\",\" \")) , value )}}\n" +
+          "  {% endfor %}\n" +
+          "  {{ \"</table>\" }}\n" +
+          "  {% endfor %}\n" +
+          "{% else %}\n" +
+          "  <h2> Nenhum servidor afetado </h2>\n" +
+          "{% endif %}    \n" +
+          "</div>").bytes.encodeBase64().toString())
+        .property("Object.Notification_Templates.URL", "https://localhost:18443/get_data_breach_person_report")
+        .property("Object.Notification_Templates.Types", "Event.Data_Breach")
+        .property("Object.Notification_Templates.Label", "Relatório")
+        .next();
+
+    }
+
+
+//    trans.commit()
+  } catch (Throwable t) {
+//    trans.rollback()
+    throw t
+  } finally {
+//    trans.close()
+  }
+
+
+}
 
 def __addVPCEdgesFromUserIdGroupPairs(
-  OrientGraph graph, GraphTraversalSource g,
+  OrientStandardGraph graph, GraphTraversalSource g,
   Long origVpcVid,
   userIdGroupPairs,
   String origGroupIdStr,
@@ -2756,7 +3228,7 @@ def __addSecGroupEdgesFromUserIdGroupPairs(graph, g, Long origSecGroupVid, userI
   return sb.toString()
 }
 
-def __addSecGroupEdges(OrientGraph graph, GraphTraversalSource g, aws_sec_groups) {
+def __addSecGroupEdges(OrientStandardGraph graph, GraphTraversalSource g, aws_sec_groups) {
 
   StringBuilder sb = new StringBuilder();
 
@@ -2901,7 +3373,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
   long oneWeekInMs = 3600000L * 24L * 7L
   long eighteenWeeks = oneWeekInMs * 18L
 
-
+  boolean newEntries = false;
   vpcIds.each {
 
     def vpcId = null
@@ -2915,6 +3387,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
       sb.append("VPC error - ").append(t.toString()).append('\n');
     }
     if (vpcId == null) {
+      newEntries = true;
       long createMillis = System.currentTimeMillis() - (long) (randVal.nextDouble() * eighteenWeeks) * 2;
       long updateMillis = createMillis + (long) (randVal.nextDouble() * eighteenWeeks);
       metadataCreateDate = new Date((long) createMillis)
@@ -2973,6 +3446,8 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
       }
 
       if (awsiId == null) {
+        newEntries = true;
+
         long createMillis = System.currentTimeMillis() - (long) (randVal.nextDouble() * eighteenWeeks);
         long updateMillis = createMillis + (long) (randVal.nextDouble() * eighteenWeeks) * 2;
         metadataCreateDate = new Date((long) createMillis)
@@ -3045,6 +3520,8 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
         }
 
         if (sgvId == null) {
+          newEntries = true;
+
 //  Transaction trans = graph.tx()
           try {
 //    if (!trans.isOpen()) {
@@ -3092,6 +3569,9 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
 //
 //    }
 
+          if (newEntries) {
+
+
           sb.append("retrieving ").append(sgvId).append('\n');
           sb.append("retrieving ").append(sgvId.class).append('\n');
 
@@ -3109,7 +3589,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
           g.addE("Has_Security_Group")
             .from(vpc)
             .to(sgv).next();
-
+          }
 //    trans.commit()
         } catch (Throwable t) {
 //    trans.rollback()
@@ -3129,7 +3609,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
 
 }
 
-def addRandomDataInit(OrientGraph graph, GraphTraversalSource g) {
+def addRandomDataInit(OrientStandardGraph graph, GraphTraversalSource g) {
   def listOfMaps = new LinkedList<HashMap<String, String>>()
 
   def map1 = [pg_metadataProcessor: '', pg_metadataLineage: '', pg_metadataRedaction: '', pg_metadataVersion: 1, pg_metadataStatus: '', pg_metadataGDPRStatus: '', pg_metadataLineageServerTag: '', pg_metadataLineageLocationTag: '', pg_metadataController: 'controller123', "pg_gender": "male", "pg_name_title": "mr", "pg_name_first": "quoc", "pg_name_last": "bastiaansen", "pg_location_street": "7247 lucasbolwerk", "pg_location_city": "epe", "pg_location_state": "flevoland", "pg_location_postcode": "92775", "pg_email": "quoc.bastiaansen@example.com", "pg_login_username": "heavybear983", "pg_login_password": "writer", "pg_login_salt": "avKgfb4e", "pg_login_md5": "d918e55da9d17937c718b9f7688821cb", "pg_login_sha1": "2cb2bba91deef25c64f15a6ac96d84c21c1189e3", "pg_login_sha256": "2945552ed13c3cf2a845d2f6af78ad7bbb161569af8e08dc3bfa36a3fa09b6df", "pg_dob": "1955-12-01 16:58:49", "pg_registered": "2012-07-15 09:50:59", "pg_phone": "(668)-056-6802", "pg_cell": "(859)-113-0976", "pg_id_name": "BSN", "pg_id_value": "94173707", "pg_picture_large": "https://randomuser.me/api/portraits/men/63.jpg", "pg_picture_medium": "https://randomuser.me/api/portraits/med/men/63.jpg", "pg_picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/63.jpg", "pg_nat": "NL"]
@@ -3271,7 +3751,7 @@ def getAwarenessScores(def scoresMap) {
   catch (Throwable t) {
     scoreValue = 0L;
   }
-  scoresMap.put('Awareness', scoreValue);
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness'), scoreValue);
 
   return scoreValue
 }
@@ -3382,7 +3862,7 @@ def getChildrenScores(scoresMap) {
 
   }
 
-  scoresMap.put('Children', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
   return scoreValue
 
 }
@@ -3474,7 +3954,7 @@ def getConsentScores(def scoresMap) {
 
   }
 
-  scoresMap.put('Consent', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Consent'), scoreValue)
   return scoreValue
 
 }
@@ -3522,7 +4002,7 @@ def getDataBreachesScores(def scoresMap) {
     scoreValue = 100L;
   }
 
-  scoresMap.put('Data Breaches', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Data Breaches'), scoreValue)
   return scoreValue
 
 
@@ -3573,7 +4053,7 @@ def getDataProtnOfficerScores(def scoresMap) {
     scoreValue = 0L;
   }
 
-  scoresMap.put('Data Protection Officer', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Data Protection Officer'), scoreValue)
   return scoreValue
 
 }
@@ -3609,7 +4089,7 @@ def getIndivRightsScores(def scoresMap) {
   } else {
     scoreValue = 0L;
   }
-  scoresMap.put('Indiv Rights', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Indiv Rights'), scoreValue)
   return scoreValue
 
 }
@@ -3632,7 +4112,7 @@ def getInfoYouHoldScores(def scoresMap) {
     if (pcntNoEdges > 5 && pcntNoEdges < 40) {
       scoreValue -= 40L;
     } else if (pcntNoEdges > 40) {
-      scoreValue -= (20L + 2L * pcntNoEdges)
+      scoreValue -= (20L + Math.max(2L * pcntNoEdges, 70L))
     } else {
       scoreValue -= (pcntNoEdges)
     }
@@ -3643,7 +4123,7 @@ def getInfoYouHoldScores(def scoresMap) {
   }
 
 
-  scoresMap.put('Info you hold', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Info you hold'), scoreValue)
   return scoreValue
 
 }
@@ -3671,7 +4151,7 @@ def getInternationalScores(def scoresMap) {
     scoreValue = 0L;
   }
 
-  scoresMap.put('International', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('International'), scoreValue)
   return scoreValue
 
 }
@@ -3696,7 +4176,7 @@ def getLawfulBasisScores(def scoresMap) {
     scoreValue = 0L;
   }
 
-  scoresMap.put('Lawful Basis', scoreValue);
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), scoreValue);
   return scoreValue
 
 }
@@ -3751,7 +4231,7 @@ def getPrivacyImpactAssessmentScores(def scoresMap) {
     scoreValue = 0L;
   }
 
-  scoresMap.put('Privacy Impact Assessment', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), scoreValue)
   return scoreValue
 
 }
@@ -3821,7 +4301,7 @@ def getPrivacyNoticesScores(def scoresMap) {
   } else {
     scoreValue = 0L;
   }
-  scoresMap.put('Privacy Notices', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Notices'), scoreValue)
   return scoreValue
 
 }
@@ -3872,7 +4352,7 @@ def getSubjectAccessRequestScores(def scoresMap) {
   } else {
     scoreValue = 0L;
   }
-  scoresMap.put('Subject Access Requests', scoreValue)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Subject Access Requests'), scoreValue)
   return scoreValue
 
 }
@@ -3896,7 +4376,7 @@ def getScoresJson() {
       4 * getSubjectAccessRequestScores(scoresMap)
   ) / 39
 
-  scoresMap.put('Total Score', totalScore)
+  scoresMap.put(PontusJ2ReportingFunctions.translate('Total Score'), totalScore)
 
   StringBuffer sb = new StringBuffer("[")
   boolean firstTime = true;
@@ -3907,7 +4387,7 @@ def getScoresJson() {
       firstTime = false;
     }
 
-    sb.append(" { \"metricname\": \"$metricname\", \"metricvalue\": $metricvalue, \"metrictype\": \"GDPR Scores\" }")
+    sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('GDPR Scores')}\" }")
   }
 
 
@@ -3918,54 +4398,103 @@ def getScoresJson() {
 }
 
 
-def calculatePOLECounts(){
+def calculatePOLECounts() {
 
   List<String> vertexLabels = [
     "Event.Consent"
-    ,"Event.Data_Breach"
-    ,"Event.Form_Ingestion"
-    ,"Event.Ingestion"
-    ,"Event.Subject_Access_Request"
-    ,"Event.Training"
-    ,"Location.Address"
-    ,"Object.AWS_Instance"
-    ,"Object.AWS_Network_Interface"
-    ,"Object.AWS_Security_Group"
-    ,"Object.AWS_VPC"
-    ,"Object.Awareness_Campaign"
-    ,"Object.Credential"
-    ,"Object.Data_Procedures"
-    ,"Object.Email_Address"
-    ,"Object.Form"
-    ,"Object.Identity_Card"
-    ,"Object.Insurance_Policy"
-    ,"Object.Lawful_Basis"
-    ,"Object.Contract"
-    ,"Object.Notification_Templates"
-    ,"Object.Privacy_Impact_Assessment"
-    ,"Object.Privacy_Notice"
-    ,"Person.Natural"
-    ,"Person.Employee"
-    ,"Person.Organisation"
+    , "Event.Data_Breach"
+    , "Event.Form_Ingestion"
+    , "Event.Ingestion"
+    , "Event.Subject_Access_Request"
+    , "Event.Training"
+    , "Location.Address"
+    , "Object.AWS_Instance"
+    , "Object.AWS_Network_Interface"
+    , "Object.AWS_Security_Group"
+    , "Object.AWS_VPC"
+    , "Object.Awareness_Campaign"
+    , "Object.Credential"
+    , "Object.Data_Procedures"
+    , "Object.Data_Source"
+    , "Object.Email_Address"
+    , "Object.Form"
+    , "Object.Identity_Card"
+    , "Object.Insurance_Policy"
+    , "Object.Lawful_Basis"
+    , "Object.Contract"
+    , "Object.Notification_Templates"
+    , "Object.Privacy_Impact_Assessment"
+    , "Object.Privacy_Notice"
+    , "Object.Sensitive_Data"
+    , "Object.Health"
+    , "Object.Biometric"
+    , "Object.Genetic"
+    , "Person.Natural"
+    , "Person.Employee"
+    , "Person.Organisation"
 
   ] ;
 
 
   StringBuffer sb = new StringBuffer("[")
   boolean firstTime = true;
-  vertexLabels.each{ dataType ->
-    if (!firstTime){
+  vertexLabels.each { dataType ->
+    if (!firstTime) {
       sb.append(",")
-    }
-    else{
+    } else {
       firstTime = false;
     }
     String var = "v.\"Metadata.Type.${dataType}\": ${dataType}"
     // sb.append(var)
 
-    Long numEntries = graph.indexQuery(dataType + ".MixedIdx",var).vertexTotals()
-    sb.append (" { \"metricname\": \"$dataType\", \"metricvalue\": $numEntries, \"metrictype\": \"POLE Counts\" }")
+    Long numEntries = App.graph.indexQuery(dataType + ".MixedIdx", var).vertexTotals()
+    sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(dataType.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
   }
+
+  String var = "v.\"Object.Data_Source.Type\": Structured"
+  Long numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
+  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+  try{
+  numEntries =   App.g.V().has('Object.Data_Source.Type', P.eq('Structured')).out().out().in().has('Metadata.Type.Person.Identity',P.eq('Person.Identity')).dedup().count().next();
+  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+  } catch (e){
+
+  }
+
+  var = "v.\"Object.Metadata_Source.Type\": DB_TABLE"
+  numEntries = App.graph.indexQuery("Object.Metadata_Source.MixedIdx", var).vertexTotals()
+  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Tables')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+  var = "v.\"Object.Metadata_Source.Type\": DB_COLUMN"
+  numEntries = App.graph.indexQuery("Object.Metadata_Source.MixedIdx", var).vertexTotals()
+  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Columns')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+
+
+  var = "v.\"Object.Data_Source.Type\": Unstructured"
+  numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
+  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+
+  numEntries =   App.g.V().has('Object.Data_Source.Type', P.eq('Unstructured')).out().out().in().has('Metadata.Type.Person.Identity',P.eq('Person.Identity')).dedup().count().next();
+  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+
+
+  var = "v.\"Object.Data_Source.Type\": Mixed"
+  numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
+  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Mixed Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+  var = "v.\"Object.Data_Source.Type\": Unstructured"
+  numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
+  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+
+
+
+
+
   sb.append(']')
 
   return sb.toString()
@@ -3973,7 +4502,7 @@ def calculatePOLECounts(){
 }
 
 
-def getNumEventsPerDataSource(){
+def getNumEventsPerDataSource() {
   StringBuffer sb = new StringBuffer("[")
   boolean firstTime = true;
 
@@ -3987,14 +4516,14 @@ def getNumEventsPerDataSource(){
       __.as('ingestion_event').values('Object.Data_Source.Name').as('event_id')
     )
     .select('event_id')
-    .groupCount() .each { metric ->
+    .groupCount().each { metric ->
     metric.each { metricname, metricvalue ->
       if (!firstTime) {
         sb.append(",")
       } else {
         firstTime = false;
       }
-      sb.append(" { \"metricname\": \"$metricname\", \"metricvalue\": $metricvalue, \"metrictype\": \"Events Per Data Source\" }")
+      sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('Events Per Data Source')}\" }")
 
     }
   }
@@ -4003,7 +4532,7 @@ def getNumEventsPerDataSource(){
 
 }
 
-def getNumNaturalPersonPerDataSource(){
+def getNumNaturalPersonPerDataSource() {
   StringBuffer sb = new StringBuffer("[")
   boolean firstTime = true;
 
@@ -4021,17 +4550,18 @@ def getNumNaturalPersonPerDataSource(){
       __.as('ingestion_event').values('Object.Data_Source.Name').as('event_id')
     )
     .select('event_id')
-    .groupCount() .each { metric ->
+    .groupCount().each { metric ->
     metric.each { metricname, metricvalue ->
       if (!firstTime) {
         sb.append(",")
       } else {
         firstTime = false;
       }
-      sb.append(" { \"metricname\": \"$metricname\", \"metricvalue\": $metricvalue, \"metrictype\": \"Natural Person Per Data Source\" }")
+      sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"Natural Person Per Data Source\" }")
 
     }
   }
+  sb.append(getNumSensitiveDataPerDataSource())
   sb.append(']')
 
   return sb.toString()
@@ -4039,14 +4569,57 @@ def getNumNaturalPersonPerDataSource(){
 
 }
 
-def getNumNaturalPersonPerOrganisation(){
+def getNumSensitiveDataPerDataSource() {
+  StringBuffer sb = new StringBuffer()
+  boolean firstTime = false;
+
+
+  g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+    .as('ingestion_event')
+    .out("Has_Ingestion_Event")
+    .out("Has_Ingestion_Event")
+    .out("Has_Sensitive_Data")
+    .has('Metadata.Type.Object.Sensitive_Data', eq('Object.Sensitive_Data'))
+  // .bothE("Has_Sensitive_Data")
+  // .label()
+  // .dedup().count()
+  //   .
+
+  // .filter(bothE("Has_Sensitive_Data").count().is(gt(0)))
+    .id()
+  // .dedup()
+    .as('events')
+    .match(
+      __.as('ingestion_event').values('Object.Data_Source.Name').as('event_id')
+    )
+    .select('event_id')
+    .groupCount().each { metric ->
+    metric.each { metricname, metricvalue ->
+      if (!firstTime) {
+        sb.append(",")
+      } else {
+        firstTime = false;
+      }
+      sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"Sensitive Data Per Data Source\" }")
+
+    }
+  }
+//  sb.append(']')
+
+  return sb.toString()
+
+
+}
+
+
+def getNumNaturalPersonPerOrganisation() {
   StringBuffer sb = new StringBuffer("[")
   boolean firstTime = true;
 
   def orgTypes = [
-    "Data Controller": "Is_Data_Controller"
-    ,"Data Processor": "Is_Data_Processor"
-    ,"Data Owner": "Is_Data_Owner"
+    "Data Controller" : "Is_Data_Controller"
+    , "Data Processor": "Is_Data_Processor"
+    , "Data Owner"    : "Is_Data_Owner"
   ]
 
 
@@ -4074,7 +4647,8 @@ def getNumNaturalPersonPerOrganisation(){
           } else {
             firstTime = false;
           }
-          sb.append(" { \"metricname\": \"$metricname\", \"metricvalue\": $metricvalue, \"metrictype\": \"Natural Person Per $orgTypeLabel\" }")
+          sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue," +
+            " \"metrictype\": \"${PontusJ2ReportingFunctions.translate('Natural Person Per')} ${PontusJ2ReportingFunctions.translate(orgTypeLabel)}\" }")
 
         }
 
@@ -4088,7 +4662,7 @@ def getNumNaturalPersonPerOrganisation(){
 
 }
 
-def getDSARStatsPerOrganisation(){
+def getDSARStatsPerOrganisation() {
 
   StringBuffer sb = new StringBuffer("[")
   boolean firstTime = true;
@@ -4097,14 +4671,14 @@ def getDSARStatsPerOrganisation(){
   def thirtyDayDateThreshold = new java.util.Date(thirtyDayThresholdMs);
 
   long fifteenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 15L));
-  def  fifteenDayDateThreshold = new java.util.Date(fifteenDayThresholdMs);
+  def fifteenDayDateThreshold = new java.util.Date(fifteenDayThresholdMs);
 
 
   long tenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 10L));
   def tenDayDateThreshold = new java.util.Date(tenDayThresholdMs);
 
   long fiveDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 5L));
-  def  fiveDayDateThreshold = new java.util.Date(fiveDayThresholdMs);
+  def fiveDayDateThreshold = new java.util.Date(fiveDayThresholdMs);
 
   def typeOrg =
     [
@@ -4113,7 +4687,7 @@ def getDSARStatsPerOrganisation(){
       "Is_Data_Owner"
     ]
 
-  typeOrg.each{ org ->
+  typeOrg.each { org ->
     g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
       .as('organisation')
       .outE(org)
@@ -4135,17 +4709,17 @@ def getDSARStatsPerOrganisation(){
       .as('events')
       .match(
         __.as('organisation').values('Person.Organisation.Name').as('dsar_source_name')
-        ,__.as('events').values('Event.Subject_Access_Request.Status').as('dsar_status')
-        ,__.as('events').values('Event.Subject_Access_Request.Request_Type').as('dsar_type')
-        ,__.as('events').values('Event.Subject_Access_Request.Metadata.Create_Date').as('dsar_create_date')
+        , __.as('events').values('Event.Subject_Access_Request.Status').as('dsar_status')
+        , __.as('events').values('Event.Subject_Access_Request.Request_Type').as('dsar_type')
+        , __.as('events').values('Event.Subject_Access_Request.Metadata.Create_Date').as('dsar_create_date')
         .coalesce(is(gt(fiveDayDateThreshold)).constant("Last 5 days"),
-          is(between(fiveDayDateThreshold,tenDayDateThreshold)).constant("Last 10 days"),
-          is(between(tenDayDateThreshold,fifteenDayDateThreshold)).constant("Last 15 days"),
-          is(between(fifteenDayDateThreshold,thirtyDayDateThreshold)).constant("Last 30 days"),
+          is(between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
+          is(between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
+          is(between(fifteenDayDateThreshold, thirtyDayDateThreshold)).constant("Last 30 days"),
           is(lt(thirtyDayDateThreshold)).constant("Older than 30 days"))
         .as('dsar_age')
       )
-      .select('dsar_source_type','dsar_source_name','dsar_status', 'dsar_type', 'dsar_age')
+      .select('dsar_source_type', 'dsar_source_name', 'dsar_status', 'dsar_type', 'dsar_age')
       .groupCount()
       .each { metric ->
         metric.each { key, metricvalue ->
@@ -4154,7 +4728,10 @@ def getDSARStatsPerOrganisation(){
           } else {
             firstTime = false;
           }
-          sb.append(" {\"dsar_source_type\":\"${key['dsar_type']}    ${key['dsar_status']}     ${key['dsar_source_type'].label().toString().replaceAll('[Is_ |_|.]',' ')}     ${key['dsar_age']}\", \"dsar_source_name\":\"${key['dsar_source_name']}\", \"dsar_count\": $metricvalue }")
+          sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(key['dsar_type'].toString())}   " +
+            " ${PontusJ2ReportingFunctions.translate(key['dsar_status'].toString())}    " +
+            " ${PontusJ2ReportingFunctions.translate(key['dsar_source_type'].label().toString().replaceAll('[Is_ |_|.]', ' ').toString())}  " +
+            "   ${PontusJ2ReportingFunctions.translate(key['dsar_age'].toString())}\", \"dsar_source_name\":\"${PontusJ2ReportingFunctions.translate(key['dsar_source_name'].toString())}\", \"dsar_count\": $metricvalue }".toString())
 
         }
 
@@ -4169,6 +4746,257 @@ def getDSARStatsPerOrganisation(){
 }
 
 
+class Discovery {
+  static String domainTranslationStr = """
+  {
+    "GENDER": "Person.Identity.Gender"
+   ,"FIRST_NAME":""
+   ,"COMPANY":""
+   ,"AIRPORT_CODE":""
+   ,"AIRPORT":""
+   ,"CA_PROVINCE_TERRITORY":""
+   ,"CA_PROVINCE_TERRITORY_CODE":""
+   ,"CITY":"Location.Address.City"
+   ,"COUNTRY":""
+   ,"COUNTRY_CODE_ISO2":""
+   ,"COUNTRY_CODE_ISO3":""
+   ,"EN_MONTH":""
+   ,"EN_MONTH_ABBREV":""
+   ,"FR_COMMUNE":""
+   ,"FR_REGION":""
+   ,"FR_REGION_LEGACY":""
+   ,"HR_DEPARTMENT":"Person.Organisation.Department"
+   ,"JOB_TITLE":"Person.Employee.Title"
+   ,"LAST_NAME":"Person.Identity.Last_Name"
+   ,"MONTH":""
+   ,"MX_ESTADO":"Location.Address.State"
+   ,"MX_ESTADO_CODE":"Location.Address.State"
+   ,"ORGANIZATION":"Person.Organisation.Name"
+   ,"STREET_TYPE":"Location.Address.Street"
+   ,"US_COUNTY":""
+   ,"US_STATE":"Location.Address.State"
+   ,"US_STATE_CODE":"Location.Address.State"
+   ,"ADDRESS_LINE":"Location.Address.Full_Address"
+   ,"FULL_NAME":"Person.Identity.Full_Name"
+
+  }
+
+""";
+
+  static JsonSlurper slurper = new JsonSlurper();
+
+  static domainTranslation = slurper.parseText(domainTranslationStr);
+
+  static addMetadataSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain, Double domainFrequency) {
+
+
+    GraphTraversal<Vertex, Vertex> dataSource = g.addV("Object.Metadata_Source");
+    Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Metadata_Source")
+      .property("Metadata.Type.Object.Metadata_Source", "Object.Metadata_Source")
+      .property("Object.Metadata_Source.Name", name)
+      .property("Object.Metadata_Source.Create_Date", new Date())
+      .property("Object.Metadata_Source.Update_Date", new Date())
+      .property("Object.Metadata_Source.Description", description)
+      .property("Object.Metadata_Source.Type", dataSourceType)
+      .property("Object.Metadata_Source.Domain", domainTranslation[domain] ?: domain)
+      .property("Object.Metadata_Source.Domain_Frequency", domainFrequency)
+      .next();
+
+
+
+
+
+    return vertexDataSource;
+
+  }
+
+
+  static addDBColSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain, Double domainFrequency) {
+
+    Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
+      g.V().has("Object.Metadata_Source.Name", P.eq(name)).tryNext()
+    GraphTraversal<Vertex, Vertex> dataSource;
+    if (!dataSourceOption.isPresent()) {
+      dataSource = g.addV("Object.Metadata_Source");
+    } else {
+      dataSource = g.V(dataSourceOption.get().id());
+    }
+
+    Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Metadata_Source")
+      .property("Metadata.Type.Object.Metadata_Source", "Object.Metadata_Source")
+      .property("Object.Metadata_Source.Name", name)
+      .property("Object.Metadata_Source.Create_Date", new Date())
+      .property("Object.Metadata_Source.Update_Date", new Date())
+      .property("Object.Metadata_Source.Description", description)
+      .property("Object.Metadata_Source.Type", dataSourceType)
+      .property("Object.Metadata_Source.Domain", domainTranslation[domain] ?: domain)
+      .property("Object.Metadata_Source.Domain_Frequency", domainFrequency)
+      .next();
+
+
+
+
+
+    return vertexDataSource;
+
+  }
+
+  static getDbCol(GraphTraversalSource g, String name) {
+    Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
+      g.V().has("Object.Metadata_Source.Name", P.eq(name)).tryNext()
+    GraphTraversal<Vertex, Vertex> dataSource;
+    if (!dataSourceOption.isPresent()) {
+      dataSource = g.addV("Object.Metadata_Source")
+        .property("Metadata.Type", "Object.Metadata_Source")
+        .property("Metadata.Type.Object.Metadata_Source", "Object.Metadata_Source")
+        .property("Object.Metadata_Source.Name", name);
+    } else {
+      dataSource = g.V(dataSourceOption.get().id());
+    }
+
+
+    return dataSource.next();
+
+  }
+
+  static addDataSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain) {
+
+    Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
+      g.V().has("Object.Data_Source.Name", P.eq(name)).tryNext()
+    GraphTraversal<Vertex, Vertex> dataSource;
+    if (!dataSourceOption.isPresent()) {
+      dataSource = g.addV("Object.Data_Source");
+    } else {
+      dataSource = g.V(dataSourceOption.get().id());
+    }
+    Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Data_Source")
+      .property("Metadata.Type.Object.Data_Source", "Object.Data_Source")
+      .property("Object.Data_Source.Name", name)
+      .property("Object.Data_Source.Create_Date", new Date())
+      .property("Object.Data_Source.Update_Date", new Date())
+      .property("Object.Data_Source.Description", description)
+      .property("Object.Data_Source.Type", dataSourceType)
+      .property("Object.Data_Source.Domain", domain)
+      .next()
+
+    return vertexDataSource;
+
+  }
+
+
+  static addDiscoveryDataFromDB(JanusGraph graph, GraphTraversalSource g,
+                                String dbURL, String dbTableName, String colMetadataStr,
+                                String colDiscoveryDataStr, Long dataSourceId) {
+
+    def trans = graph.tx()
+    try {
+      if (!trans.isOpen()) {
+        trans.open();
+      }
+
+      def dataSourceVertex = g.V(dataSourceId).next();
+//        addDataSource(
+//        g,
+//        "Discovery DB ${dbURL}",
+//        "Discovery metadata for db ${dbURL}",
+//        "DISCOVERY_DB",
+//        colMetadataStr);
+
+
+      def dataSrcTableVertex = addMetadataSource(
+        g,
+        "${dbURL}.${dbTableName}", 'data source from discovery',
+        "DB_TABLE", null, null);
+      g.addE('Has_Table').from(dataSourceVertex).to(dataSrcTableVertex).next();
+
+      def colMap = [:];
+
+      def colDiscoveryData = slurper.parseText(colDiscoveryDataStr);
+
+      colDiscoveryData?.metadata?.columns?.each { col ->
+
+//  Here is the discovery metadata format:
+//        {
+//          metadata: {
+//            columns: [
+//              {
+//                name: "", domain: "", frequency: 0.0, semanticDomains:
+//                [
+//                  { id:"", frequency: 0.0 }
+//                ]
+//              }
+//            ]
+//          }
+//        }
+
+        def colName = "${dbURL}.${dbTableName}.${col.name.trim()}";
+
+        def dataSrcColVertex = addDBColSource(
+          g,
+          colName,
+          'data source from discovery',
+          "DB_COLUMN",
+          col.domain,
+          col.domainFrequency);
+
+
+        colMap.put(colName.toString(), dataSrcColVertex);
+
+
+        // else
+        col?.semanticDomains?.each { semantics ->
+          def semanticTranslation = domainTranslation[semantics?.id] ?: semantics?.id;
+
+          def dataSrcColSemanticVertex = addMetadataSource(
+            g,
+            "${colName}.${semanticTranslation}",
+            'data source from discovery',
+            "DB_COLUMN_SEMANTIC",
+            semanticTranslation,
+            semantics.frequency);
+          g.addE('Has_Semantic').from(dataSrcColVertex).to(dataSrcColSemanticVertex).next();
+
+        }
+
+        g.addE('Has_Column').from(dataSrcTableVertex).to(dataSrcColVertex).next();
+      }
+
+
+      def colMetadata = slurper.parseText(colMetadataStr);
+
+      colMetadata.colMetaData.each {
+        col ->
+
+          if (col.foreignKeyName?.trim()) {
+
+            def colName = "${dbURL}.${dbTableName}.${col.colName.trim()}";
+            def colVertex = colMap[colName.toString()];
+            def foreignKeyColName = "${dbURL}.${col.foreignKeyName.trim()}";
+            def foreignKeyColVertex = getDbCol(g, foreignKeyColName);
+
+            g.addE('Has_Link').from(colVertex).to(foreignKeyColVertex).next();
+
+
+          }
+
+
+      }
+      trans.commit();
+    } catch (Throwable t) {
+      trans.rollback()
+      throw t
+    } finally {
+      trans.close()
+    }
+
+  }
+
+}
+
+//def addDiscoveryDataFromDB(String dbURL, String dbTableName, String colMetadataStr, String colDiscoveryDataStr) {
+//  return Discovery.addDiscoveryDataFromDB(graph, g, dbURL, dbTableName, colMetadataStr, colDiscoveryDataStr);
+//
+//}
 
 
 //g.V().drop().iterate()

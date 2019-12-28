@@ -7,11 +7,15 @@ FROM maven:3.6-jdk-8-alpine as builder
 
 COPY --from=jpostal /root/.m2 /root/.m2
 COPY --from=natty /root/.m2 /root/.m2
-COPY . /pontus-odb-graph
+COPY ./pom.xml /pontus-odb-graph/pom.xml
+
+WORKDIR /pontus-odb-graph
 
 #RUN git clone  --depth 1 --single-branch  --branch master https://github.com/pontusvision/pontus-odb-graph.git && \
-RUN cd pontus-odb-graph && \
-    mvn clean package install -DskipTests
+RUN mvn dependency:resolve
+
+COPY . /pontus-odb-graph
+RUN mvn clean package install -DskipTests
 
 RUN cd /root/.m2/repository && for i in *; do if [[ "com" == $i || "pv-gdpr" == $i ]]; then echo skip ; else rm -r $i; fi; done
 

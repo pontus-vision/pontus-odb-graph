@@ -2,7 +2,10 @@ package com.pontusvision.gdpr;
 
 //import com.netflix.astyanax.connectionpool.exceptions.ThrottledException;
 
-import org.apache.tinkerpop.gremlin.orientdb.OrientGraph;
+import com.orientechnologies.orient.server.OServerMain;
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.DefaultConfigurationBuilder;
+import org.apache.tinkerpop.gremlin.orientdb.*;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.server.GraphManager;
 import org.apache.tinkerpop.gremlin.server.GremlinServer;
@@ -18,15 +21,16 @@ import org.jhades.JHades;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 
 public class App
 {
-  private static final Logger        logger = LoggerFactory.getLogger(App.class);
-  public static        OrientGraph   graph;
+  private static final Logger              logger = LoggerFactory.getLogger(App.class);
   //    public static JanusGraphManagement graphMgmt;
+  public static        OrientStandardGraph   graph;
   public static        GremlinServer gserver;
   public static GraphTraversalSource g;
   public static Settings settings;
@@ -69,11 +73,14 @@ public class App
         return;
       }
 
+      OServerMain.create().startup();
+
       logger.info("Configuring Gremlin Server from {}", file);
       gserver = new GremlinServer(settings);
       CompletableFuture<ServerGremlinExecutor> c = gserver.start().exceptionally(t -> {
         logger.error("Gremlin Server was unable to start and will now begin shutdown: {}", t.getMessage());
         gserver.stop().join();
+        System.exit(-1);
         return null;
       });
 
@@ -81,7 +88,7 @@ public class App
       ServerGremlinExecutor executor = gserver.getServerGremlinExecutor();
       executor.getGremlinExecutor().eval("graph = TinkerGraph.open()\n" +
               "g = graph.traversal()\n");
-
+//
 
       GraphManager graphMgr = sge.getGraphManager();
       Set<String> graphNames = graphMgr.getGraphNames();
@@ -89,9 +96,22 @@ public class App
       for (String graphName : graphNames)
       {
         logger.debug("Found Graph: " + graphName);
-        graph = (OrientGraph) graphMgr.getGraph(graphName);
+        graph = (OrientStandardGraph) graphMgr.getGraph(graphName);
         //                graphMgmt = graph.openManagement();
         g = graph.traversal();
+      }
+      if (graphNames.size() == 0)
+      {
+        for (Map.Entry<String, String> entry : settings.graphs.entrySet())
+        {
+          Configuration conf = (new DefaultConfigurationBuilder(entry.getValue())).getConfiguration();
+          graph =  new OrientStandardGraph(new OrientGraphFactory(),conf);
+          graphMgr.putGraph(entry.getKey(), graph);
+          g = graph.traversal();
+
+
+        }
+
       }
 
       //            graph = graphMgr.getGraph("graph");

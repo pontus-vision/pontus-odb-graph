@@ -10,7 +10,7 @@ import com.orientechnologies.orient.core.metadata.schema.OType
 import com.orientechnologies.orient.core.record.impl.ODocument
 import groovy.json.JsonSlurper
 import groovy.transform.CompileStatic
-import org.apache.tinkerpop.gremlin.orientdb.OrientGraph
+import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
@@ -21,12 +21,12 @@ import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONVersion
 import java.util.concurrent.atomic.AtomicInteger
 
 LinkedHashMap globals = [:]
-globals << [graph: (graph) as OrientGraph]
+globals << [graph: (graph) as OrientStandardGraph]
 globals << [g: (graph).traversal() as GraphTraversalSource]
 
 
 @CompileStatic
-def loadSchema(OrientGraph graph, String... files) {
+def loadSchema(OrientStandardGraph graph, String... files) {
   StringBuffer sb = new StringBuffer()
 
 
@@ -56,14 +56,14 @@ def loadSchema(OrientGraph graph, String... files) {
 
     }
   }
-  graph.commit()
+  graph.tx().commit();
 
   sb?.append('Done!\n')
   return sb?.toString()
 }
 
 
-Map<String, OClass> addVertexLabels(OrientGraph graph, def json, StringBuffer sb = null) {
+Map<String, OClass> addVertexLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
 
   Map<String, OClass> classMap = new HashMap<>();
   json['vertexLabels'].each {
@@ -101,7 +101,7 @@ Map<String, OClass> addVertexLabels(OrientGraph graph, def json, StringBuffer sb
   return classMap;
 }
 
-Map<String, OClass> addEdgeLabels(OrientGraph graph, def json, StringBuffer sb = null) {
+Map<String, OClass> addEdgeLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
 
   Map<String, OClass> classMap = new HashMap<>();
   json['edgeLabels'].each {
@@ -162,7 +162,7 @@ OProperty createProp(OClass oClass, String keyName, Class<?> classType) {
 }
 
 
-OClass createVertexLabel(OrientGraph graph, String labelName) {
+OClass createVertexLabel(OrientStandardGraph graph, String labelName) {
 
   try {
     String className = graph.createVertexClass(labelName);
@@ -183,7 +183,7 @@ OClass createVertexLabel(OrientGraph graph, String labelName) {
   return null;
 }
 
-OClass createEdgeLabel(OrientGraph graph, String labelName) {
+OClass createEdgeLabel(OrientStandardGraph graph, String labelName) {
 
   try {
     String className = graph.createEdgeClass(labelName);

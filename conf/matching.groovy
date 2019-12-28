@@ -1,4 +1,9 @@
 import com.google.common.util.concurrent.AtomicDouble
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
 import com.joestelmach.natty.DateGroup
 import com.joestelmach.natty.Parser
 import com.pontusvision.utils.LocationAddress
@@ -7,6 +12,7 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.text.GStringTemplateEngine
 import groovy.text.Template
+import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
@@ -148,8 +154,69 @@ class PVConvMixin {
 PVConvMixin dummy = null
 String.mixin(PVConvMixin)
 
+class EdgeRequest {
 
-class PVValTemplate {
+  String label;
+  String fromVertexName;
+  String toVertexName;
+
+  EdgeRequest(String label, String fromVertexName, String toVertexName) {
+    this.label = label
+    this.fromVertexName = fromVertexName
+    this.toVertexName = toVertexName
+  }
+
+  String getLabel() {
+    return label
+  }
+
+  void setLabel(String label) {
+    this.label = label
+  }
+
+  String getFromVertexName() {
+    return fromVertexName
+  }
+
+  void setFromVertexName(String fromVertexName) {
+    this.fromVertexName = fromVertexName
+  }
+
+  String getToVertexName() {
+    return toVertexName
+  }
+
+  void setToVertexName(String toVertexName) {
+    this.toVertexName = toVertexName
+  }
+
+  boolean equals(o) {
+    if (this.is(o)) return true
+    if (!(o instanceof EdgeRequest)) return false
+
+    EdgeRequest that = (EdgeRequest) o
+
+    if (fromVertexName != that.fromVertexName) return false
+    if (label != that.label) return false
+    if (toVertexName != that.toVertexName) return false
+
+    return true
+  }
+
+  int hashCode() {
+    int result
+    result = (label != null ? label.hashCode() : 0)
+    result = 31 * result + (fromVertexName != null ? fromVertexName.hashCode() : 0)
+    result = 31 * result + (toVertexName != null ? toVertexName.hashCode() : 0)
+    return result
+  }
+
+  String toString() {
+    return "${label} = ($fromVertexName)->($toVertexName)"
+  }
+}
+
+def class PVValTemplate {
   private static GStringTemplateEngine engine = new GStringTemplateEngine(PVValTemplate.class.getClassLoader())
 
   private static Map<String, Template> templateMap = new ConcurrentHashMap<>();
@@ -158,6 +225,60 @@ class PVValTemplate {
     return templateMap.computeIfAbsent(templateName, { key -> engine.createTemplate(key) })
   }
 
+}
+
+class JsonSerializer {
+  public static GsonBuilder builder = new GsonBuilder();
+  public static Gson gson = null;
+
+  static {
+    builder.registerTypeAdapter(MatchReq.class, new MatchReqAdapter());
+    builder.registerTypeAdapter(Date.class, new TypeAdapter<Date>() {
+      @Override
+      void write(JsonWriter jsonWriter, Date o) throws IOException {
+        jsonWriter.beginObject();
+        jsonWriter.value(o.toString())
+        jsonWriter.endObject();
+
+
+      }
+
+      @Override
+      Date read(JsonReader jsonReader) throws IOException {
+        return null
+      }
+    });
+
+    builder.setPrettyPrinting();
+    gson = builder.create();
+  }
+
+}
+
+class MatchReqAdapter extends TypeAdapter<MatchReq> {
+
+  @Override
+  public MatchReq read(JsonReader reader) throws IOException {
+    return null;
+  }
+
+  @Override
+  public void write(JsonWriter writer, MatchReq obj) throws IOException {
+
+//    if (!obj.excludeFromSearch) {
+
+    writer.beginObject()
+      .name(obj.propName).value(obj.attribVal)
+      .name("matchWeight").value(obj.matchWeight)
+      .name("excludeFromSearch").value(obj.excludeFromSearch)
+      .name("excludeFromSubsequenceSearch").value(obj.excludeFromSubsequenceSearch)
+      .name("excludeFromUpdate").value(obj.excludeFromUpdate)
+      .name("operator").value(obj.predicateStr)
+      .endObject();
+
+//    }
+
+  }
 }
 
 
@@ -195,20 +316,20 @@ class MatchReq<T> {
       return P.&gte
     } else if ("lte".equals(predicateStr)) {
       return P.&lte
-//    } else if ("textContains".equals(predicateStr)) {
-//      return org.janusgraph.core.attribute.Text.&textContains
-//    } else if ("textContainsPrefix".equals(predicateStr)) {
-//      return org.janusgraph.core.attribute.Text.&textContainsPrefix
-//    } else if ("textContainsRegex".equals(predicateStr)) {
-//      return org.janusgraph.core.attribute.Text.&textContainsRegex
-//    } else if ("textContainsFuzzy".equals(predicateStr)) {
-//      return org.janusgraph.core.attribute.Text.&textContainsFuzzy
-//    } else if ("textPrefix".equals(predicateStr)) {
-//      return org.janusgraph.core.attribute.Text.&textPrefix
-//    } else if ("textRegex".equals(predicateStr)) {
-//      return org.janusgraph.core.attribute.Text.&textRegex
-//    } else if ("textFuzzy".equals(predicateStr)) {
-//      return org.janusgraph.core.attribute.Text.&textFuzzy
+    } else if ("textContains".equals(predicateStr)) {
+      return org.janusgraph.core.attribute.Text.&textContains
+    } else if ("textContainsPrefix".equals(predicateStr)) {
+      return org.janusgraph.core.attribute.Text.&textContainsPrefix
+    } else if ("textContainsRegex".equals(predicateStr)) {
+      return org.janusgraph.core.attribute.Text.&textContainsRegex
+    } else if ("textContainsFuzzy".equals(predicateStr)) {
+      return org.janusgraph.core.attribute.Text.&textContainsFuzzy
+    } else if ("textPrefix".equals(predicateStr)) {
+      return org.janusgraph.core.attribute.Text.&textPrefix
+    } else if ("textRegex".equals(predicateStr)) {
+      return org.janusgraph.core.attribute.Text.&textRegex
+    } else if ("textFuzzy".equals(predicateStr)) {
+      return org.janusgraph.core.attribute.Text.&textFuzzy
     } else return P.&eq;
 
   }
@@ -346,7 +467,7 @@ class MatchReq<T> {
     this.predicate = predicate
   }
 
-  boolean hasGraphEntries(JanusGraph graph, GraphTraversal gtrav,StringBuffer sb ) {
+  boolean hasGraphEntries(OrientStandardGraph graph, GraphTraversal gtrav, StringBuffer sb) {
 
     if (!this.excludeFromSearch && this.excludeFromUpdate) {
       List<Long> indexQueryResults = new ArrayList<>(1);
@@ -363,7 +484,7 @@ class MatchReq<T> {
     return true;
   }
 
-  GraphTraversal getGraphEntries(JanusGraph graph, GraphTraversal gtrav, List<Long> indexQueryResults, int maxHitsPerType, StringBuffer sb) {
+  GraphTraversal getGraphEntries(OrientStandardGraph graph, GraphTraversal gtrav, List<Long> indexQueryResults, int maxHitsPerType, StringBuffer sb) {
 
     String predicateStr = this.predicateStr as String;
     if (predicateStr.startsWith("idx:")) {
@@ -372,7 +493,7 @@ class MatchReq<T> {
 
       String value = "v.\"${this.propName}\":${this.attribNativeVal}"
 
-      for (JanusGraphIndexQuery.Result<JanusGraphVertex> result : (graph as JanusGraph).indexQuery(idx, value).limit(maxHitsPerType).vertexStream().collect(Collectors.toList())) {
+      for (JanusGraphIndexQuery.Result<JanusGraphVertex> result : (graph as OrientStandardGraph).indexQuery(idx, value).limit(maxHitsPerType).vertexStream().collect(Collectors.toList())) {
         indexQueryResults.add(result.getElement().longId());
       }
     } else if (predicateStr.startsWith("idxRaw:")) {
@@ -380,12 +501,12 @@ class MatchReq<T> {
       String idx = idxQuery[1];
 
       String value = this.attribNativeVal.toString();
-      value= value?.replaceAll(Pattern.quote("v.'"), 'v."');
+      value = value?.replaceAll(Pattern.quote("v.'"), 'v."');
       value = value?.replaceAll(Pattern.quote("':"), '":');
 
       sb?.append("\n in getGraphEntries()  idx=$idx; value=$value; predicateStr = ${predicateStr}, maxHitsPerType=$maxHitsPerType ")
 
-      for (JanusGraphIndexQuery.Result<JanusGraphVertex> result : (graph as JanusGraph).indexQuery(idx, value).limit(maxHitsPerType).vertexStream().collect(Collectors.toList())) {
+      for (JanusGraphIndexQuery.Result<JanusGraphVertex> result : (graph as OrientStandardGraph).indexQuery(idx, value).limit(maxHitsPerType).vertexStream().collect(Collectors.toList())) {
         indexQueryResults.add(result.getElement().longId());
       }
     } else {
@@ -410,9 +531,24 @@ class MatchReq<T> {
 
   @Override
   String toString() {
-    return propName + '=' + attribNativeVal
+    StringBuffer sb = new StringBuffer();
+
+    if (!excludeFromSearch) {
+      sb.append('\n{\n"')
+        .append(propName).append('":"').append(attribVal)
+        .append('"\n,"matchWeight":').append(matchWeight)
+        .append('\n,"operator":"').append(predicateStr)
+        .append('"\n}\n')
+      return sb.toString();
+
   }
+    return null;
 }
+}
+
+
+class Matcher {
+
 
 static Set<List<MatchReq>> subsequencesUniqueTypes(List<MatchReq> items) {
   Set<List<MatchReq>> ans = new HashSet<>();
@@ -453,49 +589,7 @@ static Set<List<MatchReq>> subsequencesUniqueTypes(List<MatchReq> items) {
 }
 
 
-def runIndexQuery(String idx, String value, int maxHitsPerType, MatchReq matchReq, Map<Long, AtomicDouble> indexQueryResults, StringBuffer sb) {
-
-
-  JanusGraphIndexQuery query = (graph as JanusGraph)?.
-    indexQuery(idx, value);
-
-  double maxScoreForRawIdx = 0;
-  Map<Long, Double> idxQueryRes = new HashMap<>();
-
-  query?.limit(maxHitsPerType)?.vertexStream()?.forEach { result ->
-    double score = result.score
-    idxQueryRes.put((Long) result.element.id(), score);
-    maxScoreForRawIdx = Math.max(maxScoreForRawIdx, score);
-  }
-  Long total = query.vertexTotals();
-  sb?.append("\n\nIn runIndexQuery: About to call idxRaw: idx: ${idx}; value = ${value}; total=${total} maxHitsPerType=${maxHitsPerType}; idxQueryRes = ${idxQueryRes}, maxScoreForRawIdx = $maxScoreForRawIdx")
-
-  idxQueryRes.forEach { vId, score ->
-    sb?.append("\nIn runIndexQuery:")?.append(vId)?.append(": ")?.append(score);
-    AtomicDouble totalScore = indexQueryResults.computeIfAbsent(vId, { key -> new AtomicDouble(0) });
-    totalScore.addAndGet(matchReq.matchWeight * (score / maxScoreForRawIdx))
-
-  }
-
-//  OptionalDouble  optionalDoubleMaxScoreForRawIdx = resultStream.mapToDouble{val -> val.score}.max();
-//
-//  optionalDoubleMaxScoreForRawIdx.ifPresent({  maxScore ->
-//    sb?.append("\nmax Score for ${value} is $maxScore")
-//
-//    resultStream.forEach { JanusGraphIndexQuery.Result<JanusGraphVertex> result ->
-//      Long vId = (Long) result.element.id();
-//      double score = result.score
-//      sb?.append("  )?.append(result.getElement().id())?.append(": ")?.append(result.getScore());
-//      AtomicDouble totalScore = indexQueryResults.computeIfAbsent(vId, { key -> new AtomicDouble(0) });
-//      totalScore.addAndGet(matchReq.matchWeight * (score / maxScore))
-//
-//    }
-//  })
-
-
-}
-
-def matchVertices(JanusGraph graph, GraphTraversalSource gTravSource = g, List<MatchReq> matchReqs, int maxHitsPerType, StringBuffer sb = null) {
+  static matchVertices(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs, int maxHitsPerType, StringBuffer sb = null) {
 
 
   Map<String, Map<Long, AtomicDouble>> vertexScoreMapByVertexName = new HashMap<>();
@@ -509,13 +603,11 @@ def matchVertices(JanusGraph graph, GraphTraversalSource gTravSource = g, List<M
     // any hits in the graph as early as possible.  The logic here is that if a match request does not have any matches
     // on its own, what hope do we have to use it as a filter combined with other entries???  This is especially true
     // when the NLP engines give us false positives (e.g. erroneous matches for names, dates, etc).
-    if (it.hasGraphEntries(graph, gTravSource.V(),sb)) {
+      if (it.hasGraphEntries(graph, gTravSource.V(), sb)) {
       matchReqList.push(it)
       vertexScoreMapByVertexName.computeIfAbsent(it.vertexName, { k -> new HashMap<>() })
-    }
-    else
-    {
-      sb?.append("\nremoved match Request $it from the list as it was not in the graph, and marked as searchable without updates\n"   )
+      } else {
+        sb?.append("\nremoved match Request $it from the list as it was not in the graph, and marked as searchable without updates\n")
 
     }
   }
@@ -548,7 +640,7 @@ def matchVertices(JanusGraph graph, GraphTraversalSource gTravSource = g, List<M
     }
 
 
-    Set<List<MatchReq>> subs = subsequencesUniqueTypes(vFiltered)
+      Set<List<MatchReq>> subs = Matcher.subsequencesUniqueTypes(vFiltered)
     // LPPM - 08/02/2019 - subsequences was creating way too many entries;
     // the alternative above only gives subsequences with unique types.
     // here is the original:
@@ -693,7 +785,7 @@ def matchVertices(JanusGraph graph, GraphTraversalSource gTravSource = g, List<M
 }
 
 
-def getTopHits(Map<String, Map<Long, AtomicDouble>> vertexScoreMapByVertexName, String targetType, double scoreThreshold, StringBuffer sb = null) {
+  static getTopHits(Map<String, Map<Long, AtomicDouble>> vertexScoreMapByVertexName, String targetType, double scoreThreshold, StringBuffer sb = null) {
   def ids = vertexScoreMapByVertexName.get(targetType) as Map<Long, AtomicDouble>;
 
   return getTopHits(ids, scoreThreshold, sb)
@@ -701,7 +793,7 @@ def getTopHits(Map<String, Map<Long, AtomicDouble>> vertexScoreMapByVertexName, 
 }
 
 
-def getTopHits(Map<Long, AtomicDouble> counts, final double scoreThreshold, StringBuffer sb = null) {
+  static getTopHits(Map<Long, AtomicDouble> counts, final double scoreThreshold, StringBuffer sb = null) {
 
 //    Map<Long, Integer> counts = ids.countBy { it }
   Map<Long, AtomicDouble> countList = counts.findAll { entry -> entry.value.get() >= scoreThreshold }
@@ -720,7 +812,7 @@ def getTopHits(Map<Long, AtomicDouble> counts, final double scoreThreshold, Stri
 }
 
 
-Map<Long, AtomicDouble> getOtherTopHits(Map<String, Map<Long, AtomicDouble>> vertexScoreMapByVertexName, String targetType, double scoreThreshold, StringBuffer sb = null) {
+  static Map<Long, AtomicDouble> getOtherTopHits(Map<String, Map<Long, AtomicDouble>> vertexScoreMapByVertexName, String targetType, double scoreThreshold, StringBuffer sb = null) {
 
   Map<Long, AtomicDouble> otherIds = new HashMap<>();
 
@@ -735,7 +827,7 @@ Map<Long, AtomicDouble> getOtherTopHits(Map<String, Map<Long, AtomicDouble>> ver
 }
 
 
-def findMatchingNeighboursFromSingleRequired(gTrav = g, Long requiredTypeId, Map<Long, AtomicDouble> otherIds, StringBuffer sb = null) {
+  static findMatchingNeighboursFromSingleRequired(gTrav, Long requiredTypeId, Map<Long, AtomicDouble> otherIds, StringBuffer sb = null) {
 
 
   def foundIds = gTrav.V(otherIds.keySet())
@@ -749,25 +841,12 @@ def findMatchingNeighboursFromSingleRequired(gTrav = g, Long requiredTypeId, Map
 
 }
 
-def findMatchingNeighbours(gTrav = g, Set<Long> requiredTypeIds, Set<Long> otherIds, StringBuffer sb = null) {
-
-
-  def foundIds = gTrav.V(otherIds)
-    .both()
-    .hasId(within(requiredTypeIds)).id()
-    .toSet() as Long[]
-
-  sb?.append("\n$foundIds")
-
-  return foundIds
-
-}
 
 /*
 
 */
 
-void addNewMatchRequest(Map<String, String> binding, List<MatchReq> matchReqs, String propValItem, Class nativeType, String propName, String vertexName, String vertexLabel, String predicate, boolean excludeFromSearch, boolean excludeFromSubsequenceSearch, boolean excludeFromUpdate, boolean mandatoryInSearch, String postProcessor, String postProcessorVar, double matchWeight, StringBuffer sb = null) {
+  static void addNewMatchRequest(Map<String, String> binding, List<MatchReq> matchReqs, String propValItem, Class nativeType, String propName, String vertexName, String vertexLabel, String predicate, boolean excludeFromSearch, boolean excludeFromSubsequenceSearch, boolean excludeFromUpdate, boolean mandatoryInSearch, String postProcessor, String postProcessorVar, double matchWeight, StringBuffer sb = null) {
 
   MatchReq mreq = null;
 
@@ -851,7 +930,7 @@ void addNewMatchRequest(Map<String, String> binding, List<MatchReq> matchReqs, S
 
 }
 
-def getMatchRequests(Map<String, String> currRecord, Object parsedRules, String rulesJsonStr, Double percentageThreshold, StringBuffer sb = null) {
+  static getMatchRequests(Map<String, String> currRecord, Object parsedRules, String rulesJsonStr, Double percentageThreshold, StringBuffer sb = null) {
   def binding = currRecord
 
   binding.put("original_request", JsonOutput.prettyPrint(JsonOutput.toJson(currRecord)));
@@ -909,7 +988,6 @@ def getMatchRequests(Map<String, String> currRecord, Object parsedRules, String 
         }
 
 
-
         String propVal = PVValTemplate.getTemplate((String) prop.val).make(binding)
 
 
@@ -961,7 +1039,7 @@ def getMatchRequests(Map<String, String> currRecord, Object parsedRules, String 
 
           } else {
 
-            sb.append("\n in getMatchRequests() - single processing $propName")
+              sb?.append("\n in getMatchRequests() - single processing $propName")
 
             addNewMatchRequest(
               binding
@@ -991,10 +1069,10 @@ def getMatchRequests(Map<String, String> currRecord, Object parsedRules, String 
 }
 
 
-def getTopHitsWithEdgeCheck(g,
+  static getTopHitsWithEdgeCheck(GraphTraversalSource g,
                             Map<Long, AtomicDouble> potentialHitIDs,
                             double scoreThreshold,
-                            HashMap<String, Map<Long, AtomicDouble>> matchIdsByVertexType,
+                                 Map<String, Map<Long, AtomicDouble>> matchIdsByVertexType,
                             String vertexTypeStr,
                             Map<String, List<EdgeRequest>> edgeReqsByVertexType,
                             StringBuffer sb = null) {
@@ -1021,8 +1099,8 @@ def getTopHitsWithEdgeCheck(g,
     });
     sb?.append("\nIn getTopHitsWithEdgeCheck() -- vertType = ${vertexTypeStr} ; topHits  = ${topHitsFiltered} ")
 
-    if (topHitsFiltered.size() == 0){
-      sb?.append("\nFiltered too much; removing filter" )
+      if (topHitsFiltered.size() == 0) {
+        sb?.append("\nFiltered too much; removing filter")
 
       topHitsFiltered.putAll(topHits);
     }
@@ -1039,7 +1117,7 @@ def getTopHitsWithEdgeCheck(g,
 
 }
 
-def static addNewVertexFromMatchReqs(g, String vertexTypeStr, List<MatchReq> matchReqsForThisVertexType, StringBuffer sb = null) {
+  static addNewVertexFromMatchReqs(g, String vertexTypeStr, List<MatchReq> matchReqsForThisVertexType, StringBuffer sb = null) {
 
   def localTrav = g
 
@@ -1075,7 +1153,7 @@ def static addNewVertexFromMatchReqs(g, String vertexTypeStr, List<MatchReq> mat
 }
 
 
-def updateExistingVertexWithMatchReqs(g, Map<Long, AtomicDouble> vertices, List<MatchReq> matchReqsForThisVertexType, double scoreThreshold, StringBuffer sb = null) {
+  static updateExistingVertexWithMatchReqs(g, Map<Long, AtomicDouble> vertices, List<MatchReq> matchReqsForThisVertexType, double scoreThreshold, StringBuffer sb = null) {
 
   def localTrav = g
   def deletionTrav = g
@@ -1086,7 +1164,7 @@ def updateExistingVertexWithMatchReqs(g, Map<Long, AtomicDouble> vertices, List<
     if (score.get() >= scoreThreshold) {
 
 
-      localTrav = localTrav.V(vertexId)
+        localTrav = g.V(vertexId)
 
       boolean atLeastOneUpdate = false;
       matchReqsForThisVertexType.each { it ->
@@ -1129,70 +1207,7 @@ def updateExistingVertexWithMatchReqs(g, Map<Long, AtomicDouble> vertices, List<
 }
 
 
-class EdgeRequest {
-
-  String label;
-  String fromVertexName;
-  String toVertexName;
-
-  EdgeRequest(String label, String fromVertexName, String toVertexName) {
-    this.label = label
-    this.fromVertexName = fromVertexName
-    this.toVertexName = toVertexName
-  }
-
-  String getLabel() {
-    return label
-  }
-
-  void setLabel(String label) {
-    this.label = label
-  }
-
-  String getFromVertexName() {
-    return fromVertexName
-  }
-
-  void setFromVertexName(String fromVertexName) {
-    this.fromVertexName = fromVertexName
-  }
-
-  String getToVertexName() {
-    return toVertexName
-  }
-
-  void setToVertexName(String toVertexName) {
-    this.toVertexName = toVertexName
-  }
-
-  boolean equals(o) {
-    if (this.is(o)) return true
-    if (!(o instanceof EdgeRequest)) return false
-
-    EdgeRequest that = (EdgeRequest) o
-
-    if (fromVertexName != that.fromVertexName) return false
-    if (label != that.label) return false
-    if (toVertexName != that.toVertexName) return false
-
-    return true
-  }
-
-  int hashCode() {
-    int result
-    result = (label != null ? label.hashCode() : 0)
-    result = 31 * result + (fromVertexName != null ? fromVertexName.hashCode() : 0)
-    result = 31 * result + (toVertexName != null ? toVertexName.hashCode() : 0)
-    return result
-  }
-
-  String toString() {
-    return "${label} = ($fromVertexName)->($toVertexName)"
-  }
-}
-
-
-def parseEdges(def rules) {
+  static parseEdges(def rules) {
 
   Map<String, List<EdgeRequest>> edgeReqsByVertexName = new HashMap<>()
   Set<EdgeRequest> edgeReqs = new HashSet<>()
@@ -1215,7 +1230,7 @@ def parseEdges(def rules) {
   return [edgeReqsByVertexName, edgeReqs]
 }
 
-def createEdges(GraphTraversalSource gTrav, Set<EdgeRequest> edgeReqs, Map<String, Map<Long, AtomicDouble>> finalVertexIdByVertexName, Map<String, AtomicDouble> maxScoresByVertexName, StringBuffer sb = null) {
+  static createEdges(GraphTraversalSource gTrav, Set<EdgeRequest> edgeReqs, Map<String, Map<Long, AtomicDouble>> finalVertexIdByVertexName, Map<String, AtomicDouble> maxScoresByVertexName, StringBuffer sb = null) {
 
   edgeReqs.each { it ->
 
@@ -1285,7 +1300,7 @@ def createEdges(GraphTraversalSource gTrav, Set<EdgeRequest> edgeReqs, Map<Strin
   }
 }
 
-def processMatchRequests(JanusGraph graph, GraphTraversalSource g,
+  static processMatchRequests(OrientStandardGraph graph, GraphTraversalSource g,
                          List<MatchReq> matchReqs,
                          int maxHitsPerType,
                          Map<String, Double> percentageThresholdByVertexName,
@@ -1298,7 +1313,9 @@ def processMatchRequests(JanusGraph graph, GraphTraversalSource g,
   def (
   Map<String, Map<Long, AtomicDouble>> vertexScoreMapByVertexName,
   Map<String, List<MatchReq>>          matchReqByVertexName
-  ) = matchVertices(graph, g, matchReqs, maxHitsPerType, sb);
+    ) = Matcher.matchVertices(graph, g, matchReqs, maxHitsPerType, sb);
+
+
   vertexScoreMapByVertexName.each { vertexTypeStr, potentialHitIDs ->
 
     List<MatchReq> matchReqsForThisVertexType = matchReqByVertexName.get(vertexTypeStr)
@@ -1319,6 +1336,19 @@ def processMatchRequests(JanusGraph graph, GraphTraversalSource g,
       newVertices.put(vId, new AtomicDouble(maxScore));
       finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
 
+        if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
+
+//        json rootKey: matchReqByVertexName
+
+//        String bizRule = JsonOutput.prettyPrint(json.toString())
+          String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName);
+
+          sb.append("\n\n\n ADDING Event.Ingestion.Business_Rules: ${bizRule}\n\n")
+
+
+          g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next();
+        }
+
     }
 
 
@@ -1328,17 +1358,60 @@ def processMatchRequests(JanusGraph graph, GraphTraversalSource g,
 
 
 }
+}
 
-def ingestDataUsingRules(JanusGraph graph, GraphTraversalSource g, Map<String, String> bindings, String jsonRules, StringBuffer sb = null) {
+def runIndexQuery(String idx, String value, int maxHitsPerType, MatchReq matchReq, Map<Long, AtomicDouble> indexQueryResults, StringBuffer sb) {
+
+
+  JanusGraphIndexQuery query = (graph as OrientStandardGraph)?.
+    indexQuery(idx, value);
+
+  double maxScoreForRawIdx = 0;
+  Map<Long, Double> idxQueryRes = new HashMap<>();
+
+  query?.limit(maxHitsPerType)?.vertexStream()?.forEach { result ->
+    double score = result.score
+    idxQueryRes.put((Long) result.element.id(), score);
+    maxScoreForRawIdx = Math.max(maxScoreForRawIdx, score);
+  }
+  Long total = query.vertexTotals();
+  sb?.append("\n\nIn runIndexQuery: About to call idxRaw: idx: ${idx}; value = ${value}; total=${total} maxHitsPerType=${maxHitsPerType}; idxQueryRes = ${idxQueryRes}, maxScoreForRawIdx = $maxScoreForRawIdx")
+
+  idxQueryRes.forEach { vId, score ->
+    sb?.append("\nIn runIndexQuery:")?.append(vId)?.append(": ")?.append(score);
+    AtomicDouble totalScore = indexQueryResults.computeIfAbsent(vId, { key -> new AtomicDouble(0) });
+    totalScore.addAndGet(matchReq.matchWeight * (score / maxScoreForRawIdx))
+
+  }
+
+//  OptionalDouble  optionalDoubleMaxScoreForRawIdx = resultStream.mapToDouble{val -> val.score}.max();
+//
+//  optionalDoubleMaxScoreForRawIdx.ifPresent({  maxScore ->
+//    sb?.append("\nmax Score for ${value} is $maxScore")
+//
+//    resultStream.forEach { JanusGraphIndexQuery.Result<JanusGraphVertex> result ->
+//      Long vId = (Long) result.element.id();
+//      double score = result.score
+//      sb?.append("  )?.append(result.getElement().id())?.append(": ")?.append(result.getScore());
+//      AtomicDouble totalScore = indexQueryResults.computeIfAbsent(vId, { key -> new AtomicDouble(0) });
+//      totalScore.addAndGet(matchReq.matchWeight * (score / maxScore))
+//
+//    }
+//  })
+
+
+}
+
+def ingestDataUsingRules(OrientStandardGraph graph, GraphTraversalSource g, Map<String, String> bindings, String jsonRules, StringBuffer sb = null) {
   Map<String, Map<Long, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>();
 
   def jsonSlurper = new JsonSlurper()
   def rules = jsonSlurper.parseText(jsonRules)
 
-  double percentageThreshold = (rules.percentageThreshold == null) ? 95.0 : (double) (rules.percentageThreshold);
+  double percentageThreshold = (rules.percentageThreshold == null) ? 10.0 : (double) (rules.percentageThreshold);
   int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType;
 
-  def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) = parseEdges(rules.updatereq)
+  def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) = Matcher.parseEdges(rules.updatereq)
   Transaction trans = graph.tx()
   try {
     if (!trans.isOpen()) {
@@ -1346,9 +1419,9 @@ def ingestDataUsingRules(JanusGraph graph, GraphTraversalSource g, Map<String, S
     }
 
     def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName, Map<String, Double> percentageThresholdByVertexName) =
-    getMatchRequests(bindings, rules.updatereq, jsonRules, percentageThreshold, sb)
+    Matcher.getMatchRequests(bindings, rules.updatereq, jsonRules, percentageThreshold, sb)
 
-    processMatchRequests(graph,
+    Matcher.processMatchRequests(graph,
       g,
       matchReqs,
       maxHitsPerType,
@@ -1372,17 +1445,17 @@ def ingestDataUsingRules(JanusGraph graph, GraphTraversalSource g, Map<String, S
 }
 
 
-def ingestRecordListUsingRules(JanusGraph graph, GraphTraversalSource g, List<Map<String, String>> recordList, String jsonRules, StringBuffer sb = null) {
+def ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g, List<Map<String, String>> recordList, String jsonRules, StringBuffer sb = null) {
   Map<String, Map<Long, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>();
 
   def jsonSlurper = new JsonSlurper()
   def rules = jsonSlurper.parseText(jsonRules)
 
 
-  double percentageThreshold = (rules.percentageThreshold == null) ? 95.0 : (double) (rules.percentageThreshold);
+  double percentageThreshold = (rules.percentageThreshold == null) ? 10.0 : (double) (rules.percentageThreshold);
   int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType;
 
-  def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) = parseEdges(rules.updatereq)
+  def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) = Matcher.parseEdges(rules.updatereq)
   Transaction trans = graph.tx()
   try {
     if (!trans.isOpen()) {
@@ -1392,10 +1465,10 @@ def ingestRecordListUsingRules(JanusGraph graph, GraphTraversalSource g, List<Ma
     for (Map<String, String> item in recordList) {
 
       def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName, Map<String, Double> percentageThresholdByVertexName) =
-      getMatchRequests(item, rules.updatereq, jsonRules, percentageThreshold, sb);
+      Matcher.getMatchRequests(item, rules.updatereq, jsonRules, percentageThreshold, sb);
 
 
-      processMatchRequests(graph, g,
+      Matcher.processMatchRequests(graph, g,
         matchReqs,
         maxHitsPerType,
         percentageThresholdByVertexName,
@@ -1417,9 +1490,20 @@ def ingestRecordListUsingRules(JanusGraph graph, GraphTraversalSource g, List<Ma
   }
 }
 
+def findMatchingNeighbours(gTrav = g, Set<Long> requiredTypeIds, Set<Long> otherIds, StringBuffer sb = null) {
 
 
-///
+  def foundIds = gTrav.V(otherIds)
+    .both()
+    .hasId(within(requiredTypeIds)).id()
+    .toSet() as Long[]
+
+  sb?.append("\n$foundIds")
+
+  return foundIds
+
+}
+
 
 /*
 

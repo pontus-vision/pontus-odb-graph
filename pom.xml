@@ -33,7 +33,7 @@
         <jukito.version>1.5</jukito.version>
         <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
         <pontus-natty.version>100.14</pontus-natty.version>
-        <netty-version>[4.1.42,)</netty-version>
+        <netty-version>4.1.44.Final</netty-version>
         <orientdb-version>3.1.0-beta1</orientdb-version>
         <!--<apache.directory-api-version>
             1.0.0
@@ -46,11 +46,54 @@
             <artifactId>orientdb-client</artifactId>
             <version>${orientdb-version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orientdb-community</artifactId>
+            <version>${orientdb-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orientdb-object</artifactId>
+            <version>${orientdb-version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.orientechnologies</groupId>
             <artifactId>orientdb-gremlin</artifactId>
             <version>${orientdb-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.carrotsearch</groupId>
+                    <artifactId>hppc</artifactId>
+                </exclusion>
+            </exclusions>
+
+        </dependency>
+
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>hppc</artifactId>
+            <version>0.7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orientdb-gremlin-server</artifactId>
+            <version>${orientdb-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.carrotsearch</groupId>
+                    <artifactId>hppc</artifactId>
+                </exclusion>
+            </exclusions>
+
         </dependency>
 
         <dependency>
@@ -77,91 +120,91 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.tinkerpop</groupId>
-            <artifactId>spark-gremlin</artifactId>
-            <version>${tinkerpop-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.glassfish.jersey.core</groupId>
-                    <artifactId>jersey-client</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.google.code.gson</groupId>
-                    <artifactId>gson</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.glassfish.jersey.containers</groupId>
-                    <artifactId>jersey-container-servlet-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.glassfish.jersey.core</groupId>
-                    <artifactId>jersey-common</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.glassfish.jersey.core</groupId>
-                    <artifactId>jersey-server</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-codec</groupId>
-                    <artifactId>commons-codec</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-configuration</groupId>
-                    <artifactId>commons-configuration</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.netty</groupId>
-                    <artifactId>netty-all</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.ws.rs</groupId>
-                    <artifactId>javax.ws.rs-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-math3</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.tinkerpop</groupId>-->
+        <!--            <artifactId>spark-gremlin</artifactId>-->
+        <!--            <version>${tinkerpop-version}</version>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.glassfish.jersey.core</groupId>-->
+        <!--                    <artifactId>jersey-client</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>com.google.code.gson</groupId>-->
+        <!--                    <artifactId>gson</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>com.fasterxml.jackson.core</groupId>-->
+        <!--                    <artifactId>jackson-core</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.glassfish.jersey.containers</groupId>-->
+        <!--                    <artifactId>jersey-container-servlet-core</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.glassfish.jersey.core</groupId>-->
+        <!--                    <artifactId>jersey-common</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.glassfish.jersey.core</groupId>-->
+        <!--                    <artifactId>jersey-server</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>commons-codec</groupId>-->
+        <!--                    <artifactId>commons-codec</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>commons-configuration</groupId>-->
+        <!--                    <artifactId>commons-configuration</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>io.netty</groupId>-->
+        <!--                    <artifactId>netty-all</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>javax.ws.rs</groupId>-->
+        <!--                    <artifactId>javax.ws.rs-api</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.apache.commons</groupId>-->
+        <!--                    <artifactId>commons-math3</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.apache.httpcomponents</groupId>-->
+        <!--                    <artifactId>httpclient</artifactId>-->
+        <!--                </exclusion>-->
 
-                <exclusion>
-                    <groupId>commons-configuration</groupId>
-                    <artifactId>commons-configuration</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.ws.rs</groupId>
-                    <artifactId>javax.ws.rs-api</artifactId>
-                </exclusion>
+        <!--                <exclusion>-->
+        <!--                    <groupId>commons-configuration</groupId>-->
+        <!--                    <artifactId>commons-configuration</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>com.google.guava</groupId>-->
+        <!--                    <artifactId>guava</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>javax.ws.rs</groupId>-->
+        <!--                    <artifactId>javax.ws.rs-api</artifactId>-->
+        <!--                </exclusion>-->
 
-                <exclusion>
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-lang</groupId>
-                    <artifactId>commons-lang</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-lang3</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--                <exclusion>-->
+        <!--                    <groupId>commons-collections</groupId>-->
+        <!--                    <artifactId>commons-collections</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>commons-lang</groupId>-->
+        <!--                    <artifactId>commons-lang</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.apache.commons</groupId>-->
+        <!--                    <artifactId>commons-lang3</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.slf4j</groupId>-->
+        <!--                    <artifactId>slf4j-api</artifactId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
 
         <!-- LPPM - adding additional dependencies to enable epoll on Linux -->
         <dependency>
@@ -180,7 +223,6 @@
             <artifactId>netty-all</artifactId>
             <version>${netty-version}</version>
         </dependency>
-
 
 
         <dependency>
@@ -333,21 +375,30 @@
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
             <version>${jersey-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.javassist</groupId>
+                    <artifactId>javassist</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-
-
-
-
-
-
+<!--        <dependency>-->
+<!--            <groupId>io.dropwizard.metrics</groupId>-->
+<!--            <artifactId>metrics-core</artifactId>-->
+<!--            <version>4.1.2</version>-->
+<!--            <type>bundle</type>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.tinkerpop</groupId>
             <artifactId>gremlin-server</artifactId>
             <version>${tinkerpop-version}</version>
-            <exclusions>
-               <exclusion><groupId>com.codahale.metrics</groupId><artifactId>metrics-core</artifactId></exclusion>
-            </exclusions>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.codahale.metrics</groupId>-->
+<!--                    <artifactId>metrics-core</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
 
         </dependency>
 
@@ -411,43 +462,43 @@
             <version>${jersey-version}</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>pontus-redaction</groupId>-->
-            <!--<artifactId>pontus-redaction-common</artifactId>-->
-            <!--<version>0.99.0</version>-->
-            <!--<exclusions>-->
+        <!--<groupId>pontus-redaction</groupId>-->
+        <!--<artifactId>pontus-redaction-common</artifactId>-->
+        <!--<version>0.99.0</version>-->
+        <!--<exclusions>-->
 
 
-                <!--<exclusion>-->
-                    <!--<groupId>io.netty</groupId>-->
-                    <!--<artifactId>netty-transport</artifactId>-->
-                <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<groupId>io.netty</groupId>-->
+        <!--<artifactId>netty-transport</artifactId>-->
+        <!--</exclusion>-->
 
-                <!--<exclusion>-->
-                    <!--<groupId>io.netty</groupId>-->
-                    <!--<artifactId>netty-buffer</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>io.netty</groupId>-->
-                    <!--<artifactId>netty</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>io.netty</groupId>-->
-                    <!--<artifactId>netty-buffer</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>io.netty</groupId>-->
-                    <!--<artifactId>netty-codec</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>io.netty</groupId>-->
-                    <!--<artifactId>netty-all</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>io.netty</groupId>-->
-                    <!--<artifactId>netty-handler</artifactId>-->
-                <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<groupId>io.netty</groupId>-->
+        <!--<artifactId>netty-buffer</artifactId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<groupId>io.netty</groupId>-->
+        <!--<artifactId>netty</artifactId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<groupId>io.netty</groupId>-->
+        <!--<artifactId>netty-buffer</artifactId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<groupId>io.netty</groupId>-->
+        <!--<artifactId>netty-codec</artifactId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<groupId>io.netty</groupId>-->
+        <!--<artifactId>netty-all</artifactId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+        <!--<groupId>io.netty</groupId>-->
+        <!--<artifactId>netty-handler</artifactId>-->
+        <!--</exclusion>-->
 
-            <!--</exclusions>-->
+        <!--</exclusions>-->
         <!--</dependency>-->
 
         <dependency>
@@ -549,7 +600,7 @@
                         <configuration>
                             <filters>
                                 <filter>
-                                    <artifact>pv-gdpr:pontus-gdpr-graph</artifact>
+                                    <artifact>pv-gdpr:pontus-odbc-graph</artifact>
                                     <includes>
                                         <include>org/**</include>
                                         <include>org/apache/hadoop/conf/Configuratio*</include>
@@ -561,23 +612,23 @@
                                         <include>uk/**</include>
                                     </includes>
                                 </filter>
-                                <filter>
-                                    <artifact>org.janusgraph:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                        <!--<exclude>org/slf4j/**</exclude>-->
-                                        <!--<exclude>ch/qos/**</exclude>-->
-                                        <!-- LPPM - WARNING: THE OLAP jobs NEED our own custom version of this class: -->
-                                        <exclude>org/apache/hadoop/conf/Configuration.class</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration*</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration**</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuratio*</exclude>
+<!--                                <filter>-->
+<!--                                    <artifact>org.janusgraph:*</artifact>-->
+<!--                                    <excludes>-->
+<!--                                        <exclude>META-INF/*.SF</exclude>-->
+<!--                                        <exclude>META-INF/*.DSA</exclude>-->
+<!--                                        <exclude>META-INF/*.RSA</exclude>-->
+<!--                                        &lt;!&ndash;<exclude>org/slf4j/**</exclude>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;<exclude>ch/qos/**</exclude>&ndash;&gt;-->
+<!--                                        &lt;!&ndash; LPPM - WARNING: THE OLAP jobs NEED our own custom version of this class: &ndash;&gt;-->
+<!--                                        <exclude>org/apache/hadoop/conf/Configuration.class</exclude>-->
+<!--                                        <exclude>org/apache/hadoop/conf/Configuration</exclude>-->
+<!--                                        <exclude>org/apache/hadoop/conf/Configuration*</exclude>-->
+<!--                                        <exclude>org/apache/hadoop/conf/Configuration**</exclude>-->
+<!--                                        <exclude>org/apache/hadoop/conf/Configuratio*</exclude>-->
 
-                                    </excludes>
-                                </filter>
+<!--                                    </excludes>-->
+<!--                                </filter>-->
                                 <filter>
                                     <artifact>*:*</artifact>
                                     <excludes>
@@ -609,42 +660,7 @@
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>org.apache.hbase:hbase-shaded-client</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                        <!--<exclude>org/slf4j/**</exclude>-->
-                                        <!--<exclude>ch/qos/**</exclude>-->
-                                        <!-- LPPM - WARNING: THE OLAP jobs NEED our own custom version of this class: -->
-                                        <exclude>org/apache/hadoop/conf/Configuration.class</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration*</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration**</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuratio*</exclude>
-
-
-                                    </excludes>
-                                </filter>
-                                <filter>
-                                    <artifact>org.apache.hbase:hbase-shaded-server</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                        <!--<exclude>org/slf4j/**</exclude>-->
-                                        <!--<exclude>ch/qos/**</exclude>-->
-                                        <!-- LPPM - WARNING: THE OLAP jobs NEED our own custom version of this class: -->
-                                        <exclude>org/apache/hadoop/conf/Configuration.class</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration*</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration**</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuratio*</exclude>
-
-                                    </excludes>
-                                </filter>
-                                <filter>
-                                    <artifact>pv-gdpr:pontus-gdpr-graph</artifact>
+                                    <artifact>pv-gdpr:pontus-odb-graph</artifact>
                                     <includes>
                                         <include>org/**</include>
                                         <include>org/apache/hadoop/conf/Configuratio*</include>

@@ -1,6 +1,7 @@
 package com.pontusvision.gdpr;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
@@ -87,14 +88,13 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
         boolean hasFilters = req.filters != null && req.filters.length > 0;
 
         Long count =
-            App.graph.executeSql(sqlQueryCount).iterator().next().getProperty("count");
+            App.graph.executeSql(sqlQueryCount,Collections.EMPTY_MAP).iterator().next().getProperty("count");
 
         if (count > 0)
         {
-
           List<Map<String, Object>> res = new LinkedList<Map<String, Object>>();
 
-          App.graph.executeSql(sqlQueryData)
+          App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP)
                    .forEach(oGremlinResult ->
                        oGremlinResult.getVertex()
                                      .ifPresent(orientVertex -> {
