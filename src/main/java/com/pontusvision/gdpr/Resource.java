@@ -1,11 +1,13 @@
 package com.pontusvision.gdpr;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
+import com.orientechnologies.orient.core.sql.executor.OResult;
+import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import org.apache.commons.lang.StringUtils;
+import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
@@ -87,27 +89,28 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
 
         boolean hasFilters = req.filters != null && req.filters.length > 0;
 
-        Long count =
-            App.graph.executeSql(sqlQueryCount,Collections.EMPTY_MAP).iterator().next().getProperty("count");
+        OGremlinResultSet resultSet = App.graph.executeSql(sqlQueryCount, Collections.EMPTY_MAP);
+        Long              count     = resultSet.iterator().next().getRawResult().getProperty("COUNT(*)");
+        resultSet.close();
 
         if (count > 0)
         {
-          List<Map<String, Object>> res = new LinkedList<Map<String, Object>>();
+          List<Map<String, Object>> res = new LinkedList<>();
 
-          App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP)
-                   .forEach(oGremlinResult ->
-                       oGremlinResult.getVertex()
-                                     .ifPresent(orientVertex -> {
-                                           Map<String, Object> props = new HashMap<>();
-                                           orientVertex.properties(orientVertex.keys().toArray(new String[] {}))
-                                                       .forEachRemaining(objectVertexProperty ->
-                                                           props.put(objectVertexProperty.key(),
-                                                               objectVertexProperty.value())
-                                                       );
-                                           res.add(props);
-                                         }
-                                     )
-                   );
+
+          OResultSet oResultSet = App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP).getRawResultSet();
+
+          while (oResultSet.hasNext()){
+            OResult oResult = oResultSet.next();
+            Map<String, Object> props = new HashMap<>();
+
+            oResult.getPropertyNames().forEach( propName -> props.put(propName, oResult.getProperty(propName)));
+            oResult.getIdentity().ifPresent(id -> props.put ("id", id.toString()));
+
+            res.add(props);
+          }
+
+          oResultSet.close();
 
           String[]     recs      = new String[res.size()];
           ObjectMapper objMapper = new ObjectMapper();
@@ -130,7 +133,7 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
               }
               else
               {
-                rec.put(entry.getKey(), val.toString());
+                rec.put(entry.getKey(), val == null ? null :val.toString());
               }
 
             }
@@ -333,13 +336,13 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
 
         oClass.properties().forEach(oProperty ->
             {
-              String currLabel = oProperty.getFullName();
+              String currLabel = oProperty.getName();
               if (currLabel.startsWith(label))
               {
                 String labelPrefix = "#";
                 try
                 {
-                  if (!oClass.areIndexed(currLabel))
+                  if (!oClass.areIndexed("Metadata.Type."+label, currLabel))
                   {
                     labelPrefix = "";
                   }

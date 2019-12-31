@@ -126,12 +126,16 @@ public class RecordRequest
     {
       if (i > 0)
       {
-        sb.append(',');
+        sb.append("`,`");
+      }
+      else
+      {
+        sb.append("@rid as id,`");
       }
       sb.append(cols[i].id);
 
     }
-    sb.append(' ');
+    sb.append("` ");
 
     return sb;
   }
@@ -186,7 +190,7 @@ public class RecordRequest
   public static StringBuilder addDateFilter(StringBuilder sb, String colId, String dateFrom, String dateTo, String type)
   {
 
-    sb.append("( ").append(colId);
+    sb.append("( `").append(colId).append("` ");
 
     //    equals, greaterThan, lessThan, inRange, notEqual
 
@@ -219,7 +223,7 @@ public class RecordRequest
   public static StringBuilder addTextFilter(StringBuilder sb, String colId, String type, String filter)
   {
 
-    sb.append("( ").append(colId);
+    sb.append("( `").append(colId).append("` ");
 
     //    equals, greaterThan, lessThan, inRange, notEqual
 
@@ -343,7 +347,7 @@ public class RecordRequest
       sb.append("SELECT ");
       appendColsSQL(sb, this.cols);
     }
-    sb.append(" FROM ").append(dataType).append(" ");
+    sb.append(" FROM `").append(dataType).append("` ");
     appendWhereFiltersSQL(sb, this.filters);
     appendCustomFilterSQL(sb, this.customFilter);
 
@@ -379,7 +383,7 @@ public class RecordRequest
         Date dateThreshold  = new java.util.Date(ageThresholdMs);
         sb.append ("SELECT * FROM (")
           .append(wholeStr)
-          .append(") where Person.Natural.Date_Of_Birth >= date('")
+          .append(") where `Person.Natural.Date_Of_Birth` >= date('")
           .append(dateThreshold.toString())
           .append("')");
 //        resSet = resSet.where(__.values("Person.Natural.Date_Of_Birth").is(gte(dateThreshold)));
@@ -410,7 +414,7 @@ public class RecordRequest
   {
     if (sortCol != null)
     {
-      sb.append(" ORDER BY ").append(sortCol).append(" ").append("+asc".equalsIgnoreCase(sortDir) ? "ASC" : "DESC");
+      sb.append(" ORDER BY `").append(sortCol).append("` ").append("+asc".equalsIgnoreCase(sortDir) ? "ASC" : "DESC");
     }
     return sb;
   }

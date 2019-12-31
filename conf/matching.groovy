@@ -516,7 +516,7 @@ class MatchReq<T> {
 
 //      String value = "v.\"${this.propName}\":${this.attribNativeVal}"
 
-      OGremlinResultSet results = graph.executeSql("SELECT @id FROM ${this.vertexLabel} WHERE SEARCH_CLASS('${this.attribNativeVal}') ", Collections.EMPTY_MAP);
+      OGremlinResultSet results = graph.executeSql("SELECT @id FROM `${this.vertexLabel}` WHERE SEARCH_CLASS('${this.attribNativeVal}') ", Collections.EMPTY_MAP);
 
       for (OGremlinResult result : results) {
         result.getVertex().ifPresent({ res -> indexQueryResults.add(res.id()) });
@@ -1394,7 +1394,7 @@ class Matcher {
 
 
     OGremlinResultSet results =
-      graph.executeSql("SELECT \$score, @rid FROM ${idx} WHERE SEARCH_CLASS ('${value}'", Collections.EMPTY_MAP)
+      graph.executeSql("SELECT \$score, @rid FROM `${idx}` WHERE SEARCH_CLASS ('${value}'", Collections.EMPTY_MAP)
 
 
 
@@ -1487,6 +1487,7 @@ def ingestDataUsingRules(OrientStandardGraph graph, GraphTraversalSource g, Map<
       sb)
 
 
+    graph.qu
     trans.commit()
   } catch (Throwable t) {
     trans.rollback()

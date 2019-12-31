@@ -68,28 +68,57 @@ Map<String, OClass> addVertexLabels(OrientStandardGraph graph, def json, StringB
   Map<String, OClass> classMap = new HashMap<>()
   json['vertexLabels'].each {
     final String name = it.name
-    final OClass oClass = createVertexLabel(mgmt, name)
+    final OClass oClass = createVertexLabel(graph, name)
     classMap.put(name, oClass)
     sb?.append("Success added vertext label - $name\n")
 
     json['propertyKeys'].each { prop ->
       if (prop.name && prop.dataType && (prop.name as String).startsWith(name)) {
-        OProperty oProperty = createProp(oClass, prop.name as String, Class.forName(prop.dataType as String))
+        Class<?> cls = null;
 
+        try {
+          cls = Class.forName(prop.dataType as String);
+        }
+        catch (Throwable t) {
+          String dataTypeLowerCase = prop?.dataType?.toLowerCase();
+          if (dataTypeLowerCase == 'date') {
+            cls = Date.class;
+          } else if (dataTypeLowerCase == 'string') {
+            cls = String.class;
+
+          } else {
+            cls = Class.forName("java.lang.${prop.dataType}")
+          }
+        }
+        OProperty oProperty = createProp(oClass, prop.name as String, cls)
       }
+
     }
 
     json['vertexIndexes'].each { idx ->
       if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
 
         if (idx.composite) {
-          oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), ids.propertyKeys as String[])
+          if (!oClass.getClassIndex(idx.name)) {
+            oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), idx.propertyKeys as String[])
+          }
+          else {
+            System.out.println("Index ${idx.name} already exists.")
+          }
+
 
         }
         if (idx.mixedIndex == "search") {
-          oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
-            null as ODocument,
-            "LUCENE", ids.propertyKeys as String[])
+          if (!oClass.getClassIndex(idx.name)) {
+            oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
+              null as ODocument,
+              "LUCENE", idx.propertyKeys as String[])
+
+          }
+          else {
+            System.out.println("Index ${idx.name} already exists.")
+          }
+
         }
 
 
@@ -98,6 +127,7 @@ Map<String, OClass> addVertexLabels(OrientStandardGraph graph, def json, StringB
 
 
   }
+
   return classMap
 }
 
@@ -142,15 +172,16 @@ Map<String, OClass> addEdgeLabels(OrientStandardGraph graph, def json, StringBuf
 @CompileStatic
 OProperty createProp(OClass oClass, String keyName, Class<?> classType) {
 
+
   try {
     OType oType = OType.getTypeByClass(classType)
+    System.out.println("keyName = ${keyName}, classType = ${classType?.toString()} oType = ${oType?.toString()}")
 
     OProperty prop = oClass.getProperty(keyName)
     if (prop == null) {
       prop = oClass.createProperty(keyName, oType)
 
     }
-    System.out.println("keyName = ${keyName}, keyID = " + prop.getId())
 
     return prop
 
@@ -166,7 +197,7 @@ OClass createVertexLabel(OrientStandardGraph graph, String labelName) {
 
   try {
     String className = graph.createVertexClass(labelName)
-    OClass oClass = graph.getSchema().getClass(className)
+    OClass oClass = graph.getRawDatabase().getClass(className)
 
 
     createProp(oClass, "Metadata.Type." + labelName, String.class)
@@ -186,7 +217,7 @@ OClass createEdgeLabel(OrientStandardGraph graph, String labelName) {
 
   try {
     String className = graph.createEdgeClass(labelName)
-    OClass oClass = graph.getSchema().getClass(className)
+    OClass oClass = graph.getRawDatabase().getClass(className)
 
     createProp(oClass, "Metadata.Type." + labelName, String.class)
 
@@ -399,8 +430,8 @@ class PontusJ2ReportingFunctions {
   static {
     PontusJ2ReportingFunctions.jinJava = new Jinjava()
 
-    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getChart",
-      PontusJ2ReportingFunctions.class, "getChart"))
+//    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getChart",
+//      PontusJ2ReportingFunctions.class, "getChart"))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "possibleMatches",
       PontusJ2ReportingFunctions.class, "possibleMatches", String.class, String.class))
@@ -703,7 +734,7 @@ class PontusJ2ReportingFunctions {
   static {
     ptDictionarySlurper = new JsonSlurper()
     try {
-      def inputFile = new File("conf/i18n_pt_translation.json")
+      def inputFile = new File("/orientdb/conf/i18n_pt_translation.json")
 
       ptDictionary = ptDictionarySlurper.parse(inputFile.text.toCharArray())
 
@@ -848,10 +879,11 @@ def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraver
 
 def getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
 
-  return getVisJsGraphImmediateNeighbourNodes(new ORecordId(pg_vid), sb, counter, nodeIds,depth)
+  return getVisJsGraphImmediateNeighbourNodes(new ORecordId(pg_vid), sb, counter, nodeIds, depth)
 
 
 }
+
 def getVisJsGraphImmediateNeighbourNodes(ORID pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
 
   def types = getMetadataTypes(depth.intValue())
@@ -863,8 +895,8 @@ def getVisJsGraphImmediateNeighbourNodes(ORID pg_vid, StringBuffer sb, int count
       ORID vid = it.id() as ORID
       if (nodeIds.add(vid)) {
         sb.append(counter == 0 ? '{' : ',{')
-          .append('"id":').append(vid)
-          .append(',"level":').append(getLevel(labelStr))
+          .append('"id":"').append(vid)
+          .append('","level":').append(getLevel(labelStr))
           .append(',"group":"').append(groupStr)
           .append('","label":"').append(labelStr)
           .append('","shape":"').append('image')
@@ -1057,8 +1089,8 @@ def getVisJSGraph(ORID pg_vid, long pg_depth) {
           String labelStr = it.label().toString().replaceAll('[_.]', ' ')
           ORID vid = it.id()
           sb.append(counter == 0 ? '{' : ',{')
-            .append('"id":').append(vid)
-            .append(',"group":"').append(groupStr)
+            .append('"id":"').append(vid)
+            .append('","group":"').append(groupStr)
             .append('","label":"').append(labelStr)
             .append('","shape":"').append('image')
             .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
@@ -1077,8 +1109,8 @@ def getVisJSGraph(ORID pg_vid, long pg_depth) {
           String labelStr = it.label().toString().replaceAll('[_.]', ' ')
           ORID vid = it.id()
           sb.append(counter == 0 ? '{' : ',{')
-            .append('"id":').append(vid)
-            .append(',"group":"').append(groupStr)
+            .append('"id":"').append(vid)
+            .append('","group":"').append(groupStr)
             .append('","label":"').append(labelStr)
             .append('","shape":"').append('image')
             .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
@@ -1116,8 +1148,8 @@ def getVisJSGraph(ORID pg_vid, long pg_depth) {
         .dedup()
         .each {
           sb.append(counter == 0 ? '{' : ',{')
-            .append('"from": ').append(it.inVertex().id())
-            .append(' ,"to": "').append(it.outVertex().id())
+            .append('"from": "').append(it.inVertex().id())
+            .append('" ,"to": "').append(it.outVertex().id())
             .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
             .append(prob.toString())
             .append('"}')
@@ -1175,8 +1207,8 @@ def getVisJsGraphImmediateNeighbourEdges(ORID pg_vid, StringBuffer sb, int count
       localEntry.setLength(0)
 
       localEntry.append(counter == 0 ? '{' : ',{')
-        .append('"from": ').append(from)
-        .append(' ,"to": "').append(to)
+        .append('"from": "').append(from)
+        .append('" ,"to": "').append(to)
         .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
         .append('"}')
       String localEntryStr = localEntry.toString()
@@ -1458,8 +1490,8 @@ def getVisJsGraph(ORID pg_vid) {
           String labelStr = it.label().toString().replaceAll('[_.]', ' ')
           ORID vid = it.id()
           sb.append(counter == 0 ? '{' : ',{')
-            .append('"id":').append(vid)
-            .append(',"group":"').append(groupStr)
+            .append('"id":"').append(vid)
+            .append('","group":"').append(groupStr)
             .append('","label":"').append(labelStr)
             .append('","shape":"').append('image')
             .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
@@ -1478,8 +1510,8 @@ def getVisJsGraph(ORID pg_vid) {
           String labelStr = it.label().toString().replaceAll('[_.]', ' ')
           ORID vid = it.id()
           sb.append(counter == 0 ? '{' : ',{')
-            .append('"id":').append(vid)
-            .append(',"group":"').append(groupStr)
+            .append('"id":"').append(vid)
+            .append('","group":"').append(groupStr)
             .append('","label":"').append(labelStr)
             .append('","shape":"').append('image')
             .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())

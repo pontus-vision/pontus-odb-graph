@@ -17,6 +17,7 @@ import groovy.json.JsonSlurper
 import org.apache.commons.math3.distribution.EnumeratedDistribution
 import org.apache.commons.math3.util.Pair
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
+import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet
 import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
@@ -4393,105 +4394,125 @@ def getScoresJson() {
   return sb.toString()
 
 }
-
-
 def calculatePOLECounts() {
-
-  List<String> vertexLabels = [
-    "Event.Consent"
-    , "Event.Data_Breach"
-    , "Event.Form_Ingestion"
-    , "Event.Ingestion"
-    , "Event.Subject_Access_Request"
-    , "Event.Training"
-    , "Location.Address"
-    , "Object.AWS_Instance"
-    , "Object.AWS_Network_Interface"
-    , "Object.AWS_Security_Group"
-    , "Object.AWS_VPC"
-    , "Object.Awareness_Campaign"
-    , "Object.Credential"
-    , "Object.Data_Procedures"
-    , "Object.Data_Source"
-    , "Object.Email_Address"
-    , "Object.Form"
-    , "Object.Identity_Card"
-    , "Object.Insurance_Policy"
-    , "Object.Lawful_Basis"
-    , "Object.Contract"
-    , "Object.Notification_Templates"
-    , "Object.Privacy_Impact_Assessment"
-    , "Object.Privacy_Notice"
-    , "Object.Sensitive_Data"
-    , "Object.Health"
-    , "Object.Biometric"
-    , "Object.Genetic"
-    , "Person.Natural"
-    , "Person.Employee"
-    , "Person.Organisation"
-
-  ];
-
-
-  StringBuffer sb = new StringBuffer("[")
-  boolean firstTime = true;
-  vertexLabels.each { dataType ->
-    if (!firstTime) {
-      sb.append(",")
-    } else {
-      firstTime = false;
-    }
-    String var = "v.\"Metadata.Type.${dataType}\": ${dataType}"
-    // sb.append(var)
-
-    Long numEntries = App.graph.indexQuery(dataType + ".MixedIdx", var).vertexTotals()
-    sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(dataType.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-  }
-
-  String var = "v.\"Object.Data_Source.Type\": Structured"
-  Long numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
-  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-
-  try {
-    numEntries = App.g.V().has('Object.Data_Source.Type', P.eq('Structured')).out().out().in().has('Metadata.Type.Person.Identity', P.eq('Person.Identity')).dedup().count().next();
-    sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-  } catch (e) {
-
-  }
-
-  var = "v.\"Object.Metadata_Source.Type\": DB_TABLE"
-  numEntries = App.graph.indexQuery("Object.Metadata_Source.MixedIdx", var).vertexTotals()
-  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Tables')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-
-  var = "v.\"Object.Metadata_Source.Type\": DB_COLUMN"
-  numEntries = App.graph.indexQuery("Object.Metadata_Source.MixedIdx", var).vertexTotals()
-  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Columns')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-
-
-  var = "v.\"Object.Data_Source.Type\": Unstructured"
-  numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
-  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-
-
-  numEntries = App.g.V().has('Object.Data_Source.Type', P.eq('Unstructured')).out().out().in().has('Metadata.Type.Person.Identity', P.eq('Person.Identity')).dedup().count().next();
-  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-
-
-  var = "v.\"Object.Data_Source.Type\": Mixed"
-  numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
-  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Mixed Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-
-  var = "v.\"Object.Data_Source.Type\": Unstructured"
-  numEntries = App.graph.indexQuery("Object.Data_Source.MixedIdx", var).vertexTotals()
-  sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-
-
-  sb.append(']')
-
-  return sb.toString()
-
+  return CalculatePOLECount.calculatePOLECounts();
 }
 
+class CalculatePOLECount {
+
+  static Long getCountQueryResults(String queryStr)
+  {
+
+    OGremlinResultSet resSet = App.graph.executeSql(queryStr, Collections.EMPTY_MAP);
+    Long numEntries = resSet.iterator().next().getRawResult().getProperty("COUNT(*)");
+
+    resSet.close();
+
+    return numEntries;
+
+  }
+
+  static String calculatePOLECounts ()
+  {
+
+    List<String> vertexLabels = [
+      "Event.Consent"
+      , "Event.Data_Breach"
+      , "Event.Form_Ingestion"
+      , "Event.Ingestion"
+      , "Event.Subject_Access_Request"
+      , "Event.Training"
+      , "Location.Address"
+      , "Object.AWS_Instance"
+      , "Object.AWS_Network_Interface"
+      , "Object.AWS_Security_Group"
+      , "Object.AWS_VPC"
+      , "Object.Awareness_Campaign"
+      , "Object.Credential"
+      , "Object.Data_Procedures"
+      , "Object.Data_Source"
+      , "Object.Email_Address"
+      , "Object.Form"
+      , "Object.Identity_Card"
+      , "Object.Insurance_Policy"
+      , "Object.Lawful_Basis"
+      , "Object.Contract"
+      , "Object.Notification_Templates"
+      , "Object.Privacy_Impact_Assessment"
+      , "Object.Privacy_Notice"
+      , "Object.Sensitive_Data"
+      , "Object.Health"
+      , "Object.Biometric"
+      , "Object.Genetic"
+      , "Person.Natural"
+      , "Person.Employee"
+      , "Person.Organisation"
+
+    ];
+
+
+    StringBuffer sb = new StringBuffer("[")
+    boolean firstTime = true;
+    vertexLabels.each { dataType ->
+      if (!firstTime) {
+        sb.append(",")
+      } else {
+        firstTime = false;
+      }
+
+      String queryStr = "SELECT COUNT(*) FROM `${dataType}`";
+//      Long numEntries = App.graph.executeSql(queryStr, Collections.EMPTY_MAP).iterator().next().getProperty("count");
+      Long numEntries = getCountQueryResults(queryStr);
+
+      sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(dataType.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+    }
+
+//  String var = "v.\"Object.Data_Source.Type\": Structured"
+    String queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'Structured'";
+    Long numEntries = getCountQueryResults(queryStr);
+
+
+    sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+    try {
+      numEntries = App.g.V().has('Object.Data_Source.Type', P.eq('Structured')).out().out().in().has('Metadata.Type.Person.Identity', P.eq('Person.Identity')).dedup().count().next();
+      sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+    } catch (e) {
+
+    }
+    queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'DB_TABLE'";
+    numEntries = getCountQueryResults(queryStr);
+
+    sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Tables')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+    queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'DB_COLUMN'";
+    numEntries = getCountQueryResults(queryStr);
+
+    sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Columns')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+
+    queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'Unstructured'";
+    numEntries = getCountQueryResults(queryStr);
+
+    sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+
+    numEntries = App.g.V().has('Object.Data_Source.Type', P.eq('Unstructured')).out().out().in().has('Metadata.Type.Person.Identity', P.eq('Person.Identity')).dedup().count().next();
+    sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+
+    queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'Mixed'";
+    numEntries = getCountQueryResults(queryStr);
+
+    sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Mixed Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+
+    sb.append(']')
+
+    return sb.toString()
+
+  }
+}
 
 def getNumEventsPerDataSource() {
   StringBuffer sb = new StringBuffer("[")
@@ -4654,88 +4675,94 @@ def getNumNaturalPersonPerOrganisation() {
 }
 
 def getDSARStatsPerOrganisation() {
-
-  StringBuffer sb = new StringBuffer("[")
-  boolean firstTime = true;
-
-  long thirtyDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 30L));
-  def thirtyDayDateThreshold = new java.util.Date(thirtyDayThresholdMs);
-
-  long fifteenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 15L));
-  def fifteenDayDateThreshold = new java.util.Date(fifteenDayThresholdMs);
-
-
-  long tenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 10L));
-  def tenDayDateThreshold = new java.util.Date(tenDayThresholdMs);
-
-  long fiveDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 5L));
-  def fiveDayDateThreshold = new java.util.Date(fiveDayThresholdMs);
-
-  def typeOrg =
-    [
-      "Is_Data_Controller",
-      "Is_Data_Processor",
-      "Is_Data_Owner"
-    ]
-
-  typeOrg.each { org ->
-    g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
-      .as('organisation')
-      .outE(org)
-      .as('dsar_source_type')
-      .inV().in('Has_Contract')
-      .out("Has_Ingestion_Event")
-      .out("Has_Ingestion_Event")
-      .in("Has_Ingestion_Event")
-      .has('Metadata.Type.Person.Natural', eq('Person.Natural'))
-      .out("Made_SAR_Request")
-      .where(
-        __.or(
-          values('Event.Subject_Access_Request.Metadata.Update_Date').is(gte(thirtyDayDateThreshold)),
-          hasNot('Event.Subject_Access_Request.Metadata.Update_Date')
-        )
-      )
-
-      .dedup()
-      .as('events')
-      .match(
-        __.as('organisation').values('Person.Organisation.Name').as('dsar_source_name')
-        , __.as('events').values('Event.Subject_Access_Request.Status').as('dsar_status')
-        , __.as('events').values('Event.Subject_Access_Request.Request_Type').as('dsar_type')
-        , __.as('events').values('Event.Subject_Access_Request.Metadata.Create_Date').as('dsar_create_date')
-        .coalesce(is(gt(fiveDayDateThreshold)).constant("Last 5 days"),
-          is(between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
-          is(between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
-          is(between(fifteenDayDateThreshold, thirtyDayDateThreshold)).constant("Last 30 days"),
-          is(lt(thirtyDayDateThreshold)).constant("Older than 30 days"))
-        .as('dsar_age')
-      )
-      .select('dsar_source_type', 'dsar_source_name', 'dsar_status', 'dsar_type', 'dsar_age')
-      .groupCount()
-      .each { metric ->
-        metric.each { key, metricvalue ->
-          if (!firstTime) {
-            sb.append("\n,")
-          } else {
-            firstTime = false;
-          }
-          sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(key['dsar_type'].toString())}   " +
-            " ${PontusJ2ReportingFunctions.translate(key['dsar_status'].toString())}    " +
-            " ${PontusJ2ReportingFunctions.translate(key['dsar_source_type'].label().toString().replaceAll('[Is_ |_|.]', ' ').toString())}  " +
-            "   ${PontusJ2ReportingFunctions.translate(key['dsar_age'].toString())}\", \"dsar_source_name\":\"${PontusJ2ReportingFunctions.translate(key['dsar_source_name'].toString())}\", \"dsar_count\": $metricvalue }".toString())
-
-        }
-
-      }
-  }
-
-  sb.append(']')
-
-  return sb.toString()
-
-
+  return GetDSARStatsPerOrganisation.getDSARStatsPerOrganisation(g);
 }
 
+class GetDSARStatsPerOrganisation {
+
+  public static String getDSARStatsPerOrganisation(GraphTraversalSource g) {
+
+    StringBuffer sb = new StringBuffer("[")
+    boolean firstTime = true;
+
+    long thirtyDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 30L));
+    def thirtyDayDateThreshold = new java.util.Date(thirtyDayThresholdMs);
+
+    long fifteenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 15L));
+    def fifteenDayDateThreshold = new java.util.Date(fifteenDayThresholdMs);
+
+
+    long tenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 10L));
+    def tenDayDateThreshold = new java.util.Date(tenDayThresholdMs);
+
+    long fiveDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 5L));
+    def fiveDayDateThreshold = new java.util.Date(fiveDayThresholdMs);
+
+    def typeOrg =
+      [
+        "Is_Data_Controller",
+        "Is_Data_Processor",
+        "Is_Data_Owner"
+      ]
+
+    typeOrg.each { org ->
+      g.V().has('Metadata.Type.Person.Organisation', P.eq('Person.Organisation'))
+        .as('organisation')
+        .outE(org)
+        .as('dsar_source_type')
+        .inV().in('Has_Contract')
+        .out("Has_Ingestion_Event")
+        .out("Has_Ingestion_Event")
+        .in("Has_Ingestion_Event")
+        .has('Metadata.Type.Person.Natural', P.eq('Person.Natural'))
+        .out("Made_SAR_Request")
+        .where(
+          __.or(
+            values('Event.Subject_Access_Request.Metadata.Update_Date').is(P.gte(thirtyDayDateThreshold)),
+            hasNot('Event.Subject_Access_Request.Metadata.Update_Date')
+          )
+        )
+
+        .dedup()
+        .as('events')
+        .match(
+          __.as('organisation').values('Person.Organisation.Name').as('dsar_source_name')
+          , __.as('events').values('Event.Subject_Access_Request.Status').as('dsar_status')
+          , __.as('events').values('Event.Subject_Access_Request.Request_Type').as('dsar_type')
+          , __.as('events').values('Event.Subject_Access_Request.Metadata.Create_Date').as('dsar_create_date')
+          .coalesce(is(P.gt(fiveDayDateThreshold)).constant("Last 5 days"),
+            is(P.between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
+            is(P.between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
+            is(P.between(fifteenDayDateThreshold, thirtyDayDateThreshold)).constant("Last 30 days"),
+            is(P.lt(thirtyDayDateThreshold)).constant("Older than 30 days"))
+          .as('dsar_age')
+        )
+        .select('dsar_source_type', 'dsar_source_name', 'dsar_status', 'dsar_type', 'dsar_age')
+        .groupCount()
+        .each { metric ->
+          metric.each { key, metricvalue ->
+            if (!firstTime) {
+              sb.append("\n,")
+            } else {
+              firstTime = false;
+            }
+            sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(key['dsar_type'].toString())}   " +
+              " ${PontusJ2ReportingFunctions.translate(key['dsar_status'].toString())}    " +
+              " ${PontusJ2ReportingFunctions.translate(key['dsar_source_type'].label().toString().replaceAll('[Is_ |_|.]', ' ').toString())}  " +
+              "   ${PontusJ2ReportingFunctions.translate(key['dsar_age'].toString())}\", \"dsar_source_name\":\"${PontusJ2ReportingFunctions.translate(key['dsar_source_name'].toString())}\", \"dsar_count\": $metricvalue }".toString())
+
+          }
+
+        }
+    }
+
+    sb.append(']')
+
+    return sb.toString()
+
+
+  }
+}
 
 class Discovery {
   static String domainTranslationStr = """

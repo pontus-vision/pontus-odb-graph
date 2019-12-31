@@ -34,6 +34,18 @@
   ],
   "propertyKeys": [
     {
+      "name": "similarity",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+
+    {
+      "name": "probability",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+
+    {
       "name": "maxFromScore",
       "dataType": "Double",
       "cardinality": "SINGLE"
@@ -80,6 +92,27 @@
     },
     {
       "name": "Event.Consent.Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+
+    {
+      "name": "Event.Consent.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Consent.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Consent.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Consent.Form_Submission_Owner_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -150,6 +183,11 @@
     },
     {
       "name": "Event.Ingestion.Domain_b64",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Ingestion.Business_Rules",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -240,6 +278,11 @@
     },
     {
       "name": "Location.Address.Full_Address",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Location.Address.Neighborhood",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -414,6 +457,26 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Sensitive_Data",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Health",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Biometric",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Genetic",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Event.Consent",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -479,6 +542,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Application",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Object.Credential",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -490,6 +558,11 @@
     },
     {
       "name": "Metadata.Type.Object.Data_Source",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Metadata_Source",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -698,6 +771,61 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
+
+
+
+
+
+    {
+      "name": "Object.Application.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Application.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Application.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Application.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Application.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Application.Start_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Application.Stop_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Application.URL",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+
+    {
+      "name": "Object.Application.Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+
+
+
+
     {
       "name": "Object.Awareness_Campaign.Description",
       "dataType": "String",
@@ -794,6 +922,127 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Metadata_Source.Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Create_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Update_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Credential_Principal",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Credential_Secret",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Credential_ApiKey",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.URI_Config",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.URI_Template",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.URI_Control",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.URI_Read",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.URI_Delete",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.URI_Update",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.URI_Monitor",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Retention_Policy_JSON",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Engine",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Domain",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Domain_Frequency",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Business_Rules",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+
+    {
       "name": "Object.Data_Source.Name",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -883,6 +1132,38 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
+    {
+      "name": "Object.Data_Source.Retention_Policy_JSON",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Engine",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Domain",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Domain_Frequency",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Business_Rules",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+
+
     {
       "name": "Object.Data_Procedures.Type",
       "dataType": "String",
@@ -1269,6 +1550,106 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Sensitive_Data.Ethnicity",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Religion",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Political_View",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Union_Membership",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Club_Membership",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Church_Membership",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Sexual_Orientation",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Health.Blood_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Health.Organ_Donor",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Health.Diseases",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Health.Alergies",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Weight_kg",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Eye_Colour",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Height_cm",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Fingerprints",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Facial_Picture",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Retinal_scans",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Genetic.DNA",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Genetic.RNA",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Genetic.Family_Medical_History",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Privacy_Notice.Why_Is_It_Collected",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1388,6 +1769,12 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
+    {
+      "name": "Person.Identity.First_Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+
     {
       "name": "Person.Identity.Marital_Status",
       "dataType": "String",
@@ -1571,6 +1958,26 @@
   ],
   "vertexLabels": [
     {
+      "name": "Object.Sensitive_Data",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Health",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Biometric",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Genetic",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Event.Consent",
       "partition": false,
       "useStatic": false
@@ -1631,6 +2038,11 @@
       "useStatic": false
     },
     {
+      "name": "Object.Application",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Object.Awareness_Campaign",
       "partition": false,
       "useStatic": false
@@ -1647,6 +2059,11 @@
     },
     {
       "name": "Object.Data_Source",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Metadata_Source",
       "partition": false,
       "useStatic": false
     },
@@ -1727,6 +2144,32 @@
     }
   ],
   "edgeLabels": [
+    {
+      "name": "Has_Sensitive_Data",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Table",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Column",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Semantic",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Link",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+
     {
       "name": "Approved_Compliance_Check",
       "multiplicity": "MULTI",
@@ -1878,6 +2321,21 @@
       "unidirected": false
     },
     {
+      "name": "Sent_Email_To",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Sent_Email_CC",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Sent_Email_BCC",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Phone",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -1897,9 +2355,89 @@
       "multiplicity": "MULTI",
       "unidirected": false
     }
-
   ],
   "vertexIndexes": [
+
+
+    {
+      "name": "Object.Sensitive_Data.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Sensitive_Data",
+        "Object.Sensitive_Data.Ethnicity",
+        "Object.Sensitive_Data.Religion",
+        "Object.Sensitive_Data.Political_View",
+        "Object.Sensitive_Data.Union_Membership",
+        "Object.Sensitive_Data.Club_Membership",
+        "Object.Sensitive_Data.Church_Membership",
+        "Object.Sensitive_Data.Sexual_Orientation"
+      ],
+      "propertyKeysMappings": {
+      }
+    },
+
+    {
+      "name": "Object.Health.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Health",
+        "Object.Health.Blood_Type",
+        "Object.Health.Organ_Donor",
+        "Object.Health.Diseases",
+        "Object.Health.Alergies"
+      ],
+      "propertyKeysMappings": {
+      }
+    },
+
+    {
+      "name": "Object.Biometric.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Biometric",
+        "Object.Biometric.Weight_kg",
+        "Object.Biometric.Eye_Colour",
+        "Object.Biometric.Height_cm"
+      ],
+      "propertyKeysMappings": {
+      }
+    },
+
+    {
+      "name": "Object.Genetic.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Genetic",
+        "Object.Genetic.DNA",
+        "Object.Genetic.RNA"
+      ],
+      "propertyKeysMappings": {
+      }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
     {
       "name": "Event.Data_Breach.MixedIdx",
       "composite": false,
@@ -2157,11 +2695,15 @@
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
+        "Metadata.Type.Object.Data_Source",
         "Object.Data_Source.Name",
         "Object.Data_Source.Create_Date",
         "Object.Data_Source.Update_Date",
+        "Object.Data_Source.Type",
         "Object.Data_Source.Description",
-        "Metadata.Type.Object.Data_Source",
+        "Object.Data_Source.Domain",
+        "Object.Data_Source.Domain_Frequency",
+        "Object.Data_Source.Engine",
         "Object.Data_Source.Form_Id",
         "Object.Data_Source.Form_Owner_Id",
         "Object.Data_Source.Form_Submission_Id",
@@ -2190,6 +2732,28 @@
           "mapping": "STRING"
         }
       }
+    },
+    {
+      "name": "Object.Metadata_Source.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Metadata_Source",
+        "Object.Metadata_Source.Name",
+        "Object.Metadata_Source.Create_Date",
+        "Object.Metadata_Source.Update_Date",
+        "Object.Metadata_Source.Type",
+        "Object.Metadata_Source.Description",
+        "Object.Metadata_Source.Domain",
+        "Object.Metadata_Source.Domain_Frequency",
+        "Object.Metadata_Source.Engine",
+        "Object.Metadata_Source.Form_Id",
+        "Object.Metadata_Source.Form_Owner_Id",
+        "Object.Metadata_Source.Form_Submission_Id",
+        "Object.Metadata_Source.Form_Submission_Owner_Id"
+      ]
     },
     {
       "name": "Event.Training.MixedIdx",
@@ -2255,6 +2819,7 @@
         "Person.Identity.Name_Qualifier",
         "Person.Identity.Marital_Status",
         "Person.Identity.Last_Name",
+        "Person.Identity.First_Name",
         "Person.Identity.Religion"
       ],
       "propertyKeysMappings": {
@@ -2497,7 +3062,8 @@
         "Location.Address.parser.state_district",
         "Location.Address.parser.entrance",
         "Location.Address.parser.house_number",
-        "Location.Address.Full_Address"
+        "Location.Address.Full_Address",
+        "Location.Address.Neighborhood"
       ],
       "propertyKeysMappings": {
         "Metadata.Type.Location.Address": {
@@ -2516,6 +3082,9 @@
           "mapping": "STRING"
         },
         "Location.Address.Full_Address": {
+          "mapping": "STRING"
+        },
+        "Location.Address.Neighborhood": {
           "mapping": "STRING"
         },
         "Location.Address.parser.house": {
@@ -2631,6 +3200,27 @@
         "Object.Privacy_Impact_Assessment.Form_Submission_Owner_Id": {
           "mapping": "STRING"
         }
+      }
+    },
+    {
+      "name": "Object.Application.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Object.Application.Description",
+        "Object.Application.Form_Owner_Id",
+        "Object.Application.Form_Submission_Owner_Id",
+        "Metadata.Type.Object.Application",
+        "Object.Application.Start_Date",
+        "Object.Application.Form_Submission_Id",
+        "Object.Application.Stop_Date",
+        "Object.Application.Form_Id",
+        "Object.Application.URL",
+        "Object.Application.Name"
+      ],
+      "propertyKeysMappings": {
       }
     },
     {
