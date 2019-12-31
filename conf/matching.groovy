@@ -1487,7 +1487,6 @@ def ingestDataUsingRules(OrientStandardGraph graph, GraphTraversalSource g, Map<
       sb)
 
 
-    graph.qu
     trans.commit()
   } catch (Throwable t) {
     trans.rollback()

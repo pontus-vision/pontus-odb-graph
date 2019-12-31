@@ -11,7 +11,6 @@
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVExcelRenderer.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVOutTable" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PontusComponent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/sql/executor/OSelectExecutionPlanner.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-gen" beforeDir="false" afterPath="$PROJECT_DIR$/../data-gen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../janusgraph" beforeDir="false" afterPath="$PROJECT_DIR$/../janusgraph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/.github/PULL_REQUEST_TEMPLATE.md" beforeDir="false" />
@@ -5887,16 +5886,9 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/bootstrap.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/bootstrap.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gdpr-schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr-schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/globals.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/globals.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/matching.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/matching.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/utils/LocationAddress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/utils/LocationAddress.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/package-lock.json" beforeDir="false" />
@@ -6133,7 +6125,7 @@
       <workItem from="1565081217434" duration="651000" />
       <workItem from="1565083493439" duration="604000" />
       <workItem from="1577042750191" duration="11804000" />
-      <workItem from="1577122395465" duration="97813000" />
+      <workItem from="1577122395465" duration="100205000" />
     </task>
     <servers />
   </component>
@@ -6196,38 +6188,38 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1577731378509" />
-    <state width="1493" height="254" key="GridCell.Tab.0.bottom" timestamp="1577805453656">
+    <state width="1493" height="254" key="GridCell.Tab.0.bottom" timestamp="1577809036440">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1577805453656" />
-    <state width="1493" height="254" key="GridCell.Tab.0.center" timestamp="1577805453653">
+    <state width="1493" height="254" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1577809036440" />
+    <state width="1493" height="254" key="GridCell.Tab.0.center" timestamp="1577809036440">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1577805453653" />
-    <state width="1493" height="254" key="GridCell.Tab.0.left" timestamp="1577805453652">
+    <state width="1493" height="254" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1577809036440" />
+    <state width="1493" height="254" key="GridCell.Tab.0.left" timestamp="1577809036440">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1577805453652" />
-    <state width="1493" height="254" key="GridCell.Tab.0.right" timestamp="1577805453656">
+    <state width="1493" height="254" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1577809036440" />
+    <state width="1493" height="254" key="GridCell.Tab.0.right" timestamp="1577809036440">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1577805453656" />
-    <state width="1493" height="254" key="GridCell.Tab.1.bottom" timestamp="1577805500040">
+    <state width="1493" height="254" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1577809036440" />
+    <state width="1493" height="254" key="GridCell.Tab.1.bottom" timestamp="1577809036033">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1577805500040" />
-    <state width="1493" height="254" key="GridCell.Tab.1.center" timestamp="1577805500039">
+    <state width="1493" height="254" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1577809036033" />
+    <state width="1493" height="254" key="GridCell.Tab.1.center" timestamp="1577809036030">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1577805500039" />
-    <state width="1493" height="254" key="GridCell.Tab.1.left" timestamp="1577805500039">
+    <state width="1493" height="254" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1577809036030" />
+    <state width="1493" height="254" key="GridCell.Tab.1.left" timestamp="1577809036028">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1577805500039" />
-    <state width="1493" height="254" key="GridCell.Tab.1.right" timestamp="1577805500040">
+    <state width="1493" height="254" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1577809036028" />
+    <state width="1493" height="254" key="GridCell.Tab.1.right" timestamp="1577809036033">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1577805500040" />
+    <state width="1493" height="254" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1577809036033" />
     <state x="300" y="74" key="Maven.ArtifactSearchDialog" timestamp="1577480846373">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6248,10 +6240,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="310" y="155" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.834@0.0.1536.834" timestamp="1577730133986" />
-    <state x="461" y="154" width="901" height="536" key="find.popup" timestamp="1577808035872">
+    <state x="461" y="154" width="901" height="536" key="find.popup" timestamp="1577812307020">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="461" y="154" width="901" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1577808035872" />
+    <state x="461" y="154" width="901" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1577812307020" />
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1577734227526">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
