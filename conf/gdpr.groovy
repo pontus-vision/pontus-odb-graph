@@ -326,17 +326,17 @@ def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, 
         property("Event.Training.Status", distribution.sample()).next()
 
 
-      g.addE("Event.Training.Awareness_Campaign")
+      g.addE("Event_Training_Awareness_Campaign")
         .from(trainingEvent)
         .to(g.V(awarenessCampaignId).next())
-        .property("Metadata.Type", "Event.Training.Awareness_Campaign")
+        .property("Metadata.Type", "Event_Training_Awareness_Campaign")
         .property("Metadata.Create_Date", metadataCreateDate)
         .next()
 
 
       person = g.V(personId).next();
 
-      g.addE("Event.Training.Person")
+      g.addE("Event_Training_Person")
         .from(trainingEvent)
         .to(person)
       //        .property("Metadata.Type", "Event.Training.Awareness_Campaign")
@@ -3357,11 +3357,6 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
 
 
   def vpcIds = com.jayway.jsonpath.JsonPath.parse(aws_instances).read('$.Reservations.[*].Instances.[*].VpcId').toSet()
-
-  graph.getOpenTransactions().each {
-    sb.append(it.toString()).append('\n');
-    // it.close()
-  }
 
 // graph.tx().rollback();
 

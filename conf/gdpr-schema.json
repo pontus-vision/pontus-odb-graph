@@ -2191,12 +2191,12 @@
       "unidirected": false
     },
     {
-      "name": "Event.Training.Awareness_Campaign",
+      "name": "Event_Training_Awareness_Campaign",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
-      "name": "Event.Training.Person",
+      "name": "Event_Training_Person",
       "multiplicity": "MULTI",
       "unidirected": false
     },

@@ -8,6 +8,8 @@ import com.orientechnologies.orient.core.metadata.schema.OClass
 import com.orientechnologies.orient.core.metadata.schema.OProperty
 import com.orientechnologies.orient.core.metadata.schema.OType
 import com.orientechnologies.orient.core.record.impl.ODocument
+import com.pontusvision.gdpr.App
+import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import groovy.transform.CompileStatic
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
@@ -17,8 +19,11 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSo
 import org.apache.tinkerpop.gremlin.structure.Edge
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONVersion
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 
 import java.util.concurrent.atomic.AtomicInteger
+
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.bothV
 
 LinkedHashMap globals = [:]
 globals << [graph: (graph) as OrientStandardGraph]
@@ -29,6 +34,8 @@ globals << [g: (graph).traversal() as GraphTraversalSource]
 def loadSchema(OrientStandardGraph graph, String... files) {
   StringBuffer sb = new StringBuffer()
 
+  def dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+  graph.executeSql('ALTER DATABASE DATETIMEFORMAT "'+ dateFormat + '"', [:])
 
   Map<String, OProperty> propsMap = [:]
   for (f in files) {
@@ -44,7 +51,7 @@ def loadSchema(OrientStandardGraph graph, String... files) {
 
         sb?.append("\nAbout to create vertex labels\n")
 
-        Map<String, OClass> classes = addVertexLabels(graph, json, sb)
+        Map<String, OClass> classes = ODBSchemaManager.addVertexLabels(graph, json, sb)
 
       } else {
         sb?.append("NOT LOADING FILE ${f}\n")
@@ -62,175 +69,172 @@ def loadSchema(OrientStandardGraph graph, String... files) {
   return sb?.toString()
 }
 
+class ODBSchemaManager {
+  static Map<String, OClass> addVertexLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
 
-Map<String, OClass> addVertexLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
+    Map<String, OClass> classMap = new HashMap<>()
+    json['vertexLabels'].each {
+      final String name = it.name
+      final OClass oClass = createVertexLabel(graph, name)
+      classMap.put(name, oClass)
+      sb?.append("Success added vertext label - $name\n")
 
-  Map<String, OClass> classMap = new HashMap<>()
-  json['vertexLabels'].each {
-    final String name = it.name
-    final OClass oClass = createVertexLabel(graph, name)
-    classMap.put(name, oClass)
-    sb?.append("Success added vertext label - $name\n")
+      json['propertyKeys'].each { prop ->
+        if (prop.name && prop.dataType && (prop.name as String).startsWith(name)) {
+          Class<?> cls = null;
 
-    json['propertyKeys'].each { prop ->
-      if (prop.name && prop.dataType && (prop.name as String).startsWith(name)) {
-        Class<?> cls = null;
-
-        try {
-          cls = Class.forName(prop.dataType as String);
-        }
-        catch (Throwable t) {
-          String dataTypeLowerCase = prop?.dataType?.toLowerCase();
-          if (dataTypeLowerCase == 'date') {
-            cls = Date.class;
-          } else if (dataTypeLowerCase == 'string') {
-            cls = String.class;
-
-          } else {
-            cls = Class.forName("java.lang.${prop.dataType}")
+          try {
+            cls = Class.forName(prop.dataType as String);
           }
+          catch (Throwable t) {
+            String dataTypeLowerCase = prop?.dataType?.toLowerCase();
+            if (dataTypeLowerCase == 'date') {
+              cls = Date.class;
+            } else if (dataTypeLowerCase == 'string') {
+              cls = String.class;
+
+            } else {
+              cls = Class.forName("java.lang.${prop.dataType}")
+            }
+          }
+          OProperty oProperty = createProp(oClass, prop.name as String, cls)
         }
-        OProperty oProperty = createProp(oClass, prop.name as String, cls)
+
       }
+
+      json['vertexIndexes'].each { idx ->
+        if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
+
+          if (idx.composite) {
+            if (!oClass.getClassIndex(idx.name)) {
+              oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), idx.propertyKeys as String[])
+            } else {
+              System.out.println("Index ${idx.name} already exists.")
+            }
+
+
+          }
+          if (idx.mixedIndex == "search") {
+            if (!oClass.getClassIndex(idx.name)) {
+              oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
+                null as ODocument,
+                "LUCENE", idx.propertyKeys as String[])
+
+            } else {
+              System.out.println("Index ${idx.name} already exists.")
+            }
+
+          }
+
+
+        }
+      }
+
 
     }
 
-    json['vertexIndexes'].each { idx ->
-      if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
+    return classMap
+  }
 
-        if (idx.composite) {
-          if (!oClass.getClassIndex(idx.name)) {
-            oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), idx.propertyKeys as String[])
-          }
-          else {
-            System.out.println("Index ${idx.name} already exists.")
-          }
+  static Map<String, OClass> addEdgeLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
 
+    Map<String, OClass> classMap = new HashMap<>()
+    json['edgeLabels'].each {
+      final String name = it.name
+      final OClass oClass = createEdgeLabel(graph, name)
+      classMap.put(name, oClass)
+      sb?.append("Success added vertext label - $name\n")
+
+      json['propertyKeys'].each { prop ->
+        if (prop.name && prop.dataType && (prop.name as String).startsWith(name)) {
+          OProperty oProperty = createProp(oClass, prop.name as String, Class.forName(prop.dataType as String))
 
         }
-        if (idx.mixedIndex == "search") {
-          if (!oClass.getClassIndex(idx.name)) {
+      }
+
+      json['edgeIndexes'].each { idx ->
+        if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
+
+          if (idx.composite) {
+            oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), ids.propertyKeys as String[])
+
+          }
+          if (idx.mixedIndex == "search") {
             oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
               null as ODocument,
-              "LUCENE", idx.propertyKeys as String[])
-
-          }
-          else {
-            System.out.println("Index ${idx.name} already exists.")
+              "LUCENE", ids.propertyKeys as String[])
           }
 
-        }
-
-
-      }
-    }
-
-
-  }
-
-  return classMap
-}
-
-Map<String, OClass> addEdgeLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
-
-  Map<String, OClass> classMap = new HashMap<>()
-  json['edgeLabels'].each {
-    final String name = it.name
-    final OClass oClass = createEdgeLabel(graph, name)
-    classMap.put(name, oClass)
-    sb?.append("Success added vertext label - $name\n")
-
-    json['propertyKeys'].each { prop ->
-      if (prop.name && prop.dataType && (prop.name as String).startsWith(name)) {
-        OProperty oProperty = createProp(oClass, prop.name as String, Class.forName(prop.dataType as String))
-
-      }
-    }
-
-    json['edgeIndexes'].each { idx ->
-      if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
-
-        if (idx.composite) {
-          oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), ids.propertyKeys as String[])
 
         }
-        if (idx.mixedIndex == "search") {
-          oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
-            null as ODocument,
-            "LUCENE", ids.propertyKeys as String[])
-        }
+      }
 
+
+    }
+    return classMap
+  }
+
+  static OProperty createProp(OClass oClass, String keyName, Class<?> classType) {
+
+
+    try {
+      OType oType = OType.getTypeByClass(classType)
+      System.out.println("keyName = ${keyName}, classType = ${classType?.toString()} oType = ${oType?.toString()}")
+
+      OProperty prop = oClass.getProperty(keyName)
+      if (prop == null) {
+        prop = oClass.createProperty(keyName, oType)
 
       }
-    }
 
-
-  }
-  return classMap
-}
-
-@CompileStatic
-OProperty createProp(OClass oClass, String keyName, Class<?> classType) {
-
-
-  try {
-    OType oType = OType.getTypeByClass(classType)
-    System.out.println("keyName = ${keyName}, classType = ${classType?.toString()} oType = ${oType?.toString()}")
-
-    OProperty prop = oClass.getProperty(keyName)
-    if (prop == null) {
-      prop = oClass.createProperty(keyName, oType)
+      return prop
 
     }
-
-    return prop
-
+    catch (Throwable t) {
+      t.printStackTrace()
+    }
+    return null
   }
-  catch (Throwable t) {
-    t.printStackTrace()
+
+
+  static OClass createVertexLabel(OrientStandardGraph graph, String labelName) {
+
+    try {
+      String className = graph.createVertexClass(labelName)
+      OClass oClass = graph.getRawDatabase().getClass(className)
+
+
+      createProp(oClass, "Metadata.Type." + labelName, String.class)
+
+
+      return oClass
+
+
+    }
+    catch (Throwable t) {
+      t.printStackTrace()
+    }
+    return null
   }
-  return null
+
+  static OClass createEdgeLabel(OrientStandardGraph graph, String labelName) {
+
+    try {
+      String className = graph.createEdgeClass(labelName)
+      OClass oClass = graph.getRawDatabase().getClass(className)
+
+      createProp(oClass, "Metadata.Type." + labelName, String.class)
+
+      return oClass
+
+
+    }
+    catch (Throwable t) {
+      t.printStackTrace()
+    }
+    return null
+  }
 }
-
-
-OClass createVertexLabel(OrientStandardGraph graph, String labelName) {
-
-  try {
-    String className = graph.createVertexClass(labelName)
-    OClass oClass = graph.getRawDatabase().getClass(className)
-
-
-    createProp(oClass, "Metadata.Type." + labelName, String.class)
-
-
-    return oClass
-
-
-  }
-  catch (Throwable t) {
-    t.printStackTrace()
-  }
-  return null
-}
-
-OClass createEdgeLabel(OrientStandardGraph graph, String labelName) {
-
-  try {
-    String className = graph.createEdgeClass(labelName)
-    OClass oClass = graph.getRawDatabase().getClass(className)
-
-    createProp(oClass, "Metadata.Type." + labelName, String.class)
-
-    return oClass
-
-
-  }
-  catch (Throwable t) {
-    t.printStackTrace()
-  }
-  return null
-}
-
 
 boolean isASCII(String s) {
   for (int i = 0; i < s.length(); i++)
@@ -240,59 +244,6 @@ boolean isASCII(String s) {
 }
 
 
-def getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, ORID vid, String origLabel) {
-  StringBuilder sb = new StringBuilder()
-
-//    sb.append("{");
-
-
-//    boolean firstLine = true;
-
-  sb.append(new groovy.json.JsonBuilder(g.V(vid).valueMap().next()).toString())
-//    g.V(vid).valueMap().next().forEach { origKey, origVal ->
-//
-//        if (!firstLine){
-//            sb.append (',')
-//        }
-//        firstLine = false;
-//        sb.append('"').append(origKey).append('": "').append(origVal).append('"')
-////        String val = origVal.get(0)
-////        String key = origKey.replaceAll('[_.]', ' ')
-////        if (!key.startsWith('Metadata')) {
-////            sb.append("<tr><td class='tg-yw4l'>");
-////            if (key.endsWith("b64")) {
-////                val = new String(val.decodeBase64())
-////                key += ' (Decoded)'
-////            }
-////            val = val.replaceAll('\\\\"', '"')
-////            val = val.replaceAll('\"', '"')
-////
-////            val = org.apache.commons.lang3.StringEscapeUtils.escapeHtml4(HtmlManipulator.replaceHtmlEntities(val));
-////            val = val.replaceAll("(\\r\\n|\\n)", "<br />");
-////
-////            val = val.replaceAll('\\\\', '');
-////
-////            if (!isASCII(val)) {
-////                val = val.replaceAll("\\p{C}", "?");
-////            }
-////
-////            if (origKey.startsWith(origLabel)) {
-////                sb.append(key.substring(origLabel.length() + 1))
-////            } else {
-////                sb.append(key);
-////            }
-////            sb.append("</td><td class='tg-yw4l'>") //.append("<![CDATA[");
-////                    .append(val)
-//////                    .append("]]>")
-////                    .append("</td></tr>");
-////        }
-//    }
-//    sb.append("}");
-
-  return sb.toString().bytes.encodeBase64()
-
-//    return sb.toString().replaceAll('["]', '\\\\"').bytes.encodeBase64();
-}
 
 def renderReportInTextPt(String pg_id, String reportType = 'DSAR', GraphTraversalSource g = g) {
   return renderReportInTextPt(new ORecordId(pg_id), reportType, g)
@@ -877,352 +828,868 @@ def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraver
 }
 
 
-def getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
 
-  return getVisJsGraphImmediateNeighbourNodes(new ORecordId(pg_vid), sb, counter, nodeIds, depth)
+VisJSGraph.g = App.g;
 
-
-}
-
-def getVisJsGraphImmediateNeighbourNodes(ORID pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
-
-  def types = getMetadataTypes(depth.intValue())
-
-  types.each { type ->
-    g.V().has("Metadata.Type.${type}", eq("${type}")).each {
-      String groupStr = it.values('Metadata.Type').next()
-      String labelStr = it.label().toString().replaceAll('[_.]', ' ')
-      ORID vid = it.id() as ORID
-      if (nodeIds.add(vid)) {
-        sb.append(counter == 0 ? '{' : ',{')
-          .append('"id":"').append(vid)
-          .append('","level":').append(getLevel(labelStr))
-          .append(',"group":"').append(groupStr)
-          .append('","label":"').append(labelStr)
-          .append('","shape":"').append('image')
-          .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
-          .append('"')
-        if (vid.equals(pg_vid)) {
-          sb.append(',"fixed":true')
-        }
-        sb.append('}')
-
-        counter++
-
-      }
-    }
+class VisJSGraph {
+  static GraphTraversalSource g;
+  static getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, ORID vid, String origLabel) {
+    StringBuilder sb = new StringBuilder()
+    sb.append(new JsonBuilder(g.V(vid).valueMap().next()).toString())
+    return sb.toString().bytes.encodeBase64()
   }
 
-
-  return counter
-}
-
-def getEdgeProperties(String fromVertexId, String toVertexId) {
-  return getEdgeProperties(new ORecordId(fromVertexId), new ORecordId(toVertexId))
-}
-
-def getEdgeProperties(ORID fromVertexId, ORID toVertexId) {
-  def mapper = GraphSONMapper.build().version(GraphSONVersion.V1_0).create().createMapper()
-
-  def v = g.V(fromVertexId).bothE().filter(bothV().id().is(toVertexId)).valueMap().next()
-
-  mapper.writeValueAsString(v)
-
-}
-
-def getVisJSGraph(String pg_vid, long pg_depth) {
-
-  return getVisJSGraph(new ORecordId(pg_vid), pg_depth)
-}
-
-def getVisJSGraph(ORID pg_vid, long pg_depth) {
-//g.V().has("Metadata.Type.Person.Natural",eq("Person.Natural")).id()
-//g.V(1720320).bothE()
-//1720320
-//
-//  def pg_depth= 1
-//  def pg_vid= 1827056
-
-  StringBuffer sb = new StringBuffer()
-
-  Long numEdges = g.V(pg_vid).bothE().count().next()
-  String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
-
-  if (numEdges > 15) {
-
-    HashSet nodesSet = new HashSet()
-    HashSet edgesSet = new HashSet()
+  static getVisJsGraph(ORID pg_vid) {
 
 
-    g.V(pg_vid).as('orig')
-      .outE().match(
-      __.as('e').inV().label().as('vLabel')
-      // ,  __.as('e').outV().label().as('inVLabel')
-      , __.as('e').label().as('edgeLabel')
-    )
-      .select('edgeLabel', 'vLabel')
-      .groupCount().each {
-      def entry = it
+    StringBuffer sb = new StringBuffer()
+
+    Long numEdges = g.V(pg_vid).bothE().count().next()
+    String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
+
+    if (numEdges > 15) {
+
+      HashSet nodesSet = new HashSet()
+      HashSet edgesSet = new HashSet()
 
 
-      entry.each {
-        key, val ->
+      g.V(pg_vid).as('orig')
+        .outE().match(
+        __.as('e').inV().label().as('vLabel')
+        // ,  __.as('e').outV().label().as('inVLabel')
+        , __.as('e').label().as('edgeLabel')
+      )
+        .select('edgeLabel', 'vLabel')
+        .groupCount().each {
+        def entry = it
 
 
-          if (key instanceof Map) {
-
-            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-            String toNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-              ' -> (' + edgeLabel + ')'
-
-            String edgeId = key.get('edgeLabel')
-            String toNodeId = key.get('vLabel') +
-              ' -> (' + edgeId + ')'
-
-            sb.setLength(0)
-
-            sb.append('{ "id":"').append(toNodeId)
-              .append('","label":"').append(toNodeLabel)
-              .append('","group":"').append(toNodeLabel)
-              .append('","shape":"').append('box')
-              .append('"}\n')
+        entry.each {
+          key, val ->
 
 
-            nodesSet.add(sb.toString())
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+              String toNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                ' -> (' + edgeLabel + ')'
+
+              String edgeId = key.get('edgeLabel')
+              String toNodeId = key.get('vLabel') +
+                ' -> (' + edgeId + ')'
+
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(toNodeId)
+                .append('","label":"').append(toNodeLabel)
+                .append('","group":"').append(toNodeLabel)
+                .append('","shape":"').append('box')
+                .append('"}\n')
 
 
-            sb.setLength(0)
+              nodesSet.add(sb.toString())
 
-            sb.append('{ "from":"')
-              .append(pg_vid).append('","to":"')
-              .append(toNodeId).append('","label":"')
-              .append(edgeLabel).append(' (')
-              .append(val).append(')","value":')
-              .append(val).append('}\n')
 
-            edgesSet.add(sb.toString())
-            sb.setLength(0)
+              sb.setLength(0)
 
-          }
+              sb.append('{ "from":"')
+                .append(pg_vid).append('","to":"')
+                .append(toNodeId).append('","label":"')
+                .append(edgeLabel).append(' (')
+                .append(val).append(')","value":')
+                .append(val).append('}\n')
+
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
+
+            }
+
+
+        }
 
 
       }
 
 
-    }
+      g.V(pg_vid).as('orig')
+        .inE().match(
+        __.as('e').outV().label().as('vLabel')
+        // ,  __.as('e').outV().label().as('inVLabel')
+        , __.as('e').label().as('edgeLabel')
+      )
+        .select('edgeLabel', 'vLabel')
+        .groupCount().each {
+        it.each {
+          key, val ->
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+
+              String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                ' <- (' + edgeLabel + ')'
+              String edgeId = key.get('edgeLabel')
+
+              String fromNodeId = key.get('vLabel') +
+                ' <- (' + edgeId + ')'
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(fromNodeId)
+                .append('","label":"').append(fromNodeLabel)
+                .append('","group":"').append(fromNodeLabel)
+                .append('","shape":"').append('box')
+                .append('"}')
+
+              nodesSet.add(sb.toString())
 
 
-    g.V(pg_vid).as('orig')
-      .inE().match(
-      __.as('e').outV().label().as('vLabel')
-      // ,  __.as('e').outV().label().as('inVLabel')
-      , __.as('e').label().as('edgeLabel')
-    )
-      .select('edgeLabel', 'vLabel')
-      .groupCount().each {
-      it.each {
-        key, val ->
-          if (key instanceof Map) {
+              sb.setLength(0)
 
-            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+              sb.append('{ "from":"')
+                .append(fromNodeId).append('","to":"')
+                .append(pg_vid).append('","label":"')
+                .append(edgeLabel).append(' (')
+                .append(val).append(')","value":')
+                .append(val).append('}')
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
+            }
 
-            String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-              ' <- (' + edgeLabel + ')'
-            String edgeId = key.get('edgeLabel')
 
-            String fromNodeId = key.get('vLabel') +
-              ' <- (' + edgeId + ')'
-            sb.setLength(0)
+        }
 
-            sb.append('{ "id":"').append(fromNodeId)
-              .append('","label":"').append(fromNodeLabel)
-              .append('","group":"').append(fromNodeLabel)
-              .append('","shape":"').append('box')
+
+      }
+      sb.setLength(0)
+      sb.append('{ "id":"').append(pg_vid)
+        .append('","label":"').append(origLabel)
+        .append('","group":"').append(origLabel)
+        .append('","fixed":').append(true)
+        .append(',"shape":"').append('image')
+        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, pg_vid, origLabel).toString())
+        .append('"}')
+
+      nodesSet.add(sb.toString())
+      sb.setLength(0)
+
+      sb.append('{ "nodes":')
+        .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
+    } else {
+      int counter = 0
+
+      try {
+
+        sb.append('{ "nodes":[')
+
+        g.V(pg_vid)
+          .both()
+          .dedup()
+          .each {
+            String groupStr = it.values('Metadata.Type').next()
+            String labelStr = it.label().toString().replaceAll('[_.]', ' ')
+            ORID vid = it.id()
+            sb.append(counter == 0 ? '{' : ',{')
+              .append('"id":"').append(vid)
+              .append('","group":"').append(groupStr)
+              .append('","label":"').append(labelStr)
+              .append('","shape":"').append('image')
+              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+              .append('"')
+            if (vid.equals(pg_vid)) {
+              sb.append(',"fixed":true')
+            }
+            sb.append('}')
+
+            counter++
+
+          }
+        g.V(pg_vid)  // Also get the original node
+          .each {
+            String groupStr = it.values('Metadata.Type').next()
+            String labelStr = it.label().toString().replaceAll('[_.]', ' ')
+            ORID vid = it.id()
+            sb.append(counter == 0 ? '{' : ',{')
+              .append('"id":"').append(vid)
+              .append('","group":"').append(groupStr)
+              .append('","label":"').append(labelStr)
+              .append('","shape":"').append('image')
+              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+              .append('"')
+            if (vid.equals(pg_vid)) {
+              sb.append(',"fixed":true')
+            }
+            sb.append('}')
+
+            counter++
+
+          }
+        sb.append('], "edges":[')
+
+
+        counter = 0
+        g.V(pg_vid)
+          .bothE()
+          .dedup()
+          .each {
+            StringBuffer prob = new StringBuffer()
+            try {
+              prob.append(' - s - ')
+                .append(
+                  Math.round(
+                    Math.min(
+                      it.values('toScorePercent').next(),
+                      it.values('fromScorePercent').next()
+                    ) * 100) / 100)
+                .append('%')
+
+            } catch (Throwable t) {
+              prob.setLength(0)
+            }
+
+            sb.append(counter == 0 ? '{' : ',{')
+              .append('"from": "').append(it.inVertex().id())
+              .append('" ,"to": "').append(it.outVertex().id())
+              .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
+              .append(prob.toString())
               .append('"}')
 
-            nodesSet.add(sb.toString())
+            counter++
 
-
-            sb.setLength(0)
-
-            sb.append('{ "from":"')
-              .append(fromNodeId).append('","to":"')
-              .append(pg_vid).append('","label":"')
-              .append(edgeLabel).append(' (')
-              .append(val).append(')","value":')
-              .append(val).append('}')
-            edgesSet.add(sb.toString())
-            sb.setLength(0)
           }
 
+        sb.append(']')
 
-      }
-
-
-    }
-    sb.setLength(0)
-    sb.append('{ "id":"').append(pg_vid)
-      .append('","label":"').append(origLabel)
-      .append('","group":"').append(origLabel)
-      .append('","fixed":').append(true)
-      .append(',"shape":"').append('image')
-      .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, pg_vid, origLabel).toString())
-      .append('"}')
-
-    nodesSet.add(sb.toString())
-    sb.setLength(0)
-
-    sb.append('{ "nodes":')
-      .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
-  } else {
-    int counter = 0
-
-    try {
-
-      sb.append('{ "nodes":[')
-
-      g.V(pg_vid)
-        .both()
-        .dedup()
-        .each {
-          String groupStr = it.values('Metadata.Type').next()
-          String labelStr = it.label().toString().replaceAll('[_.]', ' ')
-          ORID vid = it.id()
-          sb.append(counter == 0 ? '{' : ',{')
-            .append('"id":"').append(vid)
-            .append('","group":"').append(groupStr)
-            .append('","label":"').append(labelStr)
-            .append('","shape":"').append('image')
-            .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
-            .append('"')
-          if (vid.equals(pg_vid)) {
-            sb.append(',"fixed":true')
-          }
-          sb.append('}')
-
-          counter++
-
-        }
-      g.V(pg_vid)  // Also get the original node
-        .each {
-          String groupStr = it.values('Metadata.Type').next()
-          String labelStr = it.label().toString().replaceAll('[_.]', ' ')
-          ORID vid = it.id()
-          sb.append(counter == 0 ? '{' : ',{')
-            .append('"id":"').append(vid)
-            .append('","group":"').append(groupStr)
-            .append('","label":"').append(labelStr)
-            .append('","shape":"').append('image')
-            .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
-            .append('"')
-          if (vid.equals(pg_vid)) {
-            sb.append(',"fixed":true')
-          }
-          sb.append('}')
-
-          counter++
-
-        }
-      sb.append('], "edges":[')
-
-
-      StringBuffer prob = new StringBuffer()
-      try {
-        prob.append(' - s - ')
-          .append(
-            Math.round(
-              Math.min(
-                it.values('toScorePercent').next(),
-                it.values('fromScorePercent').next()
-              ) * 100) / 100)
-          .append('%')
 
       } catch (Throwable t) {
-        prob.setLength(0)
+        sb.append(t.toString())
       }
 
-
-      counter = 0
-      g.V(pg_vid)
-        .bothE()
-        .dedup()
+    }
+    sb.append(', "origLabel":"').append(origLabel).append('"')
+    int counter = 0
+    sb.append(', "reportButtons": [')
+    try {
+      g.V()
+        .has('Object.Notification_Templates.Types'
+          , eq(g.V(pg_vid).values('Metadata.Type').next()))
+        .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
         .each {
+          sb.append(counter > 0 ? ',{' : '{')
+          counter++
+          sb.append('"text":"')
+          if (it.get('Object.Notification_Templates.Text') != null)
+            sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
+          sb.append('","label":"')
+          if (it.get('Object.Notification_Templates.Label') != null)
+            sb.append(it.get('Object.Notification_Templates.Label')[0])
+          sb.append('", "vid": ').append(pg_vid)
+
+          sb.append("}")
+
+        }
+    } catch (e) {
+    }
+    sb.append('] }')
+    return sb.toString()
+  }
+
+  static getVisJsGraphImmediateNeighbourNodes(ORID pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
+
+    def types = getMetadataTypes(depth.intValue())
+
+    types.each { type ->
+      g.V().has("Metadata.Type.${type}", eq("${type}")).each {
+        String groupStr = it.values('Metadata.Type').next()
+        String labelStr = it.label().toString().replaceAll('[_.]', ' ')
+        ORID vid = it.id() as ORID
+        if (nodeIds.add(vid)) {
           sb.append(counter == 0 ? '{' : ',{')
-            .append('"from": "').append(it.inVertex().id())
-            .append('" ,"to": "').append(it.outVertex().id())
-            .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
-            .append(prob.toString())
-            .append('"}')
+            .append('"id":"').append(vid)
+            .append('","level":').append(getLevel(labelStr))
+            .append(',"group":"').append(groupStr)
+            .append('","label":"').append(labelStr)
+            .append('","shape":"').append('image')
+            .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+            .append('"')
+          if (vid.equals(pg_vid)) {
+            sb.append(',"fixed":true')
+          }
+          sb.append('}')
 
           counter++
 
         }
-
-      sb.append(']')
-
-
-    } catch (Throwable t) {
-      sb.append(t.toString())
+      }
     }
 
-  }
-  sb.append(', "origLabel":"').append(origLabel).append('"')
-  int counter = 0
-  sb.append(', "reportButtons": [')
-  try {
-    g.V()
-      .has('Object.Notification_Templates.Types'
-        , eq(g.V(pg_vid).values('Metadata.Type').next()))
-      .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
-      .each {
-        sb.append(counter > 0 ? ',{' : '{')
-        counter++
-        sb.append('"text":"')
-        if (it.get('Object.Notification_Templates.Text') != null)
-          sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
-        sb.append('","label":"')
-        if (it.get('Object.Notification_Templates.Label') != null)
-          sb.append(it.get('Object.Notification_Templates.Label')[0])
-        sb.append('", "vid": ').append(pg_vid)
 
-        sb.append("}")
+    return counter
+  }
+
+  static getEdgeProperties(ORID fromVertexId, ORID toVertexId) {
+    def mapper = GraphSONMapper.build().version(GraphSONVersion.V1_0).create().createMapper()
+
+    def v = g.V(fromVertexId).bothE().filter(bothV().id().is(toVertexId)).valueMap().next()
+
+    mapper.writeValueAsString(v)
+
+  }
+
+  static getVisJSGraph(ORID pg_vid, long pg_depth) {
+
+    StringBuffer sb = new StringBuffer()
+
+    Long numEdges = g.V(pg_vid).bothE().count().next()
+    String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
+
+    if (numEdges > 15) {
+
+      HashSet nodesSet = new HashSet()
+      HashSet edgesSet = new HashSet()
+
+
+      g.V(pg_vid).as('orig')
+        .outE().match(
+        __.as('e').inV().label().as('vLabel')
+        // ,  __.as('e').outV().label().as('inVLabel')
+        , __.as('e').label().as('edgeLabel')
+      )
+        .select('edgeLabel', 'vLabel')
+        .groupCount().each {
+        def entry = it
+
+
+        entry.each {
+          key, val ->
+
+
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel')?.replaceAll('[_.]', ' ')
+              String toNodeLabel = key.get('vLabel')?.replaceAll('[_.]', ' ') +
+                ' -> (' + edgeLabel + ')'
+
+              String edgeId = key.get('edgeLabel')
+              String toNodeId = key.get('vLabel') +
+                ' -> (' + edgeId + ')'
+
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(toNodeId)
+                .append('","label":"').append(toNodeLabel)
+                .append('","group":"').append(toNodeLabel)
+                .append('","shape":"').append('box')
+                .append('"}\n')
+
+
+              nodesSet.add(sb.toString())
+
+
+              sb.setLength(0)
+
+              sb.append('{ "from":"')
+                .append(pg_vid).append('","to":"')
+                .append(toNodeId).append('","label":"')
+                .append(edgeLabel).append(' (')
+                .append(val).append(')","value":')
+                .append(val).append('}\n')
+
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
+
+            }
+
+
+        }
+
 
       }
-  } catch (e) {
-  }
-  sb.append('] }')
-  sb.toString()
-}
-
-def getVisJsGraphImmediateNeighbourEdges(ORID pg_vid, StringBuffer sb, int counter, Set<String> currEdges) {
 
 
-  StringBuffer localEntry = new StringBuffer()
+      g.V(pg_vid).as('orig')
+        .inE().match(
+        __.as('e').outV().label().as('vLabel')
+        // ,  __.as('e').outV().label().as('inVLabel')
+        , __.as('e').label().as('edgeLabel')
+      )
+        .select('edgeLabel', 'vLabel')
+        .groupCount().each { it ->
+        it.each {
+          key, val ->
+            if (key instanceof Map) {
 
-  g.V(pg_vid)
-    .bothE()
-    .each {
-      ORID from = it.inVertex().id() as ORID
-      ORID to = it.outVertex().id() as ORID
-      localEntry.setLength(0)
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
 
-      localEntry.append(counter == 0 ? '{' : ',{')
-        .append('"from": "').append(from)
-        .append('" ,"to": "').append(to)
-        .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
+              String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                ' <- (' + edgeLabel + ')'
+              String edgeId = key.get('edgeLabel')
+
+              String fromNodeId = key.get('vLabel') +
+                ' <- (' + edgeId + ')'
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(fromNodeId)
+                .append('","label":"').append(fromNodeLabel)
+                .append('","group":"').append(fromNodeLabel)
+                .append('","shape":"').append('box')
+                .append('"}')
+
+              nodesSet.add(sb.toString())
+
+
+              sb.setLength(0)
+
+              sb.append('{ "from":"')
+                .append(fromNodeId).append('","to":"')
+                .append(pg_vid).append('","label":"')
+                .append(edgeLabel).append(' (')
+                .append(val).append(')","value":')
+                .append(val).append('}')
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
+            }
+
+
+        }
+
+
+      }
+      sb.setLength(0)
+      sb.append('{ "id":"').append(pg_vid)
+        .append('","label":"').append(origLabel)
+        .append('","group":"').append(origLabel)
+        .append('","fixed":').append(true)
+        .append(',"shape":"').append('image')
+        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, pg_vid, origLabel).toString())
         .append('"}')
-      String localEntryStr = localEntry.toString()
 
-      if (currEdges.add(localEntryStr)) {
-        sb.append(localEntryStr)
-        counter++
+      nodesSet.add(sb.toString())
+      sb.setLength(0)
+
+      sb.append('{ "nodes":')
+        .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
+    } else {
+      int counter = 0
+
+      try {
+
+        sb.append('{ "nodes":[')
+
+        g.V(pg_vid)
+          .both()
+          .dedup()
+          .each { it->
+            String groupStr = it.values('Metadata.Type').next()
+            String labelStr = it.label().toString().replaceAll('[_.]', ' ')
+            ORID vid = it.id()
+            sb.append(counter == 0 ? '{' : ',{')
+              .append('"id":"').append(vid)
+              .append('","group":"').append(groupStr)
+              .append('","label":"').append(labelStr)
+              .append('","shape":"').append('image')
+              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+              .append('"')
+            if (vid.equals(pg_vid)) {
+              sb.append(',"fixed":true')
+            }
+            sb.append('}')
+
+            counter++
+
+          }
+        g.V(pg_vid)  // Also get the original node
+          .each {
+            String groupStr = it.values('Metadata.Type').next()
+            String labelStr = it.label().toString().replaceAll('[_.]', ' ')
+            ORID vid = it.id()
+            sb.append(counter == 0 ? '{' : ',{')
+              .append('"id":"').append(vid)
+              .append('","group":"').append(groupStr)
+              .append('","label":"').append(labelStr)
+              .append('","shape":"').append('image')
+              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+              .append('"')
+            if (vid.equals(pg_vid)) {
+              sb.append(',"fixed":true')
+            }
+            sb.append('}')
+
+            counter++
+
+          }
+        sb.append('], "edges":[')
+
+
+
+
+
+        counter = 0
+        g.V(pg_vid)
+          .bothE()
+          .dedup()
+          .each {
+            StringBuffer prob = new StringBuffer()
+            try {
+              prob.append(' - s - ')
+                .append(
+                  Math.round(
+                    Math.min(
+                      it.values('toScorePercent').next() as Double,
+                      it.values('fromScorePercent').next() as Double
+                    ) * 100) / 100)
+                .append('%')
+
+            } catch (Throwable t) {
+              prob.setLength(0)
+            }
+
+
+            sb.append(counter == 0 ? '{' : ',{')
+              .append('"from": "').append(it.inVertex().id())
+              .append('" ,"to": "').append(it.outVertex().id())
+              .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
+              .append(prob.toString())
+              .append('"}')
+
+            counter++
+
+          }
+
+        sb.append(']')
+
+
+      } catch (Throwable t) {
+        sb.append(t.toString())
+      }
+
+    }
+    sb.append(', "origLabel":"').append(origLabel).append('"')
+    int counter = 0
+    sb.append(', "reportButtons": [')
+    try {
+      g.V()
+        .has('Object.Notification_Templates.Types'
+          , eq(g.V(pg_vid).values('Metadata.Type').next()))
+        .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
+        .each {
+          sb.append(counter > 0 ? ',{' : '{')
+          counter++
+          sb.append('"text":"')
+          if (it.get('Object.Notification_Templates.Text') != null)
+            sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
+          sb.append('","label":"')
+          if (it.get('Object.Notification_Templates.Label') != null)
+            sb.append(it.get('Object.Notification_Templates.Label')[0])
+          sb.append('", "vid": ').append(pg_vid)
+
+          sb.append("}")
+
+        }
+    } catch (e) {
+    }
+    sb.append('] }')
+    sb.toString()
+  }
+
+  static getVisJsGraphImmediateNeighbourEdges(ORID pg_vid, StringBuffer sb, int counter, Set<String> currEdges) {
+
+
+    StringBuffer localEntry = new StringBuffer()
+
+    g.V(pg_vid)
+      .bothE()
+      .each {
+        ORID from = it.inVertex().id() as ORID
+        ORID to = it.outVertex().id() as ORID
+        localEntry.setLength(0)
+
+        localEntry.append(counter == 0 ? '{' : ',{')
+          .append('"from": "').append(from)
+          .append('" ,"to": "').append(to)
+          .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
+          .append('"}')
+        String localEntryStr = localEntry.toString()
+
+        if (currEdges.add(localEntryStr)) {
+          sb.append(localEntryStr)
+          counter++
+
+        }
+
+
+      }
+    return counter
+  }
+
+
+  static getMetadataTypes(int level) {
+    def metadataTypes = [
+      'Event.Group_Ingestion'
+      , 'Event.Ingestion'
+      , 'Person.Natural'
+      , 'Object.Email_Address'
+      , 'Object.Credential'
+      , 'Event.Form_Ingestion'
+      , 'Object.Identity_Card'
+      , 'Location.Address'
+      , 'Object.Insurance_Policy'
+      , 'Event.Consent'
+      , 'Object.Privacy_Notice'
+      , 'Object.Privacy_Impact_Assessment'
+      , 'Object.Lawful_Basis'
+      , 'Event.Subject_Access_Request'
+      , 'Person.Employee'
+      , 'Object.Awareness_Campaign'
+      , 'Event.Training'
+      , 'Event.Data_Breach'
+      , 'Person.Organisation'
+      , 'Object.Data_Procedures'
+      , 'Object.MoU'
+      , 'Object.Form'
+      , 'Object.Notification_Templates'
+      , 'Object.AWS_Instance'
+      , 'Object.AWS_Security_Group'
+      , 'Object.AWS_Network_Interface'
+    ]
+    return metadataTypes.subList(0, level)
+  }
+  static getVisJsGraph(ORID pg_vid, int depth) {
+    StringBuffer sb = new StringBuffer()
+
+    Long numEdges = g.V(pg_vid).bothE().count().next()
+    String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
+    AtomicInteger nodeDepth = new AtomicInteger(depth)
+
+    if (numEdges > 15) {
+
+      HashSet nodesSet = new HashSet()
+      HashSet edgesSet = new HashSet()
+
+
+      g.V(pg_vid).as('orig')
+        .outE().match(
+        __.as('e').inV().label().as('vLabel')
+        // ,  __.as('e').outV().label().as('inVLabel')
+        , __.as('e').label().as('edgeLabel')
+      )
+        .select('edgeLabel', 'vLabel')
+        .groupCount().each {
+        def entry = it
+
+
+        entry.each {
+          key, val ->
+
+
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+              String toNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                ' -> (' + edgeLabel + ')'
+
+              String edgeId = key.get('edgeLabel')
+              String toNodeId = key.get('vLabel') +
+                ' -> (' + edgeId + ')'
+
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(toNodeId)
+                .append('","label":"').append(toNodeLabel)
+                .append('","group":"').append(toNodeLabel)
+                .append('","shape":"').append('box')
+                .append('"}\\n')
+
+
+              nodesSet.add(sb.toString())
+
+
+              sb.setLength(0)
+
+              sb.append('{ "from":"')
+                .append(pg_vid).append('","to":"')
+                .append(toNodeId).append('","label":"')
+                .append(edgeLabel).append(' (')
+                .append(val).append(')","value":')
+                .append(val).append('}\\n')
+
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
+
+            }
+
+
+        }
+
 
       }
 
 
+      g.V(pg_vid).as('orig')
+        .inE().match(
+        __.as('e').outV().label().as('vLabel')
+        // ,  __.as('e').outV().label().as('inVLabel')
+        , __.as('e').label().as('edgeLabel')
+      )
+        .select('edgeLabel', 'vLabel')
+        .groupCount().each {
+        it.each {
+          key, val ->
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+
+              String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                ' <- (' + edgeLabel + ')'
+              String edgeId = key.get('edgeLabel')
+
+              String fromNodeId = key.get('vLabel') +
+                ' <- (' + edgeId + ')'
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(fromNodeId)
+                .append('","label":"').append(fromNodeLabel)
+                .append('","group":"').append(fromNodeLabel)
+                .append('","shape":"').append('box')
+                .append('"}')
+
+              nodesSet.add(sb.toString())
+
+
+              sb.setLength(0)
+
+              sb.append('{ "from":"')
+                .append(fromNodeId).append('","to":"')
+                .append(pg_vid).append('","label":"')
+                .append(edgeLabel).append(' (')
+                .append(val).append(')","value":')
+                .append(val).append('}')
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
+            }
+
+
+        }
+
+
+      }
+      sb.setLength(0)
+      sb.append('{ "id":"').append(pg_vid)
+        .append('","label":"').append(origLabel)
+        .append('","group":"').append(origLabel)
+        .append('","fixed":').append(true)
+        .append(',"shape":"').append('image')
+        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, pg_vid, origLabel).toString())
+        .append('"}')
+
+      nodesSet.add(sb.toString())
+      sb.setLength(0)
+
+      sb.append('{ "nodes":')
+        .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
+        .append('}')
+    } else {
+      int counter = 0
+
+      try {
+        Set<ORID> nodeIds = new HashSet<>()
+
+        sb.append('{ "nodes":[')
+
+        getVisJsGraphImmediateNeighbourNodes(pg_vid, sb, counter, nodeIds, nodeDepth)
+
+        sb.append('], "edges":[')
+
+
+        counter = 0
+
+        Set<String> currEdges = new HashSet<>()
+        nodeIds.each {
+          counter = getVisJsGraphImmediateNeighbourEdges(it, sb, counter, currEdges)
+
+        }
+
+        sb.append(']')
+
+
+      } catch (Throwable t) {
+        sb.append(t.toString())
+      }
+
+      sb.toString()
     }
-  return counter
+    sb.append(', "origLabel":"').append(origLabel).append('"')
+    int counter = 0
+    sb.append(', "reportButtons": [')
+    try {
+      g.V()
+        .has('Object.Notification_Templates.Types'
+          , eq(g.V(pg_vid).values('Metadata.Type').next()))
+        .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
+        .each {
+          sb.append(counter > 0 ? ',{' : '{')
+          counter++
+          sb.append('"text":"')
+          if (it.get('Object.Notification_Templates.Text') != null)
+            sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
+          sb.append('","label":"')
+          if (it.get('Object.Notification_Templates.Label') != null)
+            sb.append(it.get('Object.Notification_Templates.Label')[0])
+          sb.append('", "vid": ').append(pg_vid)
+
+          sb.append("}")
+
+        }
+    } catch (e) {
+    }
+
+    sb.append('] }')
+    return sb.toString()
+
+
+  }
+
+
+  static getLevel(String label) {
+    def levels = [
+      'Event  Group Ingestion',
+      'Event Ingestion',
+      'Person Natural',
+      'Object Email Address',
+      'Object Credential',
+      'Event Form Ingestion',
+      'Object Identity Card',
+      'Location Address',
+      'Object Insurance Policy',
+      'Event Consent',
+      'Object Privacy Notice',
+      'Object Privacy Impact Assessment',
+      'Object Lawful Basis',
+      'Event Subject Access Request',
+      'Person Employee',
+      'Object Awareness Campaign',
+      'Event Training',
+      'Event Data_Breach',
+      'Person Organisation',
+      'Object Data Procedures',
+      'Object MoU',
+      'Object Form',
+      'Object Notification Templates',
+      'Object AWS Instance',
+      'Object AWS Security Group',
+      'Object AWS Network Interface'
+    ]
+    int index = levels.findIndexOf {
+      (label.equals(it))
+    }
+
+    if (index == -1) {
+      return label.hashCode() % 10
+    }
+
+    return index
+  }
+
 }
+
 /*
 Event.Group_Ingestion
 Event.Ingestion
@@ -1263,534 +1730,33 @@ Object.AWS_Network_Interface
 
  */
 
-def getMetadataTypes(int level) {
-  def metadataTypes = [
-    'Event.Group_Ingestion'
-    , 'Event.Ingestion'
-    , 'Person.Natural'
-    , 'Object.Email_Address'
-    , 'Object.Credential'
-    , 'Event.Form_Ingestion'
-    , 'Object.Identity_Card'
-    , 'Location.Address'
-    , 'Object.Insurance_Policy'
-    , 'Event.Consent'
-    , 'Object.Privacy_Notice'
-    , 'Object.Privacy_Impact_Assessment'
-    , 'Object.Lawful_Basis'
-    , 'Event.Subject_Access_Request'
-    , 'Person.Employee'
-    , 'Object.Awareness_Campaign'
-    , 'Event.Training'
-    , 'Event.Data_Breach'
-    , 'Person.Organisation'
-    , 'Object.Data_Procedures'
-    , 'Object.MoU'
-    , 'Object.Form'
-    , 'Object.Notification_Templates'
-    , 'Object.AWS_Instance'
-    , 'Object.AWS_Security_Group'
-    , 'Object.AWS_Network_Interface'
-  ]
-  return metadataTypes.subList(0, level)
-}
-
-
-def getLevel(String label) {
-  def levels = [
-    'Event  Group Ingestion',
-    'Event Ingestion',
-    'Person Natural',
-    'Object Email Address',
-    'Object Credential',
-    'Event Form Ingestion',
-    'Object Identity Card',
-    'Location Address',
-    'Object Insurance Policy',
-    'Event Consent',
-    'Object Privacy Notice',
-    'Object Privacy Impact Assessment',
-    'Object Lawful Basis',
-    'Event Subject Access Request',
-    'Person Employee',
-    'Object Awareness Campaign',
-    'Event Training',
-    'Event Data_Breach',
-    'Person Organisation',
-    'Object Data Procedures',
-    'Object MoU',
-    'Object Form',
-    'Object Notification Templates',
-    'Object AWS Instance',
-    'Object AWS Security Group',
-    'Object AWS Network Interface'
-  ]
-  int index = levels.findIndexOf {
-    (label.equals(it))
-  }
-
-  if (index == -1) {
-    return label.hashCode() % 10
-  }
-
-  return index
-}
 
 def getVisJsGraph(String pg_vid) {
 
-  return getVisJsGraph(new ORecordId(pg_vid))
+  return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid))
 }
 
-def getVisJsGraph(ORID pg_vid) {
-
-
-  StringBuffer sb = new StringBuffer()
-
-  Long numEdges = g.V(pg_vid).bothE().count().next()
-  String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
-
-  if (numEdges > 15) {
-
-    HashSet nodesSet = new HashSet()
-    HashSet edgesSet = new HashSet()
-
-
-    g.V(pg_vid).as('orig')
-      .outE().match(
-      __.as('e').inV().label().as('vLabel')
-      // ,  __.as('e').outV().label().as('inVLabel')
-      , __.as('e').label().as('edgeLabel')
-    )
-      .select('edgeLabel', 'vLabel')
-      .groupCount().each {
-      def entry = it
-
-
-      entry.each {
-        key, val ->
-
-
-          if (key instanceof Map) {
-
-            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-            String toNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-              ' -> (' + edgeLabel + ')'
-
-            String edgeId = key.get('edgeLabel')
-            String toNodeId = key.get('vLabel') +
-              ' -> (' + edgeId + ')'
-
-            sb.setLength(0)
-
-            sb.append('{ "id":"').append(toNodeId)
-              .append('","label":"').append(toNodeLabel)
-              .append('","group":"').append(toNodeLabel)
-              .append('","shape":"').append('box')
-              .append('"}\n')
-
-
-            nodesSet.add(sb.toString())
-
-
-            sb.setLength(0)
-
-            sb.append('{ "from":"')
-              .append(pg_vid).append('","to":"')
-              .append(toNodeId).append('","label":"')
-              .append(edgeLabel).append(' (')
-              .append(val).append(')","value":')
-              .append(val).append('}\n')
-
-            edgesSet.add(sb.toString())
-            sb.setLength(0)
-
-          }
-
-
-      }
-
-
-    }
-
-
-    g.V(pg_vid).as('orig')
-      .inE().match(
-      __.as('e').outV().label().as('vLabel')
-      // ,  __.as('e').outV().label().as('inVLabel')
-      , __.as('e').label().as('edgeLabel')
-    )
-      .select('edgeLabel', 'vLabel')
-      .groupCount().each {
-      it.each {
-        key, val ->
-          if (key instanceof Map) {
-
-            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-
-            String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-              ' <- (' + edgeLabel + ')'
-            String edgeId = key.get('edgeLabel')
-
-            String fromNodeId = key.get('vLabel') +
-              ' <- (' + edgeId + ')'
-            sb.setLength(0)
-
-            sb.append('{ "id":"').append(fromNodeId)
-              .append('","label":"').append(fromNodeLabel)
-              .append('","group":"').append(fromNodeLabel)
-              .append('","shape":"').append('box')
-              .append('"}')
-
-            nodesSet.add(sb.toString())
-
-
-            sb.setLength(0)
-
-            sb.append('{ "from":"')
-              .append(fromNodeId).append('","to":"')
-              .append(pg_vid).append('","label":"')
-              .append(edgeLabel).append(' (')
-              .append(val).append(')","value":')
-              .append(val).append('}')
-            edgesSet.add(sb.toString())
-            sb.setLength(0)
-          }
-
-
-      }
-
-
-    }
-    sb.setLength(0)
-    sb.append('{ "id":"').append(pg_vid)
-      .append('","label":"').append(origLabel)
-      .append('","group":"').append(origLabel)
-      .append('","fixed":').append(true)
-      .append(',"shape":"').append('image')
-      .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, pg_vid, origLabel).toString())
-      .append('"}')
-
-    nodesSet.add(sb.toString())
-    sb.setLength(0)
-
-    sb.append('{ "nodes":')
-      .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
-  } else {
-    int counter = 0
-
-    try {
-
-      sb.append('{ "nodes":[')
-
-      g.V(pg_vid)
-        .both()
-        .dedup()
-        .each {
-          String groupStr = it.values('Metadata.Type').next()
-          String labelStr = it.label().toString().replaceAll('[_.]', ' ')
-          ORID vid = it.id()
-          sb.append(counter == 0 ? '{' : ',{')
-            .append('"id":"').append(vid)
-            .append('","group":"').append(groupStr)
-            .append('","label":"').append(labelStr)
-            .append('","shape":"').append('image')
-            .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
-            .append('"')
-          if (vid.equals(pg_vid)) {
-            sb.append(',"fixed":true')
-          }
-          sb.append('}')
-
-          counter++
-
-        }
-      g.V(pg_vid)  // Also get the original node
-        .each {
-          String groupStr = it.values('Metadata.Type').next()
-          String labelStr = it.label().toString().replaceAll('[_.]', ' ')
-          ORID vid = it.id()
-          sb.append(counter == 0 ? '{' : ',{')
-            .append('"id":"').append(vid)
-            .append('","group":"').append(groupStr)
-            .append('","label":"').append(labelStr)
-            .append('","shape":"').append('image')
-            .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
-            .append('"')
-          if (vid.equals(pg_vid)) {
-            sb.append(',"fixed":true')
-          }
-          sb.append('}')
-
-          counter++
-
-        }
-      sb.append('], "edges":[')
-
-      StringBuffer prob = new StringBuffer()
-      try {
-        prob.append(' - s - ')
-          .append(
-            Math.round(
-              Math.min(
-                it.values('toScorePercent').next(),
-                it.values('fromScorePercent').next()
-              ) * 100) / 100)
-          .append('%')
-
-      } catch (Throwable t) {
-        prob.setLength(0)
-      }
-
-      counter = 0
-      g.V(pg_vid)
-        .bothE()
-        .dedup()
-        .each {
-          sb.append(counter == 0 ? '{' : ',{')
-            .append('"from": "').append(it.inVertex().id())
-            .append('" ,"to": "').append(it.outVertex().id())
-            .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
-            .append(prob.toString())
-            .append('"}')
-
-          counter++
-
-        }
-
-      sb.append(']')
-
-
-    } catch (Throwable t) {
-      sb.append(t.toString())
-    }
-
-  }
-  sb.append(', "origLabel":"').append(origLabel).append('"')
-  int counter = 0
-  sb.append(', "reportButtons": [')
-  try {
-    g.V()
-      .has('Object.Notification_Templates.Types'
-        , eq(g.V(pg_vid).values('Metadata.Type').next()))
-      .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
-      .each {
-        sb.append(counter > 0 ? ',{' : '{')
-        counter++
-        sb.append('"text":"')
-        if (it.get('Object.Notification_Templates.Text') != null)
-          sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
-        sb.append('","label":"')
-        if (it.get('Object.Notification_Templates.Label') != null)
-          sb.append(it.get('Object.Notification_Templates.Label')[0])
-        sb.append('", "vid": ').append(pg_vid)
-
-        sb.append("}")
-
-      }
-  } catch (e) {
-  }
-  sb.append('] }')
-  return sb.toString()
-}
 
 
 def getVisJsGraph(String pg_vid, int depth) {
-  return getVisJsGraph(new ORecordId(pg_vid), depth)
+  return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), depth)
 }
 
-def getVisJsGraph(ORID pg_vid, int depth) {
-  StringBuffer sb = new StringBuffer()
+def getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
 
-  Long numEdges = g.V(pg_vid).bothE().count().next()
-  String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
-  AtomicInteger nodeDepth = new AtomicInteger(depth)
-
-  if (numEdges > 15) {
-
-    HashSet nodesSet = new HashSet()
-    HashSet edgesSet = new HashSet()
+  return VisJSGraph.getVisJsGraphImmediateNeighbourNodes(new ORecordId(pg_vid), sb, counter, nodeIds, depth)
 
 
-    g.V(pg_vid).as('orig')
-      .outE().match(
-      __.as('e').inV().label().as('vLabel')
-      // ,  __.as('e').outV().label().as('inVLabel')
-      , __.as('e').label().as('edgeLabel')
-    )
-      .select('edgeLabel', 'vLabel')
-      .groupCount().each {
-      def entry = it
+}
 
 
-      entry.each {
-        key, val ->
+def getEdgeProperties(String fromVertexId, String toVertexId) {
+  return VisJSGraph.getEdgeProperties(new ORecordId(fromVertexId), new ORecordId(toVertexId))
+}
 
+def getVisJSGraph(String pg_vid, long pg_depth) {
 
-          if (key instanceof Map) {
-
-            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-            String toNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-              ' -> (' + edgeLabel + ')'
-
-            String edgeId = key.get('edgeLabel')
-            String toNodeId = key.get('vLabel') +
-              ' -> (' + edgeId + ')'
-
-            sb.setLength(0)
-
-            sb.append('{ "id":"').append(toNodeId)
-              .append('","label":"').append(toNodeLabel)
-              .append('","group":"').append(toNodeLabel)
-              .append('","shape":"').append('box')
-              .append('"}\\n')
-
-
-            nodesSet.add(sb.toString())
-
-
-            sb.setLength(0)
-
-            sb.append('{ "from":"')
-              .append(pg_vid).append('","to":"')
-              .append(toNodeId).append('","label":"')
-              .append(edgeLabel).append(' (')
-              .append(val).append(')","value":')
-              .append(val).append('}\\n')
-
-            edgesSet.add(sb.toString())
-            sb.setLength(0)
-
-          }
-
-
-      }
-
-
-    }
-
-
-    g.V(pg_vid).as('orig')
-      .inE().match(
-      __.as('e').outV().label().as('vLabel')
-      // ,  __.as('e').outV().label().as('inVLabel')
-      , __.as('e').label().as('edgeLabel')
-    )
-      .select('edgeLabel', 'vLabel')
-      .groupCount().each {
-      it.each {
-        key, val ->
-          if (key instanceof Map) {
-
-            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-
-            String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-              ' <- (' + edgeLabel + ')'
-            String edgeId = key.get('edgeLabel')
-
-            String fromNodeId = key.get('vLabel') +
-              ' <- (' + edgeId + ')'
-            sb.setLength(0)
-
-            sb.append('{ "id":"').append(fromNodeId)
-              .append('","label":"').append(fromNodeLabel)
-              .append('","group":"').append(fromNodeLabel)
-              .append('","shape":"').append('box')
-              .append('"}')
-
-            nodesSet.add(sb.toString())
-
-
-            sb.setLength(0)
-
-            sb.append('{ "from":"')
-              .append(fromNodeId).append('","to":"')
-              .append(pg_vid).append('","label":"')
-              .append(edgeLabel).append(' (')
-              .append(val).append(')","value":')
-              .append(val).append('}')
-            edgesSet.add(sb.toString())
-            sb.setLength(0)
-          }
-
-
-      }
-
-
-    }
-    sb.setLength(0)
-    sb.append('{ "id":"').append(pg_vid)
-      .append('","label":"').append(origLabel)
-      .append('","group":"').append(origLabel)
-      .append('","fixed":').append(true)
-      .append(',"shape":"').append('image')
-      .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, pg_vid, origLabel).toString())
-      .append('"}')
-
-    nodesSet.add(sb.toString())
-    sb.setLength(0)
-
-    sb.append('{ "nodes":')
-      .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
-      .append('}')
-  } else {
-    int counter = 0
-
-    try {
-      Set<ORID> nodeIds = new HashSet<>()
-
-      sb.append('{ "nodes":[')
-
-      getVisJsGraphImmediateNeighbourNodes(pg_vid, sb, counter, nodeIds, nodeDepth)
-
-      sb.append('], "edges":[')
-
-
-      counter = 0
-
-      Set<String> currEdges = new HashSet<>()
-      nodeIds.each {
-        counter = getVisJsGraphImmediateNeighbourEdges(it, sb, counter, currEdges)
-
-      }
-
-      sb.append(']')
-
-
-    } catch (Throwable t) {
-      sb.append(t.toString())
-    }
-
-    sb.toString()
-  }
-  sb.append(', "origLabel":"').append(origLabel).append('"')
-  int counter = 0
-  sb.append(', "reportButtons": [')
-  try {
-    g.V()
-      .has('Object.Notification_Templates.Types'
-        , eq(g.V(pg_vid).values('Metadata.Type').next()))
-      .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
-      .each {
-        sb.append(counter > 0 ? ',{' : '{')
-        counter++
-        sb.append('"text":"')
-        if (it.get('Object.Notification_Templates.Text') != null)
-          sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
-        sb.append('","label":"')
-        if (it.get('Object.Notification_Templates.Label') != null)
-          sb.append(it.get('Object.Notification_Templates.Label')[0])
-        sb.append('", "vid": ').append(pg_vid)
-
-        sb.append("}")
-
-      }
-  } catch (e) {
-  }
-
-  sb.append('] }')
-  return sb.toString()
-
-
+  return VisJSGraph.getVisJSGraph(new ORecordId(pg_vid), pg_depth)
 }
 
 

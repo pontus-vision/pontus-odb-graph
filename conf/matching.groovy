@@ -522,6 +522,7 @@ class MatchReq<T> {
         result.getVertex().ifPresent({ res -> indexQueryResults.add(res.id()) });
       }
 
+      results.close();
 //
 //      for (JanusGraphIndexQuery.Result<JanusGraphVertex> result : (graph as OrientStandardGraph).indexQuery(idx, value).limit(maxHitsPerType).vertexStream().collect(Collectors.toList())) {
 //        indexQueryResults.add(result.getElement().id());
@@ -1434,6 +1435,8 @@ class Matcher {
       totalScore.addAndGet(matchReq.matchWeight * (score / maxScoreForRawIdx))
 
     }
+
+    results.close();
 
 //  OptionalDouble  optionalDoubleMaxScoreForRawIdx = resultStream.mapToDouble{val -> val.score}.max();
 //

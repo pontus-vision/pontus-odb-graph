@@ -5,7 +5,7 @@ RUN apk add git
 COPY . /pontus-odb-graph
 
 
-FROM alpine
+FROM scratch
 
 COPY --from=builder  /pontus-odb-graph/conf /pontus-odb-graph/conf
 COPY --from=builder  /pontus-odb-graph/bin /pontus-odb-graph/bin

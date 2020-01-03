@@ -19,7 +19,7 @@ RUN mvn clean package install -DskipTests
 
 RUN cd /root/.m2/repository && for i in *; do if [[ "com" == $i || "pv-gdpr" == $i ]]; then echo skip ; else rm -r $i; fi; done
 
-FROM alpine
+FROM scratch
 
 COPY --from=builder /root/.m2/ /root/.m2/
 
