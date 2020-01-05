@@ -780,7 +780,7 @@ def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraver
   allData.put('connected_data', neighbours)
 
 
-  PontusJ2ReportingFunctions.g = g
+  PontusJ2ReportingFunctions.g = App.g
 
   if ('Event.Data_Breach' == vertType) {
     def impactedServers = g.V(pg_id)
@@ -829,10 +829,8 @@ def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraver
 
 
 
-VisJSGraph.g = App.g;
 
 class VisJSGraph {
-  static GraphTraversalSource g;
   static getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, ORID vid, String origLabel) {
     StringBuilder sb = new StringBuilder()
     sb.append(new JsonBuilder(g.V(vid).valueMap().next()).toString())
@@ -844,8 +842,8 @@ class VisJSGraph {
 
     StringBuffer sb = new StringBuffer()
 
-    Long numEdges = g.V(pg_vid).bothE().count().next()
-    String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
+    Long numEdges = App.g.V(pg_vid).bothE().count().next()
+    String origLabel = App.g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
 
     if (numEdges > 15) {
 
@@ -853,7 +851,7 @@ class VisJSGraph {
       HashSet edgesSet = new HashSet()
 
 
-      g.V(pg_vid).as('orig')
+      App.g.V(pg_vid).as('orig')
         .outE().match(
         __.as('e').inV().label().as('vLabel')
         // ,  __.as('e').outV().label().as('inVLabel')
@@ -911,7 +909,7 @@ class VisJSGraph {
       }
 
 
-      g.V(pg_vid).as('orig')
+      App.g.V(pg_vid).as('orig')
         .inE().match(
         __.as('e').outV().label().as('vLabel')
         // ,  __.as('e').outV().label().as('inVLabel')
@@ -965,7 +963,7 @@ class VisJSGraph {
         .append('","group":"').append(origLabel)
         .append('","fixed":').append(true)
         .append(',"shape":"').append('image')
-        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, pg_vid, origLabel).toString())
+        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
         .append('"}')
 
       nodesSet.add(sb.toString())
@@ -980,21 +978,21 @@ class VisJSGraph {
 
         sb.append('{ "nodes":[')
 
-        g.V(pg_vid)
+        App.g.V(pg_vid)
           .both()
           .dedup()
           .each {
-            String groupStr = it.values('Metadata.Type').next()
-            String labelStr = it.label().toString().replaceAll('[_.]', ' ')
+            String groupStr = it.label().toString()
+            String labelStr = groupStr.replaceAll('[_.]', ' ')
             ORID vid = it.id()
             sb.append(counter == 0 ? '{' : ',{')
-              .append('"id":"').append(vid)
+              .append('"id":"').append(vid.toString())
               .append('","group":"').append(groupStr)
               .append('","label":"').append(labelStr)
               .append('","shape":"').append('image')
-              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
               .append('"')
-            if (vid.equals(pg_vid)) {
+            if (pg_vid.toString() == (vid.toString())) {
               sb.append(',"fixed":true')
             }
             sb.append('}')
@@ -1002,19 +1000,20 @@ class VisJSGraph {
             counter++
 
           }
-        g.V(pg_vid)  // Also get the original node
+        App.g.V(pg_vid)  // Also get the original node
           .each {
-            String groupStr = it.values('Metadata.Type').next()
-            String labelStr = it.label().toString().replaceAll('[_.]', ' ')
-            ORID vid = it.id()
+            String groupStr = it.label().toString()
+            String labelStr = groupStr.replaceAll('[_.]', ' ')
+            ORID vid = it.id();
+
             sb.append(counter == 0 ? '{' : ',{')
-              .append('"id":"').append(vid)
+              .append('"id":"').append(vid.toString())
               .append('","group":"').append(groupStr)
               .append('","label":"').append(labelStr)
               .append('","shape":"').append('image')
-              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
               .append('"')
-            if (vid.equals(pg_vid)) {
+            if (pg_vid.toString() == (vid.toString())) {
               sb.append(',"fixed":true')
             }
             sb.append('}')
@@ -1026,7 +1025,7 @@ class VisJSGraph {
 
 
         counter = 0
-        g.V(pg_vid)
+        App.g.V(pg_vid)
           .bothE()
           .dedup()
           .each {
@@ -1036,8 +1035,8 @@ class VisJSGraph {
                 .append(
                   Math.round(
                     Math.min(
-                      it.values('toScorePercent').next(),
-                      it.values('fromScorePercent').next()
+                      it.values('toScorePercent').next() as Double,
+                      it.values('fromScorePercent').next() as Double
                     ) * 100) / 100)
                 .append('%')
 
@@ -1068,9 +1067,9 @@ class VisJSGraph {
     int counter = 0
     sb.append(', "reportButtons": [')
     try {
-      g.V()
+      App.g.V()
         .has('Object.Notification_Templates.Types'
-          , eq(g.V(pg_vid).values('Metadata.Type').next()))
+          , eq(App.g.V(pg_vid).values('Metadata.Type').next()))
         .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
         .each {
           sb.append(counter > 0 ? ',{' : '{')
@@ -1081,9 +1080,9 @@ class VisJSGraph {
           sb.append('","label":"')
           if (it.get('Object.Notification_Templates.Label') != null)
             sb.append(it.get('Object.Notification_Templates.Label')[0])
-          sb.append('", "vid": ').append(pg_vid)
+          sb.append('", "vid": "').append(pg_vid)
 
-          sb.append("}")
+          sb.append('"}')
 
         }
     } catch (e) {
@@ -1128,7 +1127,7 @@ class VisJSGraph {
   static getEdgeProperties(ORID fromVertexId, ORID toVertexId) {
     def mapper = GraphSONMapper.build().version(GraphSONVersion.V1_0).create().createMapper()
 
-    def v = g.V(fromVertexId).bothE().filter(bothV().id().is(toVertexId)).valueMap().next()
+    def v = App.g.V(fromVertexId).bothE().filter(bothV().id().is(toVertexId)).valueMap().next()
 
     mapper.writeValueAsString(v)
 
@@ -1138,8 +1137,8 @@ class VisJSGraph {
 
     StringBuffer sb = new StringBuffer()
 
-    Long numEdges = g.V(pg_vid).bothE().count().next()
-    String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
+    Long numEdges = App.g.V(pg_vid).bothE().count().next()
+    String origLabel = App.g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
 
     if (numEdges > 15) {
 
@@ -1147,7 +1146,7 @@ class VisJSGraph {
       HashSet edgesSet = new HashSet()
 
 
-      g.V(pg_vid).as('orig')
+      App.g.V(pg_vid).as('orig')
         .outE().match(
         __.as('e').inV().label().as('vLabel')
         // ,  __.as('e').outV().label().as('inVLabel')
@@ -1205,7 +1204,7 @@ class VisJSGraph {
       }
 
 
-      g.V(pg_vid).as('orig')
+      App.g.V(pg_vid).as('orig')
         .inE().match(
         __.as('e').outV().label().as('vLabel')
         // ,  __.as('e').outV().label().as('inVLabel')
@@ -1259,7 +1258,7 @@ class VisJSGraph {
         .append('","group":"').append(origLabel)
         .append('","fixed":').append(true)
         .append(',"shape":"').append('image')
-        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, pg_vid, origLabel).toString())
+        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
         .append('"}')
 
       nodesSet.add(sb.toString())
@@ -1274,7 +1273,7 @@ class VisJSGraph {
 
         sb.append('{ "nodes":[')
 
-        g.V(pg_vid)
+        App.g.V(pg_vid)
           .both()
           .dedup()
           .each { it->
@@ -1296,7 +1295,7 @@ class VisJSGraph {
             counter++
 
           }
-        g.V(pg_vid)  // Also get the original node
+        App.g.V(pg_vid)  // Also get the original node
           .each {
             String groupStr = it.values('Metadata.Type').next()
             String labelStr = it.label().toString().replaceAll('[_.]', ' ')
@@ -1323,7 +1322,7 @@ class VisJSGraph {
 
 
         counter = 0
-        g.V(pg_vid)
+        App.g.V(pg_vid)
           .bothE()
           .dedup()
           .each {
@@ -1366,9 +1365,9 @@ class VisJSGraph {
     int counter = 0
     sb.append(', "reportButtons": [')
     try {
-      g.V()
+      App.g.V()
         .has('Object.Notification_Templates.Types'
-          , eq(g.V(pg_vid).values('Metadata.Type').next()))
+          , P.eq(App.g.V(pg_vid).values('Metadata.Type').next()))
         .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
         .each {
           sb.append(counter > 0 ? ',{' : '{')
@@ -1379,9 +1378,9 @@ class VisJSGraph {
           sb.append('","label":"')
           if (it.get('Object.Notification_Templates.Label') != null)
             sb.append(it.get('Object.Notification_Templates.Label')[0])
-          sb.append('", "vid": ').append(pg_vid)
+          sb.append('", "vid": "').append(pg_vid)
 
-          sb.append("}")
+          sb.append('"}')
 
         }
     } catch (e) {
@@ -1395,7 +1394,7 @@ class VisJSGraph {
 
     StringBuffer localEntry = new StringBuffer()
 
-    g.V(pg_vid)
+    App.g.V(pg_vid)
       .bothE()
       .each {
         ORID from = it.inVertex().id() as ORID
@@ -1455,8 +1454,8 @@ class VisJSGraph {
   static getVisJsGraph(ORID pg_vid, int depth) {
     StringBuffer sb = new StringBuffer()
 
-    Long numEdges = g.V(pg_vid).bothE().count().next()
-    String origLabel = g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
+    Long numEdges = App.g.V(pg_vid).bothE().count().next()
+    String origLabel = App.g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
     AtomicInteger nodeDepth = new AtomicInteger(depth)
 
     if (numEdges > 15) {
@@ -1465,7 +1464,7 @@ class VisJSGraph {
       HashSet edgesSet = new HashSet()
 
 
-      g.V(pg_vid).as('orig')
+      App.g.V(pg_vid).as('orig')
         .outE().match(
         __.as('e').inV().label().as('vLabel')
         // ,  __.as('e').outV().label().as('inVLabel')
@@ -1523,7 +1522,7 @@ class VisJSGraph {
       }
 
 
-      g.V(pg_vid).as('orig')
+      App.g.V(pg_vid).as('orig')
         .inE().match(
         __.as('e').outV().label().as('vLabel')
         // ,  __.as('e').outV().label().as('inVLabel')
@@ -1577,7 +1576,7 @@ class VisJSGraph {
         .append('","group":"').append(origLabel)
         .append('","fixed":').append(true)
         .append(',"shape":"').append('image')
-        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, pg_vid, origLabel).toString())
+        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
         .append('"}')
 
       nodesSet.add(sb.toString())
@@ -1620,9 +1619,9 @@ class VisJSGraph {
     int counter = 0
     sb.append(', "reportButtons": [')
     try {
-      g.V()
+      App.g.V()
         .has('Object.Notification_Templates.Types'
-          , eq(g.V(pg_vid).values('Metadata.Type').next()))
+          , P.eq(App.g.V(pg_vid).values('Metadata.Type').next()))
         .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
         .each {
           sb.append(counter > 0 ? ',{' : '{')
@@ -1633,9 +1632,9 @@ class VisJSGraph {
           sb.append('","label":"')
           if (it.get('Object.Notification_Templates.Label') != null)
             sb.append(it.get('Object.Notification_Templates.Label')[0])
-          sb.append('", "vid": ').append(pg_vid)
+          sb.append('", "vid": "').append(pg_vid)
 
-          sb.append("}")
+          sb.append('"}')
 
         }
     } catch (e) {

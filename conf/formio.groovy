@@ -1,5 +1,7 @@
 import com.orientechnologies.orient.core.index.OIndex
 import com.orientechnologies.orient.core.metadata.schema.OClass
+import com.orientechnologies.orient.core.metadata.schema.OProperty
+import com.pontusvision.gdpr.App
 import groovy.json.JsonSlurper
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
@@ -46,13 +48,9 @@ enum IngestionOperation {
 }
 
 
-FormData.graph = graph;
-FormData.g = g;
 
 class FormData {
 
-  static OrientStandardGraph graph;
-  static GraphTraversalSource g;
 
   static getOrCreateOwnerVid(GraphTraversalSource gtran, String submissionOwner, StringBuffer sb = new StringBuffer()) {
 
@@ -115,7 +113,7 @@ class FormData {
     def retVal = "";
     def gtrav2 = gtrav.clone()
 
-    Transaction trans = graph.tx()
+    Transaction trans = App.graph.tx()
     if (trans.isOpen()) {
       trans.close();
     }
@@ -135,7 +133,8 @@ class FormData {
       def Key_Form_Submission_Owner_Id = "${dataType}.Form_Submission_Owner_Id" as String
       def Key_Metadata_Type = "Metadata.Type.${dataType}" as String
 
-      OClass vertexClass = ODBSchemaManager.createVertexLabel(graph, dataType);
+
+      OClass vertexClass = ODBSchemaManager.createVertexLabel(App.graph, dataType);
 
       Map<String, String> classFields = new HashMap<>()
 
@@ -150,7 +149,7 @@ class FormData {
 
       classFields.each { k, v ->
         if (k != 'submit') {
-          def key = ((k.startsWith(dataType) && k != "Metadata.Type") ?
+          def key = ((k.startsWith(dataType) || k.startsWith("Metadata.Type")) ?
             k :
             "$dataType.$k") as String
 
@@ -179,7 +178,7 @@ class FormData {
         if (k != 'submit') {
 
 
-          def key = ((k.startsWith(dataType) && k != "Metadata.Type") ?
+          def key = ((k.startsWith(dataType) || k.startsWith("Metadata.Type")) ?
             k :
             "$dataType.$k") as String
 
@@ -187,10 +186,26 @@ class FormData {
           sb.append("\nadding $key with val = $v =>").append(v.getClass().toString())
 
           try {
-            g = g.property(key, (String) val)
+            OProperty prop = vertexClass.getProperty(key);
+            if (prop){
+
+              g = g.property(key,  PVConvMixin.asType(val,prop.getType().getDefaultJavaType(), sb))
+
+            }
 
           } catch (Throwable t) {
-            sb.append("Error adding prop $k with val ($v): \n$t")
+            if (key.toLowerCase().indexOf("date") > 0){
+              try{
+                g = g.property(key, val as Date)
+
+              }
+              catch(Throwable t2){
+                sb.append("Error adding prop $k with val ($v): \n$t")
+              }
+            }
+            else{
+              sb.append("Error adding prop $k with val ($v): \n$t")
+            }
           }
         }
       }
@@ -243,7 +258,7 @@ class FormData {
     def localGtrav = gtrav.clone()
     def data = formDataParsed.request.data
 
-    def trans = graph.tx()
+    def trans = App.graph.tx()
 
 
     def retVal = "";
@@ -283,15 +298,16 @@ class FormData {
         retVal = localGtrav.next().id()
 
         def gt = gtrav.V(retVal)
-        gt.property(Key_Form_Owner_Id, (String) formOwnerId)
-        gt.property(Key_Form_Id, (String) formId)
-        gt.property(Key_Form_Submission_Id, (String) submissionId)
-        gt.property(Key_Metadata_Type, (String) dataType)
-        gt.property("Metadata.Type", (String) dataType)
-        gt.property(Key_Form_Submission_Owner_Id, (String) submissionOwner)
+        gt = gt.property(Key_Form_Owner_Id, (String) formOwnerId)
+        gt = gt.property(Key_Form_Id, (String) formId)
+        gt = gt.property(Key_Form_Submission_Id, (String) submissionId)
+        gt = gt.property(Key_Metadata_Type, (String) dataType)
+        gt = gt.property("Metadata.Type", (String) dataType)
+        gt = gt.property(Key_Form_Submission_Owner_Id, (String) submissionOwner)
 
 
         sb.append("Updated basic form props\n")
+        final OClass vertexClass = App.graph.getRawDatabase().getClass(dataType)
 
 
         sb.append("${dataType}.Form_Owner_Id = ").append(formOwnerId)
@@ -302,7 +318,12 @@ class FormData {
             sb.append("\nupdating $key with val = $v =>").append(v.getClass().toString())
 
             try {
-              gt.property(key, val)
+              OProperty prop = vertexClass.getProperty(key);
+              if (prop){
+
+                gt = gt.property(key,  PVConvMixin.asType(val,prop.getType().getDefaultJavaType(), sb))
+
+              }
 
             } catch (Throwable t) {
               sb.append("Error Updating Prop $k, $v:\n$t")
@@ -378,8 +399,8 @@ class FormData {
       def ownerVid = getOrCreateOwnerVid(localgTrav, submissionOwner, sb)
       sb.append("\nIn createIngestionEventId; after getOrCreateOwnerVid = ")
         .append(ownerVid)
-      def fromV = g.V(ownerVid).next()
-      def toV = g.V(ingestionEventId).next()
+      def fromV = gtrans.V(ownerVid).next()
+      def toV = gtrans.V(ingestionEventId).next()
 
       localgTrav2.addE('Has_Form_Ingestion_Event').from(fromV).to(toV).next()
       sb.append("\nIn createIngestionEventId; after creating edge Has_Form_Ingestion_Event between ownerVid ")
@@ -389,7 +410,7 @@ class FormData {
     }
     if (formDataId != null) {
 
-      localgTrav.addE('Has_Form_Ingestion_Event').from(g.V(ingestionEventId)).to(g.V(formDataId)).next()
+      localgTrav.addE('Has_Form_Ingestion_Event').from(gtrans.V(ingestionEventId)).to(gtrans.V(formDataId)).next()
       sb.append("\nIn createIngestionEventId; after creating edge Has_Form_Ingestion_Event between ingestionEventId ")
         .append(ingestionEventId).append(" and formDataId ").append(formDataId)
 
@@ -405,15 +426,17 @@ class FormData {
 
     sb.append("\nAbout to upsert $dataType; data= $dataFromFormInJSON")
 
+    ODBSchemaManager.createEdgeLabel(App.graph, relationshipName)
+
     def gtrav2 = gtrav.clone();
 
-    def retVal = updateFormData(g, dataFromFormInJSON, dataType, sb)
+    def retVal = updateFormData(gtrav, dataFromFormInJSON, dataType, sb)
 
     if (retVal == "") {
-      retVal = addFormData(g, dataFromFormInJSON, dataType, sb)
+      retVal = addFormData(gtrav, dataFromFormInJSON, dataType, sb)
     }
     if (otherDataType && otherDataTypeSubmissionId) {
-      def trans = graph.tx()
+      def trans = App.graph.tx()
 
       try {
         if (!trans.isOpen()) {
@@ -422,20 +445,19 @@ class FormData {
 
         def otherDataTypeSubmissionIdKey = "${otherDataType}.Form_Submission_Id" as String
 
-        def otherTypeId = g.V().has(otherDataTypeSubmissionIdKey, otherDataTypeSubmissionId).next().id()
+        def otherTypeId = gtrav.V().has(otherDataTypeSubmissionIdKey, otherDataTypeSubmissionId).next().id()
 
         if (otherTypeId) {
 
 
-          def foundIds = g.V(otherTypeId)
+          def foundIds = gtrav.V(otherTypeId)
             .both()
             .hasId(retVal).id().toList() as List
 
           if (foundIds.isEmpty()) {
 
-            ODBSchemaManager.createEdgeLabel(graph, relationshipName)
 
-            gtrav2.addE(relationshipName).from(g.V(retVal)).to(g.V(otherTypeId)).next()
+            gtrav2.addE(relationshipName).from(gtrav.V(retVal)).to(gtrav.V(otherTypeId)).next()
 
             sb.append("\nAfter creating new relationship $relationshipName")
 
@@ -468,7 +490,7 @@ class FormData {
     def submissionId = formDataParsed.params.submissionId as String
 
 
-    def trans = graph.tx()
+    def trans = App.graph.tx()
 
 
 
@@ -524,10 +546,10 @@ class FormData {
 }
 
 def upsertFormData(
-  GraphTraversalSource gtrav, String dataFromFormInJSON, String dataType, String otherDataType,
+  String dataFromFormInJSON, String dataType, String otherDataType,
   String otherDataTypeSubmissionId,
   String relationshipName, StringBuffer sb = new StringBuffer()) {
-  return FormData.upsertFormData(gtrav,
+  return FormData.upsertFormData(App.g,
     dataFromFormInJSON,
     dataType,
     otherDataType,

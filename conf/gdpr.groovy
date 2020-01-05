@@ -1,4 +1,4 @@
-// Long count = g.V()
+// Long count = App.g.V()
 //   .has("Object.Contract.Description", eq("This is a Data Sharing Contract"))
 //   .count()
 //   .next()
@@ -27,6 +27,11 @@ import org.apache.tinkerpop.gremlin.structure.Vertex
 
 import java.text.SimpleDateFormat
 
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
+
+
+import static org.apache.tinkerpop.gremlin.process.traversal.P.eq
+
 //import org.OrientStandardGraph.core.OrientStandardGraph
 
 def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_metadataController, pg_metadataProcessor, pg_metadataLineage, pg_metadataRedaction, pg_metadataVersion, pg_metadataStatus, pg_metadataGDPRStatus, pg_metadataLineageServerTag, pg_metadataLineageLocationTag, pg_login_username, pg_login_sha256, pg_id_name, pg_id_value, pg_name_first, pg_name_last, pg_gender, pg_nat, pg_name_title, pg_email, pg_location_street, pg_location_city, pg_location_state, pg_location_postcode) {
@@ -54,7 +59,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
     }
 
 
-    person = g.addV("Person.Natural").
+    person = App.g.addV("Person.Natural").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -75,7 +80,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
       property("Person.Natural.Date_Of_Birth", dob).
       property("Person.Natural.Title", pg_name_title).next()
 
-    email = g.addV("Object.Email_Address").
+    email = App.g.addV("Object.Email_Address").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -92,7 +97,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
       property("Object.Email_Address.Email", pg_email).next()
 
 
-    credential = g.addV("Object.Credential").
+    credential = App.g.addV("Object.Credential").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -109,7 +114,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
       property("Object.Credential.userId", pg_login_username).
       property("Object.Credential.login.sha256", pg_login_sha256).next()
 
-    idCard = g.addV("Object.Identity_Card").
+    idCard = App.g.addV("Object.Identity_Card").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -127,7 +132,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
       property("Object.Identity_Card.id_value", pg_id_value).next()
 
 
-    location = g.addV("Location.Address").
+    location = App.g.addV("Location.Address").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -147,10 +152,10 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
       property("Location.Address.Post_Code", pg_location_postcode).next()
 
 
-    g.addE("Uses_Email").from(person).to(email).next()
-    g.addE("Has_Credential").from(person).to(credential).next()
-    g.addE("Has_Id_Card").from(person).to(idCard).next()
-    g.addE("Lives").from(person).to(location).next()
+    App.g.addE("Uses_Email").from(person).to(email).next()
+    App.g.addE("Has_Credential").from(person).to(credential).next()
+    App.g.addE("Has_Id_Card").from(person).to(idCard).next()
+    App.g.addE("Lives").from(person).to(location).next()
     trans.commit()
 
   } catch (Throwable t) {
@@ -199,12 +204,12 @@ def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, 
 //    }
 
 
-    GraphTraversal awarenessCampaign = g.V().has("Metadata.Type.Object.Awareness_Campaign", P.eq("Object.Awareness_Campaign"))
+    GraphTraversal awarenessCampaign = App.g.V().has("Metadata.Type.Object.Awareness_Campaign", eq("Object.Awareness_Campaign"))
 
     if (awarenessCampaign.hasNext()) {
       awarenessCampaignId = awarenessCampaign.next().id();
     } else {
-      awarenessCampaignId = g.addV("Object.Awareness_Campaign").
+      awarenessCampaignId = App.g.addV("Object.Awareness_Campaign").
         property("Metadata.Controller", "Controller").
         property("Metadata.Processor", "Processor").
         property("Metadata.Lineage", "https://trainingcourses.com").
@@ -290,7 +295,7 @@ def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, 
       }
 
 
-      Vertex person = g.addV("Person.Employee").
+      Vertex person = App.g.addV("Person.Employee").
         property("Metadata.Type", "Person.Employee").
         property("Metadata.Type.Person.Employee", "Person.Employee").
         property("Person.Employee.Full_Name", item.get("pg_name_first") + " " + item.get("pg_name_last")).
@@ -309,7 +314,7 @@ def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, 
 
 
 
-      Vertex trainingEvent = g.addV("Event.Training").
+      Vertex trainingEvent = App.g.addV("Event.Training").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -326,7 +331,7 @@ def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, 
         property("Event.Training.Status", distribution.sample()).next()
 
 
-      g.addE("Event_Training_Awareness_Campaign")
+      App.g.addE("Event_Training_Awareness_Campaign")
         .from(trainingEvent)
         .to(g.V(awarenessCampaignId).next())
         .property("Metadata.Type", "Event_Training_Awareness_Campaign")
@@ -334,9 +339,9 @@ def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, 
         .next()
 
 
-      person = g.V(personId).next();
+      person = App.g.V(personId).next();
 
-      g.addE("Event_Training_Person")
+      App.g.addE("Event_Training_Person")
         .from(trainingEvent)
         .to(person)
       //        .property("Metadata.Type", "Event.Training.Awareness_Campaign")
@@ -344,17 +349,17 @@ def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, 
         .next()
 
       if (counter > 1) {
-        person = g.V(personId).next();
+        person = App.g.V(personId).next();
 
         try {
-          Vertex boss = g.V()
-            .has('Person.Employee.Role', P.eq(reportsTo))
+          Vertex boss = App.g.V()
+            .has('Person.Employee.Role', eq(reportsTo))
             .order()
             .by(Order.shuffle)
             .range(0, 1)
             .next();
 
-          g.addE("Reports_To").from(person).to(boss).next();
+          App.g.addE("Reports_To").from(person).to(boss).next();
         } catch (e) { /* ignore */
         }
       }
@@ -407,7 +412,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
       }
 
 
-      person = g.addV("Person.Natural").
+      person = App.g.addV("Person.Natural").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -429,7 +434,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
         property("Person.Natural.Title", item.get("pg_name_title")).next()
 
 
-      email = g.addV("Object.Email_Address").
+      email = App.g.addV("Object.Email_Address").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -446,7 +451,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
         property("Object.Email_Address.Email", item.get("pg_email")).next()
 
 
-      credential = g.addV("Object.Credential").
+      credential = App.g.addV("Object.Credential").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -463,7 +468,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
         property("Object.Credential.User_Id", item.get("pg_login_username")).
         property("Object.Credential.Login_SHA256", item.get("pg_login_sha256")).next()
 
-      idCard = g.addV("Object.Identity_Card").
+      idCard = App.g.addV("Object.Identity_Card").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -481,7 +486,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
         property("Object.Identity_Card.Id_Value", item.get("pg_id_value")).next()
 
 
-      location = g.addV("Location.Address").
+      location = App.g.addV("Location.Address").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -501,10 +506,10 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
         property("Location.Address.Post_Code", item.get("pg_location_postcode")).next()
 
 
-      g.addE("Uses_Email").from(person).to(email).next()
-      g.addE("Has_Credential").from(person).to(credential).next()
-      g.addE("Has_Id_Card").from(person).to(idCard).next()
-      g.addE("Lives").from(person).to(location).next()
+      App.g.addE("Uses_Email").from(person).to(email).next()
+      App.g.addE("Has_Credential").from(person).to(credential).next()
+      App.g.addE("Has_Id_Card").from(person).to(idCard).next()
+      App.g.addE("Lives").from(person).to(location).next()
     }
 
 
@@ -603,7 +608,7 @@ def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOf
 
       sb?.append("\n Looking for  existing person based on the $customerId ")
 
-      def personTrav = g.V().has("Person.Natural.Customer_ID", customerId)
+      def personTrav = App.g.V().has("Person.Natural.Customer_ID", customerId)
 
       def person = null;
       if (personTrav.hasNext()) {
@@ -611,7 +616,7 @@ def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOf
         sb?.append("\n Found  existing person based on the $customerId ")
 
       } else {
-        person = g.addV("Person.Natural").
+        person = App.g.addV("Person.Natural").
           property("Metadata.Controller", item.get("pg_metadataController")).
           property("Metadata.Processor", item.get("pg_metadataProcessor")).
           property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -640,12 +645,12 @@ def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOf
 
       if (emailStr) {
 
-        def emailTrav = g.V().has("Object.Email_Address.Email")
+        def emailTrav = App.g.V().has("Object.Email_Address.Email")
 
         if (emailTrav.hasNext()) {
           email = emailTrav.next()
         } else {
-          email = g.addV("Object.Email_Address").
+          email = App.g.addV("Object.Email_Address").
             property("Metadata.Controller", item.get("pg_metadataController")).
             property("Metadata.Processor", item.get("pg_metadataProcessor")).
             property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -676,7 +681,7 @@ def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOf
 
 
 
-      def locationTrav = g.V().has("Location.Address.Post_Code", postCode).has("Location.Address.Full_Address", address)
+      def locationTrav = App.g.V().has("Location.Address.Post_Code", postCode).has("Location.Address.Full_Address", address)
 
 
       if (locationTrav.hasNext()) {
@@ -686,7 +691,7 @@ def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOf
         sb?.append("\n DID NOT FIND an existing location based on the $postCode and $address")
 
 
-        locationTrav = g.addV("Location.Address").
+        locationTrav = App.g.addV("Location.Address").
           property("Metadata.Controller", item.get("pg_metadataController")).
           property("Metadata.Processor", item.get("pg_metadataProcessor")).
           property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -717,13 +722,13 @@ def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOf
 
       if (person && email) {
         sb?.append("\nadding email to person link ")
-        g.addE("Uses_Email").from(person).to(email).next()
+        App.g.addE("Uses_Email").from(person).to(email).next()
 
       }
       if (person && location) {
         sb?.append("\nadding person to location link ")
 
-        g.addE("Lives").from(person).to(location).next()
+        App.g.addE("Lives").from(person).to(location).next()
 
       }
     }
@@ -755,12 +760,12 @@ def addDataSources(OrientStandardGraph graph, GraphTraversalSource g) {
 
     for (int i = 0; i < name.length; i++) {
       Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-        g.V().has("Object.Data_Source.Name", P.eq(name[i])).tryNext()
+        App.g.V().has("Object.Data_Source.Name", eq(name[i])).tryNext()
       GraphTraversal<Vertex, Vertex> dataSource;
       if (!dataSourceOption.isPresent()) {
-        dataSource = g.addV("Object.Data_Source");
+        dataSource = App.g.addV("Object.Data_Source");
       } else {
-        dataSource = g.V(dataSourceOption.get().id());
+        dataSource = App.g.V(dataSourceOption.get().id());
       }
       Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Data_Source").
         property("Metadata.Type.Object.Data_Source", "Object.Data_Source").
@@ -821,7 +826,7 @@ def addRandomDataProcedures(graph, g) {
     for (def i = 0; i < types.length; i++) {
       def typeStr = types[i];
 
-      props = g.V().has('Metadata.Type' + "." + typeStr, P.eq(typeStr)).range(0, 1).properties().key().findAll {
+      props = App.g.V().has('Metadata.Type' + "." + typeStr, eq(typeStr)).range(0, 1).properties().key().findAll {
         (!it.startsWith('Metadata'))
       }
 
@@ -836,7 +841,7 @@ def addRandomDataProcedures(graph, g) {
         def metadataCreateDate = new Date((long) createMillis)
         def metadataUpdateDate = new Date((long) updateMillis)
 
-        def dp = g.addV("Object.Data_Procedures").
+        def dp = App.g.addV("Object.Data_Procedures").
           property("Metadata.Redaction", "/dataprotectionofficer/aaa").
           property("Metadata.Version", "1").
           property("Metadata.Create_Date", metadataCreateDate).
@@ -854,8 +859,8 @@ def addRandomDataProcedures(graph, g) {
           next()
 
         for (int k = 0; k < randValK; k++) {
-          Vertex pia = g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment')).order().by(Order.shuffle).range(0, 1).next()
-          g.addE("Has_Data_Procedures").from(pia).to(dp).next()
+          Vertex pia = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment')).order().by(Order.shuffle).range(0, 1).next()
+          App.g.addE("Has_Data_Procedures").from(pia).to(dp).next()
 
 
         }
@@ -890,24 +895,24 @@ def addDataSourcesToAWSInstances(OrientStandardGraph graph, GraphTraversalSource
 
     for (int i = 0; i < randVal1; i++) {
 
-      Vertex dataSource = g.V().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
+      Vertex dataSource = App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
         .order().by(Order.shuffle).range(0, 1).next()
 
 
       def numServersImpacted = randVal.nextInt(10) + 5;
 
-      g.V().has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
+      App.g.V().has('Metadata.Type.Object.AWS_Instance', eq('Object.AWS_Instance'))
         .order().by(Order.shuffle).range(0, numServersImpacted).each { awsInstance ->
-        g.addE("Runs_On").from(dataSource).to(awsInstance).next()
+        App.g.addE("Runs_On").from(dataSource).to(awsInstance).next()
 
       }
 //
 //      for (def j = 0; j < numServersImpacted; j++) {
 //
-//        Vertex awsInstance = g.V().has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
+//        Vertex awsInstance = App.g.V().has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
 //          .order().by(Order.shuffle).range(0, 1).next()
 //
-//        g.addE("Impacted_By_Data_Breach").from(awsInstance).to(dataSource).next()
+//        App.g.addE("Impacted_By_Data_Breach").from(awsInstance).to(dataSource).next()
 //      }
 
 
@@ -942,21 +947,21 @@ def addEdgesPiaDataSourcesPrivNotices(OrientStandardGraph graph, GraphTraversalS
 
       int randVal2 = randVal.nextInt(2) + 1
 
-      Vertex dataSource = g.V().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
+      Vertex dataSource = App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
         .order().by(Order.shuffle).range(0, 1).next()
 
 
-      Vertex pia = g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
+      Vertex pia = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
         .order().by(Order.shuffle).range(0, 1).next()
 
-      Vertex privacyNotice = g.V().has('Metadata.Type.Object.Privacy_Notice', P.eq('Object.Privacy_Notice'))
+      Vertex privacyNotice = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
         .order().by(Order.shuffle).range(0, 1).next()
 
 
       for (int j = 0; j < randVal2; j++) {
 
-        g.V().addE("Has_Privacy_Notice").from(pia).to(privacyNotice).next();
-        g.V().addE("Has_Privacy_Impact_Assessment").from(dataSource).to(pia).next();
+        App.g.V().addE("Has_Privacy_Notice").from(pia).to(privacyNotice).next();
+        App.g.V().addE("Has_Privacy_Impact_Assessment").from(dataSource).to(pia).next();
 
 
       }
@@ -1029,7 +1034,7 @@ def addRandomDataBreachEvents(OrientStandardGraph graph, GraphTraversalSource g)
       def status = distributionStatus.sample();
       def source = distributionSource.sample();
       def impact = distributionImpact.sample();
-      g.addV("Event.Data_Breach").
+      App.g.addV("Event.Data_Breach").
         property("Metadata.Lineage", "Random generator").
         property("Metadata.Redaction", "/data/protection/officer").
         property("Metadata.Version", "1").
@@ -1099,7 +1104,7 @@ def addRandomSARs(OrientStandardGraph graph, GraphTraversalSource g) {
       def metadataUpdateDate = new Date((long) updateMillis)
 
       def stat = distributionStatus.sample()
-      Vertex sar = g.addV("Event.Subject_Access_Request").
+      Vertex sar = App.g.addV("Event.Subject_Access_Request").
         property("Metadata.Controller", "ABC INC").
         property("Metadata.Processor", "ABC INC").
         property("Metadata.Lineage", "Random generator").
@@ -1118,19 +1123,19 @@ def addRandomSARs(OrientStandardGraph graph, GraphTraversalSource g) {
         next()
 
 
-      Optional<Vertex> employee = g.V().has('Metadata.Type.Person.Employee', P.eq('Person.Employee'))
+      Optional<Vertex> employee = App.g.V().has('Metadata.Type.Person.Employee', eq('Person.Employee'))
         .order().by(Order.shuffle).range(0, 1).tryNext()
 
-      Optional<Vertex> person = g.V().has('Metadata.Type.Person.Natural', P.eq('Person.Natural'))
+      Optional<Vertex> person = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
         .order().by(Order.shuffle).range(0, 1).tryNext()
 
 
       if (person.isPresent()) {
-        g.addE("Made_SAR_Request").from(person.get()).to(sar).next()
+        App.g.addE("Made_SAR_Request").from(person.get()).to(sar).next()
 
       }
       if (employee.isPresent()) {
-        g.addE("Assigned_SAR_Request").from(employee.get()).to(sar).next()
+        App.g.addE("Assigned_SAR_Request").from(employee.get()).to(sar).next()
 
       }
 
@@ -1164,7 +1169,7 @@ def addDataBreachToAWSInstances(OrientStandardGraph graph, GraphTraversalSource 
 
     for (int i = 0; i < randVal1; i++) {
 
-      Optional<GraphTraversal> trav = g.V().has('Metadata.Type.Event.Data_Breach', P.eq('Event.Data_Breach'))
+      Optional<GraphTraversal> trav = App.g.V().has('Metadata.Type.Event.Data_Breach', eq('Event.Data_Breach'))
         .order().by(Order.shuffle).range(0, 1).tryNext()
 
       if (trav.isPresent()) {
@@ -1173,10 +1178,10 @@ def addDataBreachToAWSInstances(OrientStandardGraph graph, GraphTraversalSource 
         def numServersImpacted = randVal.nextInt(10);
         for (def j = 0; j < numServersImpacted; j++) {
 
-          Vertex awsInstance = g.V().has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
+          Vertex awsInstance = App.g.V().has('Metadata.Type.Object.AWS_Instance', eq('Object.AWS_Instance'))
             .order().by(Order.shuffle).range(0, 1).next()
 
-          g.addE("Impacted_By_Data_Breach").from(awsInstance).to(dataSource).next()
+          App.g.addE("Impacted_By_Data_Breach").from(awsInstance).to(dataSource).next()
         }
 
       }
@@ -1226,7 +1231,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
       }
 
 
-      person = g.addV("Person.Natural").
+      person = App.g.addV("Person.Natural").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1248,7 +1253,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Person.Natural.Title", item.get("pg_name_title")).next()
 
 
-      email = g.addV("Object.Email_Address").
+      email = App.g.addV("Object.Email_Address").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1265,7 +1270,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Object.Email_Address.Email", item.get("pg_email")).next()
 
 
-      credential = g.addV("Object.Credential").
+      credential = App.g.addV("Object.Credential").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1282,7 +1287,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Object.Credential.User_Id", item.get("pg_login_username")).
         property("Object.Credential.Login_SHA256", item.get("pg_login_sha256")).next()
 
-      idCard = g.addV("Object.Identity_Card").
+      idCard = App.g.addV("Object.Identity_Card").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1300,7 +1305,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Object.Identity_Card.Id_Value", item.get("pg_id_value")).next()
 
 
-      location = g.addV("Location.Address").
+      location = App.g.addV("Location.Address").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1320,7 +1325,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Location.Address.Post_Code", item.get("pg_location_postcode")).next();
 
 
-      parentOrGuardian = g.V()
+      parentOrGuardian = App.g.V()
         .has('Metadata.Type.Person.Natural', eq('Person.Natural'))
         .where(__.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold)))
         .order().by(shuffle).range(0, 1).next();
@@ -1328,12 +1333,12 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
 
 
 
-      g.addE("Uses_Email").from(person).to(email).next()
-      g.addE("Has_Credential").from(person).to(credential).next()
-      g.addE("Has_Id_Card").from(person).to(idCard).next()
-      g.addE("Lives").from(person).to(location).next()
+      App.g.addE("Uses_Email").from(person).to(email).next()
+      App.g.addE("Has_Credential").from(person).to(credential).next()
+      App.g.addE("Has_Id_Card").from(person).to(idCard).next()
+      App.g.addE("Lives").from(person).to(location).next()
 
-      g.addE("Has_Parent_Or_Guardian").from(person).to(parentOrGuardian).next();
+      App.g.addE("Has_Parent_Or_Guardian").from(person).to(parentOrGuardian).next();
     }
 
 //    trans.commit()
@@ -1411,7 +1416,7 @@ eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.
 
 
     def stat = distributionStatus.sample()
-    def consent = g.addV("Event.Consent").
+    def consent = App.g.addV("Event.Consent").
       property("Metadata.Controller", "ABC INC").
       property("Metadata.Processor", "ABC INC").
       property("Metadata.Lineage", "Random generator").
@@ -1428,18 +1433,18 @@ eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.
       property("Event.Consent.Date", metadataUpdateDate).
       next()
 
-//        def employee = g.V().has('Metadata.Type',eq('Person.Employee')).order().by(shuffle).range(0,1).next()
+//        def employee = App.g.V().has('Metadata.Type',eq('Person.Employee')).order().by(shuffle).range(0,1).next()
 
-    def person = g.V().has('Metadata.Type', eq('Person.Natural')).order().by(shuffle).range(0, 1).next()
+    def person = App.g.V().has('Metadata.Type', eq('Person.Natural')).order().by(shuffle).range(0, 1).next()
 
 
-    g.addE("Consent").from(person).to(consent).next()
-    g.addE("Has_Privacy_Notice").from(consent).to(privNoticeVertex).next()
+    App.g.addE("Consent").from(person).to(consent).next()
+    App.g.addE("Has_Privacy_Notice").from(consent).to(privNoticeVertex).next()
 
 
   }
 
-//    g.V().has("Metadata.Type", eq("Person.Natural")).as("people")
+//    App.g.V().has("Metadata.Type", eq("Person.Natural")).as("people")
 //            .addE("Consent").property("Consent.Date", new Date())
 //            .from("people").to(privNoticeVertex).next()
 
@@ -1463,7 +1468,7 @@ def addContracts(OrientStandardGraph graph, GraphTraversalSource g) {
 
     for (int k = 0; k < numMoUs; k++) {
 
-      Vertex contract = g.addV("Object.Contract").
+      Vertex contract = App.g.addV("Object.Contract").
         property("Object.Contract.Id", new Random().nextLong()).
         property("Object.Contract.Description", "This is a Data Sharing Contract").
         property("Object.Contract.Status", "Active").
@@ -1472,22 +1477,22 @@ def addContracts(OrientStandardGraph graph, GraphTraversalSource g) {
         property("Object.Contract.Link", "https://www.abcinc.com/contract").next();
 
 
-      Vertex org = g.V().has('Metadata.Type.Person.Organisation', P.eq('Person.Organisation'))
+      Vertex org = App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
         .order().by(Order.shuffle).range(0, 1).next()
 
-      Vertex org2 = g.V().has('Metadata.Type.Person.Organisation', P.eq('Person.Organisation'))
+      Vertex org2 = App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
         .order().by(Order.shuffle).range(0, 1).next()
 
-      Vertex org3 = g.V().has('Metadata.Type.Person.Organisation', P.eq('Person.Organisation'))
+      Vertex org3 = App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
         .order().by(Order.shuffle).range(0, 1).next()
 
-      Vertex dataSource = g.V().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
+      Vertex dataSource = App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
         .order().by(Order.shuffle).range(0, 1).next()
 
-      g.addE("Has_Contract").from(dataSource).to(contract).next()
-      g.addE("Is_Data_Processor").from(org).to(contract).next()
-      g.addE("Is_Data_Controller").from(org2).to(contract).next()
-      g.addE("Is_Data_Owner").from(org3).to(contract).next()
+      App.g.addE("Has_Contract").from(dataSource).to(contract).next()
+      App.g.addE("Is_Data_Processor").from(org).to(contract).next()
+      App.g.addE("Is_Data_Controller").from(org2).to(contract).next()
+      App.g.addE("Is_Data_Owner").from(org3).to(contract).next()
 
     }
 
@@ -1515,7 +1520,7 @@ def addPrivacyImpactAssessment(OrientStandardGraph graph, GraphTraversalSource g
 //    }
 
 
-    g.addV("Object.Privacy_Impact_Assessment").
+    App.g.addV("Object.Privacy_Impact_Assessment").
       property("Metadata.Create_Date", metadataCreateDate).
       property("Metadata.Update_Date", metadataUpdateDate).
       property("Metadata.Type", "Object.Privacy_Impact_Assessment").
@@ -1711,12 +1716,12 @@ def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalS
     for (int i = 0; i < ilen; i++) {
 
 
-      GraphTraversal lawfulBasis1 = g.V().has("Object.Lawful_Basis.Description", P.eq(definitions[i]))
+      GraphTraversal lawfulBasis1 = App.g.V().has("Object.Lawful_Basis.Description", eq(definitions[i]))
 
       if (lawfulBasis1.hasNext()) {
         lawfulBasisVertices[i] = lawfulBasis1.next();
       } else {
-        lawfulBasisVertices[i] = g.addV("Object.Lawful_Basis").
+        lawfulBasisVertices[i] = App.g.addV("Object.Lawful_Basis").
           property("Metadata.Lineage", "https://gdpr-info.eu/art-6-gdpr/").
           property("Metadata.Redaction", "/data/protection/officer").
           property("Metadata.Version", 1).
@@ -1743,12 +1748,12 @@ def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalS
     for (int i = 0; i < ilen; i++) {
 
 
-      GraphTraversal privNotice = g.V().has("Object.Privacy_Notice.Description", P.eq(privNoticeDesc[i]))
+      GraphTraversal privNotice = App.g.V().has("Object.Privacy_Notice.Description", eq(privNoticeDesc[i]))
 
       if (privNotice.hasNext()) {
         privNotice.next();
       } else {
-        g.addV("Object.Privacy_Notice").
+        App.g.addV("Object.Privacy_Notice").
           property("Metadata.Type", "Object.Privacy_Notice").
           property("Metadata.Type.Object.Privacy_Notice", "Object.Privacy_Notice").
           property("Object.Privacy_Notice.Text", privNoticeText[i]).
@@ -1788,22 +1793,22 @@ def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalS
     */
 
 
-    Vertex pn = g.V().has("Metadata.Type.Object.Privacy_Notice", P.eq("Object.Privacy_Notice"))
+    Vertex pn = App.g.V().has("Metadata.Type.Object.Privacy_Notice", eq("Object.Privacy_Notice"))
       .order().by(Order.shuffle).range(0, 1).next();
 
     int numLawfulBasis = lawfulBasisVertices.length;
 
     int index = new Random().nextInt(numLawfulBasis);
 
-    g.addE("Has_Lawful_Basis_On").from(pn).to(lawfulBasisVertices[index]).next()
+    App.g.addE("Has_Lawful_Basis_On").from(pn).to(lawfulBasisVertices[index]).next()
 
 
-//        __addConsentForPrivacyNotice(graph, g, g.V(pnId0).next())
-//        __addConsentForPrivacyNotice(graph, g, g.V(pnId1).next())
+//        __addConsentForPrivacyNotice(graph, g, App.g.V(pnId0).next())
+//        __addConsentForPrivacyNotice(graph, g, App.g.V(pnId1).next())
 
 //
-//        __addPrivacyImpactAssessment(graph, g, g.V(pnId0).next())
-//        __addPrivacyImpactAssessment(graph, g, g.V(pnId1).next())
+//        __addPrivacyImpactAssessment(graph, g, App.g.V(pnId0).next())
+//        __addPrivacyImpactAssessment(graph, g, App.g.V(pnId1).next())
 
 
 //    trans.commit()
@@ -1852,12 +1857,12 @@ def addLawfulBasisAndPrivacyNotices(OrientStandardGraph graph, GraphTraversalSou
     for (int i = 0; i < ilen; i++) {
 
 
-      GraphTraversal lawfulBasis1 = g.V().has("Object.Lawful_Basis.Description", P.eq(definitions[i]))
+      GraphTraversal lawfulBasis1 = App.g.V().has("Object.Lawful_Basis.Description", eq(definitions[i]))
 
       if (lawfulBasis1.hasNext()) {
         lawfulBasisVertices[i] = lawfulBasis1.next();
       } else {
-        lawfulBasisVertices[i] = g.addV("Object.Lawful_Basis").
+        lawfulBasisVertices[i] = App.g.addV("Object.Lawful_Basis").
           property("Metadata.Lineage", "https://gdpr-info.eu/art-6-gdpr/").
           property("Metadata.Redaction", "/data/protection/officer").
           property("Metadata.Version", 1).
@@ -1884,12 +1889,12 @@ def addLawfulBasisAndPrivacyNotices(OrientStandardGraph graph, GraphTraversalSou
     for (int i = 0; i < ilen; i++) {
 
 
-      GraphTraversal privNotice = g.V().has("Object.Privacy_Notice.Description", P.eq(privNoticeDesc[i]))
+      GraphTraversal privNotice = App.g.V().has("Object.Privacy_Notice.Description", eq(privNoticeDesc[i]))
 
       if (privNotice.hasNext()) {
         privNotice.next();
       } else {
-        g.addV("Object.Privacy_Notice").
+        App.g.addV("Object.Privacy_Notice").
           property("Metadata.Type", "Object.Privacy_Notice").
           property("Metadata.Type.Object.Privacy_Notice", "Object.Privacy_Notice").
           property("Object.Privacy_Notice.Text", privNoticeText[i]).
@@ -1929,22 +1934,22 @@ def addLawfulBasisAndPrivacyNotices(OrientStandardGraph graph, GraphTraversalSou
     */
 
 
-    Vertex pn = g.V().has("Metadata.Type.Object.Privacy_Notice", P.eq("Object.Privacy_Notice"))
+    Vertex pn = App.g.V().has("Metadata.Type.Object.Privacy_Notice", eq("Object.Privacy_Notice"))
       .order().by(Order.shuffle).range(0, 1).next();
 
     int numLawfulBasis = lawfulBasisVertices.length;
 
     int index = new Random().nextInt(numLawfulBasis);
 
-    g.addE("Has_Lawful_Basis_On").from(pn).to(lawfulBasisVertices[index]).next()
+    App.g.addE("Has_Lawful_Basis_On").from(pn).to(lawfulBasisVertices[index]).next()
 
 
-//        __addConsentForPrivacyNotice(graph, g, g.V(pnId0).next())
-//        __addConsentForPrivacyNotice(graph, g, g.V(pnId1).next())
+//        __addConsentForPrivacyNotice(graph, g, App.g.V(pnId0).next())
+//        __addConsentForPrivacyNotice(graph, g, App.g.V(pnId1).next())
 
 //
-//        __addPrivacyImpactAssessment(graph, g, g.V(pnId0).next())
-//        __addPrivacyImpactAssessment(graph, g, g.V(pnId1).next())
+//        __addPrivacyImpactAssessment(graph, g, App.g.V(pnId0).next())
+//        __addPrivacyImpactAssessment(graph, g, App.g.V(pnId1).next())
 
 
 //    trans.commit()
@@ -2005,7 +2010,7 @@ def createForms() {
       def metadataCreateDate = new Date((long) createMillis)
 
 
-      def form = g.addV("Object.Form").
+      def form = App.g.addV("Object.Form").
         property("Metadata.Type", "Object.Form").
         property("Metadata.Type.Object.Form", "Object.Form").
         property("Object.Form.Metadata_Owner", formDataObj.formOwner).
@@ -2088,7 +2093,7 @@ def addOrganisations(OrientStandardGraph graph, GraphTraversalSource g) {
 
 
 
-      Vertex location = g.addV("Location.Address").
+      Vertex location = App.g.addV("Location.Address").
 
         property("Metadata.Lineage_Location_Tag", orgDataObj.orgCountrySet).
         property("Metadata.Type", "Location.Address").
@@ -2098,7 +2103,7 @@ def addOrganisations(OrientStandardGraph graph, GraphTraversalSource g) {
         property("Location.Address.Post_Code", orgDataObj.locationAddrCity).next()
 
 
-      Vertex org = g.addV("Person.Organisation").
+      Vertex org = App.g.addV("Person.Organisation").
         property("Metadata.Lineage_Location_Tag", orgDataObj.orgCountrySet).
         property("Metadata.Type", "Person.Organisation").
         property("Metadata.Type.Person.Organisation", "Person.Organisation").
@@ -2111,7 +2116,7 @@ def addOrganisations(OrientStandardGraph graph, GraphTraversalSource g) {
         property("Person.Organisation.Fax", orgDataObj.orgFax).
         next();
 
-      g.addE("Is_Located").from(org).to(location);
+      App.g.addE("Is_Located").from(org).to(location);
 
 
     }
@@ -2561,7 +2566,7 @@ def createDataProtectionAuthorities(OrientStandardGraph graph, GraphTraversalSou
       def metadataUpdateDate = new Date((long) updateMillis)
 
 
-      Vertex location = g.addV("Location.Address").
+      Vertex location = App.g.addV("Location.Address").
         property("Metadata.Lineage", "http://ec.europa.eu/justice/data-protection/article-29/structure/data-protection-authorities/index_en.htm").
 
         property("Metadata.Redaction", "/dataprotectionofficer/aaa").
@@ -2577,7 +2582,7 @@ def createDataProtectionAuthorities(OrientStandardGraph graph, GraphTraversalSou
         property("Location.Address.Post_Code", authDataObj.locationAddrCity).next()
 
 
-      Vertex org = g.addV("Person.Organisation").
+      Vertex org = App.g.addV("Person.Organisation").
         property("Metadata.Lineage", "http://ec.europa.eu/justice/data-protection/article-29/structure/data-protection-authorities/index_en.htm").
         property("Metadata.Redaction", "/dataprotectionofficer/aaa").
         property("Metadata.Version", "1").
@@ -2596,15 +2601,15 @@ def createDataProtectionAuthorities(OrientStandardGraph graph, GraphTraversalSou
         property("Person.Organisation.Fax", authDataObj.orgFax).
         next();
 
-      g.V().addE('Is_Located').from(org).to(location).next()
+      App.g.V().addE('Is_Located').from(org).to(location).next()
 
 
       if ((randValK % 5) == 0) {
 
-        Vertex pia = g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
+        Vertex pia = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
           .order().by(Order.shuffle).range(0, 1).next()
 
-        g.addE("Has_Data_Procedures").from(pia).to(org).next()
+        App.g.addE("Has_Data_Procedures").from(pia).to(org).next()
 
       }
 
@@ -2635,12 +2640,12 @@ def createNotificationTemplates() {
       return createNotificationTemplatesPt();
     }
 
-    Long count = g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
+    Long count = App.g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
 
 
     if (count == 0) {
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "INGESTION BUSINESS RULES")
@@ -2650,7 +2655,7 @@ def createNotificationTemplates() {
         .property("Object.Notification_Templates.Label", "Business Rules")
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "MATCHES")
@@ -2675,7 +2680,7 @@ def createNotificationTemplates() {
         .next();
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "MATCHES")
@@ -2701,7 +2706,7 @@ def createNotificationTemplates() {
         .next();
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "SAR READ TEMPLATE")
@@ -2732,7 +2737,7 @@ def createNotificationTemplates() {
         .property("Object.Notification_Templates.Label", "SAR Read")
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "SAR UPDATE TEMPLATE")
@@ -2763,7 +2768,7 @@ def createNotificationTemplates() {
         .property("Object.Notification_Templates.Label", "SAR Update")
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "SAR DELETE TEMPLATE")
@@ -2797,7 +2802,7 @@ def createNotificationTemplates() {
 
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "DATA BREACH PERSON TEMPLATE")
@@ -2883,13 +2888,13 @@ def createNotificationTemplatesPt() {
 //
 //    }
 
-    Long count = g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
+    Long count = App.g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
 
 
     if (count == 0) {
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "PIA REPORT")
@@ -2901,7 +2906,7 @@ def createNotificationTemplatesPt() {
           "{{ pv:getNumNaturalPersonForPIA(context.id).size() }} titulares.").bytes.encodeBase64().toString())
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "Privacy Notice Report")
@@ -2913,7 +2918,7 @@ def createNotificationTemplatesPt() {
           "{{ pv:getNumNaturalPersonForPIA(context.id).size() }} titulares.").bytes.encodeBase64().toString())
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "Bases Legais")
@@ -2945,7 +2950,7 @@ def createNotificationTemplatesPt() {
           "{% endif %}").bytes.encodeBase64().toString())
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "Fontes de Dados")
@@ -2955,7 +2960,7 @@ def createNotificationTemplatesPt() {
         .property("Object.Notification_Templates.Text", ("").bytes.encodeBase64().toString())
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "Contratos")
@@ -2967,7 +2972,7 @@ def createNotificationTemplatesPt() {
 
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "Regras de Negócio")
@@ -2977,7 +2982,7 @@ def createNotificationTemplatesPt() {
         .property("Object.Notification_Templates.Label", "Regras de Negócio")
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "Corresponde")
@@ -3002,7 +3007,7 @@ def createNotificationTemplatesPt() {
         .next();
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "Corresponde")
@@ -3027,7 +3032,7 @@ def createNotificationTemplatesPt() {
         .next();
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "DSAR")
@@ -3060,7 +3065,7 @@ def createNotificationTemplatesPt() {
         .next();
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "VIOLAÇÃO DE DADOS")
@@ -3152,7 +3157,7 @@ def __addVPCEdgesFromUserIdGroupPairs(
 
 
     if (uidPair.VpcId != null && uidPair.PeeringStatus == "active") {
-      def peerVpc = g.V().has('Object.AWS_VPC.Id', P.eq(uidPair.VpcId)).next();
+      def peerVpc = App.g.V().has('Object.AWS_VPC.Id', eq(uidPair.VpcId)).next();
 //  Transaction trans = graph.tx()
       try {
 //    if (!trans.isOpen()) {
@@ -3161,9 +3166,9 @@ def __addVPCEdgesFromUserIdGroupPairs(
 //    }
 
 
-        def origVPC = g.V(origVpcVid).next();
+        def origVPC = App.g.V(origVpcVid).next();
 
-        g.addE(isEgress ? "Has_Egress_Peering" : "Has_Ingress_Peering")
+        App.g.addE(isEgress ? "Has_Egress_Peering" : "Has_Ingress_Peering")
           .from(origVPC)
           .to(peerVpc)
           .property('Metadata.Lineage', origGroupIdStr)
@@ -3194,7 +3199,7 @@ def __addSecGroupEdgesFromUserIdGroupPairs(graph, g, Long origSecGroupVid, userI
 
 
     if (uidPair.GroupId != null) {
-      def peerSecGroup = g.V().has('Object.AWS_Security_Group.Id', eq(uidPair.GroupId)).next();
+      def peerSecGroup = App.g.V().has('Object.AWS_Security_Group.Id', eq(uidPair.GroupId)).next();
       //  Transaction trans = graph.tx()
       try {
 //    if (!trans.isOpen()) {
@@ -3202,9 +3207,9 @@ def __addSecGroupEdgesFromUserIdGroupPairs(graph, g, Long origSecGroupVid, userI
 //
 //    }
 
-        def origSecGroup = g.V(origSecGroupVid).next();
+        def origSecGroup = App.g.V(origSecGroupVid).next();
 
-        g.addE(isEgress ? "Has_Egress_Peering" : "Has_Ingress_Peering")
+        App.g.addE(isEgress ? "Has_Egress_Peering" : "Has_Ingress_Peering")
           .from(origSecGroup)
           .to(peerSecGroup)
           .property('Metadata.Lineage', origGroupIdStr)
@@ -3240,7 +3245,7 @@ def __addSecGroupEdges(OrientStandardGraph graph, GraphTraversalSource g, aws_se
 
     Long vpcVid = null;
     try {
-      vpcVid = g.V().has('Object.AWS_VPC.Id', eq(sg.VpcId)).next().id();
+      vpcVid = App.g.V().has('Object.AWS_VPC.Id', eq(sg.VpcId)).next().id();
 
       // sb.append('in __addSecGroupEdges -')
       //   .append('vpcVid = ').append(vpcVid).append('\n')
@@ -3279,7 +3284,7 @@ def __addSecGroupEdges(OrientStandardGraph graph, GraphTraversalSource g, aws_se
 
     Long sgVid = null;
     try {
-      sgVid = g.V().has('Object.AWS_Security_Group.Id', eq(sg.GroupId)).next().id();
+      sgVid = App.g.V().has('Object.AWS_Security_Group.Id', eq(sg.GroupId)).next().id();
 
       sg.IpPermissionsEgress.each { egressIpPerm ->
         if (egressIpPerm.UserIdGroupPairs != null) {
@@ -3374,7 +3379,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
     sb.append("VPC looking for  - ").append(it.toString()).append('\n');
 
     try {
-      vpcId = g.V().has("Object.AWS_VPC.Id", eq(it.toString())).next().id();
+      vpcId = App.g.V().has("Object.AWS_VPC.Id", eq(it.toString())).next().id();
 
 
     } catch (Throwable t) {
@@ -3395,7 +3400,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
 //    }
 
 
-        vpcId = g.addV("Object.AWS_VPC").
+        vpcId = App.g.addV("Object.AWS_VPC").
           property("Metadata.Lineage", "aws ec2 describe-instance").
           property("Metadata.Redaction", "/data/protection/officer").
           property("Metadata.Version", 1).
@@ -3430,7 +3435,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
 
       def awsiId = null;
       try {
-        awsiId = g.V().has("Object.AWS_Instance.Id", eq(iidStr)).next().id()
+        awsiId = App.g.V().has("Object.AWS_Instance.Id", eq(iidStr)).next().id()
         sb.append("AWSI found id   - ").append(awsiId).append('\n');
 
 
@@ -3455,7 +3460,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
 //    }
 
 
-          awsiId = g.addV("Object.AWS_Instance").
+          awsiId = App.g.addV("Object.AWS_Instance").
             property("Metadata.Type", "Object.AWS_Instance").
             property("Metadata.Type.Object.AWS_Instance", "Object.AWS_Instance").
             property("Metadata.Lineage", "aws ec2 describe-instance").
@@ -3505,7 +3510,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
         sb.append("secGroup - looking for ").append(sgStr.toString()).append('\n');
 
         try {
-          sgvId = g.V().has("Object.AWS_Security_Group.Id", eq(sgStr)).next().id();
+          sgvId = App.g.V().has("Object.AWS_Security_Group.Id", eq(sgStr)).next().id();
           sb.append("secGroup - found id ").append(sgvId).append('\n');
 
 
@@ -3529,7 +3534,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
             metadataCreateDate = new Date((long) createMillis)
             metadataUpdateDate = new Date((long) updateMillis)
 
-            sgvId = g.addV("Object.AWS_Security_Group").
+            sgvId = App.g.addV("Object.AWS_Security_Group").
               property("Metadata.Type", "Object.AWS_Security_Group").
               property("Metadata.Type.Object.AWS_Security_Group", "Object.AWS_Security_Group").
               property("Metadata.Lineage", "aws ec2 describe-instance").
@@ -3569,18 +3574,18 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
             sb.append("retrieving ").append(sgvId).append('\n');
             sb.append("retrieving ").append(sgvId.class).append('\n');
 
-            sgv = g.V(sgvId).next();
-            awsi = g.V(awsiId).next();
-            vpc = g.V(vpcId).next();
+            sgv = App.g.V(sgvId).next();
+            awsi = App.g.V(awsiId).next();
+            vpc = App.g.V(vpcId).next();
 
-            g.addE("Has_Server")
+            App.g.addE("Has_Server")
               .from(sgv)
               .to(awsi)
               .next();
 
-            sgv = g.V(sgvId).next();
+            sgv = App.g.V(sgvId).next();
 
-            g.addE("Has_Security_Group")
+            App.g.addE("Has_Security_Group")
               .from(vpc)
               .to(sgv).next();
           }
@@ -3700,9 +3705,9 @@ def getAwarenessScores(def scoresMap) {
   def retVal = '';
   long scoreValue
   try {
-    long numEvents = g.V().has('Metadata.Type.Object.Awareness_Campaign', eq('Object.Awareness_Campaign')).in().as('events').count().next();
+    long numEvents = App.g.V().has('Metadata.Type.Object.Awareness_Campaign', eq('Object.Awareness_Campaign')).in().as('events').count().next();
 
-    def map = g.V().has('Metadata.Type.Object.Awareness_Campaign', eq('Object.Awareness_Campaign')).in().as('events').groupCount().by('Event.Training.Status').next();
+    def map = App.g.V().has('Metadata.Type.Object.Awareness_Campaign', eq('Object.Awareness_Campaign')).in().as('events').groupCount().by('Event.Training.Status').next();
 
 
     long failedCount = map.get('Failed') == null ? 0 : map.get('Failed');
@@ -3756,7 +3761,7 @@ def getChildrenScores(scoresMap) {
   def dateThreshold = new java.util.Date(ageThresholdMs);
 
 
-  long numChildren = g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+  long numChildren = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
       and(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
@@ -3764,7 +3769,7 @@ def getChildrenScores(scoresMap) {
     )
     .count().next()
 
-  long numNoGuardian = g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+  long numNoGuardian = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
       and(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
@@ -3773,7 +3778,7 @@ def getChildrenScores(scoresMap) {
     )
     .count().next()
 
-  long numWithoutAnyConsent = g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+  long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
       and(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
@@ -3785,7 +3790,7 @@ def getChildrenScores(scoresMap) {
 
   long numNegativeConsent =
 
-    g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+    App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
       .where(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
       ).as('children')
@@ -3806,7 +3811,7 @@ def getChildrenScores(scoresMap) {
 
   long numPendingConsent =
 
-    g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+    App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
       .where(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
       ).as('children')
@@ -3865,7 +3870,7 @@ def getConsentScores(def scoresMap) {
   def dateThreshold = new java.util.Date(ageThresholdMs);
 
 
-  long numAdults = g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+  long numAdults = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
       and(
         __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
@@ -3874,7 +3879,7 @@ def getConsentScores(def scoresMap) {
     .count().next()
 
 
-  long numWithoutAnyConsent = g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+  long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
       and(
         __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
@@ -3886,7 +3891,7 @@ def getConsentScores(def scoresMap) {
 
   long numNegativeConsent =
 
-    g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+    App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
       .where(
         __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
       ).as('adults')
@@ -3906,7 +3911,7 @@ def getConsentScores(def scoresMap) {
 
   long numPendingConsent =
 
-    g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+    App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
       .where(
         __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
       ).as('adults')
@@ -3953,12 +3958,12 @@ def getConsentScores(def scoresMap) {
 }
 
 def getDataBreachesScores(def scoresMap) {
-  long numItems = g.V().has('Metadata.Type.Event.Data_Breach', eq('Event.Data_Breach'))
+  long numItems = App.g.V().has('Metadata.Type.Event.Data_Breach', eq('Event.Data_Breach'))
     .count().next()
 
 
   long numOpenDataBreachDataStolen =
-    g.V()
+    App.g.V()
       .has('Event.Data_Breach.Status', eq('Open'))
       .where(
         or(
@@ -3969,7 +3974,7 @@ def getDataBreachesScores(def scoresMap) {
       .count().next()
 
   long numOpenDataBreachDataLost =
-    g.V()
+    App.g.V()
       .has('Event.Data_Breach.Status', eq('Open'))
       .where(
         __.has('Event.Data_Breach.Impact', eq('Data Lost'))
@@ -4004,30 +4009,30 @@ def getDataBreachesScores(def scoresMap) {
 
 def getDataProtnOfficerScores(def scoresMap) {
 
-  long numDPOs = g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
+  long numDPOs = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
     .count().next()
 
 
-  long numDPODirectReports = g.V().has('Person.Employee.Role', eq('Data Protection Officer')).inE('Reports_To')
+  long numDPODirectReports = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer')).inE('Reports_To')
     .count().next()
 
 
-  long numDPOsFailed = g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
+  long numDPOsFailed = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
     .in().has('Event.Training.Status', eq('Failed'))
     .count().next()
 
 
-  long numDPODirectReportsFailed = g.V().has('Person.Employee.Role', eq('Data Protection Officer')).inE('Reports_To')
+  long numDPODirectReportsFailed = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer')).inE('Reports_To')
     .outV().in().has('Event.Training.Status', eq('Failed'))
     .count().next()
 
 
-  long numDPOsSecondReminder = g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
+  long numDPOsSecondReminder = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
     .in().has('Event.Training.Status', eq('Second  Reminder'))
     .count().next()
 
 
-  long numDPODirectReportsSecondReminder = g.V().has('Person.Employee.Role', eq('Data Protection Officer')).inE('Reports_To')
+  long numDPODirectReportsSecondReminder = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer')).inE('Reports_To')
     .outV().in().has('Event.Training.Status', eq('Second  Reminder'))
     .count().next()
 
@@ -4052,19 +4057,19 @@ def getDataProtnOfficerScores(def scoresMap) {
 }
 
 def getIndivRightsScores(def scoresMap) {
-  long numItems = g.V()
+  long numItems = App.g.V()
     .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
     .count()
     .next()
 
 
-  long numDeleteURL = g.V()
+  long numDeleteURL = App.g.V()
     .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
     .values('Object.Data_Procedures.Delete_URL')
     .count()
     .next()
 
-  long numUpdateURL = g.V()
+  long numUpdateURL = App.g.V()
     .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
     .values('Object.Data_Procedures.Delete_URL')
     .count()
@@ -4089,10 +4094,10 @@ def getIndivRightsScores(def scoresMap) {
 
 def getInfoYouHoldScores(def scoresMap) {
 
-  long numEvents = g.V().has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion')).count().next();
+  long numEvents = App.g.V().has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion')).count().next();
 
   long numRecordsNoEdges =
-    g.V()
+    App.g.V()
       .has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion'))
       .where(__.inE().count().is(eq(1)))
       .count().next()
@@ -4123,12 +4128,12 @@ def getInfoYouHoldScores(def scoresMap) {
 
 
 def getInternationalScores(def scoresMap) {
-  long numItems = g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
+  long numItems = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
     .count().next()
 
 
   long numPrivNoticesWithoutRegulator =
-    g.V()
+    App.g.V()
       .has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
       .where(__.out().has('Metadata.Type.Person.Organisation', eq('Person.Organisation')).count().is(eq(0)))
       .count().next()
@@ -4151,11 +4156,11 @@ def getInternationalScores(def scoresMap) {
 
 def getLawfulBasisScores(def scoresMap) {
 
-  long numEvents = g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
+  long numEvents = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
     .count().next()
 
 
-  long numWithoutAnyLawfulBasis = g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
+  long numWithoutAnyLawfulBasis = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
     .where(
       __.outE('Has_Lawful_Basis_On').count().is(eq(0))
     )
@@ -4176,19 +4181,19 @@ def getLawfulBasisScores(def scoresMap) {
 
 
 def getPrivacyImpactAssessmentScores(def scoresMap) {
-  long numItems = g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
+  long numItems = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
     .count().next()
 
 
   long numPIAWithoutPrivNotices =
-    g.V()
+    App.g.V()
       .has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
       .where(__.both().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).count().is(eq(0)))
       .count().next()
 
 
   long numPIAWithPrivNoticesAndDataWithoutConsent =
-    g.V()
+    App.g.V()
       .has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
       .where(
         __.both().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
@@ -4199,7 +4204,7 @@ def getPrivacyImpactAssessmentScores(def scoresMap) {
 
 
   long numPIAWithPrivNoticesAndDataWithPendingConsent =
-    g.V()
+    App.g.V()
       .has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
       .where(
         __.both().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
@@ -4231,10 +4236,10 @@ def getPrivacyImpactAssessmentScores(def scoresMap) {
 
 
 def getPrivacyNoticesScores(def scoresMap) {
-  long numEvents = g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).count().next();
+  long numEvents = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).count().next();
 
   long numRecordsNoConsent =
-    g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).as('privNotice')
+    App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).as('privNotice')
       .match(
         __.as('privNotice').both().has('Metadata.Type.Event.Consent', eq('Event.Consent')).count().as('consentCount')
 
@@ -4244,7 +4249,7 @@ def getPrivacyNoticesScores(def scoresMap) {
       .count().next()
 
   long numRecordsNoPIA =
-    g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).as('privNotice')
+    App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).as('privNotice')
       .match(
         __.as('privNotice').both().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment')).count().as('consentCount')
 
@@ -4254,7 +4259,7 @@ def getPrivacyNoticesScores(def scoresMap) {
       .count().next()
 
   long numRecordsLessThan50PcntPositiveConsent =
-    g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).as('privNotice')
+    App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).as('privNotice')
       .match(
         __.as('privNotice').both().has('Metadata.Type.Event.Consent', eq('Event.Consent')).count().as('consentCount')
         , __.as('privNotice').both().has('Event.Consent.Status', eq('Consent')).count().math('_ * 2').as('posConsentCountDouble')
@@ -4307,11 +4312,11 @@ def getSubjectAccessRequestScores(def scoresMap) {
   long tenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 10L));
   def tenDayDateThreshold = new java.util.Date(tenDayThresholdMs);
 
-  long numEvents = g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).count().next();
+  long numEvents = App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).count().next();
 
   long numRecordsOlder30Days =
 
-    g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
+    App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
       .where(
         __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(thirtyDayDateThreshold))
       )
@@ -4320,7 +4325,7 @@ def getSubjectAccessRequestScores(def scoresMap) {
 
   long numRecordsOlder10Days =
 
-    g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
+    App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
       .where(
         __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(tenDayDateThreshold))
       )
@@ -4389,14 +4394,14 @@ def getScoresJson() {
   return sb.toString()
 
 }
+
 def calculatePOLECounts() {
   return CalculatePOLECount.calculatePOLECounts();
 }
 
 class CalculatePOLECount {
 
-  static Long getCountQueryResults(String queryStr)
-  {
+  static Long getCountQueryResults(String queryStr) {
 
     OGremlinResultSet resSet = App.graph.executeSql(queryStr, Collections.EMPTY_MAP);
     Long numEntries = resSet.iterator().next().getRawResult().getProperty("COUNT(*)");
@@ -4407,8 +4412,7 @@ class CalculatePOLECount {
 
   }
 
-  static String calculatePOLECounts ()
-  {
+  static String calculatePOLECounts() {
 
     List<String> vertexLabels = [
       "Event.Consent"
@@ -4470,7 +4474,7 @@ class CalculatePOLECount {
     sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
     try {
-      numEntries = App.g.V().has('Object.Data_Source.Type', P.eq('Structured')).out().out().in().has('Metadata.Type.Person.Identity', P.eq('Person.Identity')).dedup().count().next();
+      numEntries = App.g.V().has('Object.Data_Source.Type', eq('Structured')).out().out().in().has('Metadata.Type.Person.Identity', eq('Person.Identity')).dedup().count().next();
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
     } catch (e) {
 
@@ -4492,7 +4496,7 @@ class CalculatePOLECount {
     sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-    numEntries = App.g.V().has('Object.Data_Source.Type', P.eq('Unstructured')).out().out().in().has('Metadata.Type.Person.Identity', P.eq('Person.Identity')).dedup().count().next();
+    numEntries = App.g.V().has('Object.Data_Source.Type', eq('Unstructured')).out().out().in().has('Metadata.Type.Person.Identity', eq('Person.Identity')).dedup().count().next();
     sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
@@ -4514,7 +4518,7 @@ def getNumEventsPerDataSource() {
   boolean firstTime = true;
 
 
-  g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+  App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
     .as('ingestion_event')
     .out("Has_Ingestion_Event")
     .out("Has_Ingestion_Event")
@@ -4544,7 +4548,7 @@ def getNumNaturalPersonPerDataSource() {
   boolean firstTime = true;
 
 
-  g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+  App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
     .as('ingestion_event')
     .out("Has_Ingestion_Event")
     .out("Has_Ingestion_Event")
@@ -4581,7 +4585,7 @@ def getNumSensitiveDataPerDataSource() {
   boolean firstTime = false;
 
 
-  g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+  App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
     .as('ingestion_event')
     .out("Has_Ingestion_Event")
     .out("Has_Ingestion_Event")
@@ -4631,14 +4635,14 @@ def getNumNaturalPersonPerOrganisation() {
 
 
   orgTypes.each { orgTypeLabel, orgTypeRel ->
-    g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
+    App.g.V().has('Metadata.Type.Person.Organisation', P.eq('Person.Organisation'))
       .as('organisation')
       .out(orgTypeRel)
       .in('Has_Contract')
       .out("Has_Ingestion_Event")
       .out("Has_Ingestion_Event")
       .in("Has_Ingestion_Event")
-      .has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+      .has('Metadata.Type.Person.Natural', P.eq('Person.Natural'))
       .id()
       .dedup()
       .as('events')
@@ -4670,7 +4674,7 @@ def getNumNaturalPersonPerOrganisation() {
 }
 
 def getDSARStatsPerOrganisation() {
-  return GetDSARStatsPerOrganisation.getDSARStatsPerOrganisation(g);
+  return GetDSARStatsPerOrganisation.getDSARStatsPerOrganisation(App.g);
 }
 
 class GetDSARStatsPerOrganisation {
@@ -4701,7 +4705,7 @@ class GetDSARStatsPerOrganisation {
       ]
 
     typeOrg.each { org ->
-      g.V().has('Metadata.Type.Person.Organisation', P.eq('Person.Organisation'))
+      App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
         .as('organisation')
         .outE(org)
         .as('dsar_source_type')
@@ -4709,7 +4713,7 @@ class GetDSARStatsPerOrganisation {
         .out("Has_Ingestion_Event")
         .out("Has_Ingestion_Event")
         .in("Has_Ingestion_Event")
-        .has('Metadata.Type.Person.Natural', P.eq('Person.Natural'))
+        .has('Metadata.Type.Person.Natural', eq('Person.Natural'))
         .out("Made_SAR_Request")
         .where(
           __.or(
@@ -4803,7 +4807,7 @@ class Discovery {
   static addMetadataSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain, Double domainFrequency) {
 
 
-    GraphTraversal<Vertex, Vertex> dataSource = g.addV("Object.Metadata_Source");
+    GraphTraversal<Vertex, Vertex> dataSource = App.g.addV("Object.Metadata_Source");
     Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Metadata_Source")
       .property("Metadata.Type.Object.Metadata_Source", "Object.Metadata_Source")
       .property("Object.Metadata_Source.Name", name)
@@ -4827,12 +4831,12 @@ class Discovery {
   static addDBColSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain, Double domainFrequency) {
 
     Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-      g.V().has("Object.Metadata_Source.Name", P.eq(name)).tryNext()
+      App.g.V().has("Object.Metadata_Source.Name", eq(name)).tryNext()
     GraphTraversal<Vertex, Vertex> dataSource;
     if (!dataSourceOption.isPresent()) {
-      dataSource = g.addV("Object.Metadata_Source");
+      dataSource = App.g.addV("Object.Metadata_Source");
     } else {
-      dataSource = g.V(dataSourceOption.get().id());
+      dataSource = App.g.V(dataSourceOption.get().id());
     }
 
     Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Metadata_Source")
@@ -4856,15 +4860,15 @@ class Discovery {
 
   static getDbCol(GraphTraversalSource g, String name) {
     Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-      g.V().has("Object.Metadata_Source.Name", P.eq(name)).tryNext()
+      App.g.V().has("Object.Metadata_Source.Name", eq(name)).tryNext()
     GraphTraversal<Vertex, Vertex> dataSource;
     if (!dataSourceOption.isPresent()) {
-      dataSource = g.addV("Object.Metadata_Source")
+      dataSource = App.g.addV("Object.Metadata_Source")
         .property("Metadata.Type", "Object.Metadata_Source")
         .property("Metadata.Type.Object.Metadata_Source", "Object.Metadata_Source")
         .property("Object.Metadata_Source.Name", name);
     } else {
-      dataSource = g.V(dataSourceOption.get().id());
+      dataSource = App.g.V(dataSourceOption.get().id());
     }
 
 
@@ -4875,12 +4879,12 @@ class Discovery {
   static addDataSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain) {
 
     Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-      g.V().has("Object.Data_Source.Name", P.eq(name)).tryNext()
+      App.g.V().has("Object.Data_Source.Name", eq(name)).tryNext()
     GraphTraversal<Vertex, Vertex> dataSource;
     if (!dataSourceOption.isPresent()) {
-      dataSource = g.addV("Object.Data_Source");
+      dataSource = App.g.addV("Object.Data_Source");
     } else {
-      dataSource = g.V(dataSourceOption.get().id());
+      dataSource = App.g.V(dataSourceOption.get().id());
     }
     Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Data_Source")
       .property("Metadata.Type.Object.Data_Source", "Object.Data_Source")
@@ -4907,7 +4911,7 @@ class Discovery {
         trans.open();
       }
 
-      def dataSourceVertex = g.V(dataSourceId).next();
+      def dataSourceVertex = App.g.V(dataSourceId).next();
 //        addDataSource(
 //        g,
 //        "Discovery DB ${dbURL}",
@@ -4920,7 +4924,7 @@ class Discovery {
         g,
         "${dbURL}.${dbTableName}", 'data source from discovery',
         "DB_TABLE", null, null);
-      g.addE('Has_Table').from(dataSourceVertex).to(dataSrcTableVertex).next();
+        g.addE('Has_Table').from(dataSourceVertex).to(dataSrcTableVertex).next();
 
       def colMap = [:];
 
@@ -4942,15 +4946,15 @@ class Discovery {
 //          }
 //        }
 
-        def colName = "${dbURL}.${dbTableName}.${col.name.trim()}";
+        def colName = "${dbURL}.${dbTableName}.${col.name.trim()}" as String;
 
         def dataSrcColVertex = addDBColSource(
           g,
           colName,
-          'data source from discovery',
-          "DB_COLUMN",
-          col.domain,
-          col.domainFrequency);
+          'data source from discovery' as String,
+          "DB_COLUMN" as String,
+          col.domain as String,
+          col.domainFrequency as Double);
 
 
         colMap.put(colName.toString(), dataSrcColVertex);
@@ -4962,16 +4966,16 @@ class Discovery {
 
           def dataSrcColSemanticVertex = addMetadataSource(
             g,
-            "${colName}.${semanticTranslation}",
-            'data source from discovery',
-            "DB_COLUMN_SEMANTIC",
-            semanticTranslation,
-            semantics.frequency);
-          g.addE('Has_Semantic').from(dataSrcColVertex).to(dataSrcColSemanticVertex).next();
+            "${colName}.${semanticTranslation}" as String,
+            'data source from discovery' as String,
+            "DB_COLUMN_SEMANTIC" as String,
+            semanticTranslation as String,
+            semantics.frequency as Double);
+          App.g.addE('Has_Semantic').from(dataSrcColVertex).to(dataSrcColSemanticVertex).next();
 
         }
 
-        g.addE('Has_Column').from(dataSrcTableVertex).to(dataSrcColVertex).next();
+        App.g.addE('Has_Column').from(dataSrcTableVertex).to(dataSrcColVertex).next();
       }
 
 
@@ -4987,7 +4991,7 @@ class Discovery {
             def foreignKeyColName = "${dbURL}.${col.foreignKeyName.trim()}";
             def foreignKeyColVertex = getDbCol(g, foreignKeyColName);
 
-            g.addE('Has_Link').from(colVertex).to(foreignKeyColVertex).next();
+            App.g.addE('Has_Link').from(colVertex).to(foreignKeyColVertex).next();
 
 
           }

@@ -5886,14 +5886,9 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-docker-conf.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-docker-conf.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/formio.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/formio.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gdpr-schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr-schema.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/globals.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/globals.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/matching.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/matching.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-conf/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker-conf/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-lib/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker-lib/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
@@ -6133,7 +6128,7 @@
       <workItem from="1577042750191" duration="11804000" />
       <workItem from="1577122395465" duration="100205000" />
       <workItem from="1577813326015" duration="8125000" />
-      <workItem from="1577978604601" duration="18440000" />
+      <workItem from="1577978604601" duration="32937000" />
     </task>
     <servers />
   </component>
@@ -6180,10 +6175,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="606" y="172" key="#xdebugger.XInspectDialog/0.0.1536.834@0.0.1536.834" timestamp="1577742591119" />
-    <state x="169" y="191" key="#xdebugger.evaluate" timestamp="1577800271777">
+    <state x="169" y="191" key="#xdebugger.evaluate" timestamp="1578073865053">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="169" y="191" key="#xdebugger.evaluate/0.0.1536.834@0.0.1536.834" timestamp="1577800271777" />
+    <state x="169" y="191" key="#xdebugger.evaluate/0.0.1536.834@0.0.1536.834" timestamp="1578073865053" />
     <state width="452" height="466" key="DebuggerActiveHint" timestamp="1577740067696">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6196,46 +6191,46 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1577878027771" />
-    <state width="1493" height="254" key="GridCell.Tab.0.bottom" timestamp="1578064244103">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1578241909455">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578064244103" />
-    <state width="1493" height="254" key="GridCell.Tab.0.center" timestamp="1578064244103">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578241909455" />
+    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1578241909454">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1578064244103" />
-    <state width="1493" height="254" key="GridCell.Tab.0.left" timestamp="1578064244103">
+    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1578241909454" />
+    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1578241909454">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1578064244103" />
-    <state width="1493" height="254" key="GridCell.Tab.0.right" timestamp="1578064244103">
+    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1578241909454" />
+    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1578241909454">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1578064244103" />
-    <state width="1493" height="254" key="GridCell.Tab.1.bottom" timestamp="1578064316120">
+    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1578241909454" />
+    <state width="1493" height="213" key="GridCell.Tab.1.bottom" timestamp="1578241922396">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578064316120" />
-    <state width="1493" height="254" key="GridCell.Tab.1.center" timestamp="1578064316120">
+    <state width="1493" height="213" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578241922396" />
+    <state width="1493" height="213" key="GridCell.Tab.1.center" timestamp="1578241922396">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1578064316120" />
-    <state width="1493" height="254" key="GridCell.Tab.1.left" timestamp="1578064316120">
+    <state width="1493" height="213" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1578241922396" />
+    <state width="1493" height="213" key="GridCell.Tab.1.left" timestamp="1578241922396">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1578064316120" />
-    <state width="1493" height="254" key="GridCell.Tab.1.right" timestamp="1578064316120">
+    <state width="1493" height="213" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1578241922396" />
+    <state width="1493" height="213" key="GridCell.Tab.1.right" timestamp="1578241922396">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="254" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1578064316120" />
+    <state width="1493" height="213" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1578241922396" />
     <state x="300" y="74" key="Maven.ArtifactSearchDialog" timestamp="1577480846373">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="300" y="74" key="Maven.ArtifactSearchDialog/0.0.1536.834@0.0.1536.834" timestamp="1577480846373" />
-    <state width="1430" height="422" key="XDebugger.FullValuePopup" timestamp="1577469513254">
+    <state width="1430" height="422" key="XDebugger.FullValuePopup" timestamp="1578240293412">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1430" height="422" key="XDebugger.FullValuePopup/0.0.1536.834@0.0.1536.834" timestamp="1577469513254" />
+    <state width="1430" height="422" key="XDebugger.FullValuePopup/0.0.1536.834@0.0.1536.834" timestamp="1578240293412" />
     <state x="585" y="197" key="chooseDestDirectoryDialog" timestamp="1577482538255">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6256,10 +6251,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="310" y="155" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.834@0.0.1536.834" timestamp="1577730133986" />
-    <state x="461" y="154" width="901" height="536" key="find.popup" timestamp="1578065980265">
+    <state x="461" y="154" width="901" height="536" key="find.popup" timestamp="1578071766287">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="461" y="154" width="901" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1578065980265" />
+    <state x="461" y="154" width="901" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1578071766287" />
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1577734227526">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6314,34 +6309,99 @@
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
-          <line>112</line>
-          <option name="timeStamp" value="83" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
-          <line>142</line>
-          <option name="timeStamp" value="84" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
-          <line>144</line>
-          <option name="timeStamp" value="85" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
-          <line>148</line>
-          <option name="timeStamp" value="86" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
-          <line>344</line>
+          <line>365</line>
           <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>28</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java</url>
+          <line>80</line>
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java</url>
+          <line>86</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>842</line>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>1137</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>986</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>984</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>994</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>1006</line>
+          <option name="timeStamp" value="107" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>1004</line>
+          <option name="timeStamp" value="108" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
-          <line>414</line>
-          <option name="timeStamp" value="95" />
+          <line>432</line>
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
+          <line>214</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
+          <line>428</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
+          <line>198</line>
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
+          <line>249</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/matching.groovy</url>
+          <line>116</line>
+          <option name="timeStamp" value="119" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
+          <line>196</line>
+          <option name="timeStamp" value="120" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
