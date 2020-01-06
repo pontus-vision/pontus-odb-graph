@@ -1646,6 +1646,79 @@ class VisJSGraph {
 
   }
 
+  static getInfraGraph(String pg_vid){
+    StringBuffer sb = new StringBuffer();
+    int counter = 0;
+
+    try {
+
+      GraphTraversal gtrav =  (pg_vid == "-1")?
+        App.g.V() :
+        App.g.V(new ORecordId(pg_vid)).repeat(__.inE().subgraph('subGraph').outV())
+          .times(4).cap('subGraph').next().traversal().V()
+
+
+      sb.append('{ "nodes":[' )
+
+      gtrav
+        .or(
+          __.has('Metadata.Type.Object.AWS_VPC',P.eq('Object.AWS_VPC'))
+          , __.has('Metadata.Type.Object.AWS_Security_Group',P.eq('Object.AWS_Security_Group'))
+          , __.has('Metadata.Type.Object.AWS_Instance',P.eq('Object.AWS_Instance'))
+        )  .dedup()
+        .each{
+          String groupStr = it.values('Metadata.Type').next();
+          String labelStr = it.values(groupStr+'.Id').next();
+          ORID vid = (ORID)it.id();
+          sb.append(counter == 0? '{':',{')
+            .append('"id":"').append(vid)
+            .append('","group":"').append(groupStr)
+            .append('","label":"').append(labelStr)
+            .append('","shape":"').append('image')
+            .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g,vid,labelStr).toString())
+            .append('"}')
+
+          counter++;
+
+        }
+
+      sb.append('], "edges":[' )
+
+
+      counter = 0;
+      gtrav =  (pg_vid == "-1")?
+        App.g.V() :
+        App.g.V(pg_vid).repeat(__.inE().subgraph('subGraph').outV())
+          .times(4).cap('subGraph').next().traversal().V();
+
+
+      gtrav
+        .or(
+          __.has('Metadata.Type.Object.AWS_VPC',eq('Object.AWS_VPC'))
+          , __.has('Metadata.Type.Object.AWS_Security_Group',eq('Object.AWS_Security_Group'))
+          , __.has('Metadata.Type.Object.AWS_Instance',eq('Object.AWS_Instance'))
+        )
+        .bothE()
+        .dedup()  .each{
+        sb.append(counter == 0? '{':',{')
+          .append('"from": "').append(it.inVertex().id())
+          .append('" ,"to": "').append(it.outVertex().id())
+          .append('","label": "').append(it.label().toString().replaceAll('[_.]',' '))
+          .append('"}')
+
+        counter++;
+
+      }
+
+      sb.append(']}' );
+
+
+    }catch (Throwable t){
+      sb.append(t.toString());
+    }
+
+    sb.toString()
+  }
 
   static getLevel(String label) {
     def levels = [

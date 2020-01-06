@@ -11,6 +11,7 @@
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVExcelRenderer.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVOutTable" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PontusComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-gen" beforeDir="false" afterPath="$PROJECT_DIR$/../data-gen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../janusgraph" beforeDir="false" afterPath="$PROJECT_DIR$/../janusgraph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/.github/PULL_REQUEST_TEMPLATE.md" beforeDir="false" />
@@ -5886,8 +5887,7 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/formio.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/formio.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/bootstrap.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/bootstrap.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/globals.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/globals.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
@@ -6020,7 +6020,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../docker-i18n/i18n_en_translation.json" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -6034,6 +6034,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.orientechnologies.orient.core.storage.cache.local.doublewritelog" />
       <recent name="com.pontusvision.gdpr" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -6128,26 +6129,12 @@
       <workItem from="1577042750191" duration="11804000" />
       <workItem from="1577122395465" duration="100205000" />
       <workItem from="1577813326015" duration="8125000" />
-      <workItem from="1577978604601" duration="32937000" />
+      <workItem from="1577978604601" duration="39683000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-    <option name="exactExcludedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/lib/lambda-stack.js" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/lib/lambda-stack.d.ts" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/lib/pipeline-stack.js" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/lib/TrStack.js" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/lib/pipeline-stack.d.ts" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/lib/TrStack.d.ts" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/bin/aws-cdk.js" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/bin/aws-cdk.d.ts" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/lib/rds-stack.d.ts" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/aws-cdk/tr/lib/rds-stack.js" />
-      </list>
-    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -6167,6 +6154,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="225" y="74" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1577717506624" />
+    <state x="500" y="195" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1578311176195">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="500" y="195" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1536.834@0.0.1536.834" timestamp="1578311176195" />
     <state x="450" y="153" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1577119113857">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6179,10 +6170,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="169" y="191" key="#xdebugger.evaluate/0.0.1536.834@0.0.1536.834" timestamp="1578073865053" />
-    <state width="452" height="466" key="DebuggerActiveHint" timestamp="1577740067696">
+    <state width="452" height="466" key="DebuggerActiveHint" timestamp="1578310210110">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="452" height="466" key="DebuggerActiveHint/0.0.1536.834@0.0.1536.834" timestamp="1577740067696" />
+    <state width="452" height="466" key="DebuggerActiveHint/0.0.1536.834@0.0.1536.834" timestamp="1578310210110" />
     <state x="94" y="94" width="1349" height="646" key="DiffContextDialog" timestamp="1577722668777">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6191,38 +6182,38 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1577878027771" />
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1578241909455">
+    <state width="1493" height="371" key="GridCell.Tab.0.bottom" timestamp="1578309888202">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578241909455" />
-    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1578241909454">
+    <state width="1493" height="371" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578309888202" />
+    <state width="1493" height="371" key="GridCell.Tab.0.center" timestamp="1578309888202">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1578241909454" />
-    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1578241909454">
+    <state width="1493" height="371" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1578309888202" />
+    <state width="1493" height="371" key="GridCell.Tab.0.left" timestamp="1578309888202">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1578241909454" />
-    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1578241909454">
+    <state width="1493" height="371" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1578309888202" />
+    <state width="1493" height="371" key="GridCell.Tab.0.right" timestamp="1578309888202">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1578241909454" />
-    <state width="1493" height="213" key="GridCell.Tab.1.bottom" timestamp="1578241922396">
+    <state width="1493" height="371" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1578309888202" />
+    <state width="1493" height="371" key="GridCell.Tab.1.bottom" timestamp="1578309901847">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578241922396" />
-    <state width="1493" height="213" key="GridCell.Tab.1.center" timestamp="1578241922396">
+    <state width="1493" height="371" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578309901847" />
+    <state width="1493" height="371" key="GridCell.Tab.1.center" timestamp="1578309901847">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1578241922396" />
-    <state width="1493" height="213" key="GridCell.Tab.1.left" timestamp="1578241922396">
+    <state width="1493" height="371" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1578309901847" />
+    <state width="1493" height="371" key="GridCell.Tab.1.left" timestamp="1578309901846">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1578241922396" />
-    <state width="1493" height="213" key="GridCell.Tab.1.right" timestamp="1578241922396">
+    <state width="1493" height="371" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1578309901846" />
+    <state width="1493" height="371" key="GridCell.Tab.1.right" timestamp="1578309901847">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1578241922396" />
+    <state width="1493" height="371" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1578309901847" />
     <state x="300" y="74" key="Maven.ArtifactSearchDialog" timestamp="1577480846373">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6231,10 +6222,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1430" height="422" key="XDebugger.FullValuePopup/0.0.1536.834@0.0.1536.834" timestamp="1578240293412" />
-    <state x="585" y="197" key="chooseDestDirectoryDialog" timestamp="1577482538255">
+    <state x="585" y="197" key="chooseDestDirectoryDialog" timestamp="1578311208931">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="585" y="197" key="chooseDestDirectoryDialog/0.0.1536.834@0.0.1536.834" timestamp="1577482538255" />
+    <state x="585" y="197" key="chooseDestDirectoryDialog/0.0.1536.834@0.0.1536.834" timestamp="1578311208931" />
     <state x="94" y="94" width="1349" height="646" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1577983047655">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6251,10 +6242,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="310" y="155" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.834@0.0.1536.834" timestamp="1577730133986" />
-    <state x="461" y="154" width="901" height="536" key="find.popup" timestamp="1578071766287">
+    <state x="461" y="154" width="901" height="536" key="find.popup" timestamp="1578310951711">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="461" y="154" width="901" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1578071766287" />
+    <state x="461" y="154" width="901" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1578310951711" />
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1577734227526">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6402,6 +6393,36 @@
           <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
           <line>196</line>
           <option name="timeStamp" value="120" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>1649</line>
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0-beta1/orientdb-core-3.1.0-beta1-sources.jar!/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>309</line>
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0-beta1/orientdb-core-3.1.0-beta1-sources.jar!/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>317</line>
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0-beta1/orientdb-core-3.1.0-beta1-sources.jar!/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>319</line>
+          <option name="timeStamp" value="124" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0-beta1/orientdb-core-3.1.0-beta1-sources.jar!/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>328</line>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0-beta1/orientdb-core-3.1.0-beta1-sources.jar!/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>345</line>
+          <option name="timeStamp" value="126" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
