@@ -18,6 +18,7 @@ import org.apache.tinkerpop.gremlin.structure.Vertex;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
 import static org.apache.tinkerpop.gremlin.process.traversal.P.eq;
@@ -97,15 +98,15 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
         {
           List<Map<String, Object>> res = new LinkedList<>();
 
-
           OResultSet oResultSet = App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP).getRawResultSet();
 
-          while (oResultSet.hasNext()){
-            OResult oResult = oResultSet.next();
-            Map<String, Object> props = new HashMap<>();
+          while (oResultSet.hasNext())
+          {
+            OResult             oResult = oResultSet.next();
+            Map<String, Object> props   = new HashMap<>();
 
-            oResult.getPropertyNames().forEach( propName -> props.put(propName, oResult.getProperty(propName)));
-            oResult.getIdentity().ifPresent(id -> props.put ("id", id.toString()));
+            oResult.getPropertyNames().forEach(propName -> props.put(propName, oResult.getProperty(propName)));
+            oResult.getIdentity().ifPresent(id -> props.put("id", id.toString()));
 
             res.add(props);
           }
@@ -133,7 +134,7 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
               }
               else
               {
-                rec.put(entry.getKey(), val == null ? null :val.toString());
+                rec.put(entry.getKey(), val == null ? null : val.toString());
               }
 
             }
@@ -342,7 +343,14 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
                 String labelPrefix = "#";
                 try
                 {
-                  if (!oClass.areIndexed("Metadata.Type."+label, currLabel))
+                  final AtomicReference<Boolean> isIndexed = new AtomicReference<>(false);
+                  oClass.getClassIndexes().forEach(idx ->
+                  {
+                    isIndexed.set(isIndexed.get() || idx.getDefinition().getFields().contains(currLabel));
+
+                  });
+
+                  if (!isIndexed.get())
                   {
                     labelPrefix = "";
                   }

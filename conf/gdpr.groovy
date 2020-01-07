@@ -1825,7 +1825,7 @@ def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalS
 
 def addLawfulBasisAndPrivacyNotices(OrientStandardGraph graph, GraphTraversalSource g) {
 
-  if (new File("conf/i18n_pt_translation.json").exists()) {
+  if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
     return addLawfulBasisAndPrivacyNoticesPt(graph, g);
   }
 
@@ -2636,16 +2636,16 @@ def createNotificationTemplates() {
 //      trans.open()
 //
 //    }
-    if (new File("conf/i18n_pt_translation.json").exists()) {
+    if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
       return createNotificationTemplatesPt();
     }
 
-    Long count = App.g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
+    Long count = g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
 
 
     if (count == 0) {
 
-      App.g.addV("Object.Notification_Templates")
+      g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "INGESTION BUSINESS RULES")
@@ -2655,7 +2655,7 @@ def createNotificationTemplates() {
         .property("Object.Notification_Templates.Label", "Business Rules")
         .next();
 
-      App.g.addV("Object.Notification_Templates")
+      g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "MATCHES")
@@ -2680,7 +2680,7 @@ def createNotificationTemplates() {
         .next();
 
 
-      App.g.addV("Object.Notification_Templates")
+      g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "MATCHES")
@@ -2706,7 +2706,7 @@ def createNotificationTemplates() {
         .next();
 
 
-      App.g.addV("Object.Notification_Templates")
+      g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "SAR READ TEMPLATE")
@@ -2737,7 +2737,7 @@ def createNotificationTemplates() {
         .property("Object.Notification_Templates.Label", "SAR Read")
         .next();
 
-      App.g.addV("Object.Notification_Templates")
+      g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "SAR UPDATE TEMPLATE")
@@ -2768,7 +2768,7 @@ def createNotificationTemplates() {
         .property("Object.Notification_Templates.Label", "SAR Update")
         .next();
 
-      App.g.addV("Object.Notification_Templates")
+      g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "SAR DELETE TEMPLATE")
@@ -2802,7 +2802,7 @@ def createNotificationTemplates() {
 
 
 
-      App.g.addV("Object.Notification_Templates")
+      g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "DATA BREACH PERSON TEMPLATE")
@@ -2888,7 +2888,11 @@ def createNotificationTemplatesPt() {
 //
 //    }
 
-    Long count = App.g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
+    if (!App.g){
+      App.g = g;
+    }
+
+    Long count = g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
 
 
     if (count == 0) {

@@ -280,7 +280,7 @@ def renderReportInTextPt(ORID pg_id, String reportType = 'DSAR', GraphTraversalS
 
 def renderReportInText(ORID pg_id, String reportType = 'SAR Read', GraphTraversalSource g = g) {
 
-  if (new File("conf/i18n_pt_translation.json").exists()) {
+  if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
     return renderReportInTextPt(pg_id, reportType, g)
   }
 
@@ -961,7 +961,7 @@ class VisJSGraph {
       sb.append('{ "id":"').append(pg_vid)
         .append('","label":"').append(origLabel)
         .append('","group":"').append(origLabel)
-        .append('","fixed":').append(true)
+//        .append('","fixed":').append(true)
         .append(',"shape":"').append('image')
         .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
         .append('"}')
@@ -993,7 +993,7 @@ class VisJSGraph {
               .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
               .append('"')
             if (pg_vid.toString() == (vid.toString())) {
-              sb.append(',"fixed":true')
+//              sb.append(',"fixed":true')
             }
             sb.append('}')
 
@@ -1014,7 +1014,7 @@ class VisJSGraph {
               .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
               .append('"')
             if (pg_vid.toString() == (vid.toString())) {
-              sb.append(',"fixed":true')
+//              sb.append(',"fixed":true')
             }
             sb.append('}')
 
@@ -1110,7 +1110,7 @@ class VisJSGraph {
             .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
             .append('"')
           if (vid.equals(pg_vid)) {
-            sb.append(',"fixed":true')
+//            sb.append(',"fixed":true')
           }
           sb.append('}')
 
@@ -1256,7 +1256,7 @@ class VisJSGraph {
       sb.append('{ "id":"').append(pg_vid)
         .append('","label":"').append(origLabel)
         .append('","group":"').append(origLabel)
-        .append('","fixed":').append(true)
+//        .append('","fixed":').append(true)
         .append(',"shape":"').append('image')
         .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
         .append('"}')
@@ -1288,7 +1288,7 @@ class VisJSGraph {
               .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
               .append('"')
             if (vid.equals(pg_vid)) {
-              sb.append(',"fixed":true')
+//              sb.append(',"fixed":true')
             }
             sb.append('}')
 
@@ -1308,7 +1308,7 @@ class VisJSGraph {
               .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
               .append('"')
             if (vid.equals(pg_vid)) {
-              sb.append(',"fixed":true')
+//              sb.append(',"fixed":true')
             }
             sb.append('}')
 
@@ -1574,7 +1574,7 @@ class VisJSGraph {
       sb.append('{ "id":"').append(pg_vid)
         .append('","label":"').append(origLabel)
         .append('","group":"').append(origLabel)
-        .append('","fixed":').append(true)
+//        .append('","fixed":').append(true)
         .append(',"shape":"').append('image')
         .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
         .append('"}')

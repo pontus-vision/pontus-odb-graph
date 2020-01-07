@@ -242,6 +242,7 @@ public class DoubleWriteLogGL implements DoubleWriteLog {
     if (!restoreMode) {
       return null;
     }
+    ByteOrder byteOrder = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
 
     synchronized (mutex) {
       if (!restoreMode) {
@@ -263,7 +264,7 @@ public class DoubleWriteLogGL implements DoubleWriteLog {
           if (channelSize - segmentPosition.getSecond() > METADATA_SIZE) {
             channel.position(segmentPosition.getSecond());
 
-            final ByteBuffer metadataBuffer = ByteBuffer.allocate(METADATA_SIZE); //.order(ByteOrder.nativeOrder());
+            final ByteBuffer metadataBuffer = ByteBuffer.allocate(METADATA_SIZE).order(byteOrder);
             OIOUtils.readByteBuffer(metadataBuffer, channel);
             metadataBuffer.rewind();
 
@@ -274,11 +275,11 @@ public class DoubleWriteLogGL implements DoubleWriteLog {
 
             if (storedFileId == fileId && pageIndex >= storedPageIndex && pageIndex < storedPageIndex + pages) {
               if (channelSize - segmentPosition.getSecond() - METADATA_SIZE >= compressedLen) {
-                final ByteBuffer compressedBuffer = ByteBuffer.allocate(compressedLen); //.order(ByteOrder.nativeOrder());
+                final ByteBuffer compressedBuffer = ByteBuffer.allocate(compressedLen).order(byteOrder);
                 OIOUtils.readByteBuffer(compressedBuffer, channel);
                 compressedBuffer.rewind();
 
-                final ByteBuffer pagesBuffer = ByteBuffer.allocate(pages * pageSize); //.order(ByteOrder.nativeOrder());
+                final ByteBuffer pagesBuffer = ByteBuffer.allocate(pages * pageSize).order(byteOrder);
                 LZ_4_DECOMPRESSOR.decompress(compressedBuffer, pagesBuffer);
 
                 final int pagePosition = (pageIndex - storedPageIndex) * pageSize;
@@ -311,6 +312,8 @@ public class DoubleWriteLogGL implements DoubleWriteLog {
         return;
       }
 
+      ByteOrder byteOrder = ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
+
       pageMap.clear();
 
       //sort to fetch the
@@ -330,7 +333,7 @@ public class DoubleWriteLogGL implements DoubleWriteLog {
           long fileSize = channel.size();
 
           while (fileSize - position > METADATA_SIZE) {
-            final ByteBuffer metadataBuffer = ByteBuffer.allocate(METADATA_SIZE); //.order(ByteOrder.nativeOrder());
+            final ByteBuffer metadataBuffer = ByteBuffer.allocate(METADATA_SIZE).order(byteOrder);
             OIOUtils.readByteBuffer(metadataBuffer, channel);
             metadataBuffer.rewind();
 

@@ -1,9 +1,12 @@
 package com.pontusvision.gdpr;
 
+import com.orientechnologies.orient.core.id.ORecordId;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.apache.tinkerpop.gremlin.process.traversal.P.eq;
@@ -121,10 +124,15 @@ public class RecordRequest
 
   public static StringBuilder appendColsSQL(StringBuilder sb, PVGridColumn[] cols)
   {
-
+    int counter = 0;
     for (int i = 0, ilen = cols.length; i < ilen; i++)
     {
-      if (i > 0)
+      if (cols[i].id.startsWith("@"))
+      {
+        continue;
+      }
+
+      if (counter > 0)
       {
         sb.append("`,`");
       }
@@ -132,6 +140,7 @@ public class RecordRequest
       {
         sb.append("@rid as id,`");
       }
+      counter ++;
       sb.append(cols[i].id);
 
     }
@@ -223,7 +232,16 @@ public class RecordRequest
   public static StringBuilder addTextFilter(StringBuilder sb, String colId, String type, String filter)
   {
 
-    sb.append("( `").append(colId).append("` ");
+    if (type.startsWith("not"))
+    {
+      sb.append("( NOT `").append(colId).append("` ");
+    }
+    else
+    {
+      sb.append("( `").append(colId).append("` ");
+
+    }
+
 
     //    equals, greaterThan, lessThan, inRange, notEqual
 
@@ -233,26 +251,39 @@ public class RecordRequest
 //    }
     if ("notEqual".equals(type))
     {
-      sb.append(" <> ").append(filter);
+      sb.append(" <> '").append(filter).append("'");;
     }
     else if ("equals".equals(type))
     {
-      sb.append(" = ").append(filter);
+      sb.append(" = '").append(filter).append("'");;
     }
     else if ("lessThan".equals(type))
     {
-      sb.append(" < ").append(filter);
+      sb.append(" < '").append(filter).append("'");;
     }
     else if ("greaterThan".equals(type))
     {
-      sb.append(" >  ").append(filter);
+      sb.append(" >  '").append(filter).append("'");;
     }
+    else if ("contains".equals(type) ||"notContains".equals(type) )
+    {
+      sb.append(" containsText  '").append(filter).append("'");
+    }
+    else if ("startsWith".equals(type))
+    {
+      sb.append(" LIKE  '").append(filter).append("%'");
 
+    }
+    else if ("endsWith".equals(type))
+    {
+      sb.append(" LIKE  '%").append(filter).append("'");
+
+    }
     sb.append(" ) ");
     return sb;
   }
 
-  public static StringBuilder appendWhereFiltersSQL(StringBuilder sb, PVGridFilters[] filters)
+  public static StringBuilder appendWhereFiltersSQL(StringBuilder sb, PVGridFilters[] filters, String customFilter)
   {
 
     if (filters != null)
@@ -325,7 +356,14 @@ public class RecordRequest
       {
         sb.append(')');
       }
+      appendCustomFilterSQL(sb, customFilter,filters.length > 0);
+
       sb.append(' ');
+    }
+    else
+    {
+      appendCustomFilterSQL(sb, customFilter,false);
+
     }
 
 
@@ -348,8 +386,7 @@ public class RecordRequest
       appendColsSQL(sb, this.cols);
     }
     sb.append(" FROM `").append(dataType).append("` ");
-    appendWhereFiltersSQL(sb, this.filters);
-    appendCustomFilterSQL(sb, this.customFilter);
+    appendWhereFiltersSQL(sb, this.filters, this.customFilter);
 
     if (!isCount)
     {
@@ -360,40 +397,52 @@ public class RecordRequest
     return sb.toString();
   }
 
-  public static StringBuilder appendCustomFilterSQL(StringBuilder sb, String customFilter)
+  public static StringBuilder appendCustomFilterSQL(StringBuilder sb, String customFilter, boolean hasOtherFilters)
   {
     if (StringUtils.isNotEmpty(customFilter))
     {
 
-      String wholeStr = sb.toString();
+      if (hasOtherFilters)
+      {
+        sb.append(" AND (");
+      }
+      else
+      {
+        sb.append(" WHERE (");
+      }
 
 
       if ("unmatchedEvents".equalsIgnoreCase(customFilter))
       {
-        sb.setLength(0);
 
-        sb.append ("SELECT * FROM (").append(wholeStr).append(") where count(inE()) = 1");
+        sb.append (" COUNT(inE()) = 1");
 //        resSet = resSet.where(__.inE().count().is(eq(1)));
       }
       else if ("children".equalsIgnoreCase(customFilter))
       {
-        sb.setLength(0);
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L));
         Date dateThreshold  = new java.util.Date(ageThresholdMs);
-        sb.append ("SELECT * FROM (")
-          .append(wholeStr)
-          .append(") where `Person.Natural.Date_Of_Birth` >= date('")
-          .append(dateThreshold.toString())
+        sb.append (
+            " `Person.Natural.Date_Of_Birth` >= date('")
+          .append((dateFormat).format(dateThreshold))
           .append("')");
 //        resSet = resSet.where(__.values("Person.Natural.Date_Of_Birth").is(gte(dateThreshold)));
       }
       else if (customFilter.startsWith("hasNeighbourId:"))
       {
+        String neighbourId = customFilter.substring("hasNeighbourId:".length());
+        ORecordId recordId = new ORecordId(neighbourId); // try to instantiate to validate, and prevent sql injection
+
+        sb.append(recordId.toString()).append(" IN both() ");
+
 //        long neighbourId = Long.parseLong(customFilter.split(":")[1]);
 //        resSet = resSet.where(__.both().hasId(neighbourId));
 
+
       }
+      sb.append(")");
 
     }
 

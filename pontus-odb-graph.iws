@@ -11,7 +11,6 @@
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVExcelRenderer.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVOutTable" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PontusComponent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-gen" beforeDir="false" afterPath="$PROJECT_DIR$/../data-gen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../janusgraph" beforeDir="false" afterPath="$PROJECT_DIR$/../janusgraph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/.github/PULL_REQUEST_TEMPLATE.md" beforeDir="false" />
@@ -5887,9 +5886,14 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/bootstrap.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/bootstrap.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/globals.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/globals.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pontus-odb-graph.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/package-lock.json" beforeDir="false" />
@@ -6129,7 +6133,7 @@
       <workItem from="1577042750191" duration="11804000" />
       <workItem from="1577122395465" duration="100205000" />
       <workItem from="1577813326015" duration="8125000" />
-      <workItem from="1577978604601" duration="39683000" />
+      <workItem from="1577978604601" duration="69450000" />
     </task>
     <servers />
   </component>
@@ -6150,6 +6154,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="600" y="274" key="#com.intellij.debugger.actions.ViewTextAction" timestamp="1578337255078">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="600" y="274" key="#com.intellij.debugger.actions.ViewTextAction/0.0.1536.834@0.0.1536.834" timestamp="1578337255078" />
     <state x="225" y="74" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577717506624">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6166,14 +6174,14 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="606" y="172" key="#xdebugger.XInspectDialog/0.0.1536.834@0.0.1536.834" timestamp="1577742591119" />
-    <state x="169" y="191" key="#xdebugger.evaluate" timestamp="1578073865053">
+    <state x="220" y="175" key="#xdebugger.evaluate" timestamp="1578392979969">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="169" y="191" key="#xdebugger.evaluate/0.0.1536.834@0.0.1536.834" timestamp="1578073865053" />
-    <state width="452" height="466" key="DebuggerActiveHint" timestamp="1578310210110">
+    <state x="220" y="175" key="#xdebugger.evaluate/0.0.1536.834@0.0.1536.834" timestamp="1578392979969" />
+    <state width="452" height="466" key="DebuggerActiveHint" timestamp="1578330309746">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="452" height="466" key="DebuggerActiveHint/0.0.1536.834@0.0.1536.834" timestamp="1578310210110" />
+    <state width="452" height="466" key="DebuggerActiveHint/0.0.1536.834@0.0.1536.834" timestamp="1578330309746" />
     <state x="94" y="94" width="1349" height="646" key="DiffContextDialog" timestamp="1577722668777">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6182,46 +6190,50 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1577878027771" />
-    <state width="1493" height="371" key="GridCell.Tab.0.bottom" timestamp="1578309888202">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1578392269846">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="371" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578309888202" />
-    <state width="1493" height="371" key="GridCell.Tab.0.center" timestamp="1578309888202">
+    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578392269846" />
+    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1578392269846">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="371" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1578309888202" />
-    <state width="1493" height="371" key="GridCell.Tab.0.left" timestamp="1578309888202">
+    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1578392269846" />
+    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1578392269846">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="371" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1578309888202" />
-    <state width="1493" height="371" key="GridCell.Tab.0.right" timestamp="1578309888202">
+    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1578392269846" />
+    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1578392269846">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="371" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1578309888202" />
-    <state width="1493" height="371" key="GridCell.Tab.1.bottom" timestamp="1578309901847">
+    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1578392269846" />
+    <state width="1493" height="213" key="GridCell.Tab.1.bottom" timestamp="1578392278176">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="371" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578309901847" />
-    <state width="1493" height="371" key="GridCell.Tab.1.center" timestamp="1578309901847">
+    <state width="1493" height="213" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578392278176" />
+    <state width="1493" height="213" key="GridCell.Tab.1.center" timestamp="1578392278176">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="371" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1578309901847" />
-    <state width="1493" height="371" key="GridCell.Tab.1.left" timestamp="1578309901846">
+    <state width="1493" height="213" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1578392278176" />
+    <state width="1493" height="213" key="GridCell.Tab.1.left" timestamp="1578392278176">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="371" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1578309901846" />
-    <state width="1493" height="371" key="GridCell.Tab.1.right" timestamp="1578309901847">
+    <state width="1493" height="213" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1578392278176" />
+    <state width="1493" height="213" key="GridCell.Tab.1.right" timestamp="1578392278176">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="371" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1578309901847" />
+    <state width="1493" height="213" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1578392278176" />
     <state x="300" y="74" key="Maven.ArtifactSearchDialog" timestamp="1577480846373">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="300" y="74" key="Maven.ArtifactSearchDialog/0.0.1536.834@0.0.1536.834" timestamp="1577480846373" />
-    <state width="1430" height="422" key="XDebugger.FullValuePopup" timestamp="1578240293412">
+    <state x="491" y="160" width="540" height="524" key="StructurePopup" timestamp="1578327640972">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1430" height="422" key="XDebugger.FullValuePopup/0.0.1536.834@0.0.1536.834" timestamp="1578240293412" />
+    <state x="491" y="160" width="540" height="524" key="StructurePopup/0.0.1536.834@0.0.1536.834" timestamp="1578327640972" />
+    <state width="1430" height="422" key="XDebugger.FullValuePopup" timestamp="1578337506322">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="1430" height="422" key="XDebugger.FullValuePopup/0.0.1536.834@0.0.1536.834" timestamp="1578337506322" />
     <state x="585" y="197" key="chooseDestDirectoryDialog" timestamp="1578311208931">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6242,14 +6254,14 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="310" y="155" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.834@0.0.1536.834" timestamp="1577730133986" />
-    <state x="461" y="154" width="901" height="536" key="find.popup" timestamp="1578310951711">
+    <state x="461" y="154" width="916" height="536" key="find.popup" timestamp="1578317244495">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="461" y="154" width="901" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1578310951711" />
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1577734227526">
+    <state x="461" y="154" width="916" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1578317244495" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1578335355932">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1577734227526" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1578335355932" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -6281,22 +6293,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
-          <line>122</line>
+          <line>125</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/gdpr.groovy</url>
-          <line>4743</line>
+          <line>4747</line>
           <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/gdpr.groovy</url>
-          <line>4738</line>
+          <line>4742</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
-          <line>155</line>
+          <line>156</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -6411,18 +6423,63 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0-beta1/orientdb-core-3.1.0-beta1-sources.jar!/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
-          <line>319</line>
-          <option name="timeStamp" value="124" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0-beta1/orientdb-core-3.1.0-beta1-sources.jar!/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
-          <line>328</line>
-          <option name="timeStamp" value="125" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0-beta1/orientdb-core-3.1.0-beta1-sources.jar!/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
           <line>345</line>
           <option name="timeStamp" value="126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>355</line>
+          <option name="timeStamp" value="128" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>339</line>
+          <option name="timeStamp" value="137" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>335</line>
+          <option name="timeStamp" value="140" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>246</line>
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java</url>
+          <line>316</line>
+          <option name="timeStamp" value="143" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0-beta1/orientdb-core-3.1.0-beta1-sources.jar!/com/orientechnologies/orient/core/metadata/schema/OClassImpl.java</url>
+          <line>1126</line>
+          <option name="timeStamp" value="148" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-lucene/3.1.0-beta1/orientdb-lucene-3.1.0-beta1-sources.jar!/com/orientechnologies/lucene/index/OLuceneIndexNotUnique.java</url>
+          <line>288</line>
+          <option name="timeStamp" value="151" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
+          <line>423</line>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
+          <line>401</line>
+          <option name="timeStamp" value="154" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
+          <line>354</line>
+          <option name="timeStamp" value="155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
+          <line>388</line>
+          <option name="timeStamp" value="156" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
