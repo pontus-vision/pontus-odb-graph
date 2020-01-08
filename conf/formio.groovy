@@ -3,12 +3,9 @@ import com.orientechnologies.orient.core.metadata.schema.OClass
 import com.orientechnologies.orient.core.metadata.schema.OProperty
 import com.pontusvision.gdpr.App
 import groovy.json.JsonSlurper
-import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.structure.Transaction
-
-
 
 //
 //// describeSchema()
@@ -46,7 +43,6 @@ enum IngestionOperation {
   UPDATE,
   DELETE
 }
-
 
 
 class FormData {
@@ -98,7 +94,7 @@ class FormData {
 
   }
 
-  static String addFormData(GraphTraversalSource gtrav, String dataFromFormInJSON, String dataType, StringBuffer sb = new StringBuffer()) {
+  static Map<String, String> prepareFormData(String dataFromFormInJSON, String dataType, OClass vertexClass) {
     def slurper = new JsonSlurper()
     def formDataParsed = slurper.parseText(dataFromFormInJSON)
     def formOwnerId = formDataParsed.request.owner as String
@@ -110,251 +106,94 @@ class FormData {
     def data = formDataParsed.request.data
 
 
-    def retVal = "";
-    def gtrav2 = gtrav.clone()
-
-    Transaction trans = App.graph.tx()
-    if (trans.isOpen()) {
-      trans.close();
-    }
+    def Key_Form_Owner_Id = "${dataType}.Form_Owner_Id" as String
+    def Key_Form_Id = "${dataType}.Form_Id" as String
+    def Key_Form_Submission_Id = "${dataType}.Form_Submission_Id" as String
+    def Key_Form_Submission_Owner_Id = "${dataType}.Form_Submission_Owner_Id" as String
+    def Key_Metadata_Type = "Metadata.Type.${dataType}" as String
 
 
-    try {
+    Map<String, String> classFields = new HashMap<>()
+
+    classFields.put(Key_Form_Owner_Id, formOwnerId)
+    classFields.put(Key_Form_Id, formId)
+    classFields.put(Key_Form_Submission_Id, submissionId)
+    classFields.put(Key_Form_Submission_Owner_Id, submissionOwner)
+    classFields.put(Key_Metadata_Type, dataType)
+    classFields.put("Metadata.Type", dataType)
+    classFields.putAll(data as Map)
 
 
-      // g.V().drop()
-      // g.E().drop()
-      sb.append("Adding basic form props\n")
+    classFields.each { k, v ->
+      if (k != 'submit') {
+        def key = ((k.startsWith(dataType) || k.startsWith("Metadata.Type")) ?
+          k :
+          "$dataType.$k") as String
 
-
-      def Key_Form_Owner_Id = "${dataType}.Form_Owner_Id" as String
-      def Key_Form_Id = "${dataType}.Form_Id" as String
-      def Key_Form_Submission_Id = "${dataType}.Form_Submission_Id" as String
-      def Key_Form_Submission_Owner_Id = "${dataType}.Form_Submission_Owner_Id" as String
-      def Key_Metadata_Type = "Metadata.Type.${dataType}" as String
-
-
-      OClass vertexClass = ODBSchemaManager.createVertexLabel(App.graph, dataType);
-
-      Map<String, String> classFields = new HashMap<>()
-
-      classFields.put(Key_Form_Owner_Id, formOwnerId)
-      classFields.put(Key_Form_Id, formId)
-      classFields.put(Key_Form_Submission_Id, submissionId)
-      classFields.put(Key_Form_Submission_Owner_Id, submissionOwner)
-      classFields.put(Key_Metadata_Type, dataType)
-      classFields.put("Metadata.Type", dataType)
-      classFields.putAll(data as Map)
-
-
-      classFields.each { k, v ->
-        if (k != 'submit') {
-          def key = ((k.startsWith(dataType) || k.startsWith("Metadata.Type")) ?
-            k :
-            "$dataType.$k") as String
-
-          createPropsIfNotThere(vertexClass, key, String.class, sb)
-        }
-      }
-      Set<OIndex> indices = vertexClass.getIndexes();
-
-      if (indices.size() == 0) {
-        String[] fields = classFields.values().toArray(new String[0]);
-        vertexClass.createIndex("${dataType}.MixedIdx" as String,
-          OClass.INDEX_TYPE.FULLTEXT.toString(), fields);
-        System.out.println("Added  fields ${fields} to ${dataType}.MixedIdx ");
-      }
-
-
-      if (!trans.isOpen()) {
-        trans.open();
-      }
-
-      GraphTraversal g = gtrav.addV(dataType)
-
-
-      sb.append("${dataType}.Form_Owner_Id = ").append(formOwnerId)
-      classFields.each { k, v ->
-        if (k != 'submit') {
-
-
-          def key = ((k.startsWith(dataType) || k.startsWith("Metadata.Type")) ?
-            k :
-            "$dataType.$k") as String
-
-          def val = "$v" as String
-          sb.append("\nadding $key with val = $v =>").append(v.getClass().toString())
-
-          try {
-            OProperty prop = vertexClass.getProperty(key);
-            if (prop){
-
-              g = g.property(key,  PVConvMixin.asType(val,prop.getType().getDefaultJavaType(), sb))
-
-            }
-
-          } catch (Throwable t) {
-            if (key.toLowerCase().indexOf("date") > 0){
-              try{
-                g = g.property(key, val as Date)
-
-              }
-              catch(Throwable t2){
-                sb.append("Error adding prop $k with val ($v): \n$t")
-              }
-            }
-            else{
-              sb.append("Error adding prop $k with val ($v): \n$t")
-            }
-          }
-        }
-      }
-
-      sb.append("\nAbout to get the ID")
-
-      retVal = g.next().id();
-
-      sb.append("\ngot  the ID: ").append(retVal)
-
-
-      createIngestionEventId(gtrav2, submissionId, dataType, IngestionOperation.CREATE,
-        dataFromFormInJSON, submissionOwner, retVal, sb)
-
-
-      trans.commit();
-      sb.append("\nAFTER COMMITT")
-
-      System.out.println(sb.toString())
-
-      // def newEntry = gtrav.next()
-    } catch (Throwable t) {
-      sb.append("\n$t")
-      if (trans.isOpen()) {
-        trans.rollback();
+        createPropsIfNotThere(vertexClass, key, String.class, sb)
       }
     }
-    finally {
-      trans.close();
+    Set<OIndex> indices = vertexClass.getIndexes();
 
+    if (indices.size() == 0) {
+      String[] fields = classFields.values().toArray(new String[0]);
+      vertexClass.createIndex("${dataType}.MixedIdx" as String,
+        OClass.INDEX_TYPE.FULLTEXT.toString(), fields);
+      System.out.println("Added  fields ${fields} to ${dataType}.MixedIdx ");
     }
 
-
-    return retVal;
+    return classFields;
 
   }
 
-  static String updateFormData(GraphTraversalSource gtrav, String dataFromFormInJSON, String dataType, StringBuffer sb = new StringBuffer()) {
-
-    def slurper = new JsonSlurper()
-    def formDataParsed = slurper.parseText(dataFromFormInJSON)
-    def formOwnerId = formDataParsed.request.owner as String
-    def formId = formDataParsed.request.form as String
-
-    def submissionId = formDataParsed.submission._id as String
-    def submissionOwner = formDataParsed.submission.owner as String
-
-    def gtrav2 = gtrav.clone()
-
-    def localGtrav = gtrav.clone()
-    def data = formDataParsed.request.data
-
-    def trans = App.graph.tx()
+  static String updateFormData(GraphTraversalSource gtrav, Map<String, String> fields, String dataType, OClass vertexClass, StringBuffer sb = new StringBuffer()) {
 
 
-    def retVal = "";
+    String Key_Form_Submission_Id = "${dataType}.Form_Submission_Id" as String
+    String submissionId = fields.get(Key_Form_Submission_Id);
 
-    try {
+    def localGtrav = gtrav.V()
+      .has(Key_Form_Submission_Id, (String) submissionId)
 
-      if (!trans.isOpen()) {
-        trans.open();
-      }
+    localGtrav = localGtrav.hasNext() ? localGtrav : gtrav.addV(dataType);
 
-      // g.V().drop()
-      // g.E().drop()
-
-
-      def Key_Form_Owner_Id = "${dataType}.Form_Owner_Id" as String
-      def Key_Form_Id = "${dataType}.Form_Id" as String
-      def Key_Form_Submission_Id = "${dataType}.Form_Submission_Id" as String
-      def Key_Form_Submission_Owner_Id = "${dataType}.Form_Submission_Owner_Id" as String
-      def Key_Metadata_Type = "Metadata.Type.${dataType}" as String
-
-      sb.append("\nLooking for $Key_Form_Submission_Id with val $submissionId")
+    fields.each { k, v ->
+      if (k != 'submit') {
 
 
-      localGtrav = localGtrav.V()
-        .has(Key_Form_Submission_Id, (String) submissionId)
+        def key = ((k.startsWith(dataType) || k.startsWith("Metadata.Type")) ?
+          k :
+          "$dataType.$k") as String
 
+        def val = "$v" as String
+        sb.append("\nadding $key with val = $v =>").append(v.getClass().toString())
 
-      if (!localGtrav.hasNext()) {
+        try {
+          OProperty prop = vertexClass.getProperty(key);
+          if (prop) {
 
-        sb.append("\nDid not find a form  with $Key_Form_Submission_Id with val $submissionId")
+            localGtrav = localGtrav.property(key, PVConvMixin.asType(val, prop.getType().getDefaultJavaType(), sb))
 
-        retVal = "";// _addFormData( gtrav, dataFromFormInJSON, dataType, sb )
+          }
 
-      } else {
-
-        sb.append("Found existing form; updating basic form props\n")
-        retVal = localGtrav.next().id()
-
-        def gt = gtrav.V(retVal)
-        gt = gt.property(Key_Form_Owner_Id, (String) formOwnerId)
-        gt = gt.property(Key_Form_Id, (String) formId)
-        gt = gt.property(Key_Form_Submission_Id, (String) submissionId)
-        gt = gt.property(Key_Metadata_Type, (String) dataType)
-        gt = gt.property("Metadata.Type", (String) dataType)
-        gt = gt.property(Key_Form_Submission_Owner_Id, (String) submissionOwner)
-
-
-        sb.append("Updated basic form props\n")
-        final OClass vertexClass = App.graph.getRawDatabase().getClass(dataType)
-
-
-        sb.append("${dataType}.Form_Owner_Id = ").append(formOwnerId)
-        data.each { k, v ->
-          if (k != 'submit') {
-            def key = "$dataType.$k" as String
-            def val = "$v" as String
-            sb.append("\nupdating $key with val = $v =>").append(v.getClass().toString())
-
+        } catch (Throwable t) {
+          if (key.toLowerCase().indexOf("date") > 0) {
             try {
-              OProperty prop = vertexClass.getProperty(key);
-              if (prop){
+              localGtrav = localGtrav.property(key, val as Date)
 
-                gt = gt.property(key,  PVConvMixin.asType(val,prop.getType().getDefaultJavaType(), sb))
-
-              }
-
-            } catch (Throwable t) {
-              sb.append("Error Updating Prop $k, $v:\n$t")
             }
+            catch (Throwable t2) {
+              sb.append("Error adding prop $k with val ($v): \n$t")
+            }
+          } else {
+            sb.append("Error adding prop $k with val ($v): \n$t")
           }
         }
-
-        sb.append("\nAbout to get the ID")
-
-
-        assert retVal == (gt.next().id())
-
-        sb.append("\ngot  the ID ").append(retVal)
-
-        createIngestionEventId(gtrav2, submissionId, dataType, IngestionOperation.UPDATE,
-          dataFromFormInJSON, submissionOwner, retVal, sb)
-
-
       }
-
-      trans.commit();
-      sb.append("\nAFTER COMMITT")
-
-      // def newEntry = gtrav.next()
-    } catch (Throwable t) {
-      sb.append("\n$t")
-      trans.rollback();
     }
-    finally {
-      trans.close()
-    }
+
+    def retVal = localGtrav.next().id()
+
 
     return retVal;
 
@@ -422,61 +261,68 @@ class FormData {
 
 
   static String upsertFormData(
-    def gtrav, String dataFromFormInJSON, String dataType, String otherDataType, String otherDataTypeSubmissionId, String relationshipName, StringBuffer sb = new StringBuffer()) {
-
+    GraphTraversalSource gtrav, String dataFromFormInJSON, String dataType, String otherDataType,
+    String otherDataTypeSubmissionId, String relationshipName, StringBuffer sb = new StringBuffer())
+  {
     sb.append("\nAbout to upsert $dataType; data= $dataFromFormInJSON")
 
     ODBSchemaManager.createEdgeLabel(App.graph, relationshipName)
 
-    def gtrav2 = gtrav.clone();
+    OClass vertexClass = ODBSchemaManager.createVertexLabel(App.graph, dataType);
 
-    def retVal = updateFormData(gtrav, dataFromFormInJSON, dataType, sb)
+    Map<String, String> fields = prepareFormData(dataFromFormInJSON, dataType, vertexClass);
 
-    if (retVal == "") {
-      retVal = addFormData(gtrav, dataFromFormInJSON, dataType, sb)
-    }
-    if (otherDataType && otherDataTypeSubmissionId) {
-      def trans = App.graph.tx()
+    String submissionId = fields.get("${dataType}.Form_Submission_Id")
+    String submissionOwner = fields.get("${dataType}.Form_Submission_Owner_Id")
 
-      try {
-        if (!trans.isOpen()) {
-          trans.open();
-        }
+    def trans = App.graph.tx()
+    def retVal = "";
 
+    try
+    {
+      if (!trans.isOpen())
+      {
+        trans.open();
+      }
+      retVal = updateFormData(gtrav, fields, dataType, vertexClass, sb)
+
+      createIngestionEventId(gtrav, submissionId, dataType, IngestionOperation.UPDATE,
+        dataFromFormInJSON, submissionOwner, retVal, sb)
+
+
+      if (otherDataType && otherDataTypeSubmissionId)
+      {
         def otherDataTypeSubmissionIdKey = "${otherDataType}.Form_Submission_Id" as String
-
         def otherTypeId = gtrav.V().has(otherDataTypeSubmissionIdKey, otherDataTypeSubmissionId).next().id()
 
-        if (otherTypeId) {
-
-
+        if (otherTypeId)
+        {
           def foundIds = gtrav.V(otherTypeId)
             .both()
             .hasId(retVal).id().toList() as List
 
-          if (foundIds.isEmpty()) {
-
-
-            gtrav2.addE(relationshipName).from(gtrav.V(retVal)).to(gtrav.V(otherTypeId)).next()
-
+          if (foundIds.isEmpty())
+          {
+            gtrav.addE(relationshipName).from(gtrav.V(retVal)).to(gtrav.V(otherTypeId)).next()
             sb.append("\nAfter creating new relationship $relationshipName")
-
           }
-          trans.commit();
-
         }
+      }
+      trans.commit();
 
-      } catch (Throwable t) {
-        sb.append("\n$t")
-        trans.rollback();
-      }
-      finally {
-        trans.close()
-      }
+
+    }
+    catch (Throwable t)
+    {
+      sb.append("\n$t")
+      trans.rollback();
+    }
+    finally
+    {
+      trans.close()
     }
 
-
-    sb.append("\n $retVal")
+    sb.append(" \n  $retVal ")
     return retVal;
   }
 
@@ -491,7 +337,6 @@ class FormData {
 
 
     def trans = App.graph.tx()
-
 
 
     try {
@@ -543,6 +388,7 @@ class FormData {
     return key
 
   }
+
 }
 
 def upsertFormData(

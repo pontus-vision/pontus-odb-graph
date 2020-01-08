@@ -1831,5 +1831,9 @@ def getVisJSGraph(String pg_vid, long pg_depth) {
   return VisJSGraph.getVisJSGraph(new ORecordId(pg_vid), pg_depth)
 }
 
+def getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, String vid, String origLabel) {
+  return VisJSGraph.getPropsNonMetadataAsHTMLTableRows(g,new ORecordId(vid), origLabel)
+}
+
 
 

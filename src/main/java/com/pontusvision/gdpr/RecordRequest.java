@@ -415,7 +415,7 @@ public class RecordRequest
       if ("unmatchedEvents".equalsIgnoreCase(customFilter))
       {
 
-        sb.append (" COUNT(inE()) = 1");
+        sb.append (" inE().size() = 1 ");
 //        resSet = resSet.where(__.inE().count().is(eq(1)));
       }
       else if ("children".equalsIgnoreCase(customFilter))

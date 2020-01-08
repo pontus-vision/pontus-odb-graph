@@ -5886,14 +5886,10 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/formio.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/formio.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/globals.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/globals.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pontus-odb-graph.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/package-lock.json" beforeDir="false" />
@@ -6133,7 +6129,7 @@
       <workItem from="1577042750191" duration="11804000" />
       <workItem from="1577122395465" duration="100205000" />
       <workItem from="1577813326015" duration="8125000" />
-      <workItem from="1577978604601" duration="69450000" />
+      <workItem from="1577978604601" duration="78621000" />
     </task>
     <servers />
   </component>
@@ -6190,38 +6186,38 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1577878027771" />
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom" timestamp="1578392269846">
+    <state width="1493" height="233" key="GridCell.Tab.0.bottom" timestamp="1578472758659">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578392269846" />
-    <state width="1493" height="213" key="GridCell.Tab.0.center" timestamp="1578392269846">
+    <state width="1493" height="233" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578472758659" />
+    <state width="1493" height="233" key="GridCell.Tab.0.center" timestamp="1578472758658">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1578392269846" />
-    <state width="1493" height="213" key="GridCell.Tab.0.left" timestamp="1578392269846">
+    <state width="1493" height="233" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1578472758658" />
+    <state width="1493" height="233" key="GridCell.Tab.0.left" timestamp="1578472758658">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1578392269846" />
-    <state width="1493" height="213" key="GridCell.Tab.0.right" timestamp="1578392269846">
+    <state width="1493" height="233" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1578472758658" />
+    <state width="1493" height="233" key="GridCell.Tab.0.right" timestamp="1578472758658">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1578392269846" />
-    <state width="1493" height="213" key="GridCell.Tab.1.bottom" timestamp="1578392278176">
+    <state width="1493" height="233" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1578472758658" />
+    <state width="1493" height="233" key="GridCell.Tab.1.bottom" timestamp="1578472758659">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578392278176" />
-    <state width="1493" height="213" key="GridCell.Tab.1.center" timestamp="1578392278176">
+    <state width="1493" height="233" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1578472758659" />
+    <state width="1493" height="233" key="GridCell.Tab.1.center" timestamp="1578472758659">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1578392278176" />
-    <state width="1493" height="213" key="GridCell.Tab.1.left" timestamp="1578392278176">
+    <state width="1493" height="233" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1578472758659" />
+    <state width="1493" height="233" key="GridCell.Tab.1.left" timestamp="1578472758659">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1578392278176" />
-    <state width="1493" height="213" key="GridCell.Tab.1.right" timestamp="1578392278176">
+    <state width="1493" height="233" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1578472758659" />
+    <state width="1493" height="233" key="GridCell.Tab.1.right" timestamp="1578472758659">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="213" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1578392278176" />
+    <state width="1493" height="233" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1578472758659" />
     <state x="300" y="74" key="Maven.ArtifactSearchDialog" timestamp="1577480846373">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6254,10 +6250,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="310" y="155" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.834@0.0.1536.834" timestamp="1577730133986" />
-    <state x="461" y="154" width="916" height="536" key="find.popup" timestamp="1578317244495">
+    <state x="461" y="154" width="916" height="536" key="find.popup" timestamp="1578420146527">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="461" y="154" width="916" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1578317244495" />
+    <state x="461" y="154" width="916" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1578420146527" />
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1578335355932">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -6310,11 +6306,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
           <line>156</line>
           <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
-          <line>365</line>
-          <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java</url>
@@ -6373,38 +6364,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
-          <line>432</line>
+          <line>286</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
-          <line>214</line>
-          <option name="timeStamp" value="111" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
-          <line>428</line>
+          <line>268</line>
           <option name="timeStamp" value="114" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
-          <line>198</line>
-          <option name="timeStamp" value="116" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
-          <line>249</line>
-          <option name="timeStamp" value="118" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/conf/matching.groovy</url>
-          <line>116</line>
-          <option name="timeStamp" value="119" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/conf/formio.groovy</url>
-          <line>196</line>
-          <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
@@ -6463,23 +6429,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
-          <line>423</line>
-          <option name="timeStamp" value="153" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
-          <line>401</line>
-          <option name="timeStamp" value="154" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
           <line>354</line>
           <option name="timeStamp" value="155" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
+          <line>1387</line>
+          <option name="timeStamp" value="157" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
-          <line>388</line>
-          <option name="timeStamp" value="156" />
+          <line>417</line>
+          <option name="timeStamp" value="158" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/RecordRequest.java</url>
+          <line>423</line>
+          <option name="timeStamp" value="159" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
