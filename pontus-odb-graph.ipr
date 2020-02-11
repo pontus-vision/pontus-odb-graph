@@ -482,15 +482,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/jcabi/jcabi-manifests/1.1/jcabi-manifests-1.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.nimbusds:nimbus-jose-jwt:8.4">
+    <library name="Maven: com.nimbusds:nimbus-jose-jwt:8.6">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.4/nimbus-jose-jwt-8.4.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.6/nimbus-jose-jwt-8.6.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.4/nimbus-jose-jwt-8.4-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.6/nimbus-jose-jwt-8.6-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.4/nimbus-jose-jwt-8.4-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.6/nimbus-jose-jwt-8.6-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.orientechnologies:orientdb-client:3.1.0-beta1">

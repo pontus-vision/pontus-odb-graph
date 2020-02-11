@@ -22,15 +22,15 @@ import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.apache.tinkerpop.gremlin.structure.Vertex
 
 import java.text.SimpleDateFormat
 
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
-
-
 import static org.apache.tinkerpop.gremlin.process.traversal.P.eq
+import static org.apache.tinkerpop.gremlin.process.traversal.P.gt
+import static org.apache.tinkerpop.gremlin.process.traversal.P.lte
 
 //import org.OrientStandardGraph.core.OrientStandardGraph
 
@@ -2888,7 +2888,7 @@ def createNotificationTemplatesPt() {
 //
 //    }
 
-    if (!App.g){
+    if (!App.g) {
       App.g = g;
     }
 
@@ -2906,8 +2906,8 @@ def createNotificationTemplatesPt() {
         .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
         .property("Object.Notification_Templates.Label", "Relatório")
         .property("Object.Notification_Templates.Text", ("Esta avaliação de impacto na privacidade cobre " +
-          "{{ pv:getNumSensitiveInfoForPIA(context.id).size() }} dado(s) sensiveis e" +
-          "{{ pv:getNumNaturalPersonForPIA(context.id).size() }} titulares.").bytes.encodeBase64().toString())
+          "{{ pv:getNumSensitiveInfoForPIA(context.id) }} dado(s) sensiveis e " +
+          "{{ pv:getNumNaturalPersonForPIA(context.id) }} titulares.").bytes.encodeBase64().toString())
         .next();
 
       App.g.addV("Object.Notification_Templates")
@@ -2918,8 +2918,8 @@ def createNotificationTemplatesPt() {
         .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
         .property("Object.Notification_Templates.Label", "Relatório")
         .property("Object.Notification_Templates.Text", ("Esta avaliação de impacto na privacidade cobre " +
-          "{{ pv:getNumSensitiveInfoForPIA(context.id).size() }} dado(s) sensiveis e" +
-          "{{ pv:getNumNaturalPersonForPIA(context.id).size() }} titulares.").bytes.encodeBase64().toString())
+          "{{ pv:getNumSensitiveInfoForPIA(context.id) }} dado(s) sensiveis e " +
+          "{{ pv:getNumNaturalPersonForPIA(context.id) }} titulares.").bytes.encodeBase64().toString())
         .next();
 
       App.g.addV("Object.Notification_Templates")
@@ -4310,50 +4310,55 @@ def getPrivacyNoticesScores(def scoresMap) {
 
 
 def getSubjectAccessRequestScores(def scoresMap) {
+  long fifteenDayThresholdMs = (long)(System.currentTimeMillis() - (3600000L * 24L *15L));
+  def fifteenDayThreshold = new java.util.Date (fifteenDayThresholdMs);
+  long fiveDayThresholdMs = (long)(System.currentTimeMillis() - (3600000L * 24L *5L));
+  def fiveDayThreshold = new java.util.Date (fiveDayThresholdMs);
 
-  long thirtyDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 30L));
-  def thirtyDayDateThreshold = new java.util.Date(thirtyDayThresholdMs);
-  long tenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 10L));
-  def tenDayDateThreshold = new java.util.Date(tenDayThresholdMs);
+  long numEvents = g.V().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).count().next();
 
-  long numEvents = App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).count().next();
+  long numRecordsOlder15Days =
 
-  long numRecordsOlder30Days =
-
-    App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
+    g.V().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).as('sar')
       .where(
-        __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(thirtyDayDateThreshold))
+        __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(fifteenDayThreshold))
       )
 
       .count().next()
 
-  long numRecordsOlder10Days =
+  long numRecordsOlder5Days =
 
-    App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
+    g.V().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).as('sar')
       .where(
-        __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(tenDayDateThreshold))
+        __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(fiveDayThreshold))
       )
 
       .count().next()
 
 
   long scoreValue = 100L;
-  if (numEvents > 0) {
+  if (numEvents > 0){
 
-    long pcntOlder30Days = (long) (100L * numRecordsOlder30Days / numEvents);
-    if (pcntOlder30Days > 10) {
+    long pcntOlder15Days = (long) (100L*numRecordsOlder15Days/numEvents);
+    if (pcntOlder15Days > 10){
       scoreValue -= 80L;
-    } else if (numRecordsOlder30Days > 0) {
-      scoreValue -= (60L + 2L * pcntOlder30Days)
+    }
+    else if (numRecordsOlder15Days> 0) {
+      scoreValue -= (60L + 2L* pcntOlder15Days)
     }
 
 
-    scoreValue -= (20L * numRecordsOlder10Days / numEvents)
+
+    scoreValue -= (20L * numRecordsOlder5Days/numEvents)
 
 
-  } else {
-    scoreValue = 0L;
+
+
+  }else{
+    scoreValue = 100L;
   }
+
+
   scoresMap.put(PontusJ2ReportingFunctions.translate('Subject Access Requests'), scoreValue)
   return scoreValue
 
@@ -4678,28 +4683,100 @@ def getNumNaturalPersonPerOrganisation() {
 }
 
 def getDSARStatsPerOrganisation() {
-  return GetDSARStatsPerOrganisation.getDSARStatsPerOrganisation(App.g);
+  return DSARStats.getDSARStatsPerOrganisation(App.g);
 }
 
-class GetDSARStatsPerOrganisation {
+class DSARStats {
+  public static boolean getDSARStatsPerRequestType(Date gtDateThreshold, Date lteDateThreshold, boolean firstTime, String dateLabel, StringBuffer sb) {
+    return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime,dateLabel, 'Event.Subject_Access_Request.Request_Type','TOTAL_REQ_TYPE', sb);
+  }
+  public static boolean getDSARStatsPerRequestStatus(Date gtDateThreshold, Date lteDateThreshold, boolean firstTime, String dateLabel,  StringBuffer sb) {
+    return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime,dateLabel, 'Event.Subject_Access_Request.Status', 'TOTAL_STATUS', sb);
+
+  }
+
+  public static boolean getDSARStatsPer(Date lteDateThreshold , Date  gtDateThreshold, boolean firstTime, String dateLabel, String groupByCount, String dataSourceName,  StringBuffer sb) {
+
+    long count = 0;
+    App.g.V()
+      .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
+      .where(
+        __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(P.between(gtDateThreshold, lteDateThreshold))
+      )
+
+      .groupCount().by(groupByCount)
+      .each {
+        it.each { it2 ->
+          if (!firstTime) {
+            sb.append("\n,")
+          } else {
+            firstTime = false;
+          }
+          count ++;
+          sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+          sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": $it2.value }")
+        }
+      }
+
+    if (count == 0){
+      if (!firstTime) {
+        sb.append("\n,")
+      } else {
+        firstTime = false;
+      }
+      if ('TOTAL_REQ_TYPE' == dataSourceName){
+        sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("read")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
+        sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("update")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
+        sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("delete")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
+
+        firstTime = false;
+
+      }
+      else{
+        sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("New")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
+        sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("Acknowledged")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
+        sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("Completed")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
+
+      }
+
+
+    }
+
+    return firstTime;
+
+  }
+
 
   public static String getDSARStatsPerOrganisation(GraphTraversalSource g) {
 
     StringBuffer sb = new StringBuffer("[")
     boolean firstTime = true;
 
-    long thirtyDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 30L));
-    def thirtyDayDateThreshold = new java.util.Date(thirtyDayThresholdMs);
+    long nowMs = System.currentTimeMillis();
+    def nowThreshold = new Date(nowMs);
 
-    long fifteenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 15L));
-    def fifteenDayDateThreshold = new java.util.Date(fifteenDayThresholdMs);
+    long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L));
+    def oneYearDateThreshold = new Date(oneYearThresholdMs);
 
 
-    long tenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 10L));
-    def tenDayDateThreshold = new java.util.Date(tenDayThresholdMs);
+    long thirtyDayThresholdMs = (long) (nowMs - (3600000L * 24L * 30L));
+    def thirtyDayDateThreshold = new Date(thirtyDayThresholdMs);
 
-    long fiveDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 5L));
-    def fiveDayDateThreshold = new java.util.Date(fiveDayThresholdMs);
+    long fifteenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 15L));
+    def fifteenDayDateThreshold = new Date(fifteenDayThresholdMs);
+
+
+    long tenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 10L));
+    def tenDayDateThreshold = new Date(tenDayThresholdMs);
+
+    long fiveDayThresholdMs = (long) (nowMs - (3600000L * 24L * 5L));
+    def fiveDayDateThreshold = new Date(fiveDayThresholdMs);
 
     def typeOrg =
       [
@@ -4758,6 +4835,48 @@ class GetDSARStatsPerOrganisation {
 
         }
     }
+
+    App.g.V()
+      .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
+      .groupCount().by('Event.Subject_Access_Request.Request_Type')
+      .each {
+        it.each { it2 ->
+          if (!firstTime) {
+            sb.append("\n,")
+          } else {
+            firstTime = false;
+          }
+          sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (Total)\",")
+          sb.append("\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": $it2.value }".toString())
+        }
+      }
+
+    App.g.V()
+      .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
+      .groupCount().by('Event.Subject_Access_Request.Status')
+      .each {
+        it.each { it2 ->
+          if (!firstTime) {
+            sb.append("\n,")
+          } else {
+            firstTime = false;
+          }
+          sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (Total)\",")
+          sb.append("\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": $it2.value }".toString())
+        }
+      }
+
+    firstTime = getDSARStatsPerRequestType(nowThreshold, fiveDayDateThreshold,firstTime,"0-5d", sb);
+    firstTime = getDSARStatsPerRequestType(fiveDayDateThreshold, tenDayDateThreshold,firstTime,"5-10d", sb);
+    firstTime = getDSARStatsPerRequestType(tenDayDateThreshold, fifteenDayDateThreshold,firstTime,"10-15d", sb);
+    firstTime = getDSARStatsPerRequestType(fifteenDayDateThreshold,thirtyDayDateThreshold,firstTime,"15-30d", sb);
+    firstTime = getDSARStatsPerRequestType(thirtyDayDateThreshold,oneYearDateThreshold,firstTime,"30-365d", sb);
+
+    firstTime = getDSARStatsPerRequestStatus(nowThreshold, fiveDayDateThreshold,firstTime,"0-5d", sb);
+    firstTime = getDSARStatsPerRequestStatus(fiveDayDateThreshold, tenDayDateThreshold,firstTime,"5-10d", sb);
+    firstTime = getDSARStatsPerRequestStatus(tenDayDateThreshold, fifteenDayDateThreshold,firstTime,"10-15d", sb);
+    firstTime = getDSARStatsPerRequestStatus(fifteenDayDateThreshold,thirtyDayDateThreshold,firstTime,"15-30d", sb);
+    firstTime = getDSARStatsPerRequestStatus(thirtyDayDateThreshold,oneYearDateThreshold,firstTime,"30-365d", sb);
 
     sb.append(']')
 
@@ -4928,7 +5047,7 @@ class Discovery {
         g,
         "${dbURL}.${dbTableName}", 'data source from discovery',
         "DB_TABLE", null, null);
-        g.addE('Has_Table').from(dataSourceVertex).to(dataSrcTableVertex).next();
+      g.addE('Has_Table').from(dataSourceVertex).to(dataSrcTableVertex).next();
 
       def colMap = [:];
 

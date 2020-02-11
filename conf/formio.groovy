@@ -94,7 +94,7 @@ class FormData {
 
   }
 
-  static Map<String, String> prepareFormData(String dataFromFormInJSON, String dataType, OClass vertexClass) {
+  static Map<String, String> prepareFormData(String dataFromFormInJSON, String dataType, OClass vertexClass,StringBuffer sb = new StringBuffer()) {
     def slurper = new JsonSlurper()
     def formDataParsed = slurper.parseText(dataFromFormInJSON)
     def formOwnerId = formDataParsed.request.owner as String
@@ -270,7 +270,7 @@ class FormData {
 
     OClass vertexClass = ODBSchemaManager.createVertexLabel(App.graph, dataType);
 
-    Map<String, String> fields = prepareFormData(dataFromFormInJSON, dataType, vertexClass);
+    Map<String, String> fields = prepareFormData(dataFromFormInJSON, dataType, vertexClass,sb);
 
     String submissionId = fields.get("${dataType}.Form_Submission_Id")
     String submissionOwner = fields.get("${dataType}.Form_Submission_Owner_Id")

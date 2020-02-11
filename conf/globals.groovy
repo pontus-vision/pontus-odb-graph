@@ -16,10 +16,10 @@ import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Edge
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONVersion
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -35,7 +35,7 @@ def loadSchema(OrientStandardGraph graph, String... files) {
   StringBuffer sb = new StringBuffer()
 
   def dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-  graph.executeSql('ALTER DATABASE DATETIMEFORMAT "'+ dateFormat + '"', [:])
+  graph.executeSql('ALTER DATABASE DATETIMEFORMAT "' + dateFormat + '"', [:])
 
   Map<String, OProperty> propsMap = [:]
   for (f in files) {
@@ -244,7 +244,6 @@ boolean isASCII(String s) {
 }
 
 
-
 def renderReportInTextPt(String pg_id, String reportType = 'DSAR', GraphTraversalSource g = g) {
   return renderReportInTextPt(new ORecordId(pg_id), reportType, g)
 }
@@ -341,14 +340,24 @@ class PontusJ2ReportingFunctions {
           if (obj instanceof Edge) {
 
             int counter = 0
+//            final def bothVertices = obj.bothVertices();
+
+            def vertices = [];
+
             obj.bothVertices().each { v ->
+              vertices.push(v);
+
+            }
+
+
+            vertices.each { v ->
 
               if (vertType == v.label()) {
                 ORID currVid = v.id() as ORID
                 def currScore = weightedScores.get(currVid, new Double(0))
                 // def listOfPaths = perUserVertices.computeIfAbsent(v.id(), s -> [] )
                 int vertIdx = (counter == 0) ? 1 : 0
-                String label = obj.bothVertices().get(vertIdx).label()
+                String label = vertices.get(vertIdx).label()
                 Double scoreForLabel = weightsPerVertex.get(label, new Double(0))
 
                 if (scoreForLabel > 0) {
@@ -608,10 +617,14 @@ class PontusJ2ReportingFunctions {
 
 //    System.out.println('Before loop');
 
-    br.each { key, map ->
-      sb.append("<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+    br.each { key, listEntries ->
 
-      def innerMap = map[0]
+      if (listEntries instanceof List && listEntries.size() > 0) {
+
+        listEntries.each { innerMap ->
+          sb.append("<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+
+//        def innerMap = map[0]
 
 //      System.out.println("key = ${key}, map[0] = ${innerMap} map.size() = ${map.size()}; map[0].size = ${innerMap.size()}; ${map.class} innerMap.class = ${innerMap.class}");
 
@@ -620,18 +633,18 @@ class PontusJ2ReportingFunctions {
 //        System.out.println("it.key = ${it.key}; it.val = ${it.value}");
 //      }
 //
-      String mainValue = null
-      innerMap.each { entry ->
-        if (entry.key != 'matchWeight' && entry.key != 'excludeFromSearch' &&
-          entry.key != 'excludeFromSubsequenceSearch' && entry.key != 'excludeFromUpdate' &&
-          entry.key != 'operator') {
-          sb.append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-            .append(entry.key.toString())
-            .append("</td>")
-          mainValue = entry.value.toString()
+          String mainValue = null
+          innerMap.each { entry ->
+            if (entry.key != 'matchWeight' && entry.key != 'excludeFromSearch' &&
+              entry.key != 'excludeFromSubsequenceSearch' && entry.key != 'excludeFromUpdate' &&
+              entry.key != 'operator') {
+              sb.append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+                .append(entry.key.toString())
+                .append("</td>")
+              mainValue = entry.value.toString()
 
-        }
-      }
+            }
+          }
 
 //      System.out.println("innerMap.get('matchWeight' = ${innerMap.get('matchWeight')}");
 //      System.out.println("innerMap.get('excludeFromSearch' = ${innerMap.get('excludeFromSearch')}");
@@ -639,32 +652,34 @@ class PontusJ2ReportingFunctions {
 //      System.out.println("innerMap.get('excludeFromUpdate' = ${innerMap.get('excludeFromUpdate')}");
 //      System.out.println("innerMap.get('operator' = ${innerMap.get('operator')}");
 
-      sb.append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-        .append(innerMap.get('matchWeight'))
-        .append("</td>")
+          sb.append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+            .append(innerMap.get('matchWeight'))
+            .append("</td>")
 
-        .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-        .append(innerMap.get('excludeFromSearch'))
-        .append("</td>")
+            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+            .append(innerMap.get('excludeFromSearch'))
+            .append("</td>")
 
-        .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-        .append(innerMap.get('excludeFromSubsequenceSearch'))
-        .append("</td>")
+            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+            .append(innerMap.get('excludeFromSubsequenceSearch'))
+            .append("</td>")
 
-        .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-        .append(innerMap.get('excludeFromUpdate'))
-        .append("</td>")
+            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+            .append(innerMap.get('excludeFromUpdate'))
+            .append("</td>")
 
-        .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-        .append(innerMap.get('operator'))
-        .append("</td>")
+            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+            .append(innerMap.get('operator'))
+            .append("</td>")
 
-        .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-        .append(mainValue)
-        .append("</td>")
+            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+            .append(mainValue)
+            .append("</td>")
 
 
-      sb.append("</tr>")
+          sb.append("</tr>")
+        }
+      }
     }
 
     sb.append('</table>')
@@ -676,7 +691,7 @@ class PontusJ2ReportingFunctions {
   }
 
   static Long getNumDataSourcesForPIA(String id) {
-    return g.V(new ORecordId(id)).both().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')).id().count().next()
+    return g.V(new ORecordId(id)).both().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')).count().next()
   }
 
   public static JsonSlurper ptDictionarySlurper
@@ -828,8 +843,6 @@ def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraver
 }
 
 
-
-
 class VisJSGraph {
   static getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, ORID vid, String origLabel) {
     StringBuilder sb = new StringBuilder()
@@ -962,7 +975,7 @@ class VisJSGraph {
         .append('","label":"').append(origLabel)
         .append('","group":"').append(origLabel)
 //        .append('","fixed":').append(true)
-        .append(',"shape":"').append('image')
+        .append('","shape":"').append('image')
         .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
         .append('"}')
 
@@ -1276,7 +1289,7 @@ class VisJSGraph {
         App.g.V(pg_vid)
           .both()
           .dedup()
-          .each { it->
+          .each { it ->
             String groupStr = it.values('Metadata.Type').next()
             String labelStr = it.label().toString().replaceAll('[_.]', ' ')
             ORID vid = it.id()
@@ -1316,9 +1329,6 @@ class VisJSGraph {
 
           }
         sb.append('], "edges":[')
-
-
-
 
 
         counter = 0
@@ -1451,6 +1461,7 @@ class VisJSGraph {
     ]
     return metadataTypes.subList(0, level)
   }
+
   static getVisJsGraph(ORID pg_vid, int depth) {
     StringBuffer sb = new StringBuffer()
 
@@ -1646,47 +1657,47 @@ class VisJSGraph {
 
   }
 
-  static getInfraGraph(String pg_vid){
+  static getInfraGraph(String pg_vid) {
     StringBuffer sb = new StringBuffer();
     int counter = 0;
 
     try {
 
-      GraphTraversal gtrav =  (pg_vid == "-1")?
+      GraphTraversal gtrav = (pg_vid == "-1") ?
         App.g.V() :
         App.g.V(new ORecordId(pg_vid)).repeat(__.inE().subgraph('subGraph').outV())
           .times(4).cap('subGraph').next().traversal().V()
 
 
-      sb.append('{ "nodes":[' )
+      sb.append('{ "nodes":[')
 
       gtrav
         .or(
-          __.has('Metadata.Type.Object.AWS_VPC',P.eq('Object.AWS_VPC'))
-          , __.has('Metadata.Type.Object.AWS_Security_Group',P.eq('Object.AWS_Security_Group'))
-          , __.has('Metadata.Type.Object.AWS_Instance',P.eq('Object.AWS_Instance'))
-        )  .dedup()
-        .each{
+          __.has('Metadata.Type.Object.AWS_VPC', P.eq('Object.AWS_VPC'))
+          , __.has('Metadata.Type.Object.AWS_Security_Group', P.eq('Object.AWS_Security_Group'))
+          , __.has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
+        ).dedup()
+        .each {
           String groupStr = it.values('Metadata.Type').next();
-          String labelStr = it.values(groupStr+'.Id').next();
-          ORID vid = (ORID)it.id();
-          sb.append(counter == 0? '{':',{')
+          String labelStr = it.values(groupStr + '.Id').next();
+          ORID vid = (ORID) it.id();
+          sb.append(counter == 0 ? '{' : ',{')
             .append('"id":"').append(vid)
             .append('","group":"').append(groupStr)
             .append('","label":"').append(labelStr)
             .append('","shape":"').append('image')
-            .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g,vid,labelStr).toString())
+            .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
             .append('"}')
 
           counter++;
 
         }
 
-      sb.append('], "edges":[' )
+      sb.append('], "edges":[')
 
 
       counter = 0;
-      gtrav =  (pg_vid == "-1")?
+      gtrav = (pg_vid == "-1") ?
         App.g.V() :
         App.g.V(pg_vid).repeat(__.inE().subgraph('subGraph').outV())
           .times(4).cap('subGraph').next().traversal().V();
@@ -1694,26 +1705,26 @@ class VisJSGraph {
 
       gtrav
         .or(
-          __.has('Metadata.Type.Object.AWS_VPC',eq('Object.AWS_VPC'))
-          , __.has('Metadata.Type.Object.AWS_Security_Group',eq('Object.AWS_Security_Group'))
-          , __.has('Metadata.Type.Object.AWS_Instance',eq('Object.AWS_Instance'))
+          __.has('Metadata.Type.Object.AWS_VPC', eq('Object.AWS_VPC'))
+          , __.has('Metadata.Type.Object.AWS_Security_Group', eq('Object.AWS_Security_Group'))
+          , __.has('Metadata.Type.Object.AWS_Instance', eq('Object.AWS_Instance'))
         )
         .bothE()
-        .dedup()  .each{
-        sb.append(counter == 0? '{':',{')
+        .dedup().each {
+        sb.append(counter == 0 ? '{' : ',{')
           .append('"from": "').append(it.inVertex().id())
           .append('" ,"to": "').append(it.outVertex().id())
-          .append('","label": "').append(it.label().toString().replaceAll('[_.]',' '))
+          .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
           .append('"}')
 
         counter++;
 
       }
 
-      sb.append(']}' );
+      sb.append(']}');
 
 
-    }catch (Throwable t){
+    } catch (Throwable t) {
       sb.append(t.toString());
     }
 
@@ -1809,7 +1820,6 @@ def getVisJsGraph(String pg_vid) {
 }
 
 
-
 def getVisJsGraph(String pg_vid, int depth) {
   return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), depth)
 }
@@ -1832,7 +1842,7 @@ def getVisJSGraph(String pg_vid, long pg_depth) {
 }
 
 def getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, String vid, String origLabel) {
-  return VisJSGraph.getPropsNonMetadataAsHTMLTableRows(g,new ORecordId(vid), origLabel)
+  return VisJSGraph.getPropsNonMetadataAsHTMLTableRows(g, new ORecordId(vid), origLabel)
 }
 
 

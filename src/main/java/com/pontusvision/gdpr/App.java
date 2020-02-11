@@ -2,6 +2,7 @@ package com.pontusvision.gdpr;
 
 //import com.netflix.astyanax.connectionpool.exceptions.ThrottledException;
 
+import com.orientechnologies.orient.server.OServer;
 import com.orientechnologies.orient.server.OServerMain;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.DefaultConfigurationBuilder;
@@ -34,7 +35,7 @@ public class App
   public static        GremlinServer gserver;
   public static GraphTraversalSource g;
   public static Settings settings;
-
+  public static OServer  oServer;
 
 
   public static void main(String[] args)
@@ -73,8 +74,15 @@ public class App
         return;
       }
 
-      OServerMain.create().startup();
+      oServer = OServerMain.create(true);
+      oServer.startup();
+      logger.info("BEFORE ACTIVATING SERVER *******");
 
+      oServer.activate();
+      logger.info("AFTER ACTIVATING  SERVER *******");
+      graph = (OrientStandardGraph) g.getGraph();
+
+/* NOT Needed; activate() already does this...
       logger.info("Configuring Gremlin Server from {}", file);
       gserver = new GremlinServer(settings);
       CompletableFuture<ServerGremlinExecutor> c = gserver.start().exceptionally(t -> {
@@ -113,6 +121,8 @@ public class App
         }
 
       }
+*/
+
 
       //            graph = graphMgr.getGraph("graph");
 
@@ -142,7 +152,7 @@ public class App
       //
 
       server.join();
-      c.join();
+//      c.join();
     }
     catch (Throwable e)
     {
