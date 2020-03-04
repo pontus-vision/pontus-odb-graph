@@ -62,4 +62,7 @@ public class PVGridFilterCondition
     this.dateFrom = dateFrom;
   }
 
+  public PVGridFilterCondition()
+  {
+  }
 }

@@ -55,4 +55,8 @@ public class GremlinRequest
 
   String gremlin;
   Bindings bindings;
+
+  public GremlinRequest()
+  {
+  }
 }

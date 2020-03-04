@@ -11,8 +11,15 @@
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVExcelRenderer.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVOutTable" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PontusComponent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resource/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GrafanaAnnotation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GrafanaAnnotationReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GrafanaAnnotationRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GrafanaHealthcheckReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GrafanaQueryRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GrafanaQueryResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GrafanaRange.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-gen" beforeDir="false" afterPath="$PROJECT_DIR$/../data-gen" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../grafana/run-me.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../grafana/src/github.com/grafana/grafana/.bowerrc" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../grafana/src/github.com/grafana/grafana/.bra.toml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../grafana/src/github.com/grafana/grafana/.editorconfig" beforeDir="false" />
@@ -9638,15 +9645,16 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-docker-conf.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-docker-conf.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-docker-lib.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-docker-lib.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/formio.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/formio.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/globals.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/globals.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pontus-odb-graph.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GraphRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/GremlinRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridColumn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridFilterCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridFilterCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridFilters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridFilters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/PVGridSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/package-lock.json" beforeDir="false" />
@@ -9778,7 +9786,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../docker-i18n/i18n_en_translation.json" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -9794,8 +9802,8 @@
       <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\src\resource\META-INF" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.orientechnologies.orient.core.storage.cache.local.doublewritelog" />
       <recent name="com.pontusvision.gdpr" />
+      <recent name="com.orientechnologies.orient.core.storage.cache.local.doublewritelog" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\src\main\java\com\pontusvision\gdpr" />
@@ -9898,7 +9906,17 @@
       <workItem from="1579925211093" duration="1067000" />
       <workItem from="1580937358796" duration="10255000" />
       <workItem from="1581080743990" duration="20771000" />
-      <workItem from="1581336927074" duration="6744000" />
+      <workItem from="1581336927074" duration="14681000" />
+      <workItem from="1581719810379" duration="598000" />
+      <workItem from="1581773527289" duration="462000" />
+      <workItem from="1581801903098" duration="2081000" />
+      <workItem from="1581815317831" duration="579000" />
+      <workItem from="1581818772623" duration="580000" />
+      <workItem from="1581820490021" duration="3729000" />
+      <workItem from="1582472221453" duration="8149000" />
+      <workItem from="1582724053508" duration="5719000" />
+      <workItem from="1582802436862" duration="13659000" />
+      <workItem from="1583234756219" duration="5664000" />
     </task>
     <servers />
   </component>
@@ -9949,6 +9967,95 @@
         <option value="$PROJECT_DIR$/../simple-react-panel/src/SimplePanel.js" />
         <option value="$PROJECT_DIR$/../simple-react-panel/src/module.js.map" />
         <option value="$PROJECT_DIR$/../simple-react-panel/src/module.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/query_ctrl.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/datasource.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/response_parser.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/TemplateSrv.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/orientdb_query.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/TemplateSrv.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/config_ctrl.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/config_ctrl.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/query_ctrl.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/query_ctrl.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/module.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/SqlPart.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/OrientDBMetaQuery.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/config_ctrl.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/SqlPart.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/TemplateSrv.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/response_parser.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/OrientDBMetaQuery.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/OrientDBMetaQuery.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/response_parser.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/datasource.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/SqlPart.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/module.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/module.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/orientdb_query.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/orientdb_query.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/datasource_specs.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/datasource_specs.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/query_ctrl_specs.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/datasource_specs.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/query_ctrl_specs.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/query_ctrl_specs.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/template_srv_stub.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/common.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/context_srv_stub.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/common.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/time_srv_stub.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/context_srv_stub.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/time_srv_stub.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/context_srv_stub.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/template_srv_stub.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/template_srv_stub.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/time_srv_stub.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/common.d.ts" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.js" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.js.map" />
+        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.d.ts" />
       </list>
     </option>
   </component>
@@ -9974,6 +10081,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="225" y="74" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1577717506624" />
+    <state x="575" y="102" key="#com.intellij.ide.util.MemberChooser" timestamp="1582750472926">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="575" y="102" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1582750472926" />
     <state x="500" y="195" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1578311176195">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -9990,66 +10101,66 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="1050" y="224" key="#xdebugger.evaluate/0.0.1536.834@0.0.1536.834" timestamp="1579543773253" />
-    <state width="492" height="466" key="DebuggerActiveHint" timestamp="1581274703787">
+    <state width="492" height="466" key="DebuggerActiveHint" timestamp="1583266774401">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="492" height="466" key="DebuggerActiveHint/0.0.1536.834@0.0.1536.834" timestamp="1581274703787" />
+    <state width="492" height="466" key="DebuggerActiveHint/0.0.1536.834@0.0.1536.834" timestamp="1583266774401" />
     <state x="94" y="94" width="1349" height="646" key="DiffContextDialog" timestamp="1577722668777">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="94" y="94" width="1349" height="646" key="DiffContextDialog/0.0.1536.834@0.0.1536.834" timestamp="1577722668777" />
-    <state x="550" y="172" key="FileChooserDialogImpl" timestamp="1580989320334">
+    <state x="550" y="172" key="FileChooserDialogImpl" timestamp="1581882271938">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1580989320334" />
-    <state width="1493" height="233" key="GridCell.Tab.0.bottom" timestamp="1581274638794">
+    <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1581882271938" />
+    <state width="766" height="291" key="GridCell.Tab.0.bottom" timestamp="1583268111946">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="233" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1581274638794" />
-    <state width="1493" height="233" key="GridCell.Tab.0.center" timestamp="1581274638794">
+    <state width="766" height="291" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1583268111946" />
+    <state width="766" height="291" key="GridCell.Tab.0.center" timestamp="1583268111946">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="233" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1581274638794" />
-    <state width="1493" height="233" key="GridCell.Tab.0.left" timestamp="1581274638793">
+    <state width="766" height="291" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1583268111946" />
+    <state width="766" height="291" key="GridCell.Tab.0.left" timestamp="1583268111946">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="233" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1581274638793" />
-    <state width="1493" height="233" key="GridCell.Tab.0.right" timestamp="1581274638794">
+    <state width="766" height="291" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1583268111946" />
+    <state width="766" height="291" key="GridCell.Tab.0.right" timestamp="1583268111946">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="233" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1581274638794" />
-    <state width="1493" height="233" key="GridCell.Tab.1.bottom" timestamp="1581274647334">
+    <state width="766" height="291" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1583268111946" />
+    <state width="766" height="291" key="GridCell.Tab.1.bottom" timestamp="1583268111946">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="233" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1581274647334" />
-    <state width="1493" height="233" key="GridCell.Tab.1.center" timestamp="1581274647334">
+    <state width="766" height="291" key="GridCell.Tab.1.bottom/0.0.1536.834@0.0.1536.834" timestamp="1583268111946" />
+    <state width="766" height="291" key="GridCell.Tab.1.center" timestamp="1583268111946">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="233" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1581274647334" />
-    <state width="1493" height="233" key="GridCell.Tab.1.left" timestamp="1581274647333">
+    <state width="766" height="291" key="GridCell.Tab.1.center/0.0.1536.834@0.0.1536.834" timestamp="1583268111946" />
+    <state width="766" height="291" key="GridCell.Tab.1.left" timestamp="1583268111946">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="233" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1581274647333" />
-    <state width="1493" height="233" key="GridCell.Tab.1.right" timestamp="1581274647334">
+    <state width="766" height="291" key="GridCell.Tab.1.left/0.0.1536.834@0.0.1536.834" timestamp="1583268111946" />
+    <state width="766" height="291" key="GridCell.Tab.1.right" timestamp="1583268111946">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1493" height="233" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1581274647334" />
+    <state width="766" height="291" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1583268111946" />
     <state x="300" y="74" key="Maven.ArtifactSearchDialog" timestamp="1577480846373">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="300" y="74" key="Maven.ArtifactSearchDialog/0.0.1536.834@0.0.1536.834" timestamp="1577480846373" />
-    <state x="441" y="118" key="NewModule_or_Project.wizard" timestamp="1578498332237">
+    <state x="441" y="118" width="663" height="598" key="NewModule_or_Project.wizard" timestamp="1581670546070">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="441" y="118" key="NewModule_or_Project.wizard/0.0.1536.834@0.0.1536.834" timestamp="1578498332237" />
+    <state x="441" y="118" width="663" height="598" key="NewModule_or_Project.wizard/0.0.1536.834@0.0.1536.834" timestamp="1581670546070" />
     <state x="491" y="160" width="540" height="524" key="StructurePopup" timestamp="1578327640972">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="491" y="160" width="540" height="524" key="StructurePopup/0.0.1536.834@0.0.1536.834" timestamp="1578327640972" />
-    <state width="1430" height="422" key="XDebugger.FullValuePopup" timestamp="1578337506322">
+    <state width="1430" height="422" key="XDebugger.FullValuePopup" timestamp="1582923523181">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1430" height="422" key="XDebugger.FullValuePopup/0.0.1536.834@0.0.1536.834" timestamp="1578337506322" />
+    <state width="1430" height="422" key="XDebugger.FullValuePopup/0.0.1536.834@0.0.1536.834" timestamp="1582923523181" />
     <state x="585" y="197" key="chooseDestDirectoryDialog" timestamp="1578311208931">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -10070,10 +10181,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="310" y="155" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.834@0.0.1536.834" timestamp="1577730133986" />
-    <state x="461" y="154" width="916" height="536" key="find.popup" timestamp="1581455037354">
+    <state x="461" y="154" width="916" height="536" key="find.popup" timestamp="1583263182997">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="461" y="154" width="916" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1581455037354" />
+    <state x="461" y="154" width="916" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1583263182997" />
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1578335355932">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -10114,12 +10225,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/gdpr.groovy</url>
-          <line>4819</line>
+          <line>4821</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
-          <line>156</line>
+          <line>160</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -10253,16 +10364,6 @@
           <option name="timeStamp" value="174" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/conf/gdpr.groovy</url>
-          <line>4778</line>
-          <option name="timeStamp" value="176" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/conf/gdpr.groovy</url>
-          <line>4868</line>
-          <option name="timeStamp" value="181" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/globals.groovy</url>
           <line>855</line>
           <option name="timeStamp" value="183" />
@@ -10326,6 +10427,36 @@
           <url>jar://$MAVEN_REPOSITORY$/org/apache/tinkerpop/gremlin-server/3.4.3/gremlin-server-3.4.3-sources.jar!/org/apache/tinkerpop/gremlin/server/GremlinServer.java</url>
           <line>94</line>
           <option name="timeStamp" value="203" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
+          <line>433</line>
+          <option name="timeStamp" value="205" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
+          <line>418</line>
+          <option name="timeStamp" value="206" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
+          <line>452</line>
+          <option name="timeStamp" value="208" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
+          <line>498</line>
+          <option name="timeStamp" value="209" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
+          <line>478</line>
+          <option name="timeStamp" value="211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/Resource.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="213" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

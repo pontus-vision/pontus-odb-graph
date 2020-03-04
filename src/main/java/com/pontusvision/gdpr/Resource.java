@@ -14,11 +14,15 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.glassfish.jersey.server.ContainerRequest;
 
+import javax.ws.rs.core.Request;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import static org.apache.tinkerpop.gremlin.process.traversal.P.eq;
@@ -316,7 +320,7 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
 
     try
     {
-      if (req != null && req.labels != null)
+      if (req != null && req.labels != null && req.labels.length > 0 && req.labels[0].value != null)
       {
 
         //        String[] labels = new String[req.labels.length - 1];
@@ -405,6 +409,117 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
                                                                                 @HeaderParam("AUTHORIZATION") String auth)
   {
     return "Hello, " + name + " AUTHORIZATION" + auth;
+  }
+
+
+  @GET @Path("grafana_backend") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
+
+  public GrafanaHealthcheckReply grafanaBackendHealthCheck(String str)
+  {
+    return new GrafanaHealthcheckReply("success", "success", "Data source is working");
+/*
+status: "success", message: "Data source is working", title: "Success"
+ */
+
+
+
+  }
+
+
+  @POST @Path("grafana_backend/search") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
+
+  public String[] grafanaBackendSearch(ContainerRequest request)
+  {
+
+    return new String [] {};
+
+
+  }
+
+  @POST @Path("grafana_backend/annotations") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
+
+  public GrafanaAnnotationReply[] grafanaBackendAnnotations(GrafanaAnnotationRequest request)
+  {
+
+//    reply.setText("");
+
+    List<GrafanaAnnotationReply> retVal = new LinkedList<>();
+
+//    List<Map<String, Object>> res = new LinkedList<>();
+//    String queryFromGrafanaStr = request.getAnnotation().getQuery();
+
+
+    String sqlQueryData = request.getSQLQuery();
+    OResultSet oResultSet = App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP).getRawResultSet();
+    Long lastTime = 0L;
+    Map<Long, List<GrafanaAnnotationReply>> perTimeMap = new HashMap<>();
+    while (oResultSet.hasNext())
+    {
+      OResult             oResult = oResultSet.next();
+      Map<String, Object> props   = new HashMap<>();
+      oResult.getPropertyNames().forEach(propName -> props.put(propName, oResult.getProperty(propName)));
+//      oResult.getIdentity().ifPresent(id -> props.put("id", id.toString()));
+      GrafanaAnnotationReply reply = new GrafanaAnnotationReply();
+      reply.setAnnotation(request.getAnnotation());
+      reply.setTitle(request.getAnnotation().getQuery());
+      reply.setText(props.get("description").toString());
+      Long currTime = (Long)props.get("event_time");
+
+      List<GrafanaAnnotationReply> entries = perTimeMap.putIfAbsent(currTime, new LinkedList<>() );
+      if (entries == null){
+        entries  = perTimeMap.get(currTime);
+      }
+      reply.setTime(currTime);
+
+      //    reply.setText("");
+
+      entries.add(reply);
+
+    }
+    StringBuilder sb = new StringBuilder();
+
+    perTimeMap.forEach((timestamp, grafanaAnnotationReplies) -> {
+      GrafanaAnnotationReply reply = new GrafanaAnnotationReply();
+      reply.setAnnotation(request.getAnnotation());
+      reply.setTitle(request.getAnnotation().getQuery());
+      sb.setLength(0);
+      grafanaAnnotationReplies.forEach(
+          grafanaAnnotationReply -> sb.append(grafanaAnnotationReply.getText()).append("\n"));
+      reply.setText(sb.toString());
+      reply.setTime(timestamp);
+      retVal.add(reply);
+
+    });
+
+    oResultSet.close();
+
+
+
+
+    return retVal.toArray(new GrafanaAnnotationReply[0]);
+
+  }
+
+  @POST @Path("grafana_backend/query") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
+
+  public GrafanaQueryResponse[] grafanaBackendQuery(GrafanaQueryRequest request)
+  {
+
+    GrafanaTarget [] targets = request.getTargets();
+    List<GrafanaQueryResponse> retVal = new LinkedList<>();
+
+    for (int i = 0; i < targets.length; i++)
+    {
+      GrafanaQueryResponse  reply = new GrafanaQueryResponse(
+          targets[i].getTarget(),new long[][] {}
+      );
+
+      retVal.add(reply);
+    }
+
+
+    return retVal.toArray(new GrafanaQueryResponse[0]);
+
   }
 
 }

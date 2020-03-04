@@ -23,6 +23,10 @@ public class PVGridColumn {
     Boolean sortable;
     Integer width;
 
+    public PVGridColumn()
+    {
+    }
+
     public Boolean getDefaultSortAsc() {
         return defaultSortAsc;
     }

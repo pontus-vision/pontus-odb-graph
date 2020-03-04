@@ -13,6 +13,10 @@ public class GraphRequest
     this.graphId = graphId;
   }
 
+  public GraphRequest()
+  {
+  }
+
   String graphId;
 
 }

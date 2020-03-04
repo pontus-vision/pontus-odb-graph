@@ -1077,14 +1077,13 @@ def addRandomSARs(OrientStandardGraph graph, GraphTraversalSource g) {
     def randVal = new Random()
     def randVal1 = randVal.nextInt(10)
 
-    def oneWeekInMs = 3600000 * 24 * 7
-    def eighteenWeeks = oneWeekInMs * 18
+    double oneWeekInMs = 3600000 * 24 * 7
+    double halfYear = oneWeekInMs * 26
 
 
     def probabilitiesStatus = [
       new Pair<String, Double>("New", (Double) 25.0),
       new Pair<String, Double>("Acknowledged", (Double) 30.0),
-      new Pair<String, Double>("Reviewed ", (Double) 3.0),
       new Pair<String, Double>("Denied", (Double) 60.0),
       new Pair<String, Double>("Completed", (Double) 45.0)]
     def distributionStatus = new EnumeratedDistribution<String>(probabilitiesStatus.asList())
@@ -1092,14 +1091,15 @@ def addRandomSARs(OrientStandardGraph graph, GraphTraversalSource g) {
     def probabilitiesRequestType = [
       new Pair<String, Double>("Read", (Double) 90.0),
       new Pair<String, Double>("Update", (Double) 30.0),
-      new Pair<String, Double>("Delete ", (Double) 23.0)]
+      new Pair<String, Double>("Delete", (Double) 23.0),
+    new Pair<String, Double>("Bloqueio", (Double) 23.0)]
     def distributionRequestType = new EnumeratedDistribution<String>(probabilitiesRequestType.asList())
 
 
-    for (def i = 0; i < randVal1; i++) {
+    for (def i = 0; i < 10; i++) {
 
-      def createMillis = System.currentTimeMillis() - (long) (randVal.nextDouble() * eighteenWeeks)
-      def updateMillis = createMillis + (long) (randVal.nextDouble() * eighteenWeeks)
+      def createMillis = System.currentTimeMillis() - (long) (randVal.nextDouble() * halfYear)
+      def updateMillis = createMillis
       def metadataCreateDate = new Date((long) createMillis)
       def metadataUpdateDate = new Date((long) updateMillis)
 
@@ -4725,11 +4725,13 @@ class DSARStats {
         firstTime = false;
       }
       if ('TOTAL_REQ_TYPE' == dataSourceName){
-        sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("read")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("Read")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
         sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
-        sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("update")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("Update")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
         sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
-        sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("delete")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("Delete")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+        sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
+        sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("Bloqueio")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
         sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
 
         firstTime = false;
@@ -4836,6 +4838,7 @@ class DSARStats {
         }
     }
 
+
     App.g.V()
       .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
       .groupCount().by('Event.Subject_Access_Request.Request_Type')
@@ -4865,6 +4868,8 @@ class DSARStats {
           sb.append("\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": $it2.value }".toString())
         }
       }
+
+
 
     firstTime = getDSARStatsPerRequestType(nowThreshold, fiveDayDateThreshold,firstTime,"0-5d", sb);
     firstTime = getDSARStatsPerRequestType(fiveDayDateThreshold, tenDayDateThreshold,firstTime,"5-10d", sb);

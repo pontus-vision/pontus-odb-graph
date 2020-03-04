@@ -1060,7 +1060,7 @@ class VisJSGraph {
             sb.append(counter == 0 ? '{' : ',{')
               .append('"from": "').append(it.inVertex().id())
               .append('" ,"to": "').append(it.outVertex().id())
-              .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
+              .append('","label": "').append(PontusJ2ReportingFunctions.translate(it.label().toString().replaceAll('[_.]', ' ')))
               .append(prob.toString())
               .append('"}')
 

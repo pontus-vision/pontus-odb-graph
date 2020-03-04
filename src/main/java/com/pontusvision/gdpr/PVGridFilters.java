@@ -110,4 +110,8 @@ public class PVGridFilters
     {
         this.filter = filter;
     }
+
+    public PVGridFilters()
+    {
+    }
 }

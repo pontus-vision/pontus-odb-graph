@@ -48,4 +48,10 @@ public class PVGridSearch
   {
     this.cols = cols;
   }
+
+  public PVGridSearch()
+  {
+  }
+
+
 }
