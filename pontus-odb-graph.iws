@@ -9733,6 +9733,11 @@
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
   </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
   <component name="DefaultGradleProjectSettings">
     <option name="testRunner" value="GRADLE" />
     <option name="delegatedBuild" value="true" />
@@ -9903,6 +9908,8 @@
       <workItem from="1583234756219" duration="5664000" />
       <workItem from="1583330982221" duration="602000" />
       <workItem from="1583339410054" duration="2855000" />
+      <workItem from="1584121310808" duration="1268000" />
+      <workItem from="1584379391237" duration="595000" />
     </task>
     <servers />
   </component>
@@ -10171,6 +10178,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="461" y="154" width="916" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1583263182997" />
+    <state x="203" y="142" key="new project wizard" timestamp="1584122281828">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="203" y="142" key="new project wizard/0.0.1536.834@0.0.1536.834" timestamp="1584122281828" />
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1578335355932">
       <screen x="0" y="0" width="1536" height="834" />
     </state>

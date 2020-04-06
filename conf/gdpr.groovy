@@ -4698,6 +4698,7 @@ class DSARStats {
   public static boolean getDSARStatsPer(Date lteDateThreshold , Date  gtDateThreshold, boolean firstTime, String dateLabel, String groupByCount, String dataSourceName,  StringBuffer sb) {
 
     long count = 0;
+    try{
     App.g.V()
       .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
       .where(
@@ -4717,6 +4718,9 @@ class DSARStats {
           sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": $it2.value }")
         }
       }
+    } catch (Throwable t) {
+      // ignore 
+    }
 
     if (count == 0){
       if (!firstTime) {
