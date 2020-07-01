@@ -1270,6 +1270,16 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Identity_Card.Id_Text",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Identity_Card.Id_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Insurance_Policy.Form_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -2321,6 +2331,11 @@
       "unidirected": false
     },
     {
+      "name": "Uses_Data_Source",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Sent_Email_To",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -3019,6 +3034,9 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Object.Identity_Card.Id_Name",
+        "Object.Identity_Card.Id_Value",
+        "Object.Identity_Card.Id_Type",
+        "Object.Identity_Card.Id_Text",
         "Metadata.Type.Object.Identity_Card"
       ],
       "propertyKeysMappings": {
@@ -3026,6 +3044,15 @@
           "mapping": "STRING"
         },
         "Object.Identity_Card.Id_Name": {
+          "mapping": "STRING"
+        },
+        "Object.Identity_Card.Id_Value": {
+          "mapping": "STRING"
+        },
+        "Object.Identity_Card.Id_Type": {
+          "mapping": "STRING"
+        },
+        "Object.Identity_Card.Id_Text": {
           "mapping": "STRING"
         }
       }

@@ -18,7 +18,7 @@
 
         <jetty-version>9.4.3.v20170317</jetty-version>
         <jersey-version>2.26</jersey-version>
-        <tinkerpop-version>3.4.3</tinkerpop-version>
+        <tinkerpop-version>3.4.6</tinkerpop-version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson2.version>[2.8.11.1,)</jackson2.version>
         <hadoop2.version>2.7.2</hadoop2.version>
@@ -34,7 +34,7 @@
         <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
         <pontus-natty.version>100.14</pontus-natty.version>
         <netty-version>4.1.44.Final</netty-version>
-        <orientdb-version>3.1.0-beta1</orientdb-version>
+        <orientdb-version>3.1.0</orientdb-version>
         <guava-version>18.0</guava-version>
         <!--<apache.directory-api-version>
             1.0.0
@@ -746,16 +746,16 @@
                                         <Bundle-Name>Apache TinkerPop :: OrientDB Gremlin</Bundle-Name>
                                         <Implementation-Title>Apache TinkerPop :: OrientDB Gremlin</Implementation-Title>
                                         <Bundle-Description>TinkerPop3 Graph Structure Implementation for OrientDB</Bundle-Description>
-                                        <Implementation-Version>3.1.0-beta1</Implementation-Version>
+                                        <Implementation-Version>3.1.0</Implementation-Version>
                                         <Specification-Vendor>OrientDB</Specification-Vendor>
                                         <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
                                         <Bundle-Vendor>PontusVision</Bundle-Vendor>
                                         <Implementation-Vendor>OrientDB</Implementation-Vendor>
-                                        <Bundle-Version>3.1.0.beta1</Bundle-Version>
+                                        <Bundle-Version>3.1.0</Bundle-Version>
                                         <Implementation-Build>00f3a221bcbff2871f3f55506752dbd851c484e8</Implementation-Build>
                                         <Created-By>Apache Maven 3.5.0</Created-By>
                                         <Build-Jdk>1.8.0_212</Build-Jdk>
-                                        <Specification-Version>3.1.0-beta1</Specification-Version>
+                                        <Specification-Version>3.1.0</Specification-Version>
                                         <Implementation-URL>https://www.pontusvision.com</Implementation-URL>
                                         <version>3.4.3</version>
 

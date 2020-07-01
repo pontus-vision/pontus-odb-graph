@@ -9638,7 +9638,12 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/gdpr-schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr-schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pontus-odb-graph.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/sql/executor/OSelectExecutionPlanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/sql/executor/OSelectExecutionPlanner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core/storage/cache/local/doublewritelog/DoubleWriteLogGL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/package-lock.json" beforeDir="false" />
@@ -9734,16 +9739,11 @@
     <option name="done" value="true" />
   </component>
   <component name="ComposerSettings">
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="testRunner" value="GRADLE" />
     <option name="delegatedBuild" value="true" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="pontus-odb-graph" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -9755,35 +9755,30 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="importAutomatically" value="true" />
-      </MavenImportingSettings>
-    </option>
-  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1Ollj8uSCGYEX5pl9C1sKzpjXsO" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr" />
+    <property name="last_opened_file_path" value="//wsl$/Ubuntu/home/leo/work/serverless/hibernate-search-lucene" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="C:/Program Files/nodejs/node" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="$PROJECT_DIR$/../../../../../Program Files/nodejs/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../pontus-gdpr-graph/conf/gdpr-schema.json" />
   </component>
   <component name="RecentsManager">
@@ -9851,18 +9846,6 @@
       </method>
     </configuration>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
   <component name="StructureViewFactory">
     <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR,SHOW_INHERITED,SHOW_NON_PUBLIC,SHOW_FIELDS,VISIBILITY_SORTER" />
   </component>
@@ -9910,186 +9893,41 @@
       <workItem from="1583339410054" duration="2855000" />
       <workItem from="1584121310808" duration="1268000" />
       <workItem from="1584379391237" duration="595000" />
+      <workItem from="1586517237023" duration="1367000" />
+      <workItem from="1587253484288" duration="1602000" />
+      <workItem from="1587369377713" duration="636000" />
+      <workItem from="1588698728458" duration="2667000" />
+      <workItem from="1592141883413" duration="3125000" />
+      <workItem from="1592426639273" duration="639000" />
+      <workItem from="1593278389379" duration="1847000" />
+      <workItem from="1593623406084" duration="1489000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-    <option name="exactExcludedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/../clock-panel/node_modules/@grafana/toolkit/src/plugins/e2e/commonPluginTests.js" />
-        <option value="$PROJECT_DIR$/../clock-panel/node_modules/@grafana/toolkit/src/plugins/e2e/commonPluginTests.d.ts" />
-        <option value="$PROJECT_DIR$/../clock-panel/node_modules/@grafana/toolkit/src/plugins/e2e/commonPluginTests.js.map" />
-        <option value="$PROJECT_DIR$/../clock-panel/node_modules/selection-is-backward/index.d.ts" />
-        <option value="$PROJECT_DIR$/../clock-panel/node_modules/selection-is-backward/index.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/node_modules/@grafana/toolkit/src/plugins/e2e/commonPluginTests.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/node_modules/@grafana/toolkit/src/plugins/e2e/commonPluginTests.d.ts" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/node_modules/@grafana/toolkit/src/plugins/e2e/commonPluginTests.js.map" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/infrastructure-repository/node_modules/.staging/aws-sdk-7a92f64a/scripts/services-table-generator.js" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/tr-common/test/mocks/data.d.ts" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/tr-common/test/mocks/data.js" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/tr-common/test/security/CyptographyService.test.d.ts" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/tr-common/test/security/CyptographyService.test.js" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/tr-common/test/setup.d.ts" />
-        <option value="$PROJECT_DIR$/../../../../homeoffice/hmpo/tr-common/test/setup.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/SimpleEditor.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PontusComponent.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGridReportButtonCellRenderer.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGremlinComboboxToolbar.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PontusComponent.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVReportButton.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/types.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/index.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGridReportButtonCellRenderer.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/i18n.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGremlinComboBox.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGrid.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/SimpleEditor.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGremlinComboBox.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGridColSelector.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/i18n.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGridColSelector.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/module.test.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/index.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVReportButton.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGremlinComboboxToolbar.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/PVGrid.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/SimplePanel.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/module.test.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/types.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/SimplePanel.js" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/module.js.map" />
-        <option value="$PROJECT_DIR$/../simple-react-panel/src/module.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/query_ctrl.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/datasource.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/response_parser.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/TemplateSrv.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/orientdb_query.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/TemplateSrv.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/config_ctrl.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/config_ctrl.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/query_ctrl.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/query_ctrl.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/module.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/SqlPart.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/OrientDBMetaQuery.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/config_ctrl.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/SqlPart.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/TemplateSrv.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/response_parser.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/OrientDBMetaQuery.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/OrientDBMetaQuery.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/response_parser.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/datasource.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/SqlPart.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/module.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/module.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/orientdb_query.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/src/orientdb_query.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/datasource_specs.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/datasource_specs.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/query_ctrl_specs.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/datasource_specs.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/query_ctrl_specs.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/query_ctrl_specs.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/template_srv_stub.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/common.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/context_srv_stub.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/common.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/time_srv_stub.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/context_srv_stub.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/time_srv_stub.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/context_srv_stub.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/template_srv_stub.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/template_srv_stub.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/time_srv_stub.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/specs/lib/common.d.ts" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/config_ctrl.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/SqlPart.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/response_parser.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/module.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/query_ctrl.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/TemplateSrv.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/orientdb_query.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/OrientDBMetaQuery.js" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.js.map" />
-        <option value="$PROJECT_DIR$/../grafana-orientdb-datasource/dist/datasource.d.ts" />
-      </list>
-    </option>
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="600" y="274" key="#com.intellij.debugger.actions.ViewTextAction" timestamp="1578337255078">
+    <state x="250" y="0" key="#Project_Structure" timestamp="1587254045765">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="600" y="274" key="#com.intellij.debugger.actions.ViewTextAction/0.0.1536.834@0.0.1536.834" timestamp="1578337255078" />
-    <state x="225" y="74" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577717506624">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="225" y="74" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1577717506624" />
+    <state x="250" y="0" key="#Project_Structure/0.0.1536.834@0.0.1536.834" timestamp="1587254045765" />
     <state x="575" y="102" key="#com.intellij.ide.util.MemberChooser" timestamp="1582750472926">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="575" y="102" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1582750472926" />
-    <state x="500" y="195" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1578311176195">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="500" y="195" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1536.834@0.0.1536.834" timestamp="1578311176195" />
-    <state x="450" y="153" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1577119113857">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="450" y="153" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.834@0.0.1536.834" timestamp="1577119113857" />
-    <state x="606" y="172" key="#xdebugger.XInspectDialog" timestamp="1577742591119">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="606" y="172" key="#xdebugger.XInspectDialog/0.0.1536.834@0.0.1536.834" timestamp="1577742591119" />
     <state x="1050" y="224" key="#xdebugger.evaluate" timestamp="1579543773253">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -10098,14 +9936,10 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="492" height="466" key="DebuggerActiveHint/0.0.1536.834@0.0.1536.834" timestamp="1583266774401" />
-    <state x="94" y="94" width="1349" height="646" key="DiffContextDialog" timestamp="1577722668777">
+    <state x="550" y="172" key="FileChooserDialogImpl" timestamp="1587254243177">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="94" y="94" width="1349" height="646" key="DiffContextDialog/0.0.1536.834@0.0.1536.834" timestamp="1577722668777" />
-    <state x="550" y="172" key="FileChooserDialogImpl" timestamp="1581882271938">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1581882271938" />
+    <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1587254243177" />
     <state width="766" height="291" key="GridCell.Tab.0.bottom" timestamp="1583268111946">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -10138,30 +9972,14 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="766" height="291" key="GridCell.Tab.1.right/0.0.1536.834@0.0.1536.834" timestamp="1583268111946" />
-    <state x="300" y="74" key="Maven.ArtifactSearchDialog" timestamp="1577480846373">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="300" y="74" key="Maven.ArtifactSearchDialog/0.0.1536.834@0.0.1536.834" timestamp="1577480846373" />
     <state x="441" y="118" width="663" height="598" key="NewModule_or_Project.wizard" timestamp="1581670546070">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="441" y="118" width="663" height="598" key="NewModule_or_Project.wizard/0.0.1536.834@0.0.1536.834" timestamp="1581670546070" />
-    <state x="491" y="160" width="540" height="524" key="StructurePopup" timestamp="1578327640972">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="491" y="160" width="540" height="524" key="StructurePopup/0.0.1536.834@0.0.1536.834" timestamp="1578327640972" />
     <state width="1430" height="422" key="XDebugger.FullValuePopup" timestamp="1582923523181">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1430" height="422" key="XDebugger.FullValuePopup/0.0.1536.834@0.0.1536.834" timestamp="1582923523181" />
-    <state x="585" y="197" key="chooseDestDirectoryDialog" timestamp="1578311208931">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="585" y="197" key="chooseDestDirectoryDialog/0.0.1536.834@0.0.1536.834" timestamp="1578311208931" />
-    <state x="94" y="94" width="1349" height="646" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1577983047655">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="94" y="94" width="1349" height="646" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.834@0.0.1536.834" timestamp="1577983047655" />
     <state x="467" y="243" key="com.intellij.ide.util.TipDialog" timestamp="1583339793399">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -10170,22 +9988,14 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="498" y="68" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.834@0.0.1536.834" timestamp="1581017702747" />
-    <state x="310" y="155" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1577730133986">
+    <state x="461" y="154" width="916" height="536" key="find.popup" timestamp="1586517944390">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="310" y="155" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1536.834@0.0.1536.834" timestamp="1577730133986" />
-    <state x="461" y="154" width="916" height="536" key="find.popup" timestamp="1583263182997">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="461" y="154" width="916" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1583263182997" />
+    <state x="461" y="154" width="916" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1586517944390" />
     <state x="203" y="142" key="new project wizard" timestamp="1584122281828">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="203" y="142" key="new project wizard/0.0.1536.834@0.0.1536.834" timestamp="1584122281828" />
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1578335355932">
-      <screen x="0" y="0" width="1536" height="834" />
-    </state>
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1578335355932" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -10222,7 +10032,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/gdpr.groovy</url>
-          <line>4821</line>
+          <line>4825</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -10457,21 +10267,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
