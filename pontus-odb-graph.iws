@@ -11,7 +11,6 @@
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVExcelRenderer.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVOutTable" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PontusComponent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/conf/drawio.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-gen" beforeDir="false" afterPath="$PROJECT_DIR$/../data-gen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../grafana/run-me.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../grafana/src/github.com/grafana/grafana/.bowerrc" beforeDir="false" />
@@ -9639,6 +9638,7 @@
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/nifi-toolkit/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../nifi-1.4.0/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-docker-conf.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-docker-conf.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/gdpr-schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr-schema.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
@@ -9904,7 +9904,7 @@
       <workItem from="1594655778217" duration="4000" />
       <workItem from="1595178639937" duration="2260000" />
       <workItem from="1595230495235" duration="2711000" />
-      <workItem from="1595491184270" duration="597000" />
+      <workItem from="1595491184270" duration="1458000" />
     </task>
     <servers />
   </component>

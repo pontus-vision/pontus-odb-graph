@@ -38,13 +38,11 @@
       "dataType": "Double",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "probability",
       "dataType": "Double",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "maxFromScore",
       "dataType": "Double",
@@ -95,7 +93,6 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "Event.Consent.Form_Id",
       "dataType": "String",
@@ -771,11 +768,6 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
-
-
-
-
     {
       "name": "Object.Application.Description",
       "dataType": "String",
@@ -816,16 +808,11 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "Object.Application.Name",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
-
-
-
     {
       "name": "Object.Awareness_Campaign.Description",
       "dataType": "String",
@@ -906,7 +893,6 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "Object.Data_Policy.Form_Id",
       "dataType": "String",
@@ -1047,7 +1033,6 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "Object.Data_Source.Name",
       "dataType": "String",
@@ -1168,8 +1153,6 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
-
     {
       "name": "Object.Data_Procedures.Type",
       "dataType": "String",
@@ -1205,7 +1188,6 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "Object.Data_Procedures.Country_Where_Stored",
       "dataType": "String",
@@ -1231,7 +1213,6 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "Object.Phone_Number.Type",
       "dataType": "String",
@@ -1512,7 +1493,6 @@
       "dataType": "Date",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "Object.Privacy_Notice.Delivery_Date",
       "dataType": "Date",
@@ -1528,8 +1508,6 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
-
     {
       "name": "Object.Privacy_Notice.Number_Of_Records_Monthly",
       "dataType": "Date",
@@ -1540,7 +1518,6 @@
       "dataType": "Date",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "Object.Privacy_Notice.Expiry_Date",
       "dataType": "Date",
@@ -1846,7 +1823,6 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
-
     {
       "name": "Person.Identity.Marital_Status",
       "dataType": "String",
@@ -2246,7 +2222,6 @@
       "multiplicity": "MULTI",
       "unidirected": false
     },
-
     {
       "name": "Approved_Compliance_Check",
       "multiplicity": "MULTI",
@@ -2454,8 +2429,6 @@
     }
   ],
   "vertexIndexes": [
-
-
     {
       "name": "Object.Sensitive_Data.MixedIdx",
       "composite": false,
@@ -2475,7 +2448,6 @@
       "propertyKeysMappings": {
       }
     },
-
     {
       "name": "Object.Health.MixedIdx",
       "composite": false,
@@ -2492,7 +2464,6 @@
       "propertyKeysMappings": {
       }
     },
-
     {
       "name": "Object.Biometric.MixedIdx",
       "composite": false,
@@ -2508,7 +2479,6 @@
       "propertyKeysMappings": {
       }
     },
-
     {
       "name": "Object.Genetic.MixedIdx",
       "composite": false,
@@ -2523,18 +2493,6 @@
       "propertyKeysMappings": {
       }
     },
-
-
-
-
-
-
-
-
-
-
-
-
     {
       "name": "Event.Data_Breach.MixedIdx",
       "composite": false,
@@ -2750,8 +2708,24 @@
         },
         "Object.Data_Procedures.Description": {
           "mapping": "STRING"
+        },
+        "Object.Data_Procedures.Country_Where_Stored": {
+          "mapping": "STRING"
+        },
+        "Object.Data_Procedures.Number_Of_Records_Monthly": {
+          "mapping": "STRING"
+        },
+        "Object.Data_Procedures.Info_Collected": {
+          "mapping": "STRING"
+        },
+        "Object.Data_Procedures.Why_Is_It_Collected": {
+          "mapping": "STRING"
+        },
+        "Object.Data_Procedures.Type_Of_Natural_Person": {
+          "mapping": "STRING"
         }
       }
+    }
     },
     {
       "name": "Object.Data_Policy.MixedIdx",
