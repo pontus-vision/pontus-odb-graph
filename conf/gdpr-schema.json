@@ -902,6 +902,12 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Data_Policy.Retention_Period",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+
+    {
       "name": "Object.Data_Policy.Form_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1185,16 +1191,6 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Procedures.Property",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
       "name": "Object.Data_Procedures.Update_Mechanism",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1204,6 +1200,38 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
+    {
+      "name": "Object.Data_Procedures.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+
+    {
+      "name": "Object.Data_Procedures.Country_Where_Stored",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Number_Of_Records_Monthly",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Info_Collected",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Why_Is_It_Collected",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Type_Of_Natural_Person",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+
     {
       "name": "Object.Phone_Number.Type",
       "dataType": "String",
@@ -1380,6 +1408,21 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Contract.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Expiry",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Notification_Templates.Id",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1465,6 +1508,12 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Privacy_Impact_Assessment.Country_Where_Data_Is_Stored",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+
+    {
       "name": "Object.Privacy_Notice.Delivery_Date",
       "dataType": "Date",
       "cardinality": "SINGLE"
@@ -1479,6 +1528,19 @@
       "dataType": "String",
       "cardinality": "SINGLE"
     },
+
+
+    {
+      "name": "Object.Privacy_Notice.Number_Of_Records_Monthly",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Notice.Country_Where_Stored",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+
     {
       "name": "Object.Privacy_Notice.Expiry_Date",
       "dataType": "Date",
@@ -2160,6 +2222,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_Department",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Table",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -2236,6 +2303,16 @@
       "unidirected": false
     },
     {
+      "name": "Has_Application",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Data_Source",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Ingestion_Event",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -2307,6 +2384,11 @@
     },
     {
       "name": "Is_Data_Processor",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Responsible",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2500,6 +2582,8 @@
         "Object.Contract.Link",
         "Object.Contract.Status",
         "Object.Contract.Form_Owner_Id",
+        "Object.Contract.Date",
+        "Object.Contract.Expiry",
         "Metadata.Type.Object.Contract"
       ],
       "propertyKeysMappings": {
@@ -2640,7 +2724,13 @@
         "Object.Data_Procedures.Delete_Mechanism",
         "Metadata.Type.Object.Data_Procedures",
         "Object.Data_Procedures.Property",
-        "Object.Data_Procedures.Type"
+        "Object.Data_Procedures.Type",
+        "Object.Data_Procedures.Description",
+        "Object.Data_Procedures.Country_Where_Stored",
+        "Object.Data_Procedures.Number_Of_Records_Monthly",
+        "Object.Data_Procedures.Info_Collected",
+        "Object.Data_Procedures.Why_Is_It_Collected",
+        "Object.Data_Procedures.Type_Of_Natural_Person"
       ],
       "propertyKeysMappings": {
         "Metadata.Type.Object.Data_Procedures": {
@@ -2657,6 +2747,9 @@
         },
         "Object.Data_Procedures.Update_Mechanism": {
           "mapping": "STRING"
+        },
+        "Object.Data_Procedures.Description": {
+          "mapping": "STRING"
         }
       }
     },
@@ -2668,12 +2761,14 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Object.Data_Policy.Name",
+        "Object.Data_Policy.Type",
         "Object.Data_Policy.CreateDate",
         "Object.Data_Policy.UpdateDate",
         "Object.Data_Policy.Form_Id",
         "Object.Data_Policy.Form_Owner_Id",
         "Object.Data_Policy.Form_Submission_Id",
         "Object.Data_Policy.Form_Submission_Owner_Id",
+        "Object.Data_Policy.Retention_Period",
         "Metadata.Type.Object.Data_Policy"
       ],
       "propertyKeysMappings": {
@@ -2689,6 +2784,9 @@
         "Object.Data_Policy.Name": {
           "mapping": "STRING"
         },
+        "Object.Data_Policy.Type": {
+          "mapping": "STRING"
+        },
         "Object.Data_Policy.Form_Id": {
           "mapping": "STRING"
         },
@@ -2699,6 +2797,9 @@
           "mapping": "STRING"
         },
         "Object.Data_Policy.Form_Submission_Owner_Id": {
+          "mapping": "STRING"
+        },
+        "Object.Data_Policy.Retention_Period": {
           "mapping": "STRING"
         }
       }
@@ -3390,6 +3491,8 @@
         "Metadata.Type.Object.Privacy_Notice",
         "Object.Privacy_Notice.Who_Will_It_Be_Shared",
         "Object.Privacy_Notice.Likely_To_Complain",
+        "Object.Privacy_Notice.Number_Of_Records_Monthly",
+        "Object.Privacy_Notice.Country_Where_Stored",
         "Object.Privacy_Notice.Expiry_Date"
       ],
       "propertyKeysMappings": {
