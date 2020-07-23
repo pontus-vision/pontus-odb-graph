@@ -1,5 +1,4 @@
-FROM alpine as builder
-RUN apk add git
+FROM scratch as builder
 
 #RUN git clone  --depth 1 --single-branch  --branch master https://github.com/pontus-vision/pontus-odb-graph.git
 COPY . /pontus-odb-graph

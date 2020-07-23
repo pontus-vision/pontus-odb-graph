@@ -1189,6 +1189,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Data_Procedures.Property",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Data_Procedures.Country_Where_Stored",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -2725,7 +2730,6 @@
           "mapping": "STRING"
         }
       }
-    }
     },
     {
       "name": "Object.Data_Policy.MixedIdx",

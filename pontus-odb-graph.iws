@@ -9640,6 +9640,7 @@
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build-docker-conf.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-docker-conf.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/gdpr-schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr-schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-conf/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker-conf/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
@@ -9904,7 +9905,7 @@
       <workItem from="1594655778217" duration="4000" />
       <workItem from="1595178639937" duration="2260000" />
       <workItem from="1595230495235" duration="2711000" />
-      <workItem from="1595491184270" duration="1458000" />
+      <workItem from="1595491184270" duration="2861000" />
     </task>
     <servers />
   </component>
