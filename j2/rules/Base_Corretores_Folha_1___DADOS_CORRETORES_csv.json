@@ -17,7 +17,8 @@
           },
           {
             "name": "Person.Natural.Type",
-            "val": "corretor"
+            "val": "corretor",
+            "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Full_Name",
@@ -31,7 +32,8 @@
         "props": [
           {
             "name": "Person.Organisation.Type",
-            "val": "Corretora"
+            "val": "Corretora",
+            "excludeFromSearch": true
           },
           {
             "name": "Person.Organisation.Name",
@@ -74,11 +76,13 @@
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${pg_CPF.replaceAll('[^0-9]','')}"
+            "val": "${pg_CPF.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Identity_Card.Id_Type",
-            "val": "CPF"
+            "val": "CPF",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -96,7 +100,8 @@
         "props": [
           {
             "name": "Location.Address.Type",
-            "val": "Business"
+            "val": "Business",
+            "excludeFromSearch": true
           },
           {
             "name": "Location.Address.Full_Address",

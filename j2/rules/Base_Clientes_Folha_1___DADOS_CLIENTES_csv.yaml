@@ -12,6 +12,7 @@ updatereq:
           type: "java.util.Date"
         - name: Person.Natural.Type
           val: Cliente
+          excludeFromSearch: True
         - name: Person.Natural.Full_Name
           val: ${pg_NOME?.trim().toUpperCase()}
     
@@ -19,8 +20,10 @@ updatereq:
       props:
         - name: Object.Identity_Card.Id_Value
           val: ${pg_CPF.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
+          excludeFromSearch: True
     
     - label: Object.Email_Address
       props:
@@ -36,10 +39,13 @@ updatereq:
       props:
         - name: Event.Transaction.Currency
           val: BRL
+          excludeFromSubsequenceSearch: True
         - name: Event.Transaction.Type
           val: Venda
+          excludeFromSubsequenceSearch: True
         - name: Event.Transaction.Description
           val: Venda da Propriedade
+          excludeFromSubsequenceSearch: True
         - name: Event.Transaction.Value
           val: ${pg_VALOR?.replaceAll('[^0-9\\.]','')}
     
@@ -48,6 +54,7 @@ updatereq:
       props:
         - name: Person.Organisation.Type
           val: Corretora
+          excludeFromSearch: True
         - name: Person.Organisation.Name
           val: ${pg_CORRETOR}
         - name: Person.Organisation.Short_Name

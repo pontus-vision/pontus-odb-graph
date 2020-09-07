@@ -10,7 +10,8 @@
           },
           {
             "name": "Person.Natural.Type",
-            "val": "leads"
+            "val": "leads",
+            "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Full_Name",
@@ -23,11 +24,13 @@
         "props": [
           {
             "name": "Object.Salary.Currency",
-            "val": "BRL"
+            "val": "BRL",
+            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Salary.Period",
-            "val": "Mensal"
+            "val": "Mensal",
+            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Salary.Value",
@@ -41,7 +44,8 @@
         "props": [
           {
             "name": "Person.Organisation.Type",
-            "val": "Corretora"
+            "val": "Corretora",
+            "excludeFromSearch": true
           },
           {
             "name": "Person.Organisation.Name",
@@ -85,7 +89,8 @@
           {
             "name": "Event.Consent.Date",
             "val": "${new Date()}",
-            "type": "java.util.Date"
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Consent.Status",
@@ -94,7 +99,8 @@
           {
             "name": "Event.Consent.Metadata.Create_Date",
             "val": "${new Date()}",
-            "type": "java.util.Date"
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -114,11 +120,13 @@
             "name": "Location.Address.Code",
             "val": {
               "pg_IMOVEL_INTERESSE": null
-            }
+            },
+            "mandatoryInSearch": true
           },
           {
             "name": "Location.Address.Type",
-            "val": "Lead"
+            "val": "Lead",
+            "excludeFromSearch": true
           },
           {
             "name": "Location.Address.Full_Address",
@@ -131,15 +139,18 @@
         "props": [
           {
             "name": "Event.Transaction.Currency",
-            "val": "BRL"
+            "val": "BRL",
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Transaction.Type",
-            "val": "Interesse"
+            "val": "Interesse",
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Transaction.Description",
-            "val": "Compra da Propriedade"
+            "val": "Compra da Propriedade",
+            "excludeFromSearch": true
           }
         ]
       }

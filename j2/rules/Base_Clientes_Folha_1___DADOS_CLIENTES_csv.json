@@ -17,7 +17,8 @@
           },
           {
             "name": "Person.Natural.Type",
-            "val": "Cliente"
+            "val": "Cliente",
+            "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Full_Name",
@@ -30,11 +31,13 @@
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${pg_CPF.replaceAll('[^0-9]','')}"
+            "val": "${pg_CPF.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Identity_Card.Id_Type",
-            "val": "CPF"
+            "val": "CPF",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -61,15 +64,18 @@
         "props": [
           {
             "name": "Event.Transaction.Currency",
-            "val": "BRL"
+            "val": "BRL",
+            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Event.Transaction.Type",
-            "val": "Venda"
+            "val": "Venda",
+            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Event.Transaction.Description",
-            "val": "Venda da Propriedade"
+            "val": "Venda da Propriedade",
+            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Event.Transaction.Value",
@@ -83,7 +89,8 @@
         "props": [
           {
             "name": "Person.Organisation.Type",
-            "val": "Corretora"
+            "val": "Corretora",
+            "excludeFromSearch": true
           },
           {
             "name": "Person.Organisation.Name",

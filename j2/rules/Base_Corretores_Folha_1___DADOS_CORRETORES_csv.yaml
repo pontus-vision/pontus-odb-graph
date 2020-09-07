@@ -12,6 +12,7 @@ updatereq:
           type: "java.util.Date"
         - name: Person.Natural.Type
           val: corretor
+          excludeFromSearch: True
         - name: Person.Natural.Full_Name
           val: ${pg_NOME?.trim().toUpperCase()}
     
@@ -20,6 +21,7 @@ updatereq:
       props:
         - name: Person.Organisation.Type
           val: Corretora
+          excludeFromSearch: True
         - name: Person.Organisation.Name
           val: ${pg_CORRETOR}
         - name: Person.Organisation.Short_Name
@@ -45,8 +47,10 @@ updatereq:
       props:
         - name: Object.Identity_Card.Id_Value
           val: ${pg_CPF.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
+          excludeFromSearch: True
     
     - label: Object.Email_Address
       props:
@@ -57,6 +61,7 @@ updatereq:
       props:
         - name: Location.Address.Type
           val: Business
+          excludeFromSearch: True
         - name: Location.Address.Full_Address
           val: ${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP} 
 

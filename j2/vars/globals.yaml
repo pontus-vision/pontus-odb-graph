@@ -124,7 +124,10 @@ rules:
       props:
         Full_Name: "${pg_NOME?.trim().toUpperCase()}"
         Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
-        Type: "Cliente"
+        Type:
+          val: "Cliente"
+          excludeFromSearch: true
+
         Natural.Date_Of_Birth:
           val: "${pg_DATA_NASCIMENTO}"
           type: "java.util.Date"
@@ -134,8 +137,14 @@ rules:
 
     - label: Object.Identity_Card
       props:
-        Id_Value: "${pg_CPF.replaceAll('[^0-9]','')}"
-        Id_Type: "CPF"
+        Id_Value:
+          val: "${pg_CPF.replaceAll('[^0-9]','')}"
+          mandatoryInSearch: true
+
+        Id_Type:
+          val: "CPF"
+          excludeFromSearch: true
+
     - label:  Object.Email_Address
       props:
         Email:  "${pg_EMAIL}"
@@ -144,16 +153,29 @@ rules:
         Full_Address: "${pg_IMOVEL} ${pg_BAIRRO}, Sao Paulo, SP"
     - label: Event.Transaction
       props:
-        Type: "Venda"
-        Description: "Venda da Propriedade"
-        Currency: "BRL"
+        Type:
+          val: "Venda"
+          excludeFromSubsequenceSearch: true
+
+        Description:
+          val: "Venda da Propriedade"
+          excludeFromSubsequenceSearch: true
+
+
+        Currency:
+          val: "BRL"
+          excludeFromSubsequenceSearch: true
+
         Value: "${pg_VALOR?.replaceAll('[^0-9\\\\.]','')}"
     - label: Person.Organisation
       name: CORRETOR
       props:
         Name: "${pg_CORRETOR}"
         Short_Name: "${pg_CORRETOR}"
-        Type: "Corretora"
+        Type:
+          val: "Corretora"
+          excludeFromSearch: true
+
 
     edges:
     - label: "Uses_Email"
@@ -187,7 +209,10 @@ rules:
       props:
         Full_Name: "${pg_NOME?.trim().toUpperCase()}"
         Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
-        Type: "corretor"
+        Type:
+          val: "corretor"
+          excludeFromSearch: true
+
         Natural.Date_Of_Birth:
           val: "${pg_DATA_NASCIMENTO}"
           type: "java.util.Date"
@@ -199,9 +224,12 @@ rules:
       props:
         Name: "${pg_CORRETOR}"
         Short_Name: "${pg_CORRETOR}"
-        Type: "Corretora"
+        Type:
+          val: "Corretora"
+          excludeFromSearch: true
 
-    #CELULAR
+
+      #CELULAR
     - label: Object.Phone_Number
       props:
         Raw:
@@ -222,8 +250,12 @@ rules:
     #CPF
     - label: Object.Identity_Card
       props:
-        Id_Value: "${pg_CPF.replaceAll('[^0-9]','')}"
-        Id_Type: "CPF"
+        Id_Value:
+          val: "${pg_CPF.replaceAll('[^0-9]','')}"
+          mandatoryInSearch: true
+        Id_Type:
+          val: "CPF"
+          excludeFromSearch: true
 
     # EMAIL
     - label: Object.Email_Address
@@ -234,7 +266,9 @@ rules:
     - label: Location.Address
       props:
         Full_Address: "${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP} "
-        Type: "Business"
+        Type:
+          val: "Business"
+          excludeFromSearch: true
 
 
     edges:
@@ -266,22 +300,34 @@ rules:
         props:
           Full_Name: "${pg_NOME?.trim().toUpperCase()}"
           Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
-          Type: "leads"
+          Type:
+            val: "leads"
+            excludeFromSearch: true
+
 
       - label: Object.Salary
         props:
           Value:
             val: "${pg_RENDA?.replaceAll('[^0-9\\\\.]','')}"
+
 #            type: "Double"
-          Currency: "BRL"
-          Period: "Mensal"
+          Currency:
+            val: "BRL"
+            excludeFromSubsequenceSearch: true
+          Period:
+            val: "Mensal"
+            excludeFromSubsequenceSearch: true
+
 
       - label: Person.Organisation
         name: CORRETOR
         props:
           Name: "${pg_CORRETOR}"
           Short_Name: "${pg_CORRETOR}"
-          Type: "Corretora"
+          Type:
+            val: "Corretora"
+            excludeFromSearch: true
+
 
       #TELEFONE
       - label: Object.Phone_Number
@@ -307,9 +353,12 @@ rules:
           Date:
             val: "${new Date()}"
             type: "java.util.Date"
+            excludeFromSearch: true
+
           Metadata.Create_Date:
             val: "${new Date()}"
             type: "java.util.Date"
+            excludeFromSearch: true
 
           Status: "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consent':'No Consent '}"
 
@@ -328,14 +377,28 @@ rules:
             val: "${pg_END__IMOVEL}"
     #        excludeFromUpdate: true
 
-          Type: "Lead"
-          Code: "{pg_IMOVEL_INTERESSE}"
+          Type:
+            val: "Lead"
+            excludeFromSearch: true
+
+          Code:
+            val: "{pg_IMOVEL_INTERESSE}"
+            mandatoryInSearch: true
 
       - label: Event.Transaction
         props:
-          Type: "Interesse"
-          Description: "Compra da Propriedade"
-          Currency: "BRL"
+          Type:
+            val: "Interesse"
+            excludeFromSearch: true
+
+          Description:
+            val: "Compra da Propriedade"
+            excludeFromSearch: true
+
+          Currency:
+            val: "BRL"
+            excludeFromSearch: true
+
 
     edges:
       - label: "Uses_Email"
