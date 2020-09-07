@@ -1,0 +1,53 @@
+updatereq:
+  vertices:
+  {%- for vertex in rules[currRule].vertices %}
+    {% set vertLabel = vertex.label |default(vertex.name, true) %}
+    - label: {{vertLabel}}
+    {%- if vertex.name|default (false,true) %}
+      name: {{vertex.name}}
+    {%- endif %}
+    {%- if vertex.condition|default (false,true) %}
+      condition: {{vertex.condition}}
+    {%- endif %}
+      props:
+        {%- set vertProps = vertex.props %}
+        {%- for prop in vertProps %}
+          {%- set props = vertProps[prop] %}
+        - name: {{vertLabel}}.{{prop}}
+          val: {{ props.val | default(props,true) }}
+          {%- if props.predicate|default (false,true) %}
+          predicate: {{props.predicate |default('eq', true)}}
+          {%- endif %}
+          {%- if props.mandatoryInSearch|default (false,true) %}
+          mandatoryInSearch: {{props.mandatoryInSearch |default('true', true)}}
+          {%- endif %}
+          {%- if props.excludeFromSubsequenceSearch|default (false,true) %}
+          excludeFromSubsequenceSearch: {{props.excludeFromSubsequenceSearch |default('true', true)}}
+          {%- endif %}
+          {%- if props.type|default (false,true) %}
+          type: "{{props.type |default('true', true)}}"
+          {%- endif %}
+          {%- if props.excludeFromSearch|default (false,true) %}
+          excludeFromSearch: {{props.excludeFromSearch |default('true', true)}}
+          {%- endif %}
+        {%- endfor %}
+  {%- endfor %}
+
+  edges:
+  {%- for edge in rules[currRule].edges %}
+  - label: {{ edge.label }}
+    {%- if edge.fromVertexName | default (false,true) %}
+    fromVertexName: {{ edge.fromVertexName }}
+    {%- else %}
+    fromVertexLabel: {{ edge.fromVertexLabel }}
+    {%- endif %}
+
+    {%- if edge.toVertexName | default (false,true) %}
+    toVertexName: {{ edge.toVertexName }}
+    {%- else %}
+    toVertexLabel: {{ edge.toVertexLabel }}
+    {%- endif %}
+
+
+  {%- endfor %}
+

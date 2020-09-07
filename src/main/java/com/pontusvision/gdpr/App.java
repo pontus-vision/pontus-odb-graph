@@ -2,6 +2,11 @@ package com.pontusvision.gdpr;
 
 //import com.netflix.astyanax.connectionpool.exceptions.ThrottledException;
 
+import com.amazonaws.serverless.proxy.jersey.JerseyLambdaContainerHandler;
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
+import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.orientechnologies.orient.server.OServer;
 import com.orientechnologies.orient.server.OServerMain;
 import org.apache.commons.configuration.Configuration;
@@ -15,6 +20,7 @@ import org.apache.tinkerpop.gremlin.server.util.ServerGremlinExecutor;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 //import org.janusgraph.core.JanusGraph;
@@ -22,12 +28,15 @@ import org.jhades.JHades;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 
-public class App
+public class App implements RequestStreamHandler
 {
   private static final Logger              logger = LoggerFactory.getLogger(App.class);
   //    public static JanusGraphManagement graphMgmt;
@@ -37,7 +46,11 @@ public class App
   public static Settings settings;
   public static OServer  oServer;
 
-
+  private static final ResourceConfig                                                  jerseyApplication = new ResourceConfig()
+      .packages("com.amazonaws.serverless.sample.jersey")
+      .register(JacksonFeature.class);
+  private static final JerseyLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler
+                                                        = JerseyLambdaContainerHandler.getAwsProxyHandler(jerseyApplication);
   public static void main(String[] args)
   {
     new JHades().overlappingJarsReport();
@@ -162,5 +175,11 @@ public class App
     {
       server.destroy();
     }
+  }
+
+  @Override public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context)
+      throws IOException
+  {
+    handler.proxyStream(inputStream, outputStream, context);
   }
 }

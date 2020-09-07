@@ -1,0 +1,357 @@
+fileHeaders: 'DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDEN BY THE J2 DIR TEMPLATES'
+
+schema:
+  edgeLabels:
+  - name:
+
+  vertices:
+  - name: "Object.Sensitive_Data"
+    partition: false
+    useStatic: false
+    props:
+    - name: "Ethnicity"
+      dataType: "String"
+      cardinality: "SINGLE"
+      index: true
+    - name: "Religion"
+    - name: "Political_View"
+    - name: "Union_Membership"
+    - name: "Club_Membership"
+    - name: "Church_Membership"
+    - name: "Sexual_Orientation"
+
+
+#
+#  - name: "Object.Salary"
+#
+#
+#  - name: "Object.Health"
+#
+#
+#  - name: "Object.Biometric"
+#
+#
+#  - name: "Object.Genetic"
+#
+#
+#  - name: "Event.Consent"
+#
+#
+#  - name: "Event.Transaction"
+#
+#
+#  - name: "Event.Data_Breach"
+#
+#
+#  - name: "Event.Form_Ingestion"
+#
+#
+#  - name: "Event.Ingestion"
+#
+#  - name: "Event.Group_Ingestion"
+#
+#  - name: "Event.Subject_Access_Request"
+#
+#  - name: "Event.Training"
+#  - name: "Location.Address"
+#
+#  - name: "Object.AWS_Instance"
+#
+#  - name: "Object.AWS_Network_Interface"
+#  - name: "Object.AWS_Security_Group"
+#
+#  - name: "Object.AWS_VPC"
+#
+#  - name: "Object.Application"
+#
+#  - name: "Object.Awareness_Campaign"
+#
+#
+#  - name: "Object.Credential"
+#
+#  - name: "Object.Data_Procedures"
+#
+#  - name: "Object.Data_Source"
+#
+#  - name: "Object.Metadata_Source"
+#
+#  - name: "Object.Data_Policy"
+#
+#  - name: "Object.Email_Address"
+#
+#  - name: "Object.Form"
+#
+#
+#  - name: "Object.Identity_Card"
+#
+#  - name: "Object.Insurance_Policy"
+#
+#  - name: "Object.Lawful_Basis"
+#  - name: "Object.Contract"
+#
+#  - name: "Object.Notification_Templates"
+#
+#
+#  - name: "Object.Phone_Number"
+#
+#  - name: "Object.Privacy_Impact_Assessment"
+#
+#  - name: "Object.Privacy_Notice"
+#
+#  - name: "Person.Identity"
+#
+#
+#  - name: "Person.Natural"
+#
+#  - name: "Person.Employee"
+#
+#  - name: "Person.Organisation"
+#
+
+  edges:
+  - name: Has_Sensitive_Data
+    multiplicity: MULTI
+    unidirected: false
+  - name: Works
+  - name: Has_Salary
+
+
+rules:
+  Base_Clientes_Folha_1___DADOS_CLIENTES_csv:
+    vertices:
+    - label: "Person.Natural"
+  #      name: "Person.Naturalissima"
+      props:
+        Full_Name: "${pg_NOME?.trim().toUpperCase()}"
+        Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
+        Type: "Cliente"
+        Natural.Date_Of_Birth:
+          val: "${pg_DATA_NASCIMENTO}"
+          type: "java.util.Date"
+          mandatoryInSearch: true
+          predicate: "eq"
+
+
+    - label: Object.Identity_Card
+      props:
+        Id_Value: "${pg_CPF.replaceAll('[^0-9]','')}"
+        Id_Type: "CPF"
+    - label:  Object.Email_Address
+      props:
+        Email:  "${pg_EMAIL}"
+    - label: Location.Address
+      props:
+        Full_Address: "${pg_IMOVEL} ${pg_BAIRRO}, Sao Paulo, SP"
+    - label: Event.Transaction
+      props:
+        Type: "Venda"
+        Description: "Venda da Propriedade"
+        Currency: "BRL"
+        Value: "${pg_VALOR?.replaceAll('[^0-9\\\\.]','')}"
+    - label: Person.Organisation
+      name: CORRETOR
+      props:
+        Name: "${pg_CORRETOR}"
+        Short_Name: "${pg_CORRETOR}"
+        Type: "Corretora"
+
+    edges:
+    - label: "Uses_Email"
+      fromVertexLabel: "Person.Natural"
+      toVertexLabel: "Object.Email_Address"
+
+    - label: "Has_Id_Card"
+      fromVertexLabel: "Person.Natural"
+      toVertexLabel: "Object.Identity_Card"
+
+    - label: "Lives"
+      fromVertexLabel: "Person.Natural"
+      toVertexLabel: "Location.Address"
+
+    - label: "Has_Transaction"
+      fromVertexLabel: "Person.Natural"
+      toVertexLabel: "Event.Transaction"
+
+    - label: "Has_Transaction"
+      fromVertexName: "CORRETOR"
+      toVertexLabel: "Event.Transaction"
+
+    - label: "Has_Transaction"
+      fromVertexLabel: "Location.Address"
+      toVertexLabel: "Event.Transaction"
+
+  # CORRETOR,NOME,DATA_NASCIMENTO
+  Base_Corretores_Folha_1___DADOS_CORRETORES_csv:
+    vertices:
+    - label: Person.Natural
+      props:
+        Full_Name: "${pg_NOME?.trim().toUpperCase()}"
+        Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
+        Type: "corretor"
+        Natural.Date_Of_Birth:
+          val: "${pg_DATA_NASCIMENTO}"
+          type: "java.util.Date"
+          mandatoryInSearch: true
+          predicate: "eq"
+
+    - label: Person.Organisation
+      name: CORRETOR
+      props:
+        Name: "${pg_CORRETOR}"
+        Short_Name: "${pg_CORRETOR}"
+        Type: "Corretora"
+
+    #CELULAR
+    - label: Object.Phone_Number
+      props:
+        Raw:
+          val: "${pg_CELULAR}"
+          mandatoryInSearch: false
+        Type:
+          val: "Celular"
+          excludeFromSubsequenceSearch: true
+        Numbers_Only:
+          val: "${(pg_CELULAR?.replaceAll('[^0-9]', '')?:'00000000')}"
+          excludeFromSearch: true
+          type: "[Ljava.lang.String;"
+        Last_7_Digits:
+          val: "${(((pg_CELULAR?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+          mandatoryInSearch: true
+          type: "[Ljava.lang.String;"
+
+    #CPF
+    - label: Object.Identity_Card
+      props:
+        Id_Value: "${pg_CPF.replaceAll('[^0-9]','')}"
+        Id_Type: "CPF"
+
+    # EMAIL
+    - label: Object.Email_Address
+      props:
+        Email:  "${pg_EMAIL}"
+
+    #ENDERECO,BAIRRO,CIDADE,UF,CEP
+    - label: Location.Address
+      props:
+        Full_Address: "${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP} "
+        Type: "Business"
+
+
+    edges:
+    - label: "Uses_Email"
+      fromVertexLabel: "Person.Natural"
+      toVertexLabel: "Object.Email_Address"
+
+    - label: "Has_Id_Card"
+      fromVertexLabel: "Person.Natural"
+      toVertexLabel: "Object.Identity_Card"
+
+    - label: "Works"
+      fromVertexLabel: "Person.Natural"
+      toVertexLabel: "Location.Address"
+
+    - label: "Has_Address"
+      fromVertexLabel: "Person.Organisation"
+      toVertexLabel: "Location.Address"
+
+    - label: "Works"
+      fromVertexLabel: "Person.Natural"
+      toVertexLabel: "Person.Organisation"
+
+  # NOME,,CORRETOR, RENDA,,CONSENTIMENTO
+
+  Base_Leads_Incorporadora_Folha_1___LEADS_INCORPORADORA_csv:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${pg_NOME?.trim().toUpperCase()}"
+          Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
+          Type: "Lead"
+
+      - label: Object.Salary
+        props:
+          Value:
+            val: "${pg_RENDA?.replaceAll('[^0-9\\\\.]','')}"
+#            type: "Double"
+          Currency: "BRL"
+          Period: "Mensal"
+
+      - label: Person.Organisation
+        name: CORRETOR
+        props:
+          Name: "${pg_CORRETOR}"
+          Short_Name: "${pg_CORRETOR}"
+          Type: "Corretora"
+
+      #TELEFONE
+      - label: Object.Phone_Number
+        props:
+          Raw:
+            val: "${pg_TELEFONE}"
+            mandatoryInSearch: false
+          Type:
+            val: "Celular"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(pg_TELEFONE?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((pg_TELEFONE?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      #CONSENTIMENTO
+      - label: Event.Consent
+        props:
+          Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+          Metadata.Create_Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+
+          Status: "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consent':'No Consent '}"
+
+      # EMAIL
+      - label: Object.Email_Address
+        props:
+          Email:  "${pg_EMAIL}"
+
+
+
+
+      #END__IMOVEL
+      - label: Location.Address
+        props:
+          Full_Address:
+            val: "${pg_END__IMOVEL}"
+
+          Type: "Lead"
+          Code: "{pg_IMOVEL_INTERESSE}"
+
+      - label: Event.Transaction
+        props:
+          Type: "Interesse"
+          Description: "Compra da Propriedade"
+          Currency: "BRL"
+
+    edges:
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Consent"
+
+      - label: "Consent"
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Event.Consent"
+
+      - label: "Has_Salary"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Salary"
+
+
+

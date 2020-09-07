@@ -36,12 +36,19 @@
         <netty-version>4.1.44.Final</netty-version>
         <orientdb-version>3.1.0</orientdb-version>
         <guava-version>18.0</guava-version>
+        <aws-lambda-version>1.5</aws-lambda-version>
         <!--<apache.directory-api-version>
             1.0.0
         </apache.directory-api-version>-->
 
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.amazonaws.serverless</groupId>
+            <artifactId>aws-serverless-java-container-jersey</artifactId>
+            <version>${aws-lambda-version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>

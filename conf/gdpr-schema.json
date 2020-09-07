@@ -79,6 +79,36 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Event.Transaction.Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Type",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Value",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Currency",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Event.Consent.Metadata.Create_Date",
       "dataType": "Date",
       "cardinality": "SINGLE"
@@ -284,6 +314,21 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Location.Address.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Location.Address.Code",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Location.Address.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Location.Address.Post_Code",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -464,6 +509,26 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Salary",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Salary.Value",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Salary.Currency",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Salary.Period",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Object.Biometric",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -475,6 +540,11 @@
     },
     {
       "name": "Metadata.Type.Event.Consent",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Transaction",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -870,6 +940,11 @@
     },
     {
       "name": "Object.Data_Policy.Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Policy.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1345,6 +1420,11 @@
     },
     {
       "name": "Object.Lawful_Basis.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Lawful_Basis.Short_Description",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1929,6 +2009,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Person.Natural.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Person.Organisation.Email",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -2016,6 +2101,11 @@
       "useStatic": false
     },
     {
+      "name": "Object.Salary",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Object.Health",
       "partition": false,
       "useStatic": false
@@ -2032,6 +2122,11 @@
     },
     {
       "name": "Event.Consent",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Transaction",
       "partition": false,
       "useStatic": false
     },
@@ -2199,6 +2294,21 @@
   "edgeLabels": [
     {
       "name": "Has_Sensitive_Data",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Works",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Salary",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Pays_Salary",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2378,6 +2488,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_Address",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Made_SAR_Request",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -2424,6 +2539,11 @@
     },
     {
       "name": "Has_Contract",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Transaction",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2485,6 +2605,21 @@
       }
     },
     {
+      "name": "Object.Salary.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Salary",
+        "Object.Salary.Value",
+        "Object.Salary.Currency",
+        "Object.Salary.Period"
+      ],
+      "propertyKeysMappings": {
+      }
+    },
+    {
       "name": "Object.Genetic.MixedIdx",
       "composite": false,
       "unique": false,
@@ -2527,6 +2662,33 @@
           "mapping": "STRING"
         },
         "Event.Data_Breach.Impact": {
+          "mapping": "STRING"
+        }
+      }
+    },
+    {
+      "name": "Event.Transaction.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Event.Transaction.Description",
+        "Event.Transaction.Date",
+        "Event.Transaction.Value",
+        "Event.Transaction.Type",
+        "Metadata.Type.Event.Transaction",
+        "Event.Transaction.Currency",
+        "Event.Transaction.Status"
+      ],
+      "propertyKeysMappings": {
+        "Metadata.Type.Event.Transaction": {
+          "mapping": "STRING"
+        },
+        "Event.Transaction.Description": {
+          "mapping": "STRING"
+        },
+        "Event.Transaction.Status": {
           "mapping": "STRING"
         }
       }
@@ -2978,6 +3140,7 @@
         "Person.Natural.Gender",
         "Person.Natural.Customer_ID",
         "Person.Natural.Title",
+        "Person.Natural.Type",
         "Person.Natural.Nationality",
         "Person.Natural.Full_Name_fuzzy",
         "Person.Natural.Ethnicity",
@@ -3029,6 +3192,9 @@
           "mapping": "STRING"
         },
         "Person.Natural.Title": {
+          "mapping": "STRING"
+        },
+        "Person.Natural.Type": {
           "mapping": "STRING"
         },
         "Person.Natural.Customer_ID": {
@@ -3169,7 +3335,10 @@
         "Location.Address.parser.entrance",
         "Location.Address.parser.house_number",
         "Location.Address.Full_Address",
-        "Location.Address.Neighborhood"
+        "Location.Address.Neighborhood",
+        "Location.Address.Description",
+        "Location.Address.Type",
+        "Location.Address.Code"
       ],
       "propertyKeysMappings": {
         "Metadata.Type.Location.Address": {
@@ -3191,6 +3360,9 @@
           "mapping": "STRING"
         },
         "Location.Address.Neighborhood": {
+          "mapping": "STRING"
+        },
+        "Location.Address.Description": {
           "mapping": "STRING"
         },
         "Location.Address.parser.house": {
@@ -3251,6 +3423,12 @@
           "mapping": "STRING"
         },
         "Location.Address.parser.world_region": {
+          "mapping": "STRING"
+        },
+        "Location.Address.Type": {
+          "mapping": "STRING"
+        },
+        "Location.Address.Code": {
           "mapping": "STRING"
         }
       }
@@ -3430,6 +3608,7 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Object.Lawful_Basis.Description",
+        "Object.Lawful_Basis.Short_Description",
         "Metadata.Type.Object.Lawful_Basis",
         "Object.Lawful_Basis.Id"
       ],
@@ -3441,6 +3620,9 @@
           "mapping": "STRING"
         },
         "Object.Lawful_Basis.Description": {
+          "mapping": "STRING"
+        },
+        "Object.Lawful_Basis.Short_Description": {
           "mapping": "STRING"
         }
       }
@@ -3603,6 +3785,12 @@
         "Person.Organisation.Name",
         "Person.Organisation.orgCountrySet",
         "Person.Organisation.Department",
+        "Person.Organisation.Phone",
+        "Person.Organisation.Fax",
+        "Person.Organisation.Email",
+        "Person.Organisation.Type",
+        "Person.Organisation.Tax_Id",
+        "Person.Organisation.Sector",
         "Person.Organisation.Form_Id",
         "Person.Organisation.Form_Owner_Id",
         "Person.Organisation.Form_Submission_Id",

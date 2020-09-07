@@ -1,0 +1,57 @@
+propertyKeys:
+- name: Metadata.Type.Object.Sensitive_Data
+  dataType: String
+  cardinality: SINGLE
+- name: Object.Sensitive_Data.Ethnicity
+  dataType: String
+  cardinality: SINGLE
+- name: Object.Sensitive_Data.Religion
+  dataType: String
+  cardinality: SINGLE
+- name: Object.Sensitive_Data.Political_View
+  dataType: String
+  cardinality: SINGLE
+- name: Object.Sensitive_Data.Union_Membership
+  dataType: String
+  cardinality: SINGLE
+- name: Object.Sensitive_Data.Club_Membership
+  dataType: String
+  cardinality: SINGLE
+- name: Object.Sensitive_Data.Church_Membership
+  dataType: String
+  cardinality: SINGLE
+- name: Object.Sensitive_Data.Sexual_Orientation
+  dataType: String
+  cardinality: SINGLE
+vertexLabels:
+- name: Object.Sensitive_Data
+  partition: False
+  useStatic: False
+edgeLabels:
+
+- name: Has_Sensitive_Data
+  multiplicity: MULTI
+  unidirected: False
+
+- name: Works
+  multiplicity: MULTI
+  unidirected: False
+
+- name: Has_Salary
+  multiplicity: MULTI
+  unidirected: False
+vertexIndexes:
+- name: "Object.Sensitive_Data.MixedIdx"
+  composite: false
+  unique: false
+  indexOnly: null
+  mixedIndex: "search"
+  propertyKeys:
+  - Metadata.Type.Object.Sensitive_Data
+  - Object.Sensitive_Data.Ethnicity
+  - Object.Sensitive_Data.Religion
+  - Object.Sensitive_Data.Political_View
+  - Object.Sensitive_Data.Union_Membership
+  - Object.Sensitive_Data.Club_Membership
+  - Object.Sensitive_Data.Church_Membership
+  - Object.Sensitive_Data.Sexual_Orientation

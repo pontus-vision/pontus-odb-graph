@@ -1,0 +1,170 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person.Natural",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name_fuzzy",
+            "val": "${pg_NOME?.trim().toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Type",
+            "val": "Lead"
+          },
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${pg_NOME?.trim().toUpperCase()}"
+          }
+        ]
+      },
+      {
+        "label": "Object.Salary",
+        "props": [
+          {
+            "name": "Object.Salary.Currency",
+            "val": "BRL"
+          },
+          {
+            "name": "Object.Salary.Period",
+            "val": "Mensal"
+          },
+          {
+            "name": "Object.Salary.Value",
+            "val": "${pg_RENDA?.replaceAll('[^0-9\\\\.]','')}"
+          }
+        ]
+      },
+      {
+        "label": "Person.Organisation",
+        "name": "CORRETOR",
+        "props": [
+          {
+            "name": "Person.Organisation.Type",
+            "val": "Corretora"
+          },
+          {
+            "name": "Person.Organisation.Name",
+            "val": "${pg_CORRETOR}"
+          },
+          {
+            "name": "Person.Organisation.Short_Name",
+            "val": "${pg_CORRETOR}"
+          }
+        ]
+      },
+      {
+        "label": "Object.Phone_Number",
+        "props": [
+          {
+            "name": "Object.Phone_Number.Raw",
+            "val": "${pg_TELEFONE}"
+          },
+          {
+            "name": "Object.Phone_Number.Last_7_Digits",
+            "val": "${(((pg_TELEFONE?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
+          },
+          {
+            "name": "Object.Phone_Number.Numbers_Only",
+            "val": "${(pg_TELEFONE?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "type": "[Ljava.lang.String;",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Type",
+            "val": "Celular",
+            "excludeFromSubsequenceSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Consent",
+        "props": [
+          {
+            "name": "Event.Consent.Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date"
+          },
+          {
+            "name": "Event.Consent.Status",
+            "val": "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consent':'No Consent '}"
+          },
+          {
+            "name": "Event.Consent.Metadata.Create_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date"
+          }
+        ]
+      },
+      {
+        "label": "Object.Email_Address",
+        "props": [
+          {
+            "name": "Object.Email_Address.Email",
+            "val": "${pg_EMAIL}"
+          }
+        ]
+      },
+      {
+        "label": "Location.Address",
+        "props": [
+          {
+            "name": "Location.Address.Code",
+            "val": {
+              "pg_IMOVEL_INTERESSE": null
+            }
+          },
+          {
+            "name": "Location.Address.Type",
+            "val": "Lead"
+          },
+          {
+            "name": "Location.Address.Full_Address",
+            "val": "${pg_END__IMOVEL}"
+          }
+        ]
+      },
+      {
+        "label": "Event.Transaction",
+        "props": [
+          {
+            "name": "Event.Transaction.Currency",
+            "val": "BRL"
+          },
+          {
+            "name": "Event.Transaction.Type",
+            "val": "Interesse"
+          },
+          {
+            "name": "Event.Transaction.Description",
+            "val": "Compra da Propriedade"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Uses_Email",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Email_Address"
+      },
+      {
+        "label": "Consent",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Consent"
+      },
+      {
+        "label": "Consent",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexLabel": "Event.Consent"
+      },
+      {
+        "label": "Has_Salary",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Salary"
+      }
+    ]
+  }
+}

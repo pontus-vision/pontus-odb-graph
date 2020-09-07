@@ -1693,6 +1693,18 @@ def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalS
 //
 //    }
 
+    def shortDefinitions = new String[10]
+
+    shortDefinitions[0] = "Consentimento"
+    shortDefinitions[1] = "Obrigação Legal"
+    shortDefinitions[2] = "Política Pública"
+    shortDefinitions[3] = "Pesquisa por Órgão"
+    shortDefinitions[4] = "Execução de Contratos"
+    shortDefinitions[5] = "Processo Judicial"
+    shortDefinitions[6] = "Proteção á vida"
+    shortDefinitions[7] = "Tutela da Saúde"
+    shortDefinitions[8] = "Legítimos Interesses"
+    shortDefinitions[9] = "Crédito"
 
     def definitions = new String[10]
 
@@ -1733,14 +1745,15 @@ def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalS
           property("Metadata.Type.Object.Lawful_Basis", "Object.Lawful_Basis").
           property("Object.Lawful_Basis.Id", i).
           property("Object.Lawful_Basis.Description", definitions[i]).
+          property("Object.Lawful_Basis.Short_Description", shortDefinitions[i]).
           next()
       }
 
     }
 
-    String[] privNoticeDesc = ["This is a sample Privacy Notice", "This is another sample Privacy Notice"];
-    String[] privNoticeText = ["This is a sample Privacy Notice Text; the legal terms go here",
-                               "This is another sample Privacy Notice Text; the legal terms go here"];
+    String[] privNoticeDesc = ["Aviso de privacidade simples 1", "Aviso de privacidade simples 2"];
+    String[] privNoticeText = ["Termos legais para o aviso de privacidade 1 vao aqui",
+                               "Termos legais para o aviso de privacidade 2 vao aqui"];
 
     ilen = privNoticeDesc.length;
 
@@ -1758,17 +1771,17 @@ def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalS
           property("Metadata.Type.Object.Privacy_Notice", "Object.Privacy_Notice").
           property("Object.Privacy_Notice.Text", privNoticeText[i]).
           property("Object.Privacy_Notice.Description", privNoticeDesc[i]).
-          property("Object.Privacy_Notice.Effect_On_Individuals", "low").
+          property("Object.Privacy_Notice.Effect_On_Individuals", "baixo").
           property("Object.Privacy_Notice.Who_Is_Collecting", "ABG Inc").
           property("Object.Privacy_Notice.Info_Collected", "Emails").
           property("Object.Privacy_Notice.URL", "http://www.abg.com/data").
           property("Object.Privacy_Notice.Id", i).
-          property("Object.Privacy_Notice.Why_Is_It_Collected", "required for BAU").
+          property("Object.Privacy_Notice.Why_Is_It_Collected", "Prospecção comercial").
           property("Object.Privacy_Notice.Expiry_Date", new Date()).
-          property("Object.Privacy_Notice.How_Is_It_Collected", "Electronic Form").
-          property("Object.Privacy_Notice.How_Will_It_Be_Used", "Research and Development").
+          property("Object.Privacy_Notice.How_Is_It_Collected", "Forma Eletronica").
+          property("Object.Privacy_Notice.How_Will_It_Be_Used", "Pesquisa").
           property("Object.Privacy_Notice.Who_Will_It_Be_Shared", "GAB ltd").
-          property("Object.Privacy_Notice.Likely_To_Complain", "no").
+          property("Object.Privacy_Notice.Likely_To_Complain", "nao").
           property("Object.Privacy_Notice.Delivery_Date", new Date()).
           next()
       }
@@ -3660,8 +3673,8 @@ def addRandomDataInit(OrientStandardGraph graph, GraphTraversalSource g) {
     addEdgesPiaDataSourcesPrivNotices(graph, g);
     sb.append("\n called addEdgesPiaDataSourcesPrivNotices(graph, g)");
 
-    addRandomDataProcedures(graph, g);
-    sb.append("\n called addRandomDataProcedures(graph, g)");
+//    addRandomDataProcedures(graph, g);
+//    sb.append("\n called addRandomDataProcedures(graph, g)");
 
     createDataProtectionAuthorities(graph, g);
     sb.append("\n called createDataProtectionAuthorities()");
@@ -4680,6 +4693,101 @@ def getNumNaturalPersonPerOrganisation() {
 
   return sb.toString()
 
+}
+
+
+class NaturalPersonPerDataProcedures{
+  static String getNumNaturalPersonPerDataProcedures() {
+    StringBuffer sb = new StringBuffer("[")
+    boolean firstTime = true;
+
+
+    App.g.V().has('Metadata.Type.Object.Data_Procedures', P.eq('Object.Data_Procedures'))
+      .as('data_procedures')
+      .out('has_data_source')
+    //     .in('Has_Contract')
+      .out("Has_Ingestion_Event")
+      .out("Has_Ingestion_Event")
+      .in("Has_Ingestion_Event")
+      .has('Metadata.Type.Person.Natural', P.eq('Person.Natural'))
+      .id()
+      .dedup()
+      .as('events')
+      .match(
+        __.as('data_procedures').values('Object.Data_Procedures.Type').as('event_id')
+      )
+      .select('event_id')
+      .groupCount()
+      .each { metric ->
+        metric.each { metricname, metricvalue ->
+          if (!firstTime) {
+            sb.append(",")
+          } else {
+            firstTime = false;
+          }
+          sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue," +
+            " \"metrictype\": \"${PontusJ2ReportingFunctions.translate('Natural Person Per')} ${PontusJ2ReportingFunctions.translate('Data Procedures')}\" }")
+
+        }
+
+      }
+
+
+    sb.append(']')
+
+    return sb.toString()
+
+  }
+
+}
+
+class DataProceduresPerDataSource {
+
+
+  static String getDataProceduresPerDataSource() {
+    StringBuffer sb = new StringBuffer("[")
+    boolean firstTime = true;
+
+
+    App.g.V().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
+      .as('data_source')
+      .in('has_data_source')
+      .has('Metadata.Type.Object.Data_Procedures', P.eq('Object.Data_Procedures'))
+      .id()
+      .dedup()
+      .as('events')
+      .match(
+        __.as('data_source').values('Object.Data_Source.Type').as('event_id')
+      )
+      .select('event_id')
+      .groupCount()
+      .each { metric ->
+        metric.each { metricname, metricvalue ->
+          if (!firstTime) {
+            sb.append(",")
+          } else {
+            firstTime = false;
+          }
+          sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue," +
+            " \"metrictype\": \"${PontusJ2ReportingFunctions.translate('Data Procedures Per Data Source')}\" }")
+
+        }
+
+      }
+
+
+    sb.append(']')
+
+    return sb.toString()
+  }
+}
+
+def getDataProceduresPerDataSource() {
+  return DataProceduresPerDataSource.getDataProceduresPerDataSource();
+}
+
+def getNaturalPersonPerDataProcedures() {
+  return NaturalPersonPerDataProcedures.getNumNaturalPersonPerDataProcedures();
 }
 
 def getDSARStatsPerOrganisation() {

@@ -1,0 +1,132 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person.Natural",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name_fuzzy",
+            "val": "${pg_NOME?.trim().toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Natural.Date_Of_Birth",
+            "val": "${pg_DATA_NASCIMENTO}",
+            "predicate": "eq",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
+          },
+          {
+            "name": "Person.Natural.Type",
+            "val": "Cliente"
+          },
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${pg_NOME?.trim().toUpperCase()}"
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${pg_CPF.replaceAll('[^0-9]','')}"
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF"
+          }
+        ]
+      },
+      {
+        "label": "Object.Email_Address",
+        "props": [
+          {
+            "name": "Object.Email_Address.Email",
+            "val": "${pg_EMAIL}"
+          }
+        ]
+      },
+      {
+        "label": "Location.Address",
+        "props": [
+          {
+            "name": "Location.Address.Full_Address",
+            "val": "${pg_IMOVEL} ${pg_BAIRRO}, Sao Paulo, SP"
+          }
+        ]
+      },
+      {
+        "label": "Event.Transaction",
+        "props": [
+          {
+            "name": "Event.Transaction.Currency",
+            "val": "BRL"
+          },
+          {
+            "name": "Event.Transaction.Type",
+            "val": "Venda"
+          },
+          {
+            "name": "Event.Transaction.Description",
+            "val": "Venda da Propriedade"
+          },
+          {
+            "name": "Event.Transaction.Value",
+            "val": "${pg_VALOR?.replaceAll('[^0-9\\\\.]','')}"
+          }
+        ]
+      },
+      {
+        "label": "Person.Organisation",
+        "name": "CORRETOR",
+        "props": [
+          {
+            "name": "Person.Organisation.Type",
+            "val": "Corretora"
+          },
+          {
+            "name": "Person.Organisation.Name",
+            "val": "${pg_CORRETOR}"
+          },
+          {
+            "name": "Person.Organisation.Short_Name",
+            "val": "${pg_CORRETOR}"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Uses_Email",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Email_Address"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Identity_Card"
+      },
+      {
+        "label": "Lives",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Location.Address"
+      },
+      {
+        "label": "Has_Transaction",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Transaction"
+      },
+      {
+        "label": "Has_Transaction",
+        "fromVertexName": "CORRETOR",
+        "toVertexLabel": "Event.Transaction"
+      },
+      {
+        "label": "Has_Transaction",
+        "fromVertexLabel": "Location.Address",
+        "toVertexLabel": "Event.Transaction"
+      }
+    ]
+  }
+}

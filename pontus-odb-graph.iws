@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="684b9321-1a5e-4bde-bcbb-6ba858c7edc7" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/../docker-pontus-extract-discovery/gui/Dockerfile" afterDir="false" />
@@ -11,6 +14,20 @@
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVExcelRenderer.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PVOutTable" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../pontus-extract-gui/src/PontusComponent.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/gen-templates.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/rules/Base_Clientes_Folha_1___DADOS_CLIENTES_csv.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/rules/Base_Clientes_Folha_1___DADOS_CLIENTES_csv.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/rules/Base_Corretores_Folha_1___DADOS_CORRETORES_csv.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/rules/Base_Corretores_Folha_1___DADOS_CORRETORES_csv.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/rules/Base_Leads_Incorporadora_Folha_1___LEADS_INCORPORADORA_csv.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/rules/Base_Leads_Incorporadora_Folha_1___LEADS_INCORPORADORA_csv.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/templates/create-files.sh.j2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/templates/gdpr-schema.yaml.j2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/templates/rules.yaml.j2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/test.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/test.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/vars/globals.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/j2/vars/test.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../data-gen" beforeDir="false" afterPath="$PROJECT_DIR$/../data-gen" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../grafana/run-me.sh" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../grafana/src/github.com/grafana/grafana/.bowerrc" beforeDir="false" />
@@ -9640,8 +9657,11 @@
       <change beforePath="$PROJECT_DIR$/../pontus-nifi-processors" beforeDir="false" afterPath="$PROJECT_DIR$/../pontus-nifi-processors" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build-docker-conf.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build-docker-conf.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/conf/gdpr-schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr-schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-conf/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker-conf/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/gdpr.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/conf/gdpr.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pontus-odb-graph.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pontus-odb-graph.iws" beforeDir="false" afterPath="$PROJECT_DIR$/pontus-odb-graph.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../pv-gdpr-gui/package-lock.json" beforeDir="false" />
@@ -9753,6 +9773,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JupyterTrust" id="05c4c006-1dec-43d0-b62c-43d292521733" />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
@@ -9765,7 +9793,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com/orientechnologies/orient/core" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/conf" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/j2/templates" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -9781,16 +9809,17 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../pontus-gdpr-graph/conf/gdpr-schema.json" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\conf" />
-      <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\src\main\java\com\pontusvision\gdpr" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\src\resource\META-INF" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.pontusvision.gdpr" />
       <recent name="com.orientechnologies.orient.core.storage.cache.local.doublewritelog" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\src\resource\META-INF" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\j2\templates" />
+      <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\conf" />
+      <recent name="C:\work\pontus-git\pontusvision-x\tech\pontus-odb-graph\src\main\java\com\pontusvision\gdpr" />
     </key>
   </component>
   <component name="RunManager">
@@ -9846,6 +9875,7 @@
       </method>
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="StructureViewFactory">
     <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR,SHOW_INHERITED,SHOW_NON_PUBLIC,SHOW_FIELDS,VISIBILITY_SORTER" />
   </component>
@@ -9905,12 +9935,21 @@
       <workItem from="1594655778217" duration="4000" />
       <workItem from="1595178639937" duration="2260000" />
       <workItem from="1595230495235" duration="2711000" />
-      <workItem from="1595491184270" duration="2861000" />
+      <workItem from="1595491184270" duration="8033000" />
+      <workItem from="1596184656264" duration="5690000" />
+      <workItem from="1596402512591" duration="3517000" />
+      <workItem from="1596649581344" duration="1380000" />
+      <workItem from="1597821049608" duration="3028000" />
+      <workItem from="1598548981049" duration="1372000" />
+      <workItem from="1598861738945" duration="111000" />
+      <workItem from="1598862179003" duration="6135000" />
+      <workItem from="1598978801928" duration="1237000" />
+      <workItem from="1599069001531" duration="27382000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -9925,26 +9964,30 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="250" y="0" key="#Project_Structure" timestamp="1587254045765">
+    <state x="575" y="124" key="#com.intellij.ide.util.MemberChooser" timestamp="1596187947314">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="250" y="0" key="#Project_Structure/0.0.1536.834@0.0.1536.834" timestamp="1587254045765" />
-    <state x="450" y="154" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1595490875236">
+    <state x="575" y="124" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1596187947314" />
+    <state x="450" y="154" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1597823422279">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="450" y="154" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.834@0.0.1536.834" timestamp="1595490875236" />
-    <state x="550" y="172" key="FileChooserDialogImpl" timestamp="1595253585905">
+    <state x="450" y="154" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.834@0.0.1536.834" timestamp="1597823422279" />
+    <state x="550" y="172" key="FileChooserDialogImpl" timestamp="1595533731564">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1595253585905" />
+    <state x="550" y="172" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1595533731564" />
+    <state x="300" y="73" key="Maven.ArtifactSearchDialog" timestamp="1596187798506">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="300" y="73" key="Maven.ArtifactSearchDialog/0.0.1536.834@0.0.1536.834" timestamp="1596187798506" />
     <state x="441" y="122" key="NewModule_or_Project.wizard" timestamp="1595253601287">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="441" y="122" key="NewModule_or_Project.wizard/0.0.1536.834@0.0.1536.834" timestamp="1595253601287" />
-    <state x="461" y="154" width="916" height="536" key="find.popup" timestamp="1594328707039">
+    <state x="461" y="154" width="916" height="558" key="find.popup" timestamp="1599419205048">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state x="461" y="154" width="916" height="536" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1594328707039" />
+    <state x="461" y="154" width="916" height="558" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1599419205048" />
     <state x="426" y="190" key="run.anything.popup" timestamp="1595180667699">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -9985,7 +10028,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/conf/gdpr.groovy</url>
-          <line>4825</line>
+          <line>4933</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -9995,7 +10038,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/pontusvision/gdpr/App.java</url>
-          <line>45</line>
+          <line>58</line>
           <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
