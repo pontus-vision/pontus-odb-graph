@@ -6,7 +6,7 @@ updatereq:
         - name: Person.Natural.Full_Name_fuzzy
           val: ${pg_NOME?.trim().toUpperCase()}
         - name: Person.Natural.Type
-          val: Lead
+          val: leads
         - name: Person.Natural.Full_Name
           val: ${pg_NOME?.trim().toUpperCase()}
     

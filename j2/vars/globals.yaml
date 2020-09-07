@@ -266,7 +266,7 @@ rules:
         props:
           Full_Name: "${pg_NOME?.trim().toUpperCase()}"
           Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
-          Type: "Lead"
+          Type: "leads"
 
       - label: Object.Salary
         props:
@@ -326,6 +326,7 @@ rules:
         props:
           Full_Address:
             val: "${pg_END__IMOVEL}"
+    #        excludeFromUpdate: true
 
           Type: "Lead"
           Code: "{pg_IMOVEL_INTERESSE}"

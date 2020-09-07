@@ -10,7 +10,7 @@
           },
           {
             "name": "Person.Natural.Type",
-            "val": "Lead"
+            "val": "leads"
           },
           {
             "name": "Person.Natural.Full_Name",
