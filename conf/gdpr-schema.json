@@ -85,7 +85,7 @@
     },
     {
       "name": "Event.Transaction.Type",
-      "dataType": "Date",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
