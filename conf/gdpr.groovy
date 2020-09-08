@@ -2698,7 +2698,7 @@ def createNotificationTemplates() {
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "MATCHES")
         .property("Object.Notification_Templates.Text", ("\n" +
-          "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0}') %}\n" +
+          "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Object.Identity_Card\": 90.5,  \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0}') %}\n" +
           "{% set numMatches = possibleMatches.size() %}\n" +
           "{{ context.Person_Identity_Full_Name}} Potentially matches {{ numMatches }}\n" +
           "\n" +
@@ -3003,12 +3003,14 @@ def createNotificationTemplatesPt() {
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "Corresponde")
-        .property("Object.Notification_Templates.Text", ("\n" +
-          "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0, \"Object.Senstive_Data\": 10.0, \"Object.Health\": 1.0, \"Object.Biometric\": 50.0 , \"Object.Insurance_Policy\": 1.0}') %}\n" +
+        .property("Object.Notification_Templates.Text", ("{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Object.Identity_Card\": 90.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0, \"Object.Senstive_Data\": 10.0, \"Object.Health\": 1.0, \"Object.Biometric\": 50.0 , \"Object.Insurance_Policy\": 1.0}') %}\n" +
           "{% set numMatches = possibleMatches.size() %}\n" +
+          "{% if numMatches == 0 %}\n" +
+          "{{ context.Person_Natural_Full_Name}} é o único registro no sistema.\n" +
+          "\n" +
+          "{% else %}\n" +
           "{{ context.Person_Natural_Full_Name}} Corresponde potencialmente a {{ numMatches }} registro{%- if numMatches != 1 -%}s{% endif %}.\n" +
           "\n" +
-          "{% if numMatches > 0 %}\n" +
           "\n" +
           "\n" +
           "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Titular</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Percentual</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Propriedades em Comum</th></tr>\" }}\n" +
