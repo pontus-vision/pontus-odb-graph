@@ -94,7 +94,8 @@
           },
           {
             "name": "Event.Consent.Status",
-            "val": "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consent':'No Consent '}"
+            "val": "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consent':'No Consent '}",
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Consent.Metadata.Create_Date",

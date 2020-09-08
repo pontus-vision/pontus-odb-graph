@@ -57,6 +57,7 @@ updatereq:
           excludeFromSearch: True
         - name: Event.Consent.Status
           val: ${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consent':'No Consent '}
+          excludeFromSearch: True
         - name: Event.Consent.Metadata.Create_Date
           val: ${new Date()}
           type: "java.util.Date"

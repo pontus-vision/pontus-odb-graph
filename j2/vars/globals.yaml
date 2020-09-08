@@ -125,7 +125,7 @@ rules:
         Full_Name: "${pg_NOME?.trim().toUpperCase()}"
         Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
         Type:
-          val: "Cliente"
+          val: "cliente"
           excludeFromSearch: true
 
         Natural.Date_Of_Birth:
@@ -360,7 +360,9 @@ rules:
             type: "java.util.Date"
             excludeFromSearch: true
 
-          Status: "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consent':'No Consent '}"
+          Status:
+            val: "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consent':'No Consent '}"
+            excludeFromSearch: true
 
       # EMAIL
       - label: Object.Email_Address

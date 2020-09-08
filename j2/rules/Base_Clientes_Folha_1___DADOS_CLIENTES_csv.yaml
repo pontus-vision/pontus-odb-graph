@@ -11,7 +11,7 @@ updatereq:
           mandatoryInSearch: True
           type: "java.util.Date"
         - name: Person.Natural.Type
-          val: Cliente
+          val: cliente
           excludeFromSearch: True
         - name: Person.Natural.Full_Name
           val: ${pg_NOME?.trim().toUpperCase()}
