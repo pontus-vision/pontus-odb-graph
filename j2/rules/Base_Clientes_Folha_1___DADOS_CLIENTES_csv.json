@@ -3,6 +3,7 @@
     "vertices": [
       {
         "label": "Person.Natural",
+        "name": "TITULAR",
         "props": [
           {
             "name": "Person.Natural.Full_Name_fuzzy",
@@ -23,6 +24,28 @@
           {
             "name": "Person.Natural.Full_Name",
             "val": "${pg_NOME?.trim().toUpperCase()}"
+          }
+        ]
+      },
+      {
+        "label": "Event.Consent",
+        "props": [
+          {
+            "name": "Event.Consent.Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Consent.Status",
+            "val": "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Consent.Metadata.Create_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -63,6 +86,12 @@
         "label": "Event.Transaction",
         "props": [
           {
+            "name": "Event.Transaction.Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
             "name": "Event.Transaction.Currency",
             "val": "BRL",
             "excludeFromSubsequenceSearch": true
@@ -84,20 +113,16 @@
         ]
       },
       {
-        "label": "Person.Organisation",
+        "label": "Person.Natural",
         "name": "CORRETOR",
         "props": [
           {
-            "name": "Person.Organisation.Type",
-            "val": "Corretora",
+            "name": "Person.Natural.Type",
+            "val": "corretor",
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Organisation.Name",
-            "val": "${pg_CORRETOR}"
-          },
-          {
-            "name": "Person.Organisation.Short_Name",
+            "name": "Person.Natural.Name_Qualifier",
             "val": "${pg_CORRETOR}"
           }
         ]
@@ -106,22 +131,17 @@
     "edges": [
       {
         "label": "Uses_Email",
-        "fromVertexLabel": "Person.Natural",
+        "fromVertexName": "TITULAR",
         "toVertexLabel": "Object.Email_Address"
       },
       {
         "label": "Has_Id_Card",
-        "fromVertexLabel": "Person.Natural",
+        "fromVertexName": "TITULAR",
         "toVertexLabel": "Object.Identity_Card"
       },
       {
-        "label": "Lives",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Location.Address"
-      },
-      {
         "label": "Has_Transaction",
-        "fromVertexLabel": "Person.Natural",
+        "fromVertexName": "TITULAR",
         "toVertexLabel": "Event.Transaction"
       },
       {
@@ -133,6 +153,11 @@
         "label": "Has_Transaction",
         "fromVertexLabel": "Location.Address",
         "toVertexLabel": "Event.Transaction"
+      },
+      {
+        "label": "Consent",
+        "fromVertexLabel": "TITULAR",
+        "toVertexLabel": "Event.Consent"
       }
     ]
   }

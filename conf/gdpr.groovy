@@ -4697,6 +4697,53 @@ def getNumNaturalPersonPerOrganisation() {
 
 }
 
+class ConsentPerNaturalPersonType{
+  static String getConsentPerNaturalPersonType() {
+    StringBuffer sb = new StringBuffer("[")
+    boolean firstTime = true;
+
+
+    App.g.V().has('Metadata.Type.Event.Consent', P.eq('Event.Consent'))
+      .as('consent')
+      .in('consent')
+      .has('Metadata.Type.Person.Natural', P.eq('Person.Natural'))
+      .dedup()
+      .as('person')
+    // .id()
+    // .dedup()
+    // // .as('events')
+      .match(
+        __.as('person').values('Person.Natural.Type').as('person_type'),
+        __.as('consent').values('Event.Consent.Status').as('consent_type')
+      )
+      .select('person_type', 'consent_type')
+      .groupCount()
+      .each { metric ->
+        metric.each { metricname, metricvalue ->
+          if (!firstTime) {
+            sb.append(",")
+          } else {
+            firstTime = false;
+          }
+          def metricNameLabel = "${PontusJ2ReportingFunctions.translate(metricname.person_type)} (${metricname.consent_type})"
+          sb.append(" \n{ \"metricname\": \"${metricNameLabel}\", \"metricvalue\": $metricvalue," +
+            " \"metrictype\": \"${PontusJ2ReportingFunctions.translate('Consentimento Por Titulares')}\" }")
+
+        }
+
+      }
+
+
+    sb.append(']')
+
+    return sb.toString()
+  }
+
+}
+
+def getConsentPerNaturalPersonType(){
+  return ConsentPerNaturalPersonType.getConsentPerNaturalPersonType();
+}
 
 class NaturalPersonPerDataProcedures{
   static String getNumNaturalPersonPerDataProcedures() {

@@ -23,24 +23,9 @@
           {
             "name": "Person.Natural.Full_Name",
             "val": "${pg_NOME?.trim().toUpperCase()}"
-          }
-        ]
-      },
-      {
-        "label": "Person.Organisation",
-        "name": "CORRETOR",
-        "props": [
-          {
-            "name": "Person.Organisation.Type",
-            "val": "Corretora",
-            "excludeFromSearch": true
           },
           {
-            "name": "Person.Organisation.Name",
-            "val": "${pg_CORRETOR}"
-          },
-          {
-            "name": "Person.Organisation.Short_Name",
+            "name": "Person.Natural.Name_Qualifier",
             "val": "${pg_CORRETOR}"
           }
         ]
@@ -127,14 +112,9 @@
         "toVertexLabel": "Location.Address"
       },
       {
-        "label": "Has_Address",
-        "fromVertexLabel": "Person.Organisation",
-        "toVertexLabel": "Location.Address"
-      },
-      {
-        "label": "Works",
+        "label": "Lives",
         "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Person.Organisation"
+        "toVertexLabel": "Location.Address"
       }
     ]
   }

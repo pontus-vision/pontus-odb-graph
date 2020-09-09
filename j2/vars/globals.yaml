@@ -119,8 +119,9 @@ schema:
 rules:
   Base_Clientes_Folha_1___DADOS_CLIENTES_csv:
     vertices:
-    - label: "Person.Natural"
-  #      name: "Person.Naturalissima"
+    - label: Person.Natural
+      name: TITULAR
+
       props:
         Full_Name: "${pg_NOME?.trim().toUpperCase()}"
         Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
@@ -133,6 +134,23 @@ rules:
           type: "java.util.Date"
           mandatoryInSearch: true
           predicate: "eq"
+
+    #CONSENTIMENTO
+    - label: Event.Consent
+      props:
+        Date:
+          val: "${new Date()}"
+          type: "java.util.Date"
+          excludeFromSearch: true
+
+        Metadata.Create_Date:
+          val: "${new Date()}"
+          type: "java.util.Date"
+          excludeFromSearch: true
+
+        Status:
+          val: "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}"
+          excludeFromSearch: true
 
 
     - label: Object.Identity_Card
@@ -161,37 +179,36 @@ rules:
           val: "Venda da Propriedade"
           excludeFromSubsequenceSearch: true
 
+        Date:
+          val: "${new Date()}"
+          type: "java.util.Date"
+          excludeFromSearch: true
 
         Currency:
           val: "BRL"
           excludeFromSubsequenceSearch: true
 
         Value: "${pg_VALOR?.replaceAll('[^0-9\\\\.]','')}"
-    - label: Person.Organisation
+    - label: Person.Natural
       name: CORRETOR
       props:
-        Name: "${pg_CORRETOR}"
-        Short_Name: "${pg_CORRETOR}"
+        Name_Qualifier: "${pg_CORRETOR}"
         Type:
-          val: "Corretora"
+          val: "corretor"
           excludeFromSearch: true
 
 
     edges:
     - label: "Uses_Email"
-      fromVertexLabel: "Person.Natural"
+      fromVertexName: "TITULAR"
       toVertexLabel: "Object.Email_Address"
 
     - label: "Has_Id_Card"
-      fromVertexLabel: "Person.Natural"
+      fromVertexName: "TITULAR"
       toVertexLabel: "Object.Identity_Card"
 
-    - label: "Lives"
-      fromVertexLabel: "Person.Natural"
-      toVertexLabel: "Location.Address"
-
     - label: "Has_Transaction"
-      fromVertexLabel: "Person.Natural"
+      fromVertexName: "TITULAR"
       toVertexLabel: "Event.Transaction"
 
     - label: "Has_Transaction"
@@ -201,6 +218,13 @@ rules:
     - label: "Has_Transaction"
       fromVertexLabel: "Location.Address"
       toVertexLabel: "Event.Transaction"
+
+    - label: "Consent"
+      fromVertexLabel: "TITULAR"
+      toVertexLabel: "Event.Consent"
+
+
+
 
   # CORRETOR,NOME,DATA_NASCIMENTO
   Base_Corretores_Folha_1___DADOS_CORRETORES_csv:
@@ -212,21 +236,13 @@ rules:
         Type:
           val: "corretor"
           excludeFromSearch: true
+        Name_Qualifier: "${pg_CORRETOR}"
 
         Natural.Date_Of_Birth:
           val: "${pg_DATA_NASCIMENTO}"
           type: "java.util.Date"
           mandatoryInSearch: true
           predicate: "eq"
-
-    - label: Person.Organisation
-      name: CORRETOR
-      props:
-        Name: "${pg_CORRETOR}"
-        Short_Name: "${pg_CORRETOR}"
-        Type:
-          val: "Corretora"
-          excludeFromSearch: true
 
 
       #CELULAR
@@ -284,13 +300,9 @@ rules:
       fromVertexLabel: "Person.Natural"
       toVertexLabel: "Location.Address"
 
-    - label: "Has_Address"
-      fromVertexLabel: "Person.Organisation"
-      toVertexLabel: "Location.Address"
-
-    - label: "Works"
+    - label: "Lives"
       fromVertexLabel: "Person.Natural"
-      toVertexLabel: "Person.Organisation"
+      toVertexLabel: "Location.Address"
 
   # NOME,,CORRETOR, RENDA,,CONSENTIMENTO
 
@@ -361,7 +373,7 @@ rules:
             excludeFromSearch: true
 
           Status:
-            val: "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consent':'No Consent '}"
+            val: "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}"
             excludeFromSearch: true
 
       # EMAIL
@@ -401,8 +413,69 @@ rules:
             val: "BRL"
             excludeFromSearch: true
 
+          Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+
+
+      - label: Object.Data_Source
+        props:
+          Name: planilhas - S3
+          Type: planilhas - S3
+          Description: planilhas guardadas na AWS S3
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${pg_currDate}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: planilhas - S3
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: planilhas - S3
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+
+
+
+
 
     edges:
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Person.Natural
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Event.Group_Ingestion
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        toVertexLabel: Event.Group_Ingestion
+        fromVertexLabel: Object.Data_Source
+
+
       - label: "Uses_Email"
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
@@ -411,13 +484,29 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Event.Consent"
 
-      - label: "Consent"
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Event.Consent"
+#      - label: "Consent"
+#        fromVertexLabel: "Person.Organisation"
+#        toVertexLabel: "Event.Consent"
 
       - label: "Has_Salary"
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Salary"
+
+      - label: "Is_Responsible"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Person.Organisation"
+
+      - label: "Has_Transaction"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Transaction"
+
+      - label: "Has_Transaction"
+        fromVertexLabel: "Event.Transaction"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Transaction"
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Location.Address"
 
 
 

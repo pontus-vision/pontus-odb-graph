@@ -2338,6 +2338,12 @@
       "unidirected": false
     },
     {
+      "name": "Is_Lead",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+
+    {
       "name": "Approved_Compliance_Check",
       "multiplicity": "MULTI",
       "unidirected": false
