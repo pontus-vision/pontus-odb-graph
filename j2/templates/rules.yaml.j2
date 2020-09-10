@@ -6,6 +6,9 @@ updatereq:
     {%- if vertex.name|default (false,true) %}
       name: {{vertex.name}}
     {%- endif %}
+    {%- if vertex.percentageThreshold|default (false,true) %}
+      percentageThreshold: {{vertex.percentageThreshold}}
+    {%- endif %}
     {%- if vertex.condition|default (false,true) %}
       condition: {{vertex.condition}}
     {%- endif %}
@@ -30,6 +33,13 @@ updatereq:
           {%- if props.excludeFromSearch|default (false,true) %}
           excludeFromSearch: {{props.excludeFromSearch |default('true', true)}}
           {%- endif %}
+          {%- if props.postProcessor|default (false) %}
+          postProcessor: {{props.postProcessor }}
+          {%- endif %}
+          {%- if props.postProcessorVar|default (false) %}
+          postProcessorVar: {{props.postProcessorVar }}
+          {%- endif %}
+
         {%- endfor %}
   {%- endfor %}
 

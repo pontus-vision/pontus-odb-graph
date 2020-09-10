@@ -508,5 +508,111 @@ rules:
         fromVertexLabel: "Person.Organisation"
         toVertexLabel: "Location.Address"
 
+  contratos_imoveis:
+    vertices:
+    - label: Person.Natural
+      percentageThreshold: 10
+      props:
+        Full_Name_fuzzy:
+          #val: "${com.pontusvision.utils.NLPCleaner.filter(pg_nlp_res_person,(boolean)false,(Set<String>)personFilter) as String}"
+          val: "${pg_nlp_res_person}"
+          predicate: textContainsFuzzy
+          type: "[Ljava.lang.String;"
+          excludeFromUpdate: true
+          mandatoryInSearch: true
+          postProcessor: "${it?.toUpperCase()?.trim()}"
+        Full_Name:
+          #val: "${com.pontusvision.utils.NLPCleaner.filter(pg_nlp_res_person,(boolean)false,(Set<String>)personFilter) as String}"
+          val: "${pg_nlp_res_person}"
 
+          predicate: textContainsFuzzy
+          type: "[Ljava.lang.String;"
+          excludeFromUpdate: true
+          postProcessor: "${it?.toUpperCase()?.trim()}"
+
+    - label: Location.Address
+      props:
+        "parser.postcode":
+          val: "${pg_nlp_res_post_code}"
+          type: "[Ljava.lang.String;"
+          excludeFromUpdate: true
+          mandatoryInSearch: true
+          postProcessorVar: eachPostCode
+          postProcessor: "${com.pontusvision.utils.PostCode.format(eachPostCode)}"
+    - label: Object.Email_Address
+      props:
+        Email:
+          val: "${pg_nlp_res_emailaddress}"
+          type: "[Ljava.lang.String;"
+          excludeFromUpdate: true
+          mandatoryInSearch: true
+
+    - label: Event.Ingestion
+      props:
+        Type:
+          val: PDF Form Files
+          excludeFromSearch: true
+
+        Operation:
+          val: Unstructured Data Insertion
+          excludeFromSearch: true
+
+        Domain_b64:
+          val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+          excludeFromSearch: true
+
+        Metadata_Create_Date:
+          val: "${new Date()}"
+          excludeFromSearch: true
+          type: java.util.Date
+
+    - label: Object.Data_Source
+      props:
+        Name:
+          val: Contratos
+          mandatoryInSearch: true
+          excludeFromUpdate: false
+
+        Description:
+          val: Contratos em AWS S3
+          mandatoryInSearch: false
+          excludeFromUpdate: false
+
+        Type:
+          val: Structured
+          mandatoryInSearch: false
+          excludeFromUpdate: false
+
+    - label: Event.Group_Ingestion
+      props:
+        Metadata_Start_Date:
+          val: "${pg_currDate}"
+          mandatoryInSearch: true
+          excludeFromSearch: false
+          type: java.util.Date
+
+        Metadata_End_Date:
+          val: "${new Date()}"
+          excludeFromSearch: true
+          type: java.util.Date
+
+        Type:
+          val: Contratos em AWS S3
+          excludeFromSearch: true
+
+        Operation:
+          val: Unstructured Data Insertion
+          excludeFromSearch: true
+
+
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Person.Natural
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Event.Group_Ingestion
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Object.Data_Source
+        toVertexLabel: Event.Group_Ingestion
 
