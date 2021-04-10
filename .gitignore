@@ -25,3 +25,4 @@ target
 
 *.iml
 *.iws
+docker-lib/Dockerfile

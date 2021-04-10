@@ -3,51 +3,51 @@ updatereq:
     
     - label: Person.Natural
       props:
+        - name: Person.Natural.Full_Name
+          val: ${pg_NOME?.trim().toUpperCase()}
         - name: Person.Natural.Full_Name_fuzzy
           val: ${pg_NOME?.trim().toUpperCase()}
         - name: Person.Natural.Type
           val: leads
           excludeFromSearch: True
-        - name: Person.Natural.Full_Name
-          val: ${pg_NOME?.trim().toUpperCase()}
     
     - label: Object.Salary
       props:
+        - name: Object.Salary.Value
+          val: ${pg_RENDA?.replaceAll('[^0-9\\.]','')}
         - name: Object.Salary.Currency
           val: BRL
           excludeFromSubsequenceSearch: True
         - name: Object.Salary.Period
           val: Mensal
           excludeFromSubsequenceSearch: True
-        - name: Object.Salary.Value
-          val: ${pg_RENDA?.replaceAll('[^0-9\\.]','')}
     
     - label: Person.Organisation
       name: CORRETOR
       props:
-        - name: Person.Organisation.Type
-          val: Corretora
-          excludeFromSearch: True
         - name: Person.Organisation.Name
           val: ${pg_CORRETOR}
         - name: Person.Organisation.Short_Name
           val: ${pg_CORRETOR}
+        - name: Person.Organisation.Type
+          val: Corretora
+          excludeFromSearch: True
     
     - label: Object.Phone_Number
       props:
         - name: Object.Phone_Number.Raw
           val: ${pg_TELEFONE}
-        - name: Object.Phone_Number.Last_7_Digits
-          val: ${(((pg_TELEFONE?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
-          mandatoryInSearch: True
-          type: "[Ljava.lang.String;"
+        - name: Object.Phone_Number.Type
+          val: Celular
+          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(pg_TELEFONE?.replaceAll('[^0-9]', '')?:'00000000')}
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
-        - name: Object.Phone_Number.Type
-          val: Celular
-          excludeFromSubsequenceSearch: True
+        - name: Object.Phone_Number.Last_7_Digits
+          val: ${(((pg_TELEFONE?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
     
     - label: Event.Consent
       props:
@@ -55,12 +55,12 @@ updatereq:
           val: ${new Date()}
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Event.Consent.Status
-          val: ${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}
-          excludeFromSearch: True
         - name: Event.Consent.Metadata.Create_Date
           val: ${new Date()}
           type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Consent.Status
+          val: ${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}
           excludeFromSearch: True
     
     - label: Object.Email_Address
@@ -70,67 +70,67 @@ updatereq:
     
     - label: Location.Address
       props:
-        - name: Location.Address.Code
-          val: {pg_IMOVEL_INTERESSE}
-          mandatoryInSearch: True
+        - name: Location.Address.Full_Address
+          val: ${pg_END__IMOVEL}
         - name: Location.Address.Type
           val: Lead
           excludeFromSearch: True
-        - name: Location.Address.Full_Address
-          val: ${pg_END__IMOVEL}
+        - name: Location.Address.Code
+          val: {pg_IMOVEL_INTERESSE}
+          mandatoryInSearch: True
     
     - label: Event.Transaction
       props:
-        - name: Event.Transaction.Date
-          val: ${new Date()}
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event.Transaction.Currency
-          val: BRL
-          excludeFromSearch: True
         - name: Event.Transaction.Type
           val: Interesse
           excludeFromSearch: True
         - name: Event.Transaction.Description
           val: Compra da Propriedade
           excludeFromSearch: True
+        - name: Event.Transaction.Currency
+          val: BRL
+          excludeFromSearch: True
+        - name: Event.Transaction.Date
+          val: ${new Date()}
+          type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Object.Data_Source
       props:
-        - name: Object.Data_Source.Type
-          val: planilhas - S3
         - name: Object.Data_Source.Name
+          val: planilhas - S3
+        - name: Object.Data_Source.Type
           val: planilhas - S3
         - name: Object.Data_Source.Description
           val: planilhas guardadas na AWS S3
     
     - label: Event.Group_Ingestion
       props:
-        - name: Event.Group_Ingestion.Metadata_End_Date
-          val: ${new Date()}
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Operation
-          val: Structured Data Insertion
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Type
-          val: planilhas - S3
-          excludeFromSearch: True
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${pg_currDate}
           mandatoryInSearch: True
           type: "java.util.Date"
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Type
+          val: planilhas - S3
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          excludeFromSearch: True
     
     - label: Event.Ingestion
       props:
+        - name: Event.Ingestion.Type
+          val: planilhas - S3
+          excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
           excludeFromSearch: True
         - name: Event.Ingestion.Domain_b64
           val: ${original_request?.bytes?.encodeBase64()?.toString()}
-          excludeFromSearch: True
-        - name: Event.Ingestion.Type
-          val: planilhas - S3
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Create_Date
           val: ${new Date()}

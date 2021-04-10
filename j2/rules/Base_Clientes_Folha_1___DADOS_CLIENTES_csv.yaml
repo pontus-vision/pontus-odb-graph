@@ -4,18 +4,18 @@ updatereq:
     - label: Person.Natural
       name: TITULAR
       props:
+        - name: Person.Natural.Full_Name
+          val: ${pg_NOME?.trim().toUpperCase()}
         - name: Person.Natural.Full_Name_fuzzy
           val: ${pg_NOME?.trim().toUpperCase()}
-        - name: Person.Natural.Natural.Date_Of_Birth
+        - name: Person.Natural.Type
+          val: cliente
+          excludeFromSearch: True
+        - name: Person.Natural.Date_Of_Birth
           val: ${pg_DATA_NASCIMENTO}
           predicate: eq
           mandatoryInSearch: True
           type: "java.util.Date"
-        - name: Person.Natural.Type
-          val: cliente
-          excludeFromSearch: True
-        - name: Person.Natural.Full_Name
-          val: ${pg_NOME?.trim().toUpperCase()}
     
     - label: Event.Consent
       props:
@@ -23,12 +23,12 @@ updatereq:
           val: ${new Date()}
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Event.Consent.Status
-          val: ${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}
-          excludeFromSearch: True
         - name: Event.Consent.Metadata.Create_Date
           val: ${new Date()}
           type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Consent.Status
+          val: ${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}
           excludeFromSearch: True
     
     - label: Object.Identity_Card
@@ -52,6 +52,12 @@ updatereq:
     
     - label: Event.Transaction
       props:
+        - name: Event.Transaction.Type
+          val: Venda
+          excludeFromSubsequenceSearch: True
+        - name: Event.Transaction.Description
+          val: Venda da Propriedade
+          excludeFromSubsequenceSearch: True
         - name: Event.Transaction.Date
           val: ${new Date()}
           type: "java.util.Date"
@@ -59,23 +65,17 @@ updatereq:
         - name: Event.Transaction.Currency
           val: BRL
           excludeFromSubsequenceSearch: True
-        - name: Event.Transaction.Type
-          val: Venda
-          excludeFromSubsequenceSearch: True
-        - name: Event.Transaction.Description
-          val: Venda da Propriedade
-          excludeFromSubsequenceSearch: True
         - name: Event.Transaction.Value
           val: ${pg_VALOR?.replaceAll('[^0-9\\.]','')}
     
     - label: Person.Natural
       name: CORRETOR
       props:
+        - name: Person.Natural.Name_Qualifier
+          val: ${pg_CORRETOR}
         - name: Person.Natural.Type
           val: corretor
           excludeFromSearch: True
-        - name: Person.Natural.Name_Qualifier
-          val: ${pg_CORRETOR}
 
   edges:
   - label: Uses_Email

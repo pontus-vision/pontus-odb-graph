@@ -179,6 +179,20 @@
     <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
+  <component name="accountSettings">
+    <option name="activeProfile" value="profile:default" />
+    <option name="activeRegion" value="eu-west-2" />
+    <option name="recentlyUsedProfiles">
+      <list>
+        <option value="profile:default" />
+      </list>
+    </option>
+    <option name="recentlyUsedRegions">
+      <list>
+        <option value="eu-west-2" />
+      </list>
+    </option>
+  </component>
   <component name="libraryTable">
     <library name="Maven: aopalliance:aopalliance:1.0">
       <CLASSES>
@@ -200,39 +214,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/ch/obermuhlner/big-math/2.0.0/big-math-2.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.amazonaws.serverless:aws-serverless-java-container-core:1.5">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/serverless/aws-serverless-java-container-core/1.5/aws-serverless-java-container-core-1.5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/serverless/aws-serverless-java-container-core/1.5/aws-serverless-java-container-core-1.5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/serverless/aws-serverless-java-container-core/1.5/aws-serverless-java-container-core-1.5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.amazonaws.serverless:aws-serverless-java-container-jersey:1.5">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/serverless/aws-serverless-java-container-jersey/1.5/aws-serverless-java-container-jersey-1.5.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/serverless/aws-serverless-java-container-jersey/1.5/aws-serverless-java-container-jersey-1.5-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/serverless/aws-serverless-java-container-jersey/1.5/aws-serverless-java-container-jersey-1.5-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.amazonaws:aws-lambda-java-core:1.2.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-lambda-java-core/1.2.0/aws-lambda-java-core-1.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-lambda-java-core/1.2.0/aws-lambda-java-core-1.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/amazonaws/aws-lambda-java-core/1.2.0/aws-lambda-java-core-1.2.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.carrotsearch:hppc:0.7.3">
@@ -257,48 +238,48 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/codahale/metrics/metrics-core/3.0.2/metrics-core-3.0.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.1">
+    <library name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.11.1/jackson-annotations-2.11.1.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.12.2/jackson-annotations-2.12.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.11.1/jackson-annotations-2.11.1-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.12.2/jackson-annotations-2.12.2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.11.1/jackson-annotations-2.11.1-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.12.2/jackson-annotations-2.12.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.1">
+    <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.12.2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.11.1/jackson-core-2.11.1.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.2/jackson-core-2.12.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.11.1/jackson-core-2.11.1-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.2/jackson-core-2.12.2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.11.1/jackson-core-2.11.1-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.2/jackson-core-2.12.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.1">
+    <library name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.11.1/jackson-databind-2.11.1.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.12.2/jackson-databind-2.12.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.11.1/jackson-databind-2.11.1-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.12.2/jackson-databind-2.12.2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.11.1/jackson-databind-2.11.1-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.12.2/jackson-databind-2.12.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.fasterxml.jackson.module:jackson-module-afterburner:2.10.3">
+    <library name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.7.9">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/module/jackson-module-afterburner/2.10.3/jackson-module-afterburner-2.10.3.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.7.9/jackson-dataformat-yaml-2.7.9.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/module/jackson-module-afterburner/2.10.3/jackson-module-afterburner-2.10.3-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.7.9/jackson-dataformat-yaml-2.7.9-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/module/jackson-module-afterburner/2.10.3/jackson-module-afterburner-2.10.3-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.7.9/jackson-dataformat-yaml-2.7.9-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4">
@@ -499,26 +480,37 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/java-ipv6/java-ipv6/0.17/java-ipv6-0.17-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.hazelcast:hazelcast:3.10.6">
+    <library name="Maven: com.hazelcast:hazelcast-kubernetes:1.5.3">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/hazelcast/hazelcast/3.10.6/hazelcast-3.10.6.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/hazelcast/hazelcast-kubernetes/1.5.3/hazelcast-kubernetes-1.5.3.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/hazelcast/hazelcast/3.10.6/hazelcast-3.10.6-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/hazelcast/hazelcast-kubernetes/1.5.3/hazelcast-kubernetes-1.5.3-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/hazelcast/hazelcast/3.10.6/hazelcast-3.10.6-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/hazelcast/hazelcast-kubernetes/1.5.3/hazelcast-kubernetes-1.5.3-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.hubspot.jinjava:jinjava:2.5.5">
+    <library name="Maven: com.hazelcast:hazelcast:3.12.8">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/hubspot/jinjava/jinjava/2.5.5/jinjava-2.5.5.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/hazelcast/hazelcast/3.12.8/hazelcast-3.12.8.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/hubspot/jinjava/jinjava/2.5.5/jinjava-2.5.5-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/hazelcast/hazelcast/3.12.8/hazelcast-3.12.8-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/hubspot/jinjava/jinjava/2.5.5/jinjava-2.5.5-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/hazelcast/hazelcast/3.12.8/hazelcast-3.12.8-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.hubspot.jinjava:jinjava:2.5.7">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/hubspot/jinjava/jinjava/2.5.7/jinjava-2.5.7.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/hubspot/jinjava/jinjava/2.5.7/jinjava-2.5.7-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/hubspot/jinjava/jinjava/2.5.7/jinjava-2.5.7-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.ibm.icu:icu4j:65.1">
@@ -565,147 +557,147 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/jcabi/jcabi-manifests/1.1/jcabi-manifests-1.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.nimbusds:nimbus-jose-jwt:8.19">
+    <library name="Maven: com.nimbusds:nimbus-jose-jwt:9.8.1">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.19/nimbus-jose-jwt-8.19.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/9.8.1/nimbus-jose-jwt-9.8.1.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.19/nimbus-jose-jwt-8.19-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/9.8.1/nimbus-jose-jwt-9.8.1-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/8.19/nimbus-jose-jwt-8.19-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/9.8.1/nimbus-jose-jwt-9.8.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-client:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-client:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-client/3.1.0/orientdb-client-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-client/3.1.10/orientdb-client-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-client/3.1.0/orientdb-client-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-client/3.1.10/orientdb-client-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-client/3.1.0/orientdb-client-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-client/3.1.10/orientdb-client-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-community:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-community:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-community/3.1.0/orientdb-community-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-community/3.1.10/orientdb-community-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-community/3.1.0/orientdb-community-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-community/3.1.10/orientdb-community-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-community/3.1.0/orientdb-community-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-community/3.1.10/orientdb-community-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-core:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-core:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0/orientdb-core-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.10/orientdb-core-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0/orientdb-core-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.10/orientdb-core-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.0/orientdb-core-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/3.1.10/orientdb-core-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-distributed:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-distributed:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-distributed/3.1.0/orientdb-distributed-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-distributed/3.1.10/orientdb-distributed-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-distributed/3.1.0/orientdb-distributed-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-distributed/3.1.10/orientdb-distributed-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-distributed/3.1.0/orientdb-distributed-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-distributed/3.1.10/orientdb-distributed-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-etl:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-etl:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-etl/3.1.0/orientdb-etl-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-etl/3.1.10/orientdb-etl-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-etl/3.1.0/orientdb-etl-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-etl/3.1.10/orientdb-etl-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-etl/3.1.0/orientdb-etl-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-etl/3.1.10/orientdb-etl-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-gremlin-server:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-gremlin-server:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin-server/3.1.0/orientdb-gremlin-server-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin-server/3.1.10/orientdb-gremlin-server-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin-server/3.1.0/orientdb-gremlin-server-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin-server/3.1.10/orientdb-gremlin-server-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin-server/3.1.0/orientdb-gremlin-server-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin-server/3.1.10/orientdb-gremlin-server-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-gremlin:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-gremlin:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin/3.1.0/orientdb-gremlin-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin/3.1.10/orientdb-gremlin-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin/3.1.0/orientdb-gremlin-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin/3.1.10/orientdb-gremlin-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin/3.1.0/orientdb-gremlin-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-gremlin/3.1.10/orientdb-gremlin-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-jdbc:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-jdbc:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-jdbc/3.1.0/orientdb-jdbc-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-jdbc/3.1.10/orientdb-jdbc-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-jdbc/3.1.0/orientdb-jdbc-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-jdbc/3.1.10/orientdb-jdbc-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-jdbc/3.1.0/orientdb-jdbc-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-jdbc/3.1.10/orientdb-jdbc-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-lucene:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-lucene:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-lucene/3.1.0/orientdb-lucene-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-lucene/3.1.10/orientdb-lucene-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-lucene/3.1.0/orientdb-lucene-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-lucene/3.1.10/orientdb-lucene-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-lucene/3.1.0/orientdb-lucene-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-lucene/3.1.10/orientdb-lucene-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-object:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-object:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-object/3.1.0/orientdb-object-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-object/3.1.10/orientdb-object-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-object/3.1.0/orientdb-object-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-object/3.1.10/orientdb-object-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-object/3.1.0/orientdb-object-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-object/3.1.10/orientdb-object-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-server:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-server:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-server/3.1.0/orientdb-server-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-server/3.1.10/orientdb-server-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-server/3.1.0/orientdb-server-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-server/3.1.10/orientdb-server-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-server/3.1.0/orientdb-server-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-server/3.1.10/orientdb-server-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.orientechnologies:orientdb-tools:3.1.0">
+    <library name="Maven: com.orientechnologies:orientdb-tools:3.1.10">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-tools/3.1.0/orientdb-tools-3.1.0.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-tools/3.1.10/orientdb-tools-3.1.10.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-tools/3.1.0/orientdb-tools-3.1.0-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-tools/3.1.10/orientdb-tools-3.1.10-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-tools/3.1.0/orientdb-tools-3.1.0-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-tools/3.1.10/orientdb-tools-3.1.10-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.pontusvision:pontus-jpostal:1.0.0">
@@ -794,28 +786,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/commons-configuration/commons-configuration/1.10/commons-configuration-1.10-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: commons-fileupload:commons-fileupload:1.4">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/commons-fileupload/commons-fileupload/1.4/commons-fileupload-1.4.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/commons-fileupload/commons-fileupload/1.4/commons-fileupload-1.4-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/commons-fileupload/commons-fileupload/1.4/commons-fileupload-1.4-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: commons-io:commons-io:2.2">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.2/commons-io-2.2.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.2/commons-io-2.2-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.2/commons-io-2.2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: commons-lang:commons-lang:2.6">
@@ -1115,26 +1085,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.5.8/httpclient-4.5.8-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.apache.httpcomponents:httpcore:4.4.10">
+    <library name="Maven: org.apache.httpcomponents:httpcore:4.4.11">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.10/httpcore-4.4.10.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.11/httpcore-4.4.11.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.10/httpcore-4.4.10-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.11/httpcore-4.4.11-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.10/httpcore-4.4.10-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.httpcomponents:httpmime:4.5.6">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpmime/4.5.6/httpmime-4.5.6.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpmime/4.5.6/httpmime-4.5.6-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpmime/4.5.6/httpmime-4.5.6-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.11/httpcore-4.4.11-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.apache.ivy:ivy:2.3.0">

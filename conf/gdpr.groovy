@@ -11,7 +11,10 @@
 
 // res
 
-import com.pontusvision.gdpr.App
+import com.orientechnologies.orient.core.metadata.schema.OClass
+import com.orientechnologies.orient.core.metadata.schema.OProperty
+import com.orientechnologies.orient.core.metadata.schema.OType
+import com.pontusvision.gdpr.*
 import com.pontusvision.utils.LocationAddress
 import groovy.json.JsonSlurper
 import org.apache.commons.math3.distribution.EnumeratedDistribution
@@ -27,10 +30,9 @@ import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.apache.tinkerpop.gremlin.structure.Vertex
 
 import java.text.SimpleDateFormat
+import java.util.regex.Pattern
 
-import static org.apache.tinkerpop.gremlin.process.traversal.P.eq
-import static org.apache.tinkerpop.gremlin.process.traversal.P.gt
-import static org.apache.tinkerpop.gremlin.process.traversal.P.lte
+import static org.apache.tinkerpop.gremlin.process.traversal.P.*
 
 //import org.OrientStandardGraph.core.OrientStandardGraph
 
@@ -1092,7 +1094,7 @@ def addRandomSARs(OrientStandardGraph graph, GraphTraversalSource g) {
       new Pair<String, Double>("Read", (Double) 90.0),
       new Pair<String, Double>("Update", (Double) 30.0),
       new Pair<String, Double>("Delete", (Double) 23.0),
-    new Pair<String, Double>("Bloqueio", (Double) 23.0)]
+      new Pair<String, Double>("Bloqueio", (Double) 23.0)]
     def distributionRequestType = new EnumeratedDistribution<String>(probabilitiesRequestType.asList())
 
 
@@ -4325,16 +4327,16 @@ def getPrivacyNoticesScores(def scoresMap) {
 
 
 def getSubjectAccessRequestScores(def scoresMap) {
-  long fifteenDayThresholdMs = (long)(System.currentTimeMillis() - (3600000L * 24L *15L));
-  def fifteenDayThreshold = new java.util.Date (fifteenDayThresholdMs);
-  long fiveDayThresholdMs = (long)(System.currentTimeMillis() - (3600000L * 24L *5L));
-  def fiveDayThreshold = new java.util.Date (fiveDayThresholdMs);
+  long fifteenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 15L));
+  def fifteenDayThreshold = new java.util.Date(fifteenDayThresholdMs);
+  long fiveDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 5L));
+  def fiveDayThreshold = new java.util.Date(fiveDayThresholdMs);
 
-  long numEvents = g.V().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).count().next();
+  long numEvents = g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).count().next();
 
   long numRecordsOlder15Days =
 
-    g.V().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).as('sar')
+    g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
       .where(
         __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(fifteenDayThreshold))
       )
@@ -4343,7 +4345,7 @@ def getSubjectAccessRequestScores(def scoresMap) {
 
   long numRecordsOlder5Days =
 
-    g.V().has('Metadata.Type.Event.Subject_Access_Request',eq('Event.Subject_Access_Request')).as('sar')
+    g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
       .where(
         __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(fiveDayThreshold))
       )
@@ -4352,24 +4354,20 @@ def getSubjectAccessRequestScores(def scoresMap) {
 
 
   long scoreValue = 100L;
-  if (numEvents > 0){
+  if (numEvents > 0) {
 
-    long pcntOlder15Days = (long) (100L*numRecordsOlder15Days/numEvents);
-    if (pcntOlder15Days > 10){
+    long pcntOlder15Days = (long) (100L * numRecordsOlder15Days / numEvents);
+    if (pcntOlder15Days > 10) {
       scoreValue -= 80L;
+    } else if (numRecordsOlder15Days > 0) {
+      scoreValue -= (60L + 2L * pcntOlder15Days)
     }
-    else if (numRecordsOlder15Days> 0) {
-      scoreValue -= (60L + 2L* pcntOlder15Days)
-    }
 
 
-
-    scoreValue -= (20L * numRecordsOlder5Days/numEvents)
-
+    scoreValue -= (20L * numRecordsOlder5Days / numEvents)
 
 
-
-  }else{
+  } else {
     scoreValue = 100L;
   }
 
@@ -4697,7 +4695,7 @@ def getNumNaturalPersonPerOrganisation() {
 
 }
 
-class ConsentPerNaturalPersonType{
+class ConsentPerNaturalPersonType {
   static String getConsentPerNaturalPersonType() {
     StringBuffer sb = new StringBuffer("[")
     boolean firstTime = true;
@@ -4741,11 +4739,11 @@ class ConsentPerNaturalPersonType{
 
 }
 
-def getConsentPerNaturalPersonType(){
+def getConsentPerNaturalPersonType() {
   return ConsentPerNaturalPersonType.getConsentPerNaturalPersonType();
 }
 
-class NaturalPersonPerDataProcedures{
+class NaturalPersonPerDataProcedures {
   static String getNumNaturalPersonPerDataProcedures() {
     StringBuffer sb = new StringBuffer("[")
     boolean firstTime = true;
@@ -4845,47 +4843,48 @@ def getDSARStatsPerOrganisation() {
 
 class DSARStats {
   public static boolean getDSARStatsPerRequestType(Date gtDateThreshold, Date lteDateThreshold, boolean firstTime, String dateLabel, StringBuffer sb) {
-    return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime,dateLabel, 'Event.Subject_Access_Request.Request_Type','TOTAL_REQ_TYPE', sb);
+    return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime, dateLabel, 'Event.Subject_Access_Request.Request_Type', 'TOTAL_REQ_TYPE', sb);
   }
-  public static boolean getDSARStatsPerRequestStatus(Date gtDateThreshold, Date lteDateThreshold, boolean firstTime, String dateLabel,  StringBuffer sb) {
-    return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime,dateLabel, 'Event.Subject_Access_Request.Status', 'TOTAL_STATUS', sb);
+
+  public static boolean getDSARStatsPerRequestStatus(Date gtDateThreshold, Date lteDateThreshold, boolean firstTime, String dateLabel, StringBuffer sb) {
+    return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime, dateLabel, 'Event.Subject_Access_Request.Status', 'TOTAL_STATUS', sb);
 
   }
 
-  public static boolean getDSARStatsPer(Date lteDateThreshold , Date  gtDateThreshold, boolean firstTime, String dateLabel, String groupByCount, String dataSourceName,  StringBuffer sb) {
+  public static boolean getDSARStatsPer(Date lteDateThreshold, Date gtDateThreshold, boolean firstTime, String dateLabel, String groupByCount, String dataSourceName, StringBuffer sb) {
 
     long count = 0;
-    try{
-    App.g.V()
-      .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
-      .where(
-        __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(P.between(gtDateThreshold, lteDateThreshold))
-      )
+    try {
+      App.g.V()
+        .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
+        .where(
+          __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(P.between(gtDateThreshold, lteDateThreshold))
+        )
 
-      .groupCount().by(groupByCount)
-      .each {
-        it.each { it2 ->
-          if (!firstTime) {
-            sb.append("\n,")
-          } else {
-            firstTime = false;
+        .groupCount().by(groupByCount)
+        .each {
+          it.each { it2 ->
+            if (!firstTime) {
+              sb.append("\n,")
+            } else {
+              firstTime = false;
+            }
+            count++;
+            sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+            sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": $it2.value }")
           }
-          count ++;
-          sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
-          sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": $it2.value }")
         }
-      }
     } catch (Throwable t) {
       // ignore 
     }
 
-    if (count == 0){
+    if (count == 0) {
       if (!firstTime) {
         sb.append("\n,")
       } else {
         firstTime = false;
       }
-      if ('TOTAL_REQ_TYPE' == dataSourceName){
+      if ('TOTAL_REQ_TYPE' == dataSourceName) {
         sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("Read")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
         sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
         sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("Update")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
@@ -4897,8 +4896,7 @@ class DSARStats {
 
         firstTime = false;
 
-      }
-      else{
+      } else {
         sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("New")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
         sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": 0 }")
         sb.append(",{\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate("Acknowledged")} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
@@ -5031,18 +5029,17 @@ class DSARStats {
       }
 
 
+    firstTime = getDSARStatsPerRequestType(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb);
+    firstTime = getDSARStatsPerRequestType(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb);
+    firstTime = getDSARStatsPerRequestType(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb);
+    firstTime = getDSARStatsPerRequestType(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb);
+    firstTime = getDSARStatsPerRequestType(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb);
 
-    firstTime = getDSARStatsPerRequestType(nowThreshold, fiveDayDateThreshold,firstTime,"0-5d", sb);
-    firstTime = getDSARStatsPerRequestType(fiveDayDateThreshold, tenDayDateThreshold,firstTime,"5-10d", sb);
-    firstTime = getDSARStatsPerRequestType(tenDayDateThreshold, fifteenDayDateThreshold,firstTime,"10-15d", sb);
-    firstTime = getDSARStatsPerRequestType(fifteenDayDateThreshold,thirtyDayDateThreshold,firstTime,"15-30d", sb);
-    firstTime = getDSARStatsPerRequestType(thirtyDayDateThreshold,oneYearDateThreshold,firstTime,"30-365d", sb);
-
-    firstTime = getDSARStatsPerRequestStatus(nowThreshold, fiveDayDateThreshold,firstTime,"0-5d", sb);
-    firstTime = getDSARStatsPerRequestStatus(fiveDayDateThreshold, tenDayDateThreshold,firstTime,"5-10d", sb);
-    firstTime = getDSARStatsPerRequestStatus(tenDayDateThreshold, fifteenDayDateThreshold,firstTime,"10-15d", sb);
-    firstTime = getDSARStatsPerRequestStatus(fifteenDayDateThreshold,thirtyDayDateThreshold,firstTime,"15-30d", sb);
-    firstTime = getDSARStatsPerRequestStatus(thirtyDayDateThreshold,oneYearDateThreshold,firstTime,"30-365d", sb);
+    firstTime = getDSARStatsPerRequestStatus(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb);
+    firstTime = getDSARStatsPerRequestStatus(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb);
+    firstTime = getDSARStatsPerRequestStatus(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb);
+    firstTime = getDSARStatsPerRequestStatus(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb);
+    firstTime = getDSARStatsPerRequestStatus(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb);
 
     sb.append(']')
 
@@ -5296,6 +5293,64 @@ class Discovery {
     }
 
   }
+
+  static DiscoveryReply discovery(DiscoveryRequest req) {
+    List<OProperty> props = new LinkedList<>();
+    VertexLabelsReply vertLabels = new VertexLabelsReply(
+      App.graph.getRawDatabase().getMetadata().getSchema().getClasses());
+
+    Pattern pattern = null;
+
+    if (req.regexPattern != null){
+      pattern=Pattern.compile(req.regexPattern, Pattern.CASE_INSENSITIVE);
+
+    }
+
+    int iLen = vertLabels.labels.length;
+    for (int i = 0; i < iLen; i++) {
+      String lbl = vertLabels.labels[i].label;
+      OClass oClass = App.graph.getRawDatabase().getMetadata().getSchema().getClass(lbl);
+
+      for (OProperty oProperty: oClass.properties()){
+        String currLabel = oProperty.getName();
+        if (currLabel.startsWith(lbl)) {
+          if (pattern != null && pattern.matcher(currLabel).find()) {
+            props.add(oProperty);
+          }
+          else{
+            props.add(oProperty);
+          }
+        }
+      }
+    }
+    DiscoveryReply reply = new DiscoveryReply();
+
+    reply.colMatchPropMap = new HashMap<>(req.colMetaData.size());
+
+    for (ColMetaData metadata : req.colMetaData) {
+      for (OProperty poleProperty : props) {
+        int numHits = 0, totalCount = metadata.vals.size();
+        for (String val : metadata.vals) {
+          if (poleProperty.getType() == OType.STRING && poleProperty.getAllIndexes().size() > 0) {
+            if (App.g.V().has(poleProperty.getName(), eq(val)).hasNext()) {
+              numHits++;
+            }
+          }
+        }
+        if (totalCount > 0) {
+          double probability = (double) numHits / (double) totalCount;
+          if (probability > req.percentThreshold) {
+            List<ColMatchProbability> probabilitiesList = reply.colMatchPropMap
+              .putIfAbsent(metadata, new LinkedList<>());
+            ColMatchProbability colMatchProbability = new ColMatchProbability(poleProperty.getName(), probability);
+            probabilitiesList.add(colMatchProbability);
+          }
+        }
+      }
+    }
+    return reply;
+  }
+
 
 }
 

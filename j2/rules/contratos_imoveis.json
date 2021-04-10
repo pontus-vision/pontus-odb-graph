@@ -1,0 +1,139 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person.Natural",
+        "percentageThreshold": 10,
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name_fuzzy",
+            "val": "${pg_nlp_res_person}",
+            "predicate": "textContainsFuzzy",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          },
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${pg_nlp_res_person}",
+            "predicate": "textContainsFuzzy",
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Location.Address",
+        "props": [
+          {
+            "name": "Location.Address.parser.postcode",
+            "val": "${pg_nlp_res_post_code}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${com.pontusvision.utils.PostCode.format(eachPostCode)}",
+            "postProcessorVar": "eachPostCode"
+          }
+        ]
+      },
+      {
+        "label": "Object.Email_Address",
+        "props": [
+          {
+            "name": "Object.Email_Address.Email",
+            "val": "${pg_nlp_res_emailaddress}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
+          }
+        ]
+      },
+      {
+        "label": "Event.Ingestion",
+        "props": [
+          {
+            "name": "Event.Ingestion.Type",
+            "val": "PDF Form Files",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Operation",
+            "val": "Unstructured Data Insertion",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Create_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "Contratos",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Contratos em AWS S3"
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "Structured"
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Ingestion",
+        "props": [
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "val": "${pg_currDate}",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Type",
+            "val": "Contratos em AWS S3",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Unstructured Data Insertion",
+            "excludeFromSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Group_Ingestion",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object.Data_Source",
+        "toVertexLabel": "Event.Group_Ingestion"
+      }
+    ]
+  }
+}

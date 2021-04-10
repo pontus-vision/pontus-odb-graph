@@ -1,30 +1,679 @@
 fileHeaders: 'DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDEN BY THE J2 DIR TEMPLATES'
 
 schema:
-  edgeLabels:
-  - name:
+  propertyKeys:
+    - name: similarity
+      dataType: Double
+      cardinality: SINGLE
+    - name: probability
+      dataType: Double
+      cardinality: SINGLE
+    - name: maxFromScore
+      dataType: Double
+      cardinality: SINGLE
+    - name: fromScore
+      dataType: Double
+      cardinality: SINGLE
+    - name: fromScorePercent
+      dataType: Double
+      cardinality: SINGLE
+    - name: maxToScore
+      dataType: Double
+      cardinality: SINGLE
+    - name: toScore
+      dataType: Double
+      cardinality: SINGLE
+    - name: toScorePercent
+      dataType: Double
+      cardinality: SINGLE
+
+    - name: Metadata.Type
+    - name: Metadata.Controller
+    - name: Metadata.Create_Date
+      dataType: Date
+    - name: Metadata.GDPR_Status
+    - name: Metadata.Lineage
+    - name: Metadata.Lineage_Location_Tag
+    - name: Metadata.Lineage_Server_Tag
+    - name: Metadata.Orig_Id
+    - name: Metadata.Processor
+    - name: Metadata.Redaction
+    - name: Metadata.Status
+
+      
 
   vertices:
-  - name: "Object.Sensitive_Data"
-    partition: false
-    useStatic: false
-    props:
-    - name: "Ethnicity"
-      dataType: "String"
-      cardinality: "SINGLE"
-      index: true
-    - name: "Religion"
-    - name: "Political_View"
-    - name: "Union_Membership"
-    - name: "Club_Membership"
-    - name: "Church_Membership"
-    - name: "Sexual_Orientation"
+#    - name: "Object.Sensitive_Data"
+#      partition: false
+#      useStatic: false
+#      props:
+#        - name: "Ethnicity"
+#          dataType: "String"
+#          cardinality: "SINGLE"
+#          index: true
+#        - name: "Religion"
+#        - name: "Political_View"
+#        - name: "Union_Membership"
+#        - name: "Club_Membership"
+#        - name: "Church_Membership"
+#        - name: "Sexual_Orientation"
+
+    - name: "Event.Consent"
+      partition: false
+      useStatic: false
+      props:
+        - name: Date
+          dataType: Date
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Metadata.Create_Date
+          dataType: Date
+
+        - name: Metadata.Update_Date
+          dataType: Date
+
+        - name: Status
+
+    - name: "Event.Data_Breach"
+      partition: false
+      useStatic: false
+      props:
+        - name: Description
+        - name: Id
+        - name: Impact
+        - name: Metadata.Create_Date
+          dataType: Date
+
+        - name: Metadata.Update_Date
+          dataType: Date
+
+        - name: Source
+        - name: Status
+
+    - name: "Event.Form_Ingestion"
+      partition: false
+      useStatic: false
+      props:
+        - name: Domain_b64
+          index: false
+
+        - name: Metadata_Create_Date
+          dataType: Date
+
+        - name: Metadata_GUID
+        - name: Operation
+        - name: Type
+
+    - name: "Event.Group_Ingestion"
+      partition: false
+      useStatic: false
+      props:
+        - name: Has_Controller
+          dataType: Boolean
+        - name: Has_Data_Owner
+          dataType: Boolean
+        - name: Has_Processor
+          dataType: Boolean
+        - name: Metadata_End_Date
+          dataType: Date
+        - name: Metadata_Start_Date
+          dataType: Date
+        - name: Operation
+        - name: Type
+
+    - name: "Event.Ingestion"
+      partition: false
+      useStatic: false
+      props:
+        - name: Business_Rules
+        - name: Domain_Unstructured_Data_b64
+          index: false
+
+        - name: Domain_b64
+          index: false
+
+        - name: Metadata_Create_Date
+          dataType: Date
+        - name: Metadata_GUID
+        - name: Operation
+        - name: Type
+
+    - name: "Event.Subject_Access_Request"
+      partition: false
+      useStatic: false
+      props:
+        - name: Metadata.Create_Date
+          dataType: Date
+        - name: Metadata.Update_Date
+          dataType: Date
+        - name: Request_Type
+        - name: Status
+
+    - name: "Event.Training"
+      partition: false
+      useStatic: false
+      props:
+        - name: Status
+
+    - name: "Event.Transaction"
+      partition: false
+      useStatic: false
+      props:
+        - name: Currency
+        - name: Date
+          dataType: Date
+
+        - name: Description
+        - name: Status
+        - name: Type
+        - name: Value
+
+    - name: "Location.Address"
+      partition: false
+      useStatic: false
+      props:
+        - name: City
+        - name: Code
+        - name: Description
+        - name: Full_Address
+        - name: Neighborhood
+        - name: Post_Code
+        - name: State
+        - name: Street
+        - name: Type
+        - name: parser.category
+        - name: parser.city
+        - name: parser.city_district
+        - name: parser.country
+        - name: parser.country_region
+        - name: parser.entrance
+        - name: parser.house
+        - name: parser.house_number
+        - name: parser.island
+        - name: parser.level
+        - name: parser.near
+        - name: parser.po_box
+        - name: parser.postcode
+        - name: parser.road
+        - name: parser.staircase
+        - name: parser.state
+        - name: parser.state_district
+        - name: parser.suburb
+        - name: parser.unit
+        - name: parser.world_region
+
+    - name: "Object.AWS_Instance"
+      partition: false
+      useStatic: false
+      props:
+        - name: EbsOptimized
+        - name: EnaSupport
+        - name: Id
+        - name: ImageId
+        - name: InstanceType
+        - name: KeyName
+        - name: LaunchTime
+        - name: PrivateDnsName
+        - name: PrivateIpAddress
+        - name: ProductCodeIDs
+        - name: ProductCodeTypes
+        - name: Public_Dns_Name
+        - name: Tags
+
+    - name: "Object.AWS_Network_Interface"
+      partition: false
+      useStatic: false
+      props:
+        - name: AttachTime
+        - name: Description
+        - name: MacAddress
+        - name: NetworkInterfaceId
+        - name: PrivateDnsName
+        - name: PrivateIpAddresses
+
+    - name: "Object.AWS_Security_Group"
+      partition: false
+      useStatic: false
+      props:
+        - name: GroupName
+        - name: Id
+        - name: Ip_Perms_Egress_IpRanges
+        - name: Ip_Perms_Ingress_IpRanges
+
+    - name: "Object.AWS_VPC"
+      partition: false
+      useStatic: false
+      props:
+        - name: Id
+
+    - name: "Object.Application"
+      partition: false
+      useStatic: false
+      props:
+        - name: Description
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Name
+        - name: Start_Date
+          dataType: Date
+
+        - name: Stop_Date
+          dataType: Date
+        - name: URL
+
+    - name: "Object.Awareness_Campaign"
+      partition: false
+      useStatic: false
+      props:
+        - name: Description
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Start_Date
+          dataType: Date
+
+        - name: Stop_Date
+          dataType: Date
+
+        - name: URL
+
+    - name: "Object.Biometric"
+      partition: false
+      useStatic: false
+      props:
+        - name: Eye_Colour
+        - name: Facial_Picture
+        - name: Fingerprints
+        - name: Height_cm
+        - name: Retinal_scans
+        - name: Weight_kg
+
+    - name: "Object.Contract"
+      partition: false
+      useStatic: false
+      props:
+        - name: Date
+          dataType: Date
+
+        - name: Description
+        - name: Expiry
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Id
+        - name: Link
+        - name: Status
+        - name: Type
+
+    - name: "Object.Credential"
+      partition: false
+      useStatic: false
+      props:
+        - name: Login_SHA256
+          index: false
+
+        - name: User_Id
+
+    - name: "Object.Data_Policy"
+      partition: false
+      useStatic: false
+      props:
+        - name: CreateDate
+          dataType: Date
+
+        - name: Description
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Name
+        - name: Retention_Period
+        - name: Type
+        - name: UpdateDate
+          dataType: Date
+
+    - name: "Object.Data_Procedures"
+      partition: false
+      useStatic: false
+      props:
+        - name: ID
+        - name: BusinessAreaResponsible
+        - name: Type
+        - name: Description
+        - name: MacroProcessName
+        - name: Country_Where_Stored
+        - name: Delete_Mechanism
+        - name: Delete_URL
+        - name: Info_Collected
+        - name: Number_Of_Records_Monthly
+        - name: Property
+        - name: Type_Of_Natural_Person
+        - name: Update_Mechanism
+        - name: Update_URL
+        - name: Why_Is_It_Collected
+        - name: Is_SubProcess
+          dataType: Boolean
+
+    - name: "Object.Data_Source"
+      partition: false
+      useStatic: false
+      props:
+        - name: Business_Rules
+        - name: Create_Date
+          dataType: Date
+        - name: Credential_ApiKey
+        - name: Credential_Principal
+        - name: Credential_Secret
+        - name: Description
+        - name: Domain
+        - name: Domain_Frequency
+        - name: Engine
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Name
+        - name: Retention_Policy_JSON
+        - name: Type
+        - name: URI_Config
+        - name: URI_Control
+        - name: URI_Delete
+        - name: URI_Monitor
+        - name: URI_Read
+        - name: URI_Template
+        - name: URI_Update
+        - name: Update_Date
+          dataType: Date
 
 
-#
-#  - name: "Object.Salary"
-#
-#
+    - name: "Object.Email_Address"
+      partition: false
+      useStatic: false
+      props:
+        - name: Email
+        - name: Host
+
+
+    - name: "Object.Form"
+      partition: false
+      useStatic: false
+      props:
+        - name: Metadata_Create_Date
+          dataType: Date
+        - name: Metadata_GUID
+        - name: Metadata_Owner
+        - name: Text
+        - name: URL
+        - name: Vertex_Label
+
+    - name: "Object.Genetic"
+      partition: false
+      useStatic: false
+      props:
+        - name: DNA
+        - name: Family_Medical_History
+        - name: RNA
+
+    - name: "Object.Health"
+      partition: false
+      useStatic: false
+      props:
+        - name: Alergies
+        - name: Blood_Type
+        - name: Diseases
+        - name: Organ_Donor
+
+    - name: "Object.Identity_Card"
+      partition: false
+      useStatic: false
+      props:
+        - name: Id_Name
+        - name: Id_Text
+        - name: Id_Type
+        - name: Id_Value
+
+    - name: "Object.Insurance_Policy"
+      partition: false
+      useStatic: false
+      props:
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Number
+        - name: Product_Type
+        - name: Property_Type
+        - name: Renewal_Date
+          dataType: Date
+
+        - name: Status
+        - name: Type
+
+    - name: "Object.Lawful_Basis"
+      partition: false
+      useStatic: false
+      props:
+        - name: Description
+        - name: Id
+        - name: Short_Description
+    - name: "Object.Metadata_Source"
+      partition: false
+      useStatic: false
+      props:
+        - name: Name
+        - name: Create_Date
+          dataType: Date
+        - name: Update_Date
+          dataType: Date
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Description
+        - name: Credential_Principal
+        - name: Credential_Secret
+        - name: Credential_ApiKey
+        - name: URI_Config
+        - name: URI_Template
+        - name: URI_Control
+        - name: URI_Read
+        - name: URI_Delete
+        - name: URI_Update
+        - name: URI_Monitor
+        - name: Retention_Policy_JSON
+        - name: Engine
+        - name: Type
+        - name: Domain
+        - name: Domain_Frequency
+        - name: Business_Rules
+
+    - name: "Object.Notification_Templates"
+      partition: false
+      useStatic: false
+      props:
+        - name: Id
+        - name: Label
+        - name: Text
+        - name: Types
+        - name: URL
+
+    - name: "Object.Phone_Number"
+      partition: false
+      useStatic: false
+      props:
+        - name: Last_7_Digits
+        - name: Numbers_Only
+        - name: Raw
+        - name: Type
+
+    - name: "Object.Privacy_Impact_Assessment"
+      partition: false
+      useStatic: false
+      props:
+        - name: Compliance_Check_Passed
+        - name: Country_Where_Data_Is_Stored
+        - name: Delivery_Date
+          dataType: Date
+
+        - name: Description
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Intrusion_On_Privacy
+        - name: Risk_Of_Reputational_Damage
+        - name: Risk_To_Corporation
+        - name: Risk_To_Individuals
+        - name: Start_Date
+          dataType: Date
+
+
+    - name: "Object.Privacy_Notice"
+      partition: false
+      useStatic: false
+      props:
+        - name: Country_Where_Stored
+        - name: Delivery_Date
+          dataType: Date
+
+        - name: Description
+        - name: Effect_On_Individuals
+        - name: Expiry_Date
+          dataType: Date
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: How_Is_It_Collected
+        - name: How_Will_It_Be_Used
+        - name: Id
+        - name: Info_Collected
+        - name: Likely_To_Complain
+        - name: Metadata.Create_Date
+          dataType: Date
+        - name: Metadata.Update_Date
+          dataType: Date
+        - name: Number_Of_Records_Monthly
+        - name: Text
+        - name: URL
+        - name: Who_Is_Collecting
+        - name: Who_Will_It_Be_Shared
+        - name: Why_Is_It_Collected
+
+    - name: "Object.Salary"
+      partition: false
+      useStatic: false
+      props:
+        - name: Currency
+        - name: Period
+        - name: Value
+
+    - name: "Object.Sensitive_Data"
+      partition: false
+      useStatic: false
+      props:
+        - name: Church_Membership
+        - name: Club_Membership
+        - name: Ethnicity
+        - name: Political_View
+        - name: Religion
+        - name: Sexual_Orientation
+        - name: Union_Membership
+
+    - name: "Person.Employee"
+      partition: false
+      useStatic: false
+      props:
+        - name: Date_Of_Birth
+          dataType: Date
+        - name: Ethnicity
+        - name: Full_Name
+        - name: Gender
+        - name: Height
+        - name: ID
+        - name: Is_GDPR_Role
+        - name: Last_Name
+        - name: Marital_Status
+        - name: Name_Qualifier
+        - name: Nationality
+        - name: Place_Of_Birth
+        - name: Religion
+        - name: Role
+        - name: Title
+
+    - name: "Person.Identity"
+      partition: false
+      useStatic: false
+      props:
+        - name: Date_Of_Birth
+          dataType: Date
+        - name: Ethnicity
+        - name: First_Name
+        - name: Full_Name
+        - name: Full_Name_fuzzy
+          mapping: "TEXTSTRING"
+          analyzer: { name: "text-analyzer", value: "pg_word_delimiter" }
+        - name: Gender
+        - name: Height
+        - name: ID
+        - name: Last_Name
+        - name: Marital_Status
+        - name: Name_Qualifier
+        - name: Nationality
+        - name: Place_Of_Birth
+        - name: Religion
+        - name: Title
+
+    - name: "Person.Natural"
+      partition: false
+      useStatic: false
+      props:
+        - name: Customer_ID
+        - name: Date_Of_Birth
+          dataType: Date
+        - name: Ethnicity
+        - name: Full_Name
+        - name: Full_Name_fuzzy
+          mapping: "TEXTSTRING"
+          analyzer: { name: "text-analyzer", value: "pg_word_delimiter" }
+        - name: Gender
+        - name: Height
+        - name: Last_Name
+        - name: Marital_Status
+        - name: Name_Qualifier
+        - name: Nationality
+        - name: Place_Of_Birth
+        - name: Religion
+        - name: Title
+        - name: Type
+
+    - name: "Person.Organisation"
+      partition: false
+      useStatic: false
+      props:
+        - name: Department
+        - name: Email
+        - name: Fax
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Name
+        - name: Phone
+        - name: Registration_Number
+        - name: Sector
+        - name: Short_Name
+        - name: Tax_Id
+        - name: Type
+        - name: URL
+        - name: orgCountrySet
+
 #  - name: "Object.Health"
 #
 #
@@ -109,12 +758,61 @@ schema:
 #
 
   edges:
+  - name: Approved_Compliance_Check
+  - name: Assigned_SAR_Request
+  - name: Consent
+  - name: Data_Impacted_By_Data_Breach
+  - name: Event_Training_Awareness_Campaign
+  - name: Event_Training_Person
+  - name: Has_Address
+  - name: Has_Application
+  - name: Has_Column
+  - name: Has_Contract
+  - name: Has_Credential
+  - name: Has_Data_Procedures
+  - name: Has_Data_Source
+  - name: Has_Department
+  - name: Has_Egress_Peering
+  - name: Has_Form_Ingestion_Event
+  - name: Has_Id_Card
+  - name: Has_Ingestion_Event
+  - name: Has_Ingress_Peering
+  - name: Has_Lawful_Basis_On
+  - name: Has_Link
+  - name: Has_Parent_Or_Guardian
+  - name: Has_Phone
+  - name: Has_Policy
+  - name: Has_Privacy_Impact_Assessment
+  - name: Has_Privacy_Notice
+  - name: Has_Salary
+  - name: Has_Security_Group
+  - name: Has_Security_Group_Connectivity
+  - name: Has_Semantic
   - name: Has_Sensitive_Data
     multiplicity: MULTI
     unidirected: false
+  - name: Has_Server
+  - name: Has_Table
+  - name: Has_Transaction
+  - name: Impacted_By_Data_Breach
+  - name: Is_Alias
+  - name: Is_Data_Controller
+  - name: Is_Data_Owner
+  - name: Is_Data_Processor
+  - name: Is_Lead
+  - name: Is_Located
+  - name: Is_Responsible
+  - name: Lives
+  - name: Made_SAR_Request
+  - name: Pays_Salary
+  - name: Reports_To
+  - name: Runs_On
+  - name: Sent_Email_BCC
+  - name: Sent_Email_CC
+  - name: Sent_Email_To
+  - name: Uses_Data_Source
+  - name: Uses_Email
   - name: Works
-  - name: Has_Salary
-
 
 rules:
   Base_Clientes_Folha_1___DADOS_CLIENTES_csv:
@@ -129,7 +827,7 @@ rules:
           val: "cliente"
           excludeFromSearch: true
 
-        Natural.Date_Of_Birth:
+        Date_Of_Birth:
           val: "${pg_DATA_NASCIMENTO}"
           type: "java.util.Date"
           mandatoryInSearch: true

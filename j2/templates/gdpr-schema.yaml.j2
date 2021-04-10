@@ -1,41 +1,91 @@
+elasticSearchTemplates:
+  - name: "persondatamixedidx"
+    body:
+      index_patterns:
+        - "janusgraph*mixedidx"
+      order: 0
+      settings:
+        analysis:
+          filter:
+            pg_word_delimiter_filter:
+              type: "word_delimiter"
+              catenate_words: true
+              preserve_original: true
+              generate_word_parts: false
+              generate_number_parts: false
+            analyzer:
+              pg_word_delimiter:
+                filter:
+                  - lowercase
+                  - pg_word_delimiter_filter
+                tokenizer: "whitespace"
+
+
 propertyKeys:
+{%- for prop in schema.propertyKeys %}
+  - name: {{ prop.name }}
+    dataType: {{ prop.dataType|default ('String') }}
+    cardinality: {{ prop.cardinality|default ('SINGLE') }}
+
+{%- endfor %}
+
 {%- for vertex in schema.vertices %}
-- name: Metadata.Type.{{ vertex.name }}
-  dataType: String
-  cardinality: SINGLE
+  - name: Metadata.Type.{{ vertex.name }}
+    dataType: String
+    cardinality: SINGLE
+
+  - name: {{ vertex.name }}.Type
+    dataType: String
+    cardinality: SINGLE
 
   {%- for prop in vertex.props %}
-- name: {{ vertex.name }}.{{ prop.name }}
-  dataType: {{ prop.dataType|default ('String') }}
-  cardinality: {{ prop.cardinality|default ('SINGLE') }}
+  - name: {{ vertex.name }}.{{ prop.name }}
+    dataType: {{ prop.dataType|default ('String') }}
+    cardinality: {{ prop.cardinality|default ('SINGLE') }}
   {%- endfor %}
 {%- endfor %}
 vertexLabels:
 {%- for vertex in schema.vertices %}
-- name: {{ vertex.name }}
-  partition: {{ vertex.partition | default (false) }}
-  useStatic: {{ vertex.useStatic | default (false) }}
+  - name: {{ vertex.name }}
+    partition: {{ vertex.partition | default (false) }}
+    useStatic: {{ vertex.useStatic | default (false) }}
 {%- endfor %}
 edgeLabels:
 {%- for edge in schema.edges %}
 
-- name: {{ edge.name }}
-  multiplicity: {{ edge.multiplicity | default('MULTI')}}
-  unidirected: {{ edge.unidirected | default(false)}}
+  - name: {{ edge.name }}
+    multiplicity: {{ edge.multiplicity | default('MULTI')}}
+    unidirected: {{ edge.unidirected | default(false)}}
 {%- endfor %}
 vertexIndexes:
 {%- for vertex in schema.vertices %}
-- name: "{{ vertex.name }}.MixedIdx"
-  composite: false
-  unique: false
-  indexOnly: null
-  mixedIndex: "search"
-  propertyKeys:
-  - Metadata.Type.{{ vertex.name }}
-  {%- for prop in vertex.props %}
-  {%- if (prop.index | default (true)) %}
-  - {{ vertex.name }}.{{ prop.name }}
-  {%- endif %}
-  {%- endfor %}
-  propertyKeysMappings: {}
+  - name: "{{ vertex.name }}.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.{{ vertex.name }}
+    {%- for prop in vertex.props %}
+      {%- if (prop.index | default (true)) %}
+      - {{ vertex.name }}.{{ prop.name }}
+      {%- endif %}
+    {%- endfor %}
+    propertyKeysMappings:
+    {% set mappings_counter = namespace(value=0) %}
+    {%- for prop in vertex.props %}
+      {%- if (prop.index | default (true) and prop.mapping | default (false)) %}
+         {% set mappings_counter.value = mappings_counter.value+1 %}
+      "{{ vertex.name }}.{{ prop.name }}":
+        mapping: {{ prop.mapping }}
+        {%- if (prop.analyzer | default (false)) %}
+        analyzer: {{ prop.analyzer }}
+        {%- endif %}
+      {%- endif %}
+    {%- endfor %}
+    {%- if mappings_counter.value == 0 %}
+      {}
+    {%- endif %}
+    {% set mappings_counter = namespace(value=0) %}
+
 {%- endfor %}

@@ -516,7 +516,7 @@ class MatchReq<T> {
 
 //      String value = "v.\"${this.propName}\":${this.attribNativeVal}"
 
-      OGremlinResultSet results = graph.executeSql("SELECT @id FROM `${this.vertexLabel}` WHERE SEARCH_CLASS('${this.attribNativeVal}') ", Collections.EMPTY_MAP);
+      OGremlinResultSet results = graph.executeSql("SELECT @id FROM `${this.vertexLabel}` WHERE SEARCH_CLASS('${this.attribNativeVal}') = true", Collections.EMPTY_MAP);
 
       for (OGremlinResult result : results) {
         result.getVertex().ifPresent({ res -> indexQueryResults.add(res.id()) });
@@ -1391,11 +1391,11 @@ class Matcher {
 
 
   }
-  static runIndexQuery(OrientStandardGraph graph, String idx, String value, int maxHitsPerType, MatchReq matchReq, Map<ORID, AtomicDouble> indexQueryResults, StringBuffer sb) {
+  static  runIndexQuery(OrientStandardGraph graph, String idx, String value, int maxHitsPerType, MatchReq matchReq, Map<ORID, AtomicDouble> indexQueryResults, StringBuffer sb) {
 
 
     OGremlinResultSet results =
-      graph.executeSql("SELECT \$score, @rid FROM `${idx}` WHERE SEARCH_CLASS ('${value}'", Collections.EMPTY_MAP)
+      graph.executeSql("SELECT \$score, @rid FROM `${idx}` WHERE SEARCH_CLASS ('${value}') = true", Collections.EMPTY_MAP)
 
 
 

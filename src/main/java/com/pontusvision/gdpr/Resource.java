@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
+import com.orientechnologies.orient.core.metadata.schema.OProperty;
+import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import org.apache.commons.lang.StringUtils;
@@ -16,13 +18,10 @@ import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.glassfish.jersey.server.ContainerRequest;
 
-import javax.ws.rs.core.Request;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import static org.apache.tinkerpop.gremlin.process.traversal.P.eq;
@@ -313,6 +312,72 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
 
   }
 
+  @POST @Path("discovery") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
+
+  public DiscoveryReply discovery(DiscoveryRequest req)
+  {
+    List<OProperty> props = new LinkedList<>();
+    Collection<OClass> classes =
+        App.graph.getRawDatabase().getMetadata().getSchema().getClasses();
+
+    Pattern reqPatt = null;
+
+    if (req.regexPattern != null){
+      reqPatt=Pattern.compile(req.regexPattern, Pattern.CASE_INSENSITIVE);
+    }
+
+    final Pattern pattern = reqPatt;
+    for (OClass oClass : classes)
+    {
+      String lbl = oClass.getName();
+      oClass.properties().forEach(oProperty ->
+      {
+        String currLabel = oProperty.getName();
+        if (currLabel.startsWith(lbl))
+        {
+          if (pattern != null && pattern.matcher(currLabel).find()) {
+            props.add(oProperty);
+          }
+          else{
+            props.add(oProperty);
+          }
+        }
+      });
+    }
+
+    DiscoveryReply reply = new DiscoveryReply();
+    reply.colMatchPropMap = new HashMap<>(req.colMetaData.size());
+    for (ColMetaData metadata : req.colMetaData)
+    {
+      for (OProperty poleProperty : props)
+      {
+        int numHits = 0, totalCount = metadata.vals.size();
+        for (String val : metadata.vals)
+        {
+          if (poleProperty.getType()== OType.STRING && poleProperty.getAllIndexes().size() > 0)
+          {
+            if (App.g.V().has(poleProperty.getName(), P.eq(val)).hasNext())
+            {
+              numHits++;
+            }
+          }
+        }
+        if (totalCount > 0)
+        {
+          double probability = (double) numHits / (double) totalCount;
+          if (probability > req.percentThreshold)
+          {
+            List<ColMatchProbability> probabilitiesList = reply.colMatchPropMap
+                .putIfAbsent(metadata, new LinkedList<>());
+            ColMatchProbability       colMatchProbability = new ColMatchProbability(poleProperty.getName(), probability);
+            probabilitiesList.add(colMatchProbability);
+          }
+        }
+      }
+    }
+    return reply;
+  }
+
   @POST @Path("node_property_names") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
 
   public NodePropertyNamesReply nodeProperties(VertexLabelsReply req)
@@ -411,7 +476,6 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
     return "Hello, " + name + " AUTHORIZATION" + auth;
   }
 
-
   @GET @Path("grafana_backend") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
 
   public GrafanaHealthcheckReply grafanaBackendHealthCheck(String str)
@@ -421,18 +485,14 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
 status: "success", message: "Data source is working", title: "Success"
  */
 
-
-
   }
-
 
   @POST @Path("grafana_backend/search") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
 
   public String[] grafanaBackendSearch(ContainerRequest request)
   {
 
-    return new String [] {};
-
+    return new String[] {};
 
   }
 
@@ -441,33 +501,34 @@ status: "success", message: "Data source is working", title: "Success"
   public GrafanaAnnotationReply[] grafanaBackendAnnotations(GrafanaAnnotationRequest request)
   {
 
-//    reply.setText("");
+    //    reply.setText("");
 
     List<GrafanaAnnotationReply> retVal = new LinkedList<>();
 
-//    List<Map<String, Object>> res = new LinkedList<>();
-//    String queryFromGrafanaStr = request.getAnnotation().getQuery();
+    //    List<Map<String, Object>> res = new LinkedList<>();
+    //    String queryFromGrafanaStr = request.getAnnotation().getQuery();
 
-
-    String sqlQueryData = request.getSQLQuery();
-    OResultSet oResultSet = App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP).getRawResultSet();
-    Long lastTime = 0L;
-    Map<Long, List<GrafanaAnnotationReply>> perTimeMap = new HashMap<>();
+    String                                  sqlQueryData = request.getSQLQuery();
+    OResultSet                              oResultSet   = App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP)
+                                                                    .getRawResultSet();
+    Long                                    lastTime     = 0L;
+    Map<Long, List<GrafanaAnnotationReply>> perTimeMap   = new HashMap<>();
     while (oResultSet.hasNext())
     {
       OResult             oResult = oResultSet.next();
       Map<String, Object> props   = new HashMap<>();
       oResult.getPropertyNames().forEach(propName -> props.put(propName, oResult.getProperty(propName)));
-//      oResult.getIdentity().ifPresent(id -> props.put("id", id.toString()));
+      //      oResult.getIdentity().ifPresent(id -> props.put("id", id.toString()));
       GrafanaAnnotationReply reply = new GrafanaAnnotationReply();
       reply.setAnnotation(request.getAnnotation());
       reply.setTitle(request.getAnnotation().getQuery());
       reply.setText(props.get("description").toString());
-      Long currTime = (Long)props.get("event_time");
+      Long currTime = (Long) props.get("event_time");
 
-      List<GrafanaAnnotationReply> entries = perTimeMap.putIfAbsent(currTime, new LinkedList<>() );
-      if (entries == null){
-        entries  = perTimeMap.get(currTime);
+      List<GrafanaAnnotationReply> entries = perTimeMap.putIfAbsent(currTime, new LinkedList<>());
+      if (entries == null)
+      {
+        entries = perTimeMap.get(currTime);
       }
       reply.setTime(currTime);
 
@@ -493,9 +554,6 @@ status: "success", message: "Data source is working", title: "Success"
 
     oResultSet.close();
 
-
-
-
     return retVal.toArray(new GrafanaAnnotationReply[0]);
 
   }
@@ -505,18 +563,17 @@ status: "success", message: "Data source is working", title: "Success"
   public GrafanaQueryResponse[] grafanaBackendQuery(GrafanaQueryRequest request)
   {
 
-    GrafanaTarget [] targets = request.getTargets();
-    List<GrafanaQueryResponse> retVal = new LinkedList<>();
+    GrafanaTarget[]            targets = request.getTargets();
+    List<GrafanaQueryResponse> retVal  = new LinkedList<>();
 
     for (int i = 0; i < targets.length; i++)
     {
-      GrafanaQueryResponse  reply = new GrafanaQueryResponse(
-          targets[i].getTarget(),new long[][] {}
+      GrafanaQueryResponse reply = new GrafanaQueryResponse(
+          targets[i].getTarget(), new long[][] {}
       );
 
       retVal.add(reply);
     }
-
 
     return retVal.toArray(new GrafanaQueryResponse[0]);
 

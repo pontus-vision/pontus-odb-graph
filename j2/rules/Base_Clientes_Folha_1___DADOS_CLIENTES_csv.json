@@ -6,15 +6,12 @@
         "name": "TITULAR",
         "props": [
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
+            "name": "Person.Natural.Full_Name",
             "val": "${pg_NOME?.trim().toUpperCase()}"
           },
           {
-            "name": "Person.Natural.Natural.Date_Of_Birth",
-            "val": "${pg_DATA_NASCIMENTO}",
-            "predicate": "eq",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "name": "Person.Natural.Full_Name_fuzzy",
+            "val": "${pg_NOME?.trim().toUpperCase()}"
           },
           {
             "name": "Person.Natural.Type",
@@ -22,8 +19,11 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Natural.Full_Name",
-            "val": "${pg_NOME?.trim().toUpperCase()}"
+            "name": "Person.Natural.Date_Of_Birth",
+            "val": "${pg_DATA_NASCIMENTO}",
+            "predicate": "eq",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
           }
         ]
       },
@@ -37,14 +37,14 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Consent.Status",
-            "val": "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}",
-            "excludeFromSearch": true
-          },
-          {
             "name": "Event.Consent.Metadata.Create_Date",
             "val": "${new Date()}",
             "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Consent.Status",
+            "val": "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}",
             "excludeFromSearch": true
           }
         ]
@@ -86,6 +86,16 @@
         "label": "Event.Transaction",
         "props": [
           {
+            "name": "Event.Transaction.Type",
+            "val": "Venda",
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Event.Transaction.Description",
+            "val": "Venda da Propriedade",
+            "excludeFromSubsequenceSearch": true
+          },
+          {
             "name": "Event.Transaction.Date",
             "val": "${new Date()}",
             "type": "java.util.Date",
@@ -94,16 +104,6 @@
           {
             "name": "Event.Transaction.Currency",
             "val": "BRL",
-            "excludeFromSubsequenceSearch": true
-          },
-          {
-            "name": "Event.Transaction.Type",
-            "val": "Venda",
-            "excludeFromSubsequenceSearch": true
-          },
-          {
-            "name": "Event.Transaction.Description",
-            "val": "Venda da Propriedade",
             "excludeFromSubsequenceSearch": true
           },
           {
@@ -117,13 +117,13 @@
         "name": "CORRETOR",
         "props": [
           {
+            "name": "Person.Natural.Name_Qualifier",
+            "val": "${pg_CORRETOR}"
+          },
+          {
             "name": "Person.Natural.Type",
             "val": "corretor",
             "excludeFromSearch": true
-          },
-          {
-            "name": "Person.Natural.Name_Qualifier",
-            "val": "${pg_CORRETOR}"
           }
         ]
       }

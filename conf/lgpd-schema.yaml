@@ -1,0 +1,2529 @@
+elasticSearchTemplates:
+  - name: "persondatamixedidx"
+    body:
+      index_patterns:
+        - "janusgraph*mixedidx"
+      order: 0
+      settings:
+        analysis:
+          filter:
+            pg_word_delimiter_filter:
+              type: "word_delimiter"
+              catenate_words: true
+              preserve_original: true
+              generate_word_parts: false
+              generate_number_parts: false
+            analyzer:
+              pg_word_delimiter:
+                filter:
+                  - lowercase
+                  - pg_word_delimiter_filter
+                tokenizer: "whitespace"
+
+
+propertyKeys:
+  - name: similarity
+    dataType: Double
+    cardinality: SINGLE
+  - name: probability
+    dataType: Double
+    cardinality: SINGLE
+  - name: maxFromScore
+    dataType: Double
+    cardinality: SINGLE
+  - name: fromScore
+    dataType: Double
+    cardinality: SINGLE
+  - name: fromScorePercent
+    dataType: Double
+    cardinality: SINGLE
+  - name: maxToScore
+    dataType: Double
+    cardinality: SINGLE
+  - name: toScore
+    dataType: Double
+    cardinality: SINGLE
+  - name: toScorePercent
+    dataType: Double
+    cardinality: SINGLE
+  - name: Metadata.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Controller
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Metadata.GDPR_Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Lineage
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Lineage_Location_Tag
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Lineage_Server_Tag
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Orig_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Processor
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Redaction
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Event.Consent
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Consent.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Consent.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Metadata.Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Consent.Metadata.Update_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Consent.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Event.Data_Breach
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Data_Breach.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Impact
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Metadata.Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Metadata.Update_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Source
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Event.Form_Ingestion
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Form_Ingestion.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Form_Ingestion.Domain_b64
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Form_Ingestion.Metadata_Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Form_Ingestion.Metadata_GUID
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Form_Ingestion.Operation
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Form_Ingestion.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Event.Group_Ingestion
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Group_Ingestion.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Group_Ingestion.Has_Controller
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Group_Ingestion.Has_Data_Owner
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Group_Ingestion.Has_Processor
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Group_Ingestion.Metadata_End_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Group_Ingestion.Metadata_Start_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Group_Ingestion.Operation
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Group_Ingestion.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Event.Ingestion
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Ingestion.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Ingestion.Business_Rules
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Ingestion.Domain_Unstructured_Data_b64
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Ingestion.Domain_b64
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Ingestion.Metadata_Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Ingestion.Metadata_GUID
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Ingestion.Operation
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Ingestion.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Event.Subject_Access_Request
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Subject_Access_Request.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Metadata.Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Metadata.Update_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Request_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Event.Training
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Training.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Training.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Event.Transaction
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Transaction.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Transaction.Currency
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Transaction.Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Transaction.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Transaction.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Transaction.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Transaction.Value
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Location.Address
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Location.Address.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.City
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.Code
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.Full_Address
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.Neighborhood
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.Post_Code
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.State
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.Street
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.category
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.city
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.city_district
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.country
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.country_region
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.entrance
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.house
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.house_number
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.island
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.level
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.near
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.po_box
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.postcode
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.road
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.staircase
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.state
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.state_district
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.suburb
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.unit
+    dataType: String
+    cardinality: SINGLE
+  - name: Location.Address.parser.world_region
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.AWS_Instance
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.AWS_Instance.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.EbsOptimized
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.EnaSupport
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.ImageId
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.InstanceType
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.KeyName
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.LaunchTime
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.PrivateDnsName
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.PrivateIpAddress
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.ProductCodeIDs
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.ProductCodeTypes
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.Public_Dns_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Instance.Tags
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.AWS_Network_Interface
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.AWS_Network_Interface.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Network_Interface.AttachTime
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Network_Interface.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Network_Interface.MacAddress
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Network_Interface.NetworkInterfaceId
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Network_Interface.PrivateDnsName
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Network_Interface.PrivateIpAddresses
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.AWS_Security_Group
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.AWS_Security_Group.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Security_Group.GroupName
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Security_Group.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.AWS_VPC
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.AWS_VPC.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.AWS_VPC.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Application
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Application.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Application.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Application.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Application.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Application.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Application.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Application.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Application.Start_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Application.Stop_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Application.URL
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Awareness_Campaign
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Awareness_Campaign.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Awareness_Campaign.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Awareness_Campaign.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Awareness_Campaign.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Awareness_Campaign.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Awareness_Campaign.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Awareness_Campaign.Start_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Awareness_Campaign.Stop_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Awareness_Campaign.URL
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Biometric
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Biometric.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Biometric.Eye_Colour
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Biometric.Facial_Picture
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Biometric.Fingerprints
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Biometric.Height_cm
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Biometric.Retinal_scans
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Biometric.Weight_kg
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Contract
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Contract.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Contract.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Expiry
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Link
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Contract.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Credential
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Credential.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Credential.Login_SHA256
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Credential.User_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Data_Policy
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Data_Policy.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Policy.CreateDate
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Data_Policy.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Policy.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Policy.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Policy.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Policy.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Policy.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Policy.Retention_Period
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Policy.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Policy.UpdateDate
+    dataType: Date
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Data_Procedures
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Data_Procedures.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.ID
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.BusinessAreaResponsible
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.MacroProcessName
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Country_Where_Stored
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Delete_Mechanism
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Delete_URL
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Info_Collected
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Number_Of_Records_Monthly
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Property
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Type_Of_Natural_Person
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Update_Mechanism
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Update_URL
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Why_Is_It_Collected
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Data_Source
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Data_Source.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Business_Rules
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Data_Source.Credential_ApiKey
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Credential_Principal
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Credential_Secret
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Domain
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Domain_Frequency
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Engine
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Retention_Policy_JSON
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.URI_Config
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.URI_Control
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.URI_Delete
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.URI_Monitor
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.URI_Read
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.URI_Template
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.URI_Update
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source.Update_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Email_Address
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Email_Address.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Address.Email
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Form
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Form.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Form.Metadata_Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Form.Metadata_GUID
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Form.Metadata_Owner
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Form.Text
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Form.URL
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Form.Vertex_Label
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Genetic
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Genetic.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Genetic.DNA
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Genetic.Family_Medical_History
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Genetic.RNA
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Health
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Health.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Health.Alergies
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Health.Blood_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Health.Diseases
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Health.Organ_Donor
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Identity_Card
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Identity_Card.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Identity_Card.Id_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Identity_Card.Id_Text
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Identity_Card.Id_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Identity_Card.Id_Value
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Insurance_Policy
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Insurance_Policy.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Number
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Product_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Property_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Renewal_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Insurance_Policy.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Lawful_Basis
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Lawful_Basis.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Lawful_Basis.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Lawful_Basis.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Lawful_Basis.Short_Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Metadata_Source
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Metadata_Source.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Update_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Credential_Principal
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Credential_Secret
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Credential_ApiKey
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.URI_Config
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.URI_Template
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.URI_Control
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.URI_Read
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.URI_Delete
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.URI_Update
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.URI_Monitor
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Retention_Policy_JSON
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Engine
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Domain
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Domain_Frequency
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Metadata_Source.Business_Rules
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Notification_Templates
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Notification_Templates.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Notification_Templates.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Notification_Templates.Label
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Notification_Templates.Text
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Notification_Templates.Types
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Notification_Templates.URL
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Phone_Number
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Phone_Number.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Phone_Number.Last_7_Digits
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Phone_Number.Numbers_Only
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Phone_Number.Raw
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Phone_Number.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Privacy_Impact_Assessment
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Privacy_Impact_Assessment.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Compliance_Check_Passed
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Country_Where_Data_Is_Stored
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Delivery_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Intrusion_On_Privacy
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Risk_To_Corporation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Risk_To_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Impact_Assessment.Start_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Privacy_Notice
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Privacy_Notice.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Country_Where_Stored
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Delivery_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Effect_On_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Expiry_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.How_Is_It_Collected
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.How_Will_It_Be_Used
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Info_Collected
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Likely_To_Complain
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Metadata.Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Metadata.Update_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Number_Of_Records_Monthly
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Text
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.URL
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Who_Is_Collecting
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Who_Will_It_Be_Shared
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Privacy_Notice.Why_Is_It_Collected
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Salary
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Salary.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Salary.Currency
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Salary.Period
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Salary.Value
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Sensitive_Data
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Sensitive_Data.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Sensitive_Data.Church_Membership
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Sensitive_Data.Club_Membership
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Sensitive_Data.Ethnicity
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Sensitive_Data.Political_View
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Sensitive_Data.Religion
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Sensitive_Data.Sexual_Orientation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Sensitive_Data.Union_Membership
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Person.Employee
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Person.Employee.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Date_Of_Birth
+    dataType: Date
+    cardinality: SINGLE
+  - name: Person.Employee.Ethnicity
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Full_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Gender
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Height
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.ID
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Is_GDPR_Role
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Last_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Marital_Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Name_Qualifier
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Nationality
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Place_Of_Birth
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Religion
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Role
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Employee.Title
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Person.Identity
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Person.Identity.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Date_Of_Birth
+    dataType: Date
+    cardinality: SINGLE
+  - name: Person.Identity.Ethnicity
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.First_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Full_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Full_Name_fuzzy
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Gender
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Height
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.ID
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Last_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Marital_Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Name_Qualifier
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Nationality
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Place_Of_Birth
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Religion
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Identity.Title
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Person.Natural
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Person.Natural.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Customer_ID
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Date_Of_Birth
+    dataType: Date
+    cardinality: SINGLE
+  - name: Person.Natural.Ethnicity
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Full_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Full_Name_fuzzy
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Gender
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Height
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Last_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Marital_Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Name_Qualifier
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Nationality
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Place_Of_Birth
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Religion
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Title
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Natural.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Person.Organisation
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Person.Organisation.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Department
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Email
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Fax
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Phone
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Registration_Number
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Sector
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Short_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Tax_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.URL
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.orgCountrySet
+    dataType: String
+    cardinality: SINGLE
+vertexLabels:
+  - name: Event.Consent
+    partition: False
+    useStatic: False
+  - name: Event.Data_Breach
+    partition: False
+    useStatic: False
+  - name: Event.Form_Ingestion
+    partition: False
+    useStatic: False
+  - name: Event.Group_Ingestion
+    partition: False
+    useStatic: False
+  - name: Event.Ingestion
+    partition: False
+    useStatic: False
+  - name: Event.Subject_Access_Request
+    partition: False
+    useStatic: False
+  - name: Event.Training
+    partition: False
+    useStatic: False
+  - name: Event.Transaction
+    partition: False
+    useStatic: False
+  - name: Location.Address
+    partition: False
+    useStatic: False
+  - name: Object.AWS_Instance
+    partition: False
+    useStatic: False
+  - name: Object.AWS_Network_Interface
+    partition: False
+    useStatic: False
+  - name: Object.AWS_Security_Group
+    partition: False
+    useStatic: False
+  - name: Object.AWS_VPC
+    partition: False
+    useStatic: False
+  - name: Object.Application
+    partition: False
+    useStatic: False
+  - name: Object.Awareness_Campaign
+    partition: False
+    useStatic: False
+  - name: Object.Biometric
+    partition: False
+    useStatic: False
+  - name: Object.Contract
+    partition: False
+    useStatic: False
+  - name: Object.Credential
+    partition: False
+    useStatic: False
+  - name: Object.Data_Policy
+    partition: False
+    useStatic: False
+  - name: Object.Data_Procedures
+    partition: False
+    useStatic: False
+  - name: Object.Data_Source
+    partition: False
+    useStatic: False
+  - name: Object.Email_Address
+    partition: False
+    useStatic: False
+  - name: Object.Form
+    partition: False
+    useStatic: False
+  - name: Object.Genetic
+    partition: False
+    useStatic: False
+  - name: Object.Health
+    partition: False
+    useStatic: False
+  - name: Object.Identity_Card
+    partition: False
+    useStatic: False
+  - name: Object.Insurance_Policy
+    partition: False
+    useStatic: False
+  - name: Object.Lawful_Basis
+    partition: False
+    useStatic: False
+  - name: Object.Metadata_Source
+    partition: False
+    useStatic: False
+  - name: Object.Notification_Templates
+    partition: False
+    useStatic: False
+  - name: Object.Phone_Number
+    partition: False
+    useStatic: False
+  - name: Object.Privacy_Impact_Assessment
+    partition: False
+    useStatic: False
+  - name: Object.Privacy_Notice
+    partition: False
+    useStatic: False
+  - name: Object.Salary
+    partition: False
+    useStatic: False
+  - name: Object.Sensitive_Data
+    partition: False
+    useStatic: False
+  - name: Person.Employee
+    partition: False
+    useStatic: False
+  - name: Person.Identity
+    partition: False
+    useStatic: False
+  - name: Person.Natural
+    partition: False
+    useStatic: False
+  - name: Person.Organisation
+    partition: False
+    useStatic: False
+edgeLabels:
+
+  - name: Approved_Compliance_Check
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Assigned_SAR_Request
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Consent
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Data_Impacted_By_Data_Breach
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Event_Training_Awareness_Campaign
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Event_Training_Person
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Address
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Application
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Column
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Contract
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Credential
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Data_Procedures
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Data_Source
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Department
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Egress_Peering
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Form_Ingestion_Event
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Id_Card
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Ingestion_Event
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Ingress_Peering
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Lawful_Basis_On
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Link
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Parent_Or_Guardian
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Phone
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Policy
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Privacy_Impact_Assessment
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Privacy_Notice
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Salary
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Security_Group
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Security_Group_Connectivity
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Semantic
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Sensitive_Data
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Server
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Table
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Transaction
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Impacted_By_Data_Breach
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Alias
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Data_Controller
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Data_Owner
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Data_Processor
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Lead
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Located
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Responsible
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Lives
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Made_SAR_Request
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Pays_Salary
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Reports_To
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Runs_On
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Sent_Email_BCC
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Sent_Email_CC
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Sent_Email_To
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Uses_Data_Source
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Uses_Email
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Works
+    multiplicity: MULTI
+    unidirected: False
+vertexIndexes:
+  - name: "Event.Consent.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Consent
+      - Event.Consent.Date
+      - Event.Consent.Form_Id
+      - Event.Consent.Form_Owner_Id
+      - Event.Consent.Form_Submission_Id
+      - Event.Consent.Form_Submission_Owner_Id
+      - Event.Consent.Metadata.Create_Date
+      - Event.Consent.Metadata.Update_Date
+      - Event.Consent.Status
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.Data_Breach.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Data_Breach
+      - Event.Data_Breach.Description
+      - Event.Data_Breach.Id
+      - Event.Data_Breach.Impact
+      - Event.Data_Breach.Metadata.Create_Date
+      - Event.Data_Breach.Metadata.Update_Date
+      - Event.Data_Breach.Source
+      - Event.Data_Breach.Status
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.Form_Ingestion.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Form_Ingestion
+      - Event.Form_Ingestion.Metadata_Create_Date
+      - Event.Form_Ingestion.Metadata_GUID
+      - Event.Form_Ingestion.Operation
+      - Event.Form_Ingestion.Type
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.Group_Ingestion.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Group_Ingestion
+      - Event.Group_Ingestion.Has_Controller
+      - Event.Group_Ingestion.Has_Data_Owner
+      - Event.Group_Ingestion.Has_Processor
+      - Event.Group_Ingestion.Metadata_End_Date
+      - Event.Group_Ingestion.Metadata_Start_Date
+      - Event.Group_Ingestion.Operation
+      - Event.Group_Ingestion.Type
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.Ingestion.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Ingestion
+      - Event.Ingestion.Business_Rules
+      - Event.Ingestion.Metadata_Create_Date
+      - Event.Ingestion.Metadata_GUID
+      - Event.Ingestion.Operation
+      - Event.Ingestion.Type
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.Subject_Access_Request.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Subject_Access_Request
+      - Event.Subject_Access_Request.Metadata.Create_Date
+      - Event.Subject_Access_Request.Metadata.Update_Date
+      - Event.Subject_Access_Request.Request_Type
+      - Event.Subject_Access_Request.Status
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.Training.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Training
+      - Event.Training.Status
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.Transaction.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Transaction
+      - Event.Transaction.Currency
+      - Event.Transaction.Date
+      - Event.Transaction.Description
+      - Event.Transaction.Status
+      - Event.Transaction.Type
+      - Event.Transaction.Value
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Location.Address.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Location.Address
+      - Location.Address.City
+      - Location.Address.Code
+      - Location.Address.Description
+      - Location.Address.Full_Address
+      - Location.Address.Neighborhood
+      - Location.Address.Post_Code
+      - Location.Address.State
+      - Location.Address.Street
+      - Location.Address.Type
+      - Location.Address.parser.category
+      - Location.Address.parser.city
+      - Location.Address.parser.city_district
+      - Location.Address.parser.country
+      - Location.Address.parser.country_region
+      - Location.Address.parser.entrance
+      - Location.Address.parser.house
+      - Location.Address.parser.house_number
+      - Location.Address.parser.island
+      - Location.Address.parser.level
+      - Location.Address.parser.near
+      - Location.Address.parser.po_box
+      - Location.Address.parser.postcode
+      - Location.Address.parser.road
+      - Location.Address.parser.staircase
+      - Location.Address.parser.state
+      - Location.Address.parser.state_district
+      - Location.Address.parser.suburb
+      - Location.Address.parser.unit
+      - Location.Address.parser.world_region
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.AWS_Instance.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.AWS_Instance
+      - Object.AWS_Instance.EbsOptimized
+      - Object.AWS_Instance.EnaSupport
+      - Object.AWS_Instance.Id
+      - Object.AWS_Instance.ImageId
+      - Object.AWS_Instance.InstanceType
+      - Object.AWS_Instance.KeyName
+      - Object.AWS_Instance.LaunchTime
+      - Object.AWS_Instance.PrivateDnsName
+      - Object.AWS_Instance.PrivateIpAddress
+      - Object.AWS_Instance.ProductCodeIDs
+      - Object.AWS_Instance.ProductCodeTypes
+      - Object.AWS_Instance.Public_Dns_Name
+      - Object.AWS_Instance.Tags
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.AWS_Network_Interface.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.AWS_Network_Interface
+      - Object.AWS_Network_Interface.AttachTime
+      - Object.AWS_Network_Interface.Description
+      - Object.AWS_Network_Interface.MacAddress
+      - Object.AWS_Network_Interface.NetworkInterfaceId
+      - Object.AWS_Network_Interface.PrivateDnsName
+      - Object.AWS_Network_Interface.PrivateIpAddresses
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.AWS_Security_Group.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.AWS_Security_Group
+      - Object.AWS_Security_Group.GroupName
+      - Object.AWS_Security_Group.Id
+      - Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges
+      - Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.AWS_VPC.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.AWS_VPC
+      - Object.AWS_VPC.Id
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Application.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Application
+      - Object.Application.Description
+      - Object.Application.Form_Id
+      - Object.Application.Form_Owner_Id
+      - Object.Application.Form_Submission_Id
+      - Object.Application.Form_Submission_Owner_Id
+      - Object.Application.Name
+      - Object.Application.Start_Date
+      - Object.Application.Stop_Date
+      - Object.Application.URL
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Awareness_Campaign.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Awareness_Campaign
+      - Object.Awareness_Campaign.Description
+      - Object.Awareness_Campaign.Form_Id
+      - Object.Awareness_Campaign.Form_Owner_Id
+      - Object.Awareness_Campaign.Form_Submission_Id
+      - Object.Awareness_Campaign.Form_Submission_Owner_Id
+      - Object.Awareness_Campaign.Start_Date
+      - Object.Awareness_Campaign.Stop_Date
+      - Object.Awareness_Campaign.URL
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Biometric.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Biometric
+      - Object.Biometric.Eye_Colour
+      - Object.Biometric.Facial_Picture
+      - Object.Biometric.Fingerprints
+      - Object.Biometric.Height_cm
+      - Object.Biometric.Retinal_scans
+      - Object.Biometric.Weight_kg
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Contract.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Contract
+      - Object.Contract.Date
+      - Object.Contract.Description
+      - Object.Contract.Expiry
+      - Object.Contract.Form_Id
+      - Object.Contract.Form_Owner_Id
+      - Object.Contract.Form_Submission_Id
+      - Object.Contract.Form_Submission_Owner_Id
+      - Object.Contract.Id
+      - Object.Contract.Link
+      - Object.Contract.Status
+      - Object.Contract.Type
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Credential.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Credential
+      - Object.Credential.User_Id
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Data_Policy.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Data_Policy
+      - Object.Data_Policy.CreateDate
+      - Object.Data_Policy.Description
+      - Object.Data_Policy.Form_Id
+      - Object.Data_Policy.Form_Owner_Id
+      - Object.Data_Policy.Form_Submission_Id
+      - Object.Data_Policy.Form_Submission_Owner_Id
+      - Object.Data_Policy.Name
+      - Object.Data_Policy.Retention_Period
+      - Object.Data_Policy.Type
+      - Object.Data_Policy.UpdateDate
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Data_Procedures.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Data_Procedures
+      - Object.Data_Procedures.ID
+      - Object.Data_Procedures.BusinessAreaResponsible
+      - Object.Data_Procedures.Type
+      - Object.Data_Procedures.Description
+      - Object.Data_Procedures.MacroProcessName
+      - Object.Data_Procedures.Country_Where_Stored
+      - Object.Data_Procedures.Delete_Mechanism
+      - Object.Data_Procedures.Delete_URL
+      - Object.Data_Procedures.Info_Collected
+      - Object.Data_Procedures.Number_Of_Records_Monthly
+      - Object.Data_Procedures.Property
+      - Object.Data_Procedures.Type_Of_Natural_Person
+      - Object.Data_Procedures.Update_Mechanism
+      - Object.Data_Procedures.Update_URL
+      - Object.Data_Procedures.Why_Is_It_Collected
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Data_Source.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Data_Source
+      - Object.Data_Source.Business_Rules
+      - Object.Data_Source.Create_Date
+      - Object.Data_Source.Credential_ApiKey
+      - Object.Data_Source.Credential_Principal
+      - Object.Data_Source.Credential_Secret
+      - Object.Data_Source.Description
+      - Object.Data_Source.Domain
+      - Object.Data_Source.Domain_Frequency
+      - Object.Data_Source.Engine
+      - Object.Data_Source.Form_Id
+      - Object.Data_Source.Form_Owner_Id
+      - Object.Data_Source.Form_Submission_Id
+      - Object.Data_Source.Form_Submission_Owner_Id
+      - Object.Data_Source.Name
+      - Object.Data_Source.Retention_Policy_JSON
+      - Object.Data_Source.Type
+      - Object.Data_Source.URI_Config
+      - Object.Data_Source.URI_Control
+      - Object.Data_Source.URI_Delete
+      - Object.Data_Source.URI_Monitor
+      - Object.Data_Source.URI_Read
+      - Object.Data_Source.URI_Template
+      - Object.Data_Source.URI_Update
+      - Object.Data_Source.Update_Date
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Email_Address.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Email_Address
+      - Object.Email_Address.Email
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Form.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Form
+      - Object.Form.Metadata_Create_Date
+      - Object.Form.Metadata_GUID
+      - Object.Form.Metadata_Owner
+      - Object.Form.Text
+      - Object.Form.URL
+      - Object.Form.Vertex_Label
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Genetic.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Genetic
+      - Object.Genetic.DNA
+      - Object.Genetic.Family_Medical_History
+      - Object.Genetic.RNA
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Health.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Health
+      - Object.Health.Alergies
+      - Object.Health.Blood_Type
+      - Object.Health.Diseases
+      - Object.Health.Organ_Donor
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Identity_Card.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Identity_Card
+      - Object.Identity_Card.Id_Name
+      - Object.Identity_Card.Id_Text
+      - Object.Identity_Card.Id_Type
+      - Object.Identity_Card.Id_Value
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Insurance_Policy.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Insurance_Policy
+      - Object.Insurance_Policy.Form_Id
+      - Object.Insurance_Policy.Form_Owner_Id
+      - Object.Insurance_Policy.Form_Submission_Id
+      - Object.Insurance_Policy.Form_Submission_Owner_Id
+      - Object.Insurance_Policy.Number
+      - Object.Insurance_Policy.Product_Type
+      - Object.Insurance_Policy.Property_Type
+      - Object.Insurance_Policy.Renewal_Date
+      - Object.Insurance_Policy.Status
+      - Object.Insurance_Policy.Type
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Lawful_Basis.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Lawful_Basis
+      - Object.Lawful_Basis.Description
+      - Object.Lawful_Basis.Id
+      - Object.Lawful_Basis.Short_Description
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Metadata_Source.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Metadata_Source
+      - Object.Metadata_Source.Name
+      - Object.Metadata_Source.Create_Date
+      - Object.Metadata_Source.Update_Date
+      - Object.Metadata_Source.Form_Id
+      - Object.Metadata_Source.Form_Owner_Id
+      - Object.Metadata_Source.Form_Submission_Id
+      - Object.Metadata_Source.Form_Submission_Owner_Id
+      - Object.Metadata_Source.Description
+      - Object.Metadata_Source.Credential_Principal
+      - Object.Metadata_Source.Credential_Secret
+      - Object.Metadata_Source.Credential_ApiKey
+      - Object.Metadata_Source.URI_Config
+      - Object.Metadata_Source.URI_Template
+      - Object.Metadata_Source.URI_Control
+      - Object.Metadata_Source.URI_Read
+      - Object.Metadata_Source.URI_Delete
+      - Object.Metadata_Source.URI_Update
+      - Object.Metadata_Source.URI_Monitor
+      - Object.Metadata_Source.Retention_Policy_JSON
+      - Object.Metadata_Source.Engine
+      - Object.Metadata_Source.Type
+      - Object.Metadata_Source.Domain
+      - Object.Metadata_Source.Domain_Frequency
+      - Object.Metadata_Source.Business_Rules
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Notification_Templates.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Notification_Templates
+      - Object.Notification_Templates.Id
+      - Object.Notification_Templates.Label
+      - Object.Notification_Templates.Text
+      - Object.Notification_Templates.Types
+      - Object.Notification_Templates.URL
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Phone_Number.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Phone_Number
+      - Object.Phone_Number.Last_7_Digits
+      - Object.Phone_Number.Numbers_Only
+      - Object.Phone_Number.Raw
+      - Object.Phone_Number.Type
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Privacy_Impact_Assessment.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Privacy_Impact_Assessment
+      - Object.Privacy_Impact_Assessment.Compliance_Check_Passed
+      - Object.Privacy_Impact_Assessment.Country_Where_Data_Is_Stored
+      - Object.Privacy_Impact_Assessment.Delivery_Date
+      - Object.Privacy_Impact_Assessment.Description
+      - Object.Privacy_Impact_Assessment.Form_Id
+      - Object.Privacy_Impact_Assessment.Form_Owner_Id
+      - Object.Privacy_Impact_Assessment.Form_Submission_Id
+      - Object.Privacy_Impact_Assessment.Form_Submission_Owner_Id
+      - Object.Privacy_Impact_Assessment.Intrusion_On_Privacy
+      - Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage
+      - Object.Privacy_Impact_Assessment.Risk_To_Corporation
+      - Object.Privacy_Impact_Assessment.Risk_To_Individuals
+      - Object.Privacy_Impact_Assessment.Start_Date
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Privacy_Notice.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Privacy_Notice
+      - Object.Privacy_Notice.Country_Where_Stored
+      - Object.Privacy_Notice.Delivery_Date
+      - Object.Privacy_Notice.Description
+      - Object.Privacy_Notice.Effect_On_Individuals
+      - Object.Privacy_Notice.Expiry_Date
+      - Object.Privacy_Notice.Form_Id
+      - Object.Privacy_Notice.Form_Owner_Id
+      - Object.Privacy_Notice.Form_Submission_Id
+      - Object.Privacy_Notice.Form_Submission_Owner_Id
+      - Object.Privacy_Notice.How_Is_It_Collected
+      - Object.Privacy_Notice.How_Will_It_Be_Used
+      - Object.Privacy_Notice.Id
+      - Object.Privacy_Notice.Info_Collected
+      - Object.Privacy_Notice.Likely_To_Complain
+      - Object.Privacy_Notice.Metadata.Create_Date
+      - Object.Privacy_Notice.Metadata.Update_Date
+      - Object.Privacy_Notice.Number_Of_Records_Monthly
+      - Object.Privacy_Notice.Text
+      - Object.Privacy_Notice.URL
+      - Object.Privacy_Notice.Who_Is_Collecting
+      - Object.Privacy_Notice.Who_Will_It_Be_Shared
+      - Object.Privacy_Notice.Why_Is_It_Collected
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Salary.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Salary
+      - Object.Salary.Currency
+      - Object.Salary.Period
+      - Object.Salary.Value
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Sensitive_Data.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Sensitive_Data
+      - Object.Sensitive_Data.Church_Membership
+      - Object.Sensitive_Data.Club_Membership
+      - Object.Sensitive_Data.Ethnicity
+      - Object.Sensitive_Data.Political_View
+      - Object.Sensitive_Data.Religion
+      - Object.Sensitive_Data.Sexual_Orientation
+      - Object.Sensitive_Data.Union_Membership
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Person.Employee.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Person.Employee
+      - Person.Employee.Date_Of_Birth
+      - Person.Employee.Ethnicity
+      - Person.Employee.Full_Name
+      - Person.Employee.Gender
+      - Person.Employee.Height
+      - Person.Employee.ID
+      - Person.Employee.Is_GDPR_Role
+      - Person.Employee.Last_Name
+      - Person.Employee.Marital_Status
+      - Person.Employee.Name_Qualifier
+      - Person.Employee.Nationality
+      - Person.Employee.Place_Of_Birth
+      - Person.Employee.Religion
+      - Person.Employee.Role
+      - Person.Employee.Title
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Person.Identity.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Person.Identity
+      - Person.Identity.Date_Of_Birth
+      - Person.Identity.Ethnicity
+      - Person.Identity.First_Name
+      - Person.Identity.Full_Name
+      - Person.Identity.Full_Name_fuzzy
+      - Person.Identity.Gender
+      - Person.Identity.Height
+      - Person.Identity.ID
+      - Person.Identity.Last_Name
+      - Person.Identity.Marital_Status
+      - Person.Identity.Name_Qualifier
+      - Person.Identity.Nationality
+      - Person.Identity.Place_Of_Birth
+      - Person.Identity.Religion
+      - Person.Identity.Title
+    propertyKeysMappings:
+    
+         
+      "Person.Identity.Full_Name_fuzzy":
+        mapping: TEXTSTRING
+        analyzer: {'name': 'text-analyzer', 'value': 'pg_word_delimiter'}
+    
+  - name: "Person.Natural.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Person.Natural
+      - Person.Natural.Customer_ID
+      - Person.Natural.Date_Of_Birth
+      - Person.Natural.Ethnicity
+      - Person.Natural.Full_Name
+      - Person.Natural.Full_Name_fuzzy
+      - Person.Natural.Gender
+      - Person.Natural.Height
+      - Person.Natural.Last_Name
+      - Person.Natural.Marital_Status
+      - Person.Natural.Name_Qualifier
+      - Person.Natural.Nationality
+      - Person.Natural.Place_Of_Birth
+      - Person.Natural.Religion
+      - Person.Natural.Title
+      - Person.Natural.Type
+    propertyKeysMappings:
+    
+         
+      "Person.Natural.Full_Name_fuzzy":
+        mapping: TEXTSTRING
+        analyzer: {'name': 'text-analyzer', 'value': 'pg_word_delimiter'}
+    
+  - name: "Person.Organisation.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Person.Organisation
+      - Person.Organisation.Department
+      - Person.Organisation.Email
+      - Person.Organisation.Fax
+      - Person.Organisation.Form_Id
+      - Person.Organisation.Form_Owner_Id
+      - Person.Organisation.Form_Submission_Id
+      - Person.Organisation.Form_Submission_Owner_Id
+      - Person.Organisation.Name
+      - Person.Organisation.Phone
+      - Person.Organisation.Registration_Number
+      - Person.Organisation.Sector
+      - Person.Organisation.Short_Name
+      - Person.Organisation.Tax_Id
+      - Person.Organisation.Type
+      - Person.Organisation.URL
+      - Person.Organisation.orgCountrySet
+    propertyKeysMappings:
+    
+      {}
+    

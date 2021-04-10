@@ -34,7 +34,7 @@
         <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
         <pontus-natty.version>100.14</pontus-natty.version>
         <netty-version>4.1.44.Final</netty-version>
-        <orientdb-version>3.1.0</orientdb-version>
+        <orientdb-version>3.1.10</orientdb-version>
         <guava-version>18.0</guava-version>
         <aws-lambda-version>1.5</aws-lambda-version>
         <!--<apache.directory-api-version>
@@ -43,11 +43,11 @@
 
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>com.amazonaws.serverless</groupId>
-            <artifactId>aws-serverless-java-container-jersey</artifactId>
-            <version>${aws-lambda-version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.amazonaws.serverless</groupId>-->
+<!--            <artifactId>aws-serverless-java-container-jersey</artifactId>-->
+<!--            <version>${aws-lambda-version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -303,6 +303,14 @@
                 <exclusion>
                     <groupId>com.fasterxml.jackson.core</groupId>
                     <artifactId>jackson-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-dataformat-yaml</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>com.google.guava</groupId>
@@ -799,8 +807,26 @@
                     </sources>
                 </configuration>
             </plugin>
-
-
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>versions-maven-plugin</artifactId>
+              <version>2.7</version>
+              <configuration>
+                <ignoreVersions>
+                  <ignoreVersion type="regex">.*atlassian-2</ignoreVersion>
+                  <ignoreVersion type="regex">.*Alpha2</ignoreVersion>
+                  <ignoreVersion type="regex">.*alpha1</ignoreVersion>
+                  <ignoreVersion type="regex">alpha1</ignoreVersion>
+                  <ignoreVersion type="regex">.*ALPHA</ignoreVersion>
+                  <ignoreVersion type="regex">.*alpha</ignoreVersion>
+                  <ignoreVersion type="regex">.*alpha[0-9]</ignoreVersion>
+                  <ignoreVersion type="regex">.*beta[0-9]</ignoreVersion>
+                  <ignoreVersion type="regex">.*beta</ignoreVersion>
+                  <ignoreVersion type="regex">.*BETA</ignoreVersion>
+                  <ignoreVersion type="regex">20030203.*</ignoreVersion>
+                </ignoreVersions>
+              </configuration>
+            </plugin>
         </plugins>
 
     </build>
