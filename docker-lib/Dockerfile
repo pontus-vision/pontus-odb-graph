@@ -1,5 +1,5 @@
-FROM pontusvisiongdpr/pontus-jpostal-lib:latest as jpostal
-FROM pontusvisiongdpr/pontus-natty-lib:latest as natty
+FROM pontusvisiongdpr/pontus-jpostal-lib:1.13.2 as jpostal
+FROM pontusvisiongdpr/pontus-natty-lib:1.13.2 as natty
 
 FROM maven:3.6-jdk-8-alpine as builder
 #RUN apk add git

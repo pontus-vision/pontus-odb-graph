@@ -1,5 +1,5 @@
 #!/bin/bash
-export TAG=${TAG:-latest}
+export TAG=${TAG:-1.13.2}
 export DOLLAR='$'
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 set -e 

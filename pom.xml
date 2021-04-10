@@ -16,8 +16,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <jetty-version>9.4.3.v20170317</jetty-version>
-        <jersey-version>2.26</jersey-version>
+        <jetty-version>9.4.39.v20210325</jetty-version>
+        <jersey-version>2.33</jersey-version>
         <tinkerpop-version>3.4.6</tinkerpop-version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson2.version>[2.8.11.1,)</jackson2.version>
@@ -35,8 +35,10 @@
         <pontus-natty.version>100.14</pontus-natty.version>
         <netty-version>4.1.44.Final</netty-version>
         <orientdb-version>3.1.10</orientdb-version>
+        <!--guava-version>30.1.1-jre</guava-version-->
         <guava-version>18.0</guava-version>
         <aws-lambda-version>1.5</aws-lambda-version>
+        <apache-commons-configuration.version>2.7</apache-commons-configuration.version>
         <!--<apache.directory-api-version>
             1.0.0
         </apache.directory-api-version>-->
@@ -48,6 +50,16 @@
 <!--            <artifactId>aws-serverless-java-container-jersey</artifactId>-->
 <!--            <version>${aws-lambda-version}</version>-->
 <!--        </dependency>-->
+<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-configuration2 -->
+        <!--dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+            <version>${apache-commons-configuration.version}</version>
+            <exclusions>
+                <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></exclusion>
+            </exclusions>
+        </dependency-->
+
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -64,6 +76,10 @@
             <groupId>com.orientechnologies</groupId>
             <artifactId>orientdb-community</artifactId>
             <version>${orientdb-version}</version>
+            <!--exclusions>
+                <exclusion><groupId>javax.xml.bind</groupId><artifactId>jaxb-api</artifactId></exclusion>
+                <exclusion><groupId>com.carrotsearch</groupId><artifactId>hppc</artifactId></exclusion>
+            </exclusions!-->
         </dependency>
         <dependency>
             <groupId>com.orientechnologies</groupId>
@@ -80,6 +96,13 @@
                     <groupId>com.carrotsearch</groupId>
                     <artifactId>hppc</artifactId>
                 </exclusion>
+                <!--exclusion><groupId>com.google.guava</groupId><artifactId>guava</artifactId></exclusion>
+                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-server</artifactId></exclusion>
+                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-driver</artifactId></exclusion>
+                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-core</artifactId></exclusion>
+                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-groovy</artifactId></exclusion>
+                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>tinkergraph-gremlin</artifactId></exclusion>
+                <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></exclusion-->
             </exclusions>
 
         </dependency>
@@ -106,6 +129,14 @@
                     <groupId>com.carrotsearch</groupId>
                     <artifactId>hppc</artifactId>
                 </exclusion>
+                <!--exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-server</artifactId></exclusion>
+                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-driver</artifactId></exclusion>
+                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-core</artifactId></exclusion>
+                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-groovy</artifactId></exclusion>
+                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>tinkergraph-gremlin</artifactId></exclusion>
+                <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></exclusion-->
+
+
             </exclusions>
 
         </dependency>
@@ -115,6 +146,7 @@
             <artifactId>gremlin-driver</artifactId>
             <version>${tinkerpop-version}</version>
             <exclusions>
+                <exclusion><groupId>com.carrotsearch</groupId><artifactId>hppc</artifactId></exclusion>
                 <exclusion>
                     <groupId>org.apache.commons</groupId>
                     <artifactId>commons-lang3</artifactId>
@@ -270,7 +302,7 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
-            <version>2.4.0</version>
+            <version>2.5.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.ow2.asm</groupId>
@@ -331,6 +363,7 @@
                     <artifactId>commons-net</artifactId>
                 </exclusion>
 
+                <exclusion><groupId>org.yaml</groupId><artifactId>snakeyaml</artifactId></exclusion>
             </exclusions>
         </dependency>
 
@@ -343,12 +376,12 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.2</version>
+            <version>2.8.6</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20171018</version>
+            <version>20210307</version>
         </dependency>
 
         <dependency>
@@ -364,12 +397,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.13.0</version>
+            <version>2.14.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.13.0</version>
+            <version>2.14.1</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -481,12 +514,19 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
             <version>${jetty-version}</version>
+            <exclusions>
+              <exclusion><groupId>org.slf4j</groupId><artifactId>slf4j-api</artifactId></exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-jetty-http</artifactId>
             <version>${jersey-version}</version>
+            <exclusions>
+              <exclusion><groupId>org.eclipse.jetty</groupId><artifactId>jetty-server</artifactId></exclusion>
+              <exclusion><groupId>org.eclipse.jetty</groupId><artifactId>jetty-util</artifactId></exclusion>
+            </exclusions>
         </dependency>
         <!--<dependency>-->
         <!--<groupId>pontus-redaction</groupId>-->
