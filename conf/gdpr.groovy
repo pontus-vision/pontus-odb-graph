@@ -2651,6 +2651,10 @@ def createNotificationTemplates() {
 //      trans.open()
 //
 //    }
+    if (!App.g) {
+      App.g = g;
+    }
+
     if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
       return createNotificationTemplatesPt();
     }
