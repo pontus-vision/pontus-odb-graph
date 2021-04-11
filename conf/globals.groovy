@@ -318,18 +318,18 @@ class PontusJ2ReportingFunctions {
 
   static def getProbabilityOfPossibleMatches(ORID startVertexId, Map<String, Double> weightsPerVertex) {
 
-    String vertType = g.V(startVertexId).label().next()
+    String vertType = App.g.V(startVertexId).label().next()
 
     def weightedScores = new HashMap<ORID, Double>()
     def labelsForMatch = new HashMap<ORID, StringBuffer>()
 
     Double totalScore = 0
 
-    g.V(startVertexId).both().label().each { String label ->
+    App.g.V(startVertexId).both().label().each { String label ->
       totalScore += weightsPerVertex.get(label, new Double(0))
     }
 
-    g.V(startVertexId)
+    App.g.V(startVertexId)
       .both().bothE()
       .filter(bothV()
         .has("Metadata.Type.${vertType}", eq(vertType))
@@ -384,7 +384,6 @@ class PontusJ2ReportingFunctions {
 
   }
 
-  public static GraphTraversalSource g
   public static Jinjava jinJava
 
   static {
@@ -440,7 +439,7 @@ class PontusJ2ReportingFunctions {
 
     Map<Map<String, String>, Double> retVal = new HashMap<>()
     probs.each { vid, prob ->
-      Map<String, String> context = g.V(vid).valueMap()[0].collectEntries { key, val ->
+      Map<String, String> context = App.g.V(vid).valueMap()[0].collectEntries { key, val ->
         [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
       }
       context.put('Labels_For_Match', labelsForMatch.get(vid).toString())
@@ -460,14 +459,14 @@ class PontusJ2ReportingFunctions {
   }
 
   static Map<String, String> context(String pg_id) {
-    def context = g.V(new ORecordId(pg_id)).valueMap(true)[0].collectEntries { key, val ->
+    def context = App.g.V(new ORecordId(pg_id)).valueMap(true)[0].collectEntries { key, val ->
       [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
     }
     return context
   }
 
   static List<Map<String, String>> neighbours(String pg_id) {
-    def neighbours = g.V(new ORecordId(pg_id)).both().valueMap(true).toList().collect { item ->
+    def neighbours = App.g.V(new ORecordId(pg_id)).both().valueMap(true).toList().collect { item ->
       item.collectEntries { key, val ->
         [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
       }
@@ -523,7 +522,7 @@ class PontusJ2ReportingFunctions {
 
 
   static List<Map<String, String>> getDeptForDataSources(String dataSourceId) {
-    return g.V(new ORecordId(dataSourceId))
+    return App.g.V(new ORecordId(dataSourceId))
       .in('Has_Privacy_Impact_Assessment')
       .filter(label().is('Object.Data_Source'))
       .out('Has_Ingestion_Event')
@@ -540,7 +539,7 @@ class PontusJ2ReportingFunctions {
   }
 
   static List<Map<String, String>> getDataSourcesForLawfulBasis(String lawfulBasisId) {
-    def retVal = g.V(new ORecordId(lawfulBasisId))
+    def retVal = App.g.V(new ORecordId(lawfulBasisId))
       .in()
       .in()
       .has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
@@ -558,7 +557,7 @@ class PontusJ2ReportingFunctions {
 
 
   static Long getNumNaturalPersonForLawfulBasis(String lawfulBasisId) {
-    return g.V(new ORecordId(lawfulBasisId))
+    return App.g.V(new ORecordId(lawfulBasisId))
       .in()
       .in()
       .has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
@@ -573,7 +572,7 @@ class PontusJ2ReportingFunctions {
   }
 
   static Long getNumNaturalPersonForPIA(String piaId) {
-    return g.V(new ORecordId(piaId))
+    return App.g.V(new ORecordId(piaId))
       .in('Has_Privacy_Impact_Assessment')
       .filter(has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
       .out('Has_Ingestion_Event')
@@ -587,7 +586,7 @@ class PontusJ2ReportingFunctions {
   }
 
   static Long getNumSensitiveInfoForPIA(String piaId) {
-    return g.V(new ORecordId(piaId))
+    return App.g.V(new ORecordId(piaId))
       .in('Has_Privacy_Impact_Assessment')
       .filter(label().is('Object.Data_Source'))
       .out('Has_Ingestion_Event')
@@ -691,7 +690,7 @@ class PontusJ2ReportingFunctions {
   }
 
   static Long getNumDataSourcesForPIA(String id) {
-    return g.V(new ORecordId(id)).both().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')).count().next()
+    return App.g.V(new ORecordId(id)).both().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')).count().next()
   }
 
   public static JsonSlurper ptDictionarySlurper
@@ -777,15 +776,15 @@ def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTrav
 
 def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = g) {
 
-  String vertType = g.V(pg_id).label().next()
+  String vertType = App.g.V(pg_id).label().next()
   def allData = new HashMap<>()
 
 
-  def context = g.V(pg_id).valueMap(true)[0].collectEntries { key, val ->
+  def context = App.g.V(pg_id).valueMap(true)[0].collectEntries { key, val ->
     [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
   }
 
-  def neighbours = g.V(pg_id).both().valueMap(true).toList().collect { item ->
+  def neighbours = App.g.V(pg_id).both().valueMap(true).toList().collect { item ->
     item.collectEntries { key, val ->
       [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
     }
@@ -795,10 +794,8 @@ def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraver
   allData.put('connected_data', neighbours)
 
 
-  PontusJ2ReportingFunctions.g = App.g
-
   if ('Event.Data_Breach' == vertType) {
-    def impactedServers = g.V(pg_id)
+    def impactedServers = App.g.V(pg_id)
       .both()
       .has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
       .valueMap().toList().collect { item ->
@@ -807,7 +804,7 @@ def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraver
       }
     }
 
-    GraphTraversal impactedDataSourcesTrav = g.V(pg_id)
+    GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id)
       .both().has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
       .bothE('Runs_On').outV().dedup()
 
