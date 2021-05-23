@@ -426,6 +426,8 @@ class PontusJ2ReportingFunctions {
       PontusJ2ReportingFunctions.class, "getNumNaturalPersonForPIA", String.class))
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumSensitiveInfoForPIA",
       PontusJ2ReportingFunctions.class, "getNumSensitiveInfoForPIA", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataProceduresPerPerson",
+            PontusJ2ReportingFunctions.class, "getDataProceduresPerPerson", String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "t",
       PontusJ2ReportingFunctions.class, "translate", String.class))
@@ -545,7 +547,7 @@ class PontusJ2ReportingFunctions {
       .has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
       .in()
       .has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
-      .valueMap(true).toList().collect { item ->
+      .elementMap().toList().collect { item ->
       item.collectEntries { key, val ->
         [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
       }
@@ -583,6 +585,25 @@ class PontusJ2ReportingFunctions {
       .next()
 
 
+  }
+
+  static String getDataProceduresPerPerson(String userId) {
+    return App.g.V(new ORecordId(userId))
+
+            .out('Has_Ingestion_Event')
+            .in('Has_Ingestion_Event')
+            .filter(has('Metadata.Type.Event.Group_Ingestion', P.eq('Event.Group_Ingestion')))
+            .in('Has_Ingestion_Event')
+            .filter(has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
+            .in('Has_Data_Source')
+            .dedup()
+            .elementMap().toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+
+
+    }
   }
 
   static Long getNumSensitiveInfoForPIA(String piaId) {
@@ -780,11 +801,11 @@ def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraver
   def allData = new HashMap<>()
 
 
-  def context = App.g.V(pg_id).valueMap(true)[0].collectEntries { key, val ->
+  def context = App.g.V(pg_id).elementMap()[0].collectEntries { key, val ->
     [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
   }
 
-  def neighbours = App.g.V(pg_id).both().valueMap(true).toList().collect { item ->
+  def neighbours = App.g.V(pg_id).both().elementMap().toList().collect { item ->
     item.collectEntries { key, val ->
       [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
     }

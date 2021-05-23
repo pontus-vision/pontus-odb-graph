@@ -56,17 +56,14 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
   Gson gson = new Gson();
 
   GsonBuilder gsonBuilder = new GsonBuilder();
-
   @POST @Path("agrecords") @Produces(MediaType.APPLICATION_JSON) @Consumes(MediaType.APPLICATION_JSON)
   public RecordReply agrecords(RecordRequest req)
   {
-
     if (req.cols != null && req.dataType != null)
     {
 
       Set<String> valsSet          = new HashSet<>();
       Set<String> reportButtonsSet = new HashSet<>();
-
       for (int i = 0, ilen = req.cols.length; i < ilen; i++)
       {
         if (!req.cols[i].id.startsWith("@"))

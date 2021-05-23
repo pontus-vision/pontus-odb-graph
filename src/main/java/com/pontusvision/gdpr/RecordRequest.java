@@ -371,11 +371,38 @@ public class RecordRequest
     return sb;
   }
 
-
-
-  public String getSQL(boolean isCount)
-  {
+  public String getDirStatement(){
     StringBuilder sb = new StringBuilder();
+    sb.append((this.search.direction.equals("<-") ? "IN(" : "OUT("));
+    sb.append("'").append(this.search.relationship).append("'").append(')');
+    return sb.toString();
+  }
+
+  public String getSQLNeighbour(boolean isCount){
+    StringBuilder sb = new StringBuilder();
+
+    String dir = this.getDirStatement();
+
+    if (isCount){
+      sb.append("SELECT COUNT(*) FROM (SELECT EXPAND(").append(dir).append(") FROM ")
+              .append(this.search.vid).append(")");
+    }
+    else{
+      sb.append("SELECT ");
+      appendColsSQL(sb, this.cols);
+      sb.append(" FROM (");
+
+      sb.append("SELECT EXPAND(").append(dir).append(") FROM ").append(this.search.vid).append(" ");
+      appendWhereFiltersSQL(sb, this.filters, this.customFilter);
+      sb.append(")");
+    }
+
+    return sb.toString();
+
+  }
+  public String getSQLNormal(boolean isCount){
+    StringBuilder sb = new StringBuilder();
+
     if (isCount)
     {
       sb.append("SELECT COUNT(*) ");
@@ -387,6 +414,22 @@ public class RecordRequest
     }
     sb.append(" FROM `").append(dataType).append("` ");
     appendWhereFiltersSQL(sb, this.filters, this.customFilter);
+
+    return sb.toString();
+
+  }
+
+
+  public String getSQL(boolean isCount)
+  {
+    StringBuilder sb = new StringBuilder();
+
+    if (this.search.vid != null){
+      sb.append(getSQLNeighbour(isCount));
+    }
+    else {
+      sb.append(getSQLNormal(isCount));
+    }
 
     if (!isCount)
     {

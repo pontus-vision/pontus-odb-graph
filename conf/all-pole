@@ -158,6 +158,7 @@ Object.Data_Procedures.Type_Of_Natural_Person
 Object.Data_Procedures.Update_Mechanism
 Object.Data_Procedures.Update_URL
 Object.Data_Procedures.Why_Is_It_Collected
+Object.Data_Procedures.Is_SubProcess
 Object.Data_Source.Business_Rules
 Object.Data_Source.Create_Date
 Object.Data_Source.Credential_ApiKey
@@ -183,6 +184,7 @@ Object.Data_Source.URI_Template
 Object.Data_Source.URI_Update
 Object.Data_Source.Update_Date
 Object.Email_Address.Email
+Object.Email_Address.Host
 Object.Form.Metadata_Create_Date
 Object.Form.Metadata_GUID
 Object.Form.Metadata_Owner

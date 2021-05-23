@@ -270,17 +270,17 @@
     },
     {
       "name": "Event.Group_Ingestion.Has_Controller",
-      "dataType": "String",
+      "dataType": "Boolean",
       "cardinality": "SINGLE"
     },
     {
       "name": "Event.Group_Ingestion.Has_Data_Owner",
-      "dataType": "String",
+      "dataType": "Boolean",
       "cardinality": "SINGLE"
     },
     {
       "name": "Event.Group_Ingestion.Has_Processor",
-      "dataType": "String",
+      "dataType": "Boolean",
       "cardinality": "SINGLE"
     },
     {
@@ -1124,6 +1124,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Data_Procedures.Is_SubProcess",
+      "dataType": "Boolean",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Object.Data_Source",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1265,6 +1270,11 @@
     },
     {
       "name": "Object.Email_Address.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Address.Host",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3120,7 +3130,8 @@
         "Object.Data_Procedures.Type_Of_Natural_Person",
         "Object.Data_Procedures.Update_Mechanism",
         "Object.Data_Procedures.Update_URL",
-        "Object.Data_Procedures.Why_Is_It_Collected"
+        "Object.Data_Procedures.Why_Is_It_Collected",
+        "Object.Data_Procedures.Is_SubProcess"
       ],
       "propertyKeysMappings": {}
     },
@@ -3167,7 +3178,8 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata.Type.Object.Email_Address",
-        "Object.Email_Address.Email"
+        "Object.Email_Address.Email",
+        "Object.Email_Address.Host"
       ],
       "propertyKeysMappings": {}
     },

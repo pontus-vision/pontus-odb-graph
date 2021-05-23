@@ -8,7 +8,7 @@ mkdir -p ${DIR}/rules
 
 {%- for currRule in rules %}
 
-cat vars/globals.yaml | jinja2 --strict -DcurrRule={{currRule}} -o ${DIR}/rules/{{currRule}}.yaml templates/rules.yaml.j2
+cat vars/*rules*.yaml | jinja2 --strict -DcurrRule={{currRule}} -o ${DIR}/rules/{{currRule}}.yaml templates/rules.yaml.j2
 
 yq . ${DIR}/rules/{{currRule}}.yaml  >  ${DIR}/rules/{{currRule}}.json
 
