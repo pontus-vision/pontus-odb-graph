@@ -791,6 +791,9 @@ propertyKeys:
   - name: Object.Email_Address.Host
     dataType: String
     cardinality: SINGLE
+  - name: Object.Email_Address.Type
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Form
     dataType: String
     cardinality: SINGLE
@@ -1320,6 +1323,9 @@ propertyKeys:
   - name: Person.Natural.Customer_ID
     dataType: String
     cardinality: SINGLE
+  - name: Person.Natural.Id
+    dataType: String
+    cardinality: SINGLE
   - name: Person.Natural.Date_Of_Birth
     dataType: Date
     cardinality: SINGLE
@@ -1367,6 +1373,9 @@ propertyKeys:
     cardinality: SINGLE
 
   - name: Person.Organisation.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Id
     dataType: String
     cardinality: SINGLE
   - name: Person.Organisation.Department
@@ -1746,6 +1755,14 @@ edgeLabels:
     unidirected: False
 
   - name: Works
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Family
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Dependant
     multiplicity: MULTI
     unidirected: False
 vertexIndexes:
@@ -2169,6 +2186,7 @@ vertexIndexes:
       - Metadata.Type.Object.Email_Address
       - Object.Email_Address.Email
       - Object.Email_Address.Host
+      - Object.Email_Address.Type
     propertyKeysMappings:
     
       {}
@@ -2487,6 +2505,7 @@ vertexIndexes:
     propertyKeys:
       - Metadata.Type.Person.Natural
       - Person.Natural.Customer_ID
+      - Person.Natural.Id
       - Person.Natural.Date_Of_Birth
       - Person.Natural.Ethnicity
       - Person.Natural.Full_Name
@@ -2515,6 +2534,7 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata.Type.Person.Organisation
+      - Person.Organisation.Id
       - Person.Organisation.Department
       - Person.Organisation.Email
       - Person.Organisation.Fax

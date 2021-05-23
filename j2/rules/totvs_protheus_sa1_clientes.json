@@ -94,7 +94,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "totvs/proteus/sa1_clientes",
+            "val": "totvs/protheus/sa1_clientes",
             "excludeFromSearch": true
           },
           {
@@ -138,7 +138,7 @@
           },
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "totvs/proteus/sa1_clientes",
+            "val": "totvs/protheus/sa1_clientes",
             "excludeFromSearch": true
           },
           {
@@ -153,15 +153,15 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "totvs/proteus/sa1_clientes"
+            "val": "totvs/protheus/sa1_clientes"
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "totvs/proteus/sa1_clientes"
+            "val": "totvs/protheus/sa1_clientes"
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Clientes no Proteus/Totvs"
+            "val": "Registros de Clientes no protheus/Totvs"
           }
         ]
       }

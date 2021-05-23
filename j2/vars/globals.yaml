@@ -398,6 +398,7 @@ schema:
       props:
         - name: Email
         - name: Host
+        - name: Type
 
 
     - name: "Object.Form"
@@ -635,6 +636,7 @@ schema:
       useStatic: false
       props:
         - name: Customer_ID
+        - name: Id
         - name: Date_Of_Birth
           dataType: Date
         - name: Ethnicity
@@ -657,6 +659,7 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Id
         - name: Department
         - name: Email
         - name: Fax

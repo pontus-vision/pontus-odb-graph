@@ -81,7 +81,7 @@ rules:
       - label: Event.Ingestion
         props:
           Type:
-            val: totvs/proteus/sa1_clientes
+            val: totvs/protheus/sa1_clientes
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -110,16 +110,16 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Type:
-            val: totvs/proteus/sa1_clientes
+            val: totvs/protheus/sa1_clientes
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
             excludeFromSearch: true
       - label: Object.Data_Source
         props:
-          Name: totvs/proteus/sa1_clientes
-          Type: totvs/proteus/sa1_clientes
-          Description: Registros de Clientes no Proteus/Totvs
+          Name: totvs/protheus/sa1_clientes
+          Type: totvs/protheus/sa1_clientes
+          Description: Registros de Clientes no protheus/Totvs
     edges:
       - label: Has_Ingestion_Event
         fromVertexLabel: Person.Natural
@@ -220,11 +220,12 @@ rules:
   totvs_protheus_ra_funcionario:
     vertices:
       - label: Person.Natural
+        name: colaborador
         props:
           Full_Name: "${pg_RA_NOMECMP?.trim()?.toUpperCase()}"
           Full_Name_fuzzy: "${pg_RA_NOMECMP?.trim()?.toUpperCase()}"
           Type:
-            val: "Funcionarios"
+            val: "Colaborador"
             excludeFromSearch: true
           Gender: "${pg_RA_SEXO}"
           Customer_ID:
@@ -232,21 +233,38 @@ rules:
             mandatoryInSearch: true
             predicate: "eq"
 
+      - label: Location.Address
+        name: home
+        props:
+          Full_Address: "${pg_RA_ENDEREC} ${pg_RA_COMPLEM} ${pg_BAIRRO}, ${pg_RA_MUNICIP} - ${pg_RA_ESTADO}, ${pg_RA_CEP}"
+          Description: "moradia principal"
+          Type: "home"
+
       - label: Person.Natural
+        name: mae
         props:
           Full_Name: "${pg_RA_MAE?.trim()?.toUpperCase()}"
           Full_Name_fuzzy: "${pg_RA_MAE?.trim()?.toUpperCase()}"
           Type:
-            val: "Funcionarios-Mae"
-            excludeFromSearch: true
-          Gender: "${pg_RA_SEXO}"
-          Customer_ID:
-            val: "${pg_id}"
-            mandatoryInSearch: true
-            predicate: "eq"
+            val: "colaborador-pais"
+            excludeFromSearch: false
+          Gender: "F"
+
+      - label: Person.Natural
+        name: pai
+        props:
+          Full_Name: "${pg_RA_PAI?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${pg_RA_PAI?.trim()?.toUpperCase()}"
+          Type:
+            val: "colaborador-pais"
+            excludeFromSearch: false
+          Gender: "M"
+
 
         #CELULAR
+
       - label: Object.Phone_Number
+        name: phone
         props:
           Raw:
             val: "${pg_RA_TELEFON}"
@@ -263,8 +281,8 @@ rules:
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
-      #RG
       - label: Object.Identity_Card
+        name: rg
         props:
           Id_Value:
             val: "${pg_RA_RG?.trim()?.toUpperCase()}"
@@ -273,23 +291,26 @@ rules:
             val: "RG"
             excludeFromSearch: true
 
-      # EMAIL
       - label: Object.Email_Address
+        name: email1
         props:
-          Email:  "${pg_A1_EMAIL}"
+          Email:  "${pg_RA_EMAIL.trim()?.toUpperCase()}"
+          Type: "${(pg_RA_EMAIL.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
 
-      #ENDERECO,BAIRRO,CIDADE,UF,CEP
+      - label: Object.Email_Address
+        name: email2
+        props:
+          Email:  "${pg_RA_EMAIL2.trim()?.toUpperCase()}"
+          Type: "${(pg_RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
+
       - label: Location.Address
         props:
           Full_Address: "${pg_A1_END}, ${pg_A1_BAIRRO},  ${pg_A1_MUN} - ${pg_A1_ESTADO}, ${pg_A1_CEP}"
-          Type:
-            val: "Business"
-            excludeFromSearch: true
 
       - label: Event.Ingestion
         props:
           Type:
-            val: totvs/proteus/sa1_clientes
+            val: totvs/protheus/sra_funcionarios
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -318,47 +339,68 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Type:
-            val: totvs/proteus/sa1_clientes
+            val: totvs/protheus/sra_funcionarios
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
             excludeFromSearch: true
       - label: Object.Data_Source
         props:
-          Name: totvs/proteus/sa1_clientes
-          Type: totvs/proteus/sa1_clientes
-          Description: Registros de Clientes no Proteus/Totvs
+          Name: totvs/protheus/sra_funcionarios
+          Type: totvs/protheus/sra_funcionarios
+          Description: Registros de Funcionarios no protheus/Totvs
     edges:
       - label: Has_Ingestion_Event
-        fromVertexLabel: Person.Natural
+        fromVertexName: colaborador
         toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        fromVertexName: colaborador
+        toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        fromVertexName: colaborador
+        toVertexLabel: Event.Ingestion
+
+      - label: Is_Family
+        fromVertexName: mae
+        toVertexName: colaborador
+
+      - label: Is_Family
+        fromVertexName: pai
+        toVertexName: colaborador
+
+      - label: Has_Ingestion_Event
+        fromVertexName: mae
+        toVertexLabel: Event.Ingestion
+
       - label: Has_Ingestion_Event
         fromVertexLabel: Event.Group_Ingestion
         toVertexLabel: Event.Ingestion
+
       - label: Has_Ingestion_Event
         toVertexLabel: Event.Group_Ingestion
         fromVertexLabel: Object.Data_Source
 
-      - label: "Has_Phone"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Phone_Number"
+      - label: Has_Phone
+        fromVertexName: colaborador
+        toVertexName: phone
 
+      - label: Uses_Email
+        fromVertexName: colaborador
+        toVertexName: email1
 
-      - label: "Uses_Email"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Email_Address"
+      - label: Uses_Email
+        fromVertexName: colaborador
+        toVertexName: email2
 
-      - label: "Has_Id_Card"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Identity_Card"
+      - label: Has_Id_Card
+        fromVertexName: colaborador
+        toVertexName: rg
 
-      - label: "Works"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
-
-      - label: "Lives"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+      - label: Lives
+        fromVertexName: colaborador
+        toVertexName: home
 
 
 
@@ -383,9 +425,9 @@ rules:
   #      "A2_HPAGE": "",
   #      "A2_LOGEX": "",
   #      "A2_NEMPR": "",
-  #      "A2_NOME": "CLEUSA PAIVA PIO GOMES OLIVEIRA DIA",
+  #      "A2_NOME": "CLEUSA PAIVA DIA",
   #      "A2_NOMFAV": "",
-  #      "A2_NOMRESP": "MUSCLE MANUTENCAO E R",
+  #      "A2_NOMRESP": "ARMS MANUTENCAO E R",
   #      "A2_NREDUZ": "",
   #      "A2_NR_END": "",
   #      "A2_NUMEX": "",
@@ -402,67 +444,62 @@ rules:
 
   totvs_protheus_sa2_fornecedor:
     vertices:
-      - label: Person.Natural
+      - label: Person.Organisation
+        name: fornecedor
         props:
-          Full_Name: "${pg_A2_NOME?.trim()?.toUpperCase()}"
-          Full_Name_fuzzy: "${pg_A2_NOME?.trim()?.toUpperCase()}"
+          Name: "${pg_A2_NOME?.trim()?.toUpperCase()}"
           Type:
             val: "Fornecedor"
             excludeFromSearch: true
-          #          Name_Qualifier: "${pg_CORRETOR}"
-
-          Customer_ID:
+          Id:
             val: "${pg_id}"
             mandatoryInSearch: true
-            predicate: "eq"
 
+      - label: Location.Address
+        name: business_addr
+        props:
+          Full_Address: "${pg_A2_END} ${pg_A2_ENDCOMP} ${pg_BAIRRO}, ${pg_RA_MUNICIP} - ${pg_RA_ESTADO}, ${pg_RA_CEP}"
+          Description: "endereco fornecedor"
+          Type: "business"
 
-        #CELULAR
+      - label: Person.Natural
+        name: rep
+        props:
+          Full_Name: "${pg_A2_NOMRESP?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${pg_A2_NOMRESP?.trim()?.toUpperCase()}"
+          Type:
+            val: "forenecedor"
+            excludeFromSearch: false
+
       - label: Object.Phone_Number
+        name: rep_phone
         props:
           Raw:
-            val: "${pg_A2_TEL}"
+            val: "${pg_A2_REPRTEL}"
             mandatoryInSearch: false
           Type:
             val: "Office"
             excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(pg_A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(pg_A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((pg_A2_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((pg_A2_REPRTEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
-      #RG
-      - label: Object.Identity_Card
-        props:
-          Id_Value:
-            #            val: "${pg_A1_RG.replaceAll('[^0-9]','')}"
-            val: "${pg_A1_RG?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
-          Id_Type:
-            val: "RG"
-            excludeFromSearch: true
-
-      # EMAIL
       - label: Object.Email_Address
+        name: email1
         props:
-          Email:  "${pg_A1_EMAIL}"
+          Email:  "${A2_REPR_EM.trim()?.toUpperCase()}"
+          Type: "business"
 
-      #ENDERECO,BAIRRO,CIDADE,UF,CEP
-      - label: Location.Address
-        props:
-          Full_Address: "${pg_A1_END}, ${pg_A1_BAIRRO},  ${pg_A1_MUN} - ${pg_A1_ESTADO}, ${pg_A1_CEP}"
-          Type:
-            val: "Business"
-            excludeFromSearch: true
 
       - label: Event.Ingestion
         props:
           Type:
-            val: totvs/proteus/sa1_clientes
+            val: totvs/protheus/sa2_fornecedor
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -491,40 +528,43 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Type:
-            val: totvs/proteus/sa1_clientes
+            val: totvs/protheus/sa2_fornecedor
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
             excludeFromSearch: true
       - label: Object.Data_Source
         props:
-          Name: totvs/proteus/sa1_clientes
-          Type: totvs/proteus/sa1_clientes
-          Description: Registros de Clientes no Proteus/Totvs
+          Name: totvs/protheus/sa2_fornecedor
+          Type: totvs/protheus/sa2_fornecedor
+          Description: Registros de Fornecedores no protheus/Totvs
     edges:
       - label: Has_Ingestion_Event
-        fromVertexLabel: Person.Natural
+        fromVertexName: fornecedor
         toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        fromVertexName: rep
+        toVertexLabel: Event.Ingestion
+
       - label: Has_Ingestion_Event
         fromVertexLabel: Event.Group_Ingestion
         toVertexLabel: Event.Ingestion
+
       - label: Has_Ingestion_Event
         toVertexLabel: Event.Group_Ingestion
         fromVertexLabel: Object.Data_Source
 
+      - label: Has_Phone
+        fromVertexName: rep
+        toVertexName: rep_phone
 
-      - label: "Uses_Email"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Email_Address"
+      - label: Uses_Email
+        fromVertexName: rep
+        toVertexName: email1
 
-      - label: "Has_Id_Card"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Identity_Card"
 
-      - label: "Works"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+      - label: Works
+        fromVertexName: rep
+        toVertexName: business_addr
 
-      - label: "Lives"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"

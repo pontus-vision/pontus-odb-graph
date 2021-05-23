@@ -94,6 +94,6 @@ updatereq:
     fromVertexLabel: Location.Address
     toVertexLabel: Event.Transaction
   - label: Consent
-    fromVertexLabel: TITULAR
+    fromVertexName: TITULAR
     toVertexLabel: Event.Consent
 

@@ -56,7 +56,7 @@ updatereq:
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: totvs/proteus/sa1_clientes
+          val: totvs/protheus/sa1_clientes
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
@@ -84,7 +84,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Type
-          val: totvs/proteus/sa1_clientes
+          val: totvs/protheus/sa1_clientes
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
@@ -93,11 +93,11 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: totvs/proteus/sa1_clientes
+          val: totvs/protheus/sa1_clientes
         - name: Object.Data_Source.Type
-          val: totvs/proteus/sa1_clientes
+          val: totvs/protheus/sa1_clientes
         - name: Object.Data_Source.Description
-          val: Registros de Clientes no Proteus/Totvs
+          val: Registros de Clientes no protheus/Totvs
 
   edges:
   - label: Has_Ingestion_Event

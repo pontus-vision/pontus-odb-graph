@@ -2,13 +2,14 @@ updatereq:
   vertices:
     
     - label: Person.Natural
+      name: colaborador
       props:
         - name: Person.Natural.Full_Name
           val: ${pg_RA_NOMECMP?.trim()?.toUpperCase()}
         - name: Person.Natural.Full_Name_fuzzy
           val: ${pg_RA_NOMECMP?.trim()?.toUpperCase()}
         - name: Person.Natural.Type
-          val: Funcionarios
+          val: Colaborador
           excludeFromSearch: True
         - name: Person.Natural.Gender
           val: ${pg_RA_SEXO}
@@ -17,7 +18,42 @@ updatereq:
           predicate: eq
           mandatoryInSearch: True
     
+    - label: Location.Address
+      name: home
+      props:
+        - name: Location.Address.Full_Address
+          val: ${pg_RA_ENDEREC} ${pg_RA_COMPLEM} ${pg_BAIRRO}, ${pg_RA_MUNICIP} - ${pg_RA_ESTADO}, ${pg_RA_CEP}
+        - name: Location.Address.Description
+          val: moradia principal
+        - name: Location.Address.Type
+          val: home
+    
+    - label: Person.Natural
+      name: mae
+      props:
+        - name: Person.Natural.Full_Name
+          val: ${pg_RA_MAE?.trim()?.toUpperCase()}
+        - name: Person.Natural.Full_Name_fuzzy
+          val: ${pg_RA_MAE?.trim()?.toUpperCase()}
+        - name: Person.Natural.Type
+          val: colaborador-pais
+        - name: Person.Natural.Gender
+          val: F
+    
+    - label: Person.Natural
+      name: pai
+      props:
+        - name: Person.Natural.Full_Name
+          val: ${pg_RA_PAI?.trim()?.toUpperCase()}
+        - name: Person.Natural.Full_Name_fuzzy
+          val: ${pg_RA_PAI?.trim()?.toUpperCase()}
+        - name: Person.Natural.Type
+          val: colaborador-pais
+        - name: Person.Natural.Gender
+          val: M
+    
     - label: Object.Phone_Number
+      name: phone
       props:
         - name: Object.Phone_Number.Raw
           val: ${pg_RA_TELEFON}
@@ -34,6 +70,7 @@ updatereq:
           type: "[Ljava.lang.String;"
     
     - label: Object.Identity_Card
+      name: rg
       props:
         - name: Object.Identity_Card.Id_Value
           val: ${pg_RA_RG?.trim()?.toUpperCase()}
@@ -43,22 +80,30 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Email_Address
+      name: email1
       props:
         - name: Object.Email_Address.Email
-          val: ${pg_A1_EMAIL}
+          val: ${pg_RA_EMAIL.trim()?.toUpperCase()}
+        - name: Object.Email_Address.Type
+          val: ${(pg_RA_EMAIL.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}
+    
+    - label: Object.Email_Address
+      name: email2
+      props:
+        - name: Object.Email_Address.Email
+          val: ${pg_RA_EMAIL2.trim()?.toUpperCase()}
+        - name: Object.Email_Address.Type
+          val: ${(pg_RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}
     
     - label: Location.Address
       props:
         - name: Location.Address.Full_Address
           val: ${pg_A1_END}, ${pg_A1_BAIRRO},  ${pg_A1_MUN} - ${pg_A1_ESTADO}, ${pg_A1_CEP}
-        - name: Location.Address.Type
-          val: Business
-          excludeFromSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: totvs/proteus/sa1_clientes
+          val: totvs/protheus/sra_funcionarios
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
@@ -86,7 +131,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Type
-          val: totvs/proteus/sa1_clientes
+          val: totvs/protheus/sra_funcionarios
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
@@ -95,15 +140,30 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: totvs/proteus/sa1_clientes
+          val: totvs/protheus/sra_funcionarios
         - name: Object.Data_Source.Type
-          val: totvs/proteus/sa1_clientes
+          val: totvs/protheus/sra_funcionarios
         - name: Object.Data_Source.Description
-          val: Registros de Clientes no Proteus/Totvs
+          val: Registros de Funcionarios no protheus/Totvs
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person.Natural
+    fromVertexName: colaborador
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexName: colaborador
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexName: colaborador
+    toVertexLabel: Event.Ingestion
+  - label: Is_Family
+    fromVertexName: mae
+    toVertexName: colaborador
+  - label: Is_Family
+    fromVertexName: pai
+    toVertexName: colaborador
+  - label: Has_Ingestion_Event
+    fromVertexName: mae
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
@@ -112,18 +172,18 @@ updatereq:
     fromVertexLabel: Object.Data_Source
     toVertexLabel: Event.Group_Ingestion
   - label: Has_Phone
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Phone_Number
+    fromVertexName: colaborador
+    toVertexName: phone
   - label: Uses_Email
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Email_Address
+    fromVertexName: colaborador
+    toVertexName: email1
+  - label: Uses_Email
+    fromVertexName: colaborador
+    toVertexName: email2
   - label: Has_Id_Card
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Identity_Card
-  - label: Works
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Location.Address
+    fromVertexName: colaborador
+    toVertexName: rg
   - label: Lives
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Location.Address
+    fromVertexName: colaborador
+    toVertexName: home
 
