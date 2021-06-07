@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Person.Organisation.Name",
-            "val": "${pg_A2_NOME?.trim()?.toUpperCase()}"
+            "val": "${A2_NOME?.trim()?.toUpperCase()}"
           },
           {
             "name": "Person.Organisation.Type",
@@ -16,7 +16,7 @@
           },
           {
             "name": "Person.Organisation.Id",
-            "val": "${pg_id}",
+            "val": "${id}",
             "mandatoryInSearch": true
           }
         ]
@@ -27,7 +27,7 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${pg_A2_END} ${pg_A2_ENDCOMP} ${pg_BAIRRO}, ${pg_RA_MUNICIP} - ${pg_RA_ESTADO}, ${pg_RA_CEP}"
+            "val": "${A2_END} ${A2_ENDCOMP} ${BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
           },
           {
             "name": "Location.Address.Description",
@@ -45,11 +45,11 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${pg_A2_NOMRESP?.trim()?.toUpperCase()}"
+            "val": "${A2_NOMRESP?.trim()?.toUpperCase()}"
           },
           {
             "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${pg_A2_NOMRESP?.trim()?.toUpperCase()}"
+            "val": "${A2_NOMRESP?.trim()?.toUpperCase()}"
           },
           {
             "name": "Person.Natural.Type",
@@ -63,7 +63,7 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${pg_A2_REPRTEL}"
+            "val": "${A2_REPRTEL}"
           },
           {
             "name": "Object.Phone_Number.Type",
@@ -72,13 +72,13 @@
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
-            "val": "${(pg_A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}",
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Last_7_Digits",
-            "val": "${(((pg_A2_REPRTEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((A2_REPRTEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }
@@ -118,13 +118,13 @@
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
-            "val": "${pg_firstEntry}",
+            "val": "${firstEntry}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Update_Date",
-            "val": "${pg_lastUpdate}",
+            "val": "${lastUpdate}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -135,7 +135,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${pg_currDate}",
+            "val": "${currDate}",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
           },

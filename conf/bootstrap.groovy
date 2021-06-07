@@ -14,13 +14,17 @@ try {
 //    OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
 //    orient.create("test", ODatabaseType.PLOCAL);
 
-    System.out.println('\n\n\n\nABOUT TO LOAD /opt/pontus-graphdb/graphdb-current//conf/gdpr-schema.json\n\n\n\n\n')
-    String retVal = loadSchema(graph,'/orientdb/conf/gdpr-schema.json')
+    System.out.println('\n\n\n\nABOUT TO LOAD conf/gdpr-schema.json\n\n\n\n\n')
+    String retVal = loadSchema(graph,'/orientdb/conf/gdpr-schema.json', 'conf/gdpr-schema.json')
     
-    System.out.println("results after loading /opt/pontus-graphdb/graphdb-current//conf/gdpr-schema.json: ${retVal}\n\n\n\n\n")
+    System.out.println("results after loading conf/gdpr-schema.json: ${retVal}\n\n\n\n\n")
     if (!App.g) {
         App.g = g;
     }
+
+    retVal = loadDataMappingFiles(graph, '/orientdb/j2/rules', 'j2/rules/');
+    System.out.println("results after loadDataMappingFiles: ${retVal}\n\n\n\n\n")
+
 
     createNotificationTemplates();
     addLawfulBasisAndPrivacyNotices(graph,g)

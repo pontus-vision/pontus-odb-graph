@@ -6,11 +6,11 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${pg_A1_NOME?.trim()?.toUpperCase()}"
+            "val": "${A1_NOME?.trim()?.toUpperCase()}"
           },
           {
             "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${pg_A1_NOME?.trim()?.toUpperCase()}"
+            "val": "${A1_NOME?.trim()?.toUpperCase()}"
           },
           {
             "name": "Person.Natural.Type",
@@ -19,7 +19,7 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${pg_id}",
+            "val": "${id}",
             "predicate": "eq",
             "mandatoryInSearch": true
           }
@@ -30,7 +30,7 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${pg_A1_TEL}"
+            "val": "${A1_TEL}"
           },
           {
             "name": "Object.Phone_Number.Type",
@@ -39,13 +39,13 @@
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
-            "val": "${(pg_A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}",
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Last_7_Digits",
-            "val": "${(((pg_A1_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((A1_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }
@@ -56,7 +56,7 @@
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${pg_A1_RG?.trim()?.toUpperCase()}",
+            "val": "${A1_RG?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
@@ -71,7 +71,7 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${pg_A1_EMAIL}"
+            "val": "${A1_EMAIL}"
           }
         ]
       },
@@ -80,7 +80,7 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${pg_A1_END}, ${pg_A1_BAIRRO},  ${pg_A1_MUN} - ${pg_A1_ESTADO}, ${pg_A1_CEP}"
+            "val": "${A1_END}, ${A1_BAIRRO},  ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
           },
           {
             "name": "Location.Address.Type",
@@ -109,13 +109,13 @@
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
-            "val": "${pg_firstEntry}",
+            "val": "${firstEntry}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Update_Date",
-            "val": "${pg_lastUpdate}",
+            "val": "${lastUpdate}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -126,7 +126,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${pg_currDate}",
+            "val": "${currDate}",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
           },

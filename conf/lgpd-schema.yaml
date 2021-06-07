@@ -778,6 +778,37 @@ propertyKeys:
   - name: Object.Data_Source.Update_Date
     dataType: Date
     cardinality: SINGLE
+  - name: Metadata.Type.Object.Data_Source_Mapping_Rule
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Data_Source_Mapping_Rule.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Business_Rules_JSON
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Update_Date
+    dataType: Date
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Email_Address
     dataType: String
     cardinality: SINGLE
@@ -1490,6 +1521,9 @@ vertexLabels:
   - name: Object.Data_Source
     partition: False
     useStatic: False
+  - name: Object.Data_Source_Mapping_Rule
+    partition: False
+    useStatic: False
   - name: Object.Email_Address
     partition: False
     useStatic: False
@@ -2173,6 +2207,25 @@ vertexIndexes:
       - Object.Data_Source.URI_Template
       - Object.Data_Source.URI_Update
       - Object.Data_Source.Update_Date
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Data_Source_Mapping_Rule.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Data_Source_Mapping_Rule
+      - Object.Data_Source_Mapping_Rule.Business_Rules_JSON
+      - Object.Data_Source_Mapping_Rule.Create_Date
+      - Object.Data_Source_Mapping_Rule.Form_Id
+      - Object.Data_Source_Mapping_Rule.Form_Owner_Id
+      - Object.Data_Source_Mapping_Rule.Form_Submission_Id
+      - Object.Data_Source_Mapping_Rule.Form_Submission_Owner_Id
+      - Object.Data_Source_Mapping_Rule.Name
+      - Object.Data_Source_Mapping_Rule.Update_Date
     propertyKeysMappings:
     
       {}

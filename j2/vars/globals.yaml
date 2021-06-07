@@ -392,6 +392,22 @@ schema:
           dataType: Date
 
 
+    - name: "Object.Data_Source_Mapping_Rule"
+      partition: false
+      useStatic: false
+      props:
+        - name: Business_Rules_JSON
+        - name: Create_Date
+          dataType: Date
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Name
+        - name: Update_Date
+          dataType: Date
+
+
     - name: "Object.Email_Address"
       partition: false
       useStatic: false

@@ -1,18 +1,24 @@
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.*
 import com.google.common.util.concurrent.AtomicDouble
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
+import com.jayway.jsonpath.JsonPath
 import com.joestelmach.natty.DateGroup
 import com.joestelmach.natty.Parser
 import com.orientechnologies.orient.core.id.ORID
+import com.pontusvision.gdpr.App
+import com.pontusvision.gdpr.mapping.VertexProps
 import com.pontusvision.utils.LocationAddress
 import com.pontusvision.utils.PostCode
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.text.GStringTemplateEngine
 import groovy.text.Template
+import groovy.transform.CompileStatic
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResult
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet
@@ -36,27 +42,16 @@ def benchmark = { closure ->
 }
 */
 
-class PVVertex {
-    VertProp[] props
-    String label
-    String name
-
-
-}
-class VertProp {
-    String val
-    Class nativeType
-    String name
-    String  predicate
-    boolean  excludeFromSearch
-    boolean  excludeFromSubsequenceSearch
-    boolean  excludeFromUpdate
-    boolean  mandatoryInSearch
-    String postProcessor
-    String postProcessorVar
-    double matchWeight
-    String splitChar
-}
+//class PVVertex {
+//    VertProp[] props
+//    String label
+//    String name
+//    Double percentageThreshold
+//
+//}
+//class VertProp extends com.pontusvision.gdpr.mapping.VertexProps {
+//    Class nativeType
+//}
 
 class Convert<T> {
     private from
@@ -335,6 +330,7 @@ class MatchReq<T> {
     private String vertexName
     private String vertexLabel
 
+    private Double percentageThreshold
     private String predicateStr
     private Closure predicate
     private Convert<T> conv
@@ -415,6 +411,15 @@ class MatchReq<T> {
 
 
         }
+    }
+
+
+    Double getPercentageThreshold() {
+        return percentageThreshold
+    }
+
+    void setPercentageThreshold(Double percentageThreshold) {
+        this.percentageThreshold = percentageThreshold
     }
 
     boolean getMandatoryInSearch() {
@@ -983,12 +988,173 @@ class Matcher {
 
     }
 
-    static getMatchRequests(Map<String, String> currRecord, Object parsedRules, String rulesJsonStr, Double percentageThreshold, StringBuffer sb = null) {
+    static com.pontusvision.gdpr.mapping.Rules getRule(String rulesName) {
+        def hasEntry =
+                (App.g.V()
+                        .has("Metadata.Type", "Object.Data_Source_Mapping_Rule")
+                        .has("Metadata.Type.Object.Data_Source_Mapping_Rule",
+                                P.eq("Object.Data_Source_Mapping_Rule"))
+                        .has("Object.Data_Source_Mapping_Rule.Name", P.eq(rulesName))
+                        .next()
+                        .property("Object.Data_Source_Mapping_Rule.Business_Rules_JSON")
+                        .value()
+
+                )
+        def jsonSlurper = new JsonSlurper()
+        def rules = jsonSlurper.parseText(hasEntry) as com.pontusvision.gdpr.mapping.Rules
+
+        return rules;
+
+    }
+
+    static String  ingestRecordListUsingRules(String jsonString,
+                                              String jsonPath,
+                                              String ruleName) {
+        return ingestRecordListUsingRules(App.graph,App.g, jsonString,jsonPath,ruleName);
+    }
+
+    static String  ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g,
+                                              String jsonString,
+                                              String jsonPath,
+                                              String ruleName) {
+
+        StringBuffer sb = new StringBuffer();
+
+        def  recordList = JsonPath.read(jsonString,jsonPath);
+//        def  recordList =  mapper.readValue(jsonString,
+//                new TypeReference<List<Map<String, String>>>(){} as TypeReference<List<Map<String, String>>>);
+
+
+
+        Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
+        Transaction trans = graph.tx()
+        try {
+            if (!trans.isOpen()) {
+                trans.open()
+            }
+
+            def rules =  getRule(ruleName) //jsonSlurper.parseText(jsonRules) as com.pontusvision.gdpr.mapping.Rules;
+
+
+            Double percentageThreshold = (rules.percentageThreshold == null) ? 10.0d
+                    : (double) (rules.percentageThreshold)
+            int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
+
+            def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
+                parseEdges(rules.updatereq)
+
+            for (def item in recordList) {
+
+                def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName, Map<String, Double> percentageThresholdByVertexName) =
+                getMatchRequests(item as Map<String, String>, rules.updatereq, percentageThreshold, sb)
+
+
+                processMatchRequests(graph, g,
+                        matchReqs,
+                        maxHitsPerType,
+                        percentageThresholdByVertexName,
+                        maxScoresByVertexName,
+                        finalVertexIdByVertexName,
+                        edgeReqsByVertexName,
+                        edgeReqs,
+                        sb)
+
+            }
+
+
+            trans.commit()
+        } catch (Throwable t) {
+            trans.rollback()
+            sb.append(t)
+        } finally {
+            trans.close()
+        }
+        return sb.toString();
+    }
+
+    static String upsertRule (GraphTraversalSource g, String ruleName, String ruleStr,
+                              StringBuffer sb){
+        def ruleJson = new JsonSlurper().parseText(ruleStr) as com.pontusvision.gdpr.mapping.Rules
+
+        if (ruleJson.updatereq) {
+            def hasEntry =
+                    (g.V()
+                            .has("Metadata.Type","Object.Data_Source_Mapping_Rule")
+                            .has("Metadata.Type.Object.Data_Source_Mapping_Rule",
+                                    P.eq("Object.Data_Source_Mapping_Rule"))
+                            .has("Object.Data_Source_Mapping_Rule.Name", P.eq(ruleName)).hasNext())
+
+
+            def localG = g.addV("Object.Data_Source_Mapping_Rule")
+                    .property("Metadata.Type","Object.Data_Source_Mapping_Rule")
+                    .property("Metadata.Type.Object.Data_Source_Mapping_Rule","Object.Data_Source_Mapping_Rule")
+                    .property("Object.Data_Source_Mapping_Rule.Name", ruleName)
+                    .property("Object.Data_Source_Mapping_Rule.Business_Rules_JSON", ruleStr)
+                    .property("Object.Data_Source_Mapping_Rule.Update_Date", new Date())
+
+            if (!hasEntry) {
+                sb.append("\nAdded a new Entry for ${ruleName}")
+                localG = localG.property("Object.Data_Source_Mapping_Rule.Create_Date", new Date())
+            }
+            String id =  localG.next().id().toString()
+
+            sb.append("\nId for ${ruleName} is ${id}")
+        }
+    }
+
+    static Map<String, Map<ORID, AtomicDouble>> ingestDataUsingRules(
+            Map<String, String> bindings,
+            String rulesName,
+            StringBuffer sb = null) {
+        Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
+
+
+        Transaction trans = App.graph.tx()
+        try {
+            if (!trans.isOpen()) {
+                trans.open()
+            }
+            def rules = getRule(rulesName);
+
+            double percentageThreshold = (rules.percentageThreshold == null) ? 10.0 : (double) (rules.percentageThreshold)
+            int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
+
+            def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
+            parseEdges(rules.updatereq)
+
+            def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName, Map<String, Double> percentageThresholdByVertexName) =
+            getMatchRequests(bindings, rules.updatereq, percentageThreshold, sb)
+
+            processMatchRequests(App.graph,
+                    App.g,
+                    matchReqs,
+                    maxHitsPerType,
+                    percentageThresholdByVertexName,
+                    maxScoresByVertexName,
+                    finalVertexIdByVertexName,
+                    edgeReqsByVertexName,
+                    edgeReqs,
+                    sb)
+
+
+            trans.commit()
+        } catch (Throwable t) {
+            trans.rollback()
+            throw t
+        } finally {
+            trans.close()
+        }
+
+        return finalVertexIdByVertexName
+    }
+
+
+    static getMatchRequests(Map<String, String> currRecord, Object parsedRules, Double percentageThreshold, StringBuffer sb = null) {
         def binding = currRecord
 
         binding.put("original_request", JsonOutput.prettyPrint(JsonOutput.toJson(currRecord)))
 
-        def rules = parsedRules
+        def rules = parsedRules as com.pontusvision.gdpr.mapping.UpdateReq;
         Map<String, AtomicDouble> maxScoresByVertexName = new HashMap<>()
         Map<String, Double> percentageThresholdByVertexName = new HashMap<>()
 
@@ -1015,14 +1181,14 @@ class Matcher {
             }
 
             if (passedCondition) {
-                if (vtx.createMany && vtx.createMany.prop){
-                    VertProp createManyProp = vtx.createMany.prop
-                    String propSplitChar = createManyProp?.splitChar?:","
-                    String[] propVal = ((String)createManyProp?.val).split(Pattern.quote(propSplitChar));
-                    def origProps = new ArrayList<VertProp> (vtx.props);
+                if (vtx.createMany) {
+                    com.pontusvision.gdpr.mapping.VertexProps createManyProp = vtx.createMany;
+                    String propSplitChar = createManyProp?.splitChar ?: ","
+                    String[] propVal = ((String) createManyProp?.val).split(Pattern.quote(propSplitChar));
+                    def origProps = new ArrayList<com.pontusvision.gdpr.mapping.VertexProps>(vtx.props);
 
-                    propVal.each { it->
-                        VertProp newProp = new VertProp();
+                    propVal.each { it ->
+                        VertexProps newProp = new VertexProps();
                         newProp.name = createManyProp.name
                         newProp.excludeFromSearch = (boolean) createManyProp.excludeFromSearch
                         newProp.excludeFromSubsequenceSearch = (boolean) createManyProp.excludeFromSubsequenceSearch
@@ -1040,12 +1206,14 @@ class Matcher {
                                 vertexName + "[${it}]",
                                 vertexLabel,
                                 binding,
-                                vtx)
+                                vtx,
+                                percentageThreshold,
+                                sb)
 
                     }
-                }
-                else{
-                    Matcher.processVertices(slurper, matchReqs, maxScoresByVertexName, percentageThresholdByVertexName,vertexName, vertexLabel, binding,  vtx)
+                } else {
+                    Matcher.processVertices(slurper, matchReqs, maxScoresByVertexName, percentageThresholdByVertexName,
+                            vertexName, vertexLabel, binding, vtx, percentageThreshold, sb)
                 }
             }
         }
@@ -1061,20 +1229,21 @@ class Matcher {
                            String vertexLabel,
                            Map<String, String> binding,
                            def vtx,
+                           Double percentageThreshold,
                            StringBuffer sb) {
 
 
         AtomicDouble maxScore = maxScoresByVertexName.computeIfAbsent(vertexName, { k -> new AtomicDouble(0) })
-        percentageThresholdByVertexName.computeIfAbsent(vertexName, { k -> new Double((double) (vtx.percentageThreshold == null ? percentageThreshold : vtx.percentageThreshold)) })
+        percentageThresholdByVertexName.computeIfAbsent(vertexName, { k -> new Double((double) (vtx?.percentageThreshold == null ? percentageThreshold : vtx.percentageThreshold)) })
 //        int minSizeSubsequences = vtx.minSizeSubsequences ?: -1;
 
 
-        vtx.props.each { prop ->
+        (vtx as com.pontusvision.gdpr.mapping.Vertex).props.each { prop ->
 
             Class nativeType = String.class
 
-            if (prop.type != null){
-                nativeType = Class.forName((String) prop.type)
+            if (prop.type != null) {
+                nativeType = Class.forName((String) prop.type.toString())
             }
 
             String propName = prop.name
@@ -1154,7 +1323,7 @@ class Matcher {
                             , (boolean) prop.mandatoryInSearch
                             , (String) prop.postProcessor ?: null
                             , (String) prop.postProcessorVar ?: null
-                            , (double) ((prop.matchWeight == null) ? 1.0 : prop.matchWeight)
+                            , (double) ((prop.matchWeight == null) ? 1.0d : prop.matchWeight)
                             , sb
                     )
                 }
@@ -1302,12 +1471,12 @@ class Matcher {
     }
 
 
-    static parseEdges(def rules) {
+    static parseEdges(com.pontusvision.gdpr.mapping.UpdateReq updateReq) {
 
         Map<String, List<EdgeRequest>> edgeReqsByVertexName = new HashMap<>()
         Set<EdgeRequest> edgeReqs = new HashSet<>()
 
-        rules.edges.each { it ->
+        (updateReq as com.pontusvision.gdpr.mapping.UpdateReq).edges.each { it ->
             String fromVertexName = it.fromVertexName ?: it.fromVertexLabel
             String toVertexName = it.toVertexName ?: it.toVertexLabel
             String label = it.label
@@ -1408,7 +1577,7 @@ class Matcher {
         def (
         Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName,
         Map<String, List<MatchReq>>          matchReqByVertexName
-        ) = Matcher.matchVertices(graph, g, matchReqs, maxHitsPerType, sb)
+        ) = matchVertices(graph, g, matchReqs, maxHitsPerType, sb)
 
 
         vertexScoreMapByVertexName.each { vertexTypeStr, potentialHitIDs ->
@@ -1525,7 +1694,7 @@ def ingestDataUsingRules(OrientStandardGraph graph, GraphTraversalSource g, Map<
     Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
 
     def jsonSlurper = new JsonSlurper()
-    def rules = jsonSlurper.parseText(jsonRules)
+    def rules = jsonSlurper.parseText(jsonRules) as com.pontusvision.gdpr.mapping.Rules
 
     double percentageThreshold = (rules.percentageThreshold == null) ? 10.0 : (double) (rules.percentageThreshold)
     int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
@@ -1538,7 +1707,7 @@ def ingestDataUsingRules(OrientStandardGraph graph, GraphTraversalSource g, Map<
         }
 
         def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName, Map<String, Double> percentageThresholdByVertexName) =
-        Matcher.getMatchRequests(bindings, rules.updatereq, jsonRules, percentageThreshold, sb)
+        Matcher.getMatchRequests(bindings, rules.updatereq, percentageThreshold, sb)
 
         Matcher.processMatchRequests(graph,
                 g,
@@ -1568,7 +1737,7 @@ def ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g
     Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
 
     def jsonSlurper = new JsonSlurper()
-    def rules = jsonSlurper.parseText(jsonRules)
+    def rules = jsonSlurper.parseText(jsonRules) as com.pontusvision.gdpr.mapping.Rules;
 
 
     double percentageThreshold = (rules.percentageThreshold == null) ? 10.0 : (double) (rules.percentageThreshold)
@@ -1584,7 +1753,7 @@ def ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g
         for (Map<String, String> item in recordList) {
 
             def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName, Map<String, Double> percentageThresholdByVertexName) =
-            Matcher.getMatchRequests(item, rules.updatereq, jsonRules, percentageThreshold, sb)
+            Matcher.getMatchRequests(item, rules.updatereq, percentageThreshold, sb)
 
 
             Matcher.processMatchRequests(graph, g,
@@ -1623,6 +1792,47 @@ def findMatchingNeighbours(gTrav = g, Set<ORID> requiredTypeIds, Set<ORID> other
 
 }
 
+
+@CompileStatic
+def loadDataMappingFiles(OrientStandardGraph graph, String... dirs) {
+
+    StringBuffer sb = new StringBuffer()
+
+
+    def trans = graph.tx()
+    try {
+        if (!trans.isOpen()) {
+            trans.open()
+        }
+        def jsonSuffix = ".json"
+        for (d in dirs) {
+            sb.append("\nLoading rules from folder ${d}");
+            def jsonDir = new File(d)
+            if (jsonDir.exists()) {
+                jsonDir.traverse {
+
+                    def fileName = it.name
+
+                    if (fileName.endsWith(jsonSuffix)) {
+
+                        def ruleName = fileName.substring(0, fileName.length() - jsonSuffix.length())
+                        sb.append("\nLoading rule ${ruleName}");
+
+                        def ruleStr = it.text
+                        Matcher.upsertRule ( App.g, ruleName, ruleStr, sb)
+                    }
+                }
+            }
+        }
+        graph.tx().commit()
+    }
+    catch (Throwable t) {
+        graph.tx().rollback()
+        sb?.append('\nFailed to load Mapping Files!\n')?.append(t)
+        t.printStackTrace()
+    }
+    return sb.toString()
+}
 
 /*
 

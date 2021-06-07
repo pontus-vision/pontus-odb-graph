@@ -183,6 +183,14 @@ Object.Data_Source.URI_Read
 Object.Data_Source.URI_Template
 Object.Data_Source.URI_Update
 Object.Data_Source.Update_Date
+Object.Data_Source_Mapping_Rule.Business_Rules_JSON
+Object.Data_Source_Mapping_Rule.Create_Date
+Object.Data_Source_Mapping_Rule.Form_Id
+Object.Data_Source_Mapping_Rule.Form_Owner_Id
+Object.Data_Source_Mapping_Rule.Form_Submission_Id
+Object.Data_Source_Mapping_Rule.Form_Submission_Owner_Id
+Object.Data_Source_Mapping_Rule.Name
+Object.Data_Source_Mapping_Rule.Update_Date
 Object.Email_Address.Email
 Object.Email_Address.Host
 Object.Email_Address.Type

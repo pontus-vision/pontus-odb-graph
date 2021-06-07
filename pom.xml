@@ -39,12 +39,18 @@
         <guava-version>25.0-jre</guava-version>
         <aws-lambda-version>1.5.2</aws-lambda-version>
         <apache-commons-configuration.version>2.7</apache-commons-configuration.version>
+        <apache-commons-csv.version>1.8</apache-commons-csv.version>
         <!--<apache.directory-api-version>
             1.0.0
         </apache.directory-api-version>-->
 
     </properties>
     <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.commons</groupId>-->
+<!--            <artifactId>commons-csv</artifactId>-->
+<!--            <version>${apache-commons-csv.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.amazonaws.serverless</groupId>
             <artifactId>aws-serverless-java-container-jersey</artifactId>
