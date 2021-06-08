@@ -118,7 +118,7 @@
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
-            "val": "${firstEntry}",
+            "val": "${firstUpdate}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           },

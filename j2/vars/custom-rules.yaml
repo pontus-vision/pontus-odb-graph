@@ -16,7 +16,7 @@ rules:
   #      "A1_COD_MUN": "sss",
   #      "A1_NOME": "sss",
   #      "id": "id",
-  #      "firstEntry": "2016-08-29T09:12:33.001Z",
+  #      "firstUpdate": "2016-08-29T09:12:33.001Z",
   #      "A1_DDD": "sss",
   #      "A1_EST": "sss",
   #      "A1_MUN": "sss"
@@ -90,7 +90,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${firstEntry}"
+            val: "${firstUpdate}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -151,7 +151,7 @@ rules:
   #    {
   #      "id": "string",
   #      "lastUpdate": {},
-  #      "firstEntry": {},
+  #      "firstUpdate": {},
   #      "RA_APELIDO": "",
   #      "RA_BAIRRO": "Rua Da Ponte",
   #      "RA_BITMAP": "9328",
@@ -319,7 +319,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${firstEntry}"
+            val: "${firstUpdate}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -410,7 +410,7 @@ rules:
   #   {
   #      "id": "string",
   #      "lastUpdate": {},
-  #      "firstEntry": {},
+  #      "firstUpdate": {},
   #      "A2_CEP": "8560335",
   #      "A2_CGC": "24984436333120",
   #      "A2_COMPLEM": "NIRE 35.8.1939897-6",
@@ -508,7 +508,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${firstEntry}"
+            val: "${firstUpdate}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:

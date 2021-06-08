@@ -1066,6 +1066,7 @@ class Matcher {
         } catch (Throwable t) {
             trans.rollback()
             sb.append(t)
+            throw t;
         } finally {
             trans.close()
         }
@@ -1148,9 +1149,22 @@ class Matcher {
         return finalVertexIdByVertexName
     }
 
+    static Map<String, String> cleanupKeys(Map<String, String> orgMap) {
+        Map<String, String> resultMap = new HashMap<>();
+        if (orgMap == null || orgMap.isEmpty()) {
+            return resultMap;
+        }
+        Set<String> keySet = orgMap.keySet();
+        for (String key : keySet) {
+            String newKey = key.trim();
+            resultMap.put(newKey, orgMap.get(key));
+        }
+        return resultMap;
+    }
+
 
     static getMatchRequests(Map<String, String> currRecord, Object parsedRules, Double percentageThreshold, StringBuffer sb = null) {
-        def binding = currRecord
+        def binding = cleanupKeys(currRecord);
 
         binding.put("original_request", JsonOutput.prettyPrint(JsonOutput.toJson(currRecord)))
 
