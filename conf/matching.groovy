@@ -1003,27 +1003,26 @@ class Matcher {
         def jsonSlurper = new JsonSlurper()
         def rules = jsonSlurper.parseText(hasEntry) as com.pontusvision.gdpr.mapping.Rules
 
-        return rules;
+        return rules
 
     }
 
-    static String  ingestRecordListUsingRules(String jsonString,
-                                              String jsonPath,
-                                              String ruleName) {
-        return ingestRecordListUsingRules(App.graph,App.g, jsonString,jsonPath,ruleName);
+    static String ingestRecordListUsingRules(String jsonString,
+                                             String jsonPath,
+                                             String ruleName) {
+        return ingestRecordListUsingRules(App.graph, App.g, jsonString, jsonPath, ruleName)
     }
 
-    static String  ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g,
-                                              String jsonString,
-                                              String jsonPath,
-                                              String ruleName) {
+    static String ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g,
+                                             String jsonString,
+                                             String jsonPath,
+                                             String ruleName) {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuffer sb = new StringBuffer()
 
-        def  recordList = JsonPath.read(jsonString,jsonPath);
+        def recordList = JsonPath.read(jsonString, jsonPath)
 //        def  recordList =  mapper.readValue(jsonString,
 //                new TypeReference<List<Map<String, String>>>(){} as TypeReference<List<Map<String, String>>>);
-
 
 
         Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
@@ -1033,7 +1032,7 @@ class Matcher {
                 trans.open()
             }
 
-            def rules =  getRule(ruleName) //jsonSlurper.parseText(jsonRules) as com.pontusvision.gdpr.mapping.Rules;
+            def rules = getRule(ruleName) //jsonSlurper.parseText(jsonRules) as com.pontusvision.gdpr.mapping.Rules;
 
 
             Double percentageThreshold = (rules.percentageThreshold == null) ? 10.0d
@@ -1041,7 +1040,7 @@ class Matcher {
             int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
 
             def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
-                parseEdges(rules.updatereq)
+            parseEdges(rules.updatereq)
 
             for (def item in recordList) {
 
@@ -1066,38 +1065,51 @@ class Matcher {
         } catch (Throwable t) {
             trans.rollback()
             sb.append(t)
-            throw t;
+            throw t
         } finally {
             trans.close()
         }
-        return sb.toString();
+        return sb.toString()
     }
 
-    static String upsertRule (GraphTraversalSource g, String ruleName, String ruleStr,
-                              StringBuffer sb){
+    static String upsertRule(GraphTraversalSource g, String ruleName, String ruleStr,
+                             StringBuffer sb) {
         def ruleJson = new JsonSlurper().parseText(ruleStr) as com.pontusvision.gdpr.mapping.Rules
 
         if (ruleJson.updatereq) {
-            def hasEntry =
-                    (g.V()
-                            .has("Metadata.Type","Object.Data_Source_Mapping_Rule")
-                            .has("Metadata.Type.Object.Data_Source_Mapping_Rule",
-                                    P.eq("Object.Data_Source_Mapping_Rule"))
-                            .has("Object.Data_Source_Mapping_Rule.Name", P.eq(ruleName)).hasNext())
-
-
-            def localG = g.addV("Object.Data_Source_Mapping_Rule")
-                    .property("Metadata.Type","Object.Data_Source_Mapping_Rule")
-                    .property("Metadata.Type.Object.Data_Source_Mapping_Rule","Object.Data_Source_Mapping_Rule")
-                    .property("Object.Data_Source_Mapping_Rule.Name", ruleName)
-                    .property("Object.Data_Source_Mapping_Rule.Business_Rules_JSON", ruleStr)
-                    .property("Object.Data_Source_Mapping_Rule.Update_Date", new Date())
-
-            if (!hasEntry) {
-                sb.append("\nAdded a new Entry for ${ruleName}")
-                localG = localG.property("Object.Data_Source_Mapping_Rule.Create_Date", new Date())
+            String id = null
+            try{
+                id = (g.V()
+                        .has("Metadata.Type", "Object.Data_Source_Mapping_Rule")
+                        .has("Metadata.Type.Object.Data_Source_Mapping_Rule",
+                                P.eq("Object.Data_Source_Mapping_Rule"))
+                        .has("Object.Data_Source_Mapping_Rule.Name", P.eq(ruleName))
+                        .next()
+                        .id().toString());
             }
-            String id =  localG.next().id().toString()
+            catch(Throwable t){}
+
+            if (!id) {
+                def localG = g.addV("Object.Data_Source_Mapping_Rule")
+                        .property("Metadata.Type", "Object.Data_Source_Mapping_Rule")
+                        .property("Metadata.Type.Object.Data_Source_Mapping_Rule", "Object.Data_Source_Mapping_Rule")
+                        .property("Object.Data_Source_Mapping_Rule.Name", ruleName)
+                        .property("Object.Data_Source_Mapping_Rule.Business_Rules_JSON", ruleStr)
+                        .property("Object.Data_Source_Mapping_Rule.Update_Date", new Date())
+
+
+                sb.append("\nAdded a new Entry for ${ruleName}")
+                localG = localG.property("Object.Data_Source_Mapping_Rule.Create_Date", new Date());
+                id = localG.next().id().toString()
+
+            }
+            else{
+                sb.append("\nUpdating exiting Entry for ${ruleName}")
+
+                g.V(id)
+                 .property("Object.Data_Source_Mapping_Rule.Business_Rules_JSON", ruleStr)
+
+            }
 
             sb.append("\nId for ${ruleName} is ${id}")
         }
@@ -1115,7 +1127,7 @@ class Matcher {
             if (!trans.isOpen()) {
                 trans.open()
             }
-            def rules = getRule(rulesName);
+            def rules = getRule(rulesName)
 
             double percentageThreshold = (rules.percentageThreshold == null) ? 10.0 : (double) (rules.percentageThreshold)
             int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
@@ -1150,25 +1162,34 @@ class Matcher {
     }
 
     static Map<String, String> cleanupKeys(Map<String, String> orgMap) {
-        Map<String, String> resultMap = new HashMap<>();
+        Map<String, String> resultMap = new HashMap<>()
         if (orgMap == null || orgMap.isEmpty()) {
-            return resultMap;
+            return resultMap
         }
-        Set<String> keySet = orgMap.keySet();
+        Set<String> keySet = orgMap.keySet()
         for (String key : keySet) {
-            String newKey = key.trim();
-            resultMap.put(newKey, orgMap.get(key));
+            String newKey = key.trim()
+            newKey = newKey.replaceAll(Pattern.quote("."),"_");
+            newKey = newKey.replaceAll(" ","_");
+
+            // remove accents, etc.
+            newKey = java.text.Normalizer.normalize(newKey,  java.text.Normalizer.Form.NFD);
+            newKey = newKey.replaceAll("\\p{M}", "");
+
+            resultMap.put(newKey, orgMap.get(key))
         }
-        return resultMap;
+
+        resultMap.putIfAbsent("currDate", new Date().toString())
+        return resultMap
     }
 
 
     static getMatchRequests(Map<String, String> currRecord, Object parsedRules, Double percentageThreshold, StringBuffer sb = null) {
-        def binding = cleanupKeys(currRecord);
+        def binding = cleanupKeys(currRecord)
 
         binding.put("original_request", JsonOutput.prettyPrint(JsonOutput.toJson(currRecord)))
 
-        def rules = parsedRules as com.pontusvision.gdpr.mapping.UpdateReq;
+        def rules = parsedRules as com.pontusvision.gdpr.mapping.UpdateReq
         Map<String, AtomicDouble> maxScoresByVertexName = new HashMap<>()
         Map<String, Double> percentageThresholdByVertexName = new HashMap<>()
 
@@ -1196,21 +1217,21 @@ class Matcher {
 
             if (passedCondition) {
                 if (vtx.createMany) {
-                    com.pontusvision.gdpr.mapping.VertexProps createManyProp = vtx.createMany;
+                    com.pontusvision.gdpr.mapping.VertexProps createManyProp = vtx.createMany
                     String propSplitChar = createManyProp?.splitChar ?: ","
-                    String[] propVal = ((String) createManyProp?.val).split(Pattern.quote(propSplitChar));
-                    def origProps = new ArrayList<com.pontusvision.gdpr.mapping.VertexProps>(vtx.props);
+                    String[] propVal = ((String) createManyProp?.val).split(Pattern.quote(propSplitChar))
+                    def origProps = new ArrayList<com.pontusvision.gdpr.mapping.VertexProps>(vtx.props)
 
                     propVal.each { it ->
-                        VertexProps newProp = new VertexProps();
+                        VertexProps newProp = new VertexProps()
                         newProp.name = createManyProp.name
                         newProp.excludeFromSearch = (boolean) createManyProp.excludeFromSearch
                         newProp.excludeFromSubsequenceSearch = (boolean) createManyProp.excludeFromSubsequenceSearch
                         newProp.excludeFromUpdate = (boolean) createManyProp.excludeFromUpdate
                         newProp.mandatoryInSearch = (boolean) createManyProp.mandatoryInSearch
-                        newProp.val = it;
+                        newProp.val = it
 
-                        vtx.props = origProps;
+                        vtx.props = origProps
                         vtx.props.add(newProp)
 
                         Matcher.processVertices(slurper,
@@ -1751,7 +1772,7 @@ def ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g
     Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
 
     def jsonSlurper = new JsonSlurper()
-    def rules = jsonSlurper.parseText(jsonRules) as com.pontusvision.gdpr.mapping.Rules;
+    def rules = jsonSlurper.parseText(jsonRules) as com.pontusvision.gdpr.mapping.Rules
 
 
     double percentageThreshold = (rules.percentageThreshold == null) ? 10.0 : (double) (rules.percentageThreshold)
@@ -1820,7 +1841,7 @@ def loadDataMappingFiles(OrientStandardGraph graph, String... dirs) {
         }
         def jsonSuffix = ".json"
         for (d in dirs) {
-            sb.append("\nLoading rules from folder ${d}");
+            sb.append("\nLoading rules from folder ${d}")
             def jsonDir = new File(d)
             if (jsonDir.exists()) {
                 jsonDir.traverse {
@@ -1830,10 +1851,10 @@ def loadDataMappingFiles(OrientStandardGraph graph, String... dirs) {
                     if (fileName.endsWith(jsonSuffix)) {
 
                         def ruleName = fileName.substring(0, fileName.length() - jsonSuffix.length())
-                        sb.append("\nLoading rule ${ruleName}");
+                        sb.append("\nLoading rule ${ruleName}")
 
                         def ruleStr = it.text
-                        Matcher.upsertRule ( App.g, ruleName, ruleStr, sb)
+                        Matcher.upsertRule(App.g, ruleName, ruleStr, sb)
                     }
                 }
             }

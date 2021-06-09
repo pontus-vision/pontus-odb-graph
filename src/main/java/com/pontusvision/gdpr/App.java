@@ -37,6 +37,8 @@ public class App // implements RequestStreamHandler
   public static Settings settings;
   public static OServer oServer;
   public static GremlinExecutor executor;
+  public static Server jettyServer;
+
   public static void main(String[] args) {
     App.mainHandler(args);
   }
@@ -66,8 +68,8 @@ public class App // implements RequestStreamHandler
       return null;
     });
 
-//    ServerGremlinExecutor sge = c.get();
-    ServerGremlinExecutor sge = gserver.getServerGremlinExecutor();
+    ServerGremlinExecutor sge = c.get();
+//    ServerGremlinExecutor sge = gserver.getServerGremlinExecutor();
     executor = sge.getGremlinExecutor();
 //    sge.getGremlinExecutor().eval("graph = TinkerGraph.open()\n" +
 //        "g = graph.traversal()\n");
@@ -103,27 +105,30 @@ public class App // implements RequestStreamHandler
 
 
   }
-
-  public static void mainHandler(String[] args) {
-    new JHades().overlappingJarsReport();
-
+  public static Server createJettyServer(){
     String portStr = System.getenv("GRAPHDB_REST_PORT");
     int port = 3001;
     if (portStr != null) {
       port = Integer.parseInt(portStr);
     }
     Server server = new Server(port);
+    ResourceConfig config = new ResourceConfig();
+    config.packages("com.pontusvision.gdpr", "com.pontusvision.ingestion");
+    ServletHolder servlet = new ServletHolder(new ServletContainer(config));
+
+    ServletContextHandler context = new ServletContextHandler(server, "/*");
+    context.addServlet(servlet, "/*");
+
+    return server;
+  }
+
+  public static void mainHandler(String[] args) {
+    new JHades().overlappingJarsReport();
+
+    Server server = createJettyServer();
+
 
     try {
-      ResourceConfig config = new ResourceConfig();
-      config.packages("com.pontusvision.gdpr");
-      ServletHolder servlet = new ServletHolder(new ServletContainer(config));
-
-      ServletContextHandler context = new ServletContextHandler(server, "/*");
-      context.addServlet(servlet, "/*");
-
-      server.start();
-
       String file = args.length == 0 ? "conf/gremlin-server.yml" : args[0];
 
       //      final Settings settings;
@@ -134,81 +139,6 @@ public class App // implements RequestStreamHandler
         ex.printStackTrace();
         return;
       }
-//
-//            oServer = OServerMain.create(true);
-//            oServer.startup();
-//            logger.info("BEFORE ACTIVATING SERVER *******");
-//
-//            oServer.activate();
-//            logger.info("AFTER ACTIVATING  SERVER *******");
-//            graph = (OrientStandardGraph) g.getGraph();
-
-//      logger.info("Configuring Gremlin Server from {}", file);
-//      gserver = new GremlinServer(settings);
-//      CompletableFuture<ServerGremlinExecutor> c = gserver.start().exceptionally(t -> {
-//        logger.error("Gremlin Server was unable to start and will now begin shutdown: {}", t.getMessage());
-//        gserver.stop().join();
-//        System.exit(-1);
-//        return null;
-//      });
-//
-//      ServerGremlinExecutor sge = c.get();
-//      ServerGremlinExecutor executor = gserver.getServerGremlinExecutor();
-//      executor.getGremlinExecutor().eval("graph = TinkerGraph.open()\n" +
-//              "g = graph.traversal()\n");
-////
-//
-//      GraphManager graphMgr = sge.getGraphManager();
-//      Set<String> graphNames = graphMgr.getGraphNames();
-//
-//      for (String graphName : graphNames)
-//      {
-//        logger.debug("Found Graph: " + graphName);
-//        graph = (OrientStandardGraph) graphMgr.getGraph(graphName);
-//        //                graphMgmt = graph.openManagement();
-//        g = graph.traversal();
-//      }
-//      if (graphNames.size() == 0)
-//      {
-//        for (Map.Entry<String, String> entry : settings.graphs.entrySet())
-//        {
-//          Configuration conf = (new DefaultConfigurationBuilder(entry.getValue())).getConfiguration();
-//          graph =  new OrientStandardGraph(new OrientGraphFactory(),conf);
-//          graphMgr.putGraph(entry.getKey(), graph);
-//          g = graph.traversal();
-//
-//
-//        }
-//
-//      }
-
-
-      //            graph = graphMgr.getGraph("graph");
-
-      //            initGraph(graphConfFile);
-
-      //            Graph graph = initGraph(graphConfFile);
-      //            ServerGremlinExecutor executor = gserver.getServerGremlinExecutor();
-      //            executor.getGremlinExecutor().eval("graph = TinkerGraph.open()\n" +
-      //                    "g = graph.traversal()\n");
-
-      //            gserver.getServerGremlinExecutor().getGraphManager().putGraph("graph", graph);
-      //            gserver.getServerGremlinExecutor().getGraphManager().putTraversalSource("g", graph.traversal());
-      //
-      //            gserver.
-
-      //            Configuration conf = getDefaultConfigs();
-      //            Cluster cluster = Cluster.open(conf);
-      //
-      //            Client unaliasedClient = cluster.connect();
-      //
-      //            Client client = unaliasedClient; //.alias("g1");
-      //
-      //
-      //            ResultSet res = client.submit("[1,2,3,4]");
-      //
-      //            logger.debug(res.toString());
-      //
 
       server.join();
       //      c.join();

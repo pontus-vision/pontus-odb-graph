@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.orientechnologies.apache.commons.csv.CSVFormat;
 import com.orientechnologies.apache.commons.csv.CSVRecord;
+import com.pontusvision.ingestion.Ingestion;
+import com.pontusvision.ingestion.IngestionJsonObjArrayRequest;
 import org.apache.commons.io.FileUtils;
 import org.junit.*;
 
@@ -936,14 +938,22 @@ public class AppTest
 
             String jsonString = FileUtils.readFileToString(new File(jsonFilePath), "UTF-8");
 
-            Map<String,Object> bindings = new HashMap(){{
-                put("jsonString",jsonString);
-                put("jsonPath", "$.objs");
-                put("ruleName","totvs_protheus_sa1_clientes");
-            }};
+//            Map<String,Object> bindings = new HashMap(){{
+//                put("jsonString",jsonString);
+//                put("jsonPath", "$.objs");
+//                put("ruleName","totvs_protheus_sa1_clientes");
+//            }};
+//
+//            res = App.executor.eval("Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
+//                bindings).get().toString();
+            IngestionJsonObjArrayRequest req = new IngestionJsonObjArrayRequest();
+            req.jsonString = jsonString;
+            req.jsonPath = "$.objs";
+            req.ruleName = "totvs_protheus_sa1_clientes";
 
-            res = App.executor.eval("Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
-                bindings).get().toString();
+            Ingestion ingestion = new Ingestion();
+
+            res = ingestion.jsonObjArray(req);
             System.out.println(res);
 
         } catch (ExecutionException | IOException e) {
