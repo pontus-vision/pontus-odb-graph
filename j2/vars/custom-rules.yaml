@@ -568,3 +568,105 @@ rules:
         fromVertexName: rep
         toVertexName: business_addr
 
+
+  ploomes_clientes:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${Name?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${Name?.trim()?.toUpperCase()}"
+          Type:
+            val: "Clientes"
+            excludeFromSearch: true
+
+
+        #CELULAR
+
+      #RG
+      - label: Object.Identity_Card
+        props:
+          Id_Value:
+            val: "${CPF?.trim()?.toUpperCase()}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+      # EMAIL
+      - label: Object.Email_Address
+        props:
+          Email:  "${Email}"
+
+      #ENDERECO,BAIRRO,CIDADE,UF,CEP
+      - label: Location.Address
+        props:
+          Full_Address: "${StreetAddress}, ${StreetAddressNumber},  ${StreetAddressLine2}, ${Neighborhood} ${CityId}- ${StateId}, ${ZipCode}"
+          Type:
+            val: "Business"
+            excludeFromSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: ploomes/clientes
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${CreateDate}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${LastUpdateDate}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${currDate}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: ploomes/clientes
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+      - label: Object.Data_Source
+        props:
+          Name: ploomes/clientes
+          Type: ploomes/clientes
+          Description: Registros de Clientes no protheus/Totvs
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Person.Natural
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Event.Group_Ingestion
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        toVertexLabel: Event.Group_Ingestion
+        fromVertexLabel: Object.Data_Source
+
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Identity_Card"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
