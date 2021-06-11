@@ -27,13 +27,13 @@ cp $DIR/log4j.properties $DISTDIR/lib
 cd ..
 
 unlink current
-ln -s pv-gdpr-$VERSION current
+ln -s pv-com.pontusvision.gdpr-$VERSION current
 
 cd current
 cp $DIR/datadir.tar.gz-* .
 
 cd $CURDIR
 
-echo docker cp $DISTDIR/lib/pontus-gdpr-graph-${VERSION}.jar d:/opt/pontus/pontus-graph/current/lib
+echo docker cp $DISTDIR/lib/pontus-com.pontusvision.gdpr-graph-${VERSION}.jar d:/opt/pontus/pontus-graph/current/lib
 
 

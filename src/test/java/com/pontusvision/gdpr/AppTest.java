@@ -351,7 +351,7 @@ public class AppTest {
       + "StringBuffer sb = new StringBuffer ()\n"
       + "\n"
       + "try{\n"
-      + "    ingestRecordListUsingRules(graph, g, listOfMaps, rulesStr, sb)\n"
+      + "    ingestRecordListUsingRules(graph, App.g, listOfMaps, rulesStr, sb)\n"
       + "}\n"
       + "catch (Throwable t){\n"
       + "    String stackTrace = org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(t)\n"
@@ -927,7 +927,7 @@ public class AppTest {
   public void test3() throws InterruptedException {
 
     jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
-    jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa1_clientes");
+//    jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa1_clientes");
 
   }
 

@@ -36,7 +36,7 @@ public class Ingestion {
       put("ruleName", request.ruleName);
     }};
 
-    String res = App.executor.eval("Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
+    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
         bindings).get().toString();
     return res;
 

@@ -1,3 +1,4 @@
+package com.pontusvision.graphutils
 // g.V().has('Metadata.Type.Event.Subject_Access_Request', 'Event.Subject_Access_Request').drop()
 
 // g.V().has('Metadata.Type.Object.Identity_Card', 'Object.Identity_Card')

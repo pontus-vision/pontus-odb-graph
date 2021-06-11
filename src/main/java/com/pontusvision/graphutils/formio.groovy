@@ -1,11 +1,11 @@
+package com.pontusvision.graphutils
+
 import com.orientechnologies.orient.core.index.OIndex
 import com.orientechnologies.orient.core.metadata.schema.OClass
 import com.orientechnologies.orient.core.metadata.schema.OProperty
 import com.pontusvision.gdpr.App
 import groovy.json.JsonSlurper
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
-import org.apache.tinkerpop.gremlin.structure.Transaction
 
 //
 //// describeSchema()

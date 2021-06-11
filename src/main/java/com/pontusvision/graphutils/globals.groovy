@@ -1,3 +1,5 @@
+package com.pontusvision.graphutils
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.hubspot.jinjava.Jinjava
 import com.hubspot.jinjava.lib.fn.ELFunctionDefinition
@@ -25,52 +27,49 @@ import java.util.concurrent.atomic.AtomicInteger
 
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.bothV
 
-LinkedHashMap globals = [:]
-globals << [graph: (graph) as OrientStandardGraph]
-globals << [g: (graph).traversal() as GraphTraversalSource]
 
 
-@CompileStatic
-def loadSchema(OrientStandardGraph graph, String... files) {
-    StringBuffer sb = new StringBuffer()
-
-    def dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    graph.executeSql('ALTER DATABASE DATETIMEFORMAT "' + dateFormat + '"', [:])
-
-    Map<String, OProperty> propsMap = [:]
-    for (f in files) {
-        try {
-
-            def jsonFile = new File(f)
-
-            if (jsonFile.exists()) {
-                def jsonStr = jsonFile.text
-                def json = new JsonSlurper().parseText(jsonStr)
-                sb?.append("\nLoading File ${f}\n")
-
-
-                sb?.append("\nAbout to create vertex labels\n")
-
-                Map<String, OClass> classes = ODBSchemaManager.addVertexLabels(graph, json, sb)
-
-            } else {
-                sb?.append("NOT LOADING FILE ${f}\n")
-            }
-
-        } catch (Throwable t) {
-            sb?.append('Failed to load schema!\n')?.append(t)
-            t.printStackTrace()
-
-        }
-    }
-    graph.tx().commit()
-
-    sb?.append('Done!\n')
-    return sb?.toString()
-}
 
 
 class ODBSchemaManager {
+    static def loadSchema(OrientStandardGraph graph, String... files) {
+        StringBuffer sb = new StringBuffer()
+
+        def dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        graph.executeSql('ALTER DATABASE DATETIMEFORMAT "' + dateFormat + '"', [:])
+
+        Map<String, OProperty> propsMap = [:]
+        for (f in files) {
+            try {
+
+                def jsonFile = new File(f)
+
+                if (jsonFile.exists()) {
+                    def jsonStr = jsonFile.text
+                    def json = new JsonSlurper().parseText(jsonStr)
+                    sb?.append("\nLoading File ${f}\n")
+
+
+                    sb?.append("\nAbout to create vertex labels\n")
+
+                    Map<String, OClass> classes = ODBSchemaManager.addVertexLabels(graph, json, sb)
+
+                } else {
+                    sb?.append("NOT LOADING FILE ${f}\n")
+                }
+
+            } catch (Throwable t) {
+                sb?.append('Failed to load schema!\n')?.append(t)
+                t.printStackTrace()
+
+            }
+        }
+        graph.tx().commit()
+
+        sb?.append('Done!\n')
+        return sb?.toString()
+    }
+
     static Map<String, OClass> addVertexLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
 
         Map<String, OClass> classMap = new HashMap<>()
@@ -237,81 +236,81 @@ class ODBSchemaManager {
     }
 }
 
-boolean isASCII(String s) {
-    for (int i = 0; i < s.length(); i++)
-        if (s.charAt(i) > 127)
-            return false
-    return true
-}
-
-
-def renderReportInTextPt(String pg_id, String reportType = 'DSAR', GraphTraversalSource g = g) {
-    return renderReportInTextPt(new ORecordId(pg_id), reportType, g)
-}
-
-def renderReportInTextPt(ORID pg_id, String reportType = 'DSAR', GraphTraversalSource g = g) {
-    def template = g.V().has('Object.Notification_Templates.Types', eq('Person.Natural'))
-            .has('Object.Notification_Templates.Label', eq(reportType))
-            .values('Object.Notification_Templates.Text').next() as String
-    if (template) {
-
-        // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
-        def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
-            [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
-        }
-
-        def neighbours = g.V(pg_id).both().valueMap().toList().collect { item ->
-            item.collectEntries { key, val ->
-                [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
-            }
-        }
-
-        def allData = new HashMap<>()
-
-        allData.put('context', context)
-        allData.put('connected_data', neighbours)
-
-
-        return PontusJ2ReportingFunctions.jinJava.render(new String(template.decodeBase64()), allData).toString()
-    }
-    return "Failed to render data"
-}
-
-
-def renderReportInText(ORID pg_id, String reportType = 'SAR Read', GraphTraversalSource g = g) {
-
-    if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
-        return renderReportInTextPt(pg_id, reportType, g)
-    }
-
-    def template = g.V().has('Object.Notification_Templates.Types', eq('Person.Natural'))
-            .has('Object.Notification_Templates.Label', eq(reportType))
-            .values('Object.Notification_Templates.Text').next() as String
-    if (template) {
-
-        // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
-        def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
-            [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
-        }
-
-        def neighbours = g.V(pg_id).both().valueMap().toList().collect { item ->
-            item.collectEntries { key, val ->
-                [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
-            }
-        }
-
-        def allData = new HashMap<>()
-
-        allData.put('context', context)
-        allData.put('connected_data', neighbours)
-
-        return PontusJ2ReportingFunctions.jinJava.render(new String(template.decodeBase64()), allData).toString()
-    }
-    return "Failed to render data"
-}
 
 
 class PontusJ2ReportingFunctions {
+
+    static boolean isASCII(String s) {
+        for (int i = 0; i < s.length(); i++)
+            if (s.charAt(i) > 127)
+                return false
+        return true
+    }
+
+
+    static def renderReportInTextPt(String pg_id, String reportType = 'DSAR', GraphTraversalSource g = g) {
+        return renderReportInTextPt(new ORecordId(pg_id), reportType, g)
+    }
+
+    static def  renderReportInTextPt(ORID pg_id, String reportType = 'DSAR', GraphTraversalSource g = g) {
+        def template = g.V().has('Object.Notification_Templates.Types', eq('Person.Natural'))
+                .has('Object.Notification_Templates.Label', eq(reportType))
+                .values('Object.Notification_Templates.Text').next() as String
+        if (template) {
+
+            // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
+            def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
+                [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+            }
+
+            def neighbours = g.V(pg_id).both().valueMap().toList().collect { item ->
+                item.collectEntries { key, val ->
+                    [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+                }
+            }
+
+            def allData = new HashMap<>()
+
+            allData.put('context', context)
+            allData.put('connected_data', neighbours)
+
+
+            return PontusJ2ReportingFunctions.jinJava.render(new String(template.decodeBase64()), allData).toString()
+        }
+        return "Failed to render data"
+    }
+
+    static def renderReportInText(ORID pg_id, String reportType = 'SAR Read', GraphTraversalSource g = g) {
+
+        if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
+            return renderReportInTextPt(pg_id, reportType, g)
+        }
+
+        def template = g.V().has('Object.Notification_Templates.Types', eq('Person.Natural'))
+                .has('Object.Notification_Templates.Label', eq(reportType))
+                .values('Object.Notification_Templates.Text').next() as String
+        if (template) {
+
+            // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
+            def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
+                [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+            }
+
+            def neighbours = g.V(pg_id).both().valueMap().toList().collect { item ->
+                item.collectEntries { key, val ->
+                    [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+                }
+            }
+
+            def allData = new HashMap<>()
+
+            allData.put('context', context)
+            allData.put('connected_data', neighbours)
+
+            return PontusJ2ReportingFunctions.jinJava.render(new String(template.decodeBase64()), allData).toString()
+        }
+        return "Failed to render data"
+    }
 
     static def getProbabilityOfPossibleMatches(String startVertexId, Map<String, Double> weightsPerVertex) {
         return getProbabilityOfPossibleMatches(new ORecordId(startVertexId), weightsPerVertex)
@@ -390,8 +389,8 @@ class PontusJ2ReportingFunctions {
     static {
         PontusJ2ReportingFunctions.jinJava = new Jinjava()
 
-//    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getChart",
-//      PontusJ2ReportingFunctions.class, "getChart"))
+//    com.pontusvision.graphutils.PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getChart",
+//      com.pontusvision.graphutils.PontusJ2ReportingFunctions.class, "getChart"))
 
         PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "possibleMatches",
                 PontusJ2ReportingFunctions.class, "possibleMatches", String.class, String.class))
@@ -717,7 +716,7 @@ class PontusJ2ReportingFunctions {
 
     public static JsonSlurper ptDictionarySlurper
 
-    def static ptDictionary
+    static def ptDictionary
     static {
         ptDictionarySlurper = new JsonSlurper()
         try {
@@ -790,76 +789,77 @@ class PontusJ2ReportingFunctions {
         }
         return strToTranslate
     }
-}
-
-def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = g) {
-    return renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g)
-}
-
-def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = g) {
-
-    String vertType = App.g.V(pg_id).label().next()
-    def allData = new HashMap<>()
-
-
-    def context = App.g.V(pg_id).elementMap()[0].collectEntries { key, val ->
-        [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
+    static def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = g) {
+        return renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g)
     }
 
-    def neighbours = App.g.V(pg_id).both().elementMap().toList().collect { item ->
-        item.collectEntries { key, val ->
+    static def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = g) {
+
+        String vertType = App.g.V(pg_id).label().next()
+        def allData = new HashMap<>()
+
+
+        def context = App.g.V(pg_id).elementMap()[0].collectEntries { key, val ->
             [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
         }
-    }
 
-    allData.put('context', context)
-    allData.put('connected_data', neighbours)
-
-
-    if ('Event.Data_Breach' == vertType) {
-        def impactedServers = App.g.V(pg_id)
-                .both()
-                .has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
-                .valueMap().toList().collect { item ->
+        def neighbours = App.g.V(pg_id).both().elementMap().toList().collect { item ->
             item.collectEntries { key, val ->
-                [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+                [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
             }
         }
 
-        GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id)
-                .both().has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
-                .bothE('Runs_On').outV().dedup()
+        allData.put('context', context)
+        allData.put('connected_data', neighbours)
 
-        GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
 
-        def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
-            item.collectEntries { key, val ->
-                [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
-            }
-        }
-        def impactedPeople = dsTravClone
-                .out("Has_Ingestion_Event")
-                .out("Has_Ingestion_Event")
-                .in("Has_Ingestion_Event")
-                .has("Metadata.Type.Person.Natural", P.eq('Person.Natural'))
-                .dedup()
-                .valueMap()
-                .toList()
-                .collect { item ->
-                    item.collectEntries { key, val ->
-                        [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
-                    }
+        if ('Event.Data_Breach' == vertType) {
+            def impactedServers = App.g.V(pg_id)
+                    .both()
+                    .has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
+                    .valueMap().toList().collect { item ->
+                item.collectEntries { key, val ->
+                    [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
                 }
-        allData.put('impacted_data_sources', impactedDataSources)
-        allData.put('impacted_servers', impactedServers)
-        allData.put('impacted_people', impactedPeople)
+            }
+
+            GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id)
+                    .both().has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
+                    .bothE('Runs_On').outV().dedup()
+
+            GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
+
+            def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
+                item.collectEntries { key, val ->
+                    [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+                }
+            }
+            def impactedPeople = dsTravClone
+                    .out("Has_Ingestion_Event")
+                    .out("Has_Ingestion_Event")
+                    .in("Has_Ingestion_Event")
+                    .has("Metadata.Type.Person.Natural", P.eq('Person.Natural'))
+                    .dedup()
+                    .valueMap()
+                    .toList()
+                    .collect { item ->
+                        item.collectEntries { key, val ->
+                            [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+                        }
+                    }
+            allData.put('impacted_data_sources', impactedDataSources)
+            allData.put('impacted_servers', impactedServers)
+            allData.put('impacted_people', impactedPeople)
+
+        }
+
+
+        return PontusJ2ReportingFunctions.jinJava.render(new String(pg_templateTextInBase64.decodeBase64()), allData).bytes.encodeBase64().toString()
 
     }
-
-
-    return PontusJ2ReportingFunctions.jinJava.render(new String(pg_templateTextInBase64.decodeBase64()), allData).bytes.encodeBase64().toString()
 
 }
+
 
 
 class VisJSGraph {
@@ -1790,6 +1790,37 @@ class VisJSGraph {
         return index
     }
 
+    static def getVisJsGraph(String pg_vid) {
+
+        return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid))
+    }
+
+
+    static def getVisJsGraph(String pg_vid, int depth) {
+        return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), depth)
+    }
+
+    static def getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
+
+        return VisJSGraph.getVisJsGraphImmediateNeighbourNodes(new ORecordId(pg_vid), sb, counter, nodeIds, depth)
+
+
+    }
+
+
+    static def getEdgeProperties(String fromVertexId, String toVertexId) {
+        return VisJSGraph.getEdgeProperties(new ORecordId(fromVertexId), new ORecordId(toVertexId))
+    }
+
+    static def getVisJSGraph(String pg_vid, long pg_depth) {
+
+        return VisJSGraph.getVisJSGraph(new ORecordId(pg_vid), pg_depth)
+    }
+
+    static def getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, String vid, String origLabel) {
+        return VisJSGraph.getPropsNonMetadataAsHTMLTableRows(g, new ORecordId(vid), origLabel)
+    }
+
 }
 
 /*
@@ -1832,37 +1863,6 @@ Object.AWS_Network_Interface
 
  */
 
-
-def getVisJsGraph(String pg_vid) {
-
-    return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid))
-}
-
-
-def getVisJsGraph(String pg_vid, int depth) {
-    return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), depth)
-}
-
-def getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
-
-    return VisJSGraph.getVisJsGraphImmediateNeighbourNodes(new ORecordId(pg_vid), sb, counter, nodeIds, depth)
-
-
-}
-
-
-def getEdgeProperties(String fromVertexId, String toVertexId) {
-    return VisJSGraph.getEdgeProperties(new ORecordId(fromVertexId), new ORecordId(toVertexId))
-}
-
-def getVisJSGraph(String pg_vid, long pg_depth) {
-
-    return VisJSGraph.getVisJSGraph(new ORecordId(pg_vid), pg_depth)
-}
-
-def getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, String vid, String origLabel) {
-    return VisJSGraph.getPropsNonMetadataAsHTMLTableRows(g, new ORecordId(vid), origLabel)
-}
 
 
 

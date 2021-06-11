@@ -113,7 +113,7 @@ public class App // implements RequestStreamHandler
     }
     Server server = new Server(port);
     ResourceConfig config = new ResourceConfig();
-    config.packages("com.pontusvision.gdpr", "com.pontusvision.ingestion");
+    config.packages("com.pontusvision.com.pontusvision.graphutils.gdpr", "com.pontusvision.ingestion");
     ServletHolder servlet = new ServletHolder(new ServletContainer(config));
 
     ServletContextHandler context = new ServletContextHandler(server, "/*");

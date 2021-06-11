@@ -8,7 +8,7 @@
     <version>2.0.0</version>
     <packaging>jar</packaging>
 
-    <name>com.pontusvision.gdpr</name>
+    <name>com.pontusvision.graphutils.gdpr</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -713,7 +713,7 @@
                         <configuration>
                             <filters>
                                 <filter>
-                                    <artifact>pv-gdpr:pontus-odb-graph</artifact>
+                                    <artifact>pv-com.pontusvision.gdpr:pontus-odb-graph</artifact>
                                     <includes>
                                         <include>org/**</include>
                                         <include>com/**</include>
@@ -771,7 +771,7 @@
                                     </excludes>
                                 </filter>
                                 <filter>
-                                    <artifact>pv-gdpr:pontus-odb-graph</artifact>
+                                    <artifact>pv-com.pontusvision.gdpr:pontus-odb-graph</artifact>
                                     <includes>
                                         <include>org/**</include>
                                         <include>org/apache/hadoop/conf/Configuratio*</include>
@@ -892,7 +892,7 @@
                 <configuration>
                     <sources>
                         <source>
-                            <directory>${project.basedir}/src/main/java/com/pontusvision/gdpr</directory>
+                            <directory>${project.basedir}/src/main/java/com/pontusvision/com.pontusvision.graphutils.gdpr</directory>
                             <includes>
                                 <include>**/*.groovy</include>
                             </includes>

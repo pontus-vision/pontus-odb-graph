@@ -18,7 +18,7 @@ COPY . /pontus-odb-graph/
 RUN mvn clean package install -DskipTests
 RUN mvn compile  dependency:copy-dependencies  -DincludeScope=runtime
 
-RUN cd /root/.m2/repository && for i in *; do if [[ "com" == $i || "pv-gdpr" == $i ]]; then echo skip ; else rm -r $i; fi; done
+RUN cd /root/.m2/repository && for i in *; do if [[ "com" == $i || "pv-com.pontusvision.graphutils.gdpr" == $i ]]; then echo skip ; else rm -r $i; fi; done
 
 FROM scratch
 
