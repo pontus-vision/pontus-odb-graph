@@ -1,4 +1,7 @@
 package com.pontusvision.graphutils
+
+import com.pontusvision.gdpr.App
+
 // g.V().has('Metadata.Type.Event.Subject_Access_Request', 'Event.Subject_Access_Request').drop()
 
 // g.V().has('Metadata.Type.Object.Identity_Card', 'Object.Identity_Card')
@@ -71,7 +74,7 @@ public class DrawIOGremlin {
       def id = it.attributes()['id'];
       def metadataType = it.attributes()['Metadata.Type']
       if (metadataType) {
-        def trav = g.addV("${metadataType}");
+        def trav = App.g.addV("${metadataType}");
         sb.append("""\ng.addV("${metadataType}")""")
         objMap[id] = it.attributes();
         it.attributes().each { name, val ->
@@ -98,7 +101,7 @@ public class DrawIOGremlin {
       if (sourceType) {
         sb.append("${label} - from: ${source} (${sourceType}) to: ${target} (${targetType})\n")
 
-        g.addE(label).from(vertexMap[source]).to(vertexMap[target]).next()
+        App.g.addE(label).from(vertexMap[source]).to(vertexMap[target]).next()
 
       }
 

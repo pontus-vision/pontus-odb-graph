@@ -4,7 +4,7 @@ FROM pontusvisiongdpr/pontus-natty-lib:2021-05-23-21-38 as natty
 FROM maven:3.6-jdk-8-alpine as builder
 #RUN apk add git
 
-
+COPY --from=jpostal /pontus-jpostal-datadir /pontus-odb-graph/jpostal/
 COPY --from=jpostal /root/.m2 /root/.m2
 COPY --from=natty /root/.m2 /root/.m2
 COPY ./pom.xml /pontus-odb-graph/pom.xml
@@ -18,7 +18,7 @@ COPY . /pontus-odb-graph/
 RUN mvn clean package install -DskipTests
 RUN mvn compile  dependency:copy-dependencies  -DincludeScope=runtime
 
-RUN cd /root/.m2/repository && for i in *; do if [[ "com" == $i || "pv-com.pontusvision.graphutils.gdpr" == $i ]]; then echo skip ; else rm -r $i; fi; done
+RUN cd /root/.m2/repository && for i in *; do if [[ "com" == $i || "pv-gdpr" == $i ]]; then echo skip ; else rm -r $i; fi; done
 
 FROM scratch
 

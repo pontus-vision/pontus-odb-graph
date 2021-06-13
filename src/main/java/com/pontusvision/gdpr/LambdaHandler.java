@@ -54,7 +54,7 @@ public class LambdaHandler implements RequestHandler<AwsProxyRequest, AwsProxyRe
     }
 
     protected static final ResourceConfig jerseyApplication = new ResourceConfig()
-            .packages("com.pontusvision.com.pontusvision.graphutils.gdpr")
+            .packages("com.pontusvision.gdpr")
             .register(JacksonFeature.class);
     protected static final JerseyLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler
             = JerseyLambdaContainerHandler

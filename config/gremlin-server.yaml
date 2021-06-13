@@ -7,7 +7,7 @@ gremlinPool: 3
 channelizer: org.apache.tinkerpop.gremlin.server.channel.WsAndHttpChannelizer
 graphManager: com.orientechnologies.tinkerpop.server.OrientGremlinGraphManager
 
-#channelizer: com.pontusvision.com.pontusvision.graphutils.gdpr.WsAndHttpJWTChannelizer
+#channelizer: com.pontusvision.gdpr.WsAndHttpJWTChannelizer
 graphs: {
   graph: conf/demodb.properties
 }

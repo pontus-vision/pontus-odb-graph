@@ -1739,7 +1739,7 @@ static def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTra
         lawfulBasisVertices[i] = lawfulBasis1.next();
       } else {
         lawfulBasisVertices[i] = App.g.addV("Object.Lawful_Basis").
-          property("Metadata.Lineage", "https://com.pontusvision.graphutils.gdpr-info.eu/art-6-com.pontusvision.graphutils.gdpr/").
+          property("Metadata.Lineage", "https://gdpr-info.eu/art-6-gdpr/").
           property("Metadata.Redaction", "/data/protection/officer").
           property("Metadata.Version", 1).
           property("Metadata.Status", "new").
@@ -1881,7 +1881,7 @@ static def addLawfulBasisAndPrivacyNotices(OrientStandardGraph graph, GraphTrave
         lawfulBasisVertices[i] = lawfulBasis1.next();
       } else {
         lawfulBasisVertices[i] = App.g.addV("Object.Lawful_Basis").
-          property("Metadata.Lineage", "https://com.pontusvision.graphutils.gdpr-info.eu/art-6-com.pontusvision.graphutils.gdpr/").
+          property("Metadata.Lineage", "https://gdpr-info.eu/art-6-gdpr/").
           property("Metadata.Redaction", "/data/protection/officer").
           property("Metadata.Version", 1).
           property("Metadata.Status", "new").
@@ -1998,7 +1998,7 @@ static def createForms() {
   def formData = [
     [
       formOwner      : 'Leonardo',
-      formURL        : 'forms/com.pontusvision.graphutils.gdpr/dsar_read',
+      formURL        : 'forms/gdpr/dsar_read',
       formText       : "{'display': 'form'}",
       formVertexLabel: "Event.Subject_Access_Request"
     ]
@@ -2006,7 +2006,7 @@ static def createForms() {
 
     [
       formOwner      : 'Leonardo',
-      formURL        : 'forms/com.pontusvision.graphutils.gdpr/consent',
+      formURL        : 'forms/gdpr/consent',
       formText       : "{'display': 'form'}",
       formVertexLabel: "Event.Consent"
 
@@ -3786,12 +3786,12 @@ static def getAwarenessScores(def scoresMap) {
 static def getChildrenScores(scoresMap) {
 
   long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L));
-  def dateThreshold = new java.util.Date(ageThresholdMs);
+  def dateThreshold = new Date(ageThresholdMs);
 
 
   long numChildren = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
       )
     )
@@ -3799,18 +3799,18 @@ static def getChildrenScores(scoresMap) {
 
   long numNoGuardian = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
-        , __.outE('Has_Parent_Or_Guardian').count().is(eq(0))
+        , __.outE('Has_Parent_Or_Guardian').count().is(eq(0) as P<Long>)
       )
     )
     .count().next()
 
   long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
-        , __.outE('Consent').count().is(eq(0))
+        , __.outE('Consent').count().is(eq(0) as P<Long>)
       )
     )
     .count().next()
@@ -3900,7 +3900,7 @@ static def getConsentScores(def scoresMap) {
 
   long numAdults = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
       )
     )
@@ -3909,9 +3909,9 @@ static def getConsentScores(def scoresMap) {
 
   long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
-        , __.outE('Consent').count().is(eq(0))
+        , __.outE('Consent').count().is(P.eq(0) as P<Long>)
       )
     )
     .count().next()
@@ -4966,8 +4966,8 @@ static class DSARStats {
         .out("Made_SAR_Request")
         .where(
           __.or(
-            values('Event.Subject_Access_Request.Metadata.Update_Date').is(P.gte(thirtyDayDateThreshold)),
-            hasNot('Event.Subject_Access_Request.Metadata.Update_Date')
+           __.values('Event.Subject_Access_Request.Metadata.Update_Date').is(gte(thirtyDayDateThreshold)),
+           __.hasNot('Event.Subject_Access_Request.Metadata.Update_Date')
           )
         )
 
@@ -4978,11 +4978,11 @@ static class DSARStats {
           , __.as('events').values('Event.Subject_Access_Request.Status').as('dsar_status')
           , __.as('events').values('Event.Subject_Access_Request.Request_Type').as('dsar_type')
           , __.as('events').values('Event.Subject_Access_Request.Metadata.Create_Date').as('dsar_create_date')
-          .coalesce(is(P.gt(fiveDayDateThreshold)).constant("Last 5 days"),
-            is(P.between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
-            is(P.between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
-            is(P.between(fifteenDayDateThreshold, thirtyDayDateThreshold)).constant("Last 30 days"),
-            is(P.lt(thirtyDayDateThreshold)).constant("Older than 30 days"))
+          .coalesce(__.is(gt(fiveDayDateThreshold)).constant("Last 5 days"),
+            __.is(between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
+            __.is(between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
+            __.is(between(fifteenDayDateThreshold, thirtyDayDateThreshold)).constant("Last 30 days"),
+            __.is(lt(thirtyDayDateThreshold)).constant("Older than 30 days"))
           .as('dsar_age')
         )
         .select('dsar_source_type', 'dsar_source_name', 'dsar_status', 'dsar_type', 'dsar_age')

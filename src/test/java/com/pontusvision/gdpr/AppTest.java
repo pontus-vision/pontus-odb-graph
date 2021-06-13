@@ -879,7 +879,7 @@ public class AppTest {
 
     String res = null;
     try {
-      res = App.executor.eval("g.V().hasNext();").get().toString();
+      res = App.executor.eval("App.g.V().hasNext();").get().toString();
       System.out.println(res);
 
     } catch (ExecutionException e) {

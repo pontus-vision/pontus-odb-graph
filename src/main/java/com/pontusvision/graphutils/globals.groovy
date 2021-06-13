@@ -28,9 +28,6 @@ import java.util.concurrent.atomic.AtomicInteger
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.bothV
 
 
-
-
-
 class ODBSchemaManager {
     static def loadSchema(OrientStandardGraph graph, String... files) {
         StringBuffer sb = new StringBuffer()
@@ -252,7 +249,7 @@ class PontusJ2ReportingFunctions {
         return renderReportInTextPt(new ORecordId(pg_id), reportType, g)
     }
 
-    static def  renderReportInTextPt(ORID pg_id, String reportType = 'DSAR', GraphTraversalSource g = g) {
+    static def  renderReportInTextPt(ORID pg_id, String reportType = 'DSAR', GraphTraversalSource g = App.g) {
         def template = g.V().has('Object.Notification_Templates.Types', eq('Person.Natural'))
                 .has('Object.Notification_Templates.Label', eq(reportType))
                 .values('Object.Notification_Templates.Text').next() as String
@@ -280,7 +277,7 @@ class PontusJ2ReportingFunctions {
         return "Failed to render data"
     }
 
-    static def renderReportInText(ORID pg_id, String reportType = 'SAR Read', GraphTraversalSource g = g) {
+    static def renderReportInText(ORID pg_id, String reportType = 'SAR Read', GraphTraversalSource g = App.g) {
 
         if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
             return renderReportInTextPt(pg_id, reportType, g)
@@ -1128,7 +1125,7 @@ class VisJSGraph {
         def types = getMetadataTypes(depth.intValue())
 
         types.each { type ->
-            g.V().has("Metadata.Type.${type}", eq("${type}")).each {
+            App.g.V().has("Metadata.Type.${type}", P.eq("${type}")).each {
                 String groupStr = it.values('Metadata.Type').next()
                 String labelStr = it.label().toString().replaceAll('[_.]', ' ')
                 ORID vid = it.id() as ORID

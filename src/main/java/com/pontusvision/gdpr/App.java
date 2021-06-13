@@ -113,7 +113,7 @@ public class App // implements RequestStreamHandler
     }
     Server server = new Server(port);
     ResourceConfig config = new ResourceConfig();
-    config.packages("com.pontusvision.com.pontusvision.graphutils.gdpr", "com.pontusvision.ingestion");
+    config.packages("com.pontusvision.gdpr", "com.pontusvision.ingestion", "com.pontusvision.security");
     ServletHolder servlet = new ServletHolder(new ServletContainer(config));
 
     ServletContextHandler context = new ServletContextHandler(server, "/*");
@@ -129,6 +129,8 @@ public class App // implements RequestStreamHandler
 
 
     try {
+
+      server.start();
       String file = args.length == 0 ? "conf/gremlin-server.yml" : args[0];
 
       //      final Settings settings;

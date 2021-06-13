@@ -49,7 +49,7 @@ def benchmark = { closure ->
 //    Double percentageThreshold
 //
 //}
-//class VertProp extends com.pontusvision.com.pontusvision.graphutils.gdpr.mapping.VertexProps {
+//class VertProp extends com.pontusvision.gdpr.mapping.VertexProps {
 //    Class nativeType
 //}
 
@@ -1032,7 +1032,7 @@ class Matcher {
                 trans.open()
             }
 
-            def rules = getRule(ruleName) //jsonSlurper.parseText(jsonRules) as com.pontusvision.com.pontusvision.graphutils.gdpr.mapping.Rules;
+            def rules = getRule(ruleName) //jsonSlurper.parseText(jsonRules) as com.pontusvision.gdpr.mapping.Rules;
 
 
             Double percentageThreshold = (rules.percentageThreshold == null) ? 10.0d
