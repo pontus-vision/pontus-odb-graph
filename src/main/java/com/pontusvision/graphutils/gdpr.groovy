@@ -3171,7 +3171,7 @@ static def createNotificationTemplatesPt() {
 
 }
 
-static def __addVPCEdgesFromUserIdGroupPairs(
+static String  __addVPCEdgesFromUserIdGroupPairs(
   OrientStandardGraph graph, GraphTraversalSource g,
   Long origVpcVid,
   userIdGroupPairs,
@@ -3994,7 +3994,7 @@ static def getDataBreachesScores(def scoresMap) {
     App.g.V()
       .has('Event.Data_Breach.Status', eq('Open'))
       .where(
-        or(
+        __.or(
           __.has('Event.Data_Breach.Impact', eq('Customer Data Stolen (External)'))
           , __.has('Event.Data_Breach.Impact', eq('Customer Data Stolen (Internal)'))
         )

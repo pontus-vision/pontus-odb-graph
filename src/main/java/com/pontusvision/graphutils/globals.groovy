@@ -245,13 +245,13 @@ class PontusJ2ReportingFunctions {
     }
 
 
-    static def renderReportInTextPt(String pg_id, String reportType = 'DSAR', GraphTraversalSource g = g) {
+    static def renderReportInTextPt(String pg_id, String reportType = 'DSAR', GraphTraversalSource g = App.g) {
         return renderReportInTextPt(new ORecordId(pg_id), reportType, g)
     }
 
     static def  renderReportInTextPt(ORID pg_id, String reportType = 'DSAR', GraphTraversalSource g = App.g) {
-        def template = g.V().has('Object.Notification_Templates.Types', eq('Person.Natural'))
-                .has('Object.Notification_Templates.Label', eq(reportType))
+        def template = g.V().has('Object.Notification_Templates.Types', P.eq('Person.Natural'))
+                .has('Object.Notification_Templates.Label', P.eq(reportType))
                 .values('Object.Notification_Templates.Text').next() as String
         if (template) {
 
@@ -283,8 +283,8 @@ class PontusJ2ReportingFunctions {
             return renderReportInTextPt(pg_id, reportType, g)
         }
 
-        def template = g.V().has('Object.Notification_Templates.Types', eq('Person.Natural'))
-                .has('Object.Notification_Templates.Label', eq(reportType))
+        def template = g.V().has('Object.Notification_Templates.Types', P.eq('Person.Natural'))
+                .has('Object.Notification_Templates.Label', P.eq(reportType))
                 .values('Object.Notification_Templates.Text').next() as String
         if (template) {
 
@@ -329,8 +329,8 @@ class PontusJ2ReportingFunctions {
         App.g.V(startVertexId)
                 .both().bothE()
                 .filter(bothV()
-                        .has("Metadata.Type.${vertType}", eq(vertType))
-                        .id().not(is(startVertexId))).path()
+                        .has("Metadata.Type.${vertType}", P.eq(vertType))
+                        .id().not(__.is(startVertexId))).path()
                 .each { path ->
 
                     path.objects().each { obj ->
@@ -381,56 +381,7 @@ class PontusJ2ReportingFunctions {
 
     }
 
-    public static Jinjava jinJava
 
-    static {
-        PontusJ2ReportingFunctions.jinJava = new Jinjava()
-
-//    com.pontusvision.graphutils.PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getChart",
-//      com.pontusvision.graphutils.PontusJ2ReportingFunctions.class, "getChart"))
-
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "possibleMatches",
-                PontusJ2ReportingFunctions.class, "possibleMatches", String.class, String.class))
-
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "context",
-                PontusJ2ReportingFunctions.class, "context", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "connected_data",
-                PontusJ2ReportingFunctions.class, "neighbours", String.class))
-
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTableCustomHeader",
-                PontusJ2ReportingFunctions.class, "htmlTableCustomHeader", Map.class, String.class, String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlRows",
-                PontusJ2ReportingFunctions.class, "htmlRows", Map.class, String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTable",
-                PontusJ2ReportingFunctions.class, "htmlTable", Map.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "jsonToHtmlTable",
-                PontusJ2ReportingFunctions.class, "jsonToHtmlTable", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "jsonToMap",
-                PontusJ2ReportingFunctions.class, "jsonToMap", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "businessRulesTable",
-                PontusJ2ReportingFunctions.class, "businessRulesTable", String.class))
-
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataSourcesForLawfulBasis",
-                PontusJ2ReportingFunctions.class, "getDataSourcesForLawfulBasis", String.class))
-
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDeptForDataSources",
-                PontusJ2ReportingFunctions.class, "getDeptForDataSources", String.class))
-
-
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForLawfulBasis",
-                PontusJ2ReportingFunctions.class, "getNumNaturalPersonForLawfulBasis", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForPIA",
-                PontusJ2ReportingFunctions.class, "getNumNaturalPersonForPIA", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumSensitiveInfoForPIA",
-                PontusJ2ReportingFunctions.class, "getNumSensitiveInfoForPIA", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataProceduresPerPerson",
-                PontusJ2ReportingFunctions.class, "getDataProceduresPerPerson", String.class))
-
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "t",
-                PontusJ2ReportingFunctions.class, "translate", String.class))
-
-
-    }
 
     static Map<Map<String, String>, Double> possibleMatchesMap(String pg_id, Map<String, Double> weightsPerVertex) {
         def (Map<ORID, Double> probs, Map<ORID, StringBuffer> labelsForMatch) =
@@ -523,11 +474,11 @@ class PontusJ2ReportingFunctions {
     static List<Map<String, String>> getDeptForDataSources(String dataSourceId) {
         return App.g.V(new ORecordId(dataSourceId))
                 .in('Has_Privacy_Impact_Assessment')
-                .filter(label().is('Object.Data_Source'))
+                .filter(__.label().is('Object.Data_Source'))
                 .out('Has_Ingestion_Event')
                 .out('Has_Ingestion_Event')
                 .in('Has_Ingestion_Event')
-                .filter(label().is('Person.Natural'))
+                .filter(__.label().is('Person.Natural'))
                 .valueMap(true)
                 .toList().collect({ item ->
 //      .collect { item ->
@@ -606,11 +557,11 @@ class PontusJ2ReportingFunctions {
     static Long getNumSensitiveInfoForPIA(String piaId) {
         return App.g.V(new ORecordId(piaId))
                 .in('Has_Privacy_Impact_Assessment')
-                .filter(label().is('Object.Data_Source'))
+                .filter(__.label().is('Object.Data_Source'))
                 .out('Has_Ingestion_Event')
                 .out('Has_Ingestion_Event')
                 .both('Has_Ingestion_Event')
-                .filter(has('Metadata.Type.Object.Sensitive_Data', P.eq('Object.Sensitive_Data')))
+                .filter(__.has('Metadata.Type.Object.Sensitive_Data', P.eq('Object.Sensitive_Data')))
                 .count()
                 .next()
 
@@ -711,22 +662,6 @@ class PontusJ2ReportingFunctions {
         return App.g.V(new ORecordId(id)).both().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')).count().next()
     }
 
-    public static JsonSlurper ptDictionarySlurper
-
-    static def ptDictionary
-    static {
-        ptDictionarySlurper = new JsonSlurper()
-        try {
-            def inputFile = new File("/orientdb/conf/i18n_pt_translation.json")
-
-            ptDictionary = ptDictionarySlurper.parse(inputFile.text.toCharArray())
-
-        }
-        catch (Throwable t) {
-            System.err.println("failed to load conf/i18n_pt_translation.json: " + t.toString())
-        }
-
-    }
 
 //  public static String getChart() {
 //    try {
@@ -786,11 +721,11 @@ class PontusJ2ReportingFunctions {
         }
         return strToTranslate
     }
-    static def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = g) {
+    static def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
         return renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g)
     }
 
-    static def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = g) {
+    static def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
 
         String vertType = App.g.V(pg_id).label().next()
         def allData = new HashMap<>()
@@ -854,7 +789,69 @@ class PontusJ2ReportingFunctions {
         return PontusJ2ReportingFunctions.jinJava.render(new String(pg_templateTextInBase64.decodeBase64()), allData).bytes.encodeBase64().toString()
 
     }
+    public static Jinjava jinJava
+    public static JsonSlurper ptDictionarySlurper
 
+    static def ptDictionary
+    static {
+        ptDictionarySlurper = new JsonSlurper()
+        try {
+            def inputFile = new File("/orientdb/conf/i18n_pt_translation.json")
+
+            ptDictionary = ptDictionarySlurper.parse(inputFile.text.toCharArray())
+
+        }
+        catch (Throwable t) {
+            System.err.println("failed to load conf/i18n_pt_translation.json: " + t.toString())
+        }
+
+        jinJava = new Jinjava()
+
+//    com.pontusvision.graphutils.PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getChart",
+//      com.pontusvision.graphutils.PontusJ2ReportingFunctions.class, "getChart"))
+
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "possibleMatches",
+                PontusJ2ReportingFunctions.class, "possibleMatches", String.class, String.class))
+
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "context",
+                PontusJ2ReportingFunctions.class, "context", String.class))
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "connected_data",
+                PontusJ2ReportingFunctions.class, "neighbours", String.class))
+
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTableCustomHeader",
+                PontusJ2ReportingFunctions.class, "htmlTableCustomHeader", Map.class, String.class, String.class))
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlRows",
+                PontusJ2ReportingFunctions.class, "htmlRows", Map.class, String.class))
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTable",
+                PontusJ2ReportingFunctions.class, "htmlTable", Map.class))
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "jsonToHtmlTable",
+                PontusJ2ReportingFunctions.class, "jsonToHtmlTable", String.class))
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "jsonToMap",
+                PontusJ2ReportingFunctions.class, "jsonToMap", String.class))
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "businessRulesTable",
+                PontusJ2ReportingFunctions.class, "businessRulesTable", String.class))
+
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataSourcesForLawfulBasis",
+                PontusJ2ReportingFunctions.class, "getDataSourcesForLawfulBasis", String.class))
+
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDeptForDataSources",
+                PontusJ2ReportingFunctions.class, "getDeptForDataSources", String.class))
+
+
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForLawfulBasis",
+                PontusJ2ReportingFunctions.class, "getNumNaturalPersonForLawfulBasis", String.class))
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForPIA",
+                PontusJ2ReportingFunctions.class, "getNumNaturalPersonForPIA", String.class))
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumSensitiveInfoForPIA",
+                PontusJ2ReportingFunctions.class, "getNumSensitiveInfoForPIA", String.class))
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataProceduresPerPerson",
+                PontusJ2ReportingFunctions.class, "getDataProceduresPerPerson", String.class))
+
+        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "t",
+                PontusJ2ReportingFunctions.class, "translate", String.class))
+
+
+    }
 }
 
 
@@ -1721,9 +1718,9 @@ class VisJSGraph {
 
             gtrav
                     .or(
-                            __.has('Metadata.Type.Object.AWS_VPC', eq('Object.AWS_VPC'))
-                            , __.has('Metadata.Type.Object.AWS_Security_Group', eq('Object.AWS_Security_Group'))
-                            , __.has('Metadata.Type.Object.AWS_Instance', eq('Object.AWS_Instance'))
+                            __.has('Metadata.Type.Object.AWS_VPC', P.eq('Object.AWS_VPC'))
+                            , __.has('Metadata.Type.Object.AWS_Security_Group', P.eq('Object.AWS_Security_Group'))
+                            , __.has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
                     )
                     .bothE()
                     .dedup().each {

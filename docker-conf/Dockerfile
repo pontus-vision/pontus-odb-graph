@@ -7,6 +7,7 @@ COPY . /pontus-odb-graph
 FROM scratch
 
 COPY --from=builder  /pontus-odb-graph/conf /pontus-odb-graph/conf
+COPY --from=builder  /pontus-odb-graph/j2 /pontus-odb-graph/j2
 COPY --from=builder  /pontus-odb-graph/bin /pontus-odb-graph/bin
 
 

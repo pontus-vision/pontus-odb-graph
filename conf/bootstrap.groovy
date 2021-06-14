@@ -2,6 +2,7 @@ import com.orientechnologies.orient.core.id.ORID
 import com.pontusvision.gdpr.App
 import com.pontusvision.graphutils.Matcher
 import com.pontusvision.graphutils.ODBSchemaManager
+import com.pontusvision.graphutils.PontusJ2ReportingFunctions
 import com.pontusvision.graphutils.VisJSGraph
 import com.pontusvision.graphutils.gdpr
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
@@ -86,7 +87,19 @@ static def calculatePOLECounts(){
     return gdpr.calculatePOLECounts();
 }
 
-//action
+static def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g){
+    return PontusJ2ReportingFunctions.renderReportInBase64(pg_id,pg_templateTextInBase64,g);
+}
+
+static def renderReportInTextPt(String pg_id, String reportType = 'DSAR', GraphTraversalSource g = App.g){
+    return PontusJ2ReportingFunctions.renderReportInTextPt(pg_id,reportType,g);
+}
+
+static def renderReportInText(ORID pg_id, String reportType = 'SAR Read', GraphTraversalSource g = App.g){
+    return PontusJ2ReportingFunctions.renderReportInText(pg_id,reportType,g);
+
+}
+
 
 try {
     //String gdprModeEnv = System.getenv("PONTUS_GDPR_MODE");
