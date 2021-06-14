@@ -945,6 +945,8 @@ public class AppTest {
 
     } catch (ExecutionException e) {
       e.printStackTrace();
+      assertNull(e);
+
     }
 
 
