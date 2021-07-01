@@ -3,6 +3,8 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OType;
@@ -10,13 +12,22 @@ import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.mapping.MappingReq;
 import org.apache.commons.lang.StringUtils;
+import org.apache.tinkerpop.gremlin.driver.MessageSerializer;
+import org.apache.tinkerpop.gremlin.driver.message.ResponseMessage;
+import org.apache.tinkerpop.gremlin.driver.message.ResponseStatusCode;
+import org.apache.tinkerpop.gremlin.driver.ser.GraphSONMessageSerializerV3d0;
+import org.apache.tinkerpop.gremlin.driver.ser.SerializationException;
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
+import org.apache.tinkerpop.gremlin.orientdb.io.OrientIoRegistry;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.apache.tinkerpop.gremlin.structure.io.IoRegistry;
+import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper;
+import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
 import org.glassfish.jersey.server.ContainerRequest;
 
 import javax.ws.rs.*;
@@ -160,12 +171,12 @@ public class Resource {
   @Consumes(MediaType.APPLICATION_JSON)
   public GraphReply graph(GraphRequest greq) {
 
-    Set<Vertex> outNodes = App.g.V(Long.parseLong(greq.graphId)).to(Direction.OUT).toSet();
-    Set<Vertex> inNodes = App.g.V(Long.parseLong(greq.graphId)).to(Direction.IN).toSet();
-    Vertex v = App.g.V(Long.parseLong(greq.graphId)).next();
+    Set<Vertex> outNodes = App.g.V((greq.graphId)).to(Direction.OUT).toSet();
+    Set<Vertex> inNodes = App.g.V((greq.graphId)).to(Direction.IN).toSet();
+    Vertex v = App.g.V((greq.graphId)).next();
 
-    Set<Edge> outEdges = App.g.V(Long.parseLong(greq.graphId)).toE(Direction.OUT).toSet();
-    Set<Edge> inEdges = App.g.V(Long.parseLong(greq.graphId)).toE(Direction.IN).toSet();
+    Set<Edge> outEdges = App.g.V((greq.graphId)).toE(Direction.OUT).toSet();
+    Set<Edge> inEdges = App.g.V((greq.graphId)).toE(Direction.IN).toSet();
 
     GraphReply retVal = new GraphReply(v, inNodes, outNodes, inEdges, outEdges);
 
@@ -557,19 +568,60 @@ status: "success", message: "Data source is working", title: "Success"
 
   @POST
   @Path("gremlin")
-  @Produces(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
 
   public String gremlinQuery(GremlinRequest request) {
+    final UUID uuid = request.getRequestId() == null ? UUID.randomUUID() :
+        UUID.fromString(request.getRequestId());
+    IoRegistry registry = OrientIoRegistry.getInstance();
+
+    GraphSONMapper.Builder builder = GraphSONMapper.build().addRegistry(registry);
+    GraphSONMessageSerializerV3d0 serializer = new GraphSONMessageSerializerV3d0(builder);
+
     try {
       // TODO: apply filter to request.gremlin to only allow certain queries.
 
-      return App.executor.eval(request.gremlin, request.bindings).get().toString();
-    } catch (InterruptedException e) {
+      Object res;
+      if (request.bindings == null ){
+        res = App.executor.eval(request.gremlin).get();
+      }
+      else{
+        res = App.executor.eval(request.gremlin, request.bindings).get();
+      }
+
+      final ResponseMessage msg = ResponseMessage.build(uuid)
+          .result(IteratorUtils.asList(res))
+          .code(ResponseStatusCode.SUCCESS).create();
+
+      return serializer.serializeResponseAsString(msg);
+
+//      JsonObject jsonObject = new JsonObject();
+//      jsonObject.addProperty("requestId", uuid.toString());
+//      jsonObject.add("status", gson.toJsonTree(msg.getStatus()));
+//      jsonObject.add("result", gson.toJsonTree(msg.getResult()));
+//      return jsonObject.toString();
+
+
+    } catch (InterruptedException | ExecutionException | SerializationException e) {
       e.printStackTrace();
-      return e.getMessage();
-    } catch (ExecutionException e) {
-      return e.getMessage();
+
+      final ResponseMessage msg = ResponseMessage.build(uuid)
+          .statusMessage(e.getMessage())
+          .code(ResponseStatusCode.SERVER_ERROR_SCRIPT_EVALUATION).create();
+
+      try {
+        return serializer.serializeResponseAsString(msg);
+      } catch (SerializationException serializationException) {
+        serializationException.printStackTrace();
+
+        return "{ \"error\":  \""+ e.getMessage()+ "\" }";
+      }
+//      JsonObject jsonObject = new JsonObject();
+//      jsonObject.addProperty("requestId", uuid.toString());
+//      jsonObject.add("status", JsonParser.parseString(gson.toJson(msg.getStatus())));
+//      return jsonObject.toString();
+
     }
 
   }

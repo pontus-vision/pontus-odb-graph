@@ -301,7 +301,6 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="accountSettings">
-    <option name="activeProfile" value="profile:default" />
     <option name="activeRegion" value="eu-west-2" />
     <option name="recentlyUsedProfiles">
       <list>

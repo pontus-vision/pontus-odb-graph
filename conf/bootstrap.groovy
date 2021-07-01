@@ -32,6 +32,11 @@ static def findMatchingNeighbours(GraphTraversalSource gTrav, Set<ORID> required
    return Matcher.findMatchingNeighbours(gTrav,requiredTypeIds,otherIds,sb);
 }
 
+static def getVisJsGraph(String pg_vid){
+    return VisJSGraph.getVisJSGraph(pg_vid);
+}
+
+
 static def getVisJsGraph(String pg_vid, int depth){
     return VisJSGraph.getVisJSGraph(pg_vid,depth);
 }

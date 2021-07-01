@@ -78,7 +78,6 @@ public class App // implements RequestStreamHandler
 
     GraphManager graphMgr = sge.getGraphManager();
     Set<String> graphNames = graphMgr.getGraphNames();
-
     for (String graphName : graphNames)
     {
       logger.debug("Found Graph: " + graphName);
@@ -86,6 +85,7 @@ public class App // implements RequestStreamHandler
       //                graphMgmt = graph.openManagement();
       g = graph.traversal();
     }
+
     if (graphNames.size() == 0)
     {
       for (Map.Entry<String, String> entry : settings.graphs.entrySet())
@@ -99,6 +99,8 @@ public class App // implements RequestStreamHandler
       }
 
     }
+    graphMgr.putTraversalSource("g", App.g);
+
 //    oServer.activate();
     logger.info("AFTER ACTIVATING  SERVER *******");
     graph = (OrientStandardGraph) g.getGraph();
@@ -131,7 +133,7 @@ public class App // implements RequestStreamHandler
     try {
 
       server.start();
-      String file = args.length == 0 ? "conf/gremlin-server.yml" : args[0];
+      String file = args.length == 0 ? "config/gremlin-server.yaml" : args[0];
 
       //      final Settings settings;
       try {
