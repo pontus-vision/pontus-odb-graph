@@ -33,12 +33,12 @@ static def findMatchingNeighbours(GraphTraversalSource gTrav, Set<ORID> required
 }
 
 static def getVisJsGraph(String pg_vid){
-    return VisJSGraph.getVisJSGraph(pg_vid);
+    return VisJSGraph.getVisJsGraph(pg_vid);
 }
 
 
 static def getVisJsGraph(String pg_vid, int depth){
-    return VisJSGraph.getVisJSGraph(pg_vid,depth);
+    return VisJSGraph.getVisJsGraph(pg_vid,depth);
 }
 
 static def getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb,
@@ -50,7 +50,7 @@ static def getEdgeProperties(String fromVertexId, String toVertexId){
     return VisJSGraph.getEdgeProperties(fromVertexId,toVertexId);
 }
 
-static def getVisJSGraph(String pg_vid, long pg_depth){
+static def getVisJsGraph(String pg_vid, long pg_depth){
     return VisJSGraph.getVisJsGraph(pg_vid,pg_depth);
 }
 

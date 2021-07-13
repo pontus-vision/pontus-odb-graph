@@ -856,7 +856,7 @@ class PontusJ2ReportingFunctions {
 
 
 
-class VisJSGraph {
+public class VisJSGraph {
     static getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, ORID vid, String origLabel) {
         StringBuilder sb = new StringBuilder()
         sb.append(new JsonBuilder(g.V(vid).valueMap().next()).toString())
@@ -1159,7 +1159,7 @@ class VisJSGraph {
 
     }
 
-    static getVisJSGraph(ORID pg_vid, long pg_depth) {
+    static getVisJsGraph(ORID pg_vid, long pg_depth) {
 
         StringBuffer sb = new StringBuffer()
 
@@ -1784,17 +1784,17 @@ class VisJSGraph {
         return index
     }
 
-    static def getVisJsGraph(String pg_vid) {
+    static getVisJsGraph(String pg_vid) {
 
         return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid))
     }
 
 
-    static def getVisJsGraph(String pg_vid, int depth) {
+    static getVisJsGraph(String pg_vid, int depth) {
         return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), depth)
     }
 
-    static def getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
+    static getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
 
         return VisJSGraph.getVisJsGraphImmediateNeighbourNodes(new ORecordId(pg_vid), sb, counter, nodeIds, depth)
 
@@ -1802,13 +1802,13 @@ class VisJSGraph {
     }
 
 
-    static def getEdgeProperties(String fromVertexId, String toVertexId) {
+    static getEdgeProperties(String fromVertexId, String toVertexId) {
         return VisJSGraph.getEdgeProperties(new ORecordId(fromVertexId), new ORecordId(toVertexId))
     }
 
-    static def getVisJSGraph(String pg_vid, long pg_depth) {
+    static getVisJsGraph(String pg_vid, long pg_depth) {
 
-        return VisJSGraph.getVisJSGraph(new ORecordId(pg_vid), pg_depth)
+        return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), pg_depth)
     }
 
     static def getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, String vid, String origLabel) {
