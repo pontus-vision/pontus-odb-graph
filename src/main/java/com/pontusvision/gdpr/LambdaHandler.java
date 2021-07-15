@@ -27,6 +27,7 @@ public class LambdaHandler implements RequestHandler<AwsProxyRequest, AwsProxyRe
     static {
         try {
             System.setProperty("distributed","false" );
+            System.setProperty("storage.wal.allowDirectIO","false");
             System.setProperty("ORIENTDB_HOME","/orientdb" );
             System.setProperty("orientdb_home","/orientdb" );
             System.setProperty("java.util.logging.manager","com.orientechnologies.common.log.ShutdownLogManager" );
