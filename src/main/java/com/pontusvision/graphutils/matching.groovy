@@ -1149,10 +1149,11 @@ class Matcher {
 
             }
             else{
-                sb.append("\nUpdating exiting Entry for ${ruleName}")
+                sb.append("\nUpdating exiting Entry for ${ruleName}; id = ${id}")
 
                 g.V(id)
                  .property("Object.Data_Source_Mapping_Rule.Business_Rules_JSON", ruleStr)
+                 .next();
 
             }
 
