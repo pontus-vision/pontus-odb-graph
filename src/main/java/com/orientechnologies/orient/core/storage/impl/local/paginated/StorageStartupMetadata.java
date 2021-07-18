@@ -172,7 +172,7 @@ public class StorageStartupMetadata {
     // LPPM - exiting just in case...
     if (fileLock == null) {
       OLogManager.instance().error(this,
-          "Database is locked by another process, please shutdown process and try again",
+          "EXITING PROCESS!!!!  Database is locked by another process, please shutdown process and try again",
           new OStorageException(
               "Database is locked by another process, please shutdown process and try again"));
       System.exit(0);
