@@ -676,34 +676,34 @@ rules:
       - label: "Person.Natural"
         props:
           Full_Name:
-            val: "${pg_FirstName?.toUpperCase()?.trim()} ${pg_LastName?.toUpperCase()?.trim()}"
+            val: "${FirstName?.toUpperCase()?.trim()} ${LastName?.toUpperCase()?.trim()}"
             predicate: "eq"
             mandatoryInSearch: true
             
           Full_Name_fuzzy:
-            val: "${pg_FirstName?.toUpperCase()?.trim()} ${pg_LastName?.toUpperCase()?.trim()}"
+            val: "${FirstName?.toUpperCase()?.trim()} ${LastName?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           
           Last_Name:
-            val: "${pg_LastName?.toUpperCase()?.trim()}"
+            val: "${LastName?.toUpperCase()?.trim()}"
             excludeFromSubsequenceSearch: true
            
           Date_Of_Birth:
-            val: "${pg_Birthdate?:'1666-01-01'}"
+            val: "${Birthdate?:'1666-01-01'}"
             type: "java.util.Date"
             mandatoryInSearch: false
             excludeFromSubsequenceSearch: true
 
           Title:
-            val: "${pg_Title?:pg_Salutation?:''}"
+            val: "${Title?:Salutation?:''}"
             excludeFromSearch: true
 
           Nationality:
-            val: "${pg_MailingCountry?:'Unknown'}"
+            val: "${MailingCountry?:'Unknown'}"
             excludeFromSearch: true
             
           Customer_ID:
-            val: "${pg_Id}"
+            val: "${Id}"
             mandatoryInSearch: true
 
           Gender:
@@ -712,46 +712,46 @@ rules:
             excludeFromSubsequenceSearch: true
 
           Type:
-            val: "${pg_Tipo__c?pg_Tipo__c.toLowerCase():'leads'}"
+            val: "${Tipo__c?Tipo__c.toLowerCase():'leads'}"
             mandatoryInSearch: false
             excludeFromSubsequenceSearch: true
 
       - label: "Object.Identity_Card"
-        condition: "${ (pg_CPF__c != null) && ! (pg_CPF__c.isEmpty())}"
+        condition: "${ (CPF__c != null) && ! (CPF__c.isEmpty())}"
         props:
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
 
           Id_Value:
-            val: "${pg_CPF__c.replaceAll('[^0-9]','')}"
+            val: "${CPF__c.replaceAll('[^0-9]','')}"
             mandatoryInSearch: true
 
       - label: "Location.Address"
         props:
           Full_Address:
-            val: "${ ( (pg_MailingStreet?:'')+ '\\\\n' + (pg_MailingCity?:'') + '\\\\n' + (pg_MailingState?:'') + '\\\\n' + (pg_MailingCountry?:'')).replaceAll('\\\\n', ' ') }"
+            val: "${ ( (MailingStreet?:'')+ '\\\\n' + (MailingCity?:'') + '\\\\n' + (MailingState?:'') + '\\\\n' + (MailingCountry?:'')).replaceAll('\\\\n', ' ') }"
             mandatoryInSearch: true
 
           parser:
-            val: "${ ( (pg_MailingStreet?:'')+ '\\\\n' + (pg_MailingCity?:'') + '\\\\n' + (pg_MailingState?:'') + '\\\\n' + (pg_MailingCountry?:'')).replaceAll('\\\\n', ' ') }"
+            val: "${ ( (MailingStreet?:'')+ '\\\\n' + (MailingCity?:'') + '\\\\n' + (MailingState?:'') + '\\\\n' + (MailingCountry?:'')).replaceAll('\\\\n', ' ') }"
             excludeFromSearch: true
             type: "com.pontusvision.utils.LocationAddress"
 
           Post_Code:
-            val: "${com.pontusvision.utils.PostCode.format(pg_MailingPostalCode)}"
+            val: "${com.pontusvision.utils.PostCode.format(MailingPostalCode)}"
             excludeFromSearch: true
 
       - label: "Object.Email_Address"
         props:
           Email:
-            val: "${pg_Email}"
+            val: "${Email}"
             mandatoryInSearch: true
 
       - label: "Object.Phone_Number"
         props:
           Raw:
-            val: "${pg_Phone}"
+            val: "${Phone}"
             mandatoryInSearch: false
 
           Type:
@@ -759,12 +759,12 @@ rules:
             excludeFromSubsequenceSearch: true
 
           Numbers_Only:
-            val: "${(pg_Phone?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Phone?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
 
           Last_7_Digits:
-            val: "${(((pg_Phone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Phone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
@@ -783,7 +783,7 @@ rules:
       - label: "Event.Group_Ingestion"
         props:
           Metadata_Start_Date:
-            val: "${pg_currDate}"
+            val: "${currDate}"
             mandatoryInSearch: true
             excludeFromSearch: false
             type: "java.util.Date"
