@@ -11,6 +11,7 @@ import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.mapping.MappingReq;
+import com.pontusvision.graphutils.gdpr;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tinkerpop.gremlin.driver.MessageSerializer;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseMessage;
@@ -642,5 +643,73 @@ status: "success", message: "Data source is working", title: "Success"
 
   }
 
+  @GET
+  @Path("kpi/calculatePOLECounts")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String calculatePOLECounts() {
+    return gdpr.calculatePOLECounts().toString();
+  }
+
+  @GET
+  @Path("kpi/getScoresJson")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getScoresJson() {
+    return gdpr.getScoresJson().toString();
+  }
+
+  @GET
+  @Path("kpi/getDSARStatsPerOrganisation")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getDSARStatsPerOrganisation() {
+    return gdpr.getDSARStatsPerOrganisation().toString();
+  }
+
+  @GET
+  @Path("kpi/getNaturalPersonPerDataProcedures")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getNaturalPersonPerDataProcedures() {
+    return gdpr.getNaturalPersonPerDataProcedures().toString();
+  }
+
+  @GET
+  @Path("kpi/getDataProceduresPerDataSource")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getDataProceduresPerDataSource() {
+    return gdpr.getDataProceduresPerDataSource().toString();
+  }
+
+  @GET
+  @Path("kpi/getConsentPerNaturalPersonType")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getConsentPerNaturalPersonType() {
+    return gdpr.getConsentPerNaturalPersonType().toString();
+  }
+
+  @GET
+  @Path("kpi/getNumNaturalPersonPerOrganisation")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getNumNaturalPersonPerOrganisation() {
+    return gdpr.getNumNaturalPersonPerOrganisation().toString();
+  }
+
+  @GET
+  @Path("kpi/getNumSensitiveDataPerDataSource")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getNumSensitiveDataPerDataSource() {
+    return gdpr.getNumSensitiveDataPerDataSource().toString();
+  }
+  @GET
+  @Path("kpi/getNumNaturalPersonPerDataSource")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getNumNaturalPersonPerDataSource() {
+    return gdpr.getNumNaturalPersonPerDataSource().toString();
+  }
+
+  @GET
+  @Path("kpi/getNumEventsPerDataSource")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getNumEventsPerDataSource() {
+    return gdpr.getNumEventsPerDataSource().toString();
+  }
 
 }

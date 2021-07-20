@@ -38,6 +38,16 @@ public class LambdaHandler implements RequestHandler<AwsProxyRequest, AwsProxyRe
             System.setProperty("index.txMode","FULL" );
             System.setProperty("nonTX.recordUpdate.synch","true" );
             System.setProperty("environment.dumpCfgAtStartup","false" );
+
+            System.setProperty("storage.wal.syncOnPageFlush","true");
+            System.setProperty("storage.configuration.syncOnUpdate","true");
+            System.setProperty("storage.diskCache.writeCachePart", "0");
+            System.setProperty("storage.diskCache.writeCacheFlushInactivityInterval","0");
+            System.setProperty("storage.diskCache.writeCachePageTTL", "0");
+            System.setProperty("storage.diskCache.pinnedPages", "1");
+            System.setProperty("storage.compressionMethod","gzip");
+            System.setProperty("storage.useWAL","true");
+
             System.setProperty("orientdb.config.file","/orientdb/config/orientdb-server-config.xml" );
             System.setProperty("orientdb.www.path","/orientdb/www" );
             System.setProperty("orientdb.build.number",

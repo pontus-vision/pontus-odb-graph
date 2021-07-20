@@ -1,7 +1,5 @@
 package com.pontusvision.ingestion;
 
-import com.pontusvision.gdpr.App;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -30,14 +28,19 @@ public class Ingestion {
   public String jsonObjArray(IngestionJsonObjArrayRequest request) throws ExecutionException, InterruptedException {
 
 
-    Map<String, Object> bindings = new HashMap() {{
-      put("jsonString", request.jsonString);
-      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
-      put("ruleName", request.ruleName);
-    }};
+//    Map<String, Object> bindings = new HashMap() {{
+//      put("jsonString", request.jsonString);
+//      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
+//      put("ruleName", request.ruleName);
+//    }};
 
-    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
-        bindings).get().toString();
+    String res = com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(
+        request.jsonString,
+        request.jsonPath,
+        request.ruleName);
+
+//    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
+//        bindings).get().toString();
     return res;
 
   }
