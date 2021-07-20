@@ -1,3 +1,4 @@
+package com.pontusvision.graphutils;
 // Long count = App.g.V()
 //   .has("Object.Contract.Description", eq("This is a Data Sharing Contract"))
 //   .count()
@@ -34,18 +35,20 @@ import java.util.regex.Pattern
 
 import static org.apache.tinkerpop.gremlin.process.traversal.P.*
 
+class gdpr{
 //import org.OrientStandardGraph.core.OrientStandardGraph
 
-def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_metadataController, pg_metadataProcessor, pg_metadataLineage, pg_metadataRedaction, pg_metadataVersion, pg_metadataStatus, pg_metadataGDPRStatus, pg_metadataLineageServerTag, pg_metadataLineageLocationTag, pg_login_username, pg_login_sha256, pg_id_name, pg_id_value, pg_name_first, pg_name_last, pg_gender, pg_nat, pg_name_title, pg_email, pg_location_street, pg_location_city, pg_location_state, pg_location_postcode) {
+static def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_metadataController, pg_metadataProcessor, pg_metadataLineage, pg_metadataRedaction, pg_metadataVersion, pg_metadataStatus, pg_metadataGDPRStatus, pg_metadataLineageServerTag, pg_metadataLineageLocationTag, pg_login_username, pg_login_sha256, pg_id_name, pg_id_value, pg_name_first, pg_name_last, pg_gender, pg_nat, pg_name_title, pg_email, pg_location_street, pg_location_city, pg_location_state, pg_location_postcode) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
 
+  def dob;
   try {
-    dob = new SimpleDateFormat("yyyy-MM-dd").parse((String) item.get("pg_dob"))
+    dob = new SimpleDateFormat("yyyy-MM-dd").parse((String) pg_dob)
   } catch (Throwable t) {
     try {
-      dob = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse((String) item.get("pg_dob"))
+      dob = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse((String) pg_dob)
 
     }
     catch (Throwable t2) {
@@ -61,7 +64,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
     }
 
 
-    person = App.g.addV("Person.Natural").
+   def person = App.g.addV("Person.Natural").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -82,7 +85,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
       property("Person.Natural.Date_Of_Birth", dob).
       property("Person.Natural.Title", pg_name_title).next()
 
-    email = App.g.addV("Object.Email_Address").
+   def email = App.g.addV("Object.Email_Address").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -99,7 +102,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
       property("Object.Email_Address.Email", pg_email).next()
 
 
-    credential = App.g.addV("Object.Credential").
+  def  credential = App.g.addV("Object.Credential").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -116,7 +119,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
       property("Object.Credential.userId", pg_login_username).
       property("Object.Credential.login.sha256", pg_login_sha256).next()
 
-    idCard = App.g.addV("Object.Identity_Card").
+  def  idCard = App.g.addV("Object.Identity_Card").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -134,7 +137,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
       property("Object.Identity_Card.id_value", pg_id_value).next()
 
 
-    location = App.g.addV("Location.Address").
+   def location = App.g.addV("Location.Address").
       property("Metadata.Controller", pg_metadataController).
       property("Metadata.Processor", pg_metadataProcessor).
       property("Metadata.Lineage", pg_metadataLineage).
@@ -168,7 +171,7 @@ def addRandomUserData(OrientStandardGraph graph, GraphTraversal g, pg_dob, pg_me
   }
 }
 
-def dumpData(List<Map<String, String>> listOfMaps) {
+static def dumpData(List<Map<String, String>> listOfMaps) {
 
   StringBuilder strBuilder = new StringBuilder()
   for (Map<String, String> item in listOfMaps) {
@@ -191,7 +194,7 @@ listOfMaps.add(map2);
 
 addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
-def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, List<Map<String, String>> listOfMaps) {
+static def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, List<Map<String, String>> listOfMaps) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
@@ -385,7 +388,7 @@ def addCampaignAwarenessBulk(OrientStandardGraph graph, GraphTraversalSource g, 
 }
 
 
-def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<String, String>> listOfMaps) {
+static def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<String, String>> listOfMaps) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
@@ -399,7 +402,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
 
     for (Map<String, String> item in listOfMaps) {
 
-
+      def dob;
       try {
         dob = new SimpleDateFormat("yyyy-MM-dd").parse((String) item.get("pg_dob"))
       } catch (Throwable t) {
@@ -414,7 +417,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
       }
 
 
-      person = App.g.addV("Person.Natural").
+   def   person = App.g.addV("Person.Natural").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -436,7 +439,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
         property("Person.Natural.Title", item.get("pg_name_title")).next()
 
 
-      email = App.g.addV("Object.Email_Address").
+     def email = App.g.addV("Object.Email_Address").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -453,7 +456,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
         property("Object.Email_Address.Email", item.get("pg_email")).next()
 
 
-      credential = App.g.addV("Object.Credential").
+    def  credential = App.g.addV("Object.Credential").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -470,7 +473,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
         property("Object.Credential.User_Id", item.get("pg_login_username")).
         property("Object.Credential.Login_SHA256", item.get("pg_login_sha256")).next()
 
-      idCard = App.g.addV("Object.Identity_Card").
+    def  idCard = App.g.addV("Object.Identity_Card").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -488,7 +491,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
         property("Object.Identity_Card.Id_Value", item.get("pg_id_value")).next()
 
 
-      location = App.g.addV("Location.Address").
+    def  location = App.g.addV("Location.Address").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -550,7 +553,7 @@ def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, List<Map<
  */
 
 
-def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOfMaps, StringBuffer sb = null) {
+static def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOfMaps, StringBuffer sb = null) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
@@ -745,7 +748,7 @@ def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>> listOf
   }
 }
 
-def addDataSources(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addDataSources(OrientStandardGraph graph, GraphTraversalSource g) {
 
 
 //  Transaction trans = graph.tx()
@@ -790,7 +793,7 @@ def addDataSources(OrientStandardGraph graph, GraphTraversalSource g) {
 
 }
 
-def addRandomDataProcedures(graph, g) {
+static def addRandomDataProcedures(graph, g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -883,7 +886,7 @@ def addRandomDataProcedures(graph, g) {
 
 }
 
-def addDataSourcesToAWSInstances(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addDataSourcesToAWSInstances(OrientStandardGraph graph, GraphTraversalSource g) {
 
   //  def trans = graph.tx()
   try {
@@ -932,7 +935,7 @@ def addDataSourcesToAWSInstances(OrientStandardGraph graph, GraphTraversalSource
 
 }
 
-def addEdgesPiaDataSourcesPrivNotices(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addEdgesPiaDataSourcesPrivNotices(OrientStandardGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -981,7 +984,7 @@ def addEdgesPiaDataSourcesPrivNotices(OrientStandardGraph graph, GraphTraversalS
 }
 
 
-def addRandomDataBreachEvents(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addRandomDataBreachEvents(OrientStandardGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -1066,7 +1069,7 @@ def addRandomDataBreachEvents(OrientStandardGraph graph, GraphTraversalSource g)
 }
 
 
-def addRandomSARs(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addRandomSARs(OrientStandardGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -1157,7 +1160,7 @@ def addRandomSARs(OrientStandardGraph graph, GraphTraversalSource g) {
 }
 
 
-def addDataBreachToAWSInstances(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addDataBreachToAWSInstances(OrientStandardGraph graph, GraphTraversalSource g) {
 
 //  Transaction trans = graph.tx()
   try {
@@ -1202,10 +1205,10 @@ def addDataBreachToAWSInstances(OrientStandardGraph graph, GraphTraversalSource 
 }
 
 
-def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, String>> listOfMaps) {
+static def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, String>> listOfMaps) {
 
-  metadataCreateDate = new Date();
-  metadataUpdateDate = new Date();
+ def metadataCreateDate = new Date();
+ def metadataUpdateDate = new Date();
 //  Transaction trans = graph.tx()
   try {
 //    if (!trans.isOpen()) {
@@ -1213,7 +1216,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
 //
 //    }
 
-    randVal = new Random()
+   def randVal = new Random()
 
     long oneYearInMs = 3600000L * 24L * 365L
     long eighteenYearsInMs = oneYearInMs * 18L
@@ -1223,7 +1226,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
 
 
     for (Map<String, String> item in listOfMaps) {
-
+      def dob;
 
       try {
 
@@ -1233,7 +1236,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
       }
 
 
-      person = App.g.addV("Person.Natural").
+     def  person = App.g.addV("Person.Natural").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1255,7 +1258,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Person.Natural.Title", item.get("pg_name_title")).next()
 
 
-      email = App.g.addV("Object.Email_Address").
+     def email = App.g.addV("Object.Email_Address").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1272,7 +1275,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Object.Email_Address.Email", item.get("pg_email")).next()
 
 
-      credential = App.g.addV("Object.Credential").
+     def credential = App.g.addV("Object.Credential").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1289,7 +1292,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Object.Credential.User_Id", item.get("pg_login_username")).
         property("Object.Credential.Login_SHA256", item.get("pg_login_sha256")).next()
 
-      idCard = App.g.addV("Object.Identity_Card").
+    def  idCard = App.g.addV("Object.Identity_Card").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1307,7 +1310,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Object.Identity_Card.Id_Value", item.get("pg_id_value")).next()
 
 
-      location = App.g.addV("Location.Address").
+     def location = App.g.addV("Location.Address").
         property("Metadata.Controller", item.get("pg_metadataController")).
         property("Metadata.Processor", item.get("pg_metadataProcessor")).
         property("Metadata.Lineage", item.get("pg_metadataLineage")).
@@ -1327,10 +1330,10 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
         property("Location.Address.Post_Code", item.get("pg_location_postcode")).next();
 
 
-      parentOrGuardian = App.g.V()
+     def parentOrGuardian = App.g.V()
         .has('Metadata.Type.Person.Natural', eq('Person.Natural'))
         .where(__.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold)))
-        .order().by(shuffle).range(0, 1).next();
+        .order().by(Order.shuffle).range(0, 1).next();
 
 
 
@@ -1354,7 +1357,7 @@ def addRandomChildUserDataBulk(OrientStandardGraph graph, g, List<Map<String, St
 }
 
 
-def addDataBulk(OrientStandardGraph graph, g, List<Map<String, String>> listOfMaps) {
+static def addDataBulk(OrientStandardGraph graph, g, List<Map<String, String>> listOfMaps) {
 
   def metadataCreateDate = new Date()
   def metadataUpdateDate = new Date()
@@ -1366,7 +1369,7 @@ def addDataBulk(OrientStandardGraph graph, g, List<Map<String, String>> listOfMa
 //    }
 
 
-    randVal = new Random()
+    def randVal = new Random()
 
     def oneYearInMs = 3600000 * 24 * 365
     def eighteenYearsInMs = oneYearInMs * 18
@@ -1385,7 +1388,7 @@ def addDataBulk(OrientStandardGraph graph, g, List<Map<String, String>> listOfMa
 
 }
 
-def __addConsentForPrivacyNotice(OrientStandardGraph graph, GraphTraversal g, Vertex privNoticeVertex) {
+static def __addConsentForPrivacyNotice(OrientStandardGraph graph, GraphTraversal g, Vertex privNoticeVertex) {
 
   def randVal = new Random()
   def randVal1 = randVal.nextInt(30)
@@ -1437,7 +1440,7 @@ eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.
 
 //        def employee = App.g.V().has('Metadata.Type',eq('Person.Employee')).order().by(shuffle).range(0,1).next()
 
-    def person = App.g.V().has('Metadata.Type', eq('Person.Natural')).order().by(shuffle).range(0, 1).next()
+    def person = App.g.V().has('Metadata.Type', eq('Person.Natural')).order().by(Order.shuffle).range(0, 1).next()
 
 
     App.g.addE("Consent").from(person).to(consent).next()
@@ -1454,7 +1457,7 @@ eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.
 }
 
 
-def addContracts(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addContracts(OrientStandardGraph graph, GraphTraversalSource g) {
 
   def randVal = new Random();
 
@@ -1509,7 +1512,7 @@ def addContracts(OrientStandardGraph graph, GraphTraversalSource g) {
 }
 
 
-def addPrivacyImpactAssessment(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addPrivacyImpactAssessment(OrientStandardGraph graph, GraphTraversalSource g) {
 
   Date metadataCreateDate = new Date()
   Date metadataUpdateDate = new Date()
@@ -1684,10 +1687,10 @@ have a voice.
 the end of the process.
  */
 
-def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalSource g) {
 
-  metadataCreateDate = new Date()
-  metadataUpdateDate = new Date()
+  def metadataCreateDate = new Date()
+  def metadataUpdateDate = new Date()
 //  Transaction trans = graph.tx()
   try {
 //    if (!trans.isOpen()) {
@@ -1838,7 +1841,7 @@ def addLawfulBasisAndPrivacyNoticesPt(OrientStandardGraph graph, GraphTraversalS
 }
 
 
-def addLawfulBasisAndPrivacyNotices(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addLawfulBasisAndPrivacyNotices(OrientStandardGraph graph, GraphTraversalSource g) {
 
   if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
     return addLawfulBasisAndPrivacyNoticesPt(graph, g);
@@ -1979,7 +1982,7 @@ def addLawfulBasisAndPrivacyNotices(OrientStandardGraph graph, GraphTraversalSou
 }
 
 
-def createForms() {
+static def createForms() {
 
 //    objectFormLabel = createVertexLabel(mgmt, "Object.Form");
 //
@@ -2049,7 +2052,7 @@ def createForms() {
 
 }
 
-def addOrganisations(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addOrganisations(OrientStandardGraph graph, GraphTraversalSource g) {
 
   def orgData = [
     [
@@ -2149,7 +2152,7 @@ def addOrganisations(OrientStandardGraph graph, GraphTraversalSource g) {
 }
 
 
-def createDataProtectionAuthorities(OrientStandardGraph graph, GraphTraversalSource g) {
+static def createDataProtectionAuthorities(OrientStandardGraph graph, GraphTraversalSource g) {
 
   def authData = [
     [
@@ -2644,27 +2647,27 @@ def createDataProtectionAuthorities(OrientStandardGraph graph, GraphTraversalSou
 }
 
 
-def createNotificationTemplates() {
+static def createNotificationTemplates() {
 //  Transaction trans = graph.tx()
   try {
 //    if (!trans.isOpen()) {
 //      trans.open()
 //
 //    }
-    if (!App.g) {
-      App.g = g;
-    }
+//    if (!App.g) {
+//      App.g = g;
+//    }
 
     if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
       return createNotificationTemplatesPt();
     }
 
-    Long count = g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
+    Long count = App.g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
 
 
     if (count == 0) {
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "INGESTION BUSINESS RULES")
@@ -2674,7 +2677,7 @@ def createNotificationTemplates() {
         .property("Object.Notification_Templates.Label", "Business Rules")
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "MATCHES")
@@ -2699,7 +2702,7 @@ def createNotificationTemplates() {
         .next();
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "MATCHES")
@@ -2725,7 +2728,7 @@ def createNotificationTemplates() {
         .next();
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "SAR READ TEMPLATE")
@@ -2756,7 +2759,7 @@ def createNotificationTemplates() {
         .property("Object.Notification_Templates.Label", "SAR Read")
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "SAR UPDATE TEMPLATE")
@@ -2787,7 +2790,7 @@ def createNotificationTemplates() {
         .property("Object.Notification_Templates.Label", "SAR Update")
         .next();
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "SAR DELETE TEMPLATE")
@@ -2821,7 +2824,7 @@ def createNotificationTemplates() {
 
 
 
-      g.addV("Object.Notification_Templates")
+      App.g.addV("Object.Notification_Templates")
         .property("Metadata.Type", "Object.Notification_Templates")
         .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
         .property("Object.Notification_Templates.Id", "DATA BREACH PERSON TEMPLATE")
@@ -2899,7 +2902,7 @@ def createNotificationTemplates() {
 
 }
 
-def createNotificationTemplatesPt() {
+static def createNotificationTemplatesPt() {
 //  Transaction trans = graph.tx()
   try {
 //    if (!trans.isOpen()) {
@@ -2907,11 +2910,11 @@ def createNotificationTemplatesPt() {
 //
 //    }
 
-    if (!App.g) {
-      App.g = g;
-    }
+//    if (!App.g) {
+//      App.g = g;
+//    }
 
-    Long count = g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
+    Long count = App.g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next();
 
 
     if (count == 0) {
@@ -3168,7 +3171,7 @@ def createNotificationTemplatesPt() {
 
 }
 
-def __addVPCEdgesFromUserIdGroupPairs(
+static String  __addVPCEdgesFromUserIdGroupPairs(
   OrientStandardGraph graph, GraphTraversalSource g,
   Long origVpcVid,
   userIdGroupPairs,
@@ -3217,7 +3220,7 @@ def __addVPCEdgesFromUserIdGroupPairs(
   return sb.toString()
 }
 
-def __addSecGroupEdgesFromUserIdGroupPairs(graph, g, Long origSecGroupVid, userIdGroupPairs, String origGroupIdStr, boolean isEgress) {
+static def __addSecGroupEdgesFromUserIdGroupPairs(graph, g, Long origSecGroupVid, userIdGroupPairs, String origGroupIdStr, boolean isEgress) {
   def StringBuilder sb = new StringBuilder();
 
   userIdGroupPairs.each { uidPair ->
@@ -3257,7 +3260,7 @@ def __addSecGroupEdgesFromUserIdGroupPairs(graph, g, Long origSecGroupVid, userI
   return sb.toString()
 }
 
-def __addSecGroupEdges(OrientStandardGraph graph, GraphTraversalSource g, aws_sec_groups) {
+static def __addSecGroupEdges(OrientStandardGraph graph, GraphTraversalSource g, aws_sec_groups) {
 
   StringBuilder sb = new StringBuilder();
 
@@ -3338,7 +3341,7 @@ def __addSecGroupEdges(OrientStandardGraph graph, GraphTraversalSource g, aws_se
 }
 
 
-def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
+static def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
 
   if (aws_instances == null) {
 
@@ -3383,7 +3386,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
   }
 
 
-  sb = new StringBuffer();
+  def sb = new StringBuffer();
 
 
   def vpcIds = com.jayway.jsonpath.JsonPath.parse(aws_instances).read('$.Reservations.[*].Instances.[*].VpcId').toSet()
@@ -3633,7 +3636,7 @@ def addRandomAWSGraph(graph, g, aws_instances, aws_sec_groups) {
 
 }
 
-def addRandomDataInit(OrientStandardGraph graph, GraphTraversalSource g) {
+static def addRandomDataInit(OrientStandardGraph graph, GraphTraversalSource g) {
   def listOfMaps = new LinkedList<HashMap<String, String>>()
 
   def map1 = [pg_metadataProcessor: '', pg_metadataLineage: '', pg_metadataRedaction: '', pg_metadataVersion: 1, pg_metadataStatus: '', pg_metadataGDPRStatus: '', pg_metadataLineageServerTag: '', pg_metadataLineageLocationTag: '', pg_metadataController: 'controller123', "pg_gender": "male", "pg_name_title": "mr", "pg_name_first": "quoc", "pg_name_last": "bastiaansen", "pg_location_street": "7247 lucasbolwerk", "pg_location_city": "epe", "pg_location_state": "flevoland", "pg_location_postcode": "92775", "pg_email": "quoc.bastiaansen@example.com", "pg_login_username": "heavybear983", "pg_login_password": "writer", "pg_login_salt": "avKgfb4e", "pg_login_md5": "d918e55da9d17937c718b9f7688821cb", "pg_login_sha1": "2cb2bba91deef25c64f15a6ac96d84c21c1189e3", "pg_login_sha256": "2945552ed13c3cf2a845d2f6af78ad7bbb161569af8e08dc3bfa36a3fa09b6df", "pg_dob": "1955-12-01 16:58:49", "pg_registered": "2012-07-15 09:50:59", "pg_phone": "(668)-056-6802", "pg_cell": "(859)-113-0976", "pg_id_name": "BSN", "pg_id_value": "94173707", "pg_picture_large": "https://randomuser.me/api/portraits/men/63.jpg", "pg_picture_medium": "https://randomuser.me/api/portraits/med/men/63.jpg", "pg_picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/63.jpg", "pg_nat": "NL"]
@@ -3725,7 +3728,7 @@ def addRandomDataInit(OrientStandardGraph graph, GraphTraversalSource g) {
 }
 
 
-def getAwarenessScores(def scoresMap) {
+static def getAwarenessScores(def scoresMap) {
 
   def retVal = '';
   long scoreValue
@@ -3755,7 +3758,7 @@ def getAwarenessScores(def scoresMap) {
       if (pcntSecondReminder > 10) {
         scoreValue -= 30L;
       } else if (secondReminder > 0) {
-        scoreValue -= (10L + 2L * pcntWithNegativeConsent)
+        scoreValue -= (10L + 2L * pcntSecondReminder)
       }
 
       scoreValue -= (10L * firstReminder / numEvents)
@@ -3780,15 +3783,15 @@ def getAwarenessScores(def scoresMap) {
 }
 
 
-def getChildrenScores(scoresMap) {
+static def getChildrenScores(scoresMap) {
 
   long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L));
-  def dateThreshold = new java.util.Date(ageThresholdMs);
+  def dateThreshold = new Date(ageThresholdMs);
 
 
   long numChildren = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
       )
     )
@@ -3796,18 +3799,18 @@ def getChildrenScores(scoresMap) {
 
   long numNoGuardian = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
-        , __.outE('Has_Parent_Or_Guardian').count().is(eq(0))
+        , __.outE('Has_Parent_Or_Guardian').count().is(eq(0) as P<Long>)
       )
     )
     .count().next()
 
   long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
-        , __.outE('Consent').count().is(eq(0))
+        , __.outE('Consent').count().is(eq(0) as P<Long>)
       )
     )
     .count().next()
@@ -3890,14 +3893,14 @@ def getChildrenScores(scoresMap) {
 
 }
 
-def getConsentScores(def scoresMap) {
+static def getConsentScores(def scoresMap) {
   long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L));
   def dateThreshold = new java.util.Date(ageThresholdMs);
 
 
   long numAdults = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
       )
     )
@@ -3906,9 +3909,9 @@ def getConsentScores(def scoresMap) {
 
   long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
     .where(
-      and(
+      __.and(
         __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
-        , __.outE('Consent').count().is(eq(0))
+        , __.outE('Consent').count().is(P.eq(0) as P<Long>)
       )
     )
     .count().next()
@@ -3982,7 +3985,7 @@ def getConsentScores(def scoresMap) {
 
 }
 
-def getDataBreachesScores(def scoresMap) {
+static def getDataBreachesScores(def scoresMap) {
   long numItems = App.g.V().has('Metadata.Type.Event.Data_Breach', eq('Event.Data_Breach'))
     .count().next()
 
@@ -3991,7 +3994,7 @@ def getDataBreachesScores(def scoresMap) {
     App.g.V()
       .has('Event.Data_Breach.Status', eq('Open'))
       .where(
-        or(
+        __.or(
           __.has('Event.Data_Breach.Impact', eq('Customer Data Stolen (External)'))
           , __.has('Event.Data_Breach.Impact', eq('Customer Data Stolen (Internal)'))
         )
@@ -4032,7 +4035,7 @@ def getDataBreachesScores(def scoresMap) {
 }
 
 
-def getDataProtnOfficerScores(def scoresMap) {
+static def getDataProtnOfficerScores(def scoresMap) {
 
   long numDPOs = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
     .count().next()
@@ -4081,7 +4084,7 @@ def getDataProtnOfficerScores(def scoresMap) {
 
 }
 
-def getIndivRightsScores(def scoresMap) {
+static def getIndivRightsScores(def scoresMap) {
   long numItems = App.g.V()
     .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
     .count()
@@ -4117,7 +4120,7 @@ def getIndivRightsScores(def scoresMap) {
 
 }
 
-def getInfoYouHoldScores(def scoresMap) {
+static def getInfoYouHoldScores(def scoresMap) {
 
   long numEvents = App.g.V().has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion')).count().next();
 
@@ -4152,7 +4155,7 @@ def getInfoYouHoldScores(def scoresMap) {
 }
 
 
-def getInternationalScores(def scoresMap) {
+static def getInternationalScores(def scoresMap) {
   long numItems = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
     .count().next()
 
@@ -4179,7 +4182,7 @@ def getInternationalScores(def scoresMap) {
 
 }
 
-def getLawfulBasisScores(def scoresMap) {
+static def getLawfulBasisScores(def scoresMap) {
 
   long numEvents = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
     .count().next()
@@ -4205,7 +4208,7 @@ def getLawfulBasisScores(def scoresMap) {
 }
 
 
-def getPrivacyImpactAssessmentScores(def scoresMap) {
+static def getPrivacyImpactAssessmentScores(def scoresMap) {
   long numItems = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
     .count().next()
 
@@ -4260,7 +4263,7 @@ def getPrivacyImpactAssessmentScores(def scoresMap) {
 }
 
 
-def getPrivacyNoticesScores(def scoresMap) {
+static def getPrivacyNoticesScores(def scoresMap) {
   long numEvents = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).count().next();
 
   long numRecordsNoConsent =
@@ -4330,17 +4333,17 @@ def getPrivacyNoticesScores(def scoresMap) {
 }
 
 
-def getSubjectAccessRequestScores(def scoresMap) {
+static def getSubjectAccessRequestScores(def scoresMap) {
   long fifteenDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 15L));
   def fifteenDayThreshold = new java.util.Date(fifteenDayThresholdMs);
   long fiveDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 5L));
   def fiveDayThreshold = new java.util.Date(fiveDayThresholdMs);
 
-  long numEvents = g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).count().next();
+  long numEvents = App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).count().next();
 
   long numRecordsOlder15Days =
 
-    g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
+    App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
       .where(
         __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(fifteenDayThreshold))
       )
@@ -4349,7 +4352,7 @@ def getSubjectAccessRequestScores(def scoresMap) {
 
   long numRecordsOlder5Days =
 
-    g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
+    App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
       .where(
         __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(fiveDayThreshold))
       )
@@ -4381,7 +4384,7 @@ def getSubjectAccessRequestScores(def scoresMap) {
 
 }
 
-def getScoresJson() {
+static def getScoresJson() {
 
   def scoresMap = [:]
 
@@ -4421,11 +4424,11 @@ def getScoresJson() {
 
 }
 
-def calculatePOLECounts() {
+static def calculatePOLECounts() {
   return CalculatePOLECount.calculatePOLECounts();
 }
 
-class CalculatePOLECount {
+static class CalculatePOLECount {
 
   static Long getCountQueryResults(String queryStr) {
 
@@ -4539,7 +4542,7 @@ class CalculatePOLECount {
   }
 }
 
-def getNumEventsPerDataSource() {
+static def getNumEventsPerDataSource() {
   StringBuffer sb = new StringBuffer("[")
   boolean firstTime = true;
 
@@ -4569,7 +4572,7 @@ def getNumEventsPerDataSource() {
 
 }
 
-def getNumNaturalPersonPerDataSource() {
+static def getNumNaturalPersonPerDataSource() {
   StringBuffer sb = new StringBuffer("[")
   boolean firstTime = true;
 
@@ -4606,7 +4609,7 @@ def getNumNaturalPersonPerDataSource() {
 
 }
 
-def getNumSensitiveDataPerDataSource() {
+static def getNumSensitiveDataPerDataSource() {
   StringBuffer sb = new StringBuffer()
   boolean firstTime = false;
 
@@ -4649,7 +4652,7 @@ def getNumSensitiveDataPerDataSource() {
 }
 
 
-def getNumNaturalPersonPerOrganisation() {
+static def getNumNaturalPersonPerOrganisation() {
   StringBuffer sb = new StringBuffer("[")
   boolean firstTime = true;
 
@@ -4699,7 +4702,7 @@ def getNumNaturalPersonPerOrganisation() {
 
 }
 
-class ConsentPerNaturalPersonType {
+static class ConsentPerNaturalPersonType {
   static String getConsentPerNaturalPersonType() {
     StringBuffer sb = new StringBuffer("[")
     boolean firstTime = true;
@@ -4743,11 +4746,11 @@ class ConsentPerNaturalPersonType {
 
 }
 
-def getConsentPerNaturalPersonType() {
+static def getConsentPerNaturalPersonType() {
   return ConsentPerNaturalPersonType.getConsentPerNaturalPersonType();
 }
 
-class NaturalPersonPerDataProcedures {
+static class NaturalPersonPerDataProcedures {
   static String getNumNaturalPersonPerDataProcedures() {
     StringBuffer sb = new StringBuffer("[")
     boolean firstTime = true;
@@ -4792,7 +4795,7 @@ class NaturalPersonPerDataProcedures {
 
 }
 
-class DataProceduresPerDataSource {
+static class DataProceduresPerDataSource {
 
 
   static String getDataProceduresPerDataSource() {
@@ -4833,19 +4836,19 @@ class DataProceduresPerDataSource {
   }
 }
 
-def getDataProceduresPerDataSource() {
+static def getDataProceduresPerDataSource() {
   return DataProceduresPerDataSource.getDataProceduresPerDataSource();
 }
 
-def getNaturalPersonPerDataProcedures() {
+static def getNaturalPersonPerDataProcedures() {
   return NaturalPersonPerDataProcedures.getNumNaturalPersonPerDataProcedures();
 }
 
-def getDSARStatsPerOrganisation() {
+static def getDSARStatsPerOrganisation() {
   return DSARStats.getDSARStatsPerOrganisation(App.g);
 }
 
-class DSARStats {
+static class DSARStats {
   public static boolean getDSARStatsPerRequestType(Date gtDateThreshold, Date lteDateThreshold, boolean firstTime, String dateLabel, StringBuffer sb) {
     return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime, dateLabel, 'Event.Subject_Access_Request.Request_Type', 'TOTAL_REQ_TYPE', sb);
   }
@@ -4963,8 +4966,8 @@ class DSARStats {
         .out("Made_SAR_Request")
         .where(
           __.or(
-            values('Event.Subject_Access_Request.Metadata.Update_Date').is(P.gte(thirtyDayDateThreshold)),
-            hasNot('Event.Subject_Access_Request.Metadata.Update_Date')
+           __.values('Event.Subject_Access_Request.Metadata.Update_Date').is(gte(thirtyDayDateThreshold)),
+           __.hasNot('Event.Subject_Access_Request.Metadata.Update_Date')
           )
         )
 
@@ -4975,11 +4978,11 @@ class DSARStats {
           , __.as('events').values('Event.Subject_Access_Request.Status').as('dsar_status')
           , __.as('events').values('Event.Subject_Access_Request.Request_Type').as('dsar_type')
           , __.as('events').values('Event.Subject_Access_Request.Metadata.Create_Date').as('dsar_create_date')
-          .coalesce(is(P.gt(fiveDayDateThreshold)).constant("Last 5 days"),
-            is(P.between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
-            is(P.between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
-            is(P.between(fifteenDayDateThreshold, thirtyDayDateThreshold)).constant("Last 30 days"),
-            is(P.lt(thirtyDayDateThreshold)).constant("Older than 30 days"))
+          .coalesce(__.is(gt(fiveDayDateThreshold)).constant("Last 5 days"),
+            __.is(between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
+            __.is(between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
+            __.is(between(fifteenDayDateThreshold, thirtyDayDateThreshold)).constant("Last 30 days"),
+            __.is(lt(thirtyDayDateThreshold)).constant("Older than 30 days"))
           .as('dsar_age')
         )
         .select('dsar_source_type', 'dsar_source_name', 'dsar_status', 'dsar_type', 'dsar_age')
@@ -5053,7 +5056,7 @@ class DSARStats {
   }
 }
 
-class Discovery {
+static class Discovery {
   static String domainTranslationStr = """
   {
     "GENDER": "Person.Identity.Gender"
@@ -5204,8 +5207,8 @@ class Discovery {
       def dataSourceVertex = App.g.V(dataSourceId).next();
 //        addDataSource(
 //        g,
-//        "Discovery DB ${dbURL}",
-//        "Discovery metadata for db ${dbURL}",
+//        "com.pontusvision.graphutils.Discovery DB ${dbURL}",
+//        "com.pontusvision.graphutils.Discovery metadata for db ${dbURL}",
 //        "DISCOVERY_DB",
 //        colMetadataStr);
 
@@ -5357,9 +5360,9 @@ class Discovery {
 
 
 }
-
+}
 //def addDiscoveryDataFromDB(String dbURL, String dbTableName, String colMetadataStr, String colDiscoveryDataStr) {
-//  return Discovery.addDiscoveryDataFromDB(graph, g, dbURL, dbTableName, colMetadataStr, colDiscoveryDataStr);
+//  return com.pontusvision.graphutils.Discovery.addDiscoveryDataFromDB(graph, g, dbURL, dbTableName, colMetadataStr, colDiscoveryDataStr);
 //
 //}
 

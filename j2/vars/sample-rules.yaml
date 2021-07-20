@@ -1,0 +1,500 @@
+
+rules:
+  Base_Clientes_Folha_1___DADOS_CLIENTES_csv:
+    vertices:
+      - label: Person.Natural
+        name: TITULAR
+
+        props:
+          Full_Name: "${pg_NOME?.trim().toUpperCase()}"
+          Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
+          Type:
+            val: "cliente"
+            excludeFromSearch: true
+
+          Date_Of_Birth:
+            val: "${pg_DATA_NASCIMENTO}"
+            type: "java.util.Date"
+            mandatoryInSearch: true
+            predicate: "eq"
+
+      #CONSENTIMENTO
+      - label: Event.Consent
+        props:
+          Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+
+          Metadata.Create_Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+
+          Status:
+            val: "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}"
+            excludeFromSearch: true
+
+
+      - label: Object.Identity_Card
+        props:
+          Id_Value:
+            val: "${pg_CPF.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+      - label:  Object.Email_Address
+        props:
+          Email:  "${pg_EMAIL}"
+      - label: Location.Address
+        props:
+          Full_Address: "${pg_IMOVEL} ${pg_BAIRRO}, Sao Paulo, SP"
+      - label: Event.Transaction
+        props:
+          Type:
+            val: "Venda"
+            excludeFromSubsequenceSearch: true
+
+          Description:
+            val: "Venda da Propriedade"
+            excludeFromSubsequenceSearch: true
+
+          Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+
+          Currency:
+            val: "BRL"
+            excludeFromSubsequenceSearch: true
+
+          Value: "${pg_VALOR?.replaceAll('[^0-9\\\\.]','')}"
+      - label: Person.Natural
+        name: CORRETOR
+        props:
+          Name_Qualifier: "${pg_CORRETOR}"
+          Type:
+            val: "corretor"
+            excludeFromSearch: true
+
+
+    edges:
+      - label: "Uses_Email"
+        fromVertexName: "TITULAR"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Id_Card"
+        fromVertexName: "TITULAR"
+        toVertexLabel: "Object.Identity_Card"
+
+      - label: "Has_Transaction"
+        fromVertexName: "TITULAR"
+        toVertexLabel: "Event.Transaction"
+
+      - label: "Has_Transaction"
+        fromVertexName: "CORRETOR"
+        toVertexLabel: "Event.Transaction"
+
+      - label: "Has_Transaction"
+        fromVertexLabel: "Location.Address"
+        toVertexLabel: "Event.Transaction"
+
+      - label: "Consent"
+        fromVertexName: "TITULAR"
+        toVertexLabel: "Event.Consent"
+
+
+  # CORRETOR,NOME,DATA_NASCIMENTO
+  Base_Corretores_Folha_1___DADOS_CORRETORES_csv:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${pg_NOME?.trim().toUpperCase()}"
+          Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
+          Type:
+            val: "corretor"
+            excludeFromSearch: true
+          Name_Qualifier: "${pg_CORRETOR}"
+
+          Natural.Date_Of_Birth:
+            val: "${pg_DATA_NASCIMENTO}"
+            type: "java.util.Date"
+            mandatoryInSearch: true
+            predicate: "eq"
+
+
+        #CELULAR
+      - label: Object.Phone_Number
+        props:
+          Raw:
+            val: "${pg_CELULAR}"
+            mandatoryInSearch: false
+          Type:
+            val: "Celular"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(pg_CELULAR?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((pg_CELULAR?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      #CPF
+      - label: Object.Identity_Card
+        props:
+          Id_Value:
+            val: "${pg_CPF.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+      # EMAIL
+      - label: Object.Email_Address
+        props:
+          Email:  "${pg_EMAIL}"
+
+      #ENDERECO,BAIRRO,CIDADE,UF,CEP
+      - label: Location.Address
+        props:
+          Full_Address: "${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP} "
+          Type:
+            val: "Business"
+            excludeFromSearch: true
+
+
+    edges:
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Identity_Card"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Lives"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+  # NOME,,CORRETOR, RENDA,,CONSENTIMENTO
+
+  Base_Leads_Incorporadora_Folha_1___LEADS_INCORPORADORA_csv:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${pg_NOME?.trim().toUpperCase()}"
+          Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
+          Type:
+            val: "leads"
+            excludeFromSearch: true
+
+
+      - label: Object.Salary
+        props:
+          Value:
+            val: "${pg_RENDA?.replaceAll('[^0-9\\\\.]','')}"
+
+          #            type: "Double"
+          Currency:
+            val: "BRL"
+            excludeFromSubsequenceSearch: true
+          Period:
+            val: "Mensal"
+            excludeFromSubsequenceSearch: true
+
+
+      - label: Person.Organisation
+        name: CORRETOR
+        props:
+          Name: "${pg_CORRETOR}"
+          Short_Name: "${pg_CORRETOR}"
+          Type:
+            val: "Corretora"
+            excludeFromSearch: true
+
+
+      #TELEFONE
+      - label: Object.Phone_Number
+        props:
+          Raw:
+            val: "${pg_TELEFONE}"
+            mandatoryInSearch: false
+          Type:
+            val: "Celular"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(pg_TELEFONE?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((pg_TELEFONE?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      #CONSENTIMENTO
+      - label: Event.Consent
+        props:
+          Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+
+          Metadata.Create_Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+
+          Status:
+            val: "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}"
+            excludeFromSearch: true
+
+      # EMAIL
+      - label: Object.Email_Address
+        props:
+          Email:  "${pg_EMAIL}"
+
+
+
+
+      #END__IMOVEL
+      - label: Location.Address
+        props:
+          Full_Address:
+            val: "${pg_END__IMOVEL}"
+          #        excludeFromUpdate: true
+
+          Type:
+            val: "Lead"
+            excludeFromSearch: true
+
+          Code:
+            val: "{pg_IMOVEL_INTERESSE}"
+            mandatoryInSearch: true
+
+      - label: Event.Transaction
+        props:
+          Type:
+            val: "Interesse"
+            excludeFromSearch: true
+
+          Description:
+            val: "Compra da Propriedade"
+            excludeFromSearch: true
+
+          Currency:
+            val: "BRL"
+            excludeFromSearch: true
+
+          Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+
+
+      - label: Object.Data_Source
+        props:
+          Name: planilhas - S3
+          Type: planilhas - S3
+          Description: planilhas guardadas na AWS S3
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${pg_currDate}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: planilhas - S3
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: planilhas - S3
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+
+
+
+
+
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Person.Natural
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Event.Group_Ingestion
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        toVertexLabel: Event.Group_Ingestion
+        fromVertexLabel: Object.Data_Source
+
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Consent"
+
+      #      - label: "Consent"
+      #        fromVertexLabel: "Person.Organisation"
+      #        toVertexLabel: "Event.Consent"
+
+      - label: "Has_Salary"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Salary"
+
+      - label: "Is_Responsible"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Person.Organisation"
+
+      - label: "Has_Transaction"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Transaction"
+
+      - label: "Has_Transaction"
+        fromVertexLabel: "Event.Transaction"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Transaction"
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Location.Address"
+
+  contratos_imoveis:
+    vertices:
+      - label: Person.Natural
+        percentageThreshold: 10
+        props:
+          Full_Name_fuzzy:
+            #val: "${com.pontusvision.utils.NLPCleaner.filter(pg_nlp_res_person,(boolean)false,(Set<String>)personFilter) as String}"
+            val: "${pg_nlp_res_person}"
+            predicate: textContainsFuzzy
+            type: "[Ljava.lang.String;"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+          Full_Name:
+            #val: "${com.pontusvision.utils.NLPCleaner.filter(pg_nlp_res_person,(boolean)false,(Set<String>)personFilter) as String}"
+            val: "${pg_nlp_res_person}"
+
+            predicate: textContainsFuzzy
+            type: "[Ljava.lang.String;"
+            excludeFromUpdate: true
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+
+      - label: Location.Address
+        props:
+          "parser.postcode":
+            val: "${pg_nlp_res_post_code}"
+            type: "[Ljava.lang.String;"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+            postProcessorVar: eachPostCode
+            postProcessor: "${com.pontusvision.utils.PostCode.format(eachPostCode)}"
+      - label: Object.Email_Address
+        props:
+          Email:
+            val: "${pg_nlp_res_emailaddress}"
+            type: "[Ljava.lang.String;"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: PDF Form Files
+            excludeFromSearch: true
+
+          Operation:
+            val: Unstructured Data Insertion
+            excludeFromSearch: true
+
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: Contratos
+            mandatoryInSearch: true
+            excludeFromUpdate: false
+
+          Description:
+            val: Contratos em AWS S3
+            mandatoryInSearch: false
+            excludeFromUpdate: false
+
+          Type:
+            val: Structured
+            mandatoryInSearch: false
+            excludeFromUpdate: false
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${pg_currDate}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+          Type:
+            val: Contratos em AWS S3
+            excludeFromSearch: true
+
+          Operation:
+            val: Unstructured Data Insertion
+            excludeFromSearch: true
+
+
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Person.Natural
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Event.Group_Ingestion
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Object.Data_Source
+        toVertexLabel: Event.Group_Ingestion
+
+

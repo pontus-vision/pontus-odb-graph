@@ -1,0 +1,216 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person.Organisation",
+        "name": "fornecedor",
+        "props": [
+          {
+            "name": "Person.Organisation.Name",
+            "val": "${A2_NOME?.trim()?.toUpperCase()}"
+          },
+          {
+            "name": "Person.Organisation.Type",
+            "val": "Fornecedor",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person.Organisation.Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Location.Address",
+        "name": "business_addr",
+        "props": [
+          {
+            "name": "Location.Address.Full_Address",
+            "val": "${A2_END} ${A2_ENDCOMP} ${BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+          },
+          {
+            "name": "Location.Address.Description",
+            "val": "endereco fornecedor"
+          },
+          {
+            "name": "Location.Address.Type",
+            "val": "business"
+          }
+        ]
+      },
+      {
+        "label": "Person.Natural",
+        "name": "rep",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${A2_NOMRESP?.trim()?.toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Full_Name_fuzzy",
+            "val": "${A2_NOMRESP?.trim()?.toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Type",
+            "val": "forenecedor"
+          }
+        ]
+      },
+      {
+        "label": "Object.Phone_Number",
+        "name": "rep_phone",
+        "props": [
+          {
+            "name": "Object.Phone_Number.Raw",
+            "val": "${A2_REPRTEL}"
+          },
+          {
+            "name": "Object.Phone_Number.Type",
+            "val": "Office",
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Numbers_Only",
+            "val": "${(A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "type": "[Ljava.lang.String;",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Last_7_Digits",
+            "val": "${(((A2_REPRTEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
+          }
+        ]
+      },
+      {
+        "label": "Object.Email_Address",
+        "name": "email1",
+        "props": [
+          {
+            "name": "Object.Email_Address.Email",
+            "val": "${A2_REPR_EM.trim()?.toUpperCase()}"
+          },
+          {
+            "name": "Object.Email_Address.Type",
+            "val": "business"
+          }
+        ]
+      },
+      {
+        "label": "Event.Ingestion",
+        "props": [
+          {
+            "name": "Event.Ingestion.Type",
+            "val": "totvs/protheus/sa2_fornecedor",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Create_Date",
+            "val": "${firstUpdate}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Update_Date",
+            "val": "${lastUpdate}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Ingestion",
+        "props": [
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "val": "${currDate}",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Type",
+            "val": "totvs/protheus/sa2_fornecedor",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "totvs/protheus/sa2_fornecedor"
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "totvs/protheus/sa2_fornecedor"
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Registros de Fornecedores no protheus/Totvs"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "fornecedor",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "rep",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Group_Ingestion",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object.Data_Source",
+        "toVertexLabel": "Event.Group_Ingestion"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "rep",
+        "toVertexName": "rep_phone"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "rep",
+        "toVertexName": "email1"
+      },
+      {
+        "label": "Works",
+        "fromVertexName": "rep",
+        "toVertexName": "business_addr"
+      }
+    ]
+  }
+}

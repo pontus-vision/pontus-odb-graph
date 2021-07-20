@@ -1,0 +1,12 @@
+First_Name,Last_Name,Customer_ID,Address,Post_Code,DateofBirth,Sex,Marital_Status,Phone_Number,Email_address,Permisssion_to_Contact,Policynumber,PolicyType,PolicyStatus,ProspectStatus,RenewalDate,ClientManager,TypeOfinsurance,PropertyType,Vehicle_Number
+ ROZELL,COLEMAN ,2312345763,"26 Silverweed Rd, Chatham ME5 0QU, UK",ME5 0QU,16/08/1960,Male,Married,(0189) 188871,rozell@hotmail.com,Yes,10333345,Renewable,Open,Active,11/10/2018,SYTE,Life,,
+ JOEL,COMBS,3654752637,"88 Kildale Grove, Seaton Carew, Hartlepool TS25 2AS, UK",TS25 2AS,19/10/1960,Female,Unmarried,(0191) 515 2082,,No,10330755,Non- Renewable,Open,Active,,HKJO,Motor,,CR05 TON
+ JAMES,CORREA,7326473648,"10 Ruthven Rd, Kingussie PH21 1EN, UK",PH21 1EN,30/03/1961,Male,Married,(01540) 300416,jamesc@jcconstruction.com,Yes,10330490,Renewable,Open,Active,30/10/2018,NJFG,House,Residential,
+ BILLY,COSLETT,7364723467,"34 Sandringham Gardens, North Shields NE29 9AY, UK",NE29 9AY,22/05/1962,Male,Married,(019467) 08778,billy87@dreamers.com,Yes,10330600,Renewable,Open,Close,01/11/2018,YEJR,Motor,,MA57 ERP
+ TINA,COSTELLO,6237467326,"8 Spoors Cottages, Whickham, Newcastle upon Tyne NE16 4LB, UK",NE16 4LB,19/04/1964,Female,Married,(019467) 25060,,No,10333634,Renewable,Open,Active,06/11/2018,JSYR,Motor,,RU13 BUM
+ MONTREAL,COX,8437587634,"73-74 Berwick St, Soho, London W1F 8TE, UK",W1F 8TE,22/07/1970,Male,Married,(020) 4723 2338,coxking@gmai.com,Yes,10330792,Renewable,Open,Active,11/11/2018,MSBI,House,Residential,
+ MICKEY,CRISTINO,2736743689,"18 Burnside, Belford NE70 7QG, UK",NE70 7QG,24/04/1972,Female,Unmarried,(01668) 723435,jaxweb@sbcglobal.net,Yes,10330435,Non- Renewable,Open,Close,,WUFP,House,Commercial,
+ SAM,CRUZ,4537567437,"7 Gwern Einon Rd, Sketty, Swansea SA2 8EL, UK",SA2 8EL,06/08/1972,Male,Unmarried,(01792) 388287,sam12345@rediff.com,Yes,10330435,Renewable,Open,Active,19/11/2018,ATFE,Life,,RV36 GBP
+JOHN,SMITH,4736473678,"76 Belville St, Greenock PA15 4SY, UK",PA15 4SY,08/04/1973,Male,Married,(01475) 545350,retoh@optonline.net,Yes,10330434,Renewable,Open,Active,27/10/2018,CNJO,Motor,,
+JUDY,CUSIMANO,5324757673,"34 The Fairway, Bromley BR1 2JY, UK",BR1 2JY,29/05/1976,Female,Married,(01689) 662142,judgejud@hotmail.com,Yes,10330436,Renewable,Open,Active,30/11/2018,ETHI,Life,,
+ JOHN,DAILEY,2896838266,"35 Underwood, New Addington, Croydon CR0 9ED, UK",CR0 9ED,04/12/1980,Male,Married,(01689) 424127,johndailey@aol.com,Yes,10333275,Renewable,Open,Active,01/12/2018,UYGD,Motor,,BU62 GER

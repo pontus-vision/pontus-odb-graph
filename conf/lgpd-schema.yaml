@@ -168,13 +168,13 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Event.Group_Ingestion.Has_Controller
-    dataType: String
+    dataType: Boolean
     cardinality: SINGLE
   - name: Event.Group_Ingestion.Has_Data_Owner
-    dataType: String
+    dataType: Boolean
     cardinality: SINGLE
   - name: Event.Group_Ingestion.Has_Processor
-    dataType: String
+    dataType: Boolean
     cardinality: SINGLE
   - name: Event.Group_Ingestion.Metadata_End_Date
     dataType: Date
@@ -696,6 +696,9 @@ propertyKeys:
   - name: Object.Data_Procedures.Why_Is_It_Collected
     dataType: String
     cardinality: SINGLE
+  - name: Object.Data_Procedures.Is_SubProcess
+    dataType: Boolean
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Data_Source
     dataType: String
     cardinality: SINGLE
@@ -775,6 +778,37 @@ propertyKeys:
   - name: Object.Data_Source.Update_Date
     dataType: Date
     cardinality: SINGLE
+  - name: Metadata.Type.Object.Data_Source_Mapping_Rule
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Data_Source_Mapping_Rule.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Business_Rules_JSON
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Source_Mapping_Rule.Update_Date
+    dataType: Date
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Email_Address
     dataType: String
     cardinality: SINGLE
@@ -783,6 +817,12 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object.Email_Address.Email
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Address.Host
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Address.Type
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Object.Form
@@ -1314,6 +1354,9 @@ propertyKeys:
   - name: Person.Natural.Customer_ID
     dataType: String
     cardinality: SINGLE
+  - name: Person.Natural.Id
+    dataType: String
+    cardinality: SINGLE
   - name: Person.Natural.Date_Of_Birth
     dataType: Date
     cardinality: SINGLE
@@ -1361,6 +1404,9 @@ propertyKeys:
     cardinality: SINGLE
 
   - name: Person.Organisation.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Person.Organisation.Id
     dataType: String
     cardinality: SINGLE
   - name: Person.Organisation.Department
@@ -1473,6 +1519,9 @@ vertexLabels:
     partition: False
     useStatic: False
   - name: Object.Data_Source
+    partition: False
+    useStatic: False
+  - name: Object.Data_Source_Mapping_Rule
     partition: False
     useStatic: False
   - name: Object.Email_Address
@@ -1740,6 +1789,14 @@ edgeLabels:
     unidirected: False
 
   - name: Works
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Family
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Dependant
     multiplicity: MULTI
     unidirected: False
 vertexIndexes:
@@ -2114,6 +2171,7 @@ vertexIndexes:
       - Object.Data_Procedures.Update_Mechanism
       - Object.Data_Procedures.Update_URL
       - Object.Data_Procedures.Why_Is_It_Collected
+      - Object.Data_Procedures.Is_SubProcess
     propertyKeysMappings:
     
       {}
@@ -2153,6 +2211,25 @@ vertexIndexes:
     
       {}
     
+  - name: "Object.Data_Source_Mapping_Rule.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Data_Source_Mapping_Rule
+      - Object.Data_Source_Mapping_Rule.Business_Rules_JSON
+      - Object.Data_Source_Mapping_Rule.Create_Date
+      - Object.Data_Source_Mapping_Rule.Form_Id
+      - Object.Data_Source_Mapping_Rule.Form_Owner_Id
+      - Object.Data_Source_Mapping_Rule.Form_Submission_Id
+      - Object.Data_Source_Mapping_Rule.Form_Submission_Owner_Id
+      - Object.Data_Source_Mapping_Rule.Name
+      - Object.Data_Source_Mapping_Rule.Update_Date
+    propertyKeysMappings:
+    
+      {}
+    
   - name: "Object.Email_Address.MixedIdx"
     composite: false
     unique: false
@@ -2161,6 +2238,8 @@ vertexIndexes:
     propertyKeys:
       - Metadata.Type.Object.Email_Address
       - Object.Email_Address.Email
+      - Object.Email_Address.Host
+      - Object.Email_Address.Type
     propertyKeysMappings:
     
       {}
@@ -2479,6 +2558,7 @@ vertexIndexes:
     propertyKeys:
       - Metadata.Type.Person.Natural
       - Person.Natural.Customer_ID
+      - Person.Natural.Id
       - Person.Natural.Date_Of_Birth
       - Person.Natural.Ethnicity
       - Person.Natural.Full_Name
@@ -2507,6 +2587,7 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata.Type.Person.Organisation
+      - Person.Organisation.Id
       - Person.Organisation.Department
       - Person.Organisation.Email
       - Person.Organisation.Fax

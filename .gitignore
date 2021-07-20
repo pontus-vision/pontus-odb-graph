@@ -26,3 +26,5 @@ target
 *.iml
 *.iws
 docker-lib/Dockerfile
+jpostal/
+databases/

@@ -1,0 +1,877 @@
+
+rules:
+
+
+  #    {
+  #      "A1_END": "sss"
+  #      "A1_TEL": "sss"
+  #      "A1_EMAIL": "sss"
+  #      "A1_PFISICA": "sss"
+  #      "A1_RG": "sss"
+  #      "A1_BAIRRO": "VL SAO VICENTE"
+  #      "A1_ESTADO": "sss"
+  #      "A1_CEP": "15500117"
+  #      "lastUpdate": "2016-08-29T09:12:33.001Z"
+  #      "A1_CGC": "58952390806"
+  #      "A1_COD_MUN": "sss"
+  #      "A1_NOME": "sss"
+  #      "id": "id"
+  #      "firstUpdate": "2016-08-29T09:12:33.001Z"
+  #      "A1_DDD": "sss"
+  #      "A1_EST": "sss"
+  #      "A1_MUN": "sss"
+  #    }
+  totvs_protheus_sa1_clientes:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${A1_NOME?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${A1_NOME?.trim()?.toUpperCase()}"
+          Type:
+            val: "Clientes"
+            excludeFromSearch: true
+
+          Customer_ID:
+            val: "${id}"
+            mandatoryInSearch: true
+            predicate: "eq"
+
+
+        #CELULAR
+      - label: Object.Phone_Number
+        props:
+          Raw:
+            val: "${A1_TEL}"
+            mandatoryInSearch: false
+          Type:
+            val: "Office"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((A1_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      #RG
+      - label: Object.Identity_Card
+        props:
+          Id_Value:
+            val: "${A1_RG?.trim()?.toUpperCase()}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "RG"
+            excludeFromSearch: true
+
+      # EMAIL
+      - label: Object.Email_Address
+        props:
+          Email:  "${A1_EMAIL}"
+
+      #ENDERECO,BAIRRO,CIDADE,UF,CEP
+      - label: Location.Address
+        props:
+          Full_Address: "${A1_END}, ${A1_BAIRRO},  ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+          Type:
+            val: "Business"
+            excludeFromSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: totvs/protheus/sa1_clientes
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${firstUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${currDate}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: totvs/protheus/sa1_clientes
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+      - label: Object.Data_Source
+        props:
+          Name: totvs/protheus/sa1_clientes
+          Type: totvs/protheus/sa1_clientes
+          Description: Registros de Clientes no protheus/Totvs
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Person.Natural
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Event.Group_Ingestion
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        toVertexLabel: Event.Group_Ingestion
+        fromVertexLabel: Object.Data_Source
+
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Identity_Card"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Lives"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+  #    {
+  #      "id": "string"
+  #      "lastUpdate": {}
+  #      "firstUpdate": {}
+  #      "RA_APELIDO": ""
+  #      "RA_BAIRRO": "Rua Da Ponte"
+  #      "RA_BITMAP": "9328"
+  #      "RA_BRPDH": "3"
+  #      "RA_CEP": "333333"
+  #      "RA_CEPCXPO": ""
+  #      "RA_CIC": "333333333"
+  #      "RA_CODMUN": "3333"
+  #      "RA_CODMUNE": "AP 33"
+  #      "RA_COMPLEM": ""
+  #      "RA_COMPLRG": ""
+  #      "RA_CPOSTAL": "33333-7"
+  #      "RA_CTDEPSA": ""
+  #      "RA_CTDPFGT": "2"
+  #      "RA_CTPCD": "11"
+  #      "RA_DDDCELU": ""
+  #      "RA_DDDFONE": "2"
+  #      "RA_DEFIFIS": "BRUNO.SSSS@SUNNYVALE.COM.BR"
+  #      "RA_DESCSIN": "BRUNO.SSSS@HOTMAIL.COM"
+  #      "RA_EMAIL": "R. CONTINENTAL"
+  #      "RA_EMAIL2": "SP"
+  #      "RA_ENDEREC": ""
+  #      "RA_ESTADO": ""
+  #      "RA_FOLCERT": ""
+  #      "RA_HABILIT": "CONTINENTAL"
+  #      "RA_HABILMT": "842"
+  #      "RA_LIVCERT": "R"
+  #      "RA_LOGRDSC": "MARIA AMANDA S PAIVA SSSSS"
+  #      "RA_LOGRNUM": "SAO BERNARDO DO CAMP"
+  #      "RA_LOGRTP": "BRUNO EEEE FFFF SSSSS"
+  #      "RA_LOGRTPD": "BRUNO EEEE FFFF SSSSS"
+  # x    "RA_MAE": ""
+  #      "RA_MUNICIP": "993166800"
+  #      "RA_NOME": "10707"
+  # x     "RA_NOMECMP": "842"
+  #      "RA_NSOCIAL": ""
+  #      "RA_NUMCELU": ""
+  #      "RA_NUMCP": ""
+  #      "RA_NUMENDE": "0x2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202000"
+  #      "RA_NUMEPAS": "PAULO FRIAS FERRARI"
+  #      "RA_NUMINSC": ""
+  #      "RA_NUMRIC": "14430024193"
+  #      "RA_OBSDEFI": ""
+  #      "RA_PAI": ""
+  #      "RA_PAISEXN": "2"
+  #      "RA_PAISEXT": ""
+  #      "RA_PIS": ""
+  #      "RA_PLAPRE": "40293563686"
+  #      "RA_PORTDEF": "543838778"
+  #      "RA_RACACOR": ""
+  #      "RA_REGCIVI": "162"
+  #      "RA_REGISTR": "439"
+  #      "RA_RESERVI": ""
+  #      "RA_RG": "M"
+  #      "RA_RNE": ""
+  #      "RA_SECAO": "2"
+  #      "RA_SERCP": "418473460132"
+  #      "RA_SERVENT": "0"
+  # x     "RA_SEXO": "284"
+  #      "RA_TELEFON": ""
+  #      "RA_TIPENDE": ""
+  #      "RA_TITULOE": ""
+  #      "RA_TPDEFFI": ""
+  #      "RA_ZONASEC": ""
+  #    }
+  totvs_protheus_ra_funcionario:
+    vertices:
+      - label: Person.Natural
+        name: colaborador
+        props:
+          Full_Name: "${RA_NOMECMP?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${RA_NOMECMP?.trim()?.toUpperCase()}"
+          Type:
+            val: "Colaborador"
+            excludeFromSearch: true
+          Gender: "${RA_SEXO}"
+          Customer_ID:
+            val: "${id}"
+            mandatoryInSearch: true
+            predicate: "eq"
+
+      - label: Location.Address
+        name: home
+        props:
+          Full_Address: "${RA_ENDEREC} ${RA_COMPLEM} ${BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+          Description: "moradia principal"
+          Type: "home"
+
+      - label: Person.Natural
+        name: mae
+        props:
+          Full_Name: "${RA_MAE?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${RA_MAE?.trim()?.toUpperCase()}"
+          Type:
+            val: "colaborador-pais"
+            excludeFromSearch: false
+          Gender: "F"
+
+      - label: Person.Natural
+        name: pai
+        props:
+          Full_Name: "${RA_PAI?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${RA_PAI?.trim()?.toUpperCase()}"
+          Type:
+            val: "colaborador-pais"
+            excludeFromSearch: false
+          Gender: "M"
+
+
+        #CELULAR
+
+      - label: Object.Phone_Number
+        name: phone
+        props:
+          Raw:
+            val: "${RA_TELEFON}"
+            mandatoryInSearch: false
+          Type:
+            val: "Office"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(RA_TELEFON?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((RA_TELEFON?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Identity_Card
+        name: rg
+        props:
+          Id_Value:
+            val: "${RA_RG?.trim()?.toUpperCase()}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "RG"
+            excludeFromSearch: true
+
+      - label: Object.Email_Address
+        name: email1
+        props:
+          Email:  "${RA_EMAIL.trim()?.toUpperCase()}"
+          Type: "${(RA_EMAIL.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
+
+      - label: Object.Email_Address
+        name: email2
+        props:
+          Email:  "${RA_EMAIL2.trim()?.toUpperCase()}"
+          Type: "${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
+
+      - label: Location.Address
+        props:
+          Full_Address: "${A1_END}, ${A1_BAIRRO},  ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: totvs/protheus/sra_funcionarios
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${firstUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${currDate}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: totvs/protheus/sra_funcionarios
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+      - label: Object.Data_Source
+        props:
+          Name: totvs/protheus/sra_funcionarios
+          Type: totvs/protheus/sra_funcionarios
+          Description: Registros de Funcionarios no protheus/Totvs
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexName: colaborador
+        toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        fromVertexName: colaborador
+        toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        fromVertexName: colaborador
+        toVertexLabel: Event.Ingestion
+
+      - label: Is_Family
+        fromVertexName: mae
+        toVertexName: colaborador
+
+      - label: Is_Family
+        fromVertexName: pai
+        toVertexName: colaborador
+
+      - label: Has_Ingestion_Event
+        fromVertexName: mae
+        toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Event.Group_Ingestion
+        toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        toVertexLabel: Event.Group_Ingestion
+        fromVertexLabel: Object.Data_Source
+
+      - label: Has_Phone
+        fromVertexName: colaborador
+        toVertexName: phone
+
+      - label: Uses_Email
+        fromVertexName: colaborador
+        toVertexName: email1
+
+      - label: Uses_Email
+        fromVertexName: colaborador
+        toVertexName: email2
+
+      - label: Has_Id_Card
+        fromVertexName: colaborador
+        toVertexName: rg
+
+      - label: Lives
+        fromVertexName: colaborador
+        toVertexName: home
+
+
+
+
+
+
+  #   {
+  #      "id": "string"
+  #      "lastUpdate": {}
+  #      "firstUpdate": {}
+  #      "A2_CEP": "8560335"
+  #      "A2_CGC": "24984436333120"
+  #      "A2_COMPLEM": "NIRE 35.8.1939897-6"
+  #      "A2_COMPLR": ""
+  #      "A2_CONTATO": "JUCELINO"
+  #      "A2_CONTCOM": ""
+  #      "A2_CPFIRP": ""
+  #      "A2_CX_POST": ""
+  #      "A2_EMAIL": "jkssias@hotmail.com"
+  #      "A2_END": "RUA LEON PEREIRA DA COSTA"
+  #      "A2_ENDCOMP": ""
+  #      "A2_HPAGE": ""
+  #      "A2_LOGEX": ""
+  #      "A2_NEMPR": ""
+  #      "A2_NOME": "CLEUSA PAIVA DIA"
+  #      "A2_NOMFAV": ""
+  #      "A2_NOMRESP": "ARMS MANUTENCAO E R"
+  #      "A2_NREDUZ": ""
+  #      "A2_NR_END": ""
+  #      "A2_NUMEX": ""
+  #      "A2_PFISICA": ""
+  #      "A2_REPCONT": ""
+  #      "A2_REPRCEP": ""
+  #      "A2_REPRES": ""
+  #      "A2_REPRTEL": ""
+  #      "A2_REPR_EM": ""
+  #      "A2_REPR_EN": "98561-1525"
+  #      "A2_TEL": ""
+  #      "A2_TELRE": ""
+  #    }
+
+  totvs_protheus_sa2_fornecedor:
+    vertices:
+      - label: Person.Organisation
+        name: fornecedor
+        props:
+          Name: "${A2_NOME?.trim()?.toUpperCase()}"
+          Type:
+            val: "Fornecedor"
+            excludeFromSearch: true
+          Id:
+            val: "${id}"
+            mandatoryInSearch: true
+
+      - label: Location.Address
+        name: business_addr
+        props:
+          Full_Address: "${A2_END} ${A2_ENDCOMP} ${BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+          Description: "endereco fornecedor"
+          Type: "business"
+
+      - label: Person.Natural
+        name: rep
+        props:
+          Full_Name: "${A2_NOMRESP?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${A2_NOMRESP?.trim()?.toUpperCase()}"
+          Type:
+            val: "forenecedor"
+            excludeFromSearch: false
+
+      - label: Object.Phone_Number
+        name: rep_phone
+        props:
+          Raw:
+            val: "${A2_REPRTEL}"
+            mandatoryInSearch: false
+          Type:
+            val: "Office"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((A2_REPRTEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Email_Address
+        name: email1
+        props:
+          Email:  "${A2_REPR_EM.trim()?.toUpperCase()}"
+          Type: "business"
+
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: totvs/protheus/sa2_fornecedor
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${firstUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${currDate}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: totvs/protheus/sa2_fornecedor
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+      - label: Object.Data_Source
+        props:
+          Name: totvs/protheus/sa2_fornecedor
+          Type: totvs/protheus/sa2_fornecedor
+          Description: Registros de Fornecedores no protheus/Totvs
+
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexName: fornecedor
+        toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        fromVertexName: rep
+        toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Event.Group_Ingestion
+        toVertexLabel: Event.Ingestion
+
+      - label: Has_Ingestion_Event
+        toVertexLabel: Event.Group_Ingestion
+        fromVertexLabel: Object.Data_Source
+
+      - label: Has_Phone
+        fromVertexName: rep
+        toVertexName: rep_phone
+
+      - label: Uses_Email
+        fromVertexName: rep
+        toVertexName: email1
+
+      - label: Works
+        fromVertexName: rep
+        toVertexName: business_addr
+
+
+  ploomes_clientes:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${Name?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${Name?.trim()?.toUpperCase()}"
+          Type:
+            val: "Clientes"
+            excludeFromSearch: true
+
+
+        #CELULAR
+
+      #RG
+      - label: Object.Identity_Card
+        props:
+          Id_Value:
+            val: "${CPF?.trim()?.toUpperCase()}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+      # EMAIL
+      - label: Object.Email_Address
+        props:
+          Email:  "${Email}"
+
+      #ENDERECO,BAIRRO,CIDADE,UF,CEP
+      - label: Location.Address
+        props:
+          Full_Address: "${StreetAddress}, ${StreetAddressNumber},  ${StreetAddressLine2}, ${Neighborhood} ${CityId}- ${StateId}, ${ZipCode}"
+          Type:
+            val: "Business"
+            excludeFromSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: ploomes/clientes
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${CreateDate}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${LastUpdateDate}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${currDate}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: ploomes/clientes
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+      - label: Object.Data_Source
+        props:
+          Name: ploomes/clientes
+          Type: ploomes/clientes
+          Description: Registros de Clientes no protheus/Totvs
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Person.Natural
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Event.Group_Ingestion
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
+        toVertexLabel: Event.Group_Ingestion
+        fromVertexLabel: Object.Data_Source
+
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Identity_Card"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+  salesforce:
+    vertices:
+      - label: "Person.Natural"
+        props:
+          Full_Name:
+            val: "${FirstName?.toUpperCase()?.trim()} ${LastName?.toUpperCase()?.trim()}"
+            predicate: "eq"
+            mandatoryInSearch: true
+            
+          Full_Name_fuzzy:
+            val: "${FirstName?.toUpperCase()?.trim()} ${LastName?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
+          
+          Last_Name:
+            val: "${LastName?.toUpperCase()?.trim()}"
+            excludeFromSubsequenceSearch: true
+           
+          Date_Of_Birth:
+            val: "${Birthdate?:'1666-01-01'}"
+            type: "java.util.Date"
+            mandatoryInSearch: false
+            excludeFromSubsequenceSearch: true
+
+          Title:
+            val: "${Title?:Salutation?:''}"
+            excludeFromSearch: true
+
+          Nationality:
+            val: "${MailingCountry?:'Unknown'}"
+            excludeFromSearch: true
+            
+          Customer_ID:
+            val: "${Id}"
+            mandatoryInSearch: true
+
+          Gender:
+            val: "Unknown"
+            mandatoryInSearch: false
+            excludeFromSubsequenceSearch: true
+
+          Type:
+            val: "${Tipo__c?Tipo__c.toLowerCase():'leads'}"
+            mandatoryInSearch: false
+            excludeFromSubsequenceSearch: true
+
+      - label: "Object.Identity_Card"
+        condition: "${ (CPF__c != null) && ! (CPF__c.isEmpty())}"
+        props:
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+          Id_Value:
+            val: "${CPF__c.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+
+      - label: "Location.Address"
+        props:
+          Full_Address:
+            val: "${ ( (MailingStreet?:'')+ '\\\\n' + (MailingCity?:'') + '\\\\n' + (MailingState?:'') + '\\\\n' + (MailingCountry?:'')).replaceAll('\\\\n', ' ') }"
+            mandatoryInSearch: true
+
+          parser:
+            val: "${ ( (MailingStreet?:'')+ '\\\\n' + (MailingCity?:'') + '\\\\n' + (MailingState?:'') + '\\\\n' + (MailingCountry?:'')).replaceAll('\\\\n', ' ') }"
+            excludeFromSearch: true
+            type: "com.pontusvision.utils.LocationAddress"
+
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(MailingPostalCode)}"
+            excludeFromSearch: true
+
+      - label: "Object.Email_Address"
+        props:
+          Email:
+            val: "${Email}"
+            mandatoryInSearch: true
+
+      - label: "Object.Phone_Number"
+        props:
+          Raw:
+            val: "${Phone}"
+            mandatoryInSearch: false
+
+          Type:
+            val: "Work"
+            excludeFromSubsequenceSearch: true
+
+          Numbers_Only:
+            val: "${(Phone?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+
+          Last_7_Digits:
+            val: "${(((Phone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      - label: "Object.Data_Source"
+        props:
+          Name:
+            val: "salesforce.com"
+            mandatoryInSearch: true
+          Type:
+            val: "salesforce.com"
+            mandatoryInSearch: true
+          Description:
+            val: "Salesforce.com CRM system data"
+            mandatoryInSearch: true
+
+      - label: "Event.Group_Ingestion"
+        props:
+          Metadata_Start_Date:
+            val: "${currDate}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: "java.util.Date"
+
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: "java.util.Date"
+
+          Type:
+            val: "Salesforce CRM System"
+            excludeFromSearch: true
+
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+
+      - label: "Event.Ingestion"
+        props:
+          Type:
+            val: "Salesforce CRM System"
+            excludeFromSearch: true
+
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: "java.util.Date"
+
+      - label: "Event.Consent"
+        props:
+          Status:
+            val: "Consentimento"
+            excludeFromSearch: true
+          Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: "java.util.Date"
+      - label: "Object.Privacy_Notice"
+        props:
+          Who_Is_Collecting:
+            val: "[CRM System]"
+            excludeFromUpdate: true
+    edges:
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Identity_Card"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Home_Phone_Number"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Phone_Number"
+
+      - label: "Lives"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object.Data_Source"
+
+      - label: "Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Consent"
+
+      - label: "Has_Privacy_Notice"
+        fromVertexLabel: "Event.Consent"
+        toVertexLabel: "Object.Privacy_Notice"
+

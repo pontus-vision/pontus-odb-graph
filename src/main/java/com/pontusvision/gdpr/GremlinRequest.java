@@ -1,9 +1,9 @@
 package com.pontusvision.gdpr;
 
 import javax.script.Bindings;
+import java.io.Serializable;
 
-public class GremlinRequest
-{
+public class GremlinRequest implements Serializable {
   //    {
   //        searchStr: self.searchstr,
   //                from: from,
@@ -12,8 +12,15 @@ public class GremlinRequest
   //            sortDir: ((self.sortdir > 0) ? "+asc" : "+desc")
   //    }
 
-  @Override public boolean equals(Object o)
-  {
+  String gremlin;
+  Bindings bindings;
+  String requestId;
+
+  public GremlinRequest() {
+  }
+
+  @Override
+  public boolean equals(Object o) {
     if (this == o)
       return true;
     if (!(o instanceof GremlinRequest))
@@ -26,37 +33,34 @@ public class GremlinRequest
     return bindings != null ? bindings.equals(that.bindings) : that.bindings == null;
   }
 
-  @Override public int hashCode()
-  {
+  @Override
+  public int hashCode() {
     int result = gremlin != null ? gremlin.hashCode() : 0;
     result = 31 * result + (bindings != null ? bindings.hashCode() : 0);
     return result;
   }
 
-  public String getGremlin()
-  {
+  public String getGremlin() {
     return gremlin;
   }
 
-  public void setGremlin(String gremlin)
-  {
+  public void setGremlin(String gremlin) {
     this.gremlin = gremlin;
   }
 
-  public Bindings getBindings()
-  {
+  public Bindings getBindings() {
     return bindings;
   }
 
-  public void setBindings(Bindings bindings)
-  {
+  public void setBindings(Bindings bindings) {
     this.bindings = bindings;
   }
 
-  String gremlin;
-  Bindings bindings;
+  public String getRequestId() {
+    return requestId;
+  }
 
-  public GremlinRequest()
-  {
+  public void setRequestId(String requestId) {
+    this.requestId = requestId;
   }
 }
