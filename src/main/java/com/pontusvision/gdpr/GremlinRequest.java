@@ -1,7 +1,12 @@
 package com.pontusvision.gdpr;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.script.Bindings;
+import javax.script.SimpleBindings;
 import java.io.Serializable;
+import java.util.Map;
+import java.util.Objects;
 
 public class GremlinRequest implements Serializable {
   //    {
@@ -13,7 +18,17 @@ public class GremlinRequest implements Serializable {
   //    }
 
   String gremlin;
-  Bindings bindings;
+
+  @Override
+  public String toString() {
+    return "GremlinRequest{" +
+        "gremlin='" + gremlin + '\'' +
+        ", bindingsInbound=" + bindingsInbound +
+        ", requestId='" + requestId + '\'' +
+        '}';
+  }
+
+  Bindings bindingsInbound;
   String requestId;
 
   public GremlinRequest() {
@@ -28,15 +43,15 @@ public class GremlinRequest implements Serializable {
 
     GremlinRequest that = (GremlinRequest) o;
 
-    if (gremlin != null ? !gremlin.equals(that.gremlin) : that.gremlin != null)
+    if (!Objects.equals(gremlin, that.gremlin))
       return false;
-    return bindings != null ? bindings.equals(that.bindings) : that.bindings == null;
+    return Objects.equals(bindingsInbound, that.bindingsInbound);
   }
 
   @Override
   public int hashCode() {
     int result = gremlin != null ? gremlin.hashCode() : 0;
-    result = 31 * result + (bindings != null ? bindings.hashCode() : 0);
+    result = 31 * result + (bindingsInbound != null ? bindingsInbound.hashCode() : 0);
     return result;
   }
 
@@ -48,12 +63,20 @@ public class GremlinRequest implements Serializable {
     this.gremlin = gremlin;
   }
 
-  public Bindings getBindings() {
-    return bindings;
+  @SuppressWarnings("unchecked")
+  @JsonProperty("bindings")
+  private void unpackBindings(Map<String, Object> bindings) {
+    this.bindingsInbound = new SimpleBindings(bindings);
+
   }
 
-  public void setBindings(Bindings bindings) {
-    this.bindings = bindings;
+
+  public Bindings getBindingsInbound() {
+    return bindingsInbound;
+  }
+
+  public void setBindingsInbound(Bindings bindingsInbound) {
+    this.bindingsInbound = bindingsInbound;
   }
 
   public String getRequestId() {

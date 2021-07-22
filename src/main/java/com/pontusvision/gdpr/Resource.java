@@ -3,8 +3,6 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OType;
@@ -13,7 +11,6 @@ import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.mapping.MappingReq;
 import com.pontusvision.graphutils.gdpr;
 import org.apache.commons.lang.StringUtils;
-import org.apache.tinkerpop.gremlin.driver.MessageSerializer;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseMessage;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseStatusCode;
 import org.apache.tinkerpop.gremlin.driver.ser.GraphSONMessageSerializerV3d0;
@@ -583,12 +580,13 @@ status: "success", message: "Data source is working", title: "Success"
     try {
       // TODO: apply filter to request.gremlin to only allow certain queries.
 
+      System.out.println("Received inbound request:" + request.toString());
       Object res;
-      if (request.bindings == null ){
+      if (request.bindingsInbound == null ){
         res = App.executor.eval(request.gremlin).get();
       }
       else{
-        res = App.executor.eval(request.gremlin, request.bindings).get();
+        res = App.executor.eval(request.gremlin, request.bindingsInbound).get();
       }
 
       final ResponseMessage msg = ResponseMessage.build(uuid)
