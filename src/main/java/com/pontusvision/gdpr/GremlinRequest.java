@@ -2,36 +2,30 @@ package com.pontusvision.gdpr;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.script.Bindings;
-import javax.script.SimpleBindings;
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
-public class GremlinRequest implements Serializable {
-  //    {
-  //        searchStr: self.searchstr,
-  //                from: from,
-  //            to: to,
-  //            sortBy: self.sortcol,
-  //            sortDir: ((self.sortdir > 0) ? "+asc" : "+desc")
-  //    }
+
+public class GremlinRequest {
+
 
   String gremlin;
+
+  @JsonProperty("bindings")
+  Map<String,Object> bindings;
+
+  String requestId;
+
+  public GremlinRequest() {
+  }
 
   @Override
   public String toString() {
     return "GremlinRequest{" +
         "gremlin='" + gremlin + '\'' +
-        ", bindingsInbound=" + bindingsInbound +
+        ", bindings=" + bindings +
         ", requestId='" + requestId + '\'' +
         '}';
-  }
-
-  Bindings bindingsInbound;
-  String requestId;
-
-  public GremlinRequest() {
   }
 
   @Override
@@ -45,13 +39,13 @@ public class GremlinRequest implements Serializable {
 
     if (!Objects.equals(gremlin, that.gremlin))
       return false;
-    return Objects.equals(bindingsInbound, that.bindingsInbound);
+    return Objects.equals(bindings, that.bindings);
   }
 
   @Override
   public int hashCode() {
     int result = gremlin != null ? gremlin.hashCode() : 0;
-    result = 31 * result + (bindingsInbound != null ? bindingsInbound.hashCode() : 0);
+    result = 31 * result + (bindings != null ? bindings.hashCode() : 0);
     return result;
   }
 
@@ -63,20 +57,13 @@ public class GremlinRequest implements Serializable {
     this.gremlin = gremlin;
   }
 
-  @SuppressWarnings("unchecked")
-  @JsonProperty("bindings")
-  private void unpackBindings(Map<String, Object> bindings) {
-    this.bindingsInbound = new SimpleBindings(bindings);
 
+  public Map<String, Object> getBindings() {
+    return bindings;
   }
 
-
-  public Bindings getBindingsInbound() {
-    return bindingsInbound;
-  }
-
-  public void setBindingsInbound(Bindings bindingsInbound) {
-    this.bindingsInbound = bindingsInbound;
+  public void setBindings(Map<String, Object> bindings) {
+    this.bindings = bindings;
   }
 
   public String getRequestId() {

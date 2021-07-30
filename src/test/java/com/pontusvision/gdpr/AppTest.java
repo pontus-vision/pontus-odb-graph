@@ -943,6 +943,7 @@ public class AppTest {
     }
   }
 
+  static Gson gson = new Gson();
   @Test
   public void test3() throws InterruptedException {
 
@@ -954,10 +955,11 @@ public class AppTest {
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).next().id().toString()")
               .get().toString();
 
-      GremlinRequest req = new GremlinRequest();
-      req.gremlin = "App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).next().id().toString()";
       Resource res = new Resource();
-      JsonObject obj = JsonParser.parseString( res.gremlinQuery(req)).getAsJsonObject();
+      GremlinRequest gremlinReq = new GremlinRequest();
+      gremlinReq.setGremlin(
+          "App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).next().id().toString()");
+      JsonObject obj = JsonParser.parseString( res.gremlinQuery(gson.toJson(gremlinReq))).getAsJsonObject();
       Gson gson = new Gson();
       String stringifiedOutput = gson.toJson(obj);
       String res2;
@@ -969,7 +971,7 @@ public class AppTest {
         request.setHeader("Content-Type", "application/json");
         request.setHeader("Accept", "application/json");
 
-        StringEntity data = new StringEntity(gson.toJson(req));
+        StringEntity data = new StringEntity(gson.toJson(gremlinReq));
 //        SerializableEntity data = new SerializableEntity(req);
 
         request.setEntity(data);
