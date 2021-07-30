@@ -28,6 +28,7 @@ import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper;
 import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
 import org.glassfish.jersey.server.ContainerRequest;
 
+import javax.script.SimpleBindings;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.*;
@@ -568,10 +569,14 @@ status: "success", message: "Data source is working", title: "Success"
   @Path("gremlin")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-
-  public String gremlinQuery(GremlinRequest request) {
-    final UUID uuid = request.getRequestId() == null ? UUID.randomUUID() :
-        UUID.fromString(request.getRequestId());
+  public String gremlinQuery(String requestStr) {
+    GremlinRequest request = gson.fromJson(requestStr,GremlinRequest.class);
+    final UUID uuid = request.requestId == null ? UUID.randomUUID() :
+        UUID.fromString(request.requestId);
+    if (request.gremlin == null) {
+      System.err.println("Failed to find the gremlin query: " + request);
+      throw new BadRequestException("Invalid request; missing the gremlin query");
+    }
     IoRegistry registry = OrientIoRegistry.getInstance();
 
     GraphSONMapper.Builder builder = GraphSONMapper.build().addRegistry(registry);
@@ -580,13 +585,35 @@ status: "success", message: "Data source is working", title: "Success"
     try {
       // TODO: apply filter to request.gremlin to only allow certain queries.
 
-      System.out.println("Received inbound request:" + request.toString());
+      System.out.println("Received inbound request:" + request);
       Object res;
-      if (request.bindingsInbound == null ){
-        res = App.executor.eval(request.gremlin).get();
-      }
-      else{
-        res = App.executor.eval(request.gremlin, request.bindingsInbound).get();
+
+
+      String gremlin = request.gremlin;
+
+      if (request.bindings == null) {
+        res = App.executor.eval(gremlin).get();
+      } else {
+//        Bindings bindingsMap = new SimpleBindings();
+//        request.getAsJsonObject("bindings").entrySet().forEach(entry ->
+//            bindingsMap.put(entry.getKey(),entry.getValue().getAsString()));
+//        ObjectMapper mapper = new ObjectMapper();
+
+//        JsonObject bindingsNode = request.getAsJsonObject("bindings");
+//        Bindings bindings = mapper.convertValue(bindingsNode, new TypeReference<Bindings>() { });
+
+//        Map<String, Object> bindings = new HashMap<>();
+//
+//        NamedNodeMap attribs = ((Element) request.bindings).getAttributes();
+//        for (int i = 0, ilen = attribs.getLength(); i < ilen; i++){
+//          bindings.put(attribs.item(i).getNodeName(), attribs.item(i).getNodeValue());
+
+//        Bindings bindings = gson.fromJson(request.bindings,Bindings.class);
+        request.bindings.put("g", App.g);
+
+//            .entrySet().stream()
+//            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        res = App.executor.eval(gremlin, request.bindings).get();
       }
 
       final ResponseMessage msg = ResponseMessage.build(uuid)
@@ -614,7 +641,7 @@ status: "success", message: "Data source is working", title: "Success"
       } catch (SerializationException serializationException) {
         serializationException.printStackTrace();
 
-        return "{ \"error\":  \""+ e.getMessage()+ "\" }";
+        return "{ \"error\":  \"" + e.getMessage() + "\" }";
       }
 //      JsonObject jsonObject = new JsonObject();
 //      jsonObject.addProperty("requestId", uuid.toString());
@@ -696,6 +723,7 @@ status: "success", message: "Data source is working", title: "Success"
   public String getNumSensitiveDataPerDataSource() {
     return gdpr.getNumSensitiveDataPerDataSource().toString();
   }
+
   @GET
   @Path("kpi/getNumNaturalPersonPerDataSource")
   @Produces(MediaType.TEXT_PLAIN)

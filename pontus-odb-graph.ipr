@@ -393,48 +393,48 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/codahale/metrics/metrics-core/3.0.2/metrics-core-3.0.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.3">
+    <library name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.13.0-rc1">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.12.3/jackson-annotations-2.12.3.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.13.0-rc1/jackson-annotations-2.13.0-rc1.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.12.3/jackson-annotations-2.12.3-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.13.0-rc1/jackson-annotations-2.13.0-rc1-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.12.3/jackson-annotations-2.12.3-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.13.0-rc1/jackson-annotations-2.13.0-rc1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.12.3">
+    <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.13.0-rc1">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.3/jackson-core-2.12.3.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.13.0-rc1/jackson-core-2.13.0-rc1.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.3/jackson-core-2.12.3-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.13.0-rc1/jackson-core-2.13.0-rc1-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.12.3/jackson-core-2.12.3-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.13.0-rc1/jackson-core-2.13.0-rc1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.3">
+    <library name="Maven: com.fasterxml.jackson.core:jackson-databind:2.13.0-rc1">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.12.3/jackson-databind-2.12.3.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.13.0-rc1/jackson-databind-2.13.0-rc1.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.12.3/jackson-databind-2.12.3-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.13.0-rc1/jackson-databind-2.13.0-rc1-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.12.3/jackson-databind-2.12.3-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.13.0-rc1/jackson-databind-2.13.0-rc1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.3">
+    <library name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.0-rc1">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.3/jackson-dataformat-yaml-2.12.3.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.13.0-rc1/jackson-dataformat-yaml-2.13.0-rc1.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.3/jackson-dataformat-yaml-2.12.3-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.13.0-rc1/jackson-dataformat-yaml-2.13.0-rc1-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.12.3/jackson-dataformat-yaml-2.12.3-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.13.0-rc1/jackson-dataformat-yaml-2.13.0-rc1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.fasterxml.jackson.module:jackson-module-afterburner:2.10.3">
@@ -545,17 +545,6 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/com/github/jnr/jnr-x86asm/1.0.2/jnr-x86asm-1.0.2-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.github.stephenc.jcip:jcip-annotations:1.0-1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.google.code.findbugs:annotations:3.0.1">
@@ -756,15 +745,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/jcabi/jcabi-manifests/1.1/jcabi-manifests-1.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.nimbusds:nimbus-jose-jwt:9.10">
+    <library name="Maven: com.nimbusds:nimbus-jose-jwt:9.11.1">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/9.10/nimbus-jose-jwt-9.10.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/9.11.1/nimbus-jose-jwt-9.11.1.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/9.10/nimbus-jose-jwt-9.10-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/9.11.1/nimbus-jose-jwt-9.11.1-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/9.10/nimbus-jose-jwt-9.10-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/nimbusds/nimbus-jose-jwt/9.11.1/nimbus-jose-jwt-9.11.1-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: com.orientechnologies:orientdb-client:3.1.10">
@@ -2355,15 +2344,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-log4j12/1.7.25/slf4j-log4j12-1.7.25-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.yaml:snakeyaml:1.27">
+    <library name="Maven: org.yaml:snakeyaml:1.28">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.27/snakeyaml-1.27.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.28/snakeyaml-1.28.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.27/snakeyaml-1.27-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.28/snakeyaml-1.28-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.27/snakeyaml-1.27-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/yaml/snakeyaml/1.28/snakeyaml-1.28-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
