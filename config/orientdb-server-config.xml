@@ -34,7 +34,7 @@
         <handler class="com.orientechnologies.orient.server.handler.OServerSideScriptInterpreter">
             <parameters>
                 <parameter value="true" name="enabled"/>
-                <parameter value="SQL" name="allowedLanguages"/>
+                <parameter value="SQL,GREMLIN" name="allowedLanguages"/>
                 <parameter value="" name="allowedPackages"/>
             </parameters>
         </handler>
