@@ -1004,7 +1004,7 @@ public class AppTest {
 
 
       assertEquals(userId, ((obj.get("result").getAsJsonObject())
-          .getAsJsonObject().get("data").getAsJsonArray()).get(0).getAsString());
+          .getAsJsonObject().get("data").getAsJsonObject()).get("@value").getAsJsonArray().get(0).getAsString());
 
       Map<String, Object> bindings = new HashMap() {{
         put("pg_id", userId);

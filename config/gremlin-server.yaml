@@ -3,7 +3,6 @@ port: 8183
 scriptEvaluationTimeout: 300000
 threadPoolWorker: 3
 gremlinPool: 3
-
 channelizer: org.apache.tinkerpop.gremlin.server.channel.WsAndHttpChannelizer
 graphManager: com.orientechnologies.tinkerpop.server.OrientGremlinGraphManager
 
