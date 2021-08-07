@@ -3,6 +3,7 @@
     "vertices": [
       {
         "label": "Person.Natural",
+        "condition": "${TypeId == 2}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
@@ -13,9 +14,44 @@
             "val": "${Name?.trim()?.toUpperCase()}"
           },
           {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${OriginId}"
+          },
+          {
             "name": "Person.Natural.Type",
             "val": "Clientes",
             "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person.Organisation",
+        "condition": "${TypeId == 1 && CNPJ != null}",
+        "props": [
+          {
+            "name": "Person.Organisation.Registration_Number",
+            "val": "${CNPJ}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person.Organisation.Name",
+            "val": "${LegalName}"
+          },
+          {
+            "name": "Person.Organisation.Short_Name",
+            "val": "${Name}"
+          },
+          {
+            "name": "Person.Organisation.Id",
+            "val": "${Id}"
+          },
+          {
+            "name": "Person.Organisation.Form_Id",
+            "val": "${OriginId}"
+          },
+          {
+            "name": "Person.Organisation.Email",
+            "val": "${Email}"
           }
         ]
       },
@@ -164,6 +200,11 @@
         "label": "Works",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Location.Address"
+      },
+      {
+        "label": "Empresa",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexLabel": "Person.Natural"
       }
     ]
   }

@@ -572,12 +572,27 @@ rules:
   ploomes_clientes:
     vertices:
       - label: Person.Natural
+        condition: "${TypeId == 2}"
         props:
           Full_Name: "${Name?.trim()?.toUpperCase()}"
           Full_Name_fuzzy: "${Name?.trim()?.toUpperCase()}"
+          Customer_ID: "${OriginId}"
           Type:
             val: "Clientes"
             excludeFromSearch: true
+
+      - label: Person.Organisation
+        condition: "${TypeId == 1 && CNPJ != null}"
+        props:
+          Registration_Number:
+            val: "${CNPJ}"
+            mandatoryInSearch: true
+          Name: "${LegalName}"
+          Short_Name: "${Name}"
+          Id: "${Id}"
+          Form_Id: "${OriginId}"
+          Email: "${Email}"
+
 
 
         #CELULAR
@@ -670,6 +685,10 @@ rules:
       - label: "Works"
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Location.Address"
+
+      - label: "Empresa"
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Person.Natural"
 
   salesforce:
     vertices:
