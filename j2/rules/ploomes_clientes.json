@@ -43,10 +43,6 @@
           },
           {
             "name": "Person.Organisation.Id",
-            "val": "${Id}"
-          },
-          {
-            "name": "Person.Organisation.Form_Id",
             "val": "${OriginId}"
           },
           {
@@ -178,6 +174,11 @@
       },
       {
         "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event.Group_Ingestion",
         "toVertexLabel": "Event.Ingestion"
       },
@@ -192,6 +193,11 @@
         "toVertexLabel": "Object.Email_Address"
       },
       {
+        "label": "Uses_Email",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexLabel": "Object.Email_Address"
+      },
+      {
         "label": "Has_Id_Card",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Object.Identity_Card"
@@ -202,9 +208,9 @@
         "toVertexLabel": "Location.Address"
       },
       {
-        "label": "Empresa",
+        "label": "Is_Located",
         "fromVertexLabel": "Person.Organisation",
-        "toVertexLabel": "Person.Natural"
+        "toVertexLabel": "Location.Address"
       }
     ]
   }

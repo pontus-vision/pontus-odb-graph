@@ -589,8 +589,7 @@ rules:
             mandatoryInSearch: true
           Name: "${LegalName}"
           Short_Name: "${Name}"
-          Id: "${Id}"
-          Form_Id: "${OriginId}"
+          Id: "${OriginId}"
           Email: "${Email}"
 
 
@@ -667,6 +666,9 @@ rules:
         fromVertexLabel: Person.Natural
         toVertexLabel: Event.Ingestion
       - label: Has_Ingestion_Event
+        fromVertexLabel: Person.Organisation
+        toVertexLabel: Event.Ingestion
+      - label: Has_Ingestion_Event
         fromVertexLabel: Event.Group_Ingestion
         toVertexLabel: Event.Ingestion
       - label: Has_Ingestion_Event
@@ -677,6 +679,9 @@ rules:
       - label: "Uses_Email"
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Object.Email_Address"
 
       - label: "Has_Id_Card"
         fromVertexLabel: "Person.Natural"
@@ -686,9 +691,9 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Location.Address"
 
-      - label: "Empresa"
+      - label: "Is_Located"
         fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
 
   salesforce:
     vertices:

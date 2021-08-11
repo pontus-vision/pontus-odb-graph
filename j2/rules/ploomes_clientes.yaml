@@ -25,8 +25,6 @@ updatereq:
         - name: Person.Organisation.Short_Name
           val: ${Name}
         - name: Person.Organisation.Id
-          val: ${Id}
-        - name: Person.Organisation.Form_Id
           val: ${OriginId}
         - name: Person.Organisation.Email
           val: ${Email}
@@ -104,6 +102,9 @@ updatereq:
     fromVertexLabel: Person.Natural
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
+    fromVertexLabel: Person.Organisation
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
@@ -112,13 +113,16 @@ updatereq:
   - label: Uses_Email
     fromVertexLabel: Person.Natural
     toVertexLabel: Object.Email_Address
+  - label: Uses_Email
+    fromVertexLabel: Person.Organisation
+    toVertexLabel: Object.Email_Address
   - label: Has_Id_Card
     fromVertexLabel: Person.Natural
     toVertexLabel: Object.Identity_Card
   - label: Works
     fromVertexLabel: Person.Natural
     toVertexLabel: Location.Address
-  - label: Empresa
+  - label: Is_Located
     fromVertexLabel: Person.Organisation
-    toVertexLabel: Person.Natural
+    toVertexLabel: Location.Address
 
