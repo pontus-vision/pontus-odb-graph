@@ -825,7 +825,7 @@ public class AppTest {
 
   @AfterClass
   public static void after() throws Exception {
-    App.gserver.stop().join();
+//    App.gserver.stop().join();
     App.oServer.shutdown();
     server.stop();
 
@@ -944,8 +944,6 @@ public class AppTest {
   }
 
   static Gson gson = new Gson();
-
-  //play with tests :-) !!
   @Test
   public void test3() throws InterruptedException {
 
