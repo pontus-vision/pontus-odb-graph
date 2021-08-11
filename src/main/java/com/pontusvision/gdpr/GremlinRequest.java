@@ -1,22 +1,31 @@
 package com.pontusvision.gdpr;
 
-import javax.script.Bindings;
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GremlinRequest implements Serializable {
-  //    {
-  //        searchStr: self.searchstr,
-  //                from: from,
-  //            to: to,
-  //            sortBy: self.sortcol,
-  //            sortDir: ((self.sortdir > 0) ? "+asc" : "+desc")
-  //    }
+import java.util.Map;
+import java.util.Objects;
+
+
+public class GremlinRequest {
+
 
   String gremlin;
-  Bindings bindings;
+
+  @JsonProperty("bindings")
+  Map<String,Object> bindings;
+
   String requestId;
 
   public GremlinRequest() {
+  }
+
+  @Override
+  public String toString() {
+    return "GremlinRequest{" +
+        "gremlin='" + gremlin + '\'' +
+        ", bindings=" + bindings +
+        ", requestId='" + requestId + '\'' +
+        '}';
   }
 
   @Override
@@ -28,9 +37,9 @@ public class GremlinRequest implements Serializable {
 
     GremlinRequest that = (GremlinRequest) o;
 
-    if (gremlin != null ? !gremlin.equals(that.gremlin) : that.gremlin != null)
+    if (!Objects.equals(gremlin, that.gremlin))
       return false;
-    return bindings != null ? bindings.equals(that.bindings) : that.bindings == null;
+    return Objects.equals(bindings, that.bindings);
   }
 
   @Override
@@ -48,11 +57,12 @@ public class GremlinRequest implements Serializable {
     this.gremlin = gremlin;
   }
 
-  public Bindings getBindings() {
+
+  public Map<String, Object> getBindings() {
     return bindings;
   }
 
-  public void setBindings(Bindings bindings) {
+  public void setBindings(Map<String, Object> bindings) {
     this.bindings = bindings;
   }
 

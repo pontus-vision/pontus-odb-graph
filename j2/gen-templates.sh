@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
-cd $DIR
+cd "$DIR"
 
 
 cat vars/globals.yaml | jinja2 --strict -o ../conf/lgpd-schema.yaml templates/gdpr-schema.yaml.j2
