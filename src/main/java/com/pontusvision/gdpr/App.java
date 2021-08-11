@@ -24,6 +24,8 @@ import org.jhades.JHades;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -61,14 +63,12 @@ public class App // implements RequestStreamHandler
     oServer.startup();
     logger.info("BEFORE ACTIVATING SERVER *******");
     oServer.activate();
+    logger.info("BEFORE GETTING  SERVER PLUGIN *******");
 
     PontusGremlinPlugin plugin = oServer.getPlugin("gremlin-server");
 
     executor = plugin.getGremlinExecutor();
     gserver = plugin.getGremlinServer();
-//
-
-
 
 //
 //    logger.info("Configuring Gremlin Server from {}", file);
@@ -121,7 +121,7 @@ public class App // implements RequestStreamHandler
 //    graphMgr.putTraversalSource("g", App.g);
 
 //    oServer.activate();
-    logger.info("AFTER ACTIVATING  SERVER *******");
+    logger.info("BEFORE Getting GRAPH  *******");
     graph = (OrientStandardGraph) g.getGraph();
 
 

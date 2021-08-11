@@ -7,11 +7,6 @@
                 <parameter value="50" name="graph.pool.max"/>
             </parameters>
         </handler>
-        <handler class="com.pontusvision.gdpr.PontusGremlinPlugin">
-            <parameters>
-              <parameter value="${ORIENTDB_HOME}/config/gremlin-server.yaml" name="config"/>
-            </parameters>
-        </handler>
         <handler class="com.orientechnologies.orient.server.hazelcast.OHazelcastPlugin">
             <parameters>
                 <parameter value="${distributed}" name="enabled"/>
@@ -38,6 +33,12 @@
                 <parameter value="" name="allowedPackages"/>
             </parameters>
         </handler>
+        <handler class="com.pontusvision.gdpr.PontusGremlinPlugin">
+            <parameters>
+                <parameter value="${ORIENTDB_HOME}/config/gremlin-server.yaml" name="config"/>
+            </parameters>
+        </handler>
+ 
         <!-- handler class="com.orientechnologies.orient.server.handler.OCustomSQLFunctionPlugin">
             <parameters>
                 <parameter value="${ORIENTDB_HOME}/config/custom-sql-functions.json" name="config"/>

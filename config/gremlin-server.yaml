@@ -3,12 +3,13 @@ port: 8183
 scriptEvaluationTimeout: 300000
 threadPoolWorker: 3
 gremlinPool: 3
+
 channelizer: org.apache.tinkerpop.gremlin.server.channel.WsAndHttpChannelizer
 graphManager: com.orientechnologies.tinkerpop.server.OrientGremlinGraphManager
 
 #channelizer: com.pontusvision.gdpr.WsAndHttpJWTChannelizer
 graphs: {
-  graph: ${ORIENTDB_HOME}/conf/demodb.properties
+  graph: conf/demodb.properties
 }
 scriptEngines: {
   gremlin-groovy: {
@@ -16,7 +17,7 @@ scriptEngines: {
       org.apache.tinkerpop.gremlin.server.jsr223.GremlinServerGremlinPlugin: { },
       org.apache.tinkerpop.gremlin.orientdb.jsr223.OrientDBGremlinPlugin: { },
       org.apache.tinkerpop.gremlin.jsr223.ImportGremlinPlugin: { classImports: [ java.lang.Math,com.pontusvision.gdpr.App, com.pontusvision.graphutils.ODBSchemaManager, com.pontusvision.graphutils.PontusJ2ReportingFunctions, com.pontusvision.graphutils.VisJSGraph, com.pontusvision.graphutils.DrawIOGremlin, com.pontusvision.graphutils.FormData, com.pontusvision.graphutils.IngestionOperation, com.pontusvision.graphutils.gdpr, com.pontusvision.graphutils.Matcher, com.pontusvision.gdpr.CIDRUtils, com.joestelmach.natty.DateGroup, com.joestelmach.natty.Parser, com.pontusvision.jpostal.AddressParser ,com.pontusvision.jpostal.ParsedComponent, com.pontusvision.utils.PostCode ], methodImports: [ java.lang.Math#*] },
-      org.apache.tinkerpop.gremlin.jsr223.ScriptFileGremlinPlugin: { files: [ ${ORIENTDB_HOME}/conf/bootstrap.groovy ] }
+      org.apache.tinkerpop.gremlin.jsr223.ScriptFileGremlinPlugin: { files: [ conf/bootstrap.groovy ] }
     } } }
 
 serializers:
