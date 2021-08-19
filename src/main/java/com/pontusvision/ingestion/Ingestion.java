@@ -95,7 +95,7 @@ public class Ingestion {
 
 
     String res = com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(
-        obj.getAsString(),
+        obj.toString(),
         "$.entries",
         request.ruleName);
 
