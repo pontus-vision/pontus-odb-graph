@@ -25,6 +25,11 @@
   <component name="InspectionProjectProfileManager">
     <profile version="1.0">
       <option name="myName" value="Project Default" />
+      <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+        <Languages>
+          <language minSize="69" name="Java" />
+        </Languages>
+      </inspection_tool>
     </profile>
     <version value="1.0" />
   </component>
@@ -314,7 +319,6 @@
       </list>
     </option>
   </component>
-  <component name="dataSourceStorageLocal" created-in="IU-211.7628.21" />
   <component name="libraryTable">
     <library name="Maven: aopalliance:aopalliance:1.0">
       <CLASSES>

@@ -106,6 +106,66 @@ rules:
         fromVertexName: "TITULAR"
         toVertexLabel: "Event.Consent"
 
+# First_Name,Last_Name,Customer_ID,Address,Post_Code,DateofBirth,Sex,Marital_Status,Phone_Number,Email_address,Permisssion_to_Contact,Policynumber,PolicyType,PolicyStatus,ProspectStatus,RenewalDate,ClientManager,TypeOfinsurance,PropertyType,Vehicle_Number
+  phase1_csv:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim().toUpperCase()} ${Last_Name?.trim().toUpperCase()}"
+          Full_Name_fuzzy: "${First_Name?.trim().toUpperCase()} ${Last_Name?.trim().toUpperCase()}"
+          Type:
+            val: "cliente"
+            excludeFromSearch: true
+          Customer_ID: "${Customer_ID?.trim()}"
+          Date_Of_Birth:
+            val: "${DateofBirth}"
+            type: "java.util.Date"
+            mandatoryInSearch: true
+            predicate: "eq"
+          Gender: "${Sex}"
+
+      #CONSENTIMENTO
+      - label: Event.Consent
+        props:
+          Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+
+          Metadata.Create_Date:
+            val: "${new Date()}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+
+          Status:
+            val: "${'YES'.equals(Permisssion_to_Contact?.toUpperCase())?'Consent':'No Consent'}"
+            excludeFromSearch: true
+
+
+      - label:  Object.Email_Address
+        condition: "${ (Email_address != null) && ! (Email_address.isEmpty())}"
+        props:
+          Email:  "${Email_address}"
+
+      - label: Location.Address
+        props:
+          Full_Address: "${Address} ${Post_Code}"
+
+
+    edges:
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Address"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Consent"
+
+
 
   # CORRETOR,NOME,DATA_NASCIMENTO
   Base_Corretores_Folha_1___DADOS_CORRETORES_csv:
