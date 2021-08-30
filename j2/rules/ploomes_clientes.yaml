@@ -40,6 +40,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Email_Address
+      condition: ${Email != null}
       props:
         - name: Object.Email_Address.Email
           val: ${Email}

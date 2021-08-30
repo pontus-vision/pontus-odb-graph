@@ -609,6 +609,7 @@ rules:
 
       # EMAIL
       - label: Object.Email_Address
+        condition: "${Email != null}"
         props:
           Email:  "${Email}"
 
