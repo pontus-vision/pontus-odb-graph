@@ -46,9 +46,10 @@ updatereq:
           val: ${Email}
     
     - label: Location.Address
+      condition: ${StreetAddress != null}
       props:
         - name: Location.Address.Full_Address
-          val: ${StreetAddress}, ${StreetAddressNumber},  ${StreetAddressLine2}, ${Neighborhood} ${CityId}- ${StateId}, ${ZipCode}
+          val: ${StreetAddress}${StreetAddressNumber?', '+StreetAddressNumber+' ':''}${StreetAddressLine2?:''} ${Neighborhood?', ' + Neighborhood + ' ':''}${CityId?:''}${StateId?' - '+ StateId + ' ':''}${ZipCode?' '+ZipCode:''}
         - name: Location.Address.Type
           val: Business
           excludeFromSearch: True
