@@ -53,6 +53,7 @@
       },
       {
         "label": "Object.Identity_Card",
+        "condition": "${TypeId == 2  && CPF != null}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
