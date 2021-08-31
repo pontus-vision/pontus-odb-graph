@@ -597,6 +597,7 @@ rules:
 
       #RG
       - label: Object.Identity_Card
+        condition: "${TypeId == 2  && CPF != null}"
         props:
           Id_Value:
             val: "${CPF?.trim()?.toUpperCase()}"
