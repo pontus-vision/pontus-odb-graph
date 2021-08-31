@@ -608,13 +608,15 @@ rules:
 
       # EMAIL
       - label: Object.Email_Address
+        condition: "${Email != null}"
         props:
           Email: "${Email}"
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location.Address
+        condition: "${StreetAddress != null}"
         props:
-          Full_Address: "${StreetAddress}, ${StreetAddressNumber},  ${StreetAddressLine2}, ${Neighborhood} ${CityId}- ${StateId}, ${ZipCode}"
+          Full_Address: "${StreetAddress}${StreetAddressNumber?', '+StreetAddressNumber+' ':''}${StreetAddressLine2?:''} ${Neighborhood?', ' + Neighborhood + ' ':''}${CityId?:''}${StateId?' - '+ StateId + ' ':''}${ZipCode?' '+ZipCode:''}"
           Type:
             val: "Business"
             excludeFromSearch: true
