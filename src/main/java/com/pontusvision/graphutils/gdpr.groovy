@@ -539,7 +539,7 @@ static def addRandomUserDataBulk(OrientStandardGraph graph, GraphTraversal g, Li
 		"Maritial_Status": "Married",
 		"Phone_Number": "(0189) 188871",
 		"Email_address": "rozell@hotmail.com",
-		"Permisssion_to_Contact": "Yes",
+		"Permission_to_Contact": "Yes",
 		"Policynumber": "10333345",
 		"PolicyType": "Renewable",
 		"PolicyStatus": "Open",

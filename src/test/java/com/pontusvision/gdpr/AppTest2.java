@@ -94,7 +94,7 @@ public class AppTest2  extends AppTest{
   public void test3() throws InterruptedException {
     try {
 
-      csvTestUtil("phase1.csv",  "phase1_csv");
+        csvTestUtil("phase1.csv",  "phase1_csv");
 
 
       String userId =
@@ -117,6 +117,32 @@ public class AppTest2  extends AppTest{
 
   }
 
+  @Test
+  public void test4() throws InterruptedException {
+    try {
+
+      csvTestUtil("clientes.csv",  "Cliente_SAP_PosVenda_POLARIS");
+
+
+      String userId =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('DIEGO LOPEZ')).next().id().toString()")
+                      .get().toString();
+
+      String diegoConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
+      String diegoConnections = App.executor.eval(diegoConnectionsQuery)
+              .get().toString();
+
+      assertEquals(diegoConnections,"3");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
   public void csvTestUtil(String csvFile,  String ruleName) throws InterruptedException {
 

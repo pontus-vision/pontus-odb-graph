@@ -31,7 +31,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Consent.Status
-          val: ${'YES'.equals(Permisssion_to_Contact?.toUpperCase())?'Consent':'No Consent'}
+          val: ${'YES'.equals(Permission_to_Contact?.toUpperCase())?'Consent':'No Consent'}
           excludeFromSearch: True
     
     - label: Object.Email_Address

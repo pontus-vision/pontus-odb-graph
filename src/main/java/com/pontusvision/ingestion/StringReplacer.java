@@ -2,7 +2,7 @@ package com.pontusvision.ingestion;
 
 /*
 Copyright Leo Martins -
-Pontus Vision - 2010-2019
+Pontus Vision - 2010-2021
 */
 
 import java.util.Map;

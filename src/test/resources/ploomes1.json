@@ -255,7 +255,7 @@
       "Name": "Pessoa Nova5",
       "LegalName": null,
       "Register": null,
-      "CNPJ": null,
+      "CNPJ": 123456789,
       "CPF": "CPF5",
       "StatusId": 109656,
       "CompanyId": null,
@@ -312,8 +312,4 @@
       "HasConsent": null
     }
   ]
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

@@ -1,4 +1,4 @@
-First_Name,Last_Name,Customer_ID,Address,Post_Code,DateofBirth,Sex,Marital_Status,Phone_Number,Email_address,Permisssion_to_Contact,Policynumber,PolicyType,PolicyStatus,ProspectStatus,RenewalDate,ClientManager,TypeOfinsurance,PropertyType,Vehicle_Number
+First_Name,Last_Name,Customer_ID,Address,Post_Code,DateofBirth,Sex,Marital_Status,Phone_Number,Email_address,Permission_to_Contact,Policynumber,PolicyType,PolicyStatus,ProspectStatus,RenewalDate,ClientManager,TypeOfinsurance,PropertyType,Vehicle_Number
  ROZELL,COLEMAN ,2312345763,"26 Silverweed Rd, Chatham ME5 0QU, UK",ME5 0QU,16/08/1960,Male,Married,(0189) 188871,rozell@hotmail.com,Yes,10333345,Renewable,Open,Active,11/10/2018,SYTE,Life,,
  JOEL,COMBS,3654752637,"88 Kildale Grove, Seaton Carew, Hartlepool TS25 2AS, UK",TS25 2AS,19/10/1960,Female,Unmarried,(0191) 515 2082,,No,10330755,Non- Renewable,Open,Active,,HKJO,Motor,,CR05 TON
  JAMES,CORREA,7326473648,"10 Ruthven Rd, Kingussie PH21 1EN, UK",PH21 1EN,30/03/1961,Male,Married,(01540) 300416,jamesc@jcconstruction.com,Yes,10330490,Renewable,Open,Active,30/10/2018,NJFG,House,Residential,

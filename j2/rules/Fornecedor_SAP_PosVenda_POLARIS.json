@@ -2,76 +2,29 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Person.Natural",
-        "condition": "${TypeId == 2}",
-        "props": [
-          {
-            "name": "Person.Natural.Full_Name",
-            "val": "${Name?.trim()?.toUpperCase()}"
-          },
-          {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${Name?.trim()?.toUpperCase()}"
-          },
-          {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${Id}"
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "Clientes",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
         "label": "Person.Organisation",
-        "condition": "${TypeId == 1 && CNPJ != null}",
         "props": [
-          {
-            "name": "Person.Organisation.Registration_Number",
-            "val": "${CNPJ}",
-            "mandatoryInSearch": true
-          },
           {
             "name": "Person.Organisation.Name",
-            "val": "${LegalName}"
-          },
-          {
-            "name": "Person.Organisation.Short_Name",
-            "val": "${Name}"
-          },
-          {
-            "name": "Person.Organisation.Id",
-            "val": "${Id}"
-          },
-          {
-            "name": "Person.Organisation.Email",
-            "val": "${Email}"
-          }
-        ]
-      },
-      {
-        "label": "Object.Identity_Card",
-        "props": [
-          {
-            "name": "Object.Identity_Card.Id_Value",
-            "val": "${CPF?.trim()?.toUpperCase()}",
+            "val": "${Name_1?.toUpperCase()?.trim()} ${Name_2?.toUpperCase()?.trim()}",
+            "predicate": "eq",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Identity_Card.Id_Type",
-            "val": "CPF",
+            "name": "Person.Organisation.Phone",
+            "val": "${(Telefone_1?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Email_Address",
-        "props": [
+          },
           {
-            "name": "Object.Email_Address.Email",
-            "val": "${Email}"
+            "name": "Person.Organisation.Registration_Number",
+            "val": "${Tax_Number_1}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person.Organisation.Tax_Id",
+            "val": "${Tax_Number_2}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -80,11 +33,18 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${StreetAddress}, ${StreetAddressNumber},  ${StreetAddressLine2}, ${Neighborhood} ${CityId}- ${StateId}, ${ZipCode}"
+            "val": "${ ( (Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ') }",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Location.Address.Type",
-            "val": "Business",
+            "name": "Location.Address.parser",
+            "val": "${ ( (Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ') }",
+            "type": "com.pontusvision.utils.LocationAddress",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(PostalCode)}",
             "excludeFromSearch": true
           }
         ]
@@ -94,7 +54,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "ploomes/clientes",
+            "val": "sap/fornecedores",
             "excludeFromSearch": true
           },
           {
@@ -138,7 +98,7 @@
           },
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "ploomes/clientes",
+            "val": "sap/fornecedores",
             "excludeFromSearch": true
           },
           {
@@ -153,24 +113,24 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "ploomes/clientes"
+            "val": "sap/fornecedores"
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "ploomes/clientes"
+            "val": "sap/fornecedores"
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Clientes no protheus/Totvs"
+            "val": "Registros de Fornecedores no Polaris/SAP"
           }
         ]
       }
     ],
     "edges": [
       {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Event.Ingestion"
+        "label": "Is_Located",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexLabel": "Location.Address"
       },
       {
         "label": "Has_Ingestion_Event",
@@ -186,31 +146,6 @@
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Object.Data_Source",
         "toVertexLabel": "Event.Group_Ingestion"
-      },
-      {
-        "label": "Uses_Email",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Email_Address"
-      },
-      {
-        "label": "Uses_Email",
-        "fromVertexLabel": "Person.Organisation",
-        "toVertexLabel": "Object.Email_Address"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Identity_Card"
-      },
-      {
-        "label": "Works",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Location.Address"
-      },
-      {
-        "label": "Is_Located",
-        "fromVertexLabel": "Person.Organisation",
-        "toVertexLabel": "Location.Address"
       }
     ]
   }

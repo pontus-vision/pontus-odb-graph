@@ -1,8 +1,6 @@
 package com.pontusvision.gdpr;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.orientechnologies.apache.commons.csv.CSVFormat;
 import com.orientechnologies.apache.commons.csv.CSVRecord;
 import com.pontusvision.ingestion.Ingestion;
@@ -320,7 +318,7 @@ public class AppTest {
           + "\t\t[\n"
           + "\t\t  {\n"
           + "\t\t\t\"name\": \"Event.Consent.Status\"\n"
-          + "\t\t   ,\"val\": \"${Permisssion_to_Contact?'Consent': 'No Consent'}\"\n"
+          + "\t\t   ,\"val\": \"${Permission_to_Contact?'Consent': 'No Consent'}\"\n"
           + "\t\t   ,\"excludeFromSearch\": true\n"
           + "\t\t  }\n"
           + "\t\t ,{\n"
@@ -960,7 +958,6 @@ public class AppTest {
       gremlinReq.setGremlin(
               "App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).next().id().toString()");
       JsonObject obj = JsonParser.parseString( res.gremlinQuery(gson.toJson(gremlinReq))).getAsJsonObject();
-      Gson gson = new Gson();
       String stringifiedOutput = gson.toJson(obj);
       String res2;
       try {
@@ -999,6 +996,7 @@ public class AppTest {
 
       } catch (IOException e) {
         e.printStackTrace();
+        assertNull(e);
       }
 
 
@@ -1023,7 +1021,7 @@ public class AppTest {
 
   }
 
-  //@Test
+  @Test
   public void test4() throws InterruptedException {
 
     jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
@@ -1031,15 +1029,15 @@ public class AppTest {
 
     try {
       String userId =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).next().id().toString()")
+              App.executor.eval("App.g.V().has('Person.Organisation.Short_Name',eq('Pessoa Nova5')).next().id().toString()")
                       .get().toString();
 
       Resource res = new Resource();
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-              "App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).next().id().toString()");
-      JsonObject obj = JsonParser.parseString( res.gremlinQuery(gson.toJson(gremlinReq))).getAsJsonObject();
-      Gson gson = new Gson();
+              "App.g.V().has('Person.Organisation.Short_Name',eq('Pessoa Nova5')).next().id().toString()");
+      JsonObject obj = JsonParser.parseString(res.gremlinQuery(gson.toJson(gremlinReq))).getAsJsonObject();
+//      Gson gson = new Gson();
       String stringifiedOutput = gson.toJson(obj);
       String res2;
       try {
@@ -1078,12 +1076,15 @@ public class AppTest {
 
       } catch (IOException e) {
         e.printStackTrace();
+        assertNull(e);
       }
 
 
+//      String b = "DeBugger Stop!";
 
-      assertEquals(userId, ((obj.get("result").getAsJsonObject())
-              .getAsJsonObject().get("data").getAsJsonArray()).get(0).getAsString());
+
+      assertEquals(userId, (((obj.get("result").getAsJsonObject())
+              .getAsJsonObject().get("data")).getAsJsonObject().get("@value")).getAsJsonArray().get(0).getAsString());
 
       Map<String, Object> bindings = new HashMap() {{
         put("pg_id", userId);
