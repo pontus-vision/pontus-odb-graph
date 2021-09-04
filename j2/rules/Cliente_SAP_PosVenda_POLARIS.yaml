@@ -2,38 +2,74 @@ updatereq:
   vertices:
     
     - label: Person.Natural
-      condition: ${Title != Company}
+      condition: ${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}
       props:
         - name: Person.Natural.Full_Name
-          val: ${Name_1?.trim()?.toUpperCase()}
-        - name: Person.Natural.Full_Name_fuzzy
-          val: ${Name_1?.toUpperCase()?.trim()}
-        - name: Person.Natural.Customer_ID
-          val: ${Tax_Number_2}
+          val: ${Name_1?.trim()?.toUpperCase()}${Name_2?' ':''}${Name_2?.trim()?.toUpperCase()}
         - name: Person.Natural.Type
           val: Clientes
           excludeFromSearch: True
     
+    - label: Object.Identity_Card
+      condition: ${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}
+      props:
+        - name: Object.Identity_Card.Id_Value
+          val: ${Tax_Number_1?.trim() || Tax_Number_2?.trim()}
+          mandatoryInSearch: True
+        - name: Object.Identity_Card.Id_Type
+          val: CPF
+          excludeFromSearch: True
+    
     - label: Person.Organisation
-      condition: ${Title == Company}
+      condition: ${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}
       props:
         - name: Person.Organisation.Registration_Number
-          val: ${Tax_Number_1}
+          val: ${Tax_Number_1?.trim() || Tax_Number_2?.trim()}
           mandatoryInSearch: True
         - name: Person.Organisation.Name
           val: ${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}
-        - name: Person.Organisation.Short_Name
-          val: ${Name_1?.trim()?.toUpperCase()}
+    
+    - label: Object.Phone_Number
+      name: phone
+      condition: ${Telephone_1}
+      props:
+        - name: Object.Phone_Number.Raw
+          val: ${Telephone_1}
+        - name: Object.Phone_Number.Type
+          val: Cliente
+          excludeFromSubsequenceSearch: True
+        - name: Object.Phone_Number.Numbers_Only
+          val: ${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object.Phone_Number.Last_7_Digits
+          val: ${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    
+    - label: Object.Phone_Number
+      name: phone2
+      condition: ${Telephone_2}
+      props:
+        - name: Object.Phone_Number.Raw
+          val: ${Telephone_2}
+        - name: Object.Phone_Number.Type
+          val: Cliente
+          excludeFromSubsequenceSearch: True
+        - name: Object.Phone_Number.Numbers_Only
+          val: ${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object.Phone_Number.Last_7_Digits
+          val: ${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
     
     - label: Location.Address
       props:
         - name: Location.Address.Full_Address
           val: ${ ((Street?:'')+ '\\n' + (City?:'') + '\\n' + (District?:'') + '\\n' + (Cty?:'')).replaceAll('\\n', ' ')}
           mandatoryInSearch: True
-        - name: Location.Address.parser
-          val: ${ ((Street?:'')+ '\\n' + (City?:'') + '\\n' + (District?:'') + '\\n' + (Cty?:'')).replaceAll('\\n', ' ')}
-          type: "com.pontusvision.utils.LocationAddress"
-          excludeFromSearch: True
         - name: Location.Address.Post_Code
           val: ${com.pontusvision.utils.PostCode.format(PostalCode)}
           excludeFromSearch: True
@@ -50,18 +86,18 @@ updatereq:
           val: ${original_request?.bytes?.encodeBase64()?.toString()}
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Create_Date
-          val: ${CreateDate}
+          val: ${new Date()}
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Update_Date
-          val: ${LastUpdateDate}
+          val: ${new Date()}
           type: "java.util.Date"
           excludeFromSearch: True
     
     - label: Event.Group_Ingestion
       props:
         - name: Event.Group_Ingestion.Metadata_Start_Date
-          val: ${currDate}
+          val: ${new Date()}
           mandatoryInSearch: True
           type: "java.util.Date"
         - name: Event.Group_Ingestion.Metadata_End_Date

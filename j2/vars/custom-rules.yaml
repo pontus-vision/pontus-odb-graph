@@ -906,7 +906,7 @@ rules:
       - label: Person.Organisation
         props:
           Name:
-            val: "${Name_1?.toUpperCase()?.trim()} ${Name_2?.toUpperCase()?.trim()}"
+            val: "${Name_1?.toUpperCase()?.trim()}${Name_2?' ':''}${Name_2?.toUpperCase()?.trim()}"
             predicate: "eq"
             mandatoryInSearch: true
 
@@ -924,6 +924,8 @@ rules:
             val: "${Tax_Number_2}"
             mandatoryInSearch: true
 
+#          Id: "${Vendor}"
+
 
       - label: Location.Address
         props:
@@ -931,10 +933,10 @@ rules:
             val: "${ ( (Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ') }"
             mandatoryInSearch: true
 
-          parser:
-            val: "${ ( (Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ') }"
-            excludeFromSearch: true
-            type: "com.pontusvision.utils.LocationAddress"
+#          parser:
+#            val: "${ ( (Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ') }"
+#            excludeFromSearch: true
+#            type: "com.pontusvision.utils.LocationAddress"
 
           Post_Code:
             val: "${com.pontusvision.utils.PostCode.format(PostalCode)}"
@@ -952,18 +954,18 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${CreateDate}"
+            val: "${new Date()}" # Date
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${LastUpdateDate}"
+            val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
 
       - label: Event.Group_Ingestion
         props:
           Metadata_Start_Date:
-            val: "${currDate}"
+            val: "${new Date()}"
             mandatoryInSearch: true
             excludeFromSearch: false
             type: java.util.Date
@@ -1004,45 +1006,91 @@ rules:
   Cliente_SAP_PosVenda_POLARIS:
     vertices:
       - label: Person.Natural
-        condition: "${Title != Company}"
+        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}" #--for CPF
+#        condition: "${Title != 'Company'}"
         props:
-          Full_Name: "${Name_1?.trim()?.toUpperCase()}"
-          Full_Name_fuzzy: "${Name_1?.toUpperCase()?.trim()}"
+          Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?' ':''}${Name_2?.trim()?.toUpperCase()}"
+#          Full_Name_fuzzy: "${Name_1?.toUpperCase()?.trim()}"
 
-          # if (Title == Company) -> Tax_Number_1 [CNPJ]
-          # else -> Tax_Number_2 [CPF]
-          Customer_ID: "${Tax_Number_2}"
+#          Customer_ID: "${Tax_Number_1}"
+#          id: "${Customer}"
           Type:
             val: "Clientes"
             excludeFromSearch: true
 
-      - label: Person.Organisation
-        condition: "${Title == Company}"
+      - label: Object.Identity_Card
+        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}"
         props:
+          Id_Value:
+            val: "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+#      - label: Object.Identity_Card
+#        condition: "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}"
+#        props:
+#          Id_Value:
+#            val: "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}"
+#            mandatoryInSearch: true
+#          Id_Type:
+#            val: "CNPJ"
+#            excludeFromSearch: true
+
+      - label: Person.Organisation
+#        condition: "${Tax_Number_1.length() == 14}" --for CNPJ
+        condition: "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}"
+        props:
+#          id: "${Customer}"
           Registration_Number:
-            val: "${Tax_Number_1}"
+            val: "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}"
             mandatoryInSearch: true
           Name: "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
-          Short_Name: "${Name_1?.trim()?.toUpperCase()}"
+#          Short_Name: "${Name_1?.trim()?.toUpperCase()}"
+#          Tax_Id:
+#            val: "${Tax_Number_2}"
+#            mandatoryInSearch: true
 
-#      - label: Object.Phone_Number
-#          name: phone
-#          props:
-#            Raw:
-#              val: "${Telephone_1}"
-#              mandatoryInSearch: false
-#            Type:
-#              val: "Cliente"
-#              excludeFromSubsequenceSearch: true
-#            Numbers_Only:
-#              val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}"
-#              excludeFromSearch: true
-#              type: "[Ljava.lang.String;"
-#
-#            Last_7_Digits:
-#              val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-#              mandatoryInSearch: true
-#              type: "[Ljava.lang.String;"
+      - label: Object.Phone_Number
+        name: phone
+        condition: "${Telephone_1}"
+        props:
+          Raw:
+            val: "${Telephone_1}"
+            mandatoryInSearch: false
+          Type:
+            val: "Cliente"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+
+          Last_7_Digits:
+            val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+        condition: "${Telephone_2}"
+        name: phone2
+        props:
+          Raw:
+            val: "${Telephone_2}"
+            mandatoryInSearch: false
+          Type:
+            val: "Cliente"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+
+          Last_7_Digits:
+            val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
 
       - label: Location.Address
         props:
@@ -1050,10 +1098,10 @@ rules:
             val: "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}"
             mandatoryInSearch: true
 
-          parser:
-            val: "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}"
-            excludeFromSearch: true
-            type: "com.pontusvision.utils.LocationAddress"
+#          parser:
+#            val: "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}"
+#            excludeFromSearch: true
+#            type: "com.pontusvision.utils.LocationAddress"
 
           Post_Code:
             val: "${com.pontusvision.utils.PostCode.format(PostalCode)}"
@@ -1071,18 +1119,18 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${CreateDate}"
+            val: "${new Date()}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${LastUpdateDate}"
+            val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
 
       - label: Event.Group_Ingestion
         props:
           Metadata_Start_Date:
-            val: "${currDate}"
+            val: "${new Date()}"
             mandatoryInSearch: true
             excludeFromSearch: false
             type: java.util.Date

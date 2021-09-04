@@ -6,7 +6,7 @@
         "props": [
           {
             "name": "Person.Organisation.Name",
-            "val": "${Name_1?.toUpperCase()?.trim()} ${Name_2?.toUpperCase()?.trim()}",
+            "val": "${Name_1?.toUpperCase()?.trim()}${Name_2?' ':''}${Name_2?.toUpperCase()?.trim()}",
             "predicate": "eq",
             "mandatoryInSearch": true
           },
@@ -37,12 +37,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Location.Address.parser",
-            "val": "${ ( (Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ') }",
-            "type": "com.pontusvision.utils.LocationAddress",
-            "excludeFromSearch": true
-          },
-          {
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(PostalCode)}",
             "excludeFromSearch": true
@@ -69,13 +63,13 @@
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
-            "val": "${CreateDate}",
+            "val": "${new Date()}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Update_Date",
-            "val": "${LastUpdateDate}",
+            "val": "${new Date()}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -86,7 +80,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${currDate}",
+            "val": "${new Date()}",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
           },
