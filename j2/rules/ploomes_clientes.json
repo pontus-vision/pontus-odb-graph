@@ -15,7 +15,7 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${OriginId}"
+            "val": "${Id}"
           },
           {
             "name": "Person.Natural.Type",
@@ -43,7 +43,7 @@
           },
           {
             "name": "Person.Organisation.Id",
-            "val": "${OriginId}"
+            "val": "${Id}"
           },
           {
             "name": "Person.Organisation.Email",

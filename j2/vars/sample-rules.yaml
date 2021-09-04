@@ -106,7 +106,7 @@ rules:
         fromVertexName: "TITULAR"
         toVertexLabel: "Event.Consent"
 
-# First_Name,Last_Name,Customer_ID,Address,Post_Code,DateofBirth,Sex,Marital_Status,Phone_Number,Email_address,Permisssion_to_Contact,Policynumber,PolicyType,PolicyStatus,ProspectStatus,RenewalDate,ClientManager,TypeOfinsurance,PropertyType,Vehicle_Number
+# First_Name,Last_Name,Customer_ID,Address,Post_Code,DateofBirth,Sex,Marital_Status,Phone_Number,Email_address,Permission_to_Contact,Policynumber,PolicyType,PolicyStatus,ProspectStatus,RenewalDate,ClientManager,TypeOfinsurance,PropertyType,Vehicle_Number
   phase1_csv:
     vertices:
       - label: Person.Natural
@@ -138,7 +138,7 @@ rules:
             excludeFromSearch: true
 
           Status:
-            val: "${'YES'.equals(Permisssion_to_Contact?.toUpperCase())?'Consent':'No Consent'}"
+            val: "${'YES'.equals(Permission_to_Contact?.toUpperCase())?'Consent':'No Consent'}"
             excludeFromSearch: true
 
 
