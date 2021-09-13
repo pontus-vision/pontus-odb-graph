@@ -1009,7 +1009,7 @@ rules:
         condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}" #--for CPF
 #        condition: "${Title != 'Company'}"
         props:
-          Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?' ':''}${Name_2?.trim()?.toUpperCase()}"
+          Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
 #          Full_Name_fuzzy: "${Name_1?.toUpperCase()?.trim()}"
 
 #          Customer_ID: "${Tax_Number_1}"
@@ -1167,6 +1167,96 @@ rules:
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object.Data_Source"
+
+
+  sharepoint_treinamentos:
+    vertices:
+      - label: Event.Training
+        props:
+          Status:
+            val: "Passed"
+            excludeFromSearch: true
+
+      - label: Object.Awareness_Campaign
+        props:
+          Description:
+            val: "${Descri_x00e7__x00e3_o}"
+            mandatoryInSearch: true
+#          Form_Id: "${id}"
+          Start_Date:
+            val: "${Realizadoem}"
+            type: java.util.Date
+#          URL: "${webUrl}"
+
+      - label: Person.Employee
+        props:
+          Full_Name: "${Nome0}"
+#          Role: "${Departamento0}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: sharepoint/treinamentos
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: sharepoint/treinamentos
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+
+      - label: Object.Data_Source
+        props:
+          Name: sharepoint/treinamentos
+          Type: sharepoint/treinamentos
+          Description: Registros de Treinamentos LGPD Colaboradores
+
+    edges:
+      - label: "Course_Training"
+        fromVertexLabel: "Event.Training"
+        toVertexLabel: "Object.Awareness_Campaign"
+
+      - label: "Completed_By"
+        fromVertexLabel: "Event.Training"
+        toVertexLabel: "Person.Employee"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Event.Training"
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event.Group_Ingestion"

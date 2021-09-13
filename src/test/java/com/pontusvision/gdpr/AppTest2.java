@@ -118,21 +118,65 @@ public class AppTest2  extends AppTest{
   }
 
   @Test
-  public void test4() throws InterruptedException {
+  public void testCsvPolaris() throws InterruptedException {
     try {
 
       csvTestUtil("clientes.csv",  "Cliente_SAP_PosVenda_POLARIS");
 
 
       String userId =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('OSCAR LOPEZ')).next().id().toString()")
+              App.executor.eval("App.g.V()\n" +
+                              ".has('Person.Natural.Full_Name', eq('MATEUS SILVA PINTO'))\n" +
+                              ".next()\n" +
+                              ".id()\n" +
+                              ".toString()")
                       .get().toString();
 
-//      String oscarConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
-//      String oscarConnections = App.executor.eval(oscarConnectionsQuery)
+////      Debugging
+//      System.out.println("***************************************************************************************\n" +
+//              userId);
+
+      String oscarConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
+      String oscarConnections = App.executor.eval(oscarConnectionsQuery)
+              .get().toString();
+
+      assertEquals(oscarConnections,"2");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+  @Test
+  public void testSharepointTreinamentos() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-treinamentos.json",  "$.queryResp[*].fields",
+              "sharepoint_treinamentos");
+
+
+      String userId =
+              App.executor.eval("App.g.V()\n" +
+                              ".has('Person.Employee.Full_Name', eq('MARCELA ALVES'))\n" +
+                              ".next()\n" +
+                              ".id()\n" +
+                              ".toString()")
+                      .get().toString();
+
+//      Debugging
+      System.out.println("***************************************************************************************\n" +
+              userId);
+
+//      String pedroConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
+//      String pedroConnections = App.executor.eval(pedroConnectionsQuery)
 //              .get().toString();
 //
-//      assertEquals(oscarConnections,"3");
+//      assertEquals(pedroConnections,"2");
 
 
     } catch (ExecutionException e) {

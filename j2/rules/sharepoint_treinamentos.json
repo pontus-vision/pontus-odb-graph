@@ -1,0 +1,143 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Event.Training",
+        "props": [
+          {
+            "name": "Event.Training.Status",
+            "val": "Passed",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Awareness_Campaign",
+        "props": [
+          {
+            "name": "Object.Awareness_Campaign.Description",
+            "val": "${Descri_x00e7__x00e3_o}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Awareness_Campaign.Start_Date",
+            "val": "${Realizadoem}",
+            "type": "java.util.Date"
+          }
+        ]
+      },
+      {
+        "label": "Person.Employee",
+        "props": [
+          {
+            "name": "Person.Employee.Full_Name",
+            "val": "${Nome0}"
+          }
+        ]
+      },
+      {
+        "label": "Event.Ingestion",
+        "props": [
+          {
+            "name": "Event.Ingestion.Type",
+            "val": "sharepoint/treinamentos",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Create_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Update_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Ingestion",
+        "props": [
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Type",
+            "val": "sharepoint/treinamentos",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "sharepoint/treinamentos"
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "sharepoint/treinamentos"
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Registros de Treinamentos LGPD Colaboradores"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Course_Training",
+        "fromVertexLabel": "Event.Training",
+        "toVertexLabel": "Object.Awareness_Campaign"
+      },
+      {
+        "label": "Completed_By",
+        "fromVertexLabel": "Event.Training",
+        "toVertexLabel": "Person.Employee"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Ingestion",
+        "toVertexLabel": "Event.Training"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Group_Ingestion",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object.Data_Source",
+        "toVertexLabel": "Event.Group_Ingestion"
+      }
+    ]
+  }
+}
