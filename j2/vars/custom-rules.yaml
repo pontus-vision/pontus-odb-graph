@@ -1052,6 +1052,26 @@ rules:
 #            val: "${Tax_Number_2}"
 #            mandatoryInSearch: true
 
+#     For FOREIGN Persons
+      - label: Person.Identity
+        condition: "${(!Tax_Number_1 && !Tax_Number_2) ||
+        (Tax_Number_1.trim().length() != 11 && Tax_Number_2.trim().length() != 11) ||
+        (Tax_Number_1.trim().length() != 14 && Tax_Number_2.trim().length() != 14) ||
+        Tax_Number_1.trim().matches('.*[a-zA-Z]+.*') || Tax_Number_2.trim().matches('.*[a-zA-Z]+.*')}"
+        props:
+          Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
+          #          Full_Name_fuzzy: "${Name_1?.toUpperCase()?.trim()}"
+
+          #          Customer_ID: "${Tax_Number_1}"
+          #          id: "${Customer}"
+          Title:
+            val: "Clientes Estrangeiros"
+            excludeFromSearch: true
+
+#         Ethnicity:
+#         Nationality:
+
+
       - label: Object.Phone_Number
         name: phone
         condition: "${Telephone_1}"
@@ -1188,7 +1208,7 @@ rules:
       - label: Object.Awareness_Campaign
         props:
           Description:
-            val: "${Descri_x00e7__x00e3_o}"
+            val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
             mandatoryInSearch: true
 #          Form_Id: "${id}"
           Start_Date:
@@ -1198,7 +1218,7 @@ rules:
 
       - label: Person.Employee
         props:
-          Full_Name: "${Nome0}"
+          Full_Name: "${Nome0?.trim()?.toUpperCase()}"
 #          Role: "${Departamento0}"
 
       - label: Event.Ingestion

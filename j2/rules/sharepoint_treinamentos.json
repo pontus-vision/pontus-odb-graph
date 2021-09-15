@@ -16,7 +16,7 @@
         "props": [
           {
             "name": "Object.Awareness_Campaign.Description",
-            "val": "${Descri_x00e7__x00e3_o}",
+            "val": "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
@@ -31,7 +31,7 @@
         "props": [
           {
             "name": "Person.Employee.Full_Name",
-            "val": "${Nome0}"
+            "val": "${Nome0?.trim()?.toUpperCase()}"
           }
         ]
       },

@@ -10,7 +10,7 @@ updatereq:
     - label: Object.Awareness_Campaign
       props:
         - name: Object.Awareness_Campaign.Description
-          val: ${Descri_x00e7__x00e3_o}
+          val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Object.Awareness_Campaign.Start_Date
           val: ${Realizadoem}
@@ -19,7 +19,7 @@ updatereq:
     - label: Person.Employee
       props:
         - name: Person.Employee.Full_Name
-          val: ${Nome0}
+          val: ${Nome0?.trim()?.toUpperCase()}
     
     - label: Event.Ingestion
       props:

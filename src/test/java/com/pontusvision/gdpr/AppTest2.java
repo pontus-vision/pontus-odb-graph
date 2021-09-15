@@ -159,25 +159,56 @@ public class AppTest2  extends AppTest{
       jsonTestUtil("pv-extract-sharepoint-treinamentos.json",  "$.queryResp[*].fields",
               "sharepoint_treinamentos");
 
-
+//    test for PEDRO Person.Employee NODE
       String userId =
-              App.executor.eval("App.g.V()\n" +
-                              ".has('Person.Employee.Full_Name', eq('MARCELA ALVES'))\n" +
-                              ".next()\n" +
-                              ".id()\n" +
-                              ".toString()")
-                      .get().toString();
+              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('PEDRO ALVARO CABRAL'))\n" +
+                              ".next().id().toString()").get().toString();
+      String pedroConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
+      String pedroConnections = App.executor.eval(pedroConnectionsQuery).get().toString();
+      assertEquals(pedroConnections,"1");
 
-//      Debugging
-      System.out.println("***************************************************************************************\n" +
-              userId);
+//    test for MARCELA Person.Employee NODE
+      String userId1 =
+              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('MARCELA ALVES'))\n" +
+                      ".next().id().toString()").get().toString();
 
-//      String pedroConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
-//      String pedroConnections = App.executor.eval(pedroConnectionsQuery)
-//              .get().toString();
-//
-//      assertEquals(pedroConnections,"2");
+//    test for JOSE Person.Employee NODE
+      String userId2 =
+              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('JOSE CARLOS MONSANTO'))\n" +
+                      ".next().id().toString()").get().toString();
 
+//    test for Object.Data_Source.Name
+      String userId3 =
+              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('sharepoint/treinamentos'))" +
+                      ".next().id().toString()").get().toString();
+//      assertEquals(userId3,"#82:0"); -- Id can change!!
+      String rootConnectionsQuery = "App.g.V(\"" + userId3 +"\").bothE().count().next().toString()";
+      String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
+      assertEquals(rootConnections,"3");
+
+//    test for Object.Awareness_Campaign.Description
+      String userId4 =
+              App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
+                 "eq('1º CURSO - LGPD - LEI GERAL DE PROTEÇÃO DE DADOS')).next().id().toString()").get().toString();
+      String curso1ConnectionsQuery = "App.g.V(\"" + userId4 +"\").bothE().count().next().toString()";
+      String curso1Connections = App.executor.eval(curso1ConnectionsQuery).get().toString();
+      assertEquals(curso1Connections,"2"); // -- number of Group.Ingestion nodes can vary !!
+
+//    test for Object.Awareness_Campaign.Description 2
+      String userId5 =
+              App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
+                      "eq('BASES LEGAIS LGPD')).next().id().toString()").get().toString();
+      String curso2ConnectionsQuery = "App.g.V(\"" + userId5 +"\").bothE().count().next().toString()";
+      String curso2Connections = App.executor.eval(curso2ConnectionsQuery).get().toString();
+      assertEquals(curso2Connections,"2");
+
+//    test for Object.Awareness_Campaign.Description 3
+      String userId6 =
+              App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
+                      "eq('LGPD - MULTAS E SANÇÕES')).next().id().toString()").get().toString();
+      String curso3ConnectionsQuery = "App.g.V(\"" + userId6 +"\").bothE().count().next().toString()";
+      String curso3Connections = App.executor.eval(curso3ConnectionsQuery).get().toString();
+      assertEquals(curso3Connections,"1");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
