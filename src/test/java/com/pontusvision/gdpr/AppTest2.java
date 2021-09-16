@@ -118,21 +118,155 @@ public class AppTest2  extends AppTest{
   }
 
   @Test
-  public void test4() throws InterruptedException {
+  public void testCsvPolaris() throws InterruptedException {
     try {
 
       csvTestUtil("clientes.csv",  "Cliente_SAP_PosVenda_POLARIS");
 
 
       String userId =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('OSCAR LOPEZ')).next().id().toString()")
+              App.executor.eval("App.g.V()\n" +
+                              ".has('Person.Natural.Full_Name', eq('MATEUS SILVA PINTO'))\n" +
+                              ".next()\n" +
+                              ".id()\n" +
+                              ".toString()")
                       .get().toString();
 
-//      String oscarConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
-//      String oscarConnections = App.executor.eval(oscarConnectionsQuery)
-//              .get().toString();
-//
-//      assertEquals(oscarConnections,"3");
+////      Debugging
+//      System.out.println("***************************************************************************************\n" +
+//              userId);
+
+      String oscarConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
+      String oscarConnections = App.executor.eval(oscarConnectionsQuery)
+              .get().toString();
+
+      assertEquals(oscarConnections,"2");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+  @Test
+  public void testSharepointTreinamentos() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-treinamentos.json",  "$.queryResp[*].fields",
+              "sharepoint_treinamentos");
+
+//    test for PEDRO Person.Employee NODE
+      String userId =
+              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('PEDRO ALVARO CABRAL'))\n" +
+                              ".next().id().toString()").get().toString();
+      String pedroConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
+      String pedroConnections = App.executor.eval(pedroConnectionsQuery).get().toString();
+      assertEquals(pedroConnections,"1");
+
+//    test for MARCELA Person.Employee NODE
+      String userId1 =
+              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('MARCELA ALVES'))\n" +
+                      ".next().id().toString()").get().toString();
+
+//    test for JOSE Person.Employee NODE
+      String userId2 =
+              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('JOSE CARLOS MONSANTO'))\n" +
+                      ".next().id().toString()").get().toString();
+
+//    test for Object.Data_Source.Name
+      String userId3 =
+              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('sharepoint/treinamentos'))" +
+                      ".next().id().toString()").get().toString();
+//      assertEquals(userId3,"#82:0"); -- Id can change!!
+      String rootConnectionsQuery = "App.g.V(\"" + userId3 +"\").bothE().count().next().toString()";
+      String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
+      assertEquals(rootConnections,"3");
+
+//    test for Object.Awareness_Campaign.Description
+      String userId4 =
+              App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
+                 "eq('1º CURSO - LGPD - LEI GERAL DE PROTEÇÃO DE DADOS')).next().id().toString()").get().toString();
+      String curso1ConnectionsQuery = "App.g.V(\"" + userId4 +"\").bothE().count().next().toString()";
+      String curso1Connections = App.executor.eval(curso1ConnectionsQuery).get().toString();
+      assertEquals(curso1Connections,"2"); // -- number of Group.Ingestion nodes can vary !!
+
+//    test for Object.Awareness_Campaign.Description 2
+      String userId5 =
+              App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
+                      "eq('BASES LEGAIS LGPD')).next().id().toString()").get().toString();
+      String curso2ConnectionsQuery = "App.g.V(\"" + userId5 +"\").bothE().count().next().toString()";
+      String curso2Connections = App.executor.eval(curso2ConnectionsQuery).get().toString();
+      assertEquals(curso2Connections,"2");
+
+//    test for Object.Awareness_Campaign.Description 3
+      String userId6 =
+              App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
+                      "eq('LGPD - MULTAS E SANÇÕES')).next().id().toString()").get().toString();
+      String curso3ConnectionsQuery = "App.g.V(\"" + userId6 +"\").bothE().count().next().toString()";
+      String curso3Connections = App.executor.eval(curso3ConnectionsQuery).get().toString();
+      assertEquals(curso3Connections,"1");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+  @Test
+  public void testTotvsPloomes() throws InterruptedException {
+    try {
+
+      jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
+      jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+
+//    test for COMIDAS 1 as Person.Natural
+      String userId0 =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 1'))\n" +
+                      ".next().id().toString()").get().toString();
+
+//    test for COMIDAS 1 as Person.Organisation
+      String userId1 =
+              App.executor.eval("App.g.V().has('Person.Organisation.Short_Name', eq('COMIDAS 1'))\n" +
+                      ".next().id().toString()").get().toString();
+
+//    test for Object.Data_Source.Name
+      String userId2 =
+              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('totvs/protheus/sa1_clientes'))" +
+                      ".next().id().toString()").get().toString();
+      String rootConnectionsQuery = "App.g.V(\"" + userId2 +"\").bothE().count().next().toString()";
+      String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
+      assertEquals(rootConnections,"5");
+
+//    test COUNT(Edges) for COMIDAS 2
+      String userId3 =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 2'))" +
+                      ".next().id().toString()").get().toString();
+      String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 +"\").bothE().count().next().toString()";
+      String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
+      assertEquals(comidas2Connections,"6");
+
+//    test COUNT(Edges) for Object.Email_Address
+      String userId4 =
+              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('JONAS@COMIDA1.COM.BR'))" +
+                      ".next().id().toString()").get().toString();
+      String emailConnectionsQuery = "App.g.V(\"" + userId4 +"\").bothE().count().next().toString()";
+      String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
+      assertEquals(emailConnections,"2");
+
+//    test COUNT(Edges) for Object.Phone_Number
+      String userId5 =
+              App.executor.eval("App.g.V().has('Object.Phone_Number.Numbers_Only',eq('111111111'))" +
+                      ".next().id().toString()").get().toString();
+      String phoneConnectionsQuery = "App.g.V(\"" + userId5 +"\").bothE().count().next().toString()";
+      String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
+      assertEquals(phoneConnections,"0");
 
 
     } catch (ExecutionException e) {

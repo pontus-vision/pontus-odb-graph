@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?' ':''}${Name_2?.trim()?.toUpperCase()}"
+            "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
           },
           {
             "name": "Person.Natural.Type",
@@ -44,6 +44,21 @@
           {
             "name": "Person.Organisation.Name",
             "val": "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
+          }
+        ]
+      },
+      {
+        "label": "Person.Identity",
+        "condition": "${(!Tax_Number_1 && !Tax_Number_2) || (Tax_Number_1.trim().length() != 11 && Tax_Number_2.trim().length() != 11) || (Tax_Number_1.trim().length() != 14 && Tax_Number_2.trim().length() != 14) || Tax_Number_1.trim().matches('.*[a-zA-Z]+.*') || Tax_Number_2.trim().matches('.*[a-zA-Z]+.*')}",
+        "props": [
+          {
+            "name": "Person.Identity.Full_Name",
+            "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
+          },
+          {
+            "name": "Person.Identity.Title",
+            "val": "Clientes Estrangeiros",
+            "excludeFromSearch": true
           }
         ]
       },
