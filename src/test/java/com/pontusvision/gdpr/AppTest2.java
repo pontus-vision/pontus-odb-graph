@@ -219,6 +219,65 @@ public class AppTest2  extends AppTest{
 
   }
 
+  @Test
+  public void testTotvsPloomes() throws InterruptedException {
+    try {
+
+      jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
+      jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+
+//    test for COMIDAS 1 as Person.Natural
+      String userId0 =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 1'))\n" +
+                      ".next().id().toString()").get().toString();
+
+//    test for COMIDAS 1 as Person.Organisation
+      String userId1 =
+              App.executor.eval("App.g.V().has('Person.Organisation.Short_Name', eq('COMIDAS 1'))\n" +
+                      ".next().id().toString()").get().toString();
+
+//    test for Object.Data_Source.Name
+      String userId2 =
+              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('totvs/protheus/sa1_clientes'))" +
+                      ".next().id().toString()").get().toString();
+      String rootConnectionsQuery = "App.g.V(\"" + userId2 +"\").bothE().count().next().toString()";
+      String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
+      assertEquals(rootConnections,"5");
+
+//    test COUNT(Edges) for COMIDAS 2
+      String userId3 =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 2'))" +
+                      ".next().id().toString()").get().toString();
+      String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 +"\").bothE().count().next().toString()";
+      String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
+      assertEquals(comidas2Connections,"6");
+
+//    test COUNT(Edges) for Object.Email_Address
+      String userId4 =
+              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('JONAS@COMIDA1.COM.BR'))" +
+                      ".next().id().toString()").get().toString();
+      String emailConnectionsQuery = "App.g.V(\"" + userId4 +"\").bothE().count().next().toString()";
+      String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
+      assertEquals(emailConnections,"2");
+
+//    test COUNT(Edges) for Object.Phone_Number
+      String userId5 =
+              App.executor.eval("App.g.V().has('Object.Phone_Number.Numbers_Only',eq('111111111'))" +
+                      ".next().id().toString()").get().toString();
+      String phoneConnectionsQuery = "App.g.V(\"" + userId5 +"\").bothE().count().next().toString()";
+      String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
+      assertEquals(phoneConnections,"0");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
   public void csvTestUtil(String csvFile,  String ruleName) throws InterruptedException {
 
     String res = null;
