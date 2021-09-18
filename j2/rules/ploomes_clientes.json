@@ -15,7 +15,7 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${Id}"
+            "val": "${CPF}"
           },
           {
             "name": "Person.Natural.Type",
@@ -43,7 +43,7 @@
           },
           {
             "name": "Person.Organisation.Id",
-            "val": "${Id}"
+            "val": "${CNPJ}"
           },
           {
             "name": "Person.Organisation.Email",
