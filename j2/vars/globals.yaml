@@ -132,7 +132,7 @@ schema:
       props:
         - name: Ingestion_Date
         - name: Email
-          -
+        
     - name: "Event.Email_BCC_Group"
       partition: false
       useStatic: false
