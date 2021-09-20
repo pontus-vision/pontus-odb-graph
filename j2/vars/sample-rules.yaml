@@ -165,8 +165,6 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Event.Consent"
 
-
-
   # CORRETOR,NOME,DATA_NASCIMENTO
   Base_Corretores_Folha_1___DADOS_CORRETORES_csv:
     vertices:
@@ -557,4 +555,54 @@ rules:
         fromVertexLabel: Object.Data_Source
         toVertexLabel: Event.Group_Ingestion
 
+  ADP:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${Nome?.trim().toUpperCase()}"
+          Full_Name_fuzzy: "${Nome?.trim().toUpperCase()}"
+          Type:
+            val: "cliente"
+            excludeFromSearch: true
+#          Customer_ID: "${Customer_ID?.trim()}"
+          Date_Of_Birth:
+            val: "${Data_de_Nascimento_Idade}"
+            type: "java.util.Date"
+            mandatoryInSearch: true
+            predicate: "eq"
+#          Gender: "${Sex}"
+
+      - label:  Object.Email_Address
+        condition: "${ (Email != null) && !(Email.isEmpty())}"
+        props:
+          Email:  "${Email}"
+
+      - label: Location.Address
+        condition: "${!Domiciliado_no_Exterior}"
+        props:
+          Full_Address: "${Tipo_Endereço}${Nº?', '+Nº+' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
+          Type:
+            val: "Endereço Brasil"
+            excludeFromSearch: true
+
+      - label: Location.Address
+        condition: "${Domiciliado_no_Exterior}"
+        props:
+          Full_Address: "${Tipo_Endereço}${Nº?', '+Nº+' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
+          Type:
+            val: "Endereço Exterior"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Address"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Consent"
 

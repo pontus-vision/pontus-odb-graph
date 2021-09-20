@@ -123,24 +123,33 @@ public class AppTest2  extends AppTest{
 
       csvTestUtil("clientes.csv",  "Cliente_SAP_PosVenda_POLARIS");
 
+      App.executor.eval("App.g.V().has('Person.Identity.Full_Name', eq('JAN VON MACHER'))\n" +
+                              ".next().id().toString()").get().toString();
 
-      String userId =
-              App.executor.eval("App.g.V()\n" +
-                              ".has('Person.Natural.Full_Name', eq('MATEUS SILVA PINTO'))\n" +
-                              ".next()\n" +
-                              ".id()\n" +
-                              ".toString()")
-                      .get().toString();
+      String type=
+          App.executor.eval("App.g.V().has('Person.Identity.Title')" +
+                  ".values('Person.Identity.Title').next().toString()").get().toString();
+
+      System.out.println("***************************************************************************************\n" +
+              type);
+
+//      String fullName =
+//          App.executor.eval("App.g.V().has('Person.Identity.Full_Name').next()").get().toString();
 
 ////      Debugging
 //      System.out.println("***************************************************************************************\n" +
 //              userId);
+//      System.out.println("***************************************************************************************\n" +
+//              "Person.Identity.Full_Name: " + fullName);
 
-      String oscarConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
-      String oscarConnections = App.executor.eval(oscarConnectionsQuery)
-              .get().toString();
+//      String drewConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
+//      String drewConnections = App.executor.eval(drewConnectionsQuery)
+//              .get().toString();
 
-      assertEquals(oscarConnections,"2");
+//      System.out.println("***************************************************************************************\n" +
+//              drewConnections);
+
+//      assertEquals(oscarConnections,"2");
 
 
     } catch (ExecutionException e) {
