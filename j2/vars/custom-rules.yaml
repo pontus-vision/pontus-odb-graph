@@ -1286,3 +1286,102 @@ rules:
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
 
+
+  pv_email:
+    vertices:
+      - label: Object.Data_Source
+        props:
+          Name: office365/emails
+          Type: office365/emails
+          Description: Emails From MS Graph API
+
+      - label: Event.Email_Message_Group
+        props:
+          Ingestion_Date:
+            val: "${new Date().format('yyyy-MM-dd')}"
+            mandatoryInSearch: true
+
+      - label: Event.Email_Message
+        props:
+          Domain_Unstructured_Data_b64: "${pg_content?:''}"
+          Created_Date_Time: "${emailCreatedDateTime}"
+          Sent_Date_Time: "${emailSentDateTime}"
+          Received_Date_Time: "${emailReceivedDateTime}"
+          Email_Id: "${emailId}"
+          Subject: "${emailSubject}"
+          Categories: "${categories}"
+
+      - label: Event.Email_To_Group
+        props:
+          Ingestion_Date:
+            val: "${new Date().format('yyyy-MM-dd')}"
+            mandatoryInSearch: true
+
+
+
+      - label: Person.Natural
+        props:
+          Full_Name: "${Nome0?.trim()?.toUpperCase()}"
+
+      #          Role: "${Departamento0}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: sharepoint/treinamentos
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: sharepoint/treinamentos
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+
+
+    edges:
+      - label: "Course_Training"
+        fromVertexLabel: "Event.Training"
+        toVertexLabel: "Object.Awareness_Campaign"
+
+      - label: "Completed_By"
+        fromVertexLabel: "Event.Training"
+        toVertexLabel: "Person.Employee"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Event.Training"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object.Data_Source"
+
