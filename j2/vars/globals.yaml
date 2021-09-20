@@ -106,6 +106,73 @@ schema:
         - name: Operation
         - name: Type
 
+    - name: "Event.Email_Message_Group"
+      partition: false
+      useStatic: false
+      props:
+        - name: Ingestion_Date
+
+    - name: "Event.Email_To_Group"
+      partition: false
+      useStatic: false
+      props:
+        - name: Ingestion_Date
+        - name: Email
+
+    - name: "Event.Email_From_Group"
+      partition: false
+      useStatic: false
+      props:
+        - name: Ingestion_Date
+        - name: Email
+
+    - name: "Event.Email_CC_Group"
+      partition: false
+      useStatic: false
+      props:
+        - name: Ingestion_Date
+        - name: Email
+        
+    - name: "Event.Email_BCC_Group"
+      partition: false
+      useStatic: false
+      props:
+        - name: Ingestion_Date
+        - name: Email
+
+    - name: "Event.NLP_Group"
+      partition: false
+      useStatic: false
+      props:
+        - name: Ingestion_Date
+          # Use the Person.Natural.Id here:
+        - name: PersonId
+
+
+    - name: "Event.Email_Message"
+      partition: false
+      useStatic: false
+      props:
+        - name: Business_Rules
+        - name: Domain_Unstructured_Data_b64
+          index: false
+        - name: Domain_b64
+          index: false
+        - name: Metadata_Create_Date
+          dataType: Date
+        - name: Metadata_GUID
+        - name: Operation
+        - name: Type
+        - name: Email_Id
+        - name: Created_Date_Time
+        - name: Sent_Date_Time
+        - name: Received_Date_Time
+        - name: Categories
+        - name: Subject
+        - name: Folder_Id
+        - name: User_Id
+
+
     - name: "Event.Group_Ingestion"
       partition: false
       useStatic: false
@@ -415,6 +482,61 @@ schema:
         - name: Email
         - name: Host
         - name: Type
+
+    - name: "Object.Email_Message_Attachment"
+      partition: false
+      useStatic: false
+      props:
+        - name: Email_Id
+        - name: Attachment_Id
+        - name: MetadataController
+        - name: MetadataGDPRStatus
+        - name: MetadataLineage
+        - name: NLP_Address
+        - name: NLP_Cred_Card
+        - name: NLP_Email
+        - name: NLP_Location
+        - name: NLP_Person
+        - name: NLP_Phone
+        - name: NLP_Postcode
+        - name: NLP_Policy_Number
+        - name: NLP_Org
+        - name: NLP_Misc
+        - name: NLP_Nationality
+        - name: NLP_Language
+        - name: NLP_Misc
+        - name: NLP_Money
+        - name: NLP_Date
+        - name: NLP_Time
+        - name: NLP_CPF
+
+    - name: "Object.Email_Message_Body"
+      partition: false
+      useStatic: false
+      props:
+        - name: Email_Id
+        - name: MetadataController
+        - name: MetadataGDPRStatus
+        - name: MetadataLineage
+        - name: NLP_Address
+        - name: NLP_Cred_card
+        - name: NLP_Email
+        - name: NLP_Location
+        - name: NLP_Person
+        - name: NLP_Phone
+        - name: NLP_Postcode
+        - name: NLP_Policy_number
+        - name: NLP_Org
+        - name: NLP_Misc
+        - name: NLP_Nationality
+        - name: NLP_Language
+        - name: NLP_Misc
+        - name: NLP_Money
+        - name: NLP_Date
+        - name: NLP_Time
+        - name: NLP_CPF
+
+
 
 
     - name: "Object.Form"

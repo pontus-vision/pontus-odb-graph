@@ -576,7 +576,7 @@ rules:
         props:
           Full_Name: "${Name?.trim()?.toUpperCase()}"
           Full_Name_fuzzy: "${Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Id}"
+          Customer_ID: "${CPF}"
           Type:
             val: "Clientes"
             excludeFromSearch: true
@@ -590,7 +590,7 @@ rules:
             mandatoryInSearch: true
           Name: "${LegalName}"
           Short_Name: "${Name}"
-          Id: "${Id}"
+          Id: "${CNPJ}"
           Email: "${Email}"
 
       #CELULAR
@@ -1285,4 +1285,6 @@ rules:
       - label: "Has_Ingestion_Event"
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
+
+
 

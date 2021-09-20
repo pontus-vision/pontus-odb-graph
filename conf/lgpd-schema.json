@@ -259,6 +259,206 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Event.Email_Message_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_To_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_To_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_To_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_To_Group.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_From_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_From_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_From_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_From_Group.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_CC_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_CC_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_CC_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_CC_Group.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_BCC_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_BCC_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_BCC_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_BCC_Group.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.NLP_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.NLP_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.NLP_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.NLP_Group.PersonId",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_Message",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Business_Rules",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Domain_Unstructured_Data_b64",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Domain_b64",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Metadata_Create_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Metadata_GUID",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Operation",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Email_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Created_Date_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Sent_Date_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Received_Date_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Categories",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Subject",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Folder_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.User_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Event.Group_Ingestion",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1334,6 +1534,241 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Email_Message_Attachment",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.Email_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.Attachment_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.MetadataController",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.MetadataGDPRStatus",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.MetadataLineage",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Address",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Cred_Card",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Location",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Person",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Phone",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Postcode",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Policy_Number",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Org",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Misc",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Nationality",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Language",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Misc",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Money",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_CPF",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Email_Message_Body",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.Email_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.MetadataController",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.MetadataGDPRStatus",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.MetadataLineage",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Address",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Cred_card",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Location",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Person",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Phone",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Postcode",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Policy_number",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Org",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Misc",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Nationality",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Language",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Misc",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Money",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_CPF",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Object.Form",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -2376,6 +2811,41 @@
       "useStatic": false
     },
     {
+      "name": "Event.Email_Message_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_To_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_From_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_CC_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_BCC_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.NLP_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_Message",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Event.Group_Ingestion",
       "partition": false,
       "useStatic": false
@@ -2472,6 +2942,16 @@
     },
     {
       "name": "Object.Email_Address",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Email_Message_Attachment",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Email_Message_Body",
       "partition": false,
       "useStatic": false
     },
@@ -2892,6 +3372,107 @@
       "propertyKeysMappings": {}
     },
     {
+      "name": "Event.Email_Message_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_Message_Group",
+        "Event.Email_Message_Group.Ingestion_Date"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_To_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_To_Group",
+        "Event.Email_To_Group.Ingestion_Date",
+        "Event.Email_To_Group.Email"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_From_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_From_Group",
+        "Event.Email_From_Group.Ingestion_Date",
+        "Event.Email_From_Group.Email"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_CC_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_CC_Group",
+        "Event.Email_CC_Group.Ingestion_Date",
+        "Event.Email_CC_Group.Email"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_BCC_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_BCC_Group",
+        "Event.Email_BCC_Group.Ingestion_Date",
+        "Event.Email_BCC_Group.Email"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.NLP_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.NLP_Group",
+        "Event.NLP_Group.Ingestion_Date",
+        "Event.NLP_Group.PersonId"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_Message.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_Message",
+        "Event.Email_Message.Business_Rules",
+        "Event.Email_Message.Metadata_Create_Date",
+        "Event.Email_Message.Metadata_GUID",
+        "Event.Email_Message.Operation",
+        "Event.Email_Message.Type",
+        "Event.Email_Message.Email_Id",
+        "Event.Email_Message.Created_Date_Time",
+        "Event.Email_Message.Sent_Date_Time",
+        "Event.Email_Message.Received_Date_Time",
+        "Event.Email_Message.Categories",
+        "Event.Email_Message.Subject",
+        "Event.Email_Message.Folder_Id",
+        "Event.Email_Message.User_Id"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
       "name": "Event.Group_Ingestion.MixedIdx",
       "composite": false,
       "unique": false,
@@ -3280,6 +3861,71 @@
         "Object.Email_Address.Email",
         "Object.Email_Address.Host",
         "Object.Email_Address.Type"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Email_Message_Attachment.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Email_Message_Attachment",
+        "Object.Email_Message_Attachment.Email_Id",
+        "Object.Email_Message_Attachment.Attachment_Id",
+        "Object.Email_Message_Attachment.MetadataController",
+        "Object.Email_Message_Attachment.MetadataGDPRStatus",
+        "Object.Email_Message_Attachment.MetadataLineage",
+        "Object.Email_Message_Attachment.NLP_Address",
+        "Object.Email_Message_Attachment.NLP_Cred_Card",
+        "Object.Email_Message_Attachment.NLP_Email",
+        "Object.Email_Message_Attachment.NLP_Location",
+        "Object.Email_Message_Attachment.NLP_Person",
+        "Object.Email_Message_Attachment.NLP_Phone",
+        "Object.Email_Message_Attachment.NLP_Postcode",
+        "Object.Email_Message_Attachment.NLP_Policy_Number",
+        "Object.Email_Message_Attachment.NLP_Org",
+        "Object.Email_Message_Attachment.NLP_Misc",
+        "Object.Email_Message_Attachment.NLP_Nationality",
+        "Object.Email_Message_Attachment.NLP_Language",
+        "Object.Email_Message_Attachment.NLP_Misc",
+        "Object.Email_Message_Attachment.NLP_Money",
+        "Object.Email_Message_Attachment.NLP_Date",
+        "Object.Email_Message_Attachment.NLP_Time",
+        "Object.Email_Message_Attachment.NLP_CPF"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Email_Message_Body.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Email_Message_Body",
+        "Object.Email_Message_Body.Email_Id",
+        "Object.Email_Message_Body.MetadataController",
+        "Object.Email_Message_Body.MetadataGDPRStatus",
+        "Object.Email_Message_Body.MetadataLineage",
+        "Object.Email_Message_Body.NLP_Address",
+        "Object.Email_Message_Body.NLP_Cred_card",
+        "Object.Email_Message_Body.NLP_Email",
+        "Object.Email_Message_Body.NLP_Location",
+        "Object.Email_Message_Body.NLP_Person",
+        "Object.Email_Message_Body.NLP_Phone",
+        "Object.Email_Message_Body.NLP_Postcode",
+        "Object.Email_Message_Body.NLP_Policy_number",
+        "Object.Email_Message_Body.NLP_Org",
+        "Object.Email_Message_Body.NLP_Misc",
+        "Object.Email_Message_Body.NLP_Nationality",
+        "Object.Email_Message_Body.NLP_Language",
+        "Object.Email_Message_Body.NLP_Misc",
+        "Object.Email_Message_Body.NLP_Money",
+        "Object.Email_Message_Body.NLP_Date",
+        "Object.Email_Message_Body.NLP_Time",
+        "Object.Email_Message_Body.NLP_CPF"
       ],
       "propertyKeysMappings": {}
     },
