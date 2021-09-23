@@ -222,6 +222,7 @@ Object.Email_Address.Host
 Object.Email_Address.Type
 Object.Email_Message_Attachment.Email_Id
 Object.Email_Message_Attachment.Attachment_Id
+Object.Email_Message_Attachment.Attachment_Content_Type
 Object.Email_Message_Attachment.MetadataController
 Object.Email_Message_Attachment.MetadataGDPRStatus
 Object.Email_Message_Attachment.MetadataLineage
