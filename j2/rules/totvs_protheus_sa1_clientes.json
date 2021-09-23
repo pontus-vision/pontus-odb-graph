@@ -3,6 +3,7 @@
     "vertices": [
       {
         "label": "Person.Natural",
+        "condition": "${A1_CGC?.trim()?.length() == 11}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
@@ -22,6 +23,21 @@
             "val": "${id}",
             "predicate": "eq",
             "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person.Organisation",
+        "condition": "${A1_CGC?.trim()?.length() == 14}",
+        "props": [
+          {
+            "name": "Person.Organisation.Registration_Number",
+            "val": "${A1_CGC?.trim()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person.Organisation.Name",
+            "val": "${A1_NOME?.trim()?.toUpperCase()}"
           }
         ]
       },
@@ -53,6 +69,8 @@
       },
       {
         "label": "Object.Identity_Card",
+        "name": "RG",
+        "condition": "${A1_CGC?.trim()?.length() == 11}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
@@ -62,6 +80,23 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "RG",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "CPF",
+        "condition": "${A1_CGC?.trim()?.length() == 11}",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${A1_CGC?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF",
             "excludeFromSearch": true
           }
         ]
@@ -77,14 +112,30 @@
       },
       {
         "label": "Location.Address",
+        "condition": "${A1_CGC?.trim()?.length() == 14}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A1_END}, ${A1_BAIRRO},  ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
           },
           {
             "name": "Location.Address.Type",
             "val": "Business",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Location.Address",
+        "condition": "${A1_CGC?.trim()?.length() == 11}",
+        "props": [
+          {
+            "name": "Location.Address.Full_Address",
+            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+          },
+          {
+            "name": "Location.Address.Type",
+            "val": "Residence",
             "excludeFromSearch": true
           }
         ]

@@ -1,8 +1,9 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDEN BY THE J2 DIR TEMPLATES
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
 updatereq:
   vertices:
     
     - label: Person.Natural
+      condition: ${A1_CGC?.trim()?.length() == 11}
       props:
         - name: Person.Natural.Full_Name
           val: ${A1_NOME?.trim()?.toUpperCase()}
@@ -15,6 +16,15 @@ updatereq:
           val: ${id}
           predicate: eq
           mandatoryInSearch: True
+    
+    - label: Person.Organisation
+      condition: ${A1_CGC?.trim()?.length() == 14}
+      props:
+        - name: Person.Organisation.Registration_Number
+          val: ${A1_CGC?.trim()}
+          mandatoryInSearch: True
+        - name: Person.Organisation.Name
+          val: ${A1_NOME?.trim()?.toUpperCase()}
     
     - label: Object.Phone_Number
       props:
@@ -33,6 +43,8 @@ updatereq:
           type: "[Ljava.lang.String;"
     
     - label: Object.Identity_Card
+      name: RG
+      condition: ${A1_CGC?.trim()?.length() == 11}
       props:
         - name: Object.Identity_Card.Id_Value
           val: ${A1_RG?.trim()?.toUpperCase()}
@@ -41,17 +53,38 @@ updatereq:
           val: RG
           excludeFromSearch: True
     
+    - label: Object.Identity_Card
+      name: CPF
+      condition: ${A1_CGC?.trim()?.length() == 11}
+      props:
+        - name: Object.Identity_Card.Id_Value
+          val: ${A1_CGC?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Object.Identity_Card.Id_Type
+          val: CPF
+          excludeFromSearch: True
+    
     - label: Object.Email_Address
       props:
         - name: Object.Email_Address.Email
           val: ${A1_EMAIL}
     
     - label: Location.Address
+      condition: ${A1_CGC?.trim()?.length() == 14}
       props:
         - name: Location.Address.Full_Address
-          val: ${A1_END}, ${A1_BAIRRO},  ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
         - name: Location.Address.Type
           val: Business
+          excludeFromSearch: True
+    
+    - label: Location.Address
+      condition: ${A1_CGC?.trim()?.length() == 11}
+      props:
+        - name: Location.Address.Full_Address
+          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+        - name: Location.Address.Type
+          val: Residence
           excludeFromSearch: True
     
     - label: Event.Ingestion
