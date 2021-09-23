@@ -934,6 +934,7 @@ rules:
   Fornecedor_SAP_PosVenda_POLARIS:
     vertices:
       - label: Person.Organisation
+        condition: "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14} && ${Vendor}"
         props:
           Name:
             val: "${Name_1?.toUpperCase()?.trim()}${Name_2?' ':''}${Name_2?.toUpperCase()?.trim()}"
@@ -955,6 +956,14 @@ rules:
             mandatoryInSearch: true
 
 #          Id: "${Vendor}"
+
+      - label: Person.Natural
+        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}" #--for CPF
+        props:
+          Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
+          Type:
+            val: "Fornecedores"
+            excludeFromSearch: true
 
 
       - label: Location.Address
@@ -1036,7 +1045,7 @@ rules:
   Cliente_SAP_PosVenda_POLARIS:
     vertices:
       - label: Person.Natural
-        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}" #--for CPF
+        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11} && ${Customer}" #--for CPF
 #        condition: "${Title != 'Company'}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
@@ -1049,7 +1058,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object.Identity_Card
-        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}"
+        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11} && ${Customer}"
         props:
           Id_Value:
             val: "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}"
@@ -1070,7 +1079,7 @@ rules:
 
       - label: Person.Organisation
 #        condition: "${Tax_Number_1.length() == 14}" --for CNPJ
-        condition: "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}"
+        condition: "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14} && ${Customer}"
         props:
 #          id: "${Customer}"
           Registration_Number:
@@ -1083,7 +1092,7 @@ rules:
 #            mandatoryInSearch: true
 
 #     For FOREIGN Persons
-      - label: Person.Identity
+      - label: Person.Natural
         condition: "${(!Tax_Number_1 && !Tax_Number_2) ||
         (Tax_Number_1.trim().length() != 11 && Tax_Number_2.trim().length() != 11) ||
         (Tax_Number_1.trim().length() != 14 && Tax_Number_2.trim().length() != 14) ||
@@ -1095,6 +1104,7 @@ rules:
           #          Customer_ID: "${Tax_Number_1}"
           #          id: "${Customer}"
           Title:
+            condition: "${Customer}"
             val: "Clientes Estrangeiros"
             excludeFromSearch: true
 
