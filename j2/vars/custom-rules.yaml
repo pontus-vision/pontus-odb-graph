@@ -24,6 +24,7 @@ rules:
   totvs_protheus_sa1_clientes:
     vertices:
       - label: Person.Natural
+        condition: "${A1_CGC?.trim()?.length() == 11}"
         props:
           Full_Name: "${A1_NOME?.trim()?.toUpperCase()}"
           Full_Name_fuzzy: "${A1_NOME?.trim()?.toUpperCase()}"
@@ -36,6 +37,13 @@ rules:
             mandatoryInSearch: true
             predicate: "eq"
 
+      - label: Person.Organisation
+        condition: "${A1_CGC?.trim()?.length() == 14}"
+        props:
+          Registration_Number:
+            val: "${A1_CGC?.trim()}"
+            mandatoryInSearch: true
+          Name: "${A1_NOME?.trim()?.toUpperCase()}"
 
         #CELULAR
       - label: Object.Phone_Number
@@ -57,12 +65,25 @@ rules:
 
       #RG
       - label: Object.Identity_Card
+        condition: "${A1_CGC?.trim()?.length() == 11}"
+        name: RG
         props:
           Id_Value:
             val: "${A1_RG?.trim()?.toUpperCase()}"
             mandatoryInSearch: true
           Id_Type:
             val: "RG"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        condition: "${A1_CGC?.trim()?.length() == 11}"
+        name: CPF
+        props:
+          Id_Value:
+            val: "${A1_CGC?.trim()?.toUpperCase()}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CPF"
             excludeFromSearch: true
 
       # EMAIL
@@ -72,10 +93,19 @@ rules:
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location.Address
+        condition: "${A1_CGC?.trim()?.length() == 14}"
         props:
-          Full_Address: "${A1_END}, ${A1_BAIRRO},  ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+          Full_Address: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
           Type:
             val: "Business"
+            excludeFromSearch: true
+
+      - label: Location.Address
+        condition: "${A1_CGC?.trim()?.length() == 11}"
+        props:
+          Full_Address: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+          Type:
+            val: "Residence"
             excludeFromSearch: true
 
       - label: Event.Ingestion
@@ -616,7 +646,7 @@ rules:
       - label: Location.Address
         condition: "${StreetAddress != null}"
         props:
-          Full_Address: "${StreetAddress}${StreetAddressNumber?', '+StreetAddressNumber+' ':''}${StreetAddressLine2?:''} ${Neighborhood?', ' + Neighborhood + ' ':''}${CityId?:''}${StateId?' - '+ StateId + ' ':''}${ZipCode?' '+ZipCode:''}"
+          Full_Address: "${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}"
           Type:
             val: "Business"
             excludeFromSearch: true
