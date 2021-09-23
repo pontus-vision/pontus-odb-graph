@@ -965,6 +965,9 @@ propertyKeys:
   - name: Object.Email_Message_Attachment.Attachment_Id
     dataType: String
     cardinality: SINGLE
+  - name: Object.Email_Message_Attachment.Attachment_Content_Type
+    dataType: String
+    cardinality: SINGLE
   - name: Object.Email_Message_Attachment.MetadataController
     dataType: String
     cardinality: SINGLE
@@ -1901,6 +1904,30 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Email_To
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Email_From
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Email_CC
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Email_BCC
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Email_Body
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Email_Attachment
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Address
     multiplicity: MULTI
     unidirected: False
@@ -2651,6 +2678,7 @@ vertexIndexes:
       - Metadata.Type.Object.Email_Message_Attachment
       - Object.Email_Message_Attachment.Email_Id
       - Object.Email_Message_Attachment.Attachment_Id
+      - Object.Email_Message_Attachment.Attachment_Content_Type
       - Object.Email_Message_Attachment.MetadataController
       - Object.Email_Message_Attachment.MetadataGDPRStatus
       - Object.Email_Message_Attachment.MetadataLineage
