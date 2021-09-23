@@ -1462,7 +1462,8 @@ class Matcher {
 
     }
 
-    static addNewVertexFromMatchReqs(GraphTraversalSource g, String vertexTypeStr, List<MatchReq> matchReqsForThisVertexType, StringBuffer sb = null) {
+    static addNewVertexFromMatchReqs(GraphTraversalSource g, String vertexTypeStr, List<MatchReq> matchReqsForThisVertexType,
+                                     StringBuffer sb = null) {
 
         def localTrav = g
 
@@ -1498,7 +1499,9 @@ class Matcher {
     }
 
 
-    static updateExistingVertexWithMatchReqs(GraphTraversalSource g, Map<ORID, AtomicDouble> vertices, List<MatchReq> matchReqsForThisVertexType, double scoreThreshold, StringBuffer sb = null) {
+    static updateExistingVertexWithMatchReqs(GraphTraversalSource g, Map<ORID, AtomicDouble> vertices,
+                                             List<MatchReq> matchReqsForThisVertexType, double scoreThreshold,
+                                             StringBuffer sb = null) {
 
         GraphTraversal localTrav
         def deletionTrav = g

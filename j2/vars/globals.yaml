@@ -489,6 +489,7 @@ schema:
       props:
         - name: Email_Id
         - name: Attachment_Id
+        - name: Attachment_Content_Type
         - name: MetadataController
         - name: MetadataGDPRStatus
         - name: MetadataLineage
@@ -905,6 +906,12 @@ schema:
   - name: Data_Impacted_By_Data_Breach
   - name: Event_Training_Awareness_Campaign
   - name: Event_Training_Person
+  - name: Email_To
+  - name: Email_From
+  - name: Email_CC
+  - name: Email_BCC
+  - name: Email_Body
+  - name: Email_Attachment
   - name: Has_Address
   - name: Has_Application
   - name: Has_Column
