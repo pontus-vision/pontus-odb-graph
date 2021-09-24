@@ -165,8 +165,6 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Event.Consent"
 
-
-
   # CORRETOR,NOME,DATA_NASCIMENTO
   Base_Corretores_Folha_1___DADOS_CORRETORES_csv:
     vertices:
@@ -556,5 +554,85 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: Object.Data_Source
         toVertexLabel: Event.Group_Ingestion
+
+  sharepoint_fontes_de_dados:
+    vertices:
+      - label: Object.Data_Source
+        props:
+          Name: sharepoint/fontes-de-dados # ?!?!
+          Type: sharepoint/fontes-de-dados # ?!?!
+          Description: Registros das Fontes de Dados LGPD
+
+      - label: Object.Metadata_Source
+        props:
+          Name: "${Title}"
+          Description: "${Descri_x00e7__x00e3_o}"
+          Engine: "${Sistema}"
+          Type: "${Tipo_x0020_Sistema}"
+          Domain: "${Tabela}"
+          URI_Delete: "${URL_x0020_Prefixo_x0020_Delete}"
+          URI_Update: "${URL_x0020_Prefixo_x0020_Update}"
+          URI_Read: "${URL_x0020_Prefixo_x0020_Read}"
+
+      - label: Object.Data_Policy
+        props:
+          UpdateDate: "${Frequ_x00ea_ncia_x0020_de_x0020_}" # OR Object.Data_Source.Domain_Frequency ?!?!
+          Retention_Period: "${Pol_x00ed_tica_x0020_de_x0020_Re}"
+      #          Description: ?!?!
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: sharepoint/fontes-de-dados # ?!?!
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            mandatoryInSearch: true
+            excludeFromSearch: false
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: sharepoint/fontes-de-dados # ?!?!
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+
+    edges:
+      - label: "Policy"
+        fromVertexLabel: "Object.Metadata_Source"
+        toVertexLabel: "Object.Data_Policy"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Object.Metadata_Source"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object.Data_Source"
 
 
