@@ -73,6 +73,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "phone",
+        "condition": "${Telephone_1?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -100,6 +101,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "phone2",
+        "condition": "${Telephone_2?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -133,9 +135,10 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Location.Address.Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(PostalCode)}",
-            "excludeFromSearch": true
+            "name": "Location.Address.parser",
+            "val": "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
           }
         ]
       },
@@ -250,12 +253,22 @@
       {
         "label": "Has_Phone_Number",
         "fromVertexLabel": "Person.Organisation",
-        "toVertexLabel": "Object.Phone_Number"
+        "toVertexName": "phone"
+      },
+      {
+        "label": "Has_Phone_Number",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexName": "phone2"
       },
       {
         "label": "Has_Phone_Number",
         "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Phone_Number"
+        "toVertexName": "phone"
+      },
+      {
+        "label": "Has_Phone_Number",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "phone2"
       },
       {
         "label": "Has_Identity_Card",

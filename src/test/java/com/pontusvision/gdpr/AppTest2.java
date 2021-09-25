@@ -130,7 +130,7 @@ public class AppTest2  extends AppTest{
       String pintoConnectionsQuery = "App.g.V(\"" + userId0 +"\").bothE().count().next().toString()";
       String pintoConnections = App.executor.eval(pintoConnectionsQuery)
               .get().toString();
-      assertEquals(pintoConnections,"2");
+      assertEquals(pintoConnections,"4");
 
 //    Testing for Person.Natural withOUT Tax_Number
       String userId1 =
@@ -141,7 +141,8 @@ public class AppTest2  extends AppTest{
 
      String personNaturalTypes =
              App.executor.eval("App.g.V().has('Person.Natural.Type', eq('Clientes Sem Tax'))" +
-                     ".next().toString()").get().toString();
+                     ".count().next().toString()").get().toString();
+     assertEquals(personNaturalTypes, "5");
 
      System.out.println("*******************************************************\n" + personNaturalTypes);
 

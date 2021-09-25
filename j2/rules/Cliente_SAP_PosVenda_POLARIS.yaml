@@ -45,6 +45,7 @@ updatereq:
     
     - label: Object.Phone_Number
       name: phone
+      condition: ${Telephone_1?.trim()?.length() > 0}
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_1}
@@ -62,6 +63,7 @@ updatereq:
     
     - label: Object.Phone_Number
       name: phone2
+      condition: ${Telephone_2?.trim()?.length() > 0}
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_2}
@@ -82,9 +84,10 @@ updatereq:
         - name: Location.Address.Full_Address
           val: ${ ((Street?:'')+ '\\n' + (City?:'') + '\\n' + (District?:'') + '\\n' + (Cty?:'')).replaceAll('\\n', ' ')}
           mandatoryInSearch: True
-        - name: Location.Address.Post_Code
-          val: ${com.pontusvision.utils.PostCode.format(PostalCode)}
-          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${ ((Street?:'')+ '\\n' + (City?:'') + '\\n' + (District?:'') + '\\n' + (Cty?:'')).replaceAll('\\n', ' ')}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
     
     - label: Event.Ingestion
       props:
@@ -153,10 +156,16 @@ updatereq:
     toVertexLabel: Event.Group_Ingestion
   - label: Has_Phone_Number
     fromVertexLabel: Person.Organisation
-    toVertexLabel: Object.Phone_Number
+    toVertexName: phone
+  - label: Has_Phone_Number
+    fromVertexLabel: Person.Organisation
+    toVertexName: phone2
   - label: Has_Phone_Number
     fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Phone_Number
+    toVertexName: phone
+  - label: Has_Phone_Number
+    fromVertexLabel: Person.Natural
+    toVertexName: phone2
   - label: Has_Identity_Card
     fromVertexLabel: Person.Natural
     toVertexLabel: Object.Identity_Card
