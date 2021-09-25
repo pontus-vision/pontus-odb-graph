@@ -11,6 +11,8 @@ import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.structure.Transaction
 
+import java.text.SimpleDateFormat
+
 
 class EmailNLPRequest {
   String metadataController
@@ -249,7 +251,7 @@ class EmailNLPRequest {
     VertexProps vtxProps = new VertexProps()
     vtxProps.name = "${vtxLabel}.Ingestion_Date"
     vtxProps.mandatoryInSearch = true
-    vtxProps.val = (new Date().format('yyyy-MM-dd'))
+    vtxProps.val = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
 
     vtx.props = [vtxProps]
 
@@ -264,7 +266,7 @@ class EmailNLPRequest {
     VertexProps emailGroupIngestionDateVtxProps = new VertexProps()
     emailGroupIngestionDateVtxProps.name = "${vtxLabel}.Ingestion_Date"
     emailGroupIngestionDateVtxProps.mandatoryInSearch = true
-    emailGroupIngestionDateVtxProps.val = (new Date().format('yyyy-MM-dd'))
+    emailGroupIngestionDateVtxProps.val = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
 
     VertexProps emailVtxProps = new VertexProps()
     emailVtxProps.name = "${vtxLabel}.Email"

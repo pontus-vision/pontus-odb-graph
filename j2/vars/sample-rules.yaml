@@ -165,8 +165,6 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Event.Consent"
 
-
-
   # CORRETOR,NOME,DATA_NASCIMENTO
   Base_Corretores_Folha_1___DADOS_CORRETORES_csv:
     vertices:
