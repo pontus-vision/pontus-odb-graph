@@ -378,7 +378,7 @@ class EmailNLPRequest {
     props.type = VertexProps.TypeEnum._LJAVA_LANG_STRING_
     props.excludeFromUpdate = true
     props.postProcessor=postProcessor
-//      props.
+    props.predicate = "idx:"
     vtx.props.push(props)
 
     return vtx
