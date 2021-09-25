@@ -20,7 +20,7 @@ rules:
         condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}"
         props:
           Id_Value:
-            val: "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}"
+            val: "${Tax_Number_1?.trim()?.length() == 11?Tax_Number_1:Tax_Number_2}"
             mandatoryInSearch: true
           Id_Type:
             val: "CPF"
@@ -42,7 +42,7 @@ rules:
         props:
           #          id: "${Customer}"
           Registration_Number:
-            val: "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}"
+            val: "${Tax_Number_1?.trim()?.length() == 14?Tax_Number_1:Tax_Number_2}"
             mandatoryInSearch: true
           Name: "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
       #          Short_Name: "${Name_1?.trim()?.toUpperCase()}"
@@ -71,7 +71,7 @@ rules:
 
       - label: Object.Phone_Number
         name: phone
-        condition: "${Telephone_1}"
+#        condition: "${Telephone_1}"
         props:
           Raw:
             val: "${Telephone_1}"
@@ -90,7 +90,7 @@ rules:
             type: "[Ljava.lang.String;"
 
       - label: Object.Phone_Number
-        condition: "${Telephone_2}"
+#        condition: "${Telephone_2}"
         name: phone2
         props:
           Raw:
@@ -115,10 +115,10 @@ rules:
             val: "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}"
             mandatoryInSearch: true
 
-          parser:
-            val: "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}"
-            excludeFromSearch: true
-            type: "com.pontusvision.utils.LocationAddress"
+#          parser:
+#            val: "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}"
+#            excludeFromSearch: true
+#            type: "com.pontusvision.utils.LocationAddress"
 
           Post_Code:
             val: "${com.pontusvision.utils.PostCode.format(PostalCode)}"
@@ -192,6 +192,18 @@ rules:
       - label: "Has_Ingestion_Event"
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
+
+      - label: "Has_Phone_Number"
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Object.Phone_Number"
+
+      - label: "Has_Phone_Number"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Phone_Number"
+
+      - label: "Has_Identity_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Identity_Card"
 
   Fornecedor_SAP_PosVenda_POLARIS:
     vertices:
@@ -362,4 +374,16 @@ rules:
       - label: "Has_Ingestion_Event"
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
+
+      - label: "Has_Phone_Number"
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Object.Phone_Number"
+
+      - label: "Has_Phone_Number"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Phone_Number"
+
+      - label: "Has_Identity_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Identity_Card"
 

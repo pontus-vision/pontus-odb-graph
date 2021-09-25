@@ -26,7 +26,7 @@
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}",
+            "val": "${Tax_Number_1?.trim()?.length() == 11?Tax_Number_1:Tax_Number_2}",
             "mandatoryInSearch": true
           },
           {
@@ -42,7 +42,7 @@
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
-            "val": "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}",
+            "val": "${Tax_Number_1?.trim()?.length() == 14?Tax_Number_1:Tax_Number_2}",
             "mandatoryInSearch": true
           },
           {
@@ -73,7 +73,6 @@
       {
         "label": "Object.Phone_Number",
         "name": "phone",
-        "condition": "${Telephone_1}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -101,7 +100,6 @@
       {
         "label": "Object.Phone_Number",
         "name": "phone2",
-        "condition": "${Telephone_2}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -133,12 +131,6 @@
             "name": "Location.Address.Full_Address",
             "val": "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Location.Address.parser",
-            "val": "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}",
-            "type": "com.pontusvision.utils.LocationAddress",
-            "excludeFromSearch": true
           },
           {
             "name": "Location.Address.Post_Code",
@@ -254,6 +246,21 @@
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Object.Data_Source",
         "toVertexLabel": "Event.Group_Ingestion"
+      },
+      {
+        "label": "Has_Phone_Number",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexLabel": "Object.Phone_Number"
+      },
+      {
+        "label": "Has_Phone_Number",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Phone_Number"
+      },
+      {
+        "label": "Has_Identity_Card",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Identity_Card"
       }
     ]
   }

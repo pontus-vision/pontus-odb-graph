@@ -17,7 +17,7 @@ updatereq:
       condition: ${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}
       props:
         - name: Object.Identity_Card.Id_Value
-          val: ${Tax_Number_1?.trim() || Tax_Number_2?.trim()}
+          val: ${Tax_Number_1?.trim()?.length() == 11?Tax_Number_1:Tax_Number_2}
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
@@ -27,7 +27,7 @@ updatereq:
       condition: ${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}
       props:
         - name: Person.Organisation.Registration_Number
-          val: ${Tax_Number_1?.trim() || Tax_Number_2?.trim()}
+          val: ${Tax_Number_1?.trim()?.length() == 14?Tax_Number_1:Tax_Number_2}
           mandatoryInSearch: True
         - name: Person.Organisation.Name
           val: ${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}
@@ -45,7 +45,6 @@ updatereq:
     
     - label: Object.Phone_Number
       name: phone
-      condition: ${Telephone_1}
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_1}
@@ -63,7 +62,6 @@ updatereq:
     
     - label: Object.Phone_Number
       name: phone2
-      condition: ${Telephone_2}
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_2}
@@ -84,10 +82,6 @@ updatereq:
         - name: Location.Address.Full_Address
           val: ${ ((Street?:'')+ '\\n' + (City?:'') + '\\n' + (District?:'') + '\\n' + (Cty?:'')).replaceAll('\\n', ' ')}
           mandatoryInSearch: True
-        - name: Location.Address.parser
-          val: ${ ((Street?:'')+ '\\n' + (City?:'') + '\\n' + (District?:'') + '\\n' + (Cty?:'')).replaceAll('\\n', ' ')}
-          type: "com.pontusvision.utils.LocationAddress"
-          excludeFromSearch: True
         - name: Location.Address.Post_Code
           val: ${com.pontusvision.utils.PostCode.format(PostalCode)}
           excludeFromSearch: True
@@ -157,4 +151,13 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Object.Data_Source
     toVertexLabel: Event.Group_Ingestion
+  - label: Has_Phone_Number
+    fromVertexLabel: Person.Organisation
+    toVertexLabel: Object.Phone_Number
+  - label: Has_Phone_Number
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Object.Phone_Number
+  - label: Has_Identity_Card
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Object.Identity_Card
 
