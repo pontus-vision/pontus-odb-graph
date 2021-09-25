@@ -504,6 +504,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Event.Group_Ingestion.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Event.Ingestion",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1189,7 +1194,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Policy.CreateDate",
+      "name": "Object.Data_Policy.Create_Date",
       "dataType": "Date",
       "cardinality": "SINGLE"
     },
@@ -1234,8 +1239,13 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Policy.UpdateDate",
+      "name": "Object.Data_Policy.Update_Date",
       "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Policy.Update_Frequency",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -3521,7 +3531,8 @@
         "Event.Group_Ingestion.Metadata_End_Date",
         "Event.Group_Ingestion.Metadata_Start_Date",
         "Event.Group_Ingestion.Operation",
-        "Event.Group_Ingestion.Type"
+        "Event.Group_Ingestion.Type",
+        "Event.Group_Ingestion.Ingestion_Date"
       ],
       "propertyKeysMappings": {}
     },
@@ -3791,7 +3802,7 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata.Type.Object.Data_Policy",
-        "Object.Data_Policy.CreateDate",
+        "Object.Data_Policy.Create_Date",
         "Object.Data_Policy.Description",
         "Object.Data_Policy.Form_Id",
         "Object.Data_Policy.Form_Owner_Id",
@@ -3800,7 +3811,8 @@
         "Object.Data_Policy.Name",
         "Object.Data_Policy.Retention_Period",
         "Object.Data_Policy.Type",
-        "Object.Data_Policy.UpdateDate"
+        "Object.Data_Policy.Update_Date",
+        "Object.Data_Policy.Update_Frequency"
       ],
       "propertyKeysMappings": {}
     },

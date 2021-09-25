@@ -1,30 +1,15 @@
 package com.pontusvision.gdpr;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.orientechnologies.apache.commons.csv.CSVFormat;
-import com.orientechnologies.apache.commons.csv.CSVRecord;
 import com.pontusvision.ingestion.Ingestion;
 import com.pontusvision.ingestion.IngestionCSVFileRequest;
-import com.pontusvision.ingestion.IngestionJsonObjArrayRequest;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
-import org.eclipse.jetty.server.Server;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -213,6 +198,35 @@ public class AppTest2  extends AppTest{
       String curso3ConnectionsQuery = "App.g.V(\"" + userId6 +"\").bothE().count().next().toString()";
       String curso3Connections = App.executor.eval(curso3ConnectionsQuery).get().toString();
       assertEquals(curso3Connections,"1");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+  @Test
+  public void testSharepointFontesDeDados() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json",  "$.queryResp[*].fields",
+              "sharepoint_fontes_de_dados");
+
+//    test for COUNT(dataSources)
+      String countDataSources =
+              App.executor.eval("g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))\n" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("8", countDataSources);
+
+//    test for COUNT(event Ingestions)
+      String countEventIngestions =
+              App.executor.eval("App.g.V().has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion'))\n" +
+                      ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("7", countEventIngestions);
 
     } catch (ExecutionException e) {
       e.printStackTrace();
