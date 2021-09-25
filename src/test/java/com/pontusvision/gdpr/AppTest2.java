@@ -123,24 +123,28 @@ public class AppTest2  extends AppTest{
 
       csvTestUtil("clientes.csv",  "Cliente_SAP_PosVenda_POLARIS");
 
-
-      String userId =
-              App.executor.eval("App.g.V()\n" +
-                              ".has('Person.Natural.Full_Name', eq('MATEUS SILVA PINTO'))\n" +
-                              ".next()\n" +
-                              ".id()\n" +
-                              ".toString()")
-                      .get().toString();
-
-////      Debugging
-//      System.out.println("***************************************************************************************\n" +
-//              userId);
-
-      String oscarConnectionsQuery = "App.g.V(\"" + userId +"\").bothE().count().next().toString()";
-      String oscarConnections = App.executor.eval(oscarConnectionsQuery)
+//    Testing for Person.Natural WITH Tax_Number
+      String userId0 =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MATEUS SILVA PINTO'))\n" +
+                              ".next().id().toString()").get().toString();
+      String pintoConnectionsQuery = "App.g.V(\"" + userId0 +"\").bothE().count().next().toString()";
+      String pintoConnections = App.executor.eval(pintoConnectionsQuery)
               .get().toString();
+      assertEquals(pintoConnections,"4");
 
-      assertEquals(oscarConnections,"2");
+//    Testing for Person.Natural withOUT Tax_Number
+      String userId1 =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MUNIR HANDAUS'))\n" +
+                      ".next().id().toString()").get().toString();
+//      String munirConnectionsQuery = "App.g.V(\"" + userId1 +"\").bothE().count().next().toString()";
+//      String munirConnections = App.executor.eval(munirConnectionsQuery).get().toString();
+
+     String personNaturalTypes =
+             App.executor.eval("App.g.V().has('Person.Natural.Type', eq('Clientes Sem Tax'))" +
+                     ".count().next().toString()").get().toString();
+     assertEquals(personNaturalTypes, "5");
+
+     System.out.println("*******************************************************\n" + personNaturalTypes);
 
 
     } catch (ExecutionException e) {
