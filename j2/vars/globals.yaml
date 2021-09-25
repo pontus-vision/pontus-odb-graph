@@ -189,6 +189,7 @@ schema:
           dataType: Date
         - name: Operation
         - name: Type
+        - name: Ingestion_Date
 
     - name: "Event.Ingestion"
       partition: false
@@ -391,7 +392,7 @@ schema:
       partition: false
       useStatic: false
       props:
-        - name: CreateDate
+        - name: Create_Date
           dataType: Date
 
         - name: Description
@@ -402,8 +403,9 @@ schema:
         - name: Name
         - name: Retention_Period
         - name: Type
-        - name: UpdateDate
+        - name: Update_Date
           dataType: Date
+        - name: Update_Frequency
 
     - name: "Object.Data_Procedures"
       partition: false

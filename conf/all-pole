@@ -52,6 +52,7 @@ Event.Group_Ingestion.Metadata_End_Date
 Event.Group_Ingestion.Metadata_Start_Date
 Event.Group_Ingestion.Operation
 Event.Group_Ingestion.Type
+Event.Group_Ingestion.Ingestion_Date
 Event.Ingestion.Business_Rules
 Event.Ingestion.Domain_Unstructured_Data_b64
 Event.Ingestion.Domain_b64
@@ -159,7 +160,7 @@ Object.Contract.Status
 Object.Contract.Type
 Object.Credential.Login_SHA256
 Object.Credential.User_Id
-Object.Data_Policy.CreateDate
+Object.Data_Policy.Create_Date
 Object.Data_Policy.Description
 Object.Data_Policy.Form_Id
 Object.Data_Policy.Form_Owner_Id
@@ -168,7 +169,8 @@ Object.Data_Policy.Form_Submission_Owner_Id
 Object.Data_Policy.Name
 Object.Data_Policy.Retention_Period
 Object.Data_Policy.Type
-Object.Data_Policy.UpdateDate
+Object.Data_Policy.Update_Date
+Object.Data_Policy.Update_Frequency
 Object.Data_Procedures.ID
 Object.Data_Procedures.BusinessAreaResponsible
 Object.Data_Procedures.Type
