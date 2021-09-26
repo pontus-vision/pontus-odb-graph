@@ -3,7 +3,7 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "condition": "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}",
+        "condition": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
@@ -11,7 +11,7 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${Tax_Number_1?.trim()?.length() == 11?Tax_Number_1:Tax_Number_2}"
+            "val": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
           },
           {
             "name": "Person.Natural.Type",
@@ -22,11 +22,11 @@
       },
       {
         "label": "Object.Identity_Card",
-        "condition": "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}",
+        "condition": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${Tax_Number_1?.trim()?.length() == 11?Tax_Number_1:Tax_Number_2}",
+            "val": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
@@ -38,11 +38,11 @@
       },
       {
         "label": "Person.Organisation",
-        "condition": "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}",
+        "condition": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14}",
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
-            "val": "${Tax_Number_1?.trim()?.length() == 14?Tax_Number_1:Tax_Number_2}",
+            "val": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
@@ -53,7 +53,7 @@
       },
       {
         "label": "Person.Natural",
-        "condition": "${!(Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11 || Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14) || (Tax_Number_1?.trim()?.matches('.*[a-zA-Z]+.*') || Tax_Number_2?.trim()?.matches('.*[a-zA-Z]+.*'))}",
+        "condition": "${!(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14)}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",

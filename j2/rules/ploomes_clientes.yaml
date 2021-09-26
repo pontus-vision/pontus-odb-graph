@@ -3,30 +3,31 @@ updatereq:
   vertices:
     
     - label: Person.Natural
-      condition: ${TypeId == 2}
+      condition: ${TypeId == 2 && Name != null}
       props:
         - name: Person.Natural.Full_Name
           val: ${Name?.trim()?.toUpperCase()}
-        - name: Person.Natural.Full_Name_fuzzy
-          val: ${Name?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Natural.Customer_ID
           val: ${CPF}
+          mandatoryInSearch: True
         - name: Person.Natural.Type
           val: Clientes
           excludeFromSearch: True
     
     - label: Person.Organisation
-      condition: ${TypeId == 1 && CNPJ != null}
+      condition: ${TypeId == 1 && CNPJ != null && Name != null}
       props:
         - name: Person.Organisation.Registration_Number
           val: ${CNPJ}
           mandatoryInSearch: True
         - name: Person.Organisation.Name
-          val: ${LegalName}
+          val: ${(LegalName?.trim()?.length() > 0)?LegalName?.trim().toUpperCase():Name?.trim().toUpperCase() }
         - name: Person.Organisation.Short_Name
           val: ${Name}
         - name: Person.Organisation.Id
           val: ${CNPJ}
+          mandatoryInSearch: True
         - name: Person.Organisation.Email
           val: ${Email}
     
@@ -54,6 +55,10 @@ updatereq:
         - name: Location.Address.Type
           val: Business
           excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
     
     - label: Event.Ingestion
       props:
