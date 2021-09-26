@@ -1,0 +1,182 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object.Data_Source",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "sharepoint/mapeamento-de-processos"
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "sharepoint/mapeamento-de-processos"
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Mapeamento de Processo LGPD"
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Policy",
+        "props": [
+          {
+            "name": "Object.Data_Policy.Type",
+            "val": "${Title}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Policy.Retention_Period",
+            "val": "${Per_x00ed_odo_x0020_de_x0020_ret}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Procedures",
+        "props": [
+          {
+            "name": "Object.Data_Procedures.Type",
+            "val": "${Acesso_x002c__x0020_Transfer_x00}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Procedures.Type_Of_Natural_Person",
+            "val": "${Categoria_x0020_dos_x0020_titula}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Procedures.BusinessAreaResponsible",
+            "val": "${_x00c1_rea - Respons_x00e1_velLookupId}"
+          },
+          {
+            "name": "Object.Data_Procedures.MacroProcessName",
+            "val": "${Processo}"
+          },
+          {
+            "name": "Object.Data_Procedures.Country_Where_Stored",
+            "val": "${Pa_x00ed_s_x0020_onde_x0020_as_x}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Procedures.Why_Is_It_Collected",
+            "val": "${Finalidade_x0020_do_x0020_proces}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Procedures.Info_Collected",
+            "val": "${Base_x0020_legal}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Procedures.Description",
+            "val": "${Fluxo_x0020_interno_x0020_dos_x0}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Sensitive_Data",
+        "props": [
+          {
+            "name": "Object.Sensitive_Data.Description",
+            "val": "${Dados_x0020_pessoais_x0020_utili}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Ingestion",
+        "props": [
+          {
+            "name": "Event.Ingestion.Type",
+            "val": "sharepoint/mapeamento-de-processo",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Create_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Update_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Ingestion",
+        "props": [
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Type",
+            "val": "sharepoint/mapeamento-de-processo",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Sensitive_Data",
+        "fromVertexLabel": "Object.Data_Procedures",
+        "toVertexLabel": "Object.Sensitive_Data"
+      },
+      {
+        "label": "Policy",
+        "fromVertexLabel": "Object.Data_Procedures",
+        "toVertexLabel": "Object.Data_Policy"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Ingestion",
+        "toVertexLabel": "Object.Data_Procedures"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Group_Ingestion",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object.Data_Source",
+        "toVertexLabel": "Event.Group_Ingestion"
+      }
+    ]
+  }
+}

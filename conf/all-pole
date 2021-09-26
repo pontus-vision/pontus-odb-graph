@@ -374,6 +374,7 @@ Object.Sensitive_Data.Political_View
 Object.Sensitive_Data.Religion
 Object.Sensitive_Data.Sexual_Orientation
 Object.Sensitive_Data.Union_Membership
+Object.Sensitive_Data.Description
 Person.Employee.Date_Of_Birth
 Person.Employee.Ethnicity
 Person.Employee.Full_Name

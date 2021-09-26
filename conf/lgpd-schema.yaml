@@ -1519,6 +1519,9 @@ propertyKeys:
   - name: Object.Sensitive_Data.Union_Membership
     dataType: String
     cardinality: SINGLE
+  - name: Object.Sensitive_Data.Description
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Person.Employee
     dataType: String
     cardinality: SINGLE
@@ -2127,6 +2130,30 @@ edgeLabels:
     unidirected: False
 
   - name: Is_Dependant
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Identity_Card
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Phone_Number
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Policy
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Sensitive_Data
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Completed_By
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Course_Training
     multiplicity: MULTI
     unidirected: False
 vertexIndexes:
@@ -2990,6 +3017,7 @@ vertexIndexes:
       - Object.Sensitive_Data.Religion
       - Object.Sensitive_Data.Sexual_Orientation
       - Object.Sensitive_Data.Union_Membership
+      - Object.Sensitive_Data.Description
     propertyKeysMappings:
     
       {}

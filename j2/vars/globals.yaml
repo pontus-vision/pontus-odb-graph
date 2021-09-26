@@ -727,6 +727,7 @@ schema:
         - name: Religion
         - name: Sexual_Orientation
         - name: Union_Membership
+        - name: Description
 
     - name: "Person.Employee"
       partition: false
@@ -965,6 +966,12 @@ schema:
   - name: Works
   - name: Is_Family
   - name: Is_Dependant
+  - name: Has_Identity_Card  # created for sap/polaris
+  - name: Has_Phone_Number  # created for sap/polaris
+  - name: Policy  # created for sharepoint-fonte-de-dados/ sharepoint-mapeamento-de-processo
+  - name: Sensitive_Data  # created for sharepoint-fonte-de-dados/ sharepoint-mapeamento-de-processo
+  - name: Completed_By  # created for sharepoint-treinamentos
+  - name: Course_Training  # created for sharepoint-treinamentos
 
 
 

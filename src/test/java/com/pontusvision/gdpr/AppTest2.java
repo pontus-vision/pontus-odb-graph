@@ -220,6 +220,41 @@ public class AppTest2  extends AppTest{
   }
 
   @Test
+  public void testSharepointMapeamentoDeProcesso() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",  "$.queryResp[*].fields",
+              "sharepoint_mapeamentos");
+
+//    test for COUNT(dataSources)
+      String countDataProcedures =
+              App.executor.eval("App.g.V().has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))\n" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("6", countDataProcedures);
+
+//    test for COUNT(event Ingestions)
+      String countEventIngestions =
+              App.executor.eval("App.g.V().has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion'))\n" +
+                      ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("6", countEventIngestions);
+
+      String countObjectDataPolicy =
+              App.executor.eval("App.g.V().has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
+                      ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("6", countObjectDataPolicy);
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+  @Test
   public void testTotvsPloomes() throws InterruptedException {
     try {
 
@@ -277,7 +312,6 @@ public class AppTest2  extends AppTest{
 
 
   }
-
 
   @Test
   public void testSQL() {

@@ -2454,6 +2454,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Sensitive_Data.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Person.Employee",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -3361,6 +3366,36 @@
       "name": "Is_Dependant",
       "multiplicity": "MULTI",
       "unidirected": false
+    },
+    {
+      "name": "Has_Identity_Card",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Phone_Number",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Policy",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Sensitive_Data",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Completed_By",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Course_Training",
+      "multiplicity": "MULTI",
+      "unidirected": false
     }
   ],
   "vertexIndexes": [
@@ -4224,7 +4259,8 @@
         "Object.Sensitive_Data.Political_View",
         "Object.Sensitive_Data.Religion",
         "Object.Sensitive_Data.Sexual_Orientation",
-        "Object.Sensitive_Data.Union_Membership"
+        "Object.Sensitive_Data.Union_Membership",
+        "Object.Sensitive_Data.Description"
       ],
       "propertyKeysMappings": {}
     },
