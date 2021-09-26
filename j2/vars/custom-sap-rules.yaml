@@ -4,70 +4,47 @@ rules:
   Cliente_SAP_PosVenda_POLARIS:
     vertices:
       - label: Person.Natural
-        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}" #--for CPF
+        condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}" #--for CPF
         #        condition: "${Title != 'Company'}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
           #          Full_Name_fuzzy: "${Name_1?.toUpperCase()?.trim()}"
 
-          Customer_ID: "${Tax_Number_1?.trim()?.length() == 11?Tax_Number_1:Tax_Number_2}"
+          Customer_ID: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
           #          id: "${Customer}"
           Type:
             val: "Clientes"
             excludeFromSearch: true
 
       - label: Object.Identity_Card
-        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}"
+        condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}"
         props:
           Id_Value:
-            val: "${Tax_Number_1?.trim()?.length() == 11?Tax_Number_1:Tax_Number_2}"
+            val: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
 
-      #      - label: Object.Identity_Card
-      #        condition: "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}"
-      #        props:
-      #          Id_Value:
-      #            val: "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}"
-      #            mandatoryInSearch: true
-      #          Id_Type:
-      #            val: "CNPJ"
-      #            excludeFromSearch: true
 
       - label: Person.Organisation
-        #        condition: "${Tax_Number_1.length() == 14}" --for CNPJ
-        condition: "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}"
+        condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14}"
         props:
-          #          id: "${Customer}"
           Registration_Number:
-            val: "${Tax_Number_1?.trim()?.length() == 14?Tax_Number_1:Tax_Number_2}"
+            val: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Name: "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
-      #          Short_Name: "${Name_1?.trim()?.toUpperCase()}"
-      #          Tax_Id:
-      #            val: "${Tax_Number_2}"
-      #            mandatoryInSearch: true
 
-      #     For FOREIGN Persons
+      #  For Clientes Sem Tax
       - label: Person.Natural
-        condition: "${!(Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11 ||
-        Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14) ||
-        (Tax_Number_1?.trim()?.matches('.*[a-zA-Z]+.*') || Tax_Number_2?.trim()?.matches('.*[a-zA-Z]+.*'))}"
+        condition: "${!(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14)}"
+     # NOT needed; existem entradas c/ISENTO (Tax_Number_1?.trim()?.matches('.*[a-zA-Z]+.*') || Tax_Number_2?.trim()?.matches('.*[a-zA-Z]+.*'))}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
-          #          Full_Name_fuzzy: "${Name_1?.toUpperCase()?.trim()}"
-
-          #          Customer_ID: "${Tax_Number_1}"
           Customer_ID: "${Customer}"
           Type:
             val: "Clientes Sem Tax"
             excludeFromSearch: true
-
-      #         Ethnicity:
-      #         Nationality:
-
 
       - label: Object.Phone_Number
         name: phone
@@ -216,38 +193,35 @@ rules:
   Fornecedor_SAP_PosVenda_POLARIS:
     vertices:
       - label: Person.Natural
-        condition: "${(Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11) && Tax_Number_2?.trim()?.matches('.*[a-zA-Z]+.*')}"
-        #        condition: "${Title != 'Company'}"
+        condition: "${(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11)}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
-          Customer_ID: "${Tax_Number_1?.trim()?.length() == 11?Tax_Number_1:Tax_Number_2}"
+          Customer_ID: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
           Type:
             val: "Fornecedores"
             excludeFromSearch: true
 
       - label: Object.Identity_Card
-        condition: "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}"
+        condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}"
         props:
           Id_Value:
-            val: "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}"
+            val: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]',''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
 
       - label: Person.Organisation
-        condition: "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}"
+        condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14}"
         props:
           Registration_Number:
-            val: "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}"
+            val: "${Tax_Number_1?.replaceAll('[^0-9]', '') || Tax_Number_2?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Name: "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
 
       #     For FOREIGN Persons
       - label: Person.Natural
-        condition: "${!(Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11 ||
-        Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14) ||
-        (Tax_Number_1?.trim()?.matches('.*[a-zA-Z]+.*') || Tax_Number_2?.trim()?.matches('.*[a-zA-Z]+.*'))}"
+        condition: "${!(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14)}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
           Customer_ID: "${Vendor}"

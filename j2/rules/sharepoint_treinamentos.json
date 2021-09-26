@@ -73,8 +73,8 @@
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
@@ -85,12 +85,17 @@
           {
             "name": "Event.Group_Ingestion.Type",
             "val": "sharepoint/treinamentos",
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Operation",
             "val": "Structured Data Insertion",
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -99,15 +104,18 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sharepoint/treinamentos"
+            "val": "sharepoint/treinamentos",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sharepoint/treinamentos"
+            "val": "sharepoint/treinamentos",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Treinamentos LGPD Colaboradores"
+            "val": "Registros de Treinamentos LGPD Colaboradores",
+            "mandatoryInSearch": true
           }
         ]
       }
