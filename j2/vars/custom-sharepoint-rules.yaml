@@ -157,8 +157,7 @@ rules:
         props:
           Metadata_Start_Date:
             val: "${new Date()}"
-            mandatoryInSearch: true
-            excludeFromSearch: false
+            excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
             val: "${new Date()}"
@@ -166,16 +165,26 @@ rules:
             type: java.util.Date
           Type:
             val: sharepoint/treinamentos
-            excludeFromSearch: true
+            mandatoryInSearch: true
           Operation:
             val: Structured Data Insertion
-            excludeFromSearch: true
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
+
 
       - label: Object.Data_Source
         props:
-          Name: sharepoint/treinamentos
-          Type: sharepoint/treinamentos
-          Description: Registros de Treinamentos LGPD Colaboradores
+          Name:
+            val: sharepoint/treinamentos
+            mandatoryInSearch: true
+          Type:
+            val: sharepoint/treinamentos
+            mandatoryInSearch: true
+          Description:
+            val: Registros de Treinamentos LGPD Colaboradores
+            mandatoryInSearch: true
 
     edges:
       - label: "Course_Training"

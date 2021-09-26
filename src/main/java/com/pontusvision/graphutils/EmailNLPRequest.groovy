@@ -244,7 +244,7 @@ class EmailNLPRequest {
 
   static Vertex createEventEmailMessageGroupVtx(UpdateReq updateReq) {
 
-    final String vtxLabel = 'Event.Email_Message_Group'
+    final String vtxLabel = 'Event.Email_Msg_Group'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
     vtx.name = vtxLabel
