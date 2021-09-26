@@ -17,6 +17,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.File;
 import java.io.FileReader;
@@ -34,6 +36,8 @@ import static org.junit.Assert.assertNull;
 /**
  * Unit test for simple App.
  */
+@TestMethodOrder(MethodOrderer.MethodName.class)
+
 public class AppTest2  extends AppTest{
   /**
    * Create the test case

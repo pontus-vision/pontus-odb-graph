@@ -160,14 +160,14 @@ propertyKeys:
   - name: Event.Form_Ingestion.Type
     dataType: String
     cardinality: SINGLE
-  - name: Metadata.Type.Event.Email_Message_Group
+  - name: Metadata.Type.Event.Email_Msg_Group
     dataType: String
     cardinality: SINGLE
 
-  - name: Event.Email_Message_Group.Type
+  - name: Event.Email_Msg_Group.Type
     dataType: String
     cardinality: SINGLE
-  - name: Event.Email_Message_Group.Ingestion_Date
+  - name: Event.Email_Msg_Group.Ingestion_Date
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Event.Email_To_Group
@@ -911,35 +911,35 @@ propertyKeys:
   - name: Object.Data_Source.Update_Date
     dataType: Date
     cardinality: SINGLE
-  - name: Metadata.Type.Object.Data_Source_Mapping_Rule
+  - name: Metadata.Type.Object.Data_Src_Mapping_Rule
     dataType: String
     cardinality: SINGLE
 
-  - name: Object.Data_Source_Mapping_Rule.Type
+  - name: Object.Data_Src_Mapping_Rule.Type
     dataType: String
     cardinality: SINGLE
-  - name: Object.Data_Source_Mapping_Rule.Business_Rules_JSON
+  - name: Object.Data_Src_Mapping_Rule.Business_Rules_JSON
     dataType: String
     cardinality: SINGLE
-  - name: Object.Data_Source_Mapping_Rule.Create_Date
+  - name: Object.Data_Src_Mapping_Rule.Create_Date
     dataType: Date
     cardinality: SINGLE
-  - name: Object.Data_Source_Mapping_Rule.Form_Id
+  - name: Object.Data_Src_Mapping_Rule.Form_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object.Data_Source_Mapping_Rule.Form_Owner_Id
+  - name: Object.Data_Src_Mapping_Rule.Form_Owner_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object.Data_Source_Mapping_Rule.Form_Submission_Id
+  - name: Object.Data_Src_Mapping_Rule.Form_Submission_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object.Data_Source_Mapping_Rule.Form_Submission_Owner_Id
+  - name: Object.Data_Src_Mapping_Rule.Form_Submission_Owner_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object.Data_Source_Mapping_Rule.Name
+  - name: Object.Data_Src_Mapping_Rule.Name
     dataType: String
     cardinality: SINGLE
-  - name: Object.Data_Source_Mapping_Rule.Update_Date
+  - name: Object.Data_Src_Mapping_Rule.Update_Date
     dataType: Date
     cardinality: SINGLE
   - name: Metadata.Type.Object.Email_Address
@@ -1746,7 +1746,7 @@ vertexLabels:
   - name: Event.Form_Ingestion
     partition: False
     useStatic: False
-  - name: Event.Email_Message_Group
+  - name: Event.Email_Msg_Group
     partition: False
     useStatic: False
   - name: Event.Email_To_Group
@@ -1821,7 +1821,7 @@ vertexLabels:
   - name: Object.Data_Source
     partition: False
     useStatic: False
-  - name: Object.Data_Source_Mapping_Rule
+  - name: Object.Data_Src_Mapping_Rule
     partition: False
     useStatic: False
   - name: Object.Email_Address
@@ -2182,14 +2182,14 @@ vertexIndexes:
     
       {}
     
-  - name: "Event.Email_Message_Group.MixedIdx"
+  - name: "Event.Email_Msg_Group.MixedIdx"
     composite: false
     unique: false
     indexOnly: null
     mixedIndex: "search"
     propertyKeys:
-      - Metadata.Type.Event.Email_Message_Group
-      - Event.Email_Message_Group.Ingestion_Date
+      - Metadata.Type.Event.Email_Msg_Group
+      - Event.Email_Msg_Group.Ingestion_Date
     propertyKeysMappings:
     
       {}
@@ -2644,21 +2644,21 @@ vertexIndexes:
     
       {}
     
-  - name: "Object.Data_Source_Mapping_Rule.MixedIdx"
+  - name: "Object.Data_Src_Mapping_Rule.MixedIdx"
     composite: false
     unique: false
     indexOnly: null
     mixedIndex: "search"
     propertyKeys:
-      - Metadata.Type.Object.Data_Source_Mapping_Rule
-      - Object.Data_Source_Mapping_Rule.Business_Rules_JSON
-      - Object.Data_Source_Mapping_Rule.Create_Date
-      - Object.Data_Source_Mapping_Rule.Form_Id
-      - Object.Data_Source_Mapping_Rule.Form_Owner_Id
-      - Object.Data_Source_Mapping_Rule.Form_Submission_Id
-      - Object.Data_Source_Mapping_Rule.Form_Submission_Owner_Id
-      - Object.Data_Source_Mapping_Rule.Name
-      - Object.Data_Source_Mapping_Rule.Update_Date
+      - Metadata.Type.Object.Data_Src_Mapping_Rule
+      - Object.Data_Src_Mapping_Rule.Business_Rules_JSON
+      - Object.Data_Src_Mapping_Rule.Create_Date
+      - Object.Data_Src_Mapping_Rule.Form_Id
+      - Object.Data_Src_Mapping_Rule.Form_Owner_Id
+      - Object.Data_Src_Mapping_Rule.Form_Submission_Id
+      - Object.Data_Src_Mapping_Rule.Form_Submission_Owner_Id
+      - Object.Data_Src_Mapping_Rule.Name
+      - Object.Data_Src_Mapping_Rule.Update_Date
     propertyKeysMappings:
     
       {}
