@@ -8,11 +8,14 @@ import com.pontusvision.gdpr.mapping.UpdateReq
 import com.pontusvision.gdpr.mapping.Vertex
 import com.pontusvision.gdpr.mapping.VertexProps
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
+import org.apache.tinkerpop.gremlin.process.traversal.P
+import org.apache.tinkerpop.gremlin.process.traversal.Traversal
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Transaction
 
 import java.text.SimpleDateFormat
-
 
 class EmailNLPRequest {
   String metadataController
@@ -119,62 +122,18 @@ class EmailNLPRequest {
     return vtx
   }
 
-  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequest(
+  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequestArray(
           OrientStandardGraph graph,
           GraphTraversalSource g,
-          EmailNLPRequest req) {
-    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName = [:]
+          EmailNLPRequest[] reqs) {
     Transaction trans = App.graph.tx()
     try {
       if (!trans.isOpen()) {
         trans.open()
       }
-
-
-      UpdateReq updateReq = new UpdateReq()
-
-      updateReq.vertices = []
-      updateReq.edges = []
-
-      Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq)
-      Vertex eventEmailMessageGroupVtx = createEventEmailMessageGroupVtx(updateReq)
-
-      createEdge('Has_Ingestion', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
-
-      Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
-      createEdge('Has_Ingestion', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
-
-      createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_To_Group', 'Email_To', req.toEmailAddresses)
-      createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_From_Group', 'Email_From', req.toEmailAddresses)
-      createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_CC_Group', 'Email_CC', req.toEmailAddresses)
-      createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_BCC_Group', 'Email_BCC', req.toEmailAddresses)
-
-      Vertex emailBodyOrAttachmentVtx = createObjectEmailMessageBodyOrAttachmentVtx(req, updateReq)
-
-      createEdge(req.attachmentId ? 'Email_Attachment' : 'Email_Body', eventEmailVtx.name, emailBodyOrAttachmentVtx.name, updateReq)
-
-      StringBuffer sb = new StringBuffer()
-      Double pcntThreshold = 1.0
-      Map<String, String> item = getMapFromEmailNLPRequest(req)
-      def (
-      List<MatchReq>            matchReqs,
-      Map<String, AtomicDouble> maxScoresByVertexName,
-      Map<String, Double>       percentageThresholdByVertexName
-      ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
-
-      def (
-      Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexNameLocal,
-      Map<String, List<MatchReq>>          matchReqByVertexName
-      ) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
-
-      vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
-
-      def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
-      Matcher.parseEdges(updateReq)
-
-      processUpdateReq(g,vertexScoreMapByVertexName,matchReqByVertexName,maxScoresByVertexName,
-              percentageThresholdByVertexName,edgeReqsByVertexName, edgeReqs)
-
+      for (EmailNLPRequest req: reqs){
+        upsertEmailNLPRequest(graph,g,req);
+      }
       trans.commit()
     } catch (Throwable t) {
       trans.rollback()
@@ -182,6 +141,63 @@ class EmailNLPRequest {
     } finally {
       trans.close()
     }
+  }
+
+
+  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequest(
+          OrientStandardGraph graph,
+          GraphTraversalSource g,
+          EmailNLPRequest req) {
+    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName
+
+    UpdateReq updateReq = new UpdateReq()
+    updateReq.vertices = []
+    updateReq.edges = []
+
+    Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq)
+    Vertex eventEmailMessageGroupVtx = createEventEmailMessageGroupVtx(updateReq)
+
+    createEdge('Has_Ingestion', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
+
+    Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
+    createEdge('Has_Ingestion', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
+
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_To_Group', 'Email_To', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_From_Group', 'Email_From', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_CC_Group', 'Email_CC', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_BCC_Group', 'Email_BCC', req.toEmailAddresses)
+
+    Vertex emailBodyOrAttachmentVtx = createObjectEmailMessageBodyOrAttachmentVtx(req, updateReq)
+
+    createEdge(req.attachmentId ? 'Email_Attachment' : 'Email_Body', eventEmailVtx.name, emailBodyOrAttachmentVtx.name, updateReq)
+
+
+    StringBuffer sb = new StringBuffer()
+    Double pcntThreshold = 1.0
+    Map<String, String> item = getMapFromEmailNLPRequest(req)
+    def (
+    List<MatchReq>            matchReqs,
+    Map<String, AtomicDouble> maxScoresByVertexName,
+    Map<String, Double>       percentageThresholdByVertexName
+    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
+
+    def (
+    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexNameLocal,
+    Map<String, List<MatchReq>>          matchReqByVertexName
+    ) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
+
+    vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
+
+    def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
+    Matcher.parseEdges(updateReq)
+
+    processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
+            percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
+
+    vertexScoreMapByVertexNameLocal.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
+      createEventNLPGroups(req, it.key)
+    })
+
 
     return vertexScoreMapByVertexName
   }
@@ -197,7 +213,7 @@ class EmailNLPRequest {
 
   ) {
 
-    Map<String,Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap()
+    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap()
 
     vertexScoreMapByVertexName.each { String vertexTypeStr, Map<ORID, AtomicDouble> potentialHitIDs ->
 
@@ -221,15 +237,7 @@ class EmailNLPRequest {
         finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
 
         if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
-
-//        json rootKey: matchReqByVertexName
-
-//        String bizRule = JsonOutput.prettyPrint(json.toString())
           String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
-
-          sb.append("\n\n\n ADDING Event.Ingestion.Business_Rules: ${bizRule}\n\n")
-
-
           g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
         }
 
@@ -296,6 +304,71 @@ class EmailNLPRequest {
 
     return emailVtx
 
+  }
+
+  static List<ORID> createEventNLPGroups(EmailNLPRequest req, ORID emailBodyOrAttachment,
+                                         minThreshold = 1, Integer maxThreshold = 100) {
+
+    String[] person = req.person
+
+    Traversal[] personOptions = new Traversal[person.length]
+    for (int i = 0; i < person.length; i++) {
+      personOptions[i] = __.has('Person.Natural.Full_Name', PText.textContains(person[i]))
+    }
+
+    String[] cpfs = req.cpf
+    Traversal[] cpfOptions = new Traversal[cpfs.length]
+    for (int i = 0; i < cpfs.length; i++) {
+      cpfOptions[i] = __.has('Person.Natural.Customer_Id', P.eq(cpfs[i]))
+    }
+
+
+    String[] emailAddrs = [req.email, req.toEmailAddresses,
+                           req.fromEmailAddresses, req.ccEmailAddresses, req.bccEmailAddresses].flatten()
+    Traversal[] emailOptions = new Traversal[emailAddrs.length]
+    for (int i = 0; i < emailAddrs.length; i++) {
+      emailOptions[i] = __.has('Object.Email_Address.Email', PText.textContains(emailAddrs[i]))
+    }
+    Traversal[] personNameCpfOptions = [personOptions, cpfOptions].flatten().toArray(new Traversal[0])
+
+    def persons = (App.g.V().or(personNameCpfOptions))
+
+    GraphTraversal personsClone = persons.clone() as GraphTraversal
+
+    def emails = App.g.V().or(emailOptions)
+
+    def retVal = persons.hasId(P.within(emails.in('Uses_Email').id().toList())).id().toSet() as Set<ORID>
+
+    if (retVal.size() <= minThreshold) {
+      retVal = personsClone.id().toSet() as Set<ORID>
+    }
+    String currDate = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
+
+    int count = 0
+    for (ORID orid : retVal) {
+
+      String custId = App.g.V(orid).properties('Person.Natural.Customer_Id').next().toString()
+      def nlpGroupTrav =
+              App.g.V().has('Event.NLP_Group.Person_Id', custId)
+                      .has('Event.NLP_Group.Ingestion_Date', currDate)
+
+      def nlpGroupVtxId
+      if (nlpGroupTrav.hasNext()) {
+        nlpGroupVtxId = nlpGroupTrav.id().next()
+      } else {
+        nlpGroupVtxId = App.g.addV('Event.NLP_Group')
+                .property('Event.NLP_Group.Person_Id', custId)
+                .property('Event.NLP_Group.Ingestion_Date', currDate).id().next()
+      }
+
+      App.g.addE('Has_NLP_Events').from(App.g.V(emailBodyOrAttachment)).to(App.g.V(nlpGroupVtxId))
+      App.g.addE('Has_NLP_Events').from(App.g.V(nlpGroupVtxId)).to(App.g.V(orid))
+      count++
+      if (count >= maxThreshold) {
+        break
+      }
+    }
+    return retVal
   }
 
   static Vertex createEventEmailMessageVtx(EmailNLPRequest req, UpdateReq updateReq) {
@@ -367,26 +440,8 @@ class EmailNLPRequest {
 
   }
 
-  static Vertex createPersonNLPVertexProp(String name, String[] val, Vertex vtx,
-                                          String postProcessor = '${it?.toUpperCase()?.trim()}') {
 
-    if (!val) {
-      return vtx
-    }
-    VertexProps props = new VertexProps()
-    props.name = name
-    props.mandatoryInSearch = true
-    props.val = val.toArrayString()
-    props.type = VertexProps.TypeEnum._LJAVA_LANG_STRING_
-    props.excludeFromUpdate = true
-    props.postProcessor=postProcessor
-    props.predicate = "idx:"
-    vtx.props.push(props)
-
-    return vtx
-  }
-
-    static Vertex createEmailNLPVertexProp(String name, String[] val, Vertex vtx) {
+  static Vertex createEmailNLPVertexProp(String name, String[] val, Vertex vtx) {
     if (!val) {
       return vtx
     }
@@ -403,8 +458,12 @@ class EmailNLPRequest {
     return vtx
   }
 
+  static String getObjectEmailBodyOrAttachmentVtxLabel(EmailNLPRequest req) {
+    return req.attachmentId ? 'Object.Email_Message_Attachment' : 'Object.Email_Message_Body'
+  }
+
   static Vertex createObjectEmailMessageBodyOrAttachmentVtx(EmailNLPRequest req, UpdateReq updateReq) {
-    String emailVtxLabel = req.attachmentId ? 'Object.Email_Message_Attachment' : 'Object.Email_Message_Body'
+    String emailVtxLabel = getObjectEmailBodyOrAttachmentVtxLabel(req)
     Vertex emailVtx = new Vertex()
     emailVtx.props = []
 
