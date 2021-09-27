@@ -106,7 +106,7 @@ schema:
         - name: Operation
         - name: Type
 
-    - name: "Event.Email_Message_Group"
+    - name: "Event.Email_Msg_Group"
       partition: false
       useStatic: false
       props:
@@ -461,7 +461,7 @@ schema:
           dataType: Date
 
 
-    - name: "Object.Data_Source_Mapping_Rule"
+    - name: "Object.Data_Src_Mapping_Rule"
       partition: false
       useStatic: false
       props:

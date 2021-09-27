@@ -16,15 +16,15 @@
                 "preserve_original": true,
                 "generate_word_parts": false,
                 "generate_number_parts": false
-              }
-            },
-            "analyzer": {
-              "pg_word_delimiter": {
-                "filter": [
-                  "lowercase",
-                  "pg_word_delimiter_filter"
-                ],
-                "tokenizer": "whitespace"
+              },
+              "analyzer": {
+                "pg_word_delimiter": {
+                  "filter": [
+                    "lowercase",
+                    "pg_word_delimiter_filter"
+                  ],
+                  "tokenizer": "whitespace"
+                }
               }
             }
           }
@@ -74,53 +74,73 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Controller",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Create_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.GDPR_Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Lineage",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Lineage_Location_Tag",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Lineage_Server_Tag",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Orig_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Processor",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Redaction",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Consent",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Consent.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Event.Consent.Date",
       "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Event.Transaction.Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Event.Transaction.Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Event.Transaction.Value",
-      "dataType": "Double",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Event.Transaction.Currency",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Event.Transaction.Status",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Event.Transaction.Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Event.Consent.Metadata.Create_Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Event.Consent.Metadata.Update_Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Event.Consent.Status",
-      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -140,6 +160,31 @@
     },
     {
       "name": "Event.Consent.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Consent.Metadata.Create_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Consent.Metadata.Update_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Consent.Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Data_Breach",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Data_Breach.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -179,13 +224,23 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Event.Form_Ingestion",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Form_Ingestion.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Event.Form_Ingestion.Domain_b64",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
       "name": "Event.Form_Ingestion.Metadata_Create_Date",
-      "dataType": "String",
+      "dataType": "Date",
       "cardinality": "SINGLE"
     },
     {
@@ -204,18 +259,228 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.Ingestion.Domain_Unstructured_Data_b64",
+      "name": "Metadata.Type.Event.Email_Msg_Group",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.Ingestion.Domain_b64",
+      "name": "Event.Email_Msg_Group.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.Ingestion.Business_Rules",
+      "name": "Event.Email_Msg_Group.Ingestion_Date",
       "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_To_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_To_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_To_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_To_Group.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_From_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_From_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_From_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_From_Group.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_CC_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_CC_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_CC_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_CC_Group.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_BCC_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_BCC_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_BCC_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_BCC_Group.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.NLP_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.NLP_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.NLP_Group.Ingestion_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.NLP_Group.PersonId",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Email_Message",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Business_Rules",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Domain_Unstructured_Data_b64",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Domain_b64",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Metadata_Create_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Metadata_GUID",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Operation",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Email_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Created_Date_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Sent_Date_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Received_Date_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Categories",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Subject",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.Folder_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Email_Message.User_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Group_Ingestion",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Group_Ingestion.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Group_Ingestion.Has_Controller",
+      "dataType": "Boolean",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Group_Ingestion.Has_Data_Owner",
+      "dataType": "Boolean",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Group_Ingestion.Has_Processor",
+      "dataType": "Boolean",
       "cardinality": "SINGLE"
     },
     {
@@ -239,18 +504,33 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.Group_Ingestion.Has_Controller",
-      "dataType": "Boolean",
+      "name": "Event.Group_Ingestion.Ingestion_Date",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.Group_Ingestion.Has_Processor",
-      "dataType": "Boolean",
+      "name": "Metadata.Type.Event.Ingestion",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.Group_Ingestion.Has_Data_Owner",
-      "dataType": "Boolean",
+      "name": "Event.Ingestion.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Ingestion.Business_Rules",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Ingestion.Domain_Unstructured_Data_b64",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Ingestion.Domain_b64",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -270,6 +550,16 @@
     },
     {
       "name": "Event.Ingestion.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Event.Subject_Access_Request",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Subject_Access_Request.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -294,27 +584,72 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Event.Training",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Training.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Event.Training.Status",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Location.Address.City",
+      "name": "Metadata.Type.Event.Transaction",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Location.Address.Full_Address",
+      "name": "Event.Transaction.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Location.Address.Neighborhood",
+      "name": "Event.Transaction.Currency",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Transaction.Value",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Location.Address",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
       "name": "Location.Address.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Location.Address.City",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -325,6 +660,16 @@
     },
     {
       "name": "Location.Address.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Location.Address.Full_Address",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Location.Address.Neighborhood",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -340,6 +685,11 @@
     },
     {
       "name": "Location.Address.Street",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Location.Address.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -444,278 +794,13 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Metadata.Controller",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Create_Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.GDPR_Status",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Lineage",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Lineage_Location_Tag",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Lineage_Server_Tag",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Orig_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Processor",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Redaction",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Status",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Sensitive_Data",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Health",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Salary",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Salary.Value",
-      "dataType": "Double",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Salary.Currency",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Salary.Period",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Biometric",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Genetic",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Event.Consent",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Event.Transaction",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Event.Data_Breach",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Event.Form_Ingestion",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Event.Ingestion",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Event.Group_Ingestion",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Event.Subject_Access_Request",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Event.Training",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Location.Address",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
       "name": "Metadata.Type.Object.AWS_Instance",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Metadata.Type.Object.AWS_Network_Interface",
+      "name": "Object.AWS_Instance.Type",
       "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.AWS_Security_Group",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.AWS_VPC",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Awareness_Campaign",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Application",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Credential",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Data_Procedures",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Data_Source",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Metadata_Source",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Email_Address",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Data_Policy",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Phone_Number",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Form",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Identity_Card",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Insurance_Policy",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Lawful_Basis",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Contract",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Notification_Templates",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Privacy_Impact_Assessment",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Object.Privacy_Notice",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Person.Identity",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Person.Natural",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Person.Employee",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Type.Person.Organisation",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Update_Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Metadata.Version",
-      "dataType": "Integer",
       "cardinality": "SINGLE"
     },
     {
@@ -725,7 +810,7 @@
     },
     {
       "name": "Object.AWS_Instance.EnaSupport",
-      "dataType": "Boolean",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -784,6 +869,16 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.AWS_Network_Interface",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.AWS_Network_Interface.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.AWS_Network_Interface.AttachTime",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -814,6 +909,16 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.AWS_Security_Group",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.AWS_Security_Group.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.AWS_Security_Group.GroupName",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -834,7 +939,27 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.AWS_VPC",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.AWS_VPC.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.AWS_VPC.Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Application",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Application.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -864,6 +989,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Application.Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Application.Start_Date",
       "dataType": "Date",
       "cardinality": "SINGLE"
@@ -879,7 +1009,12 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Application.Name",
+      "name": "Metadata.Type.Object.Awareness_Campaign",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Awareness_Campaign.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -924,6 +1059,121 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Biometric",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Eye_Colour",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Facial_Picture",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Fingerprints",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Height_cm",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Retinal_scans",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Biometric.Weight_kg",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Contract",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Expiry",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Link",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Contract.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Credential",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Credential.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Credential.Login_SHA256",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -934,12 +1184,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Procedures.Delete_Mechanism",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Policy.Name",
+      "name": "Metadata.Type.Object.Data_Policy",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -949,22 +1194,12 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Policy.CreateDate",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Policy.UpdateDate",
-      "dataType": "String",
+      "name": "Object.Data_Policy.Create_Date",
+      "dataType": "Date",
       "cardinality": "SINGLE"
     },
     {
       "name": "Object.Data_Policy.Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Policy.Retention_Period",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -985,6 +1220,786 @@
     },
     {
       "name": "Object.Data_Policy.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Policy.Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Policy.Retention_Period",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Policy.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Policy.Update_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Policy.Update_Frequency",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Data_Procedures",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.ID",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.BusinessAreaResponsible",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.MacroProcessName",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Country_Where_Stored",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Delete_Mechanism",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Delete_URL",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Info_Collected",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Number_Of_Records_Monthly",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Property",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Type_Of_Natural_Person",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Update_Mechanism",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Update_URL",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Why_Is_It_Collected",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Procedures.Is_SubProcess",
+      "dataType": "Boolean",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Data_Source",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Business_Rules",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Create_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Credential_ApiKey",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Credential_Principal",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Credential_Secret",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Domain",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Domain_Frequency",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Engine",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Retention_Policy_JSON",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.URI_Config",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.URI_Control",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.URI_Delete",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.URI_Monitor",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.URI_Read",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.URI_Template",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.URI_Update",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Source.Update_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Data_Src_Mapping_Rule",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.Business_Rules_JSON",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.Create_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.Update_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Email_Address",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Address.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Address.Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Address.Host",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Address.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Email_Message_Attachment",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.Email_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.Attachment_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.Attachment_Content_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.MetadataController",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.MetadataGDPRStatus",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.MetadataLineage",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Address",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Cred_Card",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Location",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Person",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Phone",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Postcode",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Policy_Number",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Org",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Misc",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Nationality",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Language",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Misc",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Money",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.NLP_CPF",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Email_Message_Body",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.Email_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.MetadataController",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.MetadataGDPRStatus",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.MetadataLineage",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Address",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Cred_card",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Email",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Location",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Person",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Phone",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Postcode",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Policy_number",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Org",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Misc",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Nationality",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Language",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Misc",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Money",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Date",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_Time",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.NLP_CPF",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Form",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Form.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Form.Metadata_Create_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Form.Metadata_GUID",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Form.Metadata_Owner",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Form.Text",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Form.URL",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Form.Vertex_Label",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Genetic",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Genetic.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Genetic.DNA",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Genetic.Family_Medical_History",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Genetic.RNA",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Health",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Health.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Health.Alergies",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Health.Blood_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Health.Diseases",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Health.Organ_Donor",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Identity_Card",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Identity_Card.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Identity_Card.Id_Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Identity_Card.Id_Text",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Identity_Card.Id_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Identity_Card.Id_Value",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Insurance_Policy",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Number",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Product_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Property_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Renewal_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Insurance_Policy.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Lawful_Basis",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Lawful_Basis.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Lawful_Basis.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Lawful_Basis.Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Lawful_Basis.Short_Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Metadata_Source",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Metadata_Source.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1100,7 +2115,7 @@
     },
     {
       "name": "Object.Metadata_Source.Domain_Frequency",
-      "dataType": "Double",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -1109,382 +2124,12 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source.Name",
+      "name": "Metadata.Type.Object.Notification_Templates",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source.Create_Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Update_Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Form_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Form_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Form_Submission_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Form_Submission_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Credential_Principal",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Credential_Secret",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Credential_ApiKey",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.URI_Config",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.URI_Template",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.URI_Control",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.URI_Read",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.URI_Delete",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.URI_Update",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.URI_Monitor",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Retention_Policy_JSON",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Engine",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Domain",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Domain_Frequency",
-      "dataType": "Double",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Source.Business_Rules",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Update_Mechanism",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Update_URL",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Delete_URL",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Update_Mechanism",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Update_URL",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Property",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Country_Where_Stored",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Number_Of_Records_Monthly",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Info_Collected",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Why_Is_It_Collected",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Data_Procedures.Type_Of_Natural_Person",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Phone_Number.Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Phone_Number.Raw",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Phone_Number.Numbers_Only",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Phone_Number.Last_7_Digits",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Email_Address.Email",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Form.Metadata_Create_Date",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Form.Metadata_GUID",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Form.Metadata_Owner",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Form.Text",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Form.URL",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Form.Vertex_Label",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Identity_Card.Id_Name",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Identity_Card.Id_Value",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Identity_Card.Id_Text",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Identity_Card.Id_Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Form_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Form_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Form_Submission_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Form_Submission_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Number",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Product_Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Property_Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Renewal_Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Status",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Insurance_Policy.Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Lawful_Basis.Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Lawful_Basis.Short_Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Lawful_Basis.Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Form_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Form_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Form_Submission_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Form_Submission_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Link",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Status",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Date",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Contract.Expiry",
+      "name": "Object.Notification_Templates.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1514,7 +2159,52 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Phone_Number",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Phone_Number.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Phone_Number.Last_7_Digits",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Phone_Number.Numbers_Only",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Phone_Number.Raw",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Phone_Number.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Privacy_Impact_Assessment",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Impact_Assessment.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Privacy_Impact_Assessment.Compliance_Check_Passed",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Impact_Assessment.Country_Where_Data_Is_Stored",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1574,8 +2264,18 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Privacy_Impact_Assessment.Country_Where_Data_Is_Stored",
-      "dataType": "Date",
+      "name": "Metadata.Type.Object.Privacy_Notice",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Notice.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Notice.Country_Where_Stored",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -1591,16 +2291,6 @@
     {
       "name": "Object.Privacy_Notice.Effect_On_Individuals",
       "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Privacy_Notice.Number_Of_Records_Monthly",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Privacy_Notice.Country_Where_Stored",
-      "dataType": "Date",
       "cardinality": "SINGLE"
     },
     {
@@ -1664,6 +2354,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Privacy_Notice.Number_Of_Records_Monthly",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Privacy_Notice.Text",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1684,27 +2379,42 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Sensitive_Data.Ethnicity",
+      "name": "Object.Privacy_Notice.Why_Is_It_Collected",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Sensitive_Data.Religion",
+      "name": "Metadata.Type.Object.Salary",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Sensitive_Data.Political_View",
+      "name": "Object.Salary.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Sensitive_Data.Union_Membership",
+      "name": "Object.Salary.Currency",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Sensitive_Data.Club_Membership",
+      "name": "Object.Salary.Period",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Salary.Value",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Sensitive_Data",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1714,88 +2424,48 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Sensitive_Data.Club_Membership",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Ethnicity",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Political_View",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Sensitive_Data.Religion",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Sensitive_Data.Sexual_Orientation",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Health.Blood_Type",
+      "name": "Object.Sensitive_Data.Union_Membership",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Health.Organ_Donor",
+      "name": "Metadata.Type.Person.Employee",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Health.Diseases",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Health.Alergies",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Biometric.Weight_kg",
-      "dataType": "Double",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Biometric.Eye_Colour",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Biometric.Height_cm",
-      "dataType": "Double",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Biometric.Fingerprints",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Biometric.Facial_Picture",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Biometric.Retinal_scans",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Genetic.DNA",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Genetic.RNA",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Genetic.Family_Medical_History",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object.Privacy_Notice.Why_Is_It_Collected",
+      "name": "Person.Employee.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
       "name": "Person.Employee.Date_Of_Birth",
       "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Person.Employee.ID",
-      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -1815,6 +2485,11 @@
     },
     {
       "name": "Person.Employee.Height",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Employee.ID",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1864,7 +2539,12 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Person.Identity.ID",
+      "name": "Metadata.Type.Person.Identity",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Identity.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1875,6 +2555,11 @@
     },
     {
       "name": "Person.Identity.Ethnicity",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Identity.First_Name",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1899,12 +2584,12 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Person.Identity.Last_Name",
+      "name": "Person.Identity.ID",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Person.Identity.First_Name",
+      "name": "Person.Identity.Last_Name",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1939,7 +2624,22 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Person.Natural",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Natural.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Person.Natural.Customer_ID",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Natural.Id",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -2014,12 +2714,52 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Person.Organisation",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Organisation.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Organisation.Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Organisation.Department",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Person.Organisation.Email",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
       "name": "Person.Organisation.Fax",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Organisation.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Organisation.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Organisation.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person.Organisation.Form_Submission_Owner_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -2067,66 +2807,11 @@
       "name": "Person.Organisation.orgCountrySet",
       "dataType": "String",
       "cardinality": "SINGLE"
-    },
-    {
-      "name": "Person.Organisation.Department",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Person.Organisation.Form_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Person.Organisation.Form_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Person.Organisation.Form_Submission_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Person.Organisation.Form_Submission_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
     }
   ],
   "vertexLabels": [
     {
-      "name": "Object.Sensitive_Data",
-      "partition": false,
-      "useStatic": false
-    },
-    {
-      "name": "Object.Salary",
-      "partition": false,
-      "useStatic": false
-    },
-    {
-      "name": "Object.Health",
-      "partition": false,
-      "useStatic": false
-    },
-    {
-      "name": "Object.Biometric",
-      "partition": false,
-      "useStatic": false
-    },
-    {
-      "name": "Object.Genetic",
-      "partition": false,
-      "useStatic": false
-    },
-    {
       "name": "Event.Consent",
-      "partition": false,
-      "useStatic": false
-    },
-    {
-      "name": "Event.Transaction",
       "partition": false,
       "useStatic": false
     },
@@ -2141,12 +2826,47 @@
       "useStatic": false
     },
     {
-      "name": "Event.Ingestion",
+      "name": "Event.Email_Msg_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_To_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_From_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_CC_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_BCC_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.NLP_Group",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Email_Message",
       "partition": false,
       "useStatic": false
     },
     {
       "name": "Event.Group_Ingestion",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Ingestion",
       "partition": false,
       "useStatic": false
     },
@@ -2157,6 +2877,11 @@
     },
     {
       "name": "Event.Training",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Event.Transaction",
       "partition": false,
       "useStatic": false
     },
@@ -2196,7 +2921,22 @@
       "useStatic": false
     },
     {
+      "name": "Object.Biometric",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Contract",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Object.Credential",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Data_Policy",
       "partition": false,
       "useStatic": false
     },
@@ -2211,12 +2951,7 @@
       "useStatic": false
     },
     {
-      "name": "Object.Metadata_Source",
-      "partition": false,
-      "useStatic": false
-    },
-    {
-      "name": "Object.Data_Policy",
+      "name": "Object.Data_Src_Mapping_Rule",
       "partition": false,
       "useStatic": false
     },
@@ -2226,7 +2961,27 @@
       "useStatic": false
     },
     {
+      "name": "Object.Email_Message_Attachment",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Email_Message_Body",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Object.Form",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Genetic",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Health",
       "partition": false,
       "useStatic": false
     },
@@ -2246,7 +3001,7 @@
       "useStatic": false
     },
     {
-      "name": "Object.Contract",
+      "name": "Object.Metadata_Source",
       "partition": false,
       "useStatic": false
     },
@@ -2271,6 +3026,21 @@
       "useStatic": false
     },
     {
+      "name": "Object.Salary",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Sensitive_Data",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Person.Employee",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Person.Identity",
       "partition": false,
       "useStatic": false
@@ -2281,68 +3051,12 @@
       "useStatic": false
     },
     {
-      "name": "Person.Employee",
-      "partition": false,
-      "useStatic": false
-    },
-    {
       "name": "Person.Organisation",
       "partition": false,
       "useStatic": false
     }
   ],
   "edgeLabels": [
-    {
-      "name": "Has_Sensitive_Data",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Works",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Salary",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Pays_Salary",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Department",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Table",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Column",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Semantic",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Link",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Is_Lead",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-
     {
       "name": "Approved_Compliance_Check",
       "multiplicity": "MULTI",
@@ -2374,12 +3088,72 @@
       "unidirected": false
     },
     {
+      "name": "Email_To",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_From",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_CC",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_BCC",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_Body",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_Attachment",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Address",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Application",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Column",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Contract",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Credential",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
       "name": "Has_Data_Procedures",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Data_Source",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Department",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2399,16 +3173,6 @@
       "unidirected": false
     },
     {
-      "name": "Has_Application",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Data_Source",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
       "name": "Has_Ingestion_Event",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -2424,12 +3188,17 @@
       "unidirected": false
     },
     {
+      "name": "Has_Link",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Parent_Or_Guardian",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
-      "name": "Has_Privacy_Impact_Assessment",
+      "name": "Has_Phone",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2439,7 +3208,17 @@
       "unidirected": false
     },
     {
+      "name": "Has_Privacy_Impact_Assessment",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Privacy_Notice",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Salary",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2454,7 +3233,27 @@
       "unidirected": false
     },
     {
+      "name": "Has_Semantic",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Sensitive_Data",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Server",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Table",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Transaction",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2469,17 +3268,27 @@
       "unidirected": false
     },
     {
-      "name": "Is_Data_Owner",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
       "name": "Is_Data_Controller",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
+      "name": "Is_Data_Owner",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Is_Data_Processor",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Lead",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Located",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2494,12 +3303,12 @@
       "unidirected": false
     },
     {
-      "name": "Has_Address",
+      "name": "Made_SAR_Request",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
-      "name": "Made_SAR_Request",
+      "name": "Pays_Salary",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2509,22 +3318,7 @@
       "unidirected": false
     },
     {
-      "name": "Uses_Email",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Uses_Data_Source",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Sent_Email_To",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Sent_Email_CC",
+      "name": "Runs_On",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -2534,110 +3328,60 @@
       "unidirected": false
     },
     {
-      "name": "Has_Phone",
+      "name": "Sent_Email_CC",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
-      "name": "Is_Located",
+      "name": "Sent_Email_To",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
-      "name": "Has_Contract",
+      "name": "Uses_Data_Source",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
-      "name": "Has_Transaction",
+      "name": "Uses_Email",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
-      "name": "Runs_On",
+      "name": "Works",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Family",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Dependant",
       "multiplicity": "MULTI",
       "unidirected": false
     }
   ],
   "vertexIndexes": [
     {
-      "name": "Object.Sensitive_Data.MixedIdx",
+      "name": "Event.Consent.MixedIdx",
       "composite": false,
       "unique": false,
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Metadata.Type.Object.Sensitive_Data",
-        "Object.Sensitive_Data.Ethnicity",
-        "Object.Sensitive_Data.Religion",
-        "Object.Sensitive_Data.Political_View",
-        "Object.Sensitive_Data.Union_Membership",
-        "Object.Sensitive_Data.Club_Membership",
-        "Object.Sensitive_Data.Church_Membership",
-        "Object.Sensitive_Data.Sexual_Orientation"
+        "Metadata.Type.Event.Consent",
+        "Event.Consent.Date",
+        "Event.Consent.Form_Id",
+        "Event.Consent.Form_Owner_Id",
+        "Event.Consent.Form_Submission_Id",
+        "Event.Consent.Form_Submission_Owner_Id",
+        "Event.Consent.Metadata.Create_Date",
+        "Event.Consent.Metadata.Update_Date",
+        "Event.Consent.Status"
       ],
-      "propertyKeysMappings": {
-      }
-    },
-    {
-      "name": "Object.Health.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type.Object.Health",
-        "Object.Health.Blood_Type",
-        "Object.Health.Organ_Donor",
-        "Object.Health.Diseases",
-        "Object.Health.Alergies"
-      ],
-      "propertyKeysMappings": {
-      }
-    },
-    {
-      "name": "Object.Biometric.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type.Object.Biometric",
-        "Object.Biometric.Weight_kg",
-        "Object.Biometric.Eye_Colour",
-        "Object.Biometric.Height_cm"
-      ],
-      "propertyKeysMappings": {
-      }
-    },
-    {
-      "name": "Object.Salary.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type.Object.Salary",
-        "Object.Salary.Value",
-        "Object.Salary.Currency",
-        "Object.Salary.Period"
-      ],
-      "propertyKeysMappings": {
-      }
-    },
-    {
-      "name": "Object.Genetic.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type.Object.Genetic",
-        "Object.Genetic.DNA",
-        "Object.Genetic.RNA"
-      ],
-      "propertyKeysMappings": {
-      }
+      "propertyKeysMappings": {}
     },
     {
       "name": "Event.Data_Breach.MixedIdx",
@@ -2646,31 +3390,194 @@
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Event.Data_Breach.Source",
-        "Event.Data_Breach.Metadata.Create_Date",
-        "Event.Data_Breach.Impact",
-        "Event.Data_Breach.Metadata.Update_Date",
         "Metadata.Type.Event.Data_Breach",
-        "Event.Data_Breach.Status",
-        "Event.Data_Breach.Id"
+        "Event.Data_Breach.Description",
+        "Event.Data_Breach.Id",
+        "Event.Data_Breach.Impact",
+        "Event.Data_Breach.Metadata.Create_Date",
+        "Event.Data_Breach.Metadata.Update_Date",
+        "Event.Data_Breach.Source",
+        "Event.Data_Breach.Status"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Event.Data_Breach": {
-          "mapping": "STRING"
-        },
-        "Event.Data_Breach.Id": {
-          "mapping": "STRING"
-        },
-        "Event.Data_Breach.Status": {
-          "mapping": "STRING"
-        },
-        "Event.Data_Breach.Source": {
-          "mapping": "STRING"
-        },
-        "Event.Data_Breach.Impact": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Form_Ingestion.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Form_Ingestion",
+        "Event.Form_Ingestion.Metadata_Create_Date",
+        "Event.Form_Ingestion.Metadata_GUID",
+        "Event.Form_Ingestion.Operation",
+        "Event.Form_Ingestion.Type"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_Msg_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_Msg_Group",
+        "Event.Email_Msg_Group.Ingestion_Date"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_To_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_To_Group",
+        "Event.Email_To_Group.Ingestion_Date",
+        "Event.Email_To_Group.Email"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_From_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_From_Group",
+        "Event.Email_From_Group.Ingestion_Date",
+        "Event.Email_From_Group.Email"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_CC_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_CC_Group",
+        "Event.Email_CC_Group.Ingestion_Date",
+        "Event.Email_CC_Group.Email"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_BCC_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_BCC_Group",
+        "Event.Email_BCC_Group.Ingestion_Date",
+        "Event.Email_BCC_Group.Email"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.NLP_Group.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.NLP_Group",
+        "Event.NLP_Group.Ingestion_Date",
+        "Event.NLP_Group.PersonId"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Email_Message.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Email_Message",
+        "Event.Email_Message.Business_Rules",
+        "Event.Email_Message.Metadata_Create_Date",
+        "Event.Email_Message.Metadata_GUID",
+        "Event.Email_Message.Operation",
+        "Event.Email_Message.Type",
+        "Event.Email_Message.Email_Id",
+        "Event.Email_Message.Created_Date_Time",
+        "Event.Email_Message.Sent_Date_Time",
+        "Event.Email_Message.Received_Date_Time",
+        "Event.Email_Message.Categories",
+        "Event.Email_Message.Subject",
+        "Event.Email_Message.Folder_Id",
+        "Event.Email_Message.User_Id"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Group_Ingestion.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Group_Ingestion",
+        "Event.Group_Ingestion.Has_Controller",
+        "Event.Group_Ingestion.Has_Data_Owner",
+        "Event.Group_Ingestion.Has_Processor",
+        "Event.Group_Ingestion.Metadata_End_Date",
+        "Event.Group_Ingestion.Metadata_Start_Date",
+        "Event.Group_Ingestion.Operation",
+        "Event.Group_Ingestion.Type",
+        "Event.Group_Ingestion.Ingestion_Date"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Ingestion.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Ingestion",
+        "Event.Ingestion.Business_Rules",
+        "Event.Ingestion.Metadata_Create_Date",
+        "Event.Ingestion.Metadata_GUID",
+        "Event.Ingestion.Operation",
+        "Event.Ingestion.Type"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Subject_Access_Request.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Subject_Access_Request",
+        "Event.Subject_Access_Request.Metadata.Create_Date",
+        "Event.Subject_Access_Request.Metadata.Update_Date",
+        "Event.Subject_Access_Request.Request_Type",
+        "Event.Subject_Access_Request.Status"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Event.Training.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Training",
+        "Event.Training.Status"
+      ],
+      "propertyKeysMappings": {}
     },
     {
       "name": "Event.Transaction.MixedIdx",
@@ -2679,70 +3586,55 @@
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Event.Transaction.Description",
-        "Event.Transaction.Date",
-        "Event.Transaction.Value",
-        "Event.Transaction.Type",
         "Metadata.Type.Event.Transaction",
         "Event.Transaction.Currency",
-        "Event.Transaction.Status"
+        "Event.Transaction.Date",
+        "Event.Transaction.Description",
+        "Event.Transaction.Status",
+        "Event.Transaction.Type",
+        "Event.Transaction.Value"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Event.Transaction": {
-          "mapping": "STRING"
-        },
-        "Event.Transaction.Description": {
-          "mapping": "STRING"
-        },
-        "Event.Transaction.Status": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
     },
     {
-      "name": "Object.Contract.MixedIdx",
+      "name": "Location.Address.MixedIdx",
       "composite": false,
       "unique": false,
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Object.Contract.Form_Submission_Owner_Id",
-        "Object.Contract.Form_Id",
-        "Object.Contract.Id",
-        "Object.Contract.Form_Submission_Id",
-        "Object.Contract.Link",
-        "Object.Contract.Status",
-        "Object.Contract.Form_Owner_Id",
-        "Object.Contract.Date",
-        "Object.Contract.Expiry",
-        "Metadata.Type.Object.Contract"
+        "Metadata.Type.Location.Address",
+        "Location.Address.City",
+        "Location.Address.Code",
+        "Location.Address.Description",
+        "Location.Address.Full_Address",
+        "Location.Address.Neighborhood",
+        "Location.Address.Post_Code",
+        "Location.Address.State",
+        "Location.Address.Street",
+        "Location.Address.Type",
+        "Location.Address.parser.category",
+        "Location.Address.parser.city",
+        "Location.Address.parser.city_district",
+        "Location.Address.parser.country",
+        "Location.Address.parser.country_region",
+        "Location.Address.parser.entrance",
+        "Location.Address.parser.house",
+        "Location.Address.parser.house_number",
+        "Location.Address.parser.island",
+        "Location.Address.parser.level",
+        "Location.Address.parser.near",
+        "Location.Address.parser.po_box",
+        "Location.Address.parser.postcode",
+        "Location.Address.parser.road",
+        "Location.Address.parser.staircase",
+        "Location.Address.parser.state",
+        "Location.Address.parser.state_district",
+        "Location.Address.parser.suburb",
+        "Location.Address.parser.unit",
+        "Location.Address.parser.world_region"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Contract": {
-          "mapping": "STRING"
-        },
-        "Object.Contract.Id": {
-          "mapping": "STRING"
-        },
-        "Object.Contract.Status": {
-          "mapping": "STRING"
-        },
-        "Object.Contract.Link": {
-          "mapping": "STRING"
-        },
-        "Object.Contract.Form_Owner_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Contract.Form_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Contract.Form_Submission_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Contract.Form_Submission_Owner_Id": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
     },
     {
       "name": "Object.AWS_Instance.MixedIdx",
@@ -2752,32 +3644,38 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata.Type.Object.AWS_Instance",
+        "Object.AWS_Instance.EbsOptimized",
+        "Object.AWS_Instance.EnaSupport",
         "Object.AWS_Instance.Id",
         "Object.AWS_Instance.ImageId",
         "Object.AWS_Instance.InstanceType",
+        "Object.AWS_Instance.KeyName",
+        "Object.AWS_Instance.LaunchTime",
+        "Object.AWS_Instance.PrivateDnsName",
+        "Object.AWS_Instance.PrivateIpAddress",
+        "Object.AWS_Instance.ProductCodeIDs",
+        "Object.AWS_Instance.ProductCodeTypes",
         "Object.AWS_Instance.Public_Dns_Name",
         "Object.AWS_Instance.Tags"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.AWS_Instance": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_Instance.Public_Dns_Name": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_Instance.Id": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_Instance.ImageId": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_Instance.InstanceType": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_Instance.Tags": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.AWS_Network_Interface.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.AWS_Network_Interface",
+        "Object.AWS_Network_Interface.AttachTime",
+        "Object.AWS_Network_Interface.Description",
+        "Object.AWS_Network_Interface.MacAddress",
+        "Object.AWS_Network_Interface.NetworkInterfaceId",
+        "Object.AWS_Network_Interface.PrivateDnsName",
+        "Object.AWS_Network_Interface.PrivateIpAddresses"
+      ],
+      "propertyKeysMappings": {}
     },
     {
       "name": "Object.AWS_Security_Group.MixedIdx",
@@ -2786,29 +3684,13 @@
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges",
-        "Object.AWS_Security_Group.GroupName",
-        "Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges",
         "Metadata.Type.Object.AWS_Security_Group",
-        "Object.AWS_Security_Group.Id"
+        "Object.AWS_Security_Group.GroupName",
+        "Object.AWS_Security_Group.Id",
+        "Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges",
+        "Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.AWS_Security_Group": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_Security_Group.GroupName": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_Security_Group.Id": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
     },
     {
       "name": "Object.AWS_VPC.MixedIdx",
@@ -2820,84 +3702,97 @@
         "Metadata.Type.Object.AWS_VPC",
         "Object.AWS_VPC.Id"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.AWS_VPC": {
-          "mapping": "STRING"
-        },
-        "Object.AWS_VPC.Id": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
     },
     {
-      "name": "Object.AWS_Network_Interface.MixedIdx",
+      "name": "Object.Application.MixedIdx",
       "composite": false,
       "unique": false,
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Object.AWS_Network_Interface.Description",
-        "Object.AWS_Network_Interface.NetworkInterfaceId",
-        "Object.AWS_Network_Interface.PrivateIpAddresses",
-        "Object.AWS_Network_Interface.PrivateDnsName",
-        "Metadata.Type.Object.AWS_Network_Interface",
-        "Object.AWS_Network_Interface.MacAddress"
-      ]
-    },
-    {
-      "name": "Object.Data_Procedures.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Object.Data_Procedures.Update_Mechanism",
-        "Object.Data_Procedures.Delete_Mechanism",
-        "Metadata.Type.Object.Data_Procedures",
-        "Object.Data_Procedures.Property",
-        "Object.Data_Procedures.Type",
-        "Object.Data_Procedures.Description",
-        "Object.Data_Procedures.Country_Where_Stored",
-        "Object.Data_Procedures.Number_Of_Records_Monthly",
-        "Object.Data_Procedures.Info_Collected",
-        "Object.Data_Procedures.Why_Is_It_Collected",
-        "Object.Data_Procedures.Type_Of_Natural_Person"
+        "Metadata.Type.Object.Application",
+        "Object.Application.Description",
+        "Object.Application.Form_Id",
+        "Object.Application.Form_Owner_Id",
+        "Object.Application.Form_Submission_Id",
+        "Object.Application.Form_Submission_Owner_Id",
+        "Object.Application.Name",
+        "Object.Application.Start_Date",
+        "Object.Application.Stop_Date",
+        "Object.Application.URL"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Data_Procedures": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Type": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Property": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Delete_Mechanism": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Update_Mechanism": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Description": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Country_Where_Stored": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Number_Of_Records_Monthly": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Info_Collected": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Why_Is_It_Collected": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Procedures.Type_Of_Natural_Person": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Awareness_Campaign.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Awareness_Campaign",
+        "Object.Awareness_Campaign.Description",
+        "Object.Awareness_Campaign.Form_Id",
+        "Object.Awareness_Campaign.Form_Owner_Id",
+        "Object.Awareness_Campaign.Form_Submission_Id",
+        "Object.Awareness_Campaign.Form_Submission_Owner_Id",
+        "Object.Awareness_Campaign.Start_Date",
+        "Object.Awareness_Campaign.Stop_Date",
+        "Object.Awareness_Campaign.URL"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Biometric.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Biometric",
+        "Object.Biometric.Eye_Colour",
+        "Object.Biometric.Facial_Picture",
+        "Object.Biometric.Fingerprints",
+        "Object.Biometric.Height_cm",
+        "Object.Biometric.Retinal_scans",
+        "Object.Biometric.Weight_kg"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Contract.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Contract",
+        "Object.Contract.Date",
+        "Object.Contract.Description",
+        "Object.Contract.Expiry",
+        "Object.Contract.Form_Id",
+        "Object.Contract.Form_Owner_Id",
+        "Object.Contract.Form_Submission_Id",
+        "Object.Contract.Form_Submission_Owner_Id",
+        "Object.Contract.Id",
+        "Object.Contract.Link",
+        "Object.Contract.Status",
+        "Object.Contract.Type"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Credential.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Credential",
+        "Object.Credential.User_Id"
+      ],
+      "propertyKeysMappings": {}
     },
     {
       "name": "Object.Data_Policy.MixedIdx",
@@ -2906,49 +3801,47 @@
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Object.Data_Policy.Name",
-        "Object.Data_Policy.Type",
-        "Object.Data_Policy.CreateDate",
-        "Object.Data_Policy.UpdateDate",
+        "Metadata.Type.Object.Data_Policy",
+        "Object.Data_Policy.Create_Date",
+        "Object.Data_Policy.Description",
         "Object.Data_Policy.Form_Id",
         "Object.Data_Policy.Form_Owner_Id",
         "Object.Data_Policy.Form_Submission_Id",
         "Object.Data_Policy.Form_Submission_Owner_Id",
+        "Object.Data_Policy.Name",
         "Object.Data_Policy.Retention_Period",
-        "Metadata.Type.Object.Data_Policy"
+        "Object.Data_Policy.Type",
+        "Object.Data_Policy.Update_Date",
+        "Object.Data_Policy.Update_Frequency"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Data_Policy": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Policy.UpdateDate": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Policy.CreateDate": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Policy.Name": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Policy.Type": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Policy.Form_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Policy.Form_Owner_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Policy.Form_Submission_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Policy.Form_Submission_Owner_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Policy.Retention_Period": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Data_Procedures.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Data_Procedures",
+        "Object.Data_Procedures.ID",
+        "Object.Data_Procedures.BusinessAreaResponsible",
+        "Object.Data_Procedures.Type",
+        "Object.Data_Procedures.Description",
+        "Object.Data_Procedures.MacroProcessName",
+        "Object.Data_Procedures.Country_Where_Stored",
+        "Object.Data_Procedures.Delete_Mechanism",
+        "Object.Data_Procedures.Delete_URL",
+        "Object.Data_Procedures.Info_Collected",
+        "Object.Data_Procedures.Number_Of_Records_Monthly",
+        "Object.Data_Procedures.Property",
+        "Object.Data_Procedures.Type_Of_Natural_Person",
+        "Object.Data_Procedures.Update_Mechanism",
+        "Object.Data_Procedures.Update_URL",
+        "Object.Data_Procedures.Why_Is_It_Collected",
+        "Object.Data_Procedures.Is_SubProcess"
+      ],
+      "propertyKeysMappings": {}
     },
     {
       "name": "Object.Data_Source.MixedIdx",
@@ -2958,10 +3851,11 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata.Type.Object.Data_Source",
-        "Object.Data_Source.Name",
+        "Object.Data_Source.Business_Rules",
         "Object.Data_Source.Create_Date",
-        "Object.Data_Source.Update_Date",
-        "Object.Data_Source.Type",
+        "Object.Data_Source.Credential_ApiKey",
+        "Object.Data_Source.Credential_Principal",
+        "Object.Data_Source.Credential_Secret",
         "Object.Data_Source.Description",
         "Object.Data_Source.Domain",
         "Object.Data_Source.Domain_Frequency",
@@ -2969,31 +3863,215 @@
         "Object.Data_Source.Form_Id",
         "Object.Data_Source.Form_Owner_Id",
         "Object.Data_Source.Form_Submission_Id",
-        "Object.Data_Source.Form_Submission_Owner_Id"
+        "Object.Data_Source.Form_Submission_Owner_Id",
+        "Object.Data_Source.Name",
+        "Object.Data_Source.Retention_Policy_JSON",
+        "Object.Data_Source.Type",
+        "Object.Data_Source.URI_Config",
+        "Object.Data_Source.URI_Control",
+        "Object.Data_Source.URI_Delete",
+        "Object.Data_Source.URI_Monitor",
+        "Object.Data_Source.URI_Read",
+        "Object.Data_Source.URI_Template",
+        "Object.Data_Source.URI_Update",
+        "Object.Data_Source.Update_Date"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Data_Source": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Source.Description": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Source.Name": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Source.Form_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Source.Form_Owner_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Source.Form_Submission_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Data_Source.Form_Submission_Owner_Id": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Data_Src_Mapping_Rule.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Data_Src_Mapping_Rule",
+        "Object.Data_Src_Mapping_Rule.Business_Rules_JSON",
+        "Object.Data_Src_Mapping_Rule.Create_Date",
+        "Object.Data_Src_Mapping_Rule.Form_Id",
+        "Object.Data_Src_Mapping_Rule.Form_Owner_Id",
+        "Object.Data_Src_Mapping_Rule.Form_Submission_Id",
+        "Object.Data_Src_Mapping_Rule.Form_Submission_Owner_Id",
+        "Object.Data_Src_Mapping_Rule.Name",
+        "Object.Data_Src_Mapping_Rule.Update_Date"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Email_Address.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Email_Address",
+        "Object.Email_Address.Email",
+        "Object.Email_Address.Host",
+        "Object.Email_Address.Type"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Email_Message_Attachment.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Email_Message_Attachment",
+        "Object.Email_Message_Attachment.Email_Id",
+        "Object.Email_Message_Attachment.Attachment_Id",
+        "Object.Email_Message_Attachment.Attachment_Content_Type",
+        "Object.Email_Message_Attachment.MetadataController",
+        "Object.Email_Message_Attachment.MetadataGDPRStatus",
+        "Object.Email_Message_Attachment.MetadataLineage",
+        "Object.Email_Message_Attachment.NLP_Address",
+        "Object.Email_Message_Attachment.NLP_Cred_Card",
+        "Object.Email_Message_Attachment.NLP_Email",
+        "Object.Email_Message_Attachment.NLP_Location",
+        "Object.Email_Message_Attachment.NLP_Person",
+        "Object.Email_Message_Attachment.NLP_Phone",
+        "Object.Email_Message_Attachment.NLP_Postcode",
+        "Object.Email_Message_Attachment.NLP_Policy_Number",
+        "Object.Email_Message_Attachment.NLP_Org",
+        "Object.Email_Message_Attachment.NLP_Misc",
+        "Object.Email_Message_Attachment.NLP_Nationality",
+        "Object.Email_Message_Attachment.NLP_Language",
+        "Object.Email_Message_Attachment.NLP_Misc",
+        "Object.Email_Message_Attachment.NLP_Money",
+        "Object.Email_Message_Attachment.NLP_Date",
+        "Object.Email_Message_Attachment.NLP_Time",
+        "Object.Email_Message_Attachment.NLP_CPF"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Email_Message_Body.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Email_Message_Body",
+        "Object.Email_Message_Body.Email_Id",
+        "Object.Email_Message_Body.MetadataController",
+        "Object.Email_Message_Body.MetadataGDPRStatus",
+        "Object.Email_Message_Body.MetadataLineage",
+        "Object.Email_Message_Body.NLP_Address",
+        "Object.Email_Message_Body.NLP_Cred_card",
+        "Object.Email_Message_Body.NLP_Email",
+        "Object.Email_Message_Body.NLP_Location",
+        "Object.Email_Message_Body.NLP_Person",
+        "Object.Email_Message_Body.NLP_Phone",
+        "Object.Email_Message_Body.NLP_Postcode",
+        "Object.Email_Message_Body.NLP_Policy_number",
+        "Object.Email_Message_Body.NLP_Org",
+        "Object.Email_Message_Body.NLP_Misc",
+        "Object.Email_Message_Body.NLP_Nationality",
+        "Object.Email_Message_Body.NLP_Language",
+        "Object.Email_Message_Body.NLP_Misc",
+        "Object.Email_Message_Body.NLP_Money",
+        "Object.Email_Message_Body.NLP_Date",
+        "Object.Email_Message_Body.NLP_Time",
+        "Object.Email_Message_Body.NLP_CPF"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Form.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Form",
+        "Object.Form.Metadata_Create_Date",
+        "Object.Form.Metadata_GUID",
+        "Object.Form.Metadata_Owner",
+        "Object.Form.Text",
+        "Object.Form.URL",
+        "Object.Form.Vertex_Label"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Genetic.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Genetic",
+        "Object.Genetic.DNA",
+        "Object.Genetic.Family_Medical_History",
+        "Object.Genetic.RNA"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Health.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Health",
+        "Object.Health.Alergies",
+        "Object.Health.Blood_Type",
+        "Object.Health.Diseases",
+        "Object.Health.Organ_Donor"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Identity_Card.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Identity_Card",
+        "Object.Identity_Card.Id_Name",
+        "Object.Identity_Card.Id_Text",
+        "Object.Identity_Card.Id_Type",
+        "Object.Identity_Card.Id_Value"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Insurance_Policy.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Insurance_Policy",
+        "Object.Insurance_Policy.Form_Id",
+        "Object.Insurance_Policy.Form_Owner_Id",
+        "Object.Insurance_Policy.Form_Submission_Id",
+        "Object.Insurance_Policy.Form_Submission_Owner_Id",
+        "Object.Insurance_Policy.Number",
+        "Object.Insurance_Policy.Product_Type",
+        "Object.Insurance_Policy.Property_Type",
+        "Object.Insurance_Policy.Renewal_Date",
+        "Object.Insurance_Policy.Status",
+        "Object.Insurance_Policy.Type"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Lawful_Basis.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Lawful_Basis",
+        "Object.Lawful_Basis.Description",
+        "Object.Lawful_Basis.Id",
+        "Object.Lawful_Basis.Short_Description"
+      ],
+      "propertyKeysMappings": {}
     },
     {
       "name": "Object.Metadata_Source.MixedIdx",
@@ -3006,60 +4084,175 @@
         "Object.Metadata_Source.Name",
         "Object.Metadata_Source.Create_Date",
         "Object.Metadata_Source.Update_Date",
-        "Object.Metadata_Source.Type",
-        "Object.Metadata_Source.Description",
-        "Object.Metadata_Source.Domain",
-        "Object.Metadata_Source.Domain_Frequency",
-        "Object.Metadata_Source.Engine",
         "Object.Metadata_Source.Form_Id",
         "Object.Metadata_Source.Form_Owner_Id",
         "Object.Metadata_Source.Form_Submission_Id",
-        "Object.Metadata_Source.Form_Submission_Owner_Id"
-      ]
+        "Object.Metadata_Source.Form_Submission_Owner_Id",
+        "Object.Metadata_Source.Description",
+        "Object.Metadata_Source.Credential_Principal",
+        "Object.Metadata_Source.Credential_Secret",
+        "Object.Metadata_Source.Credential_ApiKey",
+        "Object.Metadata_Source.URI_Config",
+        "Object.Metadata_Source.URI_Template",
+        "Object.Metadata_Source.URI_Control",
+        "Object.Metadata_Source.URI_Read",
+        "Object.Metadata_Source.URI_Delete",
+        "Object.Metadata_Source.URI_Update",
+        "Object.Metadata_Source.URI_Monitor",
+        "Object.Metadata_Source.Retention_Policy_JSON",
+        "Object.Metadata_Source.Engine",
+        "Object.Metadata_Source.Type",
+        "Object.Metadata_Source.Domain",
+        "Object.Metadata_Source.Domain_Frequency",
+        "Object.Metadata_Source.Business_Rules"
+      ],
+      "propertyKeysMappings": {}
     },
     {
-      "name": "Event.Training.MixedIdx",
+      "name": "Object.Notification_Templates.MixedIdx",
       "composite": false,
       "unique": false,
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Metadata.Type.Event.Training",
-        "Event.Training.Status"
+        "Metadata.Type.Object.Notification_Templates",
+        "Object.Notification_Templates.Id",
+        "Object.Notification_Templates.Label",
+        "Object.Notification_Templates.Text",
+        "Object.Notification_Templates.Types",
+        "Object.Notification_Templates.URL"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Event.Training": {
-          "mapping": "STRING"
-        },
-        "Event.Training.Status": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
     },
     {
-      "name": "Event.Subject_Access_Request.MixedIdx",
+      "name": "Object.Phone_Number.MixedIdx",
       "composite": false,
       "unique": false,
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Event.Subject_Access_Request.Metadata.Create_Date",
-        "Metadata.Type.Event.Subject_Access_Request",
-        "Event.Subject_Access_Request.Metadata.Update_Date",
-        "Event.Subject_Access_Request.Status",
-        "Event.Subject_Access_Request.Request_Type"
+        "Metadata.Type.Object.Phone_Number",
+        "Object.Phone_Number.Last_7_Digits",
+        "Object.Phone_Number.Numbers_Only",
+        "Object.Phone_Number.Raw",
+        "Object.Phone_Number.Type"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Event.Subject_Access_Request": {
-          "mapping": "STRING"
-        },
-        "Event.Subject_Access_Request.Status": {
-          "mapping": "STRING"
-        },
-        "Event.Subject_Access_Request.Request_Type": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Privacy_Impact_Assessment.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Privacy_Impact_Assessment",
+        "Object.Privacy_Impact_Assessment.Compliance_Check_Passed",
+        "Object.Privacy_Impact_Assessment.Country_Where_Data_Is_Stored",
+        "Object.Privacy_Impact_Assessment.Delivery_Date",
+        "Object.Privacy_Impact_Assessment.Description",
+        "Object.Privacy_Impact_Assessment.Form_Id",
+        "Object.Privacy_Impact_Assessment.Form_Owner_Id",
+        "Object.Privacy_Impact_Assessment.Form_Submission_Id",
+        "Object.Privacy_Impact_Assessment.Form_Submission_Owner_Id",
+        "Object.Privacy_Impact_Assessment.Intrusion_On_Privacy",
+        "Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage",
+        "Object.Privacy_Impact_Assessment.Risk_To_Corporation",
+        "Object.Privacy_Impact_Assessment.Risk_To_Individuals",
+        "Object.Privacy_Impact_Assessment.Start_Date"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Privacy_Notice.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Privacy_Notice",
+        "Object.Privacy_Notice.Country_Where_Stored",
+        "Object.Privacy_Notice.Delivery_Date",
+        "Object.Privacy_Notice.Description",
+        "Object.Privacy_Notice.Effect_On_Individuals",
+        "Object.Privacy_Notice.Expiry_Date",
+        "Object.Privacy_Notice.Form_Id",
+        "Object.Privacy_Notice.Form_Owner_Id",
+        "Object.Privacy_Notice.Form_Submission_Id",
+        "Object.Privacy_Notice.Form_Submission_Owner_Id",
+        "Object.Privacy_Notice.How_Is_It_Collected",
+        "Object.Privacy_Notice.How_Will_It_Be_Used",
+        "Object.Privacy_Notice.Id",
+        "Object.Privacy_Notice.Info_Collected",
+        "Object.Privacy_Notice.Likely_To_Complain",
+        "Object.Privacy_Notice.Metadata.Create_Date",
+        "Object.Privacy_Notice.Metadata.Update_Date",
+        "Object.Privacy_Notice.Number_Of_Records_Monthly",
+        "Object.Privacy_Notice.Text",
+        "Object.Privacy_Notice.URL",
+        "Object.Privacy_Notice.Who_Is_Collecting",
+        "Object.Privacy_Notice.Who_Will_It_Be_Shared",
+        "Object.Privacy_Notice.Why_Is_It_Collected"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Salary.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Salary",
+        "Object.Salary.Currency",
+        "Object.Salary.Period",
+        "Object.Salary.Value"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Sensitive_Data.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Sensitive_Data",
+        "Object.Sensitive_Data.Church_Membership",
+        "Object.Sensitive_Data.Club_Membership",
+        "Object.Sensitive_Data.Ethnicity",
+        "Object.Sensitive_Data.Political_View",
+        "Object.Sensitive_Data.Religion",
+        "Object.Sensitive_Data.Sexual_Orientation",
+        "Object.Sensitive_Data.Union_Membership"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Person.Employee.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Person.Employee",
+        "Person.Employee.Date_Of_Birth",
+        "Person.Employee.Ethnicity",
+        "Person.Employee.Full_Name",
+        "Person.Employee.Gender",
+        "Person.Employee.Height",
+        "Person.Employee.ID",
+        "Person.Employee.Is_GDPR_Role",
+        "Person.Employee.Last_Name",
+        "Person.Employee.Marital_Status",
+        "Person.Employee.Name_Qualifier",
+        "Person.Employee.Nationality",
+        "Person.Employee.Place_Of_Birth",
+        "Person.Employee.Religion",
+        "Person.Employee.Role",
+        "Person.Employee.Title"
+      ],
+      "propertyKeysMappings": {}
     },
     {
       "name": "Person.Identity.MixedIdx",
@@ -3069,67 +4262,29 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata.Type.Person.Identity",
-        "Person.Identity.Place_Of_Birth",
-        "Person.Identity.Full_Name",
-        "Person.Identity.Gender",
-        "Person.Identity.ID",
-        "Person.Identity.Title",
-        "Person.Identity.Nationality",
-        "Person.Identity.Full_Name_fuzzy",
-        "Person.Identity.Ethnicity",
         "Person.Identity.Date_Of_Birth",
-        "Person.Identity.Name_Qualifier",
-        "Person.Identity.Marital_Status",
-        "Person.Identity.Last_Name",
+        "Person.Identity.Ethnicity",
         "Person.Identity.First_Name",
-        "Person.Identity.Religion"
+        "Person.Identity.Full_Name",
+        "Person.Identity.Full_Name_fuzzy",
+        "Person.Identity.Gender",
+        "Person.Identity.Height",
+        "Person.Identity.ID",
+        "Person.Identity.Last_Name",
+        "Person.Identity.Marital_Status",
+        "Person.Identity.Name_Qualifier",
+        "Person.Identity.Nationality",
+        "Person.Identity.Place_Of_Birth",
+        "Person.Identity.Religion",
+        "Person.Identity.Title"
       ],
       "propertyKeysMappings": {
-        "Metadata.Type.Person.Identity": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.Date_Of_Birth": {
-          "mapping": "DEFAULT"
-        },
-        "Person.Identity.Full_Name": {
-          "mapping": "STRING"
-        },
         "Person.Identity.Full_Name_fuzzy": {
           "mapping": "TEXTSTRING",
           "analyzer": {
             "name": "text-analyzer",
             "value": "pg_word_delimiter"
           }
-        },
-        "Person.Identity.Last_Name": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.Gender": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.Nationality": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.Place_Of_Birth": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.Religion": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.Ethnicity": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.Marital_Status": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.Name_Qualifier": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.Title": {
-          "mapping": "STRING"
-        },
-        "Person.Identity.ID": {
-          "mapping": "STRING"
         }
       }
     },
@@ -3141,639 +4296,30 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata.Type.Person.Natural",
-        "Person.Natural.Place_Of_Birth",
-        "Person.Natural.Full_Name",
-        "Person.Natural.Gender",
         "Person.Natural.Customer_ID",
-        "Person.Natural.Title",
-        "Person.Natural.Type",
-        "Person.Natural.Nationality",
-        "Person.Natural.Full_Name_fuzzy",
-        "Person.Natural.Ethnicity",
+        "Person.Natural.Id",
         "Person.Natural.Date_Of_Birth",
-        "Person.Natural.Name_Qualifier",
-        "Person.Natural.Marital_Status",
+        "Person.Natural.Ethnicity",
+        "Person.Natural.Full_Name",
+        "Person.Natural.Full_Name_fuzzy",
+        "Person.Natural.Gender",
+        "Person.Natural.Height",
         "Person.Natural.Last_Name",
-        "Person.Natural.Religion"
+        "Person.Natural.Marital_Status",
+        "Person.Natural.Name_Qualifier",
+        "Person.Natural.Nationality",
+        "Person.Natural.Place_Of_Birth",
+        "Person.Natural.Religion",
+        "Person.Natural.Title",
+        "Person.Natural.Type"
       ],
       "propertyKeysMappings": {
-        "Metadata.Type.Person.Natural": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Date_Of_Birth": {
-          "mapping": "DEFAULT"
-        },
-        "Person.Natural.Full_Name": {
-          "mapping": "STRING"
-        },
         "Person.Natural.Full_Name_fuzzy": {
           "mapping": "TEXTSTRING",
           "analyzer": {
             "name": "text-analyzer",
             "value": "pg_word_delimiter"
           }
-        },
-        "Person.Natural.Last_Name": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Gender": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Nationality": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Place_Of_Birth": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Religion": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Ethnicity": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Marital_Status": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Name_Qualifier": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Title": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Type": {
-          "mapping": "STRING"
-        },
-        "Person.Natural.Customer_ID": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Phone_Number.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type.Object.Phone_Number",
-        "Object.Phone_Number.Type",
-        "Object.Phone_Number.Raw",
-        "Object.Phone_Number.Numbers_Only",
-        "Object.Phone_Number.Last_7_Digits"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Phone_Number": {
-          "mapping": "STRING"
-        },
-        "Object.Phone_Number.Type": {
-          "mapping": "STRING"
-        },
-        "Object.Phone_Number.Raw": {
-          "mapping": "STRING"
-        },
-        "Object.Phone_Number.Numbers_Only": {
-          "mapping": "DEFAULT"
-        },
-        "Object.Phone_Number.Last_7_Digits": {
-          "mapping": "DEFAULT"
-        }
-      }
-    },
-    {
-      "name": "Object.Email_Address.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type.Object.Email_Address",
-        "Object.Email_Address.Email"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Email_Address": {
-          "mapping": "STRING"
-        },
-        "Object.Email_Address.Email": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Credential.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type.Object.Credential",
-        "Object.Credential.User_Id"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Credential": {
-          "mapping": "STRING"
-        },
-        "Object.Credential.User_Id": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Identity_Card.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Object.Identity_Card.Id_Name",
-        "Object.Identity_Card.Id_Value",
-        "Object.Identity_Card.Id_Type",
-        "Object.Identity_Card.Id_Text",
-        "Metadata.Type.Object.Identity_Card"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Identity_Card": {
-          "mapping": "STRING"
-        },
-        "Object.Identity_Card.Id_Name": {
-          "mapping": "STRING"
-        },
-        "Object.Identity_Card.Id_Value": {
-          "mapping": "STRING"
-        },
-        "Object.Identity_Card.Id_Type": {
-          "mapping": "STRING"
-        },
-        "Object.Identity_Card.Id_Text": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Location.Address.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Location.Address.parser.country",
-        "Location.Address.parser.staircase",
-        "Location.Address.parser.state",
-        "Location.Address.parser.po_box",
-        "Location.Address.parser.postcode",
-        "Location.Address.parser.island",
-        "Location.Address.parser.unit",
-        "Location.Address.parser.world_region",
-        "Location.Address.parser.country_region",
-        "Location.Address.City",
-        "Location.Address.parser.city_district",
-        "Location.Address.parser.road",
-        "Location.Address.parser.house",
-        "Location.Address.Street",
-        "Location.Address.parser.category",
-        "Location.Address.State",
-        "Location.Address.parser.suburb",
-        "Location.Address.parser.city",
-        "Metadata.Type.Location.Address",
-        "Location.Address.parser.near",
-        "Location.Address.parser.level",
-        "Location.Address.Post_Code",
-        "Location.Address.parser.state_district",
-        "Location.Address.parser.entrance",
-        "Location.Address.parser.house_number",
-        "Location.Address.Full_Address",
-        "Location.Address.Neighborhood",
-        "Location.Address.Description",
-        "Location.Address.Type",
-        "Location.Address.Code"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Location.Address": {
-          "mapping": "STRING"
-        },
-        "Location.Address.Street": {
-          "mapping": "STRING"
-        },
-        "Location.Address.City": {
-          "mapping": "STRING"
-        },
-        "Location.Address.State": {
-          "mapping": "STRING"
-        },
-        "Location.Address.Post_Code": {
-          "mapping": "STRING"
-        },
-        "Location.Address.Full_Address": {
-          "mapping": "STRING"
-        },
-        "Location.Address.Neighborhood": {
-          "mapping": "STRING"
-        },
-        "Location.Address.Description": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.house": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.category": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.near": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.house_number": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.road": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.unit": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.level": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.staircase": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.entrance": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.po_box": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.postcode": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.suburb": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.city_district": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.city": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.island": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.state_district": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.state": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.country_region": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.country": {
-          "mapping": "STRING"
-        },
-        "Location.Address.parser.world_region": {
-          "mapping": "STRING"
-        },
-        "Location.Address.Type": {
-          "mapping": "STRING"
-        },
-        "Location.Address.Code": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Privacy_Impact_Assessment.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Object.Privacy_Impact_Assessment.Form_Submission_Id",
-        "Object.Privacy_Impact_Assessment.Form_Submission_Owner_Id",
-        "Object.Privacy_Impact_Assessment.Intrusion_On_Privacy",
-        "Object.Privacy_Impact_Assessment.Risk_To_Individuals",
-        "Object.Privacy_Impact_Assessment.Compliance_Check_Passed",
-        "Object.Privacy_Impact_Assessment.Risk_To_Corporation",
-        "Metadata.Type.Object.Privacy_Impact_Assessment",
-        "Object.Privacy_Impact_Assessment.Delivery_Date",
-        "Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage",
-        "Object.Privacy_Impact_Assessment.Form_Id",
-        "Object.Privacy_Impact_Assessment.Form_Owner_Id",
-        "Object.Privacy_Impact_Assessment.Start_Date"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Privacy_Impact_Assessment": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Impact_Assessment.Risk_To_Individuals": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Impact_Assessment.Intrusion_On_Privacy": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Impact_Assessment.Risk_To_Corporation": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Impact_Assessment.Compliance_Check_Passed": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Impact_Assessment.Form_Owner_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Impact_Assessment.Form_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Impact_Assessment.Form_Submission_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Impact_Assessment.Form_Submission_Owner_Id": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Application.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Object.Application.Description",
-        "Object.Application.Form_Owner_Id",
-        "Object.Application.Form_Submission_Owner_Id",
-        "Metadata.Type.Object.Application",
-        "Object.Application.Start_Date",
-        "Object.Application.Form_Submission_Id",
-        "Object.Application.Stop_Date",
-        "Object.Application.Form_Id",
-        "Object.Application.URL",
-        "Object.Application.Name"
-      ],
-      "propertyKeysMappings": {
-      }
-    },
-    {
-      "name": "Object.Awareness_Campaign.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Object.Awareness_Campaign.Description",
-        "Object.Awareness_Campaign.Form_Owner_Id",
-        "Object.Awareness_Campaign.Form_Submission_Owner_Id",
-        "Metadata.Type.Object.Awareness_Campaign",
-        "Object.Awareness_Campaign.Start_Date",
-        "Object.Awareness_Campaign.Form_Submission_Id",
-        "Object.Awareness_Campaign.Stop_Date",
-        "Object.Awareness_Campaign.Form_Id",
-        "Object.Awareness_Campaign.URL"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Awareness_Campaign": {
-          "mapping": "STRING"
-        },
-        "Object.Awareness_Campaign.Description": {
-          "mapping": "STRING"
-        },
-        "Object.Awareness_Campaign.URL": {
-          "mapping": "STRING"
-        },
-        "Object.Awareness_Campaign.Form_Owner_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Awareness_Campaign.Form_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Awareness_Campaign.Form_Submission_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Awareness_Campaign.Form_Submission_Owner_Id": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Insurance_Policy.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Object.Insurance_Policy.Status",
-        "Object.Insurance_Policy.Property_Type",
-        "Object.Insurance_Policy.Type",
-        "Object.Insurance_Policy.Renewal_Date",
-        "Object.Insurance_Policy.Form_Id",
-        "Object.Insurance_Policy.Number",
-        "Metadata.Type.Object.Insurance_Policy",
-        "Object.Insurance_Policy.Product_Type",
-        "Object.Insurance_Policy.Form_Submission_Id",
-        "Object.Insurance_Policy.Form_Submission_Owner_Id",
-        "Object.Insurance_Policy.Form_Owner_Id"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Insurance_Policy": {
-          "mapping": "STRING"
-        },
-        "Object.Insurance_Policy.Number": {
-          "mapping": "STRING"
-        },
-        "Object.Insurance_Policy.Type": {
-          "mapping": "STRING"
-        },
-        "Object.Insurance_Policy.Status": {
-          "mapping": "STRING"
-        },
-        "Object.Insurance_Policy.Product_Type": {
-          "mapping": "STRING"
-        },
-        "Object.Insurance_Policy.Property_Type": {
-          "mapping": "STRING"
-        },
-        "Object.Insurance_Policy.Form_Owner_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Insurance_Policy.Form_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Insurance_Policy.Form_Submission_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Insurance_Policy.Form_Submission_Owner_Id": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Lawful_Basis.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Object.Lawful_Basis.Description",
-        "Object.Lawful_Basis.Short_Description",
-        "Metadata.Type.Object.Lawful_Basis",
-        "Object.Lawful_Basis.Id"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Lawful_Basis": {
-          "mapping": "STRING"
-        },
-        "Object.Lawful_Basis.Id": {
-          "mapping": "STRING"
-        },
-        "Object.Lawful_Basis.Description": {
-          "mapping": "STRING"
-        },
-        "Object.Lawful_Basis.Short_Description": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Privacy_Notice.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Object.Privacy_Notice.Description",
-        "Object.Privacy_Notice.Who_Is_Collecting",
-        "Object.Privacy_Notice.Info_Collected",
-        "Object.Privacy_Notice.URL",
-        "Object.Privacy_Notice.Id",
-        "Object.Privacy_Notice.Form_Id",
-        "Object.Privacy_Notice.Form_Owner_Id",
-        "Object.Privacy_Notice.Form_Submission_Id",
-        "Object.Privacy_Notice.Form_Submission_Owner_Id",
-        "Object.Privacy_Notice.Effect_On_Individuals",
-        "Object.Privacy_Notice.Why_Is_It_Collected",
-        "Object.Privacy_Notice.Delivery_Date",
-        "Object.Privacy_Notice.How_Is_It_Collected",
-        "Object.Privacy_Notice.How_Will_It_Be_Used",
-        "Metadata.Type.Object.Privacy_Notice",
-        "Object.Privacy_Notice.Who_Will_It_Be_Shared",
-        "Object.Privacy_Notice.Likely_To_Complain",
-        "Object.Privacy_Notice.Number_Of_Records_Monthly",
-        "Object.Privacy_Notice.Country_Where_Stored",
-        "Object.Privacy_Notice.Expiry_Date"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Privacy_Notice": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Id": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.URL": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Info_Collected": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Who_Is_Collecting": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.How_Is_It_Collected": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Why_Is_It_Collected": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.How_Will_It_Be_Used": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Who_Will_It_Be_Shared": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Effect_On_Individuals": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Likely_To_Complain": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Form_Owner_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Form_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Form_Submission_Id": {
-          "mapping": "STRING"
-        },
-        "Object.Privacy_Notice.Form_Submission_Owner_Id": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Person.Employee.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type.Person.Employee",
-        "Person.Employee.Gender",
-        "Person.Employee.Is_GDPR_Role",
-        "Person.Employee.ID",
-        "Person.Employee.Name_Qualifier",
-        "Person.Employee.Religion",
-        "Person.Employee.Marital_Status",
-        "Person.Employee.Title",
-        "Person.Employee.Last_Name",
-        "Person.Employee.Ethnicity",
-        "Person.Employee.Nationality",
-        "Person.Employee.Date_Of_Birth",
-        "Person.Employee.Full_Name",
-        "Person.Employee.Role",
-        "Person.Employee.Place_Of_Birth"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Person.Employee": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.ID": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Role": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Is_GDPR_Role": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Full_Name": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Last_Name": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Gender": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Nationality": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Place_Of_Birth": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Religion": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Ethnicity": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Marital_Status": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Name_Qualifier": {
-          "mapping": "STRING"
-        },
-        "Person.Employee.Title": {
-          "mapping": "STRING"
         }
       }
     },
@@ -3784,245 +4330,26 @@
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Person.Organisation.URL",
-        "Person.Organisation.Short_Name",
         "Metadata.Type.Person.Organisation",
-        "Person.Organisation.Registration_Number",
-        "Person.Organisation.Name",
-        "Person.Organisation.orgCountrySet",
+        "Person.Organisation.Id",
         "Person.Organisation.Department",
-        "Person.Organisation.Phone",
-        "Person.Organisation.Fax",
         "Person.Organisation.Email",
-        "Person.Organisation.Type",
-        "Person.Organisation.Tax_Id",
-        "Person.Organisation.Sector",
+        "Person.Organisation.Fax",
         "Person.Organisation.Form_Id",
         "Person.Organisation.Form_Owner_Id",
         "Person.Organisation.Form_Submission_Id",
-        "Person.Organisation.Form_Submission_Owner_Id"
+        "Person.Organisation.Form_Submission_Owner_Id",
+        "Person.Organisation.Name",
+        "Person.Organisation.Phone",
+        "Person.Organisation.Registration_Number",
+        "Person.Organisation.Sector",
+        "Person.Organisation.Short_Name",
+        "Person.Organisation.Tax_Id",
+        "Person.Organisation.Type",
+        "Person.Organisation.URL",
+        "Person.Organisation.orgCountrySet"
       ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Person.Organisation": {
-          "mapping": "STRING"
-        },
-        "Person.Organisation.Registration_Number": {
-          "mapping": "STRING"
-        },
-        "Person.Organisation.Name": {
-          "mapping": "STRING"
-        },
-        "Person.Organisation.Short_Name": {
-          "mapping": "STRING"
-        },
-        "Person.Organisation.URL": {
-          "mapping": "STRING"
-        },
-        "Person.Organisation.orgCountrySet": {
-          "mapping": "STRING"
-        },
-        "Person.Organisation.Form_Id": {
-          "mapping": "STRING"
-        },
-        "Person.Organisation.Form_Owner_Id": {
-          "mapping": "STRING"
-        },
-        "Person.Organisation.Form_Submission_Id": {
-          "mapping": "STRING"
-        },
-        "Person.Organisation.Form_Submission_Owner_Id": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Event.Consent.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Event.Consent.Metadata.Create_Date",
-        "Event.Consent.Date",
-        "Event.Consent.Metadata.Update_Date",
-        "Event.Consent.Status",
-        "Metadata.Type.Event.Consent"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Event.Consent": {
-          "mapping": "STRING"
-        },
-        "Event.Consent.Status": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Metadata.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type",
-        "Metadata.Create_Date",
-        "Metadata.Lineage_Location_Tag"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Lineage_Location_Tag": {
-          "mapping": "STRING"
-        },
-        "Metadata.Type": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Event.Group_Ingestion.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Event.Group_Ingestion.Operation",
-        "Event.Group_Ingestion.Metadata_End_Date",
-        "Event.Group_Ingestion.Type",
-        "Event.Group_Ingestion.Metadata_Start_Date",
-        "Event.Group_Ingestion.Has_Controller",
-        "Event.Group_Ingestion.Has_Processor",
-        "Event.Group_Ingestion.Has_Data_Owner",
-        "Metadata.Type.Event.Group_Ingestion"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Event.Group_Ingestion": {
-          "mapping": "STRING"
-        },
-        "Event.Group_Ingestion.Type": {
-          "mapping": "STRING"
-        },
-        "Event.Group_Ingestion.Operation": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Event.Ingestion.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Event.Ingestion.Operation",
-        "Event.Ingestion.Type",
-        "Metadata.Type.Event.Ingestion",
-        "Event.Ingestion.Metadata_Create_Date",
-        "Event.Ingestion.Metadata_GUID"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Event.Ingestion": {
-          "mapping": "STRING"
-        },
-        "Event.Ingestion.Metadata_GUID": {
-          "mapping": "STRING"
-        },
-        "Event.Ingestion.Type": {
-          "mapping": "STRING"
-        },
-        "Event.Ingestion.Operation": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Event.Form_Ingestion.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Event.Form_Ingestion.Metadata_GUID",
-        "Event.Form_Ingestion.Metadata_Create_Date",
-        "Event.Form_Ingestion.Operation",
-        "Event.Form_Ingestion.Type",
-        "Metadata.Type.Event.Form_Ingestion"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Event.Form_Ingestion": {
-          "mapping": "STRING"
-        },
-        "Event.Form_Ingestion.Metadata_Create_Date": {
-          "mapping": "STRING"
-        },
-        "Event.Form_Ingestion.Metadata_GUID": {
-          "mapping": "STRING"
-        },
-        "Event.Form_Ingestion.Type": {
-          "mapping": "STRING"
-        },
-        "Event.Form_Ingestion.Operation": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Form.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata.Type.Object.Form",
-        "Object.Form.URL",
-        "Object.Form.Vertex_Label",
-        "Object.Form.Metadata_Owner",
-        "Object.Form.Metadata_GUID"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Form": {
-          "mapping": "STRING"
-        },
-        "Object.Form.Metadata_Owner": {
-          "mapping": "STRING"
-        },
-        "Object.Form.Metadata_GUID": {
-          "mapping": "STRING"
-        },
-        "Object.Form.URL": {
-          "mapping": "STRING"
-        },
-        "Object.Form.Vertex_Label": {
-          "mapping": "STRING"
-        }
-      }
-    },
-    {
-      "name": "Object.Notification_Templates.CompositeIdx",
-      "composite": true,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": null,
-      "propertyKeys": [
-        "Object.Notification_Templates.Id"
-      ]
-    },
-    {
-      "name": "Object.Notification_Templates.MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Object.Notification_Templates.Types",
-        "Metadata.Type.Object.Notification_Templates"
-      ],
-      "propertyKeysMappings": {
-        "Metadata.Type.Object.Notification_Templates": {
-          "mapping": "STRING"
-        },
-        "Object.Notification_Templates.Types": {
-          "mapping": "STRING"
-        }
-      }
+      "propertyKeysMappings": {}
     }
   ]
 }

@@ -3,19 +3,17 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "condition": "${TypeId == 2}",
+        "condition": "${TypeId == 2 && Name != null}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${Name?.trim()?.toUpperCase()}"
-          },
-          {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${Name?.trim()?.toUpperCase()}"
+            "val": "${Name?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${CPF}"
+            "val": "${CPF}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
@@ -26,7 +24,7 @@
       },
       {
         "label": "Person.Organisation",
-        "condition": "${TypeId == 1 && CNPJ != null}",
+        "condition": "${TypeId == 1 && CNPJ != null && Name != null}",
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
@@ -35,7 +33,7 @@
           },
           {
             "name": "Person.Organisation.Name",
-            "val": "${LegalName}"
+            "val": "${(LegalName?.trim()?.length() > 0)?LegalName?.trim().toUpperCase():Name?.trim().toUpperCase() }"
           },
           {
             "name": "Person.Organisation.Short_Name",
@@ -43,7 +41,8 @@
           },
           {
             "name": "Person.Organisation.Id",
-            "val": "${CNPJ}"
+            "val": "${CNPJ}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Organisation.Email",
@@ -89,6 +88,12 @@
             "name": "Location.Address.Type",
             "val": "Business",
             "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
           }
         ]
       },

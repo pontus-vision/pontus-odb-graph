@@ -659,7 +659,7 @@ status: "success", message: "Data source is working", title: "Success"
   @Consumes(MediaType.APPLICATION_JSON)
 
   public String mappingPost(MappingReq request) {
-    return App.g.V().addV("Object.Data_Source_Mapping_Rule")
+    return App.g.V().addV("Object.Data_Src_Mapping_Rule")
         .property("Name", "")
         .property("Create_Date", "")
         .property("Update_Date", "")
