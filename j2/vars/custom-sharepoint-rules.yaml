@@ -233,7 +233,7 @@ rules:
         Type_Of_Natural_Person:
           val: "${Categoria_x0020_dos_x0020_titula}"
           excludeFromSearch: true
-        BusinessAreaResponsible: "${_x00c1_rea - Respons_x00e1_velLookupId}"
+        BusinessAreaResponsible: "${_x00c1_rea} - ${Respons_x00e1_velLookupId}"
         MacroProcessName: "${Processo}"
         Country_Where_Stored:
           val: "${Pa_x00ed_s_x0020_onde_x0020_as_x}"

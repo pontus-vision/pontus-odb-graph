@@ -29,7 +29,7 @@ updatereq:
           val: ${Categoria_x0020_dos_x0020_titula}
           excludeFromSearch: True
         - name: Object.Data_Procedures.BusinessAreaResponsible
-          val: ${_x00c1_rea - Respons_x00e1_velLookupId}
+          val: ${_x00c1_rea} - ${Respons_x00e1_velLookupId}
         - name: Object.Data_Procedures.MacroProcessName
           val: ${Processo}
         - name: Object.Data_Procedures.Country_Where_Stored

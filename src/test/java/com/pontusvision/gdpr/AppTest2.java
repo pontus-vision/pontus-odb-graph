@@ -245,6 +245,15 @@ public class AppTest2  extends AppTest{
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals("6", countObjectDataPolicy);
 
+      String businessAreaResponsible =
+              App.executor.eval("App.g.V().has('Object.Data_Procedures.BusinessAreaResponsible'" +
+                      ", eq('Distribuidores - 31')).next().id().toString()").get().toString();
+
+      String whyItIsCollectedValues =
+              App.executor.eval("App.g.V().values('Object.Data_Procedures.Why_Is_It_Collected')" +
+                      ".next()").get().toString();
+      System.out.println("***************************************************\n" + whyItIsCollectedValues);
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
