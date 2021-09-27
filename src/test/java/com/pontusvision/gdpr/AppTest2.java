@@ -210,6 +210,9 @@ public class AppTest2  extends AppTest{
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals("7", countObjectDataPolicy);
 
+      // "id": "6" @ pv-extract-sharepoint-fontes-de-dados.json
+      System.out.println(App.executor.eval("App.g.V().values('Object.Data_Source.Description').next()").get().toString());
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
