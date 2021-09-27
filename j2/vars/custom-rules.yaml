@@ -599,6 +599,7 @@ rules:
         toVertexName: business_addr
 
 
+<<<<<<< HEAD
   ploomes_clientes:
     vertices:
       - label: Person.Natural
@@ -727,6 +728,8 @@ rules:
         fromVertexLabel: "Person.Organisation"
         toVertexLabel: "Location.Address"
 
+=======
+>>>>>>> origin/master
   salesforce:
     vertices:
       - label: "Person.Natural"
@@ -735,15 +738,15 @@ rules:
             val: "${FirstName?.toUpperCase()?.trim()} ${LastName?.toUpperCase()?.trim()}"
             predicate: "eq"
             mandatoryInSearch: true
-            
+
           Full_Name_fuzzy:
             val: "${FirstName?.toUpperCase()?.trim()} ${LastName?.toUpperCase()?.trim()}"
             excludeFromSearch: true
-          
+
           Last_Name:
             val: "${LastName?.toUpperCase()?.trim()}"
             excludeFromSubsequenceSearch: true
-           
+
           Date_Of_Birth:
             val: "${Birthdate?:'1666-01-01'}"
             type: "java.util.Date"
@@ -757,7 +760,7 @@ rules:
           Nationality:
             val: "${MailingCountry?:'Unknown'}"
             excludeFromSearch: true
-            
+
           Customer_ID:
             val: "${Id}"
             mandatoryInSearch: true
@@ -930,6 +933,7 @@ rules:
       - label: "Has_Privacy_Notice"
         fromVertexLabel: "Event.Consent"
         toVertexLabel: "Object.Privacy_Notice"
+<<<<<<< HEAD
 
   Fornecedor_SAP_PosVenda_POLARIS:
     vertices:
@@ -1328,3 +1332,5 @@ rules:
 
 
 
+=======
+>>>>>>> origin/master

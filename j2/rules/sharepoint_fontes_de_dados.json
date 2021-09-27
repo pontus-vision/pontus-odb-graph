@@ -2,36 +2,87 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Event.Training",
+        "label": "Object.Data_Source",
+        "name": "sharepoint",
         "props": [
           {
-            "name": "Event.Training.Status",
-            "val": "Passed",
+            "name": "Object.Data_Source.Name",
+            "val": "sharepoint/fontes-de-dados"
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "sharepoint/fontes-de-dados"
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Registros das Fontes de Dados LGPD"
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "name": "fontes_de_dados",
+        "condition": "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "${Title}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Engine",
+            "val": "${Sistema}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "${Tipo_x0020_Sistema}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Domain",
+            "val": "${Tabela}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.URI_Delete",
+            "val": "${URL_x0020_Prefixo_x0020_Delete}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.URI_Update",
+            "val": "${URL_x0020_Prefixo_x0020_Update}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.URI_Read",
+            "val": "${URL_x0020_Prefixo_x0020_Read}",
             "excludeFromSearch": true
           }
         ]
       },
       {
-        "label": "Object.Awareness_Campaign",
+        "label": "Object.Data_Policy",
         "props": [
           {
-            "name": "Object.Awareness_Campaign.Description",
-            "val": "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}",
+            "name": "Object.Data_Policy.Update_Frequency",
+            "val": "${Frequ_x00ea_ncia_x0020_de_x0020_}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Policy.Retention_Period",
+            "val": "${Pol_x00ed_tica_x0020_de_x0020_Re}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Awareness_Campaign.Start_Date",
-            "val": "${Realizadoem}",
-            "type": "java.util.Date"
-          }
-        ]
-      },
-      {
-        "label": "Person.Employee",
-        "props": [
-          {
-            "name": "Person.Employee.Full_Name",
-            "val": "${Nome0?.trim()?.toUpperCase()}"
+            "name": "Object.Data_Policy.Type",
+            "val": "${Title}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -40,7 +91,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sharepoint/treinamentos",
+            "val": "sharepoint/fontes-de-dados",
             "excludeFromSearch": true
           },
           {
@@ -84,7 +135,7 @@
           },
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sharepoint/treinamentos",
+            "val": "sharepoint/fontes-de-dados",
             "mandatoryInSearch": true
           },
           {
@@ -98,43 +149,18 @@
             "mandatoryInSearch": true
           }
         ]
-      },
-      {
-        "label": "Object.Data_Source",
-        "props": [
-          {
-            "name": "Object.Data_Source.Name",
-            "val": "sharepoint/treinamentos",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sharepoint/treinamentos",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros de Treinamentos LGPD Colaboradores",
-            "mandatoryInSearch": true
-          }
-        ]
       }
     ],
     "edges": [
       {
-        "label": "Course_Training",
-        "fromVertexLabel": "Event.Training",
-        "toVertexLabel": "Object.Awareness_Campaign"
-      },
-      {
-        "label": "Completed_By",
-        "fromVertexLabel": "Event.Training",
-        "toVertexLabel": "Person.Employee"
+        "label": "Policy",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexLabel": "Object.Data_Policy"
       },
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event.Ingestion",
-        "toVertexLabel": "Event.Training"
+        "toVertexName": "fontes_de_dados"
       },
       {
         "label": "Has_Ingestion_Event",
@@ -143,7 +169,7 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
+        "fromVertexName": "sharepoint",
         "toVertexLabel": "Event.Group_Ingestion"
       }
     ]

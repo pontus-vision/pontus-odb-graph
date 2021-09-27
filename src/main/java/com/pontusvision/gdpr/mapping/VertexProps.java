@@ -12,7 +12,7 @@ import java.util.Objects;
 public class VertexProps {
   private @Valid String name = null;
   private @Valid String val = null;
-  private @Valid PredicateEnum predicate = PredicateEnum.EQ;
+  private @Valid String predicate = PredicateEnum.EQ.toString();
   private @Valid Boolean mandatoryInSearch = false;
   private @Valid Boolean excludeFromSubsequenceSearch = false;
   private @Valid Boolean excludeFromSearch = false;
@@ -95,20 +95,36 @@ public class VertexProps {
    * the operation that needs to be executed to compare the value with existing records for upsert operations (e.g. eq, neq, gt, lt, gte, lte, textContains, textContainsPrefix)
    **/
   public VertexProps predicate(PredicateEnum predicate) {
-    this.predicate = predicate;
+    this.predicate = predicate.toString();
+    return this;
+  }
+
+  public VertexProps predicate(String predicate) throws Exception {
+    if (predicate.startsWith("idx")|| PredicateEnum.fromValue(predicate)!= null){
+      this.predicate = predicate;
+    }
+    else {
+      throw new Exception("Invalid Predicate ${predicate}");
+
+    }
+
     return this;
   }
 
   //  @ApiModelProperty(example = "eq", value = "the operation that needs to be executed to compare the value with existing records for upsert operations (e.g. eq, neq, gt, lt, gte, lte, textContains, textContainsPrefix)")
   @JsonProperty("predicate")
 
-  public PredicateEnum getPredicate() {
+  public String getPredicate() {
     return predicate;
   }
 
   public void setPredicate(PredicateEnum predicate) {
-    this.predicate = predicate;
+    this.predicate = predicate.value();
   }
+  public void setPredicate(String predicate) throws Exception {
+    this.predicate( predicate);
+  }
+
 
   /**
    *
@@ -280,7 +296,8 @@ public class VertexProps {
 
   public enum PredicateEnum {
 
-    EQ("eq"), NEQ("neq"), GT("gt"), LT("lt"), GTE("gte"), LTE("lte"), TEXTCONTAINS("textContains"), TEXTCONTAINSPREFIX("textContainsPrefix");
+    EQ("eq"), NEQ("neq"), GT("gt"), LT("lt"), GTE("gte"), LTE("lte"), TEXTCONTAINS("textContains"),
+    TEXTCONTAINSPREFIX("textContainsPrefix");
 
 
     private final String value;
