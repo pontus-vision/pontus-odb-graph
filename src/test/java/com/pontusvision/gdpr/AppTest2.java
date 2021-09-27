@@ -250,11 +250,8 @@ public class AppTest2  extends AppTest{
                       ".next().id().toString()").get().toString();
       String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 +"\").bothE().count().next().toString()";
       String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
-<<<<<<< HEAD
-      assertEquals(comidas2Connections,"4");
-=======
       assertEquals("5",comidas2Connections);
->>>>>>> origin/master
+
 
 //    test COUNT(Edges) for Object.Email_Address
       String userId4 =
