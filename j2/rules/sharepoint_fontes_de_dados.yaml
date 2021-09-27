@@ -2,30 +2,61 @@
 updatereq:
   vertices:
     
-    - label: Event.Training
+    - label: Object.Data_Source
+      name: sharepoint
       props:
-        - name: Event.Training.Status
-          val: Passed
-          excludeFromSearch: True
+        - name: Object.Data_Source.Name
+          val: sharepoint/fontes-de-dados
+        - name: Object.Data_Source.Type
+          val: sharepoint/fontes-de-dados
+        - name: Object.Data_Source.Description
+          val: Registros das Fontes de Dados LGPD
     
-    - label: Object.Awareness_Campaign
+    - label: Object.Data_Source
+      name: fontes_de_dados
+      condition: ${Descri_x00e7__x00e3_o?.trim()?.length() > 0}
       props:
-        - name: Object.Awareness_Campaign.Description
+        - name: Object.Data_Source.Name
+          val: ${Title}
+          mandatoryInSearch: True
+        - name: Object.Data_Source.Description
           val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Object.Awareness_Campaign.Start_Date
-          val: ${Realizadoem}
-          type: "java.util.Date"
+        - name: Object.Data_Source.Engine
+          val: ${Sistema}
+          excludeFromSearch: True
+        - name: Object.Data_Source.Type
+          val: ${Tipo_x0020_Sistema}
+          excludeFromSearch: True
+        - name: Object.Data_Source.Domain
+          val: ${Tabela}
+          excludeFromSearch: True
+        - name: Object.Data_Source.URI_Delete
+          val: ${URL_x0020_Prefixo_x0020_Delete}
+          excludeFromSearch: True
+        - name: Object.Data_Source.URI_Update
+          val: ${URL_x0020_Prefixo_x0020_Update}
+          excludeFromSearch: True
+        - name: Object.Data_Source.URI_Read
+          val: ${URL_x0020_Prefixo_x0020_Read}
+          excludeFromSearch: True
     
-    - label: Person.Employee
+    - label: Object.Data_Policy
       props:
-        - name: Person.Employee.Full_Name
-          val: ${Nome0?.trim()?.toUpperCase()}
+        - name: Object.Data_Policy.Update_Frequency
+          val: ${Frequ_x00ea_ncia_x0020_de_x0020_}
+          excludeFromSearch: True
+        - name: Object.Data_Policy.Retention_Period
+          val: ${Pol_x00ed_tica_x0020_de_x0020_Re}
+          mandatoryInSearch: True
+        - name: Object.Data_Policy.Type
+          val: ${Title}
+          mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sharepoint/treinamentos
+          val: sharepoint/fontes-de-dados
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
@@ -53,7 +84,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Type
-          val: sharepoint/treinamentos
+          val: sharepoint/fontes-de-dados
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
@@ -61,33 +92,18 @@ updatereq:
         - name: Event.Group_Ingestion.Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
-    
-    - label: Object.Data_Source
-      props:
-        - name: Object.Data_Source.Name
-          val: sharepoint/treinamentos
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: sharepoint/treinamentos
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros de Treinamentos LGPD Colaboradores
-          mandatoryInSearch: True
 
   edges:
-  - label: Course_Training
-    fromVertexLabel: Event.Training
-    toVertexLabel: Object.Awareness_Campaign
-  - label: Completed_By
-    fromVertexLabel: Event.Training
-    toVertexLabel: Person.Employee
+  - label: Policy
+    fromVertexName: fontes_de_dados
+    toVertexLabel: Object.Data_Policy
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Ingestion
-    toVertexLabel: Event.Training
+    toVertexName: fontes_de_dados
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object.Data_Source
+    fromVertexName: sharepoint
     toVertexLabel: Event.Group_Ingestion
 

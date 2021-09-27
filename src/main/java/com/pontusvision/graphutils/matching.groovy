@@ -1036,12 +1036,12 @@ class Matcher {
     static com.pontusvision.gdpr.mapping.Rules getRule(String rulesName) {
         def hasEntry =
                 (App.g.V()
-                        .has("Metadata.Type", "Object.Data_Source_Mapping_Rule")
-                        .has("Metadata.Type.Object.Data_Source_Mapping_Rule",
-                                P.eq("Object.Data_Source_Mapping_Rule"))
-                        .has("Object.Data_Source_Mapping_Rule.Name", P.eq(rulesName))
+                        .has("Metadata.Type", "Object.Data_Src_Mapping_Rule")
+                        .has("Metadata.Type.Object.Data_Src_Mapping_Rule",
+                                P.eq("Object.Data_Src_Mapping_Rule"))
+                        .has("Object.Data_Src_Mapping_Rule.Name", P.eq(rulesName))
                         .next()
-                        .property("Object.Data_Source_Mapping_Rule.Business_Rules_JSON")
+                        .property("Object.Data_Src_Mapping_Rule.Business_Rules_JSON")
                         .value()
 
                 )
@@ -1125,26 +1125,26 @@ class Matcher {
             String id = null
             try{
                 id = (g.V()
-                        .has("Metadata.Type", "Object.Data_Source_Mapping_Rule")
-                        .has("Metadata.Type.Object.Data_Source_Mapping_Rule",
-                                P.eq("Object.Data_Source_Mapping_Rule"))
-                        .has("Object.Data_Source_Mapping_Rule.Name", P.eq(ruleName))
+                        .has("Metadata.Type", "Object.Data_Src_Mapping_Rule")
+                        .has("Metadata.Type.Object.Data_Src_Mapping_Rule",
+                                P.eq("Object.Data_Src_Mapping_Rule"))
+                        .has("Object.Data_Src_Mapping_Rule.Name", P.eq(ruleName))
                         .next()
                         .id().toString());
             }
             catch(Throwable t){}
 
             if (!id) {
-                def localG = g.addV("Object.Data_Source_Mapping_Rule")
-                        .property("Metadata.Type", "Object.Data_Source_Mapping_Rule")
-                        .property("Metadata.Type.Object.Data_Source_Mapping_Rule", "Object.Data_Source_Mapping_Rule")
-                        .property("Object.Data_Source_Mapping_Rule.Name", ruleName)
-                        .property("Object.Data_Source_Mapping_Rule.Business_Rules_JSON", ruleStr)
-                        .property("Object.Data_Source_Mapping_Rule.Update_Date", new Date())
+                def localG = g.addV("Object.Data_Src_Mapping_Rule")
+                        .property("Metadata.Type", "Object.Data_Src_Mapping_Rule")
+                        .property("Metadata.Type.Object.Data_Src_Mapping_Rule", "Object.Data_Src_Mapping_Rule")
+                        .property("Object.Data_Src_Mapping_Rule.Name", ruleName)
+                        .property("Object.Data_Src_Mapping_Rule.Business_Rules_JSON", ruleStr)
+                        .property("Object.Data_Src_Mapping_Rule.Update_Date", new Date())
 
 
                 sb.append("\nAdded a new Entry for ${ruleName}")
-                localG = localG.property("Object.Data_Source_Mapping_Rule.Create_Date", new Date());
+                localG = localG.property("Object.Data_Src_Mapping_Rule.Create_Date", new Date());
                 id = localG.next().id().toString()
 
             }
@@ -1152,7 +1152,7 @@ class Matcher {
                 sb.append("\nUpdating exiting Entry for ${ruleName}; id = ${id}")
 
                 g.V(id)
-                 .property("Object.Data_Source_Mapping_Rule.Business_Rules_JSON", ruleStr)
+                 .property("Object.Data_Src_Mapping_Rule.Business_Rules_JSON", ruleStr)
                  .next();
 
             }
@@ -1462,7 +1462,8 @@ class Matcher {
 
     }
 
-    static addNewVertexFromMatchReqs(GraphTraversalSource g, String vertexTypeStr, List<MatchReq> matchReqsForThisVertexType, StringBuffer sb = null) {
+    static addNewVertexFromMatchReqs(GraphTraversalSource g, String vertexTypeStr, List<MatchReq> matchReqsForThisVertexType,
+                                     StringBuffer sb = null) {
 
         def localTrav = g
 
@@ -1498,7 +1499,9 @@ class Matcher {
     }
 
 
-    static updateExistingVertexWithMatchReqs(GraphTraversalSource g, Map<ORID, AtomicDouble> vertices, List<MatchReq> matchReqsForThisVertexType, double scoreThreshold, StringBuffer sb = null) {
+    static updateExistingVertexWithMatchReqs(GraphTraversalSource g, Map<ORID, AtomicDouble> vertices,
+                                             List<MatchReq> matchReqsForThisVertexType, double scoreThreshold,
+                                             StringBuffer sb = null) {
 
         GraphTraversal localTrav
         def deletionTrav = g

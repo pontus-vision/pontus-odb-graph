@@ -3,11 +3,15 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "condition": "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}",
+        "condition": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
             "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
           },
           {
             "name": "Person.Natural.Type",
@@ -18,11 +22,11 @@
       },
       {
         "label": "Object.Identity_Card",
-        "condition": "${Tax_Number_1?.trim()?.length() == 11 || Tax_Number_2?.trim()?.length() == 11}",
+        "condition": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}",
+            "val": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
@@ -34,11 +38,11 @@
       },
       {
         "label": "Person.Organisation",
-        "condition": "${Tax_Number_1?.trim()?.length() == 14 || Tax_Number_2?.trim()?.length() == 14}",
+        "condition": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14}",
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
-            "val": "${Tax_Number_1?.trim() || Tax_Number_2?.trim()}",
+            "val": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
@@ -48,16 +52,20 @@
         ]
       },
       {
-        "label": "Person.Identity",
-        "condition": "${(!Tax_Number_1 && !Tax_Number_2) || (Tax_Number_1.trim().length() != 11 && Tax_Number_2.trim().length() != 11) || (Tax_Number_1.trim().length() != 14 && Tax_Number_2.trim().length() != 14) || Tax_Number_1.trim().matches('.*[a-zA-Z]+.*') || Tax_Number_2.trim().matches('.*[a-zA-Z]+.*')}",
+        "label": "Person.Natural",
+        "condition": "${!(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14)}",
         "props": [
           {
-            "name": "Person.Identity.Full_Name",
+            "name": "Person.Natural.Full_Name",
             "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
           },
           {
-            "name": "Person.Identity.Title",
-            "val": "Clientes Estrangeiros",
+            "name": "Person.Natural.Customer_ID",
+            "val": "${Customer}"
+          },
+          {
+            "name": "Person.Natural.Type",
+            "val": "Clientes Sem Tax",
             "excludeFromSearch": true
           }
         ]
@@ -65,7 +73,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "phone",
-        "condition": "${Telephone_1}",
+        "condition": "${Telephone_1?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -93,7 +101,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "phone2",
-        "condition": "${Telephone_2}",
+        "condition": "${Telephone_2?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -127,9 +135,10 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Location.Address.Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(PostalCode)}",
-            "excludeFromSearch": true
+            "name": "Location.Address.parser",
+            "val": "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
           }
         ]
       },
@@ -240,6 +249,31 @@
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Object.Data_Source",
         "toVertexLabel": "Event.Group_Ingestion"
+      },
+      {
+        "label": "Has_Phone_Number",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexName": "phone"
+      },
+      {
+        "label": "Has_Phone_Number",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexName": "phone2"
+      },
+      {
+        "label": "Has_Phone_Number",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "phone"
+      },
+      {
+        "label": "Has_Phone_Number",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "phone2"
+      },
+      {
+        "label": "Has_Identity_Card",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Identity_Card"
       }
     ]
   }

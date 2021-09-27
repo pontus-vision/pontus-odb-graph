@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>com.pontusvision.gdpr</name>
-    <url>http://maven.apache.org</url>
+    <url>https://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,17 +24,20 @@
         <hadoop2.version>2.7.2</hadoop2.version>
 
         <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
-        <junit.version>4.12</junit.version>
+        <junit.jupiter.version>5.7.2</junit.jupiter.version>
+        <junit.platform.version>1.7.2</junit.platform.version>
+<!--        <junit.version>4.12</junit.version>-->
         <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
         <fmt-maven-plugin.version>2.1.0</fmt-maven-plugin.version>
-        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
         <mockito-all.version>1.10.19</mockito-all.version>
         <jukito.version>1.5</jukito.version>
         <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
         <pontus-natty.version>100.14</pontus-natty.version>
         <netty-version>4.1.44.Final</netty-version>
-        <orientdb-version>3.1.10</orientdb-version>
+        <orientdb-version>3.1.12</orientdb-version>
         <!--guava-version>30.1.1-jre</guava-version-->
         <guava-version>25.0-jre</guava-version>
         <aws-lambda-version>1.5.2</aws-lambda-version>
@@ -505,11 +508,24 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
 
 
         <dependency>
@@ -653,6 +669,10 @@
             <scope>test</scope>
             <exclusions>
                 <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.mockito</groupId>
                     <artifactId>mockito-core</artifactId>
                 </exclusion>
@@ -686,7 +706,7 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-                <version>3.5.1</version>
+                <version>${maven-compiler-plugin.version}</version>
             </plugin>
             <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -804,7 +824,7 @@
                                         <X-Compile-Target-JDK>1.8</X-Compile-Target-JDK>
 
                                         <Manifest-Version>1.0</Manifest-Version>
-                                        <Bundle-License>http://www.opensource.org/licenses/Apache-2.0</Bundle-License>
+                                        <Bundle-License>https://www.opensource.org/licenses/Apache-2.0</Bundle-License>
                                         <Bundle-SymbolicName>com.orientechnologies.orientdb-gremlin
                                         </Bundle-SymbolicName>
                                         <Archiver-Version>Plexus Archiver</Archiver-Version>
@@ -912,19 +932,19 @@
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.7</version>
                 <configuration>
-                    <ignoreVersions>
-                        <ignoreVersion type="regex">.*atlassian-2</ignoreVersion>
-                        <ignoreVersion type="regex">.*Alpha2</ignoreVersion>
-                        <ignoreVersion type="regex">.*alpha1</ignoreVersion>
-                        <ignoreVersion type="regex">alpha1</ignoreVersion>
-                        <ignoreVersion type="regex">.*ALPHA</ignoreVersion>
-                        <ignoreVersion type="regex">.*alpha</ignoreVersion>
-                        <ignoreVersion type="regex">.*alpha[0-9]</ignoreVersion>
-                        <ignoreVersion type="regex">.*beta[0-9]</ignoreVersion>
-                        <ignoreVersion type="regex">.*beta</ignoreVersion>
-                        <ignoreVersion type="regex">.*BETA</ignoreVersion>
-                        <ignoreVersion type="regex">20030203.*</ignoreVersion>
-                    </ignoreVersions>
+<!--                    <ignoreVersions>-->
+<!--                        <ignoreVersion type="regex">.*atlassian-2</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">.*Alpha2</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">.*alpha1</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">alpha1</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">.*ALPHA</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">.*alpha</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">.*alpha[0-9]</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">.*beta[0-9]</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">.*beta</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">.*BETA</ignoreVersion>-->
+<!--                        <ignoreVersion type="regex">20030203.*</ignoreVersion>-->
+<!--                    </ignoreVersions>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -944,7 +964,11 @@
                     </execution>
                 </executions>
             </plugin>
-         
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+
         </plugins>
 
     </build>

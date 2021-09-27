@@ -57,6 +57,7 @@ public class Ingestion {
     String retVal  = StringReplacer.replaceAll(headerSub, (" .;:-"), "_");
     retVal = java.text.Normalizer.normalize(retVal,  java.text.Normalizer.Form.NFD);
     retVal = retVal.replaceAll("\\p{M}", "");
+    retVal = retVal.replaceAll("[^\\p{ASCII}]", "");
     return retVal;
   }
 

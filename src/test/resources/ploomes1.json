@@ -3,12 +3,12 @@
   "value": [
     {
       "Id": 13181008,
-      "TypeId": 1,
+      "TypeId": 2,
       "Name": "COMIDAS 1",
       "LegalName": "Subaru automotiva",
       "Register": null,
-      "CNPJ": 100985674,
-      "CPF": "CPF1",
+      "CNPJ": null,
+      "CPF": "100985674",
       "StatusId": 109656,
       "CompanyId": null,
       "RelationshipId": null,
@@ -129,7 +129,7 @@
 
     {
       "Id": 13181012,
-      "TypeId": 1,
+      "TypeId": 2,
       "Name": "Pessoa Nova3",
       "LegalName": null,
       "Register": null,
@@ -191,7 +191,7 @@
     },
     {
       "Id": 13181013,
-      "TypeId": 1,
+      "TypeId": 2,
       "Name": "Pessoa Nova4",
       "LegalName": null,
       "Register": null,
@@ -253,7 +253,7 @@
     },
     {
       "Id": 13181014,
-      "TypeId": 1,
+      "TypeId": 2,
       "Name": "Pessoa Nova5",
       "LegalName": null,
       "Register": null,

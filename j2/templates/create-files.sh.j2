@@ -10,7 +10,7 @@ mkdir -p "${DIR}/rules"
 
 cat $1 | jinja2 --strict \
    -DcurrRule={{currRule}} \
-   -DfileHeaders='DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDEN BY THE J2 DIR TEMPLATES' \
+   -DfileHeaders='DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES' \
    -o "${DIR}/rules/{{currRule}}.yaml" templates/rules.yaml.j2
 
 yq . "${DIR}/rules/{{currRule}}.yaml"  >  "${DIR}/rules/{{currRule}}.json"

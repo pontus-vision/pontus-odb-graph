@@ -259,17 +259,17 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Metadata.Type.Event.Email_Message_Group",
+      "name": "Metadata.Type.Event.Email_Msg_Group",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.Email_Message_Group.Type",
+      "name": "Event.Email_Msg_Group.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.Email_Message_Group.Ingestion_Date",
+      "name": "Event.Email_Msg_Group.Ingestion_Date",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -500,6 +500,11 @@
     },
     {
       "name": "Event.Group_Ingestion.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Group_Ingestion.Ingestion_Date",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1189,7 +1194,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Policy.CreateDate",
+      "name": "Object.Data_Policy.Create_Date",
       "dataType": "Date",
       "cardinality": "SINGLE"
     },
@@ -1234,8 +1239,13 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Policy.UpdateDate",
+      "name": "Object.Data_Policy.Update_Date",
       "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Data_Policy.Update_Frequency",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -1459,52 +1469,52 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Metadata.Type.Object.Data_Source_Mapping_Rule",
+      "name": "Metadata.Type.Object.Data_Src_Mapping_Rule",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.Type",
+      "name": "Object.Data_Src_Mapping_Rule.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.Business_Rules_JSON",
+      "name": "Object.Data_Src_Mapping_Rule.Business_Rules_JSON",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.Create_Date",
+      "name": "Object.Data_Src_Mapping_Rule.Create_Date",
       "dataType": "Date",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.Form_Id",
+      "name": "Object.Data_Src_Mapping_Rule.Form_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.Form_Owner_Id",
+      "name": "Object.Data_Src_Mapping_Rule.Form_Owner_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.Form_Submission_Id",
+      "name": "Object.Data_Src_Mapping_Rule.Form_Submission_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.Form_Submission_Owner_Id",
+      "name": "Object.Data_Src_Mapping_Rule.Form_Submission_Owner_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.Name",
+      "name": "Object.Data_Src_Mapping_Rule.Name",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.Update_Date",
+      "name": "Object.Data_Src_Mapping_Rule.Update_Date",
       "dataType": "Date",
       "cardinality": "SINGLE"
     },
@@ -1550,6 +1560,11 @@
     },
     {
       "name": "Object.Email_Message_Attachment.Attachment_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Attachment.Attachment_Content_Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -2811,7 +2826,7 @@
       "useStatic": false
     },
     {
-      "name": "Event.Email_Message_Group",
+      "name": "Event.Email_Msg_Group",
       "partition": false,
       "useStatic": false
     },
@@ -2936,7 +2951,7 @@
       "useStatic": false
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule",
+      "name": "Object.Data_Src_Mapping_Rule",
       "partition": false,
       "useStatic": false
     },
@@ -3069,6 +3084,36 @@
     },
     {
       "name": "Event_Training_Person",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_To",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_From",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_CC",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_BCC",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_Body",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Email_Attachment",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -3372,14 +3417,14 @@
       "propertyKeysMappings": {}
     },
     {
-      "name": "Event.Email_Message_Group.MixedIdx",
+      "name": "Event.Email_Msg_Group.MixedIdx",
       "composite": false,
       "unique": false,
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Metadata.Type.Event.Email_Message_Group",
-        "Event.Email_Message_Group.Ingestion_Date"
+        "Metadata.Type.Event.Email_Msg_Group",
+        "Event.Email_Msg_Group.Ingestion_Date"
       ],
       "propertyKeysMappings": {}
     },
@@ -3486,7 +3531,8 @@
         "Event.Group_Ingestion.Metadata_End_Date",
         "Event.Group_Ingestion.Metadata_Start_Date",
         "Event.Group_Ingestion.Operation",
-        "Event.Group_Ingestion.Type"
+        "Event.Group_Ingestion.Type",
+        "Event.Group_Ingestion.Ingestion_Date"
       ],
       "propertyKeysMappings": {}
     },
@@ -3756,7 +3802,7 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata.Type.Object.Data_Policy",
-        "Object.Data_Policy.CreateDate",
+        "Object.Data_Policy.Create_Date",
         "Object.Data_Policy.Description",
         "Object.Data_Policy.Form_Id",
         "Object.Data_Policy.Form_Owner_Id",
@@ -3765,7 +3811,8 @@
         "Object.Data_Policy.Name",
         "Object.Data_Policy.Retention_Period",
         "Object.Data_Policy.Type",
-        "Object.Data_Policy.UpdateDate"
+        "Object.Data_Policy.Update_Date",
+        "Object.Data_Policy.Update_Frequency"
       ],
       "propertyKeysMappings": {}
     },
@@ -3832,21 +3879,21 @@
       "propertyKeysMappings": {}
     },
     {
-      "name": "Object.Data_Source_Mapping_Rule.MixedIdx",
+      "name": "Object.Data_Src_Mapping_Rule.MixedIdx",
       "composite": false,
       "unique": false,
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Metadata.Type.Object.Data_Source_Mapping_Rule",
-        "Object.Data_Source_Mapping_Rule.Business_Rules_JSON",
-        "Object.Data_Source_Mapping_Rule.Create_Date",
-        "Object.Data_Source_Mapping_Rule.Form_Id",
-        "Object.Data_Source_Mapping_Rule.Form_Owner_Id",
-        "Object.Data_Source_Mapping_Rule.Form_Submission_Id",
-        "Object.Data_Source_Mapping_Rule.Form_Submission_Owner_Id",
-        "Object.Data_Source_Mapping_Rule.Name",
-        "Object.Data_Source_Mapping_Rule.Update_Date"
+        "Metadata.Type.Object.Data_Src_Mapping_Rule",
+        "Object.Data_Src_Mapping_Rule.Business_Rules_JSON",
+        "Object.Data_Src_Mapping_Rule.Create_Date",
+        "Object.Data_Src_Mapping_Rule.Form_Id",
+        "Object.Data_Src_Mapping_Rule.Form_Owner_Id",
+        "Object.Data_Src_Mapping_Rule.Form_Submission_Id",
+        "Object.Data_Src_Mapping_Rule.Form_Submission_Owner_Id",
+        "Object.Data_Src_Mapping_Rule.Name",
+        "Object.Data_Src_Mapping_Rule.Update_Date"
       ],
       "propertyKeysMappings": {}
     },
@@ -3874,6 +3921,7 @@
         "Metadata.Type.Object.Email_Message_Attachment",
         "Object.Email_Message_Attachment.Email_Id",
         "Object.Email_Message_Attachment.Attachment_Id",
+        "Object.Email_Message_Attachment.Attachment_Content_Type",
         "Object.Email_Message_Attachment.MetadataController",
         "Object.Email_Message_Attachment.MetadataGDPRStatus",
         "Object.Email_Message_Attachment.MetadataLineage",

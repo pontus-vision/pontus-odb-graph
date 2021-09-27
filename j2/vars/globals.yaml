@@ -1,4 +1,4 @@
-fileHeaders: 'DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDEN BY THE J2 DIR TEMPLATES'
+fileHeaders: 'DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES'
 
 schema:
   propertyKeys:
@@ -106,7 +106,7 @@ schema:
         - name: Operation
         - name: Type
 
-    - name: "Event.Email_Message_Group"
+    - name: "Event.Email_Msg_Group"
       partition: false
       useStatic: false
       props:
@@ -189,6 +189,7 @@ schema:
           dataType: Date
         - name: Operation
         - name: Type
+        - name: Ingestion_Date
 
     - name: "Event.Ingestion"
       partition: false
@@ -391,7 +392,7 @@ schema:
       partition: false
       useStatic: false
       props:
-        - name: CreateDate
+        - name: Create_Date
           dataType: Date
 
         - name: Description
@@ -402,8 +403,9 @@ schema:
         - name: Name
         - name: Retention_Period
         - name: Type
-        - name: UpdateDate
+        - name: Update_Date
           dataType: Date
+        - name: Update_Frequency
 
     - name: "Object.Data_Procedures"
       partition: false
@@ -459,7 +461,7 @@ schema:
           dataType: Date
 
 
-    - name: "Object.Data_Source_Mapping_Rule"
+    - name: "Object.Data_Src_Mapping_Rule"
       partition: false
       useStatic: false
       props:
@@ -489,6 +491,7 @@ schema:
       props:
         - name: Email_Id
         - name: Attachment_Id
+        - name: Attachment_Content_Type
         - name: MetadataController
         - name: MetadataGDPRStatus
         - name: MetadataLineage
@@ -905,6 +908,12 @@ schema:
   - name: Data_Impacted_By_Data_Breach
   - name: Event_Training_Awareness_Campaign
   - name: Event_Training_Person
+  - name: Email_To
+  - name: Email_From
+  - name: Email_CC
+  - name: Email_BCC
+  - name: Email_Body
+  - name: Email_Attachment
   - name: Has_Address
   - name: Has_Application
   - name: Has_Column
