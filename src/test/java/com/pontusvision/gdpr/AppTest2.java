@@ -251,7 +251,6 @@ public class AppTest2  extends AppTest{
       String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
       assertEquals("5",comidas2Connections);
 
-
 //    test COUNT(Edges) for Object.Email_Address
       String userId4 =
               App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('JONAS@COMIDA1.COM.BR'))" +
