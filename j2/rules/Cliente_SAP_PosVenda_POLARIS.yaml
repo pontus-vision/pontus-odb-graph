@@ -31,6 +31,9 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Organisation.Name
           val: ${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}
+        - name: Person.Organisation.Type
+          val: Clientes PJ
+          excludeFromSearch: True
     
     - label: Person.Natural
       condition: ${!(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14)}

@@ -48,6 +48,11 @@
           {
             "name": "Person.Organisation.Name",
             "val": "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
+          },
+          {
+            "name": "Person.Organisation.Type",
+            "val": "Clientes PJ",
+            "excludeFromSearch": true
           }
         ]
       },

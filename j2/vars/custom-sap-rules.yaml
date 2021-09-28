@@ -34,6 +34,9 @@ rules:
             val: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Name: "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
+          Type:
+            val: "Clientes PJ"
+            excludeFromSearch: true
 
       #  For Clientes Sem Tax
       - label: Person.Natural
