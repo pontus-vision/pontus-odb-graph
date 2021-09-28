@@ -558,11 +558,12 @@ rules:
   ADP:
     vertices:
       - label: Person.Natural
+        name: primary_person
         props:
           Full_Name: "${Nome?.trim().toUpperCase()}"
           Full_Name_fuzzy: "${Nome?.trim().toUpperCase()}"
           Type:
-            val: "cliente"
+            val: "colaborador"
             excludeFromSearch: true
 #          Customer_ID: "${Customer_ID?.trim()}"
           Date_Of_Birth:
@@ -570,9 +571,66 @@ rules:
             type: "java.util.Date"
             mandatoryInSearch: true
             predicate: "eq"
-#          Gender: "${Sex}"
+#     Gender: "${Sex}"
 
-#      - label: work in progress
+      - label: Person.Employee
+        props:
+          ID: "${Identidade}"
+          Title: "${Matrícula}"
+          Role: "${Cargo} - ${Função}"
+
+      - label: Person.Natural
+#        condition: "${java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18}"
+        name: nome_responsavel_legal
+        props:
+          Full_Name: "${Nome_do_Responsável_Legal?.trim().toUpperCase()}"
+          Type:
+            val: "Nome do Responsável Legal"
+            excludeFromSearch: true
+
+      - label: Person.Natural
+        #        condition: "${java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18}"
+        name: nome_coordenador
+        props:
+          Full_Name: "${Nome_do_Responsável_Legal?.trim().toUpperCase()}"
+          Type:
+            val: "Nome do Coordenador"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        name: cpf
+        props:
+          Id_Value:
+            val: "${CPF.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+#        condition: "${java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18}"
+        name: cpf_responsavel
+        props:
+          Id_Value:
+            val: "${CPF.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+
+          Id_Type:
+            val: "CPF Responsável"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+          #        condition: "${java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18}"
+        name: cpf_coordenador
+        props:
+          Id_Value:
+            val: "${CPF_do_Coordenador.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+
+          Id_Type:
+            val: "CPF Coordenador"
+            excludeFromSearch: true
 
       - label:  Object.Email_Address
         condition: "${(Email != null) && !(Email.isEmpty())}"
@@ -580,17 +638,19 @@ rules:
           Email:  "${Email}"
 
       - label: Location.Address
+        name: endereco_brasil
         condition: "${!Domiciliado_no_Exterior}"
         props:
-          Full_Address: "${Tipo_Endereço}${Nº?', '+Nº+' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
+          Full_Address: "${Tipo_Endereço}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
           Type:
             val: "Endereço Brasil"
             excludeFromSearch: true
 
       - label: Location.Address
-        condition: "${Domiciliado_no_Exterior}"
+        name: endereco_exterior
+#        condition: "${!(!Domiciliado_no_Exterior)}"
         props:
-          Full_Address: "${Tipo_Endereço}${Nº?', '+Nº+' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
+          Full_Address: "${Tipo_Endereço}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
           Type:
             val: "Endereço Exterior"
             excludeFromSearch: true
@@ -652,21 +712,51 @@ rules:
             val: Structured Data Insertion
             excludeFromSearch: true
 
+      - label: Object.Phone_Number
+        name: telefone
+        props:
+          Raw:
+            val: "${Telefone}"
+            mandatoryInSearch: false
+#          Type:
+#            val: "Telefone Fixo"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+#        condition: "${!(!Telefone_Comercial)}"
+        name: telefone_comercial
+        props:
+          Raw:
+            val: "${Telefone_Comercial}"
+            mandatoryInSearch: false
+
     edges:
       - label: "Uses_Email"
-        fromVertexLabel: "Person.Natural"
+        fromVertexName: "primary_person"
         toVertexLabel: "Object.Email_Address"
 
       - label: "Has_Address"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+        fromVertexName: "primary_person"
+        toVertexName: "endereco_brasil"
+
+      - label: "Has_Address"
+        fromVertexName: "primary_person"
+        toVertexName: "endereco_exterior"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Person.Organisation"
+        fromVertexName: "primary_person"
         toVertexLabel: "Event.Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Person.Natural"
+        fromVertexLabel: "Person.Employee"
         toVertexLabel: "Event.Ingestion"
 
       - label: "Has_Ingestion_Event"
@@ -677,3 +767,22 @@ rules:
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
 
+      - label: ""
+        fromVertexName: "primary_person"
+        toVertexName: "cpf_coordenador"
+
+      - label: ""
+        fromVertexName: "primary_person"
+        toVertexName: "cpf_responsavel"
+
+      - label: "Has_Id_Card"
+        fromVertexName: "primary_person"
+        toVertexName: "cpf"
+
+      - label: ""
+        fromVertexName: "primary_person"
+        toVertexName: "nome_coordenador"
+
+      - label: ""
+        fromVertexName: "primary_person"
+        toVertexName: "nome_responsavel_legal"
