@@ -3,6 +3,7 @@
     "vertices": [
       {
         "label": "Person.Natural",
+        "name": "primary_person",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
@@ -14,7 +15,7 @@
           },
           {
             "name": "Person.Natural.Type",
-            "val": "cliente",
+            "val": "colaborador",
             "excludeFromSearch": true
           },
           {
@@ -23,6 +24,101 @@
             "predicate": "eq",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
+          }
+        ]
+      },
+      {
+        "label": "Person.Employee",
+        "props": [
+          {
+            "name": "Person.Employee.ID",
+            "val": "${Identidade}"
+          },
+          {
+            "name": "Person.Employee.Title",
+            "val": "${Matrícula}"
+          },
+          {
+            "name": "Person.Employee.Role",
+            "val": "${Cargo} - ${Função}"
+          }
+        ]
+      },
+      {
+        "label": "Person.Natural",
+        "name": "nome_responsavel_legal",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${Nome_do_Responsável_Legal?.trim().toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Type",
+            "val": "Nome do Responsável Legal",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person.Natural",
+        "name": "nome_coordenador",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${Nome_do_Responsável_Legal?.trim().toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Type",
+            "val": "Nome do Coordenador",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cpf",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${CPF.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cpf_responsavel",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${CPF.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF Responsável",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cpf_coordenador",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${CPF_do_Coordenador.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF Coordenador",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -38,11 +134,12 @@
       },
       {
         "label": "Location.Address",
+        "name": "endereco_brasil",
         "condition": "${!Domiciliado_no_Exterior}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${Tipo_Endereço}${Nº?', '+Nº+' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
+            "val": "${Tipo_Endereço}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
           },
           {
             "name": "Location.Address.Type",
@@ -53,11 +150,11 @@
       },
       {
         "label": "Location.Address",
-        "condition": "${Domiciliado_no_Exterior}",
+        "name": "endereco_exterior",
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${Tipo_Endereço}${Nº?', '+Nº+' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
+            "val": "${Tipo_Endereço}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
           },
           {
             "name": "Location.Address.Type",
@@ -136,27 +233,64 @@
             "excludeFromSearch": true
           }
         ]
+      },
+      {
+        "label": "Object.Phone_Number",
+        "name": "telefone",
+        "props": [
+          {
+            "name": "Object.Phone_Number.Raw",
+            "val": "${Telefone}"
+          },
+          {
+            "name": "Object.Phone_Number.Numbers_Only",
+            "val": "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "type": "[Ljava.lang.String;",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Last_7_Digits",
+            "val": "${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
+          }
+        ]
+      },
+      {
+        "label": "Object.Phone_Number",
+        "name": "telefone_comercial",
+        "props": [
+          {
+            "name": "Object.Phone_Number.Raw",
+            "val": "${Telefone_Comercial}"
+          }
+        ]
       }
     ],
     "edges": [
       {
         "label": "Uses_Email",
-        "fromVertexLabel": "Person.Natural",
+        "fromVertexName": "primary_person",
         "toVertexLabel": "Object.Email_Address"
       },
       {
         "label": "Has_Address",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Location.Address"
+        "fromVertexName": "primary_person",
+        "toVertexName": "endereco_brasil"
+      },
+      {
+        "label": "Has_Address",
+        "fromVertexName": "primary_person",
+        "toVertexName": "endereco_exterior"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person.Organisation",
+        "fromVertexName": "primary_person",
         "toVertexLabel": "Event.Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person.Natural",
+        "fromVertexLabel": "Person.Employee",
         "toVertexLabel": "Event.Ingestion"
       },
       {
@@ -168,6 +302,31 @@
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Object.Data_Source",
         "toVertexLabel": "Event.Group_Ingestion"
+      },
+      {
+        "label": null,
+        "fromVertexName": "primary_person",
+        "toVertexName": "cpf_coordenador"
+      },
+      {
+        "label": null,
+        "fromVertexName": "primary_person",
+        "toVertexName": "cpf_responsavel"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "primary_person",
+        "toVertexName": "cpf"
+      },
+      {
+        "label": null,
+        "fromVertexName": "primary_person",
+        "toVertexName": "nome_coordenador"
+      },
+      {
+        "label": null,
+        "fromVertexName": "primary_person",
+        "toVertexName": "nome_responsavel_legal"
       }
     ]
   }
