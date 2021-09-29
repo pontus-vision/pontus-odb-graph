@@ -81,7 +81,6 @@ public class AppTest2  extends AppTest{
   @Test
   public void test00002CsvPolaris() throws InterruptedException {
     try {
-
       csvTestUtil("sap-polaris-clientes.csv",  "Cliente_SAP_PosVenda_POLARIS");
 
 //    Testing for Person.Natural WITH Tax_Number

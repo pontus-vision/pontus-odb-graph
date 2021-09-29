@@ -555,4 +555,3 @@ rules:
         fromVertexLabel: Object.Data_Source
         toVertexLabel: Event.Group_Ingestion
 
-

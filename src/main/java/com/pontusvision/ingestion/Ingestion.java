@@ -87,7 +87,7 @@ public class Ingestion {
   }
 
   public static String cleanHeader (String headerSub){
-    String retVal  = StringReplacer.replaceAll(headerSub, (" .;:-"), "_");
+    String retVal  = StringReplacer.replaceAll(headerSub, (" .;:-)([]{}$\"'!£%^&*+/\\?><@~#`|"), "_");
     retVal = java.text.Normalizer.normalize(retVal,  java.text.Normalizer.Form.NFD);
     retVal = retVal.replaceAll("\\p{M}", "");
     retVal = retVal.replaceAll("[^\\p{ASCII}]", "");
