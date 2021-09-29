@@ -68,6 +68,12 @@ public class Ingestion {
 //      put("ruleName", request.ruleName);
 //    }};
 
+    if ("pv_email".equalsIgnoreCase(request.ruleName)){
+      return com.pontusvision.graphutils.Matcher.ingestEmail(
+          request.jsonString,
+          request.jsonPath,
+          request.ruleName);
+    }
 
     String res = com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(
         request.jsonString,

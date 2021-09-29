@@ -17,6 +17,8 @@ public class Vertex {
   private Class nativeType;
 
 
+  private @Valid Double percentageThreshold = 0.00000000001;
+
   @JsonProperty("createMany")
 
   public VertexProps getCreateMany() {
@@ -62,6 +64,16 @@ public class Vertex {
   public Vertex name(String name) {
     this.name = name;
     return this;
+  }
+
+  @JsonProperty("percentageThreshold")
+
+  public Double getPercentageThreshold() {
+    return percentageThreshold;
+  }
+
+  public void setPercentageThreshold(Double percentageThreshold) {
+    this.percentageThreshold = percentageThreshold;
   }
 
 
