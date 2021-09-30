@@ -44,10 +44,10 @@
       "person": [
         "Led"
       ],
-      "cpf": "[]",
-      "cnpj": "[]",
+      "cpf": [],
+      "cnpj": [],
       "emailId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZZZZZMASMVg9RZpQvx1RA5gOBwCdoYR88J93Trj61dww2kItAAAAAAFYAACdoYR88J93Trj61dww2kItAAEwzmzdAAA=",
-      "categories": "[]",
+      "categories": [],
       "emailSubject": "Re: SABE Webinar",
       "emailUserId": "aaaaaaaa-bbbb-cccc-ddde-fffffffffffffffffffff",
       "emailFolderId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAAAABBBBBBBBBBBBBBBBBBBBBBBB5gOAQCdoYR88J93Trj61dww2kItAAAAAAFYAAA=",
@@ -92,7 +92,7 @@
       "cpf": "[]",
       "cnpj": "[]",
       "emailId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZZZZZMASMVg9RZpQvx1RA5gOBwCdoYR88J93Trj61dww2kItAAAAAAFYAACdoYR88J93Trj61dww2kItAAEwzmzcAAA=",
-      "categories": "[]",
+      "categories": [],
       "emailSubject": "Automatic reply: SABE Webinar",
       "emailUserId": "aaaaaaaa-bbbb-cccc-ddde-fffffffffffffffffffff",
       "emailFolderId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAAAABBBBBBBBBBBBBBBBBBBBBBBB5gOAQCdoYR88J93Trj61dww2kItAAAAAAFYAAA=",
@@ -144,10 +144,10 @@
       "person": [
         "Led Silva"
       ],
-      "cpf": "[]",
-      "cnpj": "[]",
+      "cpf": [],
+      "cnpj": [],
       "emailId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZZZZZMASMVg9RZpQvx1RA5gOBwCdoYR88J93Trj61dww2kItAAAAAAFYAACdoYR88J93Trj61dww2kItAAACk72GAAA=",
-      "categories": "[]",
+      "categories": [],
       "emailSubject": "View your Office 365 Business Essentials billing statement",
       "emailUserId": "aaaaaaaa-bbbb-cccc-ddde-fffffffffffffffffffff",
       "emailFolderId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAAAABBBBBBBBBBBBBBBBBBBBBBBB5gOAQCdoYR88J93Trj61dww2kItAAAAAAFYAAA=",

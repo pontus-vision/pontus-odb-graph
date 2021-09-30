@@ -17,7 +17,7 @@ import org.apache.tinkerpop.gremlin.structure.Transaction
 
 import java.text.SimpleDateFormat
 
-class EmailNLPRequest {
+class EmailNLPRequest implements   Serializable{
   String metadataController
   String metadataGDPRStatus
   String metadataLineage
@@ -40,6 +40,7 @@ class EmailNLPRequest {
   String[] time
   String[] categories
   String[] cpf
+  String[] cnpj
 
 
   String attachmentContentType
@@ -532,6 +533,322 @@ class EmailNLPRequest {
 
     return updateReq
   }
+  String getMetadataController() {
+    return metadataController
+  }
 
+  void setMetadataController(String metadataController) {
+    this.metadataController = metadataController
+  }
+
+  String getMetadataGDPRStatus() {
+    return metadataGDPRStatus
+  }
+
+  void setMetadataGDPRStatus(String metadataGDPRStatus) {
+    this.metadataGDPRStatus = metadataGDPRStatus
+  }
+
+  String getMetadataLineage() {
+    return metadataLineage
+  }
+
+  void setMetadataLineage(String metadataLineage) {
+    this.metadataLineage = metadataLineage
+  }
+
+  String getPg_currDate() {
+    return pg_currDate
+  }
+
+  void setPg_currDate(String pg_currDate) {
+    this.pg_currDate = pg_currDate
+  }
+
+  String getPg_content() {
+    return pg_content
+  }
+
+  void setPg_content(String pg_content) {
+    this.pg_content = pg_content
+  }
+
+  String[] getAddress() {
+    return address
+  }
+
+  void setAddress(String[] address) {
+    this.address = address
+  }
+
+  String[] getCred_card() {
+    return cred_card
+  }
+
+  void setCred_card(String[] cred_card) {
+    this.cred_card = cred_card
+  }
+
+  String[] getEmail() {
+    return email
+  }
+
+  void setEmail(String[] email) {
+    this.email = email
+  }
+
+  String[] getLocation() {
+    return location
+  }
+
+  void setLocation(String[] location) {
+    this.location = location
+  }
+
+  String[] getPerson() {
+    return person
+  }
+
+  void setPerson(String[] person) {
+    this.person = person
+  }
+
+  String[] getPhone() {
+    return phone
+  }
+
+  void setPhone(String[] phone) {
+    this.phone = phone
+  }
+
+  String[] getPostcode() {
+    return postcode
+  }
+
+  void setPostcode(String[] postcode) {
+    this.postcode = postcode
+  }
+
+  String[] getPolicy_number() {
+    return policy_number
+  }
+
+  void setPolicy_number(String[] policy_number) {
+    this.policy_number = policy_number
+  }
+
+  String[] getOrg() {
+    return org
+  }
+
+  void setOrg(String[] org) {
+    this.org = org
+  }
+
+  String[] getNationality() {
+    return nationality
+  }
+
+  void setNationality(String[] nationality) {
+    this.nationality = nationality
+  }
+
+  String[] getLanguage() {
+    return language
+  }
+
+  void setLanguage(String[] language) {
+    this.language = language
+  }
+
+  String[] getMisc() {
+    return misc
+  }
+
+  void setMisc(String[] misc) {
+    this.misc = misc
+  }
+
+  String[] getMoney() {
+    return money
+  }
+
+  void setMoney(String[] money) {
+    this.money = money
+  }
+
+  String[] getDate() {
+    return date
+  }
+
+  void setDate(String[] date) {
+    this.date = date
+  }
+
+  String[] getTime() {
+    return time
+  }
+
+  void setTime(String[] time) {
+    this.time = time
+  }
+
+  String[] getCategories() {
+    return categories
+  }
+
+  void setCategories(String[] categories) {
+    this.categories = categories
+  }
+
+  String[] getCpf() {
+    return cpf
+  }
+
+  void setCpf(String[] cpf) {
+    this.cpf = cpf
+  }
+
+  String getAttachmentContentType() {
+    return attachmentContentType
+  }
+
+  void setAttachmentContentType(String attachmentContentType) {
+    this.attachmentContentType = attachmentContentType
+  }
+
+  String getAttachmentId() {
+    return attachmentId
+  }
+
+  void setAttachmentId(String attachmentId) {
+    this.attachmentId = attachmentId
+  }
+  String[] getCnpj() {
+    return cnpj
+  }
+
+  void setCnpj(String[] cnpj) {
+    this.cnpj = cnpj
+  }
+  String getEmailSubject() {
+    return emailSubject
+  }
+
+  void setEmailSubject(String emailSubject) {
+    this.emailSubject = emailSubject
+  }
+
+  String getEmailId() {
+    return emailId
+  }
+
+  void setEmailId(String emailId) {
+    this.emailId = emailId
+  }
+
+  String getEmailUserId() {
+    return emailUserId
+  }
+
+  void setEmailUserId(String emailUserId) {
+    this.emailUserId = emailUserId
+  }
+
+  String getEmailFolderId() {
+    return emailFolderId
+  }
+
+  void setEmailFolderId(String emailFolderId) {
+    this.emailFolderId = emailFolderId
+  }
+
+  String getEmailCreatedDateTime() {
+    return emailCreatedDateTime
+  }
+
+  void setEmailCreatedDateTime(String emailCreatedDateTime) {
+    this.emailCreatedDateTime = emailCreatedDateTime
+  }
+
+  String getEmailReceivedDateTime() {
+    return emailReceivedDateTime
+  }
+
+  void setEmailReceivedDateTime(String emailReceivedDateTime) {
+    this.emailReceivedDateTime = emailReceivedDateTime
+  }
+
+  String getEmailSentDateTime() {
+    return emailSentDateTime
+  }
+
+  void setEmailSentDateTime(String emailSentDateTime) {
+    this.emailSentDateTime = emailSentDateTime
+  }
+
+  String[] getToEmailAddresses() {
+    return toEmailAddresses
+  }
+
+  void setToEmailAddresses(String[] toEmailAddresses) {
+    this.toEmailAddresses = toEmailAddresses
+  }
+
+  String[] getToEmailNames() {
+    return toEmailNames
+  }
+
+  void setToEmailNames(String[] toEmailNames) {
+    this.toEmailNames = toEmailNames
+  }
+
+  String getFromEmailAddresses() {
+    return fromEmailAddresses
+  }
+
+  void setFromEmailAddresses(String fromEmailAddresses) {
+    this.fromEmailAddresses = fromEmailAddresses
+  }
+
+  String getFromEmailNames() {
+    return fromEmailNames
+  }
+
+  void setFromEmailNames(String fromEmailNames) {
+    this.fromEmailNames = fromEmailNames
+  }
+
+  String[] getBccEmailAddresses() {
+    return bccEmailAddresses
+  }
+
+  void setBccEmailAddresses(String[] bccEmailAddresses) {
+    this.bccEmailAddresses = bccEmailAddresses
+  }
+
+  String[] getBccEmailNames() {
+    return bccEmailNames
+  }
+
+  void setBccEmailNames(String[] bccEmailNames) {
+    this.bccEmailNames = bccEmailNames
+  }
+
+  String[] getCcEmailAddresses() {
+    return ccEmailAddresses
+  }
+
+  void setCcEmailAddresses(String[] ccEmailAddresses) {
+    this.ccEmailAddresses = ccEmailAddresses
+  }
+
+  String[] getCcEmailNames() {
+    return ccEmailNames
+  }
+
+  void setCcEmailNames(String[] ccEmailNames) {
+    this.ccEmailNames = ccEmailNames
+  }
 
 }

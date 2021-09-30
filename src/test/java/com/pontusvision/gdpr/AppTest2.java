@@ -220,6 +220,41 @@ public class AppTest2  extends AppTest{
   }
 
   @Test
+  public void test00004SharepointDataSources() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-data-sources.json",  "$.queryResp[*].fields",
+          "sharepoint_data_sources");
+
+//    test0000 for COUNT(dataSources)
+      String countDataSources =
+          App.executor.eval("App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))\n" +
+              ".count().next().toString()").get().toString();
+      assertEquals("10", countDataSources);
+
+//    test0000 for COUNT(event Ingestions)
+      String countEventIngestions =
+          App.executor.eval("App.g.V().has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion'))\n" +
+              ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("9", countEventIngestions);
+
+      String countObjectDataPolicy =
+          App.executor.eval("App.g.V().has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
+              ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("9", countObjectDataPolicy);
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+  @Test
   public void test00005TotvsPloomes() throws InterruptedException {
     try {
 

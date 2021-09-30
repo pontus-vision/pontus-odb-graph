@@ -1059,7 +1059,8 @@ class Matcher {
     }
 
     static String ingestEmail(String jsonString, String jsonPath, String ruleName){
-        def recordList = JsonPath.read(jsonString, jsonPath) as EmailNLPRequest[]
+        EmailNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
+
         return EmailNLPRequest.upsertEmailNLPRequestArray(App.graph,App.g,recordList).toString();
     }
 
