@@ -13,8 +13,8 @@ import com.orientechnologies.orient.core.record.impl.ODocument
 import com.pontusvision.gdpr.App
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
-import groovy.transform.CompileStatic
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
+import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
@@ -27,570 +27,663 @@ import java.util.concurrent.atomic.AtomicInteger
 
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.bothV
 
-
 class ODBSchemaManager {
-    static def loadSchema(OrientStandardGraph graph, String... files) {
-        StringBuffer sb = new StringBuffer()
+  static def loadSchema(OrientStandardGraph graph, String... files) {
+    StringBuffer sb = new StringBuffer()
 
-        def dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        graph.executeSql('ALTER DATABASE DATETIMEFORMAT "' + dateFormat + '"', [:])
+    def dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    graph.executeSql('ALTER DATABASE DATETIMEFORMAT "' + dateFormat + '"', [:])
 
-        Map<String, OProperty> propsMap = [:]
-        for (f in files) {
-            try {
+    Map<String, OProperty> propsMap = [:]
+    for (f in files) {
+      try {
 
-                def jsonFile = new File(f)
+        def jsonFile = new File(f)
 
-                if (jsonFile.exists()) {
-                    def jsonStr = jsonFile.text
-                    def json = new JsonSlurper().parseText(jsonStr)
-                    sb?.append("\nLoading File ${f}\n")
+        if (jsonFile.exists()) {
+          def jsonStr = jsonFile.text
+          def json = new JsonSlurper().parseText(jsonStr)
+          sb?.append("\nLoading File ${f}\n")
 
 
-                    sb?.append("\nAbout to create vertex labels\n")
+          sb?.append("\nAbout to create vertex labels\n")
 
-                    Map<String, OClass> classes = ODBSchemaManager.addVertexLabels(graph, json, sb)
+          Map<String, OClass> classes = ODBSchemaManager.addVertexLabels(graph, json, sb)
 
-                } else {
-                    sb?.append("NOT LOADING FILE ${f}\n")
-                }
-
-            } catch (Throwable t) {
-                sb?.append('Failed to load schema!\n')?.append(t)
-                t.printStackTrace()
-
-            }
+        } else {
+          sb?.append("NOT LOADING FILE ${f}\n")
         }
-        graph.tx().commit()
 
-        sb?.append('Done!\n')
-        return sb?.toString()
+      } catch (Throwable t) {
+        sb?.append('Failed to load schema!\n')?.append(t)
+        t.printStackTrace()
+
+      }
     }
+    graph.tx().commit()
 
-    static Map<String, OClass> addVertexLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
+    sb?.append('Done!\n')
+    return sb?.toString()
+  }
 
-        Map<String, OClass> classMap = new HashMap<>()
-        json['vertexLabels'].each {
-            final String name = it.name
-            final OClass oClass = createVertexLabel(graph, name)
-            classMap.put(name, oClass)
-            sb?.append("Success added vertext label - $name\n")
+  static Map<String, OClass> addVertexLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
 
-            json['propertyKeys'].each { prop ->
-                if (prop.name && prop.dataType && (prop.name as String).startsWith(name)) {
-                    Class<?> cls = null
+    Map<String, OClass> classMap = new HashMap<>()
+    json['vertexLabels'].each {
+      final String name = it.name
+      final OClass oClass = createVertexLabel(graph, name)
+      classMap.put(name, oClass)
+      sb?.append("Success added vertext label - $name\n")
 
-                    try {
-                        cls = Class.forName(prop.dataType as String)
-                    }
-                    catch (Throwable t) {
-                        String dataTypeLowerCase = prop?.dataType?.toLowerCase()
-                        if (dataTypeLowerCase == 'date') {
-                            cls = Date.class
-                        } else if (dataTypeLowerCase == 'string') {
-                            cls = String.class
+      json['propertyKeys'].each { prop ->
+        if (prop.name && prop.dataType && (prop.name as String).startsWith(name)) {
+          Class<?> cls = null
 
-                        } else {
-                            cls = Class.forName("java.lang.${prop.dataType}")
-                        }
-                    }
-                    OProperty oProperty = createProp(oClass, prop.name as String, cls)
-                }
+          try {
+            cls = Class.forName(prop.dataType as String)
+          }
+          catch (Throwable t) {
+            String dataTypeLowerCase = prop?.dataType?.toLowerCase()
+            if (dataTypeLowerCase == 'date') {
+              cls = Date.class
+            } else if (dataTypeLowerCase == 'string') {
+              cls = String.class
 
+            } else {
+              cls = Class.forName("java.lang.${prop.dataType}")
             }
+          }
+          OProperty oProperty = createProp(oClass, prop.name as String, cls)
+        }
 
-            json['vertexIndexes'].each { idx ->
-                if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
+      }
 
-                    if (idx.composite) {
-                        if (!oClass.getClassIndex(idx.name)) {
-                            oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), idx.propertyKeys as String[])
-                        } else {
-                            System.out.println("Index ${idx.name} already exists.")
-                        }
+      json['vertexIndexes'].each { idx ->
+        if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
 
-
-                    }
-                    if (idx.mixedIndex == "search") {
-                        if (!oClass.getClassIndex(idx.name)) {
-                            oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
-                                    null as ODocument,
-                                    "LUCENE", idx.propertyKeys as String[])
-
-                        } else {
-                            System.out.println("Index ${idx.name} already exists.")
-                        }
-
-                    }
-
-
-                }
+          if (idx.composite) {
+            if (!oClass.getClassIndex(idx.name)) {
+              oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), idx.propertyKeys as String[])
+            } else {
+              System.out.println("Index ${idx.name} already exists.")
             }
 
 
-        }
+          }
+          if (idx.mixedIndex == "search") {
+            if (!oClass.getClassIndex(idx.name)) {
+              oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
+                      null as ODocument,
+                      "LUCENE", idx.propertyKeys as String[])
 
-        return classMap
-    }
-
-    static Map<String, OClass> addEdgeLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
-
-        Map<String, OClass> classMap = new HashMap<>()
-        json['edgeLabels'].each {
-            final String name = it.name
-            final OClass oClass = createEdgeLabel(graph, name)
-            classMap.put(name, oClass)
-            sb?.append("Success added vertext label - $name\n")
-
-            json['propertyKeys'].each { prop ->
-                if (prop.name && prop.dataType && (prop.name as String).startsWith(name)) {
-                    OProperty oProperty = createProp(oClass, prop.name as String, Class.forName(prop.dataType as String))
-
-                }
+            } else {
+              System.out.println("Index ${idx.name} already exists.")
             }
 
-            json['edgeIndexes'].each { idx ->
-                if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
-
-                    if (idx.composite) {
-                        oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), ids.propertyKeys as String[])
-
-                    }
-                    if (idx.mixedIndex == "search") {
-                        oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
-                                null as ODocument,
-                                "LUCENE", ids.propertyKeys as String[])
-                    }
-
-
-                }
-            }
+          }
 
 
         }
-        return classMap
+      }
+
+
     }
 
-    static OProperty createProp(OClass oClass, String keyName, Class<?> classType) {
+    return classMap
+  }
 
+  static Map<String, OClass> addEdgeLabels(OrientStandardGraph graph, def json, StringBuffer sb = null) {
 
-        try {
-            OType oType = OType.getTypeByClass(classType)
-            System.out.println("keyName = ${keyName}, classType = ${classType?.toString()} oType = ${oType?.toString()}")
+    Map<String, OClass> classMap = new HashMap<>()
+    json['edgeLabels'].each {
+      final String name = it.name
+      final OClass oClass = createEdgeLabel(graph, name)
+      classMap.put(name, oClass)
+      sb?.append("Success added vertext label - $name\n")
 
-            OProperty prop = oClass.getProperty(keyName)
-            if (prop == null) {
-                prop = oClass.createProperty(keyName, oType)
-
-            }
-
-            return prop
+      json['propertyKeys'].each { prop ->
+        if (prop.name && prop.dataType && (prop.name as String).startsWith(name)) {
+          OProperty oProperty = createProp(oClass, prop.name as String, Class.forName(prop.dataType as String))
 
         }
-        catch (Throwable t) {
-            t.printStackTrace()
+      }
+
+      json['edgeIndexes'].each { idx ->
+        if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
+
+          if (idx.composite) {
+            oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), ids.propertyKeys as String[])
+
+          }
+          if (idx.mixedIndex == "search") {
+            oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
+                    null as ODocument,
+                    "LUCENE", ids.propertyKeys as String[])
+          }
+
+
         }
-        return null
+      }
+
+
     }
+    return classMap
+  }
+
+  static OProperty createProp(OClass oClass, String keyName, Class<?> classType) {
 
 
-    static OClass createVertexLabel(OrientStandardGraph graph, String labelName) {
+    try {
+      OType oType = OType.getTypeByClass(classType)
+      System.out.println("keyName = ${keyName}, classType = ${classType?.toString()} oType = ${oType?.toString()}")
 
-        try {
-            String className = graph.createVertexClass(labelName)
-            OClass oClass = graph.getRawDatabase().getClass(className)
+      OProperty prop = oClass.getProperty(keyName)
+      if (prop == null) {
+        prop = oClass.createProperty(keyName, oType)
 
+      }
 
-            createProp(oClass, "Metadata.Type." + labelName, String.class)
+      return prop
 
-
-            return oClass
-
-
-        }
-        catch (Throwable t) {
-            t.printStackTrace()
-        }
-        return null
     }
-
-    static OClass createEdgeLabel(OrientStandardGraph graph, String labelName) {
-
-        try {
-            String className = graph.createEdgeClass(labelName)
-            OClass oClass = graph.getRawDatabase().getClass(className)
-
-            createProp(oClass, "Metadata.Type." + labelName, String.class)
-
-            return oClass
-
-
-        }
-        catch (Throwable t) {
-            t.printStackTrace()
-        }
-        return null
+    catch (Throwable t) {
+      t.printStackTrace()
     }
+    return null
+  }
+
+
+  static OClass createVertexLabel(OrientStandardGraph graph, String labelName) {
+
+    try {
+      String className = graph.createVertexClass(labelName)
+      OClass oClass = graph.getRawDatabase().getClass(className)
+
+
+      createProp(oClass, "Metadata.Type." + labelName, String.class)
+
+
+      return oClass
+
+
+    }
+    catch (Throwable t) {
+      t.printStackTrace()
+    }
+    return null
+  }
+
+  static OClass createEdgeLabel(OrientStandardGraph graph, String labelName) {
+
+    try {
+      String className = graph.createEdgeClass(labelName)
+      OClass oClass = graph.getRawDatabase().getClass(className)
+
+      createProp(oClass, "Metadata.Type." + labelName, String.class)
+
+      return oClass
+
+
+    }
+    catch (Throwable t) {
+      t.printStackTrace()
+    }
+    return null
+  }
 }
-
 
 
 class PontusJ2ReportingFunctions {
 
-    static boolean isASCII(String s) {
-        for (int i = 0; i < s.length(); i++)
-            if (s.charAt(i) > 127)
-                return false
-        return true
-    }
+  static boolean isASCII(String s) {
+    for (int i = 0; i < s.length(); i++)
+      if (s.charAt(i) > 127)
+        return false
+    return true
+  }
+
+  static def getSelfDiscoveryGrid(def pg_vid, String queryDir, String pg_edgeType, String pg_type, String pg_orderCol,
+                                  Integer pg_orderDir, Long pg_from, Long pg_to) {
+    HashSet<String> headers = new HashSet<>()
+    StringBuffer sb = new StringBuffer()
+
+    long topCounter = 0
+    sb.append('{ "data":[')
 
 
-    static def renderReportInTextPt(String pg_id, String reportType = 'DSAR', GraphTraversalSource g = App.g) {
-        return renderReportInTextPt(new ORecordId(pg_id), reportType, g)
-    }
+    def gridData = App.g.V(pg_vid)
+    gridData = (queryDir == '<-' ?
+            gridData.inE(pg_edgeType).outV() :
+            gridData.outE(pg_edgeType).inV());
 
-    static def  renderReportInTextPt(ORID pg_id, String reportType = 'DSAR', GraphTraversalSource g = App.g) {
-        def template = g.V().has('Object.Notification_Templates.Types', P.eq('Person.Natural'))
-                .has('Object.Notification_Templates.Label', P.eq(reportType))
-                .values('Object.Notification_Templates.Text').next() as String
-        if (template) {
+    gridData = gridData
+            .has('Metadata.Type.' + pg_type, P.eq(pg_type))
+            .order();
 
-            // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
-            def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
-                [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
-            }
+    gridData = (pg_orderCol == null ?
+            gridData.by('id') :
+            gridData.by(pg_orderCol.toString(), pg_orderDir == (1) ? Order.asc : Order.desc))
 
-            def neighbours = g.V(pg_id).both().valueMap().toList().collect { item ->
-                item.collectEntries { key, val ->
-                    [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+    gridData.range(pg_from, pg_to)
+            .match(
+                    __.as('data').id().as('id')
+                    , __.as('data').valueMap().as('valueMap')
+            )
+            .select('id', 'valueMap')
+            .each { it ->
+              if (topCounter > 0) {
+                sb.append(',')
+              }
+              topCounter++
+              def tmpId = it.get('id').toString()
+              tmpId = tmpId.startsWith('v') ? tmpId.substring(2, tmpId.size() - 1) : tmpId
+              sb.append('{ "index":"').append(tmpId).append('"')
+
+              it.get('valueMap').each { String key, val ->
+                if ("Event.Ingestion.Business_Rules" != key) {
+                  sb.append(', "').append(key).append('":')
+                  headers.add(key)
+                  if (val.size() == 1) {
+                    def rawVal = val[0]
+                    if (rawVal instanceof String || rawVal instanceof Date) {
+                      sb.append('"').append(rawVal.toString().replaceAll('["]', "'")).append('"')
+                    } else {
+                      sb.append(rawVal)
+                    }
+
+                  } else {
+                    sb.append('[')
+                    int counter = 0
+                    val.each { rawVal ->
+                      if (counter > 0) {
+                        sb.append(',')
+                      }
+                      counter++
+                      if (rawVal instanceof String || rawVal instanceof Date) {
+                        sb.append('"').append(rawVal.toString().replaceAll('["]', "'")).append('"')
+                      } else {
+                        sb.append(rawVal)
+
+                      }
+
+
+                    }
+                    sb.append(']')
+
+                  }
+
+
                 }
+              }
+              sb.append('}')
+
             }
 
-            def allData = new HashMap<>()
 
-            allData.put('context', context)
-            allData.put('connected_data', neighbours)
+    topCounter = 0
+    sb.append('],  "cols":[')
+    headers.each { it ->
+      if (topCounter > 0) {
+        sb.append(',')
+      }
+      topCounter++
+      sb.append('{ "id":"').append(it).append('"')
+              .append(', "name":"')
+              .append(it.replace('Metadata.', '').replace(pg_type + '.', '')
+                      .replaceAll('[_.]', ' '))
+              .append('"')
+              .append(', "field":"').append(it).append('"}')
+    }
+    sb.append('] }')
 
+    sb.toString()
+  }
 
-            return PontusJ2ReportingFunctions.jinJava.render(new String(template.decodeBase64()), allData).toString()
+  static def renderReportInTextPt(String pg_id, String reportType = 'DSAR', GraphTraversalSource g = App.g) {
+    return renderReportInTextPt(new ORecordId(pg_id), reportType, g)
+  }
+
+  static def renderReportInTextPt(ORID pg_id, String reportType = 'DSAR', GraphTraversalSource g = App.g) {
+    def template = g.V().has('Object.Notification_Templates.Types', P.eq('Person.Natural'))
+            .has('Object.Notification_Templates.Label', P.eq(reportType))
+            .values('Object.Notification_Templates.Text').next() as String
+    if (template) {
+
+      // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
+      def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
+        [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+
+      def neighbours = g.V(pg_id).both().valueMap().toList().collect { item ->
+        item.collectEntries { key, val ->
+          [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
         }
-        return "Failed to render data"
+      }
+
+      def allData = new HashMap<>()
+
+      allData.put('context', context)
+      allData.put('connected_data', neighbours)
+
+
+      return PontusJ2ReportingFunctions.jinJava.render(new String(template.decodeBase64()), allData).toString()
+    }
+    return "Failed to render data"
+  }
+
+  static def renderReportInText(ORID pg_id, String reportType = 'SAR Read', GraphTraversalSource g = App.g) {
+
+    if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
+      return renderReportInTextPt(pg_id, reportType, g)
     }
 
-    static def renderReportInText(ORID pg_id, String reportType = 'SAR Read', GraphTraversalSource g = App.g) {
+    def template = g.V().has('Object.Notification_Templates.Types', P.eq('Person.Natural'))
+            .has('Object.Notification_Templates.Label', P.eq(reportType))
+            .values('Object.Notification_Templates.Text').next() as String
+    if (template) {
 
-        if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
-            return renderReportInTextPt(pg_id, reportType, g)
+      // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
+      def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
+        [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+
+      def neighbours = g.V(pg_id).both().valueMap().toList().collect { item ->
+        item.collectEntries { key, val ->
+          [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
         }
+      }
 
-        def template = g.V().has('Object.Notification_Templates.Types', P.eq('Person.Natural'))
-                .has('Object.Notification_Templates.Label', P.eq(reportType))
-                .values('Object.Notification_Templates.Text').next() as String
-        if (template) {
+      def allData = new HashMap<>()
 
-            // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
-            def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
-                [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
-            }
+      allData.put('context', context)
+      allData.put('connected_data', neighbours)
 
-            def neighbours = g.V(pg_id).both().valueMap().toList().collect { item ->
-                item.collectEntries { key, val ->
-                    [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
-                }
-            }
+      return PontusJ2ReportingFunctions.jinJava.render(new String(template.decodeBase64()), allData).toString()
+    }
+    return "Failed to render data"
+  }
 
-            def allData = new HashMap<>()
+  static def getProbabilityOfPossibleMatches(String startVertexId, Map<String, Double> weightsPerVertex) {
+    return getProbabilityOfPossibleMatches(new ORecordId(startVertexId), weightsPerVertex)
+  }
 
-            allData.put('context', context)
-            allData.put('connected_data', neighbours)
+  static def getProbabilityOfPossibleMatches(ORID startVertexId, Map<String, Double> weightsPerVertex) {
 
-            return PontusJ2ReportingFunctions.jinJava.render(new String(template.decodeBase64()), allData).toString()
-        }
-        return "Failed to render data"
+    String vertType = App.g.V(startVertexId).label().next()
+
+    def weightedScores = new HashMap<ORID, Double>()
+    def labelsForMatch = new HashMap<ORID, StringBuffer>()
+
+    Double totalScore = 0
+
+    App.g.V(startVertexId).both().label().each { String label ->
+      totalScore += weightsPerVertex.get(label, new Double(0))
     }
 
-    static def getProbabilityOfPossibleMatches(String startVertexId, Map<String, Double> weightsPerVertex) {
-        return getProbabilityOfPossibleMatches(new ORecordId(startVertexId), weightsPerVertex)
-    }
+    App.g.V(startVertexId)
+            .both().bothE()
+            .filter(bothV()
+                    .has("Metadata.Type.${vertType}", P.eq(vertType))
+                    .id().not(__.is(startVertexId))).path()
+            .each { path ->
 
-    static def getProbabilityOfPossibleMatches(ORID startVertexId, Map<String, Double> weightsPerVertex) {
+              path.objects().each { obj ->
+                if (obj instanceof Edge) {
 
-        String vertType = App.g.V(startVertexId).label().next()
-
-        def weightedScores = new HashMap<ORID, Double>()
-        def labelsForMatch = new HashMap<ORID, StringBuffer>()
-
-        Double totalScore = 0
-
-        App.g.V(startVertexId).both().label().each { String label ->
-            totalScore += weightsPerVertex.get(label, new Double(0))
-        }
-
-        App.g.V(startVertexId)
-                .both().bothE()
-                .filter(bothV()
-                        .has("Metadata.Type.${vertType}", P.eq(vertType))
-                        .id().not(__.is(startVertexId))).path()
-                .each { path ->
-
-                    path.objects().each { obj ->
-                        if (obj instanceof Edge) {
-
-                            int counter = 0
+                  int counter = 0
 //            final def bothVertices = obj.bothVertices();
 
-                            def vertices = []
+                  def vertices = []
 
-                            obj.bothVertices().each { v ->
-                                vertices.push(v)
+                  obj.bothVertices().each { v ->
+                    vertices.push(v)
 
-                            }
+                  }
 
 
-                            vertices.each { v ->
+                  vertices.each { v ->
 
-                                if (vertType == v.label()) {
-                                    ORID currVid = v.id() as ORID
-                                    def currScore = weightedScores.get(currVid, new Double(0))
-                                    // def listOfPaths = perUserVertices.computeIfAbsent(v.id(), s -> [] )
-                                    int vertIdx = (counter == 0) ? 1 : 0
-                                    String label = vertices.get(vertIdx).label()
-                                    Double scoreForLabel = weightsPerVertex.get(label, new Double(0))
+                    if (vertType == v.label()) {
+                      ORID currVid = v.id() as ORID
+                      def currScore = weightedScores.get(currVid, new Double(0))
+                      // def listOfPaths = perUserVertices.computeIfAbsent(v.id(), s -> [] )
+                      int vertIdx = (counter == 0) ? 1 : 0
+                      String label = vertices.get(vertIdx).label()
+                      Double scoreForLabel = weightsPerVertex.get(label, new Double(0))
 
-                                    if (scoreForLabel > 0) {
-                                        StringBuffer currPath = labelsForMatch.get(currVid, new StringBuffer())
-                                        if (currPath.length() > 0) {
-                                            currPath.append(', ')
-                                        }
-                                        currPath.append(translate(label.replaceAll("[_|\\.]", " ")))
-                                        labelsForMatch.put(currVid, currPath)
-                                    }
-                                    currScore += scoreForLabel / totalScore
-                                    weightedScores.put(currVid, currScore)
-
-                                }
-                                counter++
-                            }
+                      if (scoreForLabel > 0) {
+                        StringBuffer currPath = labelsForMatch.get(currVid, new StringBuffer())
+                        if (currPath.length() > 0) {
+                          currPath.append(', ')
                         }
-                        // }
+                        currPath.append(translate(label.replaceAll("[_|\\.]", " ")))
+                        labelsForMatch.put(currVid, currPath)
+                      }
+                      currScore += scoreForLabel / totalScore
+                      weightedScores.put(currVid, currScore)
+
                     }
+                    counter++
+                  }
                 }
-
-
-        return [weightedScores, labelsForMatch]
-
-    }
-
-
-
-    static Map<Map<String, String>, Double> possibleMatchesMap(String pg_id, Map<String, Double> weightsPerVertex) {
-        def (Map<ORID, Double> probs, Map<ORID, StringBuffer> labelsForMatch) =
-        getProbabilityOfPossibleMatches(new ORecordId(pg_id), weightsPerVertex)
-
-        Map<Map<String, String>, Double> retVal = new HashMap<>()
-        probs.each { vid, prob ->
-            Map<String, String> context = App.g.V(vid).valueMap()[0].collectEntries { key, val ->
-                [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+                // }
+              }
             }
-            context.put('Labels_For_Match', labelsForMatch.get(vid).toString())
-            retVal.put(context, prob)
-        }
 
-        return retVal
+
+    return [weightedScores, labelsForMatch]
+
+  }
+
+
+  static Map<Map<String, String>, Double> possibleMatchesMap(String pg_id, Map<String, Double> weightsPerVertex) {
+    def (Map<ORID, Double> probs, Map<ORID, StringBuffer> labelsForMatch) =
+    getProbabilityOfPossibleMatches(new ORecordId(pg_id), weightsPerVertex)
+
+    Map<Map<String, String>, Double> retVal = new HashMap<>()
+    probs.each { vid, prob ->
+      Map<String, String> context = App.g.V(vid).valueMap()[0].collectEntries { key, val ->
+        [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+      context.put('Labels_For_Match', labelsForMatch.get(vid).toString())
+      retVal.put(context, prob)
     }
 
-    static Map<Map<String, String>, Double> possibleMatches(String pg_id, String weightsPerServer) {
+    return retVal
+  }
+
+  static Map<Map<String, String>, Double> possibleMatches(String pg_id, String weightsPerServer) {
 
 
-        Map<String, Double> weights =
-                new ObjectMapper().readValue(weightsPerServer, Map.class)
+    Map<String, Double> weights =
+            new ObjectMapper().readValue(weightsPerServer, Map.class)
 
-        return possibleMatchesMap(pg_id, weights)
+    return possibleMatchesMap(pg_id, weights)
+  }
+
+  static Map<String, String> context(String pg_id) {
+    def context = App.g.V(new ORecordId(pg_id)).valueMap(true)[0].collectEntries { key, val ->
+      [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+    }
+    return context
+  }
+
+  static List<Map<String, String>> neighbours(String pg_id) {
+    def neighbours = App.g.V(new ORecordId(pg_id)).both().valueMap(true).toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
     }
 
-    static Map<String, String> context(String pg_id) {
-        def context = App.g.V(new ORecordId(pg_id)).valueMap(true)[0].collectEntries { key, val ->
-            [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
-        }
-        return context
+    return neighbours
+
+  }
+
+  static String htmlTableCustomHeader(Map<String, String> map, String tableHeader, String tableFooter) {
+    StringBuilder htmlBuilder = new StringBuilder()
+    htmlBuilder.append(tableHeader)
+
+    htmlBuilder.append(htmlRows(map))
+    htmlBuilder.append(tableFooter)
+
+    return htmlBuilder.toString()
+  }
+
+  static String htmlRows(Map<String, String> map, String rowsCss = "border: 1px solid #dddddd;text-align: left;padding: 8px;") {
+    StringBuilder htmlBuilder = new StringBuilder()
+    for (Map.Entry<String, String> entry : map.entrySet()) {
+      htmlBuilder.append(String.format("<tr style='${rowsCss}'><td style='${rowsCss}'>%s</td><td style='${rowsCss}'>%s</td></tr>\n",
+              translate(entry.getKey().replaceAll("_", " ")), entry.getValue()))
     }
 
-    static List<Map<String, String>> neighbours(String pg_id) {
-        def neighbours = App.g.V(new ORecordId(pg_id)).both().valueMap(true).toList().collect { item ->
-            item.collectEntries { key, val ->
-                [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
-            }
-        }
+    return htmlBuilder.toString()
+  }
 
-        return neighbours
+  static String htmlTable(Map<String, String> map) {
+    htmlTableCustomHeader(map,
+            "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" +
+                    translate("Name") +
+                    "</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" +
+                    translate("Value") +
+                    "</th></tr>",
+            "</table>")
+  }
 
-    }
+  static String jsonToHtmlTable(String json) {
+    Map<String, String> jsonMap =
+            new ObjectMapper().readValue(json, Map.class)
 
-    static String htmlTableCustomHeader(Map<String, String> map, String tableHeader, String tableFooter) {
-        StringBuilder htmlBuilder = new StringBuilder()
-        htmlBuilder.append(tableHeader)
+    htmlTableCustomHeader(jsonMap,
+            "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Value</th></tr>",
+            "</table>")
+  }
 
-        htmlBuilder.append(htmlRows(map))
-        htmlBuilder.append(tableFooter)
+  static Map jsonToMap(String json) {
+    return new ObjectMapper().readValue(json, Map.class)
 
-        return htmlBuilder.toString()
-    }
-
-    static String htmlRows(Map<String, String> map, String rowsCss = "border: 1px solid #dddddd;text-align: left;padding: 8px;") {
-        StringBuilder htmlBuilder = new StringBuilder()
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            htmlBuilder.append(String.format("<tr style='${rowsCss}'><td style='${rowsCss}'>%s</td><td style='${rowsCss}'>%s</td></tr>\n",
-                    translate(entry.getKey().replaceAll("_", " ")), entry.getValue()))
-        }
-
-        return htmlBuilder.toString()
-    }
-
-    static String htmlTable(Map<String, String> map) {
-        htmlTableCustomHeader(map,
-                "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" +
-                        translate("Name") +
-                        "</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>" +
-                        translate("Value") +
-                        "</th></tr>",
-                "</table>")
-    }
-
-    static String jsonToHtmlTable(String json) {
-        Map<String, String> jsonMap =
-                new ObjectMapper().readValue(json, Map.class)
-
-        htmlTableCustomHeader(jsonMap,
-                "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Value</th></tr>",
-                "</table>")
-    }
-
-    static Map jsonToMap(String json) {
-        return new ObjectMapper().readValue(json, Map.class)
-
-    }
+  }
 
 
-    static List<Map<String, String>> getDeptForDataSources(String dataSourceId) {
-        return App.g.V(new ORecordId(dataSourceId))
-                .in('Has_Privacy_Impact_Assessment')
-                .filter(__.label().is('Object.Data_Source'))
-                .out('Has_Ingestion_Event')
-                .out('Has_Ingestion_Event')
-                .in('Has_Ingestion_Event')
-                .filter(__.label().is('Person.Natural'))
-                .valueMap(true)
-                .toList().collect({ item ->
+  static List<Map<String, String>> getDeptForDataSources(String dataSourceId) {
+    return App.g.V(new ORecordId(dataSourceId))
+            .in('Has_Privacy_Impact_Assessment')
+            .filter(__.label().is('Object.Data_Source'))
+            .out('Has_Ingestion_Event')
+            .out('Has_Ingestion_Event')
+            .in('Has_Ingestion_Event')
+            .filter(__.label().is('Person.Natural'))
+            .valueMap(true)
+            .toList().collect({ item ->
 //      .collect { item ->
-            item.collectEntries({ key, val ->
-                [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
-            })
-        } as Closure<Map<String, String>>)
+      item.collectEntries({ key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      })
+    } as Closure<Map<String, String>>)
+  }
+
+  static List<Map<String, String>> getDataSourcesForLawfulBasis(String lawfulBasisId) {
+    def retVal = App.g.V(new ORecordId(lawfulBasisId))
+            .in()
+            .in()
+            .has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
+            .in()
+            .has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
+            .elementMap().toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
     }
 
-    static List<Map<String, String>> getDataSourcesForLawfulBasis(String lawfulBasisId) {
-        def retVal = App.g.V(new ORecordId(lawfulBasisId))
-                .in()
-                .in()
-                .has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
-                .in()
-                .has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
-                .elementMap().toList().collect { item ->
-            item.collectEntries { key, val ->
-                [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
-            }
-        }
+    return retVal as List<Map<String, String>>
 
-        return retVal as List<Map<String, String>>
+  }
+
+
+  static Long getNumNaturalPersonForLawfulBasis(String lawfulBasisId) {
+    return App.g.V(new ORecordId(lawfulBasisId))
+            .in()
+            .in()
+            .has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
+            .both()
+            .has('Metadata.Type.Object.Privacy_Notice', P.eq('Object.Privacy_Notice'))
+            .in()
+            .has('Metadata.Type.Event.Consent', P.eq('Event.Consent'))
+            .in()
+            .dedup()
+            .count()
+            .next()
+  }
+
+  static Long getNumNaturalPersonForPIA(String piaId) {
+    return App.g.V(new ORecordId(piaId))
+            .in('Has_Privacy_Impact_Assessment')
+            .filter(has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
+            .out('Has_Ingestion_Event')
+            .out('Has_Ingestion_Event')
+            .in('Has_Ingestion_Event')
+            .filter(has('Metadata.Type.Person.Natural', P.eq('Person.Natural')))
+            .count()
+            .next()
+
+
+  }
+
+  static String getDataProceduresPerPerson(String userId) {
+    return App.g.V(new ORecordId(userId))
+
+            .out('Has_Ingestion_Event')
+            .in('Has_Ingestion_Event')
+            .filter(has('Metadata.Type.Event.Group_Ingestion', P.eq('Event.Group_Ingestion')))
+            .in('Has_Ingestion_Event')
+            .filter(has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
+            .in('Has_Data_Source')
+            .dedup()
+            .elementMap().toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+
 
     }
+  }
+
+  static Long getNumSensitiveInfoForPIA(String piaId) {
+    return App.g.V(new ORecordId(piaId))
+            .in('Has_Privacy_Impact_Assessment')
+            .filter(__.label().is('Object.Data_Source'))
+            .out('Has_Ingestion_Event')
+            .out('Has_Ingestion_Event')
+            .both('Has_Ingestion_Event')
+            .filter(__.has('Metadata.Type.Object.Sensitive_Data', P.eq('Object.Sensitive_Data')))
+            .count()
+            .next()
+
+  }
+
+  static String businessRulesTable(String json) {
 
 
-    static Long getNumNaturalPersonForLawfulBasis(String lawfulBasisId) {
-        return App.g.V(new ORecordId(lawfulBasisId))
-                .in()
-                .in()
-                .has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
-                .both()
-                .has('Metadata.Type.Object.Privacy_Notice', P.eq('Object.Privacy_Notice'))
-                .in()
-                .has('Metadata.Type.Event.Consent', P.eq('Event.Consent'))
-                .in()
-                .dedup()
-                .count()
-                .next()
-    }
+    StringBuffer sb = new StringBuffer("<table style='margin: 2px; padding: 5px;'>")
+            .append("<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+            .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Name")).append("</th>")
+            .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Match Weight")).append("</th>")
+            .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Exclude From Search")).append("</th>")
+            .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Exclude From Subsequence Search")).append("</th>")
+            .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Exclude From Update")).append("</th>")
+            .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Operation")).append("</th>")
+            .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Value")).append("</th>")
+            .append("</tr>")
 
-    static Long getNumNaturalPersonForPIA(String piaId) {
-        return App.g.V(new ORecordId(piaId))
-                .in('Has_Privacy_Impact_Assessment')
-                .filter(has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
-                .out('Has_Ingestion_Event')
-                .out('Has_Ingestion_Event')
-                .in('Has_Ingestion_Event')
-                .filter(has('Metadata.Type.Person.Natural', P.eq('Person.Natural')))
-                .count()
-                .next()
-
-
-    }
-
-    static String getDataProceduresPerPerson(String userId) {
-        return App.g.V(new ORecordId(userId))
-
-                .out('Has_Ingestion_Event')
-                .in('Has_Ingestion_Event')
-                .filter(has('Metadata.Type.Event.Group_Ingestion', P.eq('Event.Group_Ingestion')))
-                .in('Has_Ingestion_Event')
-                .filter(has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
-                .in('Has_Data_Source')
-                .dedup()
-                .elementMap().toList().collect { item ->
-            item.collectEntries { key, val ->
-                [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
-            }
-
-
-        }
-    }
-
-    static Long getNumSensitiveInfoForPIA(String piaId) {
-        return App.g.V(new ORecordId(piaId))
-                .in('Has_Privacy_Impact_Assessment')
-                .filter(__.label().is('Object.Data_Source'))
-                .out('Has_Ingestion_Event')
-                .out('Has_Ingestion_Event')
-                .both('Has_Ingestion_Event')
-                .filter(__.has('Metadata.Type.Object.Sensitive_Data', P.eq('Object.Sensitive_Data')))
-                .count()
-                .next()
-
-    }
-
-    static String businessRulesTable(String json) {
-
-
-        StringBuffer sb = new StringBuffer("<table style='margin: 2px; padding: 5px;'>")
-                .append("<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-                .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Name")).append("</th>")
-                .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Match Weight")).append("</th>")
-                .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Exclude From Search")).append("</th>")
-                .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Exclude From Subsequence Search")).append("</th>")
-                .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Exclude From Update")).append("</th>")
-                .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Operation")).append("</th>")
-                .append("<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>").append(translate("Value")).append("</th>")
-                .append("</tr>")
-
-        Map br = jsonToMap(json)
+    Map br = jsonToMap(json)
 
 //    System.out.println('Before loop');
 
-        br.each { key, listEntries ->
+    br.each { key, listEntries ->
 
-            if (listEntries instanceof List && listEntries.size() > 0) {
+      if (listEntries instanceof List && listEntries.size() > 0) {
 
-                listEntries.each { innerMap ->
-                    sb.append("<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+        listEntries.each { innerMap ->
+          sb.append("<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
 
 //        def innerMap = map[0]
 
@@ -601,18 +694,18 @@ class PontusJ2ReportingFunctions {
 //        System.out.println("it.key = ${it.key}; it.val = ${it.value}");
 //      }
 //
-                    String mainValue = null
-                    innerMap.each { entry ->
-                        if (entry.key != 'matchWeight' && entry.key != 'excludeFromSearch' &&
-                                entry.key != 'excludeFromSubsequenceSearch' && entry.key != 'excludeFromUpdate' &&
-                                entry.key != 'operator') {
-                            sb.append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-                                    .append(entry.key.toString())
-                                    .append("</td>")
-                            mainValue = entry.value.toString()
+          String mainValue = null
+          innerMap.each { entry ->
+            if (entry.key != 'matchWeight' && entry.key != 'excludeFromSearch' &&
+                    entry.key != 'excludeFromSubsequenceSearch' && entry.key != 'excludeFromUpdate' &&
+                    entry.key != 'operator') {
+              sb.append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+                      .append(entry.key.toString())
+                      .append("</td>")
+              mainValue = entry.value.toString()
 
-                        }
-                    }
+            }
+          }
 
 //      System.out.println("innerMap.get('matchWeight' = ${innerMap.get('matchWeight')}");
 //      System.out.println("innerMap.get('excludeFromSearch' = ${innerMap.get('excludeFromSearch')}");
@@ -620,47 +713,47 @@ class PontusJ2ReportingFunctions {
 //      System.out.println("innerMap.get('excludeFromUpdate' = ${innerMap.get('excludeFromUpdate')}");
 //      System.out.println("innerMap.get('operator' = ${innerMap.get('operator')}");
 
-                    sb.append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-                            .append(innerMap.get('matchWeight'))
-                            .append("</td>")
+          sb.append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+                  .append(innerMap.get('matchWeight'))
+                  .append("</td>")
 
-                            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-                            .append(innerMap.get('excludeFromSearch'))
-                            .append("</td>")
+                  .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+                  .append(innerMap.get('excludeFromSearch'))
+                  .append("</td>")
 
-                            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-                            .append(innerMap.get('excludeFromSubsequenceSearch'))
-                            .append("</td>")
+                  .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+                  .append(innerMap.get('excludeFromSubsequenceSearch'))
+                  .append("</td>")
 
-                            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-                            .append(innerMap.get('excludeFromUpdate'))
-                            .append("</td>")
+                  .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+                  .append(innerMap.get('excludeFromUpdate'))
+                  .append("</td>")
 
-                            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-                            .append(innerMap.get('operator'))
-                            .append("</td>")
+                  .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+                  .append(innerMap.get('operator'))
+                  .append("</td>")
 
-                            .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
-                            .append(mainValue)
-                            .append("</td>")
+                  .append("<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>")
+                  .append(mainValue)
+                  .append("</td>")
 
 
-                    sb.append("</tr>")
-                }
-            }
+          sb.append("</tr>")
         }
+      }
+    }
 
-        sb.append('</table>')
+    sb.append('</table>')
 
 //    {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (c.key , c.value )}}
 
-        return sb.toString()
+    return sb.toString()
 
-    }
+  }
 
-    static Long getNumDataSourcesForPIA(String id) {
-        return App.g.V(new ORecordId(id)).both().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')).count().next()
-    }
+  static Long getNumDataSourcesForPIA(String id) {
+    return App.g.V(new ORecordId(id)).both().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')).count().next()
+  }
 
 
 //  public static String getChart() {
@@ -709,1111 +802,1112 @@ class PontusJ2ReportingFunctions {
 //
 //  }
 
-    static String translate(String strToTranslate) {
-        if (ptDictionary) {
-            String retVal = ptDictionary.get(strToTranslate)
-            if (!retVal) {
-                System.err.println("failed to find translation conf/i18n_pt_translation.json: " + strToTranslate)
-                return strToTranslate
-            } else {
-                return retVal
-            }
-        }
+  static String translate(String strToTranslate) {
+    if (ptDictionary) {
+      String retVal = ptDictionary.get(strToTranslate)
+      if (!retVal) {
+        System.err.println("failed to find translation conf/i18n_pt_translation.json: " + strToTranslate)
         return strToTranslate
+      } else {
+        return retVal
+      }
     }
-    static def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
-        return renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g)
+    return strToTranslate
+  }
+
+  static def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
+    return renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g)
+  }
+
+  static def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
+
+    String vertType = App.g.V(pg_id).label().next()
+    def allData = new HashMap<>()
+
+
+    def context = App.g.V(pg_id).elementMap()[0].collectEntries { key, val ->
+      [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
     }
 
-    static def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
+    def neighbours = App.g.V(pg_id).both().elementMap().toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
+      }
+    }
 
-        String vertType = App.g.V(pg_id).label().next()
-        def allData = new HashMap<>()
+    allData.put('context', context)
+    allData.put('connected_data', neighbours)
 
 
-        def context = App.g.V(pg_id).elementMap()[0].collectEntries { key, val ->
-            [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
+    if ('Event.Data_Breach' == vertType) {
+      def impactedServers = App.g.V(pg_id)
+              .both()
+              .has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
+              .valueMap().toList().collect { item ->
+        item.collectEntries { key, val ->
+          [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
         }
+      }
 
-        def neighbours = App.g.V(pg_id).both().elementMap().toList().collect { item ->
-            item.collectEntries { key, val ->
-                [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
-            }
+      GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id)
+              .both().has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
+              .bothE('Runs_On').outV().dedup()
+
+      GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
+
+      def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
+        item.collectEntries { key, val ->
+          [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
         }
-
-        allData.put('context', context)
-        allData.put('connected_data', neighbours)
-
-
-        if ('Event.Data_Breach' == vertType) {
-            def impactedServers = App.g.V(pg_id)
-                    .both()
-                    .has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
-                    .valueMap().toList().collect { item ->
+      }
+      def impactedPeople = dsTravClone
+              .out("Has_Ingestion_Event")
+              .out("Has_Ingestion_Event")
+              .in("Has_Ingestion_Event")
+              .has("Metadata.Type.Person.Natural", P.eq('Person.Natural'))
+              .dedup()
+              .valueMap()
+              .toList()
+              .collect { item ->
                 item.collectEntries { key, val ->
-                    [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+                  [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
                 }
-            }
-
-            GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id)
-                    .both().has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
-                    .bothE('Runs_On').outV().dedup()
-
-            GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
-
-            def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
-                item.collectEntries { key, val ->
-                    [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
-                }
-            }
-            def impactedPeople = dsTravClone
-                    .out("Has_Ingestion_Event")
-                    .out("Has_Ingestion_Event")
-                    .in("Has_Ingestion_Event")
-                    .has("Metadata.Type.Person.Natural", P.eq('Person.Natural'))
-                    .dedup()
-                    .valueMap()
-                    .toList()
-                    .collect { item ->
-                        item.collectEntries { key, val ->
-                            [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
-                        }
-                    }
-            allData.put('impacted_data_sources', impactedDataSources)
-            allData.put('impacted_servers', impactedServers)
-            allData.put('impacted_people', impactedPeople)
-
-        }
-
-
-        return PontusJ2ReportingFunctions.jinJava.render(new String(pg_templateTextInBase64.decodeBase64()), allData).bytes.encodeBase64().toString()
+              }
+      allData.put('impacted_data_sources', impactedDataSources)
+      allData.put('impacted_servers', impactedServers)
+      allData.put('impacted_people', impactedPeople)
 
     }
-    public static Jinjava jinJava
-    public static JsonSlurper ptDictionarySlurper
 
-    static def ptDictionary
-    static {
-        ptDictionarySlurper = new JsonSlurper()
-        try {
-            def inputFile = new File("/orientdb/conf/i18n_pt_translation.json")
 
-            ptDictionary = ptDictionarySlurper.parse(inputFile.text.toCharArray())
+    return PontusJ2ReportingFunctions.jinJava.render(new String(pg_templateTextInBase64.decodeBase64()), allData)
+            .bytes.encodeBase64().toString()
 
-        }
-        catch (Throwable t) {
-            System.err.println("failed to load conf/i18n_pt_translation.json: " + t.toString())
-        }
+  }
+  public static Jinjava jinJava
+  public static JsonSlurper ptDictionarySlurper
 
-        jinJava = new Jinjava()
+  static def ptDictionary
+  static {
+    ptDictionarySlurper = new JsonSlurper()
+    try {
+      def inputFile = new File("/orientdb/conf/i18n_pt_translation.json")
+
+      ptDictionary = ptDictionarySlurper.parse(inputFile.text.toCharArray())
+
+    }
+    catch (Throwable t) {
+      System.err.println("failed to load conf/i18n_pt_translation.json: " + t.toString())
+    }
+
+    jinJava = new Jinjava()
 
 //    com.pontusvision.graphutils.PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getChart",
 //      com.pontusvision.graphutils.PontusJ2ReportingFunctions.class, "getChart"))
 
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "possibleMatches",
-                PontusJ2ReportingFunctions.class, "possibleMatches", String.class, String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "possibleMatches",
+            PontusJ2ReportingFunctions.class, "possibleMatches", String.class, String.class))
 
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "context",
-                PontusJ2ReportingFunctions.class, "context", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "connected_data",
-                PontusJ2ReportingFunctions.class, "neighbours", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "context",
+            PontusJ2ReportingFunctions.class, "context", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "connected_data",
+            PontusJ2ReportingFunctions.class, "neighbours", String.class))
 
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTableCustomHeader",
-                PontusJ2ReportingFunctions.class, "htmlTableCustomHeader", Map.class, String.class, String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlRows",
-                PontusJ2ReportingFunctions.class, "htmlRows", Map.class, String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTable",
-                PontusJ2ReportingFunctions.class, "htmlTable", Map.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "jsonToHtmlTable",
-                PontusJ2ReportingFunctions.class, "jsonToHtmlTable", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "jsonToMap",
-                PontusJ2ReportingFunctions.class, "jsonToMap", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "businessRulesTable",
-                PontusJ2ReportingFunctions.class, "businessRulesTable", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTableCustomHeader",
+            PontusJ2ReportingFunctions.class, "htmlTableCustomHeader", Map.class, String.class, String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlRows",
+            PontusJ2ReportingFunctions.class, "htmlRows", Map.class, String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTable",
+            PontusJ2ReportingFunctions.class, "htmlTable", Map.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "jsonToHtmlTable",
+            PontusJ2ReportingFunctions.class, "jsonToHtmlTable", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "jsonToMap",
+            PontusJ2ReportingFunctions.class, "jsonToMap", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "businessRulesTable",
+            PontusJ2ReportingFunctions.class, "businessRulesTable", String.class))
 
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataSourcesForLawfulBasis",
-                PontusJ2ReportingFunctions.class, "getDataSourcesForLawfulBasis", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataSourcesForLawfulBasis",
+            PontusJ2ReportingFunctions.class, "getDataSourcesForLawfulBasis", String.class))
 
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDeptForDataSources",
-                PontusJ2ReportingFunctions.class, "getDeptForDataSources", String.class))
-
-
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForLawfulBasis",
-                PontusJ2ReportingFunctions.class, "getNumNaturalPersonForLawfulBasis", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForPIA",
-                PontusJ2ReportingFunctions.class, "getNumNaturalPersonForPIA", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumSensitiveInfoForPIA",
-                PontusJ2ReportingFunctions.class, "getNumSensitiveInfoForPIA", String.class))
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataProceduresPerPerson",
-                PontusJ2ReportingFunctions.class, "getDataProceduresPerPerson", String.class))
-
-        PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "t",
-                PontusJ2ReportingFunctions.class, "translate", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDeptForDataSources",
+            PontusJ2ReportingFunctions.class, "getDeptForDataSources", String.class))
 
 
-    }
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForLawfulBasis",
+            PontusJ2ReportingFunctions.class, "getNumNaturalPersonForLawfulBasis", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForPIA",
+            PontusJ2ReportingFunctions.class, "getNumNaturalPersonForPIA", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumSensitiveInfoForPIA",
+            PontusJ2ReportingFunctions.class, "getNumSensitiveInfoForPIA", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataProceduresPerPerson",
+            PontusJ2ReportingFunctions.class, "getDataProceduresPerPerson", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "t",
+            PontusJ2ReportingFunctions.class, "translate", String.class))
+
+
+  }
 }
 
 
+class VisJSGraph {
+  static getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, ORID vid, String origLabel) {
+    StringBuilder sb = new StringBuilder()
+    sb.append(new JsonBuilder(g.V(vid).valueMap().next()).toString())
+    return sb.toString().bytes.encodeBase64()
+  }
 
-public class VisJSGraph {
-    static getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, ORID vid, String origLabel) {
-        StringBuilder sb = new StringBuilder()
-        sb.append(new JsonBuilder(g.V(vid).valueMap().next()).toString())
-        return sb.toString().bytes.encodeBase64()
-    }
-
-    static getVisJsGraph(ORID pg_vid) {
-
-
-        StringBuffer sb = new StringBuffer()
-
-        Long numEdges = App.g.V(pg_vid).bothE().count().next()
-        String origLabel = App.g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
-
-        if (numEdges > 15) {
-
-            HashSet nodesSet = new HashSet()
-            HashSet edgesSet = new HashSet()
+  static getVisJsGraph(ORID pg_vid) {
 
 
-            App.g.V(pg_vid).as('orig')
-                    .outE().match(
-                    __.as('e').inV().label().as('vLabel')
-                    // ,  __.as('e').outV().label().as('inVLabel')
-                    , __.as('e').label().as('edgeLabel')
-            )
-                    .select('edgeLabel', 'vLabel')
-                    .groupCount().each {
-                def entry = it
+    StringBuffer sb = new StringBuffer()
+
+    Long numEdges = App.g.V(pg_vid).bothE().count().next()
+    String origLabel = App.g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
+
+    if (numEdges > 15) {
+
+      HashSet nodesSet = new HashSet()
+      HashSet edgesSet = new HashSet()
 
 
-                entry.each {
-                    key, val ->
+      App.g.V(pg_vid).as('orig')
+              .outE().match(
+              __.as('e').inV().label().as('vLabel')
+              // ,  __.as('e').outV().label().as('inVLabel')
+              , __.as('e').label().as('edgeLabel')
+      )
+              .select('edgeLabel', 'vLabel')
+              .groupCount().each {
+        def entry = it
 
 
-                        if (key instanceof Map) {
-
-                            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-                            String toNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-                                    ' -> (' + edgeLabel + ')'
-
-                            String edgeId = key.get('edgeLabel')
-                            String toNodeId = key.get('vLabel') +
-                                    ' -> (' + edgeId + ')'
-
-                            sb.setLength(0)
-
-                            sb.append('{ "id":"').append(toNodeId)
-                                    .append('","label":"').append(toNodeLabel)
-                                    .append('","group":"').append(toNodeLabel)
-                                    .append('","shape":"').append('box')
-                                    .append('"}\n')
+        entry.each {
+          key, val ->
 
 
-                            nodesSet.add(sb.toString())
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+              String toNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                      ' -> (' + edgeLabel + ')'
+
+              String edgeId = key.get('edgeLabel')
+              String toNodeId = key.get('vLabel') +
+                      ' -> (' + edgeId + ')'
+
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(toNodeId)
+                      .append('","label":"').append(toNodeLabel)
+                      .append('","group":"').append(toNodeLabel)
+                      .append('","shape":"').append('box')
+                      .append('"}\n')
 
 
-                            sb.setLength(0)
-
-                            sb.append('{ "from":"')
-                                    .append(pg_vid).append('","to":"')
-                                    .append(toNodeId).append('","label":"')
-                                    .append(edgeLabel).append(' (')
-                                    .append(val).append(')","value":')
-                                    .append(val).append('}\n')
-
-                            edgesSet.add(sb.toString())
-                            sb.setLength(0)
-
-                        }
+              nodesSet.add(sb.toString())
 
 
-                }
+              sb.setLength(0)
 
+              sb.append('{ "from":"')
+                      .append(pg_vid).append('","to":"')
+                      .append(toNodeId).append('","label":"')
+                      .append(edgeLabel).append(' (')
+                      .append(val).append(')","value":')
+                      .append(val).append('}\n')
+
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
 
             }
 
 
-            App.g.V(pg_vid).as('orig')
-                    .inE().match(
-                    __.as('e').outV().label().as('vLabel')
-                    // ,  __.as('e').outV().label().as('inVLabel')
-                    , __.as('e').label().as('edgeLabel')
-            )
-                    .select('edgeLabel', 'vLabel')
-                    .groupCount().each {
-                it.each {
-                    key, val ->
-                        if (key instanceof Map) {
-
-                            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-
-                            String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-                                    ' <- (' + edgeLabel + ')'
-                            String edgeId = key.get('edgeLabel')
-
-                            String fromNodeId = key.get('vLabel') +
-                                    ' <- (' + edgeId + ')'
-                            sb.setLength(0)
-
-                            sb.append('{ "id":"').append(fromNodeId)
-                                    .append('","label":"').append(fromNodeLabel)
-                                    .append('","group":"').append(fromNodeLabel)
-                                    .append('","shape":"').append('box')
-                                    .append('"}')
-
-                            nodesSet.add(sb.toString())
+        }
 
 
-                            sb.setLength(0)
-
-                            sb.append('{ "from":"')
-                                    .append(fromNodeId).append('","to":"')
-                                    .append(pg_vid).append('","label":"')
-                                    .append(edgeLabel).append(' (')
-                                    .append(val).append(')","value":')
-                                    .append(val).append('}')
-                            edgesSet.add(sb.toString())
-                            sb.setLength(0)
-                        }
+      }
 
 
-                }
+      App.g.V(pg_vid).as('orig')
+              .inE().match(
+              __.as('e').outV().label().as('vLabel')
+              // ,  __.as('e').outV().label().as('inVLabel')
+              , __.as('e').label().as('edgeLabel')
+      )
+              .select('edgeLabel', 'vLabel')
+              .groupCount().each {
+        it.each {
+          key, val ->
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+
+              String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                      ' <- (' + edgeLabel + ')'
+              String edgeId = key.get('edgeLabel')
+
+              String fromNodeId = key.get('vLabel') +
+                      ' <- (' + edgeId + ')'
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(fromNodeId)
+                      .append('","label":"').append(fromNodeLabel)
+                      .append('","group":"').append(fromNodeLabel)
+                      .append('","shape":"').append('box')
+                      .append('"}')
+
+              nodesSet.add(sb.toString())
 
 
+              sb.setLength(0)
+
+              sb.append('{ "from":"')
+                      .append(fromNodeId).append('","to":"')
+                      .append(pg_vid).append('","label":"')
+                      .append(edgeLabel).append(' (')
+                      .append(val).append(')","value":')
+                      .append(val).append('}')
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
             }
-            sb.setLength(0)
-            sb.append('{ "id":"').append(pg_vid)
-                    .append('","label":"').append(origLabel)
-                    .append('","group":"').append(origLabel)
+
+
+        }
+
+
+      }
+      sb.setLength(0)
+      sb.append('{ "id":"').append(pg_vid)
+              .append('","label":"').append(origLabel)
+              .append('","group":"').append(origLabel)
 //        .append('","fixed":').append(true)
-                    .append('","shape":"').append('image')
-                    .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
-                    .append('"}')
+              .append('","shape":"').append('image')
+              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
+              .append('"}')
 
-            nodesSet.add(sb.toString())
-            sb.setLength(0)
+      nodesSet.add(sb.toString())
+      sb.setLength(0)
 
-            sb.append('{ "nodes":')
-                    .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
-        } else {
-            int counter = 0
+      sb.append('{ "nodes":')
+              .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
+    } else {
+      int counter = 0
 
-            try {
+      try {
 
-                sb.append('{ "nodes":[')
-
-                App.g.V(pg_vid)
-                        .both()
-                        .dedup()
-                        .each {
-                            String groupStr = it.label().toString()
-                            String labelStr = groupStr.replaceAll('[_.]', ' ')
-                            ORID vid = it.id()
-                            sb.append(counter == 0 ? '{' : ',{')
-                                    .append('"id":"').append(vid.toString())
-                                    .append('","group":"').append(groupStr)
-                                    .append('","label":"').append(labelStr)
-                                    .append('","shape":"').append('image')
-                                    .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
-                                    .append('"')
-                            if (pg_vid.toString() == (vid.toString())) {
-//              sb.append(',"fixed":true')
-                            }
-                            sb.append('}')
-
-                            counter++
-
-                        }
-                App.g.V(pg_vid)  // Also get the original node
-                        .each {
-                            String groupStr = it.label().toString()
-                            String labelStr = groupStr.replaceAll('[_.]', ' ')
-                            ORID vid = it.id()
-
-                            sb.append(counter == 0 ? '{' : ',{')
-                                    .append('"id":"').append(vid.toString())
-                                    .append('","group":"').append(groupStr)
-                                    .append('","label":"').append(labelStr)
-                                    .append('","shape":"').append('image')
-                                    .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
-                                    .append('"')
-                            if (pg_vid.toString() == (vid.toString())) {
-//              sb.append(',"fixed":true')
-                            }
-                            sb.append('}')
-
-                            counter++
-
-                        }
-                sb.append('], "edges":[')
-
-
-                counter = 0
-                App.g.V(pg_vid)
-                        .bothE()
-                        .dedup()
-                        .each {
-                            StringBuffer prob = new StringBuffer()
-                            try {
-                                prob.append(' - s - ')
-                                        .append(
-                                                Math.round(
-                                                        Math.min(
-                                                                it.values('toScorePercent').next() as Double,
-                                                                it.values('fromScorePercent').next() as Double
-                                                        ) * 100) / 100)
-                                        .append('%')
-
-                            } catch (Throwable t) {
-                                prob.setLength(0)
-                            }
-
-                            sb.append(counter == 0 ? '{' : ',{')
-                                    .append('"from": "').append(it.inVertex().id())
-                                    .append('" ,"to": "').append(it.outVertex().id())
-                                    .append('","label": "').append(PontusJ2ReportingFunctions.translate(it.label().toString().replaceAll('[_.]', ' ')))
-                                    .append(prob.toString())
-                                    .append('"}')
-
-                            counter++
-
-                        }
-
-                sb.append(']')
-
-
-            } catch (Throwable t) {
-                sb.append(t.toString())
-            }
-
-        }
-        sb.append(', "origLabel":"').append(origLabel).append('"')
-        int counter = 0
-        sb.append(', "reportButtons": [')
-        try {
-            App.g.V()
-                    .has('Object.Notification_Templates.Types'
-                            , eq(App.g.V(pg_vid).values('Metadata.Type').next()))
-                    .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
-                    .each {
-                        sb.append(counter > 0 ? ',{' : '{')
-                        counter++
-                        sb.append('"text":"')
-                        if (it.get('Object.Notification_Templates.Text') != null)
-                            sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
-                        sb.append('","label":"')
-                        if (it.get('Object.Notification_Templates.Label') != null)
-                            sb.append(it.get('Object.Notification_Templates.Label')[0])
-                        sb.append('", "vid": "').append(pg_vid)
-
-                        sb.append('"}')
-
-                    }
-        } catch (e) {
-        }
-        sb.append('] }')
-        return sb.toString()
-    }
-
-    static getVisJsGraphImmediateNeighbourNodes(ORID pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
-
-        def types = getMetadataTypes(depth.intValue())
-
-        types.each { type ->
-            App.g.V().has("Metadata.Type.${type}", P.eq("${type}")).each {
-                String groupStr = it.values('Metadata.Type').next()
-                String labelStr = it.label().toString().replaceAll('[_.]', ' ')
-                ORID vid = it.id() as ORID
-                if (nodeIds.add(vid)) {
-                    sb.append(counter == 0 ? '{' : ',{')
-                            .append('"id":"').append(vid)
-                            .append('","level":').append(getLevel(labelStr))
-                            .append(',"group":"').append(groupStr)
-                            .append('","label":"').append(labelStr)
-                            .append('","shape":"').append('image')
-                            .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
-                            .append('"')
-                    if (vid.equals(pg_vid)) {
-//            sb.append(',"fixed":true')
-                    }
-                    sb.append('}')
-
-                    counter++
-
-                }
-            }
-        }
-
-
-        return counter
-    }
-
-    static getEdgeProperties(ORID fromVertexId, ORID toVertexId) {
-        def mapper = GraphSONMapper.build().version(GraphSONVersion.V1_0).create().createMapper()
-
-        def v = App.g.V(fromVertexId).bothE().filter(bothV().id().is(toVertexId)).valueMap().next()
-
-        mapper.writeValueAsString(v)
-
-    }
-
-    static getVisJsGraph(ORID pg_vid, long pg_depth) {
-
-        StringBuffer sb = new StringBuffer()
-
-        Long numEdges = App.g.V(pg_vid).bothE().count().next()
-        String origLabel = App.g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
-
-        if (numEdges > 15) {
-
-            HashSet nodesSet = new HashSet()
-            HashSet edgesSet = new HashSet()
-
-
-            App.g.V(pg_vid).as('orig')
-                    .outE().match(
-                    __.as('e').inV().label().as('vLabel')
-                    // ,  __.as('e').outV().label().as('inVLabel')
-                    , __.as('e').label().as('edgeLabel')
-            )
-                    .select('edgeLabel', 'vLabel')
-                    .groupCount().each {
-                def entry = it
-
-
-                entry.each {
-                    key, val ->
-
-
-                        if (key instanceof Map) {
-
-                            String edgeLabel = key.get('edgeLabel')?.replaceAll('[_.]', ' ')
-                            String toNodeLabel = key.get('vLabel')?.replaceAll('[_.]', ' ') +
-                                    ' -> (' + edgeLabel + ')'
-
-                            String edgeId = key.get('edgeLabel')
-                            String toNodeId = key.get('vLabel') +
-                                    ' -> (' + edgeId + ')'
-
-                            sb.setLength(0)
-
-                            sb.append('{ "id":"').append(toNodeId)
-                                    .append('","label":"').append(toNodeLabel)
-                                    .append('","group":"').append(toNodeLabel)
-                                    .append('","shape":"').append('box')
-                                    .append('"}\n')
-
-
-                            nodesSet.add(sb.toString())
-
-
-                            sb.setLength(0)
-
-                            sb.append('{ "from":"')
-                                    .append(pg_vid).append('","to":"')
-                                    .append(toNodeId).append('","label":"')
-                                    .append(edgeLabel).append(' (')
-                                    .append(val).append(')","value":')
-                                    .append(val).append('}\n')
-
-                            edgesSet.add(sb.toString())
-                            sb.setLength(0)
-
-                        }
-
-
-                }
-
-
-            }
-
-
-            App.g.V(pg_vid).as('orig')
-                    .inE().match(
-                    __.as('e').outV().label().as('vLabel')
-                    // ,  __.as('e').outV().label().as('inVLabel')
-                    , __.as('e').label().as('edgeLabel')
-            )
-                    .select('edgeLabel', 'vLabel')
-                    .groupCount().each { it ->
-                it.each {
-                    key, val ->
-                        if (key instanceof Map) {
-
-                            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-
-                            String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-                                    ' <- (' + edgeLabel + ')'
-                            String edgeId = key.get('edgeLabel')
-
-                            String fromNodeId = key.get('vLabel') +
-                                    ' <- (' + edgeId + ')'
-                            sb.setLength(0)
-
-                            sb.append('{ "id":"').append(fromNodeId)
-                                    .append('","label":"').append(fromNodeLabel)
-                                    .append('","group":"').append(fromNodeLabel)
-                                    .append('","shape":"').append('box')
-                                    .append('"}')
-
-                            nodesSet.add(sb.toString())
-
-
-                            sb.setLength(0)
-
-                            sb.append('{ "from":"')
-                                    .append(fromNodeId).append('","to":"')
-                                    .append(pg_vid).append('","label":"')
-                                    .append(edgeLabel).append(' (')
-                                    .append(val).append(')","value":')
-                                    .append(val).append('}')
-                            edgesSet.add(sb.toString())
-                            sb.setLength(0)
-                        }
-
-
-                }
-
-
-            }
-            sb.setLength(0)
-            sb.append('{ "id":"').append(pg_vid)
-                    .append('","label":"').append(origLabel)
-                    .append('","group":"').append(origLabel)
-//        .append('","fixed":').append(true)
-                    .append(',"shape":"').append('image')
-                    .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
-                    .append('"}')
-
-            nodesSet.add(sb.toString())
-            sb.setLength(0)
-
-            sb.append('{ "nodes":')
-                    .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
-        } else {
-            int counter = 0
-
-            try {
-
-                sb.append('{ "nodes":[')
-
-                App.g.V(pg_vid)
-                        .both()
-                        .dedup()
-                        .each { it ->
-                            String groupStr = it.values('Metadata.Type').next()
-                            String labelStr = it.label().toString().replaceAll('[_.]', ' ')
-                            ORID vid = it.id()
-                            sb.append(counter == 0 ? '{' : ',{')
-                                    .append('"id":"').append(vid)
-                                    .append('","group":"').append(groupStr)
-                                    .append('","label":"').append(labelStr)
-                                    .append('","shape":"').append('image')
-                                    .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
-                                    .append('"')
-                            if (vid.equals(pg_vid)) {
-//              sb.append(',"fixed":true')
-                            }
-                            sb.append('}')
-
-                            counter++
-
-                        }
-                App.g.V(pg_vid)  // Also get the original node
-                        .each {
-                            String groupStr = it.values('Metadata.Type').next()
-                            String labelStr = it.label().toString().replaceAll('[_.]', ' ')
-                            ORID vid = it.id()
-                            sb.append(counter == 0 ? '{' : ',{')
-                                    .append('"id":"').append(vid)
-                                    .append('","group":"').append(groupStr)
-                                    .append('","label":"').append(labelStr)
-                                    .append('","shape":"').append('image')
-                                    .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
-                                    .append('"')
-                            if (vid.equals(pg_vid)) {
-//              sb.append(',"fixed":true')
-                            }
-                            sb.append('}')
-
-                            counter++
-
-                        }
-                sb.append('], "edges":[')
-
-
-                counter = 0
-                App.g.V(pg_vid)
-                        .bothE()
-                        .dedup()
-                        .each {
-                            StringBuffer prob = new StringBuffer()
-                            try {
-                                prob.append(' - s - ')
-                                        .append(
-                                                Math.round(
-                                                        Math.min(
-                                                                it.values('toScorePercent').next() as Double,
-                                                                it.values('fromScorePercent').next() as Double
-                                                        ) * 100) / 100)
-                                        .append('%')
-
-                            } catch (Throwable t) {
-                                prob.setLength(0)
-                            }
-
-
-                            sb.append(counter == 0 ? '{' : ',{')
-                                    .append('"from": "').append(it.inVertex().id())
-                                    .append('" ,"to": "').append(it.outVertex().id())
-                                    .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
-                                    .append(prob.toString())
-                                    .append('"}')
-
-                            counter++
-
-                        }
-
-                sb.append(']')
-
-
-            } catch (Throwable t) {
-                sb.append(t.toString())
-            }
-
-        }
-        sb.append(', "origLabel":"').append(origLabel).append('"')
-        int counter = 0
-        sb.append(', "reportButtons": [')
-        try {
-            App.g.V()
-                    .has('Object.Notification_Templates.Types'
-                            , P.eq(App.g.V(pg_vid).values('Metadata.Type').next()))
-                    .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
-                    .each {
-                        sb.append(counter > 0 ? ',{' : '{')
-                        counter++
-                        sb.append('"text":"')
-                        if (it.get('Object.Notification_Templates.Text') != null)
-                            sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
-                        sb.append('","label":"')
-                        if (it.get('Object.Notification_Templates.Label') != null)
-                            sb.append(it.get('Object.Notification_Templates.Label')[0])
-                        sb.append('", "vid": "').append(pg_vid)
-
-                        sb.append('"}')
-
-                    }
-        } catch (e) {
-        }
-        sb.append('] }')
-        sb.toString()
-    }
-
-    static getVisJsGraphImmediateNeighbourEdges(ORID pg_vid, StringBuffer sb, int counter, Set<String> currEdges) {
-
-
-        StringBuffer localEntry = new StringBuffer()
+        sb.append('{ "nodes":[')
 
         App.g.V(pg_vid)
-                .bothE()
+                .both()
+                .dedup()
                 .each {
-                    ORID from = it.inVertex().id() as ORID
-                    ORID to = it.outVertex().id() as ORID
-                    localEntry.setLength(0)
+                  String groupStr = it.label().toString()
+                  String labelStr = groupStr.replaceAll('[_.]', ' ')
+                  ORID vid = it.id()
+                  sb.append(counter == 0 ? '{' : ',{')
+                          .append('"id":"').append(vid.toString())
+                          .append('","group":"').append(groupStr)
+                          .append('","label":"').append(labelStr)
+                          .append('","shape":"').append('image')
+                          .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
+                          .append('"')
+                  if (pg_vid.toString() == (vid.toString())) {
+//              sb.append(',"fixed":true')
+                  }
+                  sb.append('}')
 
-                    localEntry.append(counter == 0 ? '{' : ',{')
-                            .append('"from": "').append(from)
-                            .append('" ,"to": "').append(to)
-                            .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
-                            .append('"}')
-                    String localEntryStr = localEntry.toString()
-
-                    if (currEdges.add(localEntryStr)) {
-                        sb.append(localEntryStr)
-                        counter++
-
-                    }
-
+                  counter++
 
                 }
-        return counter
-    }
+        App.g.V(pg_vid)  // Also get the original node
+                .each {
+                  String groupStr = it.label().toString()
+                  String labelStr = groupStr.replaceAll('[_.]', ' ')
+                  ORID vid = it.id()
+
+                  sb.append(counter == 0 ? '{' : ',{')
+                          .append('"id":"').append(vid.toString())
+                          .append('","group":"').append(groupStr)
+                          .append('","label":"').append(labelStr)
+                          .append('","shape":"').append('image')
+                          .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
+                          .append('"')
+                  if (pg_vid.toString() == (vid.toString())) {
+//              sb.append(',"fixed":true')
+                  }
+                  sb.append('}')
+
+                  counter++
+
+                }
+        sb.append('], "edges":[')
 
 
-    static getMetadataTypes(int level) {
-        def metadataTypes = [
-                'Event.Group_Ingestion'
-                , 'Event.Ingestion'
-                , 'Person.Natural'
-                , 'Object.Email_Address'
-                , 'Object.Credential'
-                , 'Event.Form_Ingestion'
-                , 'Object.Identity_Card'
-                , 'Location.Address'
-                , 'Object.Insurance_Policy'
-                , 'Event.Consent'
-                , 'Object.Privacy_Notice'
-                , 'Object.Privacy_Impact_Assessment'
-                , 'Object.Lawful_Basis'
-                , 'Event.Subject_Access_Request'
-                , 'Person.Employee'
-                , 'Object.Awareness_Campaign'
-                , 'Event.Training'
-                , 'Event.Data_Breach'
-                , 'Person.Organisation'
-                , 'Object.Data_Procedures'
-                , 'Object.MoU'
-                , 'Object.Form'
-                , 'Object.Notification_Templates'
-                , 'Object.AWS_Instance'
-                , 'Object.AWS_Security_Group'
-                , 'Object.AWS_Network_Interface'
-        ]
-        return metadataTypes.subList(0, level)
-    }
+        counter = 0
+        App.g.V(pg_vid)
+                .bothE()
+                .dedup()
+                .each {
+                  StringBuffer prob = new StringBuffer()
+                  try {
+                    prob.append(' - s - ')
+                            .append(
+                                    Math.round(
+                                            Math.min(
+                                                    it.values('toScorePercent').next() as Double,
+                                                    it.values('fromScorePercent').next() as Double
+                                            ) * 100) / 100)
+                            .append('%')
 
-    static getVisJsGraph(ORID pg_vid, int depth) {
-        StringBuffer sb = new StringBuffer()
+                  } catch (Throwable t) {
+                    prob.setLength(0)
+                  }
 
-        Long numEdges = App.g.V(pg_vid).bothE().count().next()
-        String origLabel = App.g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
-        AtomicInteger nodeDepth = new AtomicInteger(depth)
+                  sb.append(counter == 0 ? '{' : ',{')
+                          .append('"from": "').append(it.inVertex().id())
+                          .append('" ,"to": "').append(it.outVertex().id())
+                          .append('","label": "').append(PontusJ2ReportingFunctions.translate(it.label().toString().replaceAll('[_.]', ' ')))
+                          .append(prob.toString())
+                          .append('"}')
 
-        if (numEdges > 15) {
-
-            HashSet nodesSet = new HashSet()
-            HashSet edgesSet = new HashSet()
-
-
-            App.g.V(pg_vid).as('orig')
-                    .outE().match(
-                    __.as('e').inV().label().as('vLabel')
-                    // ,  __.as('e').outV().label().as('inVLabel')
-                    , __.as('e').label().as('edgeLabel')
-            )
-                    .select('edgeLabel', 'vLabel')
-                    .groupCount().each {
-                def entry = it
-
-
-                entry.each {
-                    key, val ->
-
-
-                        if (key instanceof Map) {
-
-                            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-                            String toNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-                                    ' -> (' + edgeLabel + ')'
-
-                            String edgeId = key.get('edgeLabel')
-                            String toNodeId = key.get('vLabel') +
-                                    ' -> (' + edgeId + ')'
-
-                            sb.setLength(0)
-
-                            sb.append('{ "id":"').append(toNodeId)
-                                    .append('","label":"').append(toNodeLabel)
-                                    .append('","group":"').append(toNodeLabel)
-                                    .append('","shape":"').append('box')
-                                    .append('"}\\n')
-
-
-                            nodesSet.add(sb.toString())
-
-
-                            sb.setLength(0)
-
-                            sb.append('{ "from":"')
-                                    .append(pg_vid).append('","to":"')
-                                    .append(toNodeId).append('","label":"')
-                                    .append(edgeLabel).append(' (')
-                                    .append(val).append(')","value":')
-                                    .append(val).append('}\\n')
-
-                            edgesSet.add(sb.toString())
-                            sb.setLength(0)
-
-                        }
-
+                  counter++
 
                 }
 
+        sb.append(']')
+
+
+      } catch (Throwable t) {
+        sb.append(t.toString())
+      }
+
+    }
+    sb.append(', "origLabel":"').append(origLabel).append('"')
+    int counter = 0
+    sb.append(', "reportButtons": [')
+    try {
+      App.g.V()
+              .has('Object.Notification_Templates.Types'
+                      , eq(App.g.V(pg_vid).values('Metadata.Type').next()))
+              .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
+              .each {
+                sb.append(counter > 0 ? ',{' : '{')
+                counter++
+                sb.append('"text":"')
+                if (it.get('Object.Notification_Templates.Text') != null)
+                  sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
+                sb.append('","label":"')
+                if (it.get('Object.Notification_Templates.Label') != null)
+                  sb.append(it.get('Object.Notification_Templates.Label')[0])
+                sb.append('", "vid": "').append(pg_vid)
+
+                sb.append('"}')
+
+              }
+    } catch (e) {
+    }
+    sb.append('] }')
+    return sb.toString()
+  }
+
+  static getVisJsGraphImmediateNeighbourNodes(ORID pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
+
+    def types = getMetadataTypes(depth.intValue())
+
+    types.each { type ->
+      App.g.V().has("Metadata.Type.${type}", P.eq("${type}")).each {
+        String groupStr = it.values('Metadata.Type').next()
+        String labelStr = it.label().toString().replaceAll('[_.]', ' ')
+        ORID vid = it.id() as ORID
+        if (nodeIds.add(vid)) {
+          sb.append(counter == 0 ? '{' : ',{')
+                  .append('"id":"').append(vid)
+                  .append('","level":').append(getLevel(labelStr))
+                  .append(',"group":"').append(groupStr)
+                  .append('","label":"').append(labelStr)
+                  .append('","shape":"').append('image')
+                  .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+                  .append('"')
+          if (vid.equals(pg_vid)) {
+//            sb.append(',"fixed":true')
+          }
+          sb.append('}')
+
+          counter++
+
+        }
+      }
+    }
+
+
+    return counter
+  }
+
+  static getEdgeProperties(ORID fromVertexId, ORID toVertexId) {
+    def mapper = GraphSONMapper.build().version(GraphSONVersion.V1_0).create().createMapper()
+
+    def v = App.g.V(fromVertexId).bothE().filter(bothV().id().is(toVertexId)).valueMap().next()
+
+    mapper.writeValueAsString(v)
+
+  }
+
+  static getVisJsGraph(ORID pg_vid, long pg_depth) {
+
+    StringBuffer sb = new StringBuffer()
+
+    Long numEdges = App.g.V(pg_vid).bothE().count().next()
+    String origLabel = App.g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
+
+    if (numEdges > 15) {
+
+      HashSet nodesSet = new HashSet()
+      HashSet edgesSet = new HashSet()
+
+
+      App.g.V(pg_vid).as('orig')
+              .outE().match(
+              __.as('e').inV().label().as('vLabel')
+              // ,  __.as('e').outV().label().as('inVLabel')
+              , __.as('e').label().as('edgeLabel')
+      )
+              .select('edgeLabel', 'vLabel')
+              .groupCount().each {
+        def entry = it
+
+
+        entry.each {
+          key, val ->
+
+
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel')?.replaceAll('[_.]', ' ')
+              String toNodeLabel = key.get('vLabel')?.replaceAll('[_.]', ' ') +
+                      ' -> (' + edgeLabel + ')'
+
+              String edgeId = key.get('edgeLabel')
+              String toNodeId = key.get('vLabel') +
+                      ' -> (' + edgeId + ')'
+
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(toNodeId)
+                      .append('","label":"').append(toNodeLabel)
+                      .append('","group":"').append(toNodeLabel)
+                      .append('","shape":"').append('box')
+                      .append('"}\n')
+
+
+              nodesSet.add(sb.toString())
+
+
+              sb.setLength(0)
+
+              sb.append('{ "from":"')
+                      .append(pg_vid).append('","to":"')
+                      .append(toNodeId).append('","label":"')
+                      .append(edgeLabel).append(' (')
+                      .append(val).append(')","value":')
+                      .append(val).append('}\n')
+
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
 
             }
 
 
-            App.g.V(pg_vid).as('orig')
-                    .inE().match(
-                    __.as('e').outV().label().as('vLabel')
-                    // ,  __.as('e').outV().label().as('inVLabel')
-                    , __.as('e').label().as('edgeLabel')
-            )
-                    .select('edgeLabel', 'vLabel')
-                    .groupCount().each {
-                it.each {
-                    key, val ->
-                        if (key instanceof Map) {
-
-                            String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
-
-                            String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
-                                    ' <- (' + edgeLabel + ')'
-                            String edgeId = key.get('edgeLabel')
-
-                            String fromNodeId = key.get('vLabel') +
-                                    ' <- (' + edgeId + ')'
-                            sb.setLength(0)
-
-                            sb.append('{ "id":"').append(fromNodeId)
-                                    .append('","label":"').append(fromNodeLabel)
-                                    .append('","group":"').append(fromNodeLabel)
-                                    .append('","shape":"').append('box')
-                                    .append('"}')
-
-                            nodesSet.add(sb.toString())
+        }
 
 
-                            sb.setLength(0)
-
-                            sb.append('{ "from":"')
-                                    .append(fromNodeId).append('","to":"')
-                                    .append(pg_vid).append('","label":"')
-                                    .append(edgeLabel).append(' (')
-                                    .append(val).append(')","value":')
-                                    .append(val).append('}')
-                            edgesSet.add(sb.toString())
-                            sb.setLength(0)
-                        }
+      }
 
 
-                }
+      App.g.V(pg_vid).as('orig')
+              .inE().match(
+              __.as('e').outV().label().as('vLabel')
+              // ,  __.as('e').outV().label().as('inVLabel')
+              , __.as('e').label().as('edgeLabel')
+      )
+              .select('edgeLabel', 'vLabel')
+              .groupCount().each { it ->
+        it.each {
+          key, val ->
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+
+              String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                      ' <- (' + edgeLabel + ')'
+              String edgeId = key.get('edgeLabel')
+
+              String fromNodeId = key.get('vLabel') +
+                      ' <- (' + edgeId + ')'
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(fromNodeId)
+                      .append('","label":"').append(fromNodeLabel)
+                      .append('","group":"').append(fromNodeLabel)
+                      .append('","shape":"').append('box')
+                      .append('"}')
+
+              nodesSet.add(sb.toString())
 
 
+              sb.setLength(0)
+
+              sb.append('{ "from":"')
+                      .append(fromNodeId).append('","to":"')
+                      .append(pg_vid).append('","label":"')
+                      .append(edgeLabel).append(' (')
+                      .append(val).append(')","value":')
+                      .append(val).append('}')
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
             }
-            sb.setLength(0)
-            sb.append('{ "id":"').append(pg_vid)
-                    .append('","label":"').append(origLabel)
-                    .append('","group":"').append(origLabel)
+
+
+        }
+
+
+      }
+      sb.setLength(0)
+      sb.append('{ "id":"').append(pg_vid)
+              .append('","label":"').append(origLabel)
+              .append('","group":"').append(origLabel)
 //        .append('","fixed":').append(true)
-                    .append(',"shape":"').append('image')
-                    .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
-                    .append('"}')
+              .append(',"shape":"').append('image')
+              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
+              .append('"}')
 
-            nodesSet.add(sb.toString())
-            sb.setLength(0)
+      nodesSet.add(sb.toString())
+      sb.setLength(0)
 
-            sb.append('{ "nodes":')
-                    .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
-                    .append('}')
-        } else {
-            int counter = 0
+      sb.append('{ "nodes":')
+              .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
+    } else {
+      int counter = 0
 
-            try {
-                Set<ORID> nodeIds = new HashSet<>()
+      try {
 
-                sb.append('{ "nodes":[')
+        sb.append('{ "nodes":[')
 
-                getVisJsGraphImmediateNeighbourNodes(pg_vid, sb, counter, nodeIds, nodeDepth)
+        App.g.V(pg_vid)
+                .both()
+                .dedup()
+                .each { it ->
+                  String groupStr = it.values('Metadata.Type').next()
+                  String labelStr = it.label().toString().replaceAll('[_.]', ' ')
+                  ORID vid = it.id()
+                  sb.append(counter == 0 ? '{' : ',{')
+                          .append('"id":"').append(vid)
+                          .append('","group":"').append(groupStr)
+                          .append('","label":"').append(labelStr)
+                          .append('","shape":"').append('image')
+                          .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+                          .append('"')
+                  if (vid.equals(pg_vid)) {
+//              sb.append(',"fixed":true')
+                  }
+                  sb.append('}')
 
-                sb.append('], "edges":[')
+                  counter++
+
+                }
+        App.g.V(pg_vid)  // Also get the original node
+                .each {
+                  String groupStr = it.values('Metadata.Type').next()
+                  String labelStr = it.label().toString().replaceAll('[_.]', ' ')
+                  ORID vid = it.id()
+                  sb.append(counter == 0 ? '{' : ',{')
+                          .append('"id":"').append(vid)
+                          .append('","group":"').append(groupStr)
+                          .append('","label":"').append(labelStr)
+                          .append('","shape":"').append('image')
+                          .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(g, vid, labelStr).toString())
+                          .append('"')
+                  if (vid.equals(pg_vid)) {
+//              sb.append(',"fixed":true')
+                  }
+                  sb.append('}')
+
+                  counter++
+
+                }
+        sb.append('], "edges":[')
 
 
-                counter = 0
+        counter = 0
+        App.g.V(pg_vid)
+                .bothE()
+                .dedup()
+                .each {
+                  StringBuffer prob = new StringBuffer()
+                  try {
+                    prob.append(' - s - ')
+                            .append(
+                                    Math.round(
+                                            Math.min(
+                                                    it.values('toScorePercent').next() as Double,
+                                                    it.values('fromScorePercent').next() as Double
+                                            ) * 100) / 100)
+                            .append('%')
 
-                Set<String> currEdges = new HashSet<>()
-                nodeIds.each {
-                    counter = getVisJsGraphImmediateNeighbourEdges(it, sb, counter, currEdges)
+                  } catch (Throwable t) {
+                    prob.setLength(0)
+                  }
+
+
+                  sb.append(counter == 0 ? '{' : ',{')
+                          .append('"from": "').append(it.inVertex().id())
+                          .append('" ,"to": "').append(it.outVertex().id())
+                          .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
+                          .append(prob.toString())
+                          .append('"}')
+
+                  counter++
 
                 }
 
-                sb.append(']')
+        sb.append(']')
 
 
-            } catch (Throwable t) {
-                sb.append(t.toString())
-            }
-
-            sb.toString()
-        }
-        sb.append(', "origLabel":"').append(origLabel).append('"')
-        int counter = 0
-        sb.append(', "reportButtons": [')
-        try {
-            App.g.V()
-                    .has('Object.Notification_Templates.Types'
-                            , P.eq(App.g.V(pg_vid).values('Metadata.Type').next()))
-                    .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
-                    .each {
-                        sb.append(counter > 0 ? ',{' : '{')
-                        counter++
-                        sb.append('"text":"')
-                        if (it.get('Object.Notification_Templates.Text') != null)
-                            sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
-                        sb.append('","label":"')
-                        if (it.get('Object.Notification_Templates.Label') != null)
-                            sb.append(it.get('Object.Notification_Templates.Label')[0])
-                        sb.append('", "vid": "').append(pg_vid)
-
-                        sb.append('"}')
-
-                    }
-        } catch (e) {
-        }
-
-        sb.append('] }')
-        return sb.toString()
-
+      } catch (Throwable t) {
+        sb.append(t.toString())
+      }
 
     }
+    sb.append(', "origLabel":"').append(origLabel).append('"')
+    int counter = 0
+    sb.append(', "reportButtons": [')
+    try {
+      App.g.V()
+              .has('Object.Notification_Templates.Types'
+                      , P.eq(App.g.V(pg_vid).values('Metadata.Type').next()))
+              .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
+              .each {
+                sb.append(counter > 0 ? ',{' : '{')
+                counter++
+                sb.append('"text":"')
+                if (it.get('Object.Notification_Templates.Text') != null)
+                  sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
+                sb.append('","label":"')
+                if (it.get('Object.Notification_Templates.Label') != null)
+                  sb.append(it.get('Object.Notification_Templates.Label')[0])
+                sb.append('", "vid": "').append(pg_vid)
 
-    static getInfraGraph(String pg_vid) {
-        StringBuffer sb = new StringBuffer()
-        int counter = 0
+                sb.append('"}')
 
-        try {
+              }
+    } catch (e) {
+    }
+    sb.append('] }')
+    sb.toString()
+  }
 
-            GraphTraversal gtrav = (pg_vid == "-1") ?
-                    App.g.V() :
-                    App.g.V(new ORecordId(pg_vid)).repeat(__.inE().subgraph('subGraph').outV())
-                            .times(4).cap('subGraph').next().traversal().V()
-
-
-            sb.append('{ "nodes":[')
-
-            gtrav
-                    .or(
-                            __.has('Metadata.Type.Object.AWS_VPC', P.eq('Object.AWS_VPC'))
-                            , __.has('Metadata.Type.Object.AWS_Security_Group', P.eq('Object.AWS_Security_Group'))
-                            , __.has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
-                    ).dedup()
-                    .each {
-                        String groupStr = it.values('Metadata.Type').next()
-                        String labelStr = it.values(groupStr + '.Id').next()
-                        ORID vid = (ORID) it.id()
-                        sb.append(counter == 0 ? '{' : ',{')
-                                .append('"id":"').append(vid)
-                                .append('","group":"').append(groupStr)
-                                .append('","label":"').append(labelStr)
-                                .append('","shape":"').append('image')
-                                .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
-                                .append('"}')
-
-                        counter++
-
-                    }
-
-            sb.append('], "edges":[')
+  static getVisJsGraphImmediateNeighbourEdges(ORID pg_vid, StringBuffer sb, int counter, Set<String> currEdges) {
 
 
-            counter = 0
-            gtrav = (pg_vid == "-1") ?
-                    App.g.V() :
-                    App.g.V(pg_vid).repeat(__.inE().subgraph('subGraph').outV())
-                            .times(4).cap('subGraph').next().traversal().V()
+    StringBuffer localEntry = new StringBuffer()
+
+    App.g.V(pg_vid)
+            .bothE()
+            .each {
+              ORID from = it.inVertex().id() as ORID
+              ORID to = it.outVertex().id() as ORID
+              localEntry.setLength(0)
+
+              localEntry.append(counter == 0 ? '{' : ',{')
+                      .append('"from": "').append(from)
+                      .append('" ,"to": "').append(to)
+                      .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
+                      .append('"}')
+              String localEntryStr = localEntry.toString()
+
+              if (currEdges.add(localEntryStr)) {
+                sb.append(localEntryStr)
+                counter++
+
+              }
 
 
-            gtrav
-                    .or(
-                            __.has('Metadata.Type.Object.AWS_VPC', P.eq('Object.AWS_VPC'))
-                            , __.has('Metadata.Type.Object.AWS_Security_Group', P.eq('Object.AWS_Security_Group'))
-                            , __.has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
-                    )
-                    .bothE()
-                    .dedup().each {
+            }
+    return counter
+  }
+
+
+  static getMetadataTypes(int level) {
+    def metadataTypes = [
+            'Event.Group_Ingestion'
+            , 'Event.Ingestion'
+            , 'Person.Natural'
+            , 'Object.Email_Address'
+            , 'Object.Credential'
+            , 'Event.Form_Ingestion'
+            , 'Object.Identity_Card'
+            , 'Location.Address'
+            , 'Object.Insurance_Policy'
+            , 'Event.Consent'
+            , 'Object.Privacy_Notice'
+            , 'Object.Privacy_Impact_Assessment'
+            , 'Object.Lawful_Basis'
+            , 'Event.Subject_Access_Request'
+            , 'Person.Employee'
+            , 'Object.Awareness_Campaign'
+            , 'Event.Training'
+            , 'Event.Data_Breach'
+            , 'Person.Organisation'
+            , 'Object.Data_Procedures'
+            , 'Object.MoU'
+            , 'Object.Form'
+            , 'Object.Notification_Templates'
+            , 'Object.AWS_Instance'
+            , 'Object.AWS_Security_Group'
+            , 'Object.AWS_Network_Interface'
+    ]
+    return metadataTypes.subList(0, level)
+  }
+
+  static getVisJsGraph(ORID pg_vid, int depth) {
+    StringBuffer sb = new StringBuffer()
+
+    Long numEdges = App.g.V(pg_vid).bothE().count().next()
+    String origLabel = App.g.V(pg_vid).label().next().replaceAll('[_.]', ' ')
+    AtomicInteger nodeDepth = new AtomicInteger(depth)
+
+    if (numEdges > 15) {
+
+      HashSet nodesSet = new HashSet()
+      HashSet edgesSet = new HashSet()
+
+
+      App.g.V(pg_vid).as('orig')
+              .outE().match(
+              __.as('e').inV().label().as('vLabel')
+              // ,  __.as('e').outV().label().as('inVLabel')
+              , __.as('e').label().as('edgeLabel')
+      )
+              .select('edgeLabel', 'vLabel')
+              .groupCount().each {
+        def entry = it
+
+
+        entry.each {
+          key, val ->
+
+
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+              String toNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                      ' -> (' + edgeLabel + ')'
+
+              String edgeId = key.get('edgeLabel')
+              String toNodeId = key.get('vLabel') +
+                      ' -> (' + edgeId + ')'
+
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(toNodeId)
+                      .append('","label":"').append(toNodeLabel)
+                      .append('","group":"').append(toNodeLabel)
+                      .append('","shape":"').append('box')
+                      .append('"}\\n')
+
+
+              nodesSet.add(sb.toString())
+
+
+              sb.setLength(0)
+
+              sb.append('{ "from":"')
+                      .append(pg_vid).append('","to":"')
+                      .append(toNodeId).append('","label":"')
+                      .append(edgeLabel).append(' (')
+                      .append(val).append(')","value":')
+                      .append(val).append('}\\n')
+
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
+
+            }
+
+
+        }
+
+
+      }
+
+
+      App.g.V(pg_vid).as('orig')
+              .inE().match(
+              __.as('e').outV().label().as('vLabel')
+              // ,  __.as('e').outV().label().as('inVLabel')
+              , __.as('e').label().as('edgeLabel')
+      )
+              .select('edgeLabel', 'vLabel')
+              .groupCount().each {
+        it.each {
+          key, val ->
+            if (key instanceof Map) {
+
+              String edgeLabel = key.get('edgeLabel').replaceAll('[_.]', ' ')
+
+              String fromNodeLabel = key.get('vLabel').replaceAll('[_.]', ' ') +
+                      ' <- (' + edgeLabel + ')'
+              String edgeId = key.get('edgeLabel')
+
+              String fromNodeId = key.get('vLabel') +
+                      ' <- (' + edgeId + ')'
+              sb.setLength(0)
+
+              sb.append('{ "id":"').append(fromNodeId)
+                      .append('","label":"').append(fromNodeLabel)
+                      .append('","group":"').append(fromNodeLabel)
+                      .append('","shape":"').append('box')
+                      .append('"}')
+
+              nodesSet.add(sb.toString())
+
+
+              sb.setLength(0)
+
+              sb.append('{ "from":"')
+                      .append(fromNodeId).append('","to":"')
+                      .append(pg_vid).append('","label":"')
+                      .append(edgeLabel).append(' (')
+                      .append(val).append(')","value":')
+                      .append(val).append('}')
+              edgesSet.add(sb.toString())
+              sb.setLength(0)
+            }
+
+
+        }
+
+
+      }
+      sb.setLength(0)
+      sb.append('{ "id":"').append(pg_vid)
+              .append('","label":"').append(origLabel)
+              .append('","group":"').append(origLabel)
+//        .append('","fixed":').append(true)
+              .append(',"shape":"').append('image')
+              .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, pg_vid, origLabel).toString())
+              .append('"}')
+
+      nodesSet.add(sb.toString())
+      sb.setLength(0)
+
+      sb.append('{ "nodes":')
+              .append(nodesSet.toString()).append(', "edges":').append(edgesSet.toString())
+              .append('}')
+    } else {
+      int counter = 0
+
+      try {
+        Set<ORID> nodeIds = new HashSet<>()
+
+        sb.append('{ "nodes":[')
+
+        getVisJsGraphImmediateNeighbourNodes(pg_vid, sb, counter, nodeIds, nodeDepth)
+
+        sb.append('], "edges":[')
+
+
+        counter = 0
+
+        Set<String> currEdges = new HashSet<>()
+        nodeIds.each {
+          counter = getVisJsGraphImmediateNeighbourEdges(it, sb, counter, currEdges)
+
+        }
+
+        sb.append(']')
+
+
+      } catch (Throwable t) {
+        sb.append(t.toString())
+      }
+
+      sb.toString()
+    }
+    sb.append(', "origLabel":"').append(origLabel).append('"')
+    int counter = 0
+    sb.append(', "reportButtons": [')
+    try {
+      App.g.V()
+              .has('Object.Notification_Templates.Types'
+                      , P.eq(App.g.V(pg_vid).values('Metadata.Type').next()))
+              .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
+              .each {
+                sb.append(counter > 0 ? ',{' : '{')
+                counter++
+                sb.append('"text":"')
+                if (it.get('Object.Notification_Templates.Text') != null)
+                  sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
+                sb.append('","label":"')
+                if (it.get('Object.Notification_Templates.Label') != null)
+                  sb.append(it.get('Object.Notification_Templates.Label')[0])
+                sb.append('", "vid": "').append(pg_vid)
+
+                sb.append('"}')
+
+              }
+    } catch (e) {
+    }
+
+    sb.append('] }')
+    return sb.toString()
+
+
+  }
+
+  static getInfraGraph(String pg_vid) {
+    StringBuffer sb = new StringBuffer()
+    int counter = 0
+
+    try {
+
+      GraphTraversal gtrav = (pg_vid == "-1") ?
+              App.g.V() :
+              App.g.V(new ORecordId(pg_vid)).repeat(__.inE().subgraph('subGraph').outV())
+                      .times(4).cap('subGraph').next().traversal().V()
+
+
+      sb.append('{ "nodes":[')
+
+      gtrav
+              .or(
+                      __.has('Metadata.Type.Object.AWS_VPC', P.eq('Object.AWS_VPC'))
+                      , __.has('Metadata.Type.Object.AWS_Security_Group', P.eq('Object.AWS_Security_Group'))
+                      , __.has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
+              ).dedup()
+              .each {
+                String groupStr = it.values('Metadata.Type').next()
+                String labelStr = it.values(groupStr + '.Id').next()
+                ORID vid = (ORID) it.id()
                 sb.append(counter == 0 ? '{' : ',{')
-                        .append('"from": "').append(it.inVertex().id())
-                        .append('" ,"to": "').append(it.outVertex().id())
-                        .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
+                        .append('"id":"').append(vid)
+                        .append('","group":"').append(groupStr)
+                        .append('","label":"').append(labelStr)
+                        .append('","shape":"').append('image')
+                        .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
                         .append('"}')
 
                 counter++
 
-            }
+              }
 
-            sb.append(']}')
+      sb.append('], "edges":[')
 
 
-        } catch (Throwable t) {
-            sb.append(t.toString())
-        }
+      counter = 0
+      gtrav = (pg_vid == "-1") ?
+              App.g.V() :
+              App.g.V(pg_vid).repeat(__.inE().subgraph('subGraph').outV())
+                      .times(4).cap('subGraph').next().traversal().V()
 
-        sb.toString()
+
+      gtrav
+              .or(
+                      __.has('Metadata.Type.Object.AWS_VPC', P.eq('Object.AWS_VPC'))
+                      , __.has('Metadata.Type.Object.AWS_Security_Group', P.eq('Object.AWS_Security_Group'))
+                      , __.has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
+              )
+              .bothE()
+              .dedup().each {
+        sb.append(counter == 0 ? '{' : ',{')
+                .append('"from": "').append(it.inVertex().id())
+                .append('" ,"to": "').append(it.outVertex().id())
+                .append('","label": "').append(it.label().toString().replaceAll('[_.]', ' '))
+                .append('"}')
+
+        counter++
+
+      }
+
+      sb.append(']}')
+
+
+    } catch (Throwable t) {
+      sb.append(t.toString())
     }
 
-    static getLevel(String label) {
-        def levels = [
-                'Event  Group Ingestion',
-                'Event Ingestion',
-                'Person Natural',
-                'Object Email Address',
-                'Object Credential',
-                'Event Form Ingestion',
-                'Object Identity Card',
-                'Location Address',
-                'Object Insurance Policy',
-                'Event Consent',
-                'Object Privacy Notice',
-                'Object Privacy Impact Assessment',
-                'Object Lawful Basis',
-                'Event Subject Access Request',
-                'Person Employee',
-                'Object Awareness Campaign',
-                'Event Training',
-                'Event Data_Breach',
-                'Person Organisation',
-                'Object Data Procedures',
-                'Object MoU',
-                'Object Form',
-                'Object Notification Templates',
-                'Object AWS Instance',
-                'Object AWS Security Group',
-                'Object AWS Network Interface'
-        ]
-        int index = levels.findIndexOf {
-            (label.equals(it))
-        }
+    sb.toString()
+  }
 
-        if (index == -1) {
-            return label.hashCode() % 10
-        }
-
-        return index
+  static getLevel(String label) {
+    def levels = [
+            'Event  Group Ingestion',
+            'Event Ingestion',
+            'Person Natural',
+            'Object Email Address',
+            'Object Credential',
+            'Event Form Ingestion',
+            'Object Identity Card',
+            'Location Address',
+            'Object Insurance Policy',
+            'Event Consent',
+            'Object Privacy Notice',
+            'Object Privacy Impact Assessment',
+            'Object Lawful Basis',
+            'Event Subject Access Request',
+            'Person Employee',
+            'Object Awareness Campaign',
+            'Event Training',
+            'Event Data_Breach',
+            'Person Organisation',
+            'Object Data Procedures',
+            'Object MoU',
+            'Object Form',
+            'Object Notification Templates',
+            'Object AWS Instance',
+            'Object AWS Security Group',
+            'Object AWS Network Interface'
+    ]
+    int index = levels.findIndexOf {
+      (label.equals(it))
     }
 
-    static getVisJsGraph(String pg_vid) {
-
-        return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid))
+    if (index == -1) {
+      return label.hashCode() % 10
     }
 
+    return index
+  }
 
-    static getVisJsGraph(String pg_vid, int depth) {
-        return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), depth)
-    }
+  static getVisJsGraph(String pg_vid) {
 
-    static getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
-
-        return VisJSGraph.getVisJsGraphImmediateNeighbourNodes(new ORecordId(pg_vid), sb, counter, nodeIds, depth)
-
-
-    }
+    return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid))
+  }
 
 
-    static getEdgeProperties(String fromVertexId, String toVertexId) {
-        return VisJSGraph.getEdgeProperties(new ORecordId(fromVertexId), new ORecordId(toVertexId))
-    }
+  static getVisJsGraph(String pg_vid, int depth) {
+    return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), depth)
+  }
 
-    static getVisJsGraph(String pg_vid, long pg_depth) {
+  static getVisJsGraphImmediateNeighbourNodes(String pg_vid, StringBuffer sb, int counter, Set<ORID> nodeIds, AtomicInteger depth) {
 
-        return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), pg_depth)
-    }
+    return VisJSGraph.getVisJsGraphImmediateNeighbourNodes(new ORecordId(pg_vid), sb, counter, nodeIds, depth)
 
-    static def getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, String vid, String origLabel) {
-        return VisJSGraph.getPropsNonMetadataAsHTMLTableRows(g, new ORecordId(vid), origLabel)
-    }
+
+  }
+
+
+  static getEdgeProperties(String fromVertexId, String toVertexId) {
+    return VisJSGraph.getEdgeProperties(new ORecordId(fromVertexId), new ORecordId(toVertexId))
+  }
+
+  static getVisJsGraph(String pg_vid, long pg_depth) {
+
+    return VisJSGraph.getVisJsGraph(new ORecordId(pg_vid), pg_depth)
+  }
+
+  static def getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, String vid, String origLabel) {
+    return VisJSGraph.getPropsNonMetadataAsHTMLTableRows(g, new ORecordId(vid), origLabel)
+  }
 
 }
 

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.orientechnologies.apache.commons.csv.CSVFormat;
 import com.orientechnologies.apache.commons.csv.CSVRecord;
 import com.pontusvision.gdpr.App;
+import com.pontusvision.graphutils.EmailNLPRequest;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ws.rs.Consumes;
@@ -30,6 +31,31 @@ public class Ingestion {
   }
 
   @POST
+  @Path("pv_o365_email_json_obj_array")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public String pvO365EmailJsonObjArray(IngestionJsonObjArrayRequest request) throws ExecutionException, InterruptedException {
+
+
+//    Map<String, Object> bindings = new HashMap() {{
+//      put("jsonString", request.jsonString);
+//      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
+//      put("ruleName", request.ruleName);
+//    }};
+
+
+    String res = com.pontusvision.graphutils.Matcher.ingestEmail(
+        request.jsonString,
+        request.jsonPath,
+        request.ruleName);
+
+//    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
+//        bindings).get().toString();
+    return res;
+
+  }
+
+  @POST
   @Path("json_obj_array")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
@@ -41,6 +67,13 @@ public class Ingestion {
 //      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
 //      put("ruleName", request.ruleName);
 //    }};
+
+    if ("pv_email".equalsIgnoreCase(request.ruleName)){
+      return com.pontusvision.graphutils.Matcher.ingestEmail(
+          request.jsonString,
+          request.jsonPath,
+          request.ruleName);
+    }
 
     String res = com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(
         request.jsonString,

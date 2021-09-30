@@ -146,7 +146,7 @@ schema:
       props:
         - name: Ingestion_Date
           # Use the Person.Natural.Id here:
-        - name: PersonId
+        - name: Person_Id
 
 
     - name: "Event.Email_Message"

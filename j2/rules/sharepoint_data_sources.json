@@ -1,0 +1,177 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object.Data_Source",
+        "name": "sharepoint",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "sharepoint/data-sources"
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "sharepoint/data-sources"
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Data Sources"
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "name": "data_sources",
+        "condition": "${field_Descri_x0020__x0020_o?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "${Title}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Engine",
+            "val": "${field_Sistema}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "${field_Tipo_x0020_Sistema}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Domain",
+            "val": "${field_Tabela}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.URI_Delete",
+            "val": "${field_URL_x0020_Prefixo_x0020_Delete}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.URI_Update",
+            "val": "${field_URL_x0020_Prefixo_x0020_Update}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Source.URI_Read",
+            "val": "${field_URL_x0020_Prefixo_x0020_Read}",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Policy",
+        "props": [
+          {
+            "name": "Object.Data_Policy.Update_Frequency",
+            "val": "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Policy.Retention_Period",
+            "val": "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Policy.Type",
+            "val": "${Title}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Ingestion",
+        "props": [
+          {
+            "name": "Event.Ingestion.Type",
+            "val": "sharepoint/fontes-de-dados",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Create_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Update_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Ingestion",
+        "props": [
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Type",
+            "val": "sharepoint/fontes-de-dados",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Policy",
+        "fromVertexName": "data_sources",
+        "toVertexLabel": "Object.Data_Policy"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Ingestion",
+        "toVertexName": "data_sources"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Group_Ingestion",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "sharepoint",
+        "toVertexLabel": "Event.Group_Ingestion"
+      }
+    ]
+  }
+}
