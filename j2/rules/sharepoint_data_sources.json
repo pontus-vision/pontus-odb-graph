@@ -71,7 +71,7 @@
         "props": [
           {
             "name": "Object.Data_Policy.Update_Frequency",
-            "val": "${field_Frequ_x00ea_ncia_x0020_de_x0020_}",
+            "val": "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}",
             "excludeFromSearch": true
           },
           {
