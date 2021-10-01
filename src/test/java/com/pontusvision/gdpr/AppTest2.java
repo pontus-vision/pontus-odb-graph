@@ -230,7 +230,7 @@ public class AppTest2  extends AppTest{
       String countDataSources =
           App.executor.eval("App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))\n" +
               ".count().next().toString()").get().toString();
-      assertEquals("8", countDataSources);
+      assertEquals("17", countDataSources);
 
 //    test0000 for COUNT(event Ingestions)
       String countEventIngestions =
