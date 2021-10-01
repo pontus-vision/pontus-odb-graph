@@ -129,6 +129,9 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telefone_Comercial}
+        - name: Object.Phone_Number.Type
+          val: Telefone Comercial
+          excludeFromSubsequenceSearch: True
 
   edges:
   - label: Uses_Email

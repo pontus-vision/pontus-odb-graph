@@ -182,6 +182,13 @@ rules:
           Raw:
             val: "${Telefone_Comercial}"
             mandatoryInSearch: false
+          Type:
+            val: "Telefone Comercial"
+            excludeFromSubsequenceSearch: true
+
+#       Work In Progress
+#      - label: Object.Phone_Number
+#        name: telefone_opcional
 
     edges:
       - label: "Uses_Email"

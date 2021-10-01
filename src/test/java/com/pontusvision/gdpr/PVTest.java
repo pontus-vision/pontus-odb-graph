@@ -347,7 +347,7 @@ public class PVTest extends AppTest {
   }
 
   @Test
-  public void testADP() throws InterruptedException {
+  public void test00012ADP() throws InterruptedException {
     try {
       csvTestUtil("ADP.csv",  "ADP");
 
@@ -355,6 +355,20 @@ public class PVTest extends AppTest {
               App.executor.eval("App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))\n" +
                       ".count().next().toString()").get().toString();
       assertEquals("7", countDataSources);
+
+      String countCommercialPhoneNumbers =
+              App.executor.eval("App.g.V().has('Object.Phone_Number.Type', eq('Telefone Comercial'))" +
+                              ".count().next().toString()").get().toString();
+      assertEquals("1", countCommercialPhoneNumbers);
+
+      String countForeignLocationAddress =
+              App.executor.eval("App.g.V().has('Location.Address.Type', eq('Endereço Exterior'))" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("1", countForeignLocationAddress);
+
+      App.executor.eval("App.g.V().values('Object.Identity_Card.Id_Value').next().toString()");
+
+      App.executor.eval("App.g.V().values('Person.Employee.Role').count().next().toString()");
 
 
     } catch (ExecutionException e) {
