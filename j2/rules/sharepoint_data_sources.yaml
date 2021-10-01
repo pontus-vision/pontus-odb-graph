@@ -56,7 +56,7 @@ updatereq:
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sharepoint/fontes-de-dados
+          val: sharepoint/data-sources
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
@@ -84,26 +84,27 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Type
-          val: sharepoint/fontes-de-dados
+          val: sharepoint/data-sources
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.mandatoryInSearch
+          val: True
 
   edges:
-  - label: Policy
-    fromVertexName: data_sources
-    toVertexLabel: Object.Data_Policy
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Ingestion
-    toVertexName: data_sources
+    fromVertexName: sharepoint
+    toVertexLabel: Event.Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexName: sharepoint
-    toVertexLabel: Event.Group_Ingestion
+    fromVertexLabel: Event.Ingestion
+    toVertexName: data_sources
+  - label: Has_Policy
+    fromVertexName: data_sources
+    toVertexLabel: Object.Data_Policy
 

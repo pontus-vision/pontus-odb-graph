@@ -53,7 +53,7 @@ rules:
       - label: Event.Ingestion
         props:
           Type:
-            val: sharepoint/fontes-de-dados
+            val: sharepoint/data-sources
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -82,31 +82,31 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Type:
-            val: sharepoint/fontes-de-dados
+            val: sharepoint/data-sources
             mandatoryInSearch: true
           Operation:
             val: Structured Data Insertion
             mandatoryInSearch: true
           Ingestion_Date:
             val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+          mandatoryInSearch: true
 
     edges:
-      - label: "Policy"
-        fromVertexName: "data_sources"
-        toVertexLabel: "Object.Data_Policy"
-
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
-        toVertexName: "data_sources"
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event.Group_Ingestion"
         toVertexLabel: "Event.Ingestion"
 
       - label: "Has_Ingestion_Event"
-        toVertexLabel: "Event.Group_Ingestion"
-        fromVertexName: "sharepoint"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexName: "data_sources"
+
+      - label: "Has_Policy"
+        fromVertexName: "data_sources"
+        toVertexLabel: "Object.Data_Policy"
 
   sharepoint_fontes_de_dados:
     vertices:
@@ -200,21 +200,23 @@ rules:
             mandatoryInSearch: true
 
     edges:
-      - label: "Policy"
-        fromVertexName: "fontes_de_dados"
-        toVertexLabel: "Object.Data_Policy"
-
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
-        toVertexName: "fontes_de_dados"
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event.Group_Ingestion"
         toVertexLabel: "Event.Ingestion"
 
       - label: "Has_Ingestion_Event"
-        toVertexLabel: "Event.Group_Ingestion"
-        fromVertexName: "sharepoint"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexName: "fontes_de_dados"
+
+
+      - label: "Has_Policy"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object.Data_Policy"
+
 
 
   sharepoint_treinamentos:

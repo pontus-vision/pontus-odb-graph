@@ -189,18 +189,18 @@ class EmailNLPRequest implements   Serializable{
     def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
     Matcher.parseEdges(updateReq)
 
-    processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
+    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
             percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
 
-    vertexScoreMapByVertexNameLocal.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
+    finalVertexIdByVertexName.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
       createEventNLPGroups(req, it.key)
     })
 
 
-    return vertexScoreMapByVertexName
+    return finalVertexIdByVertexName
   }
 
-  static void processUpdateReq(
+  static Map<String, Map<ORID, AtomicDouble>> processUpdateReq(
           final GraphTraversalSource g,
           final Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName,
           final Map<String, List<MatchReq>> matchReqByVertexName,
@@ -246,6 +246,7 @@ class EmailNLPRequest implements   Serializable{
 
     Matcher.createEdges(g, (Set<EdgeRequest>) edgeReqs, finalVertexIdByVertexName, maxScoresByVertexName)
 
+    return finalVertexIdByVertexName;
   }
 
   static Vertex createEventEmailMessageGroupVtx(UpdateReq updateReq) {
@@ -304,7 +305,7 @@ class EmailNLPRequest implements   Serializable{
 
   }
 
-  static List<ORID> createEventNLPGroups(EmailNLPRequest req, ORID emailBodyOrAttachment,
+  static Set<ORID> createEventNLPGroups(EmailNLPRequest req, ORID emailBodyOrAttachment,
                                          minThreshold = 1, Integer maxThreshold = 100) {
 
     String[] person = req.person
@@ -335,9 +336,15 @@ class EmailNLPRequest implements   Serializable{
 
     def emails = App.g.V().or(emailOptions)
 
-    def retVal = persons.hasId(P.within(emails.in('Uses_Email').id().toList())).id().toSet() as Set<ORID>
+    Set<ORID> retVal = null;
+    try {
+      retVal = persons.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>
 
-    if (retVal.size() <= minThreshold) {
+    }catch (Throwable t){
+      //ignore
+    }
+
+    if (!retVal || retVal.size() <= minThreshold) {
       retVal = personsClone.id().toSet() as Set<ORID>
     }
     String currDate = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
@@ -466,7 +473,7 @@ class EmailNLPRequest implements   Serializable{
     emailVtx.props = []
 
     emailVtx.label = emailVtxLabel
-    emailVtx.name = req.attachmentId ?: req.emailId
+    emailVtx.name = emailVtxLabel //req.attachmentId ?: req.emailId
     VertexProps emailIdVtxProps = new VertexProps()
     emailIdVtxProps.name = "${emailVtxLabel}.Email_Id"
     emailIdVtxProps.mandatoryInSearch = true
