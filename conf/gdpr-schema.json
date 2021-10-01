@@ -3361,6 +3361,21 @@
       "name": "Is_Dependant",
       "multiplicity": "MULTI",
       "unidirected": false
+    },
+    {
+      "name": "Is_Relative",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Subordinate",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Trainee",
+      "multiplicity": "MULTI",
+      "unidirected": false
     }
   ],
   "vertexIndexes": [

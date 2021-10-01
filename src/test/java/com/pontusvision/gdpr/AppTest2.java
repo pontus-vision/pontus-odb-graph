@@ -277,6 +277,25 @@ public class AppTest2  extends AppTest{
 
   }
 
+  @Test
+  public void testADP() throws InterruptedException {
+    try {
+      csvTestUtil("ADP.csv",  "ADP");
+
+      String countDataSources =
+              App.executor.eval("App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))\n" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("7", countDataSources);
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
   @Test
   public void testSQL() {

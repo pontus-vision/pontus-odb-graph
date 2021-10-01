@@ -558,7 +558,7 @@ rules:
   ADP:
     vertices:
       - label: Person.Natural
-        name: primary_person
+        name: titular
         props:
           Full_Name: "${Nome?.trim().toUpperCase()}"
           Full_Name_fuzzy: "${Nome?.trim().toUpperCase()}"
@@ -576,26 +576,26 @@ rules:
       - label: Person.Employee
         props:
           ID: "${Identidade}"
-          Title: "${Matrícula}"
-          Role: "${Cargo} - ${Função}"
+          Title: "${Matricula}"
+          Role: "${Cargo} - ${Funcao}"
 
-      - label: Person.Natural
-#        condition: "${java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18}"
-        name: nome_responsavel_legal
-        props:
-          Full_Name: "${Nome_do_Responsável_Legal?.trim().toUpperCase()}"
-          Type:
-            val: "Nome do Responsável Legal"
-            excludeFromSearch: true
+#      - label: Person.Natural
+##        condition: "${!(java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18)}"
+#        name: responsavel_legal
+#        props:
+#          Full_Name: "${Nome_do_Responsavel_Legal?.trim().toUpperCase()}"
+#          Type:
+#            val: "Nome do Responsável Legal"
+#            excludeFromSearch: true
 
-      - label: Person.Natural
-        #        condition: "${java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18}"
-        name: nome_coordenador
-        props:
-          Full_Name: "${Nome_do_Responsável_Legal?.trim().toUpperCase()}"
-          Type:
-            val: "Nome do Coordenador"
-            excludeFromSearch: true
+#      - label: Person.Natural
+#        #        condition: "${!(java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18)}"
+#        name: nome_coordenador
+#        props:
+#          Full_Name: "${Nome_do_Responsavel_Legal?.trim().toUpperCase()}"
+#          Type:
+#            val: "Nome do Coordenador"
+#            excludeFromSearch: true
 
       - label: Object.Identity_Card
         name: cpf
@@ -608,49 +608,49 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
-#        condition: "${java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18}"
-        name: cpf_responsavel
-        props:
-          Id_Value:
-            val: "${CPF.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+#      - label: Object.Identity_Card
+##        condition: "${!(java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18)}"
+#        name: cpf_responsavel
+#        props:
+#          Id_Value:
+#            val: "${CPF_Responsavel.replaceAll('[^0-9]','')}"
+#            mandatoryInSearch: true
+#
+#          Id_Type:
+#            val: "CPF Responsável"
+#            excludeFromSearch: true
 
-          Id_Type:
-            val: "CPF Responsável"
-            excludeFromSearch: true
-
-      - label: Object.Identity_Card
-          #        condition: "${java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18}"
-        name: cpf_coordenador
-        props:
-          Id_Value:
-            val: "${CPF_do_Coordenador.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
-
-          Id_Type:
-            val: "CPF Coordenador"
-            excludeFromSearch: true
+#      - label: Object.Identity_Card
+##        condition: "${!(java.time.Period.between(java.time.LocalDate.of(YEAR, MONTH, DAY), java.time.LocalDate.now()).getYears() > 18)}"
+#        name: cpf_coordenador
+#        props:
+#          Id_Value:
+#            val: "${CPF_do_Coordenador.replaceAll('[^0-9]','')}"
+#            mandatoryInSearch: true
+#
+#          Id_Type:
+#            val: "CPF Coordenador"
+#            excludeFromSearch: true
 
       - label:  Object.Email_Address
         condition: "${(Email != null) && !(Email.isEmpty())}"
         props:
-          Email:  "${Email}"
+          Email:  "${Email?.trim()?.toUpperCase()}"
 
       - label: Location.Address
         name: endereco_brasil
-        condition: "${!Domiciliado_no_Exterior}"
+        condition: "${Domiciliado_no_Exterior == 'Não'}"
         props:
-          Full_Address: "${Tipo_Endereço}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
+          Full_Address: "${Tipo_Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}"
           Type:
             val: "Endereço Brasil"
             excludeFromSearch: true
 
       - label: Location.Address
         name: endereco_exterior
-#        condition: "${!(!Domiciliado_no_Exterior)}"
+        condition: "${Domiciliado_no_Exterior == 'Sim'}"
         props:
-          Full_Address: "${Tipo_Endereço}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}"
+          Full_Address: "${Tipo_Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}"
           Type:
             val: "Endereço Exterior"
             excludeFromSearch: true
@@ -718,9 +718,9 @@ rules:
           Raw:
             val: "${Telefone}"
             mandatoryInSearch: false
-#          Type:
-#            val: "Telefone Fixo"
-#            excludeFromSubsequenceSearch: true
+          Type:
+            val: "Telefone Fixo"
+            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -731,7 +731,7 @@ rules:
             type: "[Ljava.lang.String;"
 
       - label: Object.Phone_Number
-#        condition: "${!(!Telefone_Comercial)}"
+        condition: "${Telefone_Comercial?.trim()?.length() > 0}"
         name: telefone_comercial
         props:
           Raw:
@@ -740,19 +740,19 @@ rules:
 
     edges:
       - label: "Uses_Email"
-        fromVertexName: "primary_person"
+        fromVertexName: "titular"
         toVertexLabel: "Object.Email_Address"
 
       - label: "Has_Address"
-        fromVertexName: "primary_person"
+        fromVertexName: "titular"
         toVertexName: "endereco_brasil"
 
       - label: "Has_Address"
-        fromVertexName: "primary_person"
+        fromVertexName: "titular"
         toVertexName: "endereco_exterior"
 
       - label: "Has_Ingestion_Event"
-        fromVertexName: "primary_person"
+        fromVertexName: "titular"
         toVertexLabel: "Event.Ingestion"
 
       - label: "Has_Ingestion_Event"
@@ -767,22 +767,26 @@ rules:
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
 
-      - label: ""
-        fromVertexName: "primary_person"
-        toVertexName: "cpf_coordenador"
+#      - label: "Is_Trainee"
+#        fromVertexName: "titular"
+#        toVertexName: "cpf_coordenador"
 
-      - label: ""
-        fromVertexName: "primary_person"
-        toVertexName: "cpf_responsavel"
+#      - label: "Is_Relative"
+#        fromVertexName: "titular"
+#        toVertexName: "cpf_responsavel"
 
       - label: "Has_Id_Card"
-        fromVertexName: "primary_person"
+        fromVertexName: "titular"
         toVertexName: "cpf"
 
-      - label: ""
-        fromVertexName: "primary_person"
-        toVertexName: "nome_coordenador"
+#      - label: "Is_Subordinate"
+#        fromVertexName: "titular"
+#        toVertexName: "nome_coordenador"
 
-      - label: ""
-        fromVertexName: "primary_person"
-        toVertexName: "nome_responsavel_legal"
+#      - label: "Is_Relative"
+#        fromVertexName: "titular"
+#        toVertexName: "responsavel_legal"
+
+      - label: "Has_Phone"
+        fromVertexName: "titular"
+        toVertexName: "telefone"

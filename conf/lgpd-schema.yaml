@@ -2129,6 +2129,18 @@ edgeLabels:
   - name: Is_Dependant
     multiplicity: MULTI
     unidirected: False
+
+  - name: Is_Relative
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Subordinate
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Trainee
+    multiplicity: MULTI
+    unidirected: False
 vertexIndexes:
   - name: "Event.Consent.MixedIdx"
     composite: false

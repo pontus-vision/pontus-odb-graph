@@ -965,6 +965,9 @@ schema:
   - name: Works
   - name: Is_Family
   - name: Is_Dependant
+  - name: Is_Relative
+  - name: Is_Subordinate
+  - name: Is_Trainee
 
 
 

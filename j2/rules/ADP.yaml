@@ -1,15 +1,16 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDEN BY THE J2 DIR TEMPLATES
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
 updatereq:
   vertices:
     
     - label: Person.Natural
+      name: titular
       props:
         - name: Person.Natural.Full_Name
           val: ${Nome?.trim().toUpperCase()}
         - name: Person.Natural.Full_Name_fuzzy
           val: ${Nome?.trim().toUpperCase()}
         - name: Person.Natural.Type
-          val: cliente
+          val: colaborador
           excludeFromSearch: True
         - name: Person.Natural.Date_Of_Birth
           val: ${Data_de_Nascimento_Idade}
@@ -17,26 +18,47 @@ updatereq:
           mandatoryInSearch: True
           type: "java.util.Date"
     
+    - label: Person.Employee
+      props:
+        - name: Person.Employee.ID
+          val: ${Identidade}
+        - name: Person.Employee.Title
+          val: ${Matricula}
+        - name: Person.Employee.Role
+          val: ${Cargo} - ${Funcao}
+    
+    - label: Object.Identity_Card
+      name: cpf
+      props:
+        - name: Object.Identity_Card.Id_Value
+          val: ${CPF.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object.Identity_Card.Id_Type
+          val: CPF
+          excludeFromSearch: True
+    
     - label: Object.Email_Address
       condition: ${(Email != null) && !(Email.isEmpty())}
       props:
         - name: Object.Email_Address.Email
-          val: ${Email}
+          val: ${Email?.trim()?.toUpperCase()}
     
     - label: Location.Address
-      condition: ${!Domiciliado_no_Exterior}
+      name: endereco_brasil
+      condition: ${Domiciliado_no_Exterior == 'Não'}
       props:
         - name: Location.Address.Full_Address
-          val: ${Tipo_Endereço}${Nº?', '+Nº+' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}
+          val: ${Tipo_Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}
         - name: Location.Address.Type
           val: Endereço Brasil
           excludeFromSearch: True
     
     - label: Location.Address
-      condition: ${Domiciliado_no_Exterior}
+      name: endereco_exterior
+      condition: ${Domiciliado_no_Exterior == 'Sim'}
       props:
         - name: Location.Address.Full_Address
-          val: ${Tipo_Endereço}${Nº?', '+Nº+' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Município02?:''}${CEP?' '+CEP:''}
+          val: ${Tipo_Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}
         - name: Location.Address.Type
           val: Endereço Exterior
           excludeFromSearch: True
@@ -83,19 +105,46 @@ updatereq:
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
           excludeFromSearch: True
+    
+    - label: Object.Phone_Number
+      name: telefone
+      props:
+        - name: Object.Phone_Number.Raw
+          val: ${Telefone}
+        - name: Object.Phone_Number.Type
+          val: Telefone Fixo
+          excludeFromSubsequenceSearch: True
+        - name: Object.Phone_Number.Numbers_Only
+          val: ${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object.Phone_Number.Last_7_Digits
+          val: ${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    
+    - label: Object.Phone_Number
+      name: telefone_comercial
+      condition: ${Telefone_Comercial?.trim()?.length() > 0}
+      props:
+        - name: Object.Phone_Number.Raw
+          val: ${Telefone_Comercial}
 
   edges:
   - label: Uses_Email
-    fromVertexLabel: Person.Natural
+    fromVertexName: titular
     toVertexLabel: Object.Email_Address
   - label: Has_Address
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Location.Address
+    fromVertexName: titular
+    toVertexName: endereco_brasil
+  - label: Has_Address
+    fromVertexName: titular
+    toVertexName: endereco_exterior
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person.Organisation
+    fromVertexName: titular
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person.Natural
+    fromVertexLabel: Person.Employee
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
@@ -103,4 +152,10 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Object.Data_Source
     toVertexLabel: Event.Group_Ingestion
+  - label: Has_Id_Card
+    fromVertexName: titular
+    toVertexName: cpf
+  - label: Has_Phone
+    fromVertexName: titular
+    toVertexName: telefone
 
