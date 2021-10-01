@@ -369,7 +369,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.NLP_Group.PersonId",
+      "name": "Event.NLP_Group.Person_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3504,7 +3504,7 @@
       "propertyKeys": [
         "Metadata.Type.Event.NLP_Group",
         "Event.NLP_Group.Ingestion_Date",
-        "Event.NLP_Group.PersonId"
+        "Event.NLP_Group.Person_Id"
       ],
       "propertyKeysMappings": {}
     },

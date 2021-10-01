@@ -8,13 +8,16 @@ import com.pontusvision.gdpr.mapping.UpdateReq
 import com.pontusvision.gdpr.mapping.Vertex
 import com.pontusvision.gdpr.mapping.VertexProps
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
+import org.apache.tinkerpop.gremlin.process.traversal.P
+import org.apache.tinkerpop.gremlin.process.traversal.Traversal
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Transaction
 
 import java.text.SimpleDateFormat
 
-
-class EmailNLPRequest {
+class EmailNLPRequest implements   Serializable{
   String metadataController
   String metadataGDPRStatus
   String metadataLineage
@@ -37,6 +40,7 @@ class EmailNLPRequest {
   String[] time
   String[] categories
   String[] cpf
+  String[] cnpj
 
 
   String attachmentContentType
@@ -61,45 +65,42 @@ class EmailNLPRequest {
   static Map<String, String> getMapFromEmailNLPRequest(EmailNLPRequest req) {
     Map<String, String> retVal = [:]
 
-    retVal.put("emailSubject", req.emailSubject.toString())
-    retVal.put("emailId", req.emailId.toString())
-    retVal.put("emailUserId", req.emailUserId.toString())
-    retVal.put("emailFolderId", req.emailFolderId.toString())
-    retVal.put("emailCreatedDateTime", req.emailCreatedDateTime.toString())
-    retVal.put("emailReceivedDateTime", req.emailReceivedDateTime.toString())
-    retVal.put("emailSentDateTime", req.emailSentDateTime.toString())
-    retVal.put("fromEmailAddresses", req.fromEmailAddresses.toString())
-    retVal.put("fromEmailNames", req.fromEmailNames.toString())
-    retVal.put("toEmailAddresses", req.toEmailAddresses.toArrayString())
-    retVal.put("toEmailNames", req.toEmailNames.toArrayString())
-
-    retVal.put("metadataController", req.metadataController.toString())
-    retVal.put("metadataGDPRStatus", req.metadataGDPRStatus.toString())
-    retVal.put("metadataLineage", req.metadataLineage.toString())
-    retVal.put("pg_currDate", req.pg_currDate.toString())
-    retVal.put("pg_content", req.pg_content.toString())
-
-    retVal.put("nlp_location", req.location.toArrayString())
-    retVal.put("nlp_person", req.person.toArrayString())
-    retVal.put("nlp_phone", req.phone.toArrayString())
-    retVal.put("nlp_postcode", req.postcode.toArrayString())
-    retVal.put("nlp_policy_number", req.policy_number.toArrayString())
-
-    retVal.put("nlp_nationality", req.nationality.toArrayString())
-    retVal.put("nlp_address", req.address.toArrayString())
-    retVal.put("nlp_cred_card", req.cred_card.toString())
-    retVal.put("bccEmailAddresses", req.bccEmailAddresses.toArrayString())
-    retVal.put("bccEmailNames", req.bccEmailNames.toArrayString())
-    retVal.put("categories", req.categories.toArrayString())
-    retVal.put("ccEmailAddresses", req.ccEmailAddresses.toArrayString())
-    retVal.put("ccEmailNames", req.ccEmailNames.toArrayString())
-    retVal.put("nlp_email", req.email.toArrayString())
-    retVal.put("nlp_date", req.date.toArrayString())
-    retVal.put("nlp_time", req.time.toArrayString())
-    retVal.put("nlp_money", req.money.toArrayString())
-    retVal.put("nlp_misc", req.misc.toArrayString())
-    retVal.put("nlp_language", req.language.toArrayString())
-    retVal.put("nlp_org", req.org.toArrayString())
+    retVal.put("emailSubject", req.emailSubject.toString()?:"[]")
+    retVal.put("emailId", req.emailId.toString()?:"[]")
+    retVal.put("emailUserId", req.emailUserId.toString()?:"[]")
+    retVal.put("emailFolderId", req.emailFolderId.toString()?:"[]")
+    retVal.put("emailCreatedDateTime", req.emailCreatedDateTime?.toString()?:"[]")
+    retVal.put("emailReceivedDateTime", req.emailReceivedDateTime?.toString()?:"[]")
+    retVal.put("emailSentDateTime", req.emailSentDateTime?.toString()?:"[]")
+    retVal.put("fromEmailAddresses", req.fromEmailAddresses?.toString()?:"[]")
+    retVal.put("fromEmailNames", req.fromEmailNames?.toString()?:"[]")
+    retVal.put("toEmailAddresses", req.toEmailAddresses?.toArrayString()?:"[]")
+    retVal.put("toEmailNames", req.toEmailNames?.toArrayString()?:"[]")
+    retVal.put("metadataController", req.metadataController?.toString()?:"[]")
+    retVal.put("metadataGDPRStatus", req.metadataGDPRStatus?.toString()?:"[]")
+    retVal.put("metadataLineage", req.metadataLineage?.toString()?:"[]")
+    retVal.put("pg_currDate", req.pg_currDate?.toString()?:"[]")
+    retVal.put("pg_content", req.pg_content?.toString()?:"[]")
+    retVal.put("nlp_location", req.location?.toArrayString()?:"[]")
+    retVal.put("nlp_person", req.person?.toArrayString()?:"[]")
+    retVal.put("nlp_phone", req.phone?.toArrayString()?:"[]")
+    retVal.put("nlp_postcode", req.postcode?.toArrayString()?:"[]")
+    retVal.put("nlp_policy_number", req.policy_number?.toArrayString()?:"[]")
+    retVal.put("nlp_nationality", req.nationality?.toArrayString()?:"[]")
+    retVal.put("nlp_address", req.address?.toArrayString()?:"[]")
+    retVal.put("nlp_cred_card", req.cred_card?.toString()?:"[]")
+    retVal.put("bccEmailAddresses", req.bccEmailAddresses?.toArrayString()?:"[]")
+    retVal.put("bccEmailNames", req.bccEmailNames?.toArrayString()?:"[]")
+    retVal.put("categories", req.categories?.toArrayString()?:"[]")
+    retVal.put("ccEmailAddresses", req.ccEmailAddresses?.toArrayString()?:"[]")
+    retVal.put("ccEmailNames", req.ccEmailNames?.toArrayString()?:"[]")
+    retVal.put("nlp_email", req.email?.toArrayString()?:"[]")
+    retVal.put("nlp_date", req.date?.toArrayString()?:"[]")
+    retVal.put("nlp_time", req.time?.toArrayString()?:"[]")
+    retVal.put("nlp_money", req.money?.toArrayString()?:"[]")
+    retVal.put("nlp_misc", req.misc?.toArrayString()?:"[]")
+    retVal.put("nlp_language", req.language?.toArrayString()?:"[]")
+    retVal.put("nlp_org", req.org?.toArrayString()?:"[]")
 
     return retVal
   }
@@ -112,69 +113,25 @@ class EmailNLPRequest {
     VertexProps vtxProps = new VertexProps()
     vtxProps.name = "${vtxLabel}.Name"
     vtxProps.mandatoryInSearch = true
-    vtxProps.val = 'Office365'
+    vtxProps.val = 'Office365/email'
 
     vtx.props = [vtxProps]
     req.vertices.push(vtx)
     return vtx
   }
 
-  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequest(
+  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequestArray(
           OrientStandardGraph graph,
           GraphTraversalSource g,
-          EmailNLPRequest req) {
-    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName = [:]
+          EmailNLPRequest[] reqs) {
     Transaction trans = App.graph.tx()
     try {
       if (!trans.isOpen()) {
         trans.open()
       }
-
-
-      UpdateReq updateReq = new UpdateReq()
-
-      updateReq.vertices = []
-      updateReq.edges = []
-
-      Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq)
-      Vertex eventEmailMessageGroupVtx = createEventEmailMessageGroupVtx(updateReq)
-
-      createEdge('Has_Ingestion', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
-
-      Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
-      createEdge('Has_Ingestion', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
-
-      createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_To_Group', 'Email_To', req.toEmailAddresses)
-      createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_From_Group', 'Email_From', req.toEmailAddresses)
-      createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_CC_Group', 'Email_CC', req.toEmailAddresses)
-      createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_BCC_Group', 'Email_BCC', req.toEmailAddresses)
-
-      Vertex emailBodyOrAttachmentVtx = createObjectEmailMessageBodyOrAttachmentVtx(req, updateReq)
-
-      createEdge(req.attachmentId ? 'Email_Attachment' : 'Email_Body', eventEmailVtx.name, emailBodyOrAttachmentVtx.name, updateReq)
-
-      StringBuffer sb = new StringBuffer()
-      Double pcntThreshold = 1.0
-      Map<String, String> item = getMapFromEmailNLPRequest(req)
-      def (
-      List<MatchReq>            matchReqs,
-      Map<String, AtomicDouble> maxScoresByVertexName,
-      Map<String, Double>       percentageThresholdByVertexName
-      ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
-
-      def (
-      Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexNameLocal,
-      Map<String, List<MatchReq>>          matchReqByVertexName
-      ) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
-
-      vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
-
-      def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
-      Matcher.parseEdges(updateReq)
-
-      processUpdateReq(g,vertexScoreMapByVertexName,matchReqByVertexName,maxScoresByVertexName,
-              percentageThresholdByVertexName,edgeReqsByVertexName, edgeReqs)
-
+      for (EmailNLPRequest req: reqs){
+        upsertEmailNLPRequest(graph,g,req);
+      }
       trans.commit()
     } catch (Throwable t) {
       trans.rollback()
@@ -182,11 +139,68 @@ class EmailNLPRequest {
     } finally {
       trans.close()
     }
-
-    return vertexScoreMapByVertexName
   }
 
-  static void processUpdateReq(
+
+  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequest(
+          OrientStandardGraph graph,
+          GraphTraversalSource g,
+          EmailNLPRequest req) {
+    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName
+
+    UpdateReq updateReq = new UpdateReq()
+    updateReq.vertices = []
+    updateReq.edges = []
+
+    Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq)
+    Vertex eventEmailMessageGroupVtx = createEventEmailMessageGroupVtx(updateReq)
+
+    createEdge('Has_Ingestion', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
+
+    Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
+    createEdge('Has_Ingestion', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
+
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_To_Group', 'Email_To', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_From_Group', 'Email_From', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_CC_Group', 'Email_CC', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_BCC_Group', 'Email_BCC', req.toEmailAddresses)
+
+    Vertex emailBodyOrAttachmentVtx = createObjectEmailMessageBodyOrAttachmentVtx(req, updateReq)
+
+    createEdge(req.attachmentId ? 'Email_Attachment' : 'Email_Body', eventEmailVtx.name, emailBodyOrAttachmentVtx.name, updateReq)
+
+
+    StringBuffer sb = new StringBuffer()
+    Double pcntThreshold = 1.0
+    Map<String, String> item = getMapFromEmailNLPRequest(req)
+    def (
+    List<MatchReq>            matchReqs,
+    Map<String, AtomicDouble> maxScoresByVertexName,
+    Map<String, Double>       percentageThresholdByVertexName
+    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
+
+    def (
+    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexNameLocal,
+    Map<String, List<MatchReq>>          matchReqByVertexName
+    ) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
+
+    vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
+
+    def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
+    Matcher.parseEdges(updateReq)
+
+    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
+            percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
+
+    finalVertexIdByVertexName.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
+      createEventNLPGroups(req, it.key)
+    })
+
+
+    return finalVertexIdByVertexName
+  }
+
+  static Map<String, Map<ORID, AtomicDouble>> processUpdateReq(
           final GraphTraversalSource g,
           final Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName,
           final Map<String, List<MatchReq>> matchReqByVertexName,
@@ -197,7 +211,7 @@ class EmailNLPRequest {
 
   ) {
 
-    Map<String,Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap()
+    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap()
 
     vertexScoreMapByVertexName.each { String vertexTypeStr, Map<ORID, AtomicDouble> potentialHitIDs ->
 
@@ -221,15 +235,7 @@ class EmailNLPRequest {
         finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
 
         if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
-
-//        json rootKey: matchReqByVertexName
-
-//        String bizRule = JsonOutput.prettyPrint(json.toString())
           String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
-
-          sb.append("\n\n\n ADDING Event.Ingestion.Business_Rules: ${bizRule}\n\n")
-
-
           g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
         }
 
@@ -240,6 +246,7 @@ class EmailNLPRequest {
 
     Matcher.createEdges(g, (Set<EdgeRequest>) edgeReqs, finalVertexIdByVertexName, maxScoresByVertexName)
 
+    return finalVertexIdByVertexName;
   }
 
   static Vertex createEventEmailMessageGroupVtx(UpdateReq updateReq) {
@@ -296,6 +303,77 @@ class EmailNLPRequest {
 
     return emailVtx
 
+  }
+
+  static Set<ORID> createEventNLPGroups(EmailNLPRequest req, ORID emailBodyOrAttachment,
+                                         minThreshold = 1, Integer maxThreshold = 100) {
+
+    String[] person = req.person
+
+    Traversal[] personOptions = new Traversal[person.length]
+    for (int i = 0; i < person.length; i++) {
+      personOptions[i] = __.has('Person.Natural.Full_Name', PText.textContains(person[i]))
+    }
+
+    String[] cpfs = req.cpf
+    Traversal[] cpfOptions = new Traversal[cpfs.length]
+    for (int i = 0; i < cpfs.length; i++) {
+      cpfOptions[i] = __.has('Person.Natural.Customer_Id', P.eq(cpfs[i]))
+    }
+
+
+    String[] emailAddrs = [req.email, req.toEmailAddresses,
+                           req.fromEmailAddresses, req.ccEmailAddresses, req.bccEmailAddresses].flatten()
+    Traversal[] emailOptions = new Traversal[emailAddrs.length]
+    for (int i = 0; i < emailAddrs.length; i++) {
+      emailOptions[i] = __.has('Object.Email_Address.Email', PText.textContains(emailAddrs[i]))
+    }
+    Traversal[] personNameCpfOptions = [personOptions, cpfOptions].flatten().toArray(new Traversal[0])
+
+    def persons = (App.g.V().or(personNameCpfOptions))
+
+    GraphTraversal personsClone = persons.clone() as GraphTraversal
+
+    def emails = App.g.V().or(emailOptions)
+
+    Set<ORID> retVal = null;
+    try {
+      retVal = persons.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>
+
+    }catch (Throwable t){
+      //ignore
+    }
+
+    if (!retVal || retVal.size() <= minThreshold) {
+      retVal = personsClone.id().toSet() as Set<ORID>
+    }
+    String currDate = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
+
+    int count = 0
+    for (ORID orid : retVal) {
+
+      String custId = App.g.V(orid).properties('Person.Natural.Customer_Id').next().toString()
+      def nlpGroupTrav =
+              App.g.V().has('Event.NLP_Group.Person_Id', custId)
+                      .has('Event.NLP_Group.Ingestion_Date', currDate)
+
+      def nlpGroupVtxId
+      if (nlpGroupTrav.hasNext()) {
+        nlpGroupVtxId = nlpGroupTrav.id().next()
+      } else {
+        nlpGroupVtxId = App.g.addV('Event.NLP_Group')
+                .property('Event.NLP_Group.Person_Id', custId)
+                .property('Event.NLP_Group.Ingestion_Date', currDate).id().next()
+      }
+
+      App.g.addE('Has_NLP_Events').from(App.g.V(emailBodyOrAttachment)).to(App.g.V(nlpGroupVtxId))
+      App.g.addE('Has_NLP_Events').from(App.g.V(nlpGroupVtxId)).to(App.g.V(orid))
+      count++
+      if (count >= maxThreshold) {
+        break
+      }
+    }
+    return retVal
   }
 
   static Vertex createEventEmailMessageVtx(EmailNLPRequest req, UpdateReq updateReq) {
@@ -367,26 +445,8 @@ class EmailNLPRequest {
 
   }
 
-  static Vertex createPersonNLPVertexProp(String name, String[] val, Vertex vtx,
-                                          String postProcessor = '${it?.toUpperCase()?.trim()}') {
 
-    if (!val) {
-      return vtx
-    }
-    VertexProps props = new VertexProps()
-    props.name = name
-    props.mandatoryInSearch = true
-    props.val = val.toArrayString()
-    props.type = VertexProps.TypeEnum._LJAVA_LANG_STRING_
-    props.excludeFromUpdate = true
-    props.postProcessor=postProcessor
-    props.predicate = "idx:"
-    vtx.props.push(props)
-
-    return vtx
-  }
-
-    static Vertex createEmailNLPVertexProp(String name, String[] val, Vertex vtx) {
+  static Vertex createEmailNLPVertexProp(String name, String[] val, Vertex vtx) {
     if (!val) {
       return vtx
     }
@@ -403,13 +463,17 @@ class EmailNLPRequest {
     return vtx
   }
 
+  static String getObjectEmailBodyOrAttachmentVtxLabel(EmailNLPRequest req) {
+    return req.attachmentId ? 'Object.Email_Message_Attachment' : 'Object.Email_Message_Body'
+  }
+
   static Vertex createObjectEmailMessageBodyOrAttachmentVtx(EmailNLPRequest req, UpdateReq updateReq) {
-    String emailVtxLabel = req.attachmentId ? 'Object.Email_Message_Attachment' : 'Object.Email_Message_Body'
+    String emailVtxLabel = getObjectEmailBodyOrAttachmentVtxLabel(req)
     Vertex emailVtx = new Vertex()
     emailVtx.props = []
 
     emailVtx.label = emailVtxLabel
-    emailVtx.name = req.attachmentId ?: req.emailId
+    emailVtx.name = emailVtxLabel //req.attachmentId ?: req.emailId
     VertexProps emailIdVtxProps = new VertexProps()
     emailIdVtxProps.name = "${emailVtxLabel}.Email_Id"
     emailIdVtxProps.mandatoryInSearch = true
@@ -476,6 +540,322 @@ class EmailNLPRequest {
 
     return updateReq
   }
+  String getMetadataController() {
+    return metadataController
+  }
 
+  void setMetadataController(String metadataController) {
+    this.metadataController = metadataController
+  }
+
+  String getMetadataGDPRStatus() {
+    return metadataGDPRStatus
+  }
+
+  void setMetadataGDPRStatus(String metadataGDPRStatus) {
+    this.metadataGDPRStatus = metadataGDPRStatus
+  }
+
+  String getMetadataLineage() {
+    return metadataLineage
+  }
+
+  void setMetadataLineage(String metadataLineage) {
+    this.metadataLineage = metadataLineage
+  }
+
+  String getPg_currDate() {
+    return pg_currDate
+  }
+
+  void setPg_currDate(String pg_currDate) {
+    this.pg_currDate = pg_currDate
+  }
+
+  String getPg_content() {
+    return pg_content
+  }
+
+  void setPg_content(String pg_content) {
+    this.pg_content = pg_content
+  }
+
+  String[] getAddress() {
+    return address
+  }
+
+  void setAddress(String[] address) {
+    this.address = address
+  }
+
+  String[] getCred_card() {
+    return cred_card
+  }
+
+  void setCred_card(String[] cred_card) {
+    this.cred_card = cred_card
+  }
+
+  String[] getEmail() {
+    return email
+  }
+
+  void setEmail(String[] email) {
+    this.email = email
+  }
+
+  String[] getLocation() {
+    return location
+  }
+
+  void setLocation(String[] location) {
+    this.location = location
+  }
+
+  String[] getPerson() {
+    return person
+  }
+
+  void setPerson(String[] person) {
+    this.person = person
+  }
+
+  String[] getPhone() {
+    return phone
+  }
+
+  void setPhone(String[] phone) {
+    this.phone = phone
+  }
+
+  String[] getPostcode() {
+    return postcode
+  }
+
+  void setPostcode(String[] postcode) {
+    this.postcode = postcode
+  }
+
+  String[] getPolicy_number() {
+    return policy_number
+  }
+
+  void setPolicy_number(String[] policy_number) {
+    this.policy_number = policy_number
+  }
+
+  String[] getOrg() {
+    return org
+  }
+
+  void setOrg(String[] org) {
+    this.org = org
+  }
+
+  String[] getNationality() {
+    return nationality
+  }
+
+  void setNationality(String[] nationality) {
+    this.nationality = nationality
+  }
+
+  String[] getLanguage() {
+    return language
+  }
+
+  void setLanguage(String[] language) {
+    this.language = language
+  }
+
+  String[] getMisc() {
+    return misc
+  }
+
+  void setMisc(String[] misc) {
+    this.misc = misc
+  }
+
+  String[] getMoney() {
+    return money
+  }
+
+  void setMoney(String[] money) {
+    this.money = money
+  }
+
+  String[] getDate() {
+    return date
+  }
+
+  void setDate(String[] date) {
+    this.date = date
+  }
+
+  String[] getTime() {
+    return time
+  }
+
+  void setTime(String[] time) {
+    this.time = time
+  }
+
+  String[] getCategories() {
+    return categories
+  }
+
+  void setCategories(String[] categories) {
+    this.categories = categories
+  }
+
+  String[] getCpf() {
+    return cpf
+  }
+
+  void setCpf(String[] cpf) {
+    this.cpf = cpf
+  }
+
+  String getAttachmentContentType() {
+    return attachmentContentType
+  }
+
+  void setAttachmentContentType(String attachmentContentType) {
+    this.attachmentContentType = attachmentContentType
+  }
+
+  String getAttachmentId() {
+    return attachmentId
+  }
+
+  void setAttachmentId(String attachmentId) {
+    this.attachmentId = attachmentId
+  }
+  String[] getCnpj() {
+    return cnpj
+  }
+
+  void setCnpj(String[] cnpj) {
+    this.cnpj = cnpj
+  }
+  String getEmailSubject() {
+    return emailSubject
+  }
+
+  void setEmailSubject(String emailSubject) {
+    this.emailSubject = emailSubject
+  }
+
+  String getEmailId() {
+    return emailId
+  }
+
+  void setEmailId(String emailId) {
+    this.emailId = emailId
+  }
+
+  String getEmailUserId() {
+    return emailUserId
+  }
+
+  void setEmailUserId(String emailUserId) {
+    this.emailUserId = emailUserId
+  }
+
+  String getEmailFolderId() {
+    return emailFolderId
+  }
+
+  void setEmailFolderId(String emailFolderId) {
+    this.emailFolderId = emailFolderId
+  }
+
+  String getEmailCreatedDateTime() {
+    return emailCreatedDateTime
+  }
+
+  void setEmailCreatedDateTime(String emailCreatedDateTime) {
+    this.emailCreatedDateTime = emailCreatedDateTime
+  }
+
+  String getEmailReceivedDateTime() {
+    return emailReceivedDateTime
+  }
+
+  void setEmailReceivedDateTime(String emailReceivedDateTime) {
+    this.emailReceivedDateTime = emailReceivedDateTime
+  }
+
+  String getEmailSentDateTime() {
+    return emailSentDateTime
+  }
+
+  void setEmailSentDateTime(String emailSentDateTime) {
+    this.emailSentDateTime = emailSentDateTime
+  }
+
+  String[] getToEmailAddresses() {
+    return toEmailAddresses
+  }
+
+  void setToEmailAddresses(String[] toEmailAddresses) {
+    this.toEmailAddresses = toEmailAddresses
+  }
+
+  String[] getToEmailNames() {
+    return toEmailNames
+  }
+
+  void setToEmailNames(String[] toEmailNames) {
+    this.toEmailNames = toEmailNames
+  }
+
+  String getFromEmailAddresses() {
+    return fromEmailAddresses
+  }
+
+  void setFromEmailAddresses(String fromEmailAddresses) {
+    this.fromEmailAddresses = fromEmailAddresses
+  }
+
+  String getFromEmailNames() {
+    return fromEmailNames
+  }
+
+  void setFromEmailNames(String fromEmailNames) {
+    this.fromEmailNames = fromEmailNames
+  }
+
+  String[] getBccEmailAddresses() {
+    return bccEmailAddresses
+  }
+
+  void setBccEmailAddresses(String[] bccEmailAddresses) {
+    this.bccEmailAddresses = bccEmailAddresses
+  }
+
+  String[] getBccEmailNames() {
+    return bccEmailNames
+  }
+
+  void setBccEmailNames(String[] bccEmailNames) {
+    this.bccEmailNames = bccEmailNames
+  }
+
+  String[] getCcEmailAddresses() {
+    return ccEmailAddresses
+  }
+
+  void setCcEmailAddresses(String[] ccEmailAddresses) {
+    this.ccEmailAddresses = ccEmailAddresses
+  }
+
+  String[] getCcEmailNames() {
+    return ccEmailNames
+  }
+
+  void setCcEmailNames(String[] ccEmailNames) {
+    this.ccEmailNames = ccEmailNames
+  }
 
 }

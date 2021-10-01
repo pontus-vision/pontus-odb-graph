@@ -1,5 +1,113 @@
 rules:
 
+  sharepoint_data_sources:
+    vertices:
+      - label: Object.Data_Source
+        name: sharepoint
+        props:
+          Name: sharepoint/data-sources
+          Type: sharepoint/data-sources
+          Description: Data Sources
+
+      - label: Object.Data_Source
+        condition: "${field_Descri_x0020__x0020_o?.trim()?.length() > 0}"
+        name: data_sources
+        props:
+          Name:
+            val: "${Title}"
+            mandatoryInSearch: true
+          Description:
+            val: "${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}"
+            mandatoryInSearch: true
+          Engine:
+            val: "${field_Sistema}"
+            excludeFromSearch: true
+          Type:
+            val: "${field_Tipo_x0020_Sistema}"
+            excludeFromSearch: true
+          Domain:
+            val: "${field_Tabela}"
+            excludeFromSearch: true
+          URI_Delete:
+            val: "${field_URL_x0020_Prefixo_x0020_Delete}"
+            excludeFromSearch: true
+          URI_Update:
+            val: "${field_URL_x0020_Prefixo_x0020_Update}"
+            excludeFromSearch: true
+          URI_Read:
+            val: "${field_URL_x0020_Prefixo_x0020_Read}"
+            excludeFromSearch: true
+
+      - label: Object.Data_Policy
+        props:
+          Update_Frequency:
+            val: "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}"
+            excludeFromSearch: true
+          Retention_Period:
+            val: "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}"
+            mandatoryInSearch: true
+          Type:
+            val: "${Title}"
+            mandatoryInSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: sharepoint/data-sources
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+#            mandatoryInSearch: false
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: sharepoint/data-sources
+            mandatoryInSearch: true
+          Operation:
+            val: Structured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          mandatoryInSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexName: "data_sources"
+
+      - label: "Has_Policy"
+        fromVertexName: "data_sources"
+        toVertexLabel: "Object.Data_Policy"
+
   sharepoint_fontes_de_dados:
     vertices:
       - label: Object.Data_Source
@@ -92,21 +200,23 @@ rules:
             mandatoryInSearch: true
 
     edges:
-      - label: "Policy"
-        fromVertexName: "fontes_de_dados"
-        toVertexLabel: "Object.Data_Policy"
-
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
-        toVertexName: "fontes_de_dados"
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event.Group_Ingestion"
         toVertexLabel: "Event.Ingestion"
 
       - label: "Has_Ingestion_Event"
-        toVertexLabel: "Event.Group_Ingestion"
-        fromVertexName: "sharepoint"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexName: "fontes_de_dados"
+
+
+      - label: "Has_Policy"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object.Data_Policy"
+
 
 
   sharepoint_treinamentos:

@@ -77,10 +77,10 @@ rules:
       #            val: "CPF Coordenador"
       #            excludeFromSearch: true
 
-      - label:  Object.Email_Address
+      - label: Object.Email_Address
         condition: "${(Email != null) && !(Email.isEmpty())}"
         props:
-          Email:  "${Email?.trim()?.toUpperCase()}"
+          Email: "${Email?.trim()?.toUpperCase()}"
 
       - label: Location.Address
         name: endereco_brasil

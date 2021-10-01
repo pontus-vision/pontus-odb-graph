@@ -1046,7 +1046,7 @@ class Matcher {
 
                 )
         def jsonSlurper = new JsonSlurper()
-        def rules = jsonSlurper.parseText(hasEntry) as com.pontusvision.gdpr.mapping.Rules
+        def rules = jsonSlurper.parseText(hasEntry as String) as com.pontusvision.gdpr.mapping.Rules
 
         return rules
 
@@ -1058,12 +1058,20 @@ class Matcher {
         return ingestRecordListUsingRules(App.graph, App.g, jsonString, jsonPath, ruleName)
     }
 
+    static String ingestEmail(String jsonString, String jsonPath, String ruleName){
+        EmailNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
+
+        return EmailNLPRequest.upsertEmailNLPRequestArray(App.graph,App.g,recordList).toString();
+    }
+
     static String ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g,
                                              String jsonString,
                                              String jsonPath,
                                              String ruleName) {
 
         StringBuffer sb = new StringBuffer()
+
+
 
         def recordList = JsonPath.read(jsonString, jsonPath)
 //        def  recordList =  mapper.readValue(jsonString,

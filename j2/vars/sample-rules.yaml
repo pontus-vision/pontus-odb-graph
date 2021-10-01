@@ -554,3 +554,4 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: Object.Data_Source
         toVertexLabel: Event.Group_Ingestion
+
