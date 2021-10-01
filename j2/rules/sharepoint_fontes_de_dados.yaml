@@ -94,16 +94,16 @@ updatereq:
           mandatoryInSearch: True
 
   edges:
-  - label: Policy
-    fromVertexName: fontes_de_dados
-    toVertexLabel: Object.Data_Policy
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Ingestion
-    toVertexName: fontes_de_dados
+    fromVertexName: sharepoint
+    toVertexLabel: Event.Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexName: sharepoint
-    toVertexLabel: Event.Group_Ingestion
+    fromVertexLabel: Event.Ingestion
+    toVertexName: fontes_de_dados
+  - label: Has_Policy
+    fromVertexName: fontes_de_dados
+    toVertexLabel: Object.Data_Policy
 

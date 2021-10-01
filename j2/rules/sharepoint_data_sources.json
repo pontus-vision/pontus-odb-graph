@@ -91,7 +91,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sharepoint/fontes-de-dados",
+            "val": "sharepoint/data-sources",
             "excludeFromSearch": true
           },
           {
@@ -135,7 +135,7 @@
           },
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sharepoint/fontes-de-dados",
+            "val": "sharepoint/data-sources",
             "mandatoryInSearch": true
           },
           {
@@ -145,22 +145,20 @@
           },
           {
             "name": "Event.Group_Ingestion.Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          },
+          {
+            "name": "Event.Group_Ingestion.mandatoryInSearch",
+            "val": true
           }
         ]
       }
     ],
     "edges": [
       {
-        "label": "Policy",
-        "fromVertexName": "data_sources",
-        "toVertexLabel": "Object.Data_Policy"
-      },
-      {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Ingestion",
-        "toVertexName": "data_sources"
+        "fromVertexName": "sharepoint",
+        "toVertexLabel": "Event.Group_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
@@ -169,8 +167,13 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "sharepoint",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "fromVertexLabel": "Event.Ingestion",
+        "toVertexName": "data_sources"
+      },
+      {
+        "label": "Has_Policy",
+        "fromVertexName": "data_sources",
+        "toVertexLabel": "Object.Data_Policy"
       }
     ]
   }
