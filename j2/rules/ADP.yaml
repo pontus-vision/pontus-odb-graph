@@ -10,7 +10,7 @@ updatereq:
         - name: Person.Natural.Type
           val: colaborador
           excludeFromSearch: True
-        - name: Person.Natural.IdStr
+        - name: Person.Natural.Customer_ID
           val: ${CPF?.replaceAll('[^0-9]', '')}
         - name: Person.Natural.Date_Of_Birth
           val: ${Data_de_Nascimento_Idade?.trim()}
@@ -20,7 +20,7 @@ updatereq:
     
     - label: Person.Employee
       props:
-        - name: Person.Employee.IdStr
+        - name: Person.Employee.ID
           val: ${CPF?.replaceAll('[^0-9]', '')}
         - name: Person.Employee.Role
           val: ${(Cargo?.trim()?.length()>0)?Cargo:'Cargo não definido'} - ${Funcao?.trim()?.length()>0?Funcao:'Função não definida'}
@@ -33,7 +33,7 @@ updatereq:
       props:
         - name: Person.Natural.Full_Name
           val: ${Nome_do_Responsavel_Legal?.trim().toUpperCase()}
-        - name: Person.Natural.IdStr
+        - name: Person.Natural.Customer_ID
           val: ${CPF_Responsavel?.replaceAll('[^0-9]', '')}
     
     - label: Object.Identity_Card
@@ -56,7 +56,7 @@ updatereq:
         - name: Person.Natural.Type
           val: colaborador
           excludeFromSearch: True
-        - name: Person.Natural.IdStr
+        - name: Person.Natural.Customer_ID
           val: ${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}
     
     - label: Object.Identity_Card

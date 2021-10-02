@@ -8,7 +8,7 @@ updatereq:
         - name: Person.Natural.Full_Name
           val: ${Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Natural.IdStr
+        - name: Person.Natural.Customer_ID
           val: ${CPF?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person.Natural.Type
@@ -25,7 +25,7 @@ updatereq:
           val: ${(LegalName?.trim()?.length() > 0)?LegalName?.trim().toUpperCase():Name?.trim().toUpperCase() }
         - name: Person.Organisation.Short_Name
           val: ${Name}
-        - name: Person.Organisation.IdStr
+        - name: Person.Organisation.Id
           val: ${CNPJ?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person.Organisation.Email

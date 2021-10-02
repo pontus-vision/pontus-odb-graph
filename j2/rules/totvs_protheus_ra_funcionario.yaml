@@ -14,7 +14,7 @@ updatereq:
           excludeFromSearch: True
         - name: Person.Natural.Gender
           val: ${RA_SEXO}
-        - name: Person.Natural.IdStr
+        - name: Person.Natural.Customer_ID
           val: ${id}
           predicate: eq
           mandatoryInSearch: True

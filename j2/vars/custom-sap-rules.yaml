@@ -10,7 +10,7 @@ rules:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
           #          Full_Name_fuzzy: "${Name_1?.toUpperCase()?.trim()}"
 
-          IdStr: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
+          Customer_ID: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
           #          id: "${Customer}"
           Type:
             val: "Clientes"
@@ -41,7 +41,7 @@ rules:
      # NOT needed; existem entradas c/ISENTO (Tax_Number_1?.trim()?.matches('.*[a-zA-Z]+.*') || Tax_Number_2?.trim()?.matches('.*[a-zA-Z]+.*'))}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
-          IdStr: "${Customer}"
+          Customer_ID: "${Customer}"
           Type:
             val: "Clientes Sem Tax"
             excludeFromSearch: true
@@ -199,7 +199,7 @@ rules:
         condition: "${(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11)}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
-          IdStr: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
+          Customer_ID: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
           Type:
             val: "Fornecedores"
             excludeFromSearch: true
@@ -227,7 +227,7 @@ rules:
         condition: "${!(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14)}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
-          IdStr: "${Vendor}"
+          Customer_ID: "${Vendor}"
           Type:
             val: "Fornecedores Sem Tax"
             excludeFromSearch: true

@@ -9,7 +9,7 @@ rules:
           Type:
             val: "colaborador"
             excludeFromSearch: true
-          IdStr: "${CPF?.replaceAll('[^0-9]', '')}"
+          Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
           Date_Of_Birth:
             val: "${Data_de_Nascimento_Idade?.trim()}"
             type: "java.util.Date"
@@ -19,7 +19,7 @@ rules:
 
       - label: Person.Employee
         props:
-          IdStr: "${CPF?.replaceAll('[^0-9]', '')}"
+          ID: "${CPF?.replaceAll('[^0-9]', '')}"
 #          Title: "${Matricula}"
           Role: "${(Cargo?.trim()?.length()>0)?Cargo:'Cargo não definido'} - ${Funcao?.trim()?.length()>0?Funcao:'Função não definida'}"
           Full_Name: "${Nome?.trim().toUpperCase()}"
@@ -29,7 +29,7 @@ rules:
         name: responsavel
         props:
           Full_Name: "${Nome_do_Responsavel_Legal?.trim().toUpperCase()}"
-          IdStr: "${CPF_Responsavel?.replaceAll('[^0-9]', '')}"
+          Customer_ID: "${CPF_Responsavel?.replaceAll('[^0-9]', '')}"
 
       - label: Object.Identity_Card
         condition: "${CPF_Responsavel?.trim()?.length() > 0 }"
@@ -50,7 +50,7 @@ rules:
           Type:
             val: "colaborador"
             excludeFromSearch: true
-          IdStr: "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}"
+          Customer_ID: "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}"
 
       - label: Object.Identity_Card
         condition: "${CPF_do_Coordenador?.trim()?.length() > 0 }"

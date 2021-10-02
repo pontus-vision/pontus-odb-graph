@@ -37,7 +37,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Natural.IdStr",
+            "name": "Person.Natural.Customer_ID",
             "val": "${Id}",
             "mandatoryInSearch": true
           },

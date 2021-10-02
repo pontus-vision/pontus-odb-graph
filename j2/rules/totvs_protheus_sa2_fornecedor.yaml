@@ -10,7 +10,7 @@ updatereq:
         - name: Person.Organisation.Type
           val: Fornecedor
           excludeFromSearch: True
-        - name: Person.Organisation.IdStr
+        - name: Person.Organisation.Id
           val: ${id}
           mandatoryInSearch: True
     

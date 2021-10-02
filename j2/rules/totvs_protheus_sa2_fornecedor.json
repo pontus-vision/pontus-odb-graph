@@ -15,7 +15,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Organisation.IdStr",
+            "name": "Person.Organisation.Id",
             "val": "${id}",
             "mandatoryInSearch": true
           }

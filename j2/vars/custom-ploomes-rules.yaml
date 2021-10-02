@@ -8,13 +8,13 @@ rules:
           Full_Name:
             val: "${Name?.trim()?.toUpperCase()}"
             mandatoryInSearch: true
-          IdStr:
+          Customer_ID:
             val: "${CPF?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Type:
             val: "Clientes"
             excludeFromSearch: true
-      #          IdStr: "${RoleId}"
+      #          Id: "${RoleId}"
 
       - label: Person.Organisation
         condition: "${TypeId == 1 && CNPJ != null && Name != null}"
@@ -24,7 +24,7 @@ rules:
             mandatoryInSearch: true
           Name: "${(LegalName?.trim()?.length() > 0)?LegalName?.trim().toUpperCase():Name?.trim().toUpperCase() }"
           Short_Name: "${Name}"
-          IdStr:
+          Id:
             val: "${CNPJ?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Email: "${Email?.trim()?.toLowerCase()}"

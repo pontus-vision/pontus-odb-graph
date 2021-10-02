@@ -665,7 +665,7 @@ public class PVTest extends AppTest {
       assertEquals("1", externalAddressCount, "Expect IAN GAEL FERREIRA to have 1 Endereço Exterior ");
 
       String coordenadorCPF =  App.executor.eval("App.g.V()" +
-          ".has('Person.Natural.Full_Name', eq('JOÃOZINHO')).has('Person.Natural.Id', eq('43376845409'))" +
+          ".has('Person.Natural.Full_Name', eq('JOÃOZINHO')).has('Person.Natural.Customer_ID', eq('43376845409'))" +
           ".out('Is_Subordinate')" +
           ".out('Has_Id_Card')" +
 //          ".count().next().toString()").get().toString();
