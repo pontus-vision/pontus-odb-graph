@@ -949,8 +949,12 @@ schema:
   - name: Is_Data_Controller
   - name: Is_Data_Owner
   - name: Is_Data_Processor
+  - name: Is_Dependant
+  - name: Is_Family
   - name: Is_Lead
   - name: Is_Located
+  - name: Is_Relative
+  - name: Is_Subordinate
   - name: Is_Responsible
   - name: Lives
   - name: Made_SAR_Request
@@ -963,8 +967,6 @@ schema:
   - name: Uses_Data_Source
   - name: Uses_Email
   - name: Works
-  - name: Is_Family
-  - name: Is_Dependant
 
 
 

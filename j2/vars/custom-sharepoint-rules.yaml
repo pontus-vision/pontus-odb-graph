@@ -70,6 +70,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
+
       - label: Event.Group_Ingestion
         props:
           Metadata_Start_Date:
