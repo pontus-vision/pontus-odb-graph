@@ -80,7 +80,7 @@ rules:
       - label: Object.Email_Address
         condition: "${(Email != null) && !(Email.isEmpty())}"
         props:
-          Email: "${Email?.trim()?.toUpperCase()}"
+          Email: "${Email}"
 
       - label: Location.Address
         name: endereco_brasil
