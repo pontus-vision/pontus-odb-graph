@@ -322,7 +322,7 @@ public class PVTest extends AppTest {
 
 //    test0000 COUNT(Edges) for Object.Email_Address
       String userId4 =
-          App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('JONAS@COMIDA1.COM.BR'))" +
+          App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('jonas@comida1.com.br'))" +
               ".next().id().toString()").get().toString();
       String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
       String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
