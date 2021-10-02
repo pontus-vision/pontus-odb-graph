@@ -32,7 +32,7 @@ rules:
             val: "Clientes"
             excludeFromSearch: true
 
-          ID:
+          IdStr:
             val: "${id}"
             mandatoryInSearch: true
             predicate: "eq"
@@ -263,7 +263,7 @@ rules:
             val: "Colaborador"
             excludeFromSearch: true
           Gender: "${RA_SEXO}"
-          ID:
+          IdStr:
             val: "${id}"
             mandatoryInSearch: true
             predicate: "eq"
@@ -491,7 +491,7 @@ rules:
           Type:
             val: "Fornecedor"
             excludeFromSearch: true
-          Id:
+          IdStr:
             val: "${id}"
             mandatoryInSearch: true
 
@@ -645,7 +645,7 @@ rules:
             val: "${MailingCountry?:'Unknown'}"
             excludeFromSearch: true
 
-          ID:
+          IdStr:
             val: "${Id}"
             mandatoryInSearch: true
 

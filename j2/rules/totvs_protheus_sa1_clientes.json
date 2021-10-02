@@ -19,7 +19,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Natural.ID",
+            "name": "Person.Natural.IdStr",
             "val": "${id}",
             "predicate": "eq",
             "mandatoryInSearch": true

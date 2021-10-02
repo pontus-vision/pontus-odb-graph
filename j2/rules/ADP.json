@@ -15,7 +15,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Natural.ID",
+            "name": "Person.Natural.IdStr",
             "val": "${CPF?.replaceAll('[^0-9]', '')}"
           },
           {
@@ -31,12 +31,12 @@
         "label": "Person.Employee",
         "props": [
           {
-            "name": "Person.Employee.ID",
+            "name": "Person.Employee.IdStr",
             "val": "${CPF?.replaceAll('[^0-9]', '')}"
           },
           {
             "name": "Person.Employee.Role",
-            "val": "${Cargo} - ${Funcao}"
+            "val": "${(Cargo?.trim()?.length()>0)?Cargo:'Cargo não definido'} - ${Funcao?.trim()?.length()>0?Funcao:'Função não definida'}"
           },
           {
             "name": "Person.Employee.Full_Name",
@@ -54,7 +54,7 @@
             "val": "${Nome_do_Responsavel_Legal?.trim().toUpperCase()}"
           },
           {
-            "name": "Person.Natural.ID",
+            "name": "Person.Natural.IdStr",
             "val": "${CPF_Responsavel?.replaceAll('[^0-9]', '')}"
           }
         ]
@@ -78,7 +78,7 @@
       },
       {
         "label": "Person.Natural",
-        "name": "nome_coordenador",
+        "name": "coordenador",
         "condition": "${Nome_do_Coordenador?.trim()?.length() > 0 && CPF_do_Coordenador?.trim()?.length() > 0 }",
         "props": [
           {
@@ -91,7 +91,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Natural.ID",
+            "name": "Person.Natural.IdStr",
             "val": "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}"
           }
         ]
@@ -321,7 +321,7 @@
       {
         "label": "Is_Subordinate",
         "fromVertexName": "titular",
-        "toVertexName": "cpf_coordenador"
+        "toVertexName": "coordenador"
       },
       {
         "label": "Is_Responsible",

@@ -318,7 +318,7 @@ class EmailNLPRequest implements   Serializable{
     String[] cpfs = req.cpf
     Traversal[] cpfOptions = new Traversal[cpfs.length]
     for (int i = 0; i < cpfs.length; i++) {
-      cpfOptions[i] = __.has('Person.Natural.ID', P.eq(cpfs[i]))
+      cpfOptions[i] = __.has('Person.Natural.Customer_Id', P.eq(cpfs[i]))
     }
 
 
@@ -352,7 +352,7 @@ class EmailNLPRequest implements   Serializable{
     int count = 0
     for (ORID orid : retVal) {
 
-      String custId = App.g.V(orid).properties('Person.Natural.ID').next().toString()
+      String custId = App.g.V(orid).properties('Person.Natural.Customer_Id').next().toString()
       def nlpGroupTrav =
               App.g.V().has('Event.NLP_Group.Person_Id', custId)
                       .has('Event.NLP_Group.Ingestion_Date', currDate)

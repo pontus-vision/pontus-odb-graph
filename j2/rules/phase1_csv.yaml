@@ -11,7 +11,7 @@ updatereq:
         - name: Person.Natural.Type
           val: cliente
           excludeFromSearch: True
-        - name: Person.Natural.ID
+        - name: Person.Natural.Customer_ID
           val: ${Customer_ID?.trim()}
         - name: Person.Natural.Date_Of_Birth
           val: ${DateofBirth}

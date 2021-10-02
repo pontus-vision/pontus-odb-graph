@@ -635,26 +635,46 @@ public class PVTest extends AppTest {
       assertEquals("1", countDataSources, "Expect 1 Data Source (ADP)");
 
 
-      adpDsqueryPrefix += ".out('Has_Ingestion_Event')";
+      String adpDsqueryPrefix2 = adpDsqueryPrefix + ".out('Has_Ingestion_Event')";
 
       String countDataEventGroups =
-          App.executor.eval( adpDsqueryPrefix +
+          App.executor.eval( adpDsqueryPrefix2 +
               ".count().next().toString()").get().toString();
       assertEquals("1", countDataEventGroups, "Expect 1 Ingestion Data Group ");
 
-      adpDsqueryPrefix += ".out('Has_Ingestion_Event')";
+
+      String adpDsqueryPrefix3 = adpDsqueryPrefix2 + ".out('Has_Ingestion_Event')";
 
       String countDataEvents =
-          App.executor.eval( adpDsqueryPrefix +
+          App.executor.eval( adpDsqueryPrefix3 +
               ".count().next().toString()").get().toString();
       assertEquals("7", countDataEvents, "Expect 7 Ingestion Events ");
 
-      adpDsqueryPrefix += ".in('Has_Ingestion_Event').has('Metadata.Type.Person.Natural', eq('Person.Natural'))";
+      String adpDsqueryPrefix4 = adpDsqueryPrefix3 +
+          ".in('Has_Ingestion_Event').has('Metadata.Type.Person.Natural', eq('Person.Natural'))";
 
       String countPersonObjects =
-          App.executor.eval( adpDsqueryPrefix +
+          App.executor.eval( adpDsqueryPrefix4 +
               ".count().next().toString()").get().toString();
       assertEquals("7", countPersonObjects, "Expect 7 Person.Natural entries ");
+
+      String externalAddressCount =  App.executor.eval("App.g.V()" +
+          ".has('Person.Natural.Full_Name', eq('IAN GAEL FERREIRA')).out('Is_Located')" +
+          ".has('Location.Address.Type', eq('Endereço Exterior'))"+
+          ".count().next().toString()").get().toString();
+      assertEquals("1", externalAddressCount, "Expect IAN GAEL FERREIRA to have 1 Endereço Exterior ");
+
+      String coordenadorCPF =  App.executor.eval("App.g.V()" +
+          ".has('Person.Natural.Full_Name', eq('JOÃOZINHO')).has('Person.Natural.Id', eq('43376845409'))" +
+          ".out('Is_Subordinate')" +
+          ".out('Has_Id_Card')" +
+//          ".count().next().toString()").get().toString();
+
+      ".properties('Object.Identity_Card.Id_Value').value()" +
+          ".next().toString()").get().toString();
+      assertEquals("07856755466", coordenadorCPF, "CPF From Joaozinho's coordinator ");
+
+
 
 //
 //      String countCommercialPhoneNumbers =

@@ -116,7 +116,7 @@ rules:
           Type:
             val: "cliente"
             excludeFromSearch: true
-          ID: "${Customer_ID?.trim()}"
+          Customer_ID: "${Customer_ID?.trim()}"
           Date_Of_Birth:
             val: "${DateofBirth}"
             type: "java.util.Date"

@@ -18,7 +18,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Natural.ID",
+            "name": "Person.Natural.Customer_ID",
             "val": "${Customer_ID?.trim()}"
           },
           {

@@ -24,7 +24,7 @@ updatereq:
         - name: Person.Natural.Nationality
           val: ${MailingCountry?:'Unknown'}
           excludeFromSearch: True
-        - name: Person.Natural.ID
+        - name: Person.Natural.IdStr
           val: ${Id}
           mandatoryInSearch: True
         - name: Person.Natural.Gender

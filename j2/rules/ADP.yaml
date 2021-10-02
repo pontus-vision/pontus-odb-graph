@@ -10,7 +10,7 @@ updatereq:
         - name: Person.Natural.Type
           val: colaborador
           excludeFromSearch: True
-        - name: Person.Natural.ID
+        - name: Person.Natural.IdStr
           val: ${CPF?.replaceAll('[^0-9]', '')}
         - name: Person.Natural.Date_Of_Birth
           val: ${Data_de_Nascimento_Idade?.trim()}
@@ -20,10 +20,10 @@ updatereq:
     
     - label: Person.Employee
       props:
-        - name: Person.Employee.ID
+        - name: Person.Employee.IdStr
           val: ${CPF?.replaceAll('[^0-9]', '')}
         - name: Person.Employee.Role
-          val: ${Cargo} - ${Funcao}
+          val: ${(Cargo?.trim()?.length()>0)?Cargo:'Cargo não definido'} - ${Funcao?.trim()?.length()>0?Funcao:'Função não definida'}
         - name: Person.Employee.Full_Name
           val: ${Nome?.trim().toUpperCase()}
     
@@ -33,7 +33,7 @@ updatereq:
       props:
         - name: Person.Natural.Full_Name
           val: ${Nome_do_Responsavel_Legal?.trim().toUpperCase()}
-        - name: Person.Natural.ID
+        - name: Person.Natural.IdStr
           val: ${CPF_Responsavel?.replaceAll('[^0-9]', '')}
     
     - label: Object.Identity_Card
@@ -48,7 +48,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Person.Natural
-      name: nome_coordenador
+      name: coordenador
       condition: ${Nome_do_Coordenador?.trim()?.length() > 0 && CPF_do_Coordenador?.trim()?.length() > 0 }
       props:
         - name: Person.Natural.Full_Name
@@ -56,7 +56,7 @@ updatereq:
         - name: Person.Natural.Type
           val: colaborador
           excludeFromSearch: True
-        - name: Person.Natural.ID
+        - name: Person.Natural.IdStr
           val: ${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}
     
     - label: Object.Identity_Card
@@ -196,7 +196,7 @@ updatereq:
     toVertexLabel: Location.Address
   - label: Is_Subordinate
     fromVertexName: titular
-    toVertexName: cpf_coordenador
+    toVertexName: coordenador
   - label: Is_Responsible
     fromVertexName: responsavel
     toVertexName: titular
