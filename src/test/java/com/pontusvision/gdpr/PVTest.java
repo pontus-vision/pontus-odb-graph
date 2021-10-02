@@ -627,7 +627,7 @@ public class PVTest extends AppTest {
     try {
       csvTestUtil("ADP.csv",  "ADP");
 
-      String adpDsqueryPrefix = "App.g.V().has('Object.Data_Source.Type', eq('ADP'))\n";
+      String adpDsqueryPrefix = "App.g.V().has('Object.Data_Source.Name', eq('ADP'))\n";
 
       String countDataSources =
           App.executor.eval( adpDsqueryPrefix +
