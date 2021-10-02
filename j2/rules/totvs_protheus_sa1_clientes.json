@@ -106,7 +106,7 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${A1_EMAIL}"
+            "val": "${A1_EMAIL?.trim()?.toLowerCase()}"
           }
         ]
       },
@@ -176,25 +176,30 @@
         "label": "Event.Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${currDate}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "name": "Event.Group_Ingestion.Type",
+            "val": "totvs/protheus/sa1_clientes",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Type",
-            "val": "totvs/protheus/sa1_clientes",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Operation",
-            "val": "Structured Data Insertion",
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
             "excludeFromSearch": true
           }
         ]

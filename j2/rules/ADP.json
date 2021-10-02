@@ -10,17 +10,17 @@
             "val": "${Nome?.trim().toUpperCase()}"
           },
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${Nome?.trim().toUpperCase()}"
-          },
-          {
             "name": "Person.Natural.Type",
             "val": "colaborador",
             "excludeFromSearch": true
           },
           {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${CPF?.replaceAll('[^0-9]', '')}"
+          },
+          {
             "name": "Person.Natural.Date_Of_Birth",
-            "val": "${Data_de_Nascimento_Idade}",
+            "val": "${Data_de_Nascimento_Idade?.trim()}",
             "predicate": "eq",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
@@ -32,15 +32,84 @@
         "props": [
           {
             "name": "Person.Employee.ID",
-            "val": "${Identidade}"
-          },
-          {
-            "name": "Person.Employee.Title",
-            "val": "${Matricula}"
+            "val": "${CPF?.replaceAll('[^0-9]', '')}"
           },
           {
             "name": "Person.Employee.Role",
-            "val": "${Cargo} - ${Funcao}"
+            "val": "${(Cargo?.trim()?.length()>0)?Cargo:'Cargo não definido'} - ${Funcao?.trim()?.length()>0?Funcao:'Função não definida'}"
+          },
+          {
+            "name": "Person.Employee.Full_Name",
+            "val": "${Nome?.trim().toUpperCase()}"
+          }
+        ]
+      },
+      {
+        "label": "Person.Natural",
+        "name": "responsavel",
+        "condition": "${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_Responsavel?.trim()?.length() > 0 }",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${Nome_do_Responsavel_Legal?.trim().toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${CPF_Responsavel?.replaceAll('[^0-9]', '')}"
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cpf_responsavel",
+        "condition": "${CPF_Responsavel?.trim()?.length() > 0 }",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${CPF_Responsavel.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person.Natural",
+        "name": "coordenador",
+        "condition": "${Nome_do_Coordenador?.trim()?.length() > 0 && CPF_do_Coordenador?.trim()?.length() > 0 }",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${Nome_do_Coordenador?.trim().toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Type",
+            "val": "colaborador",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}"
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cpf_coordenador",
+        "condition": "${CPF_do_Coordenador?.trim()?.length() > 0 }",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -66,14 +135,12 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${Email}"
+            "val": "${Email?.trim()?.toLowerCase()}"
           }
         ]
       },
       {
         "label": "Location.Address",
-        "name": "endereco_brasil",
-        "condition": "${Domiciliado_no_Exterior == 'Não'}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
@@ -81,23 +148,7 @@
           },
           {
             "name": "Location.Address.Type",
-            "val": "Endereço Brasil",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Location.Address",
-        "name": "endereco_exterior",
-        "condition": "${Domiciliado_no_Exterior == 'Sim'}",
-        "props": [
-          {
-            "name": "Location.Address.Full_Address",
-            "val": "${Tipo_Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}"
-          },
-          {
-            "name": "Location.Address.Type",
-            "val": "Endereço Exterior",
+            "val": "${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}",
             "excludeFromSearch": true
           }
         ]
@@ -150,25 +201,30 @@
         "label": "Event.Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "name": "Event.Group_Ingestion.Type",
+            "val": "ADP",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Type",
-            "val": "ADP",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Operation",
-            "val": "Structured Data Insertion",
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
             "excludeFromSearch": true
           }
         ]
@@ -176,6 +232,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "telefone",
+        "condition": "${Telefone?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -189,14 +246,12 @@
           {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Last_7_Digits",
             "val": "${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -213,25 +268,30 @@
             "name": "Object.Phone_Number.Type",
             "val": "Telefone Comercial",
             "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Numbers_Only",
+            "val": "${(Telefone_Comercial?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Last_7_Digits",
+            "val": "${(((Telefone_Comercial?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true
           }
         ]
       }
     ],
     "edges": [
       {
-        "label": "Uses_Email",
-        "fromVertexName": "titular",
-        "toVertexLabel": "Object.Email_Address"
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object.Data_Source",
+        "toVertexLabel": "Event.Group_Ingestion"
       },
       {
-        "label": "Has_Address",
-        "fromVertexName": "titular",
-        "toVertexName": "endereco_brasil"
-      },
-      {
-        "label": "Has_Address",
-        "fromVertexName": "titular",
-        "toVertexName": "endereco_exterior"
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Group_Ingestion",
+        "toVertexLabel": "Event.Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
@@ -244,14 +304,29 @@
         "toVertexLabel": "Event.Ingestion"
       },
       {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "label": "Is_Alias",
+        "fromVertexLabel": "Person.Employee",
+        "toVertexName": "titular"
       },
       {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "label": "Uses_Email",
+        "fromVertexName": "titular",
+        "toVertexLabel": "Object.Email_Address"
+      },
+      {
+        "label": "Is_Located",
+        "fromVertexName": "titular",
+        "toVertexLabel": "Location.Address"
+      },
+      {
+        "label": "Is_Subordinate",
+        "fromVertexName": "titular",
+        "toVertexName": "coordenador"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexName": "responsavel",
+        "toVertexName": "titular"
       },
       {
         "label": "Has_Id_Card",
@@ -259,9 +334,24 @@
         "toVertexName": "cpf"
       },
       {
+        "label": "Has_Id_Card",
+        "fromVertexName": "responsavel",
+        "toVertexName": "cpf_responsavel"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "coordenador",
+        "toVertexName": "cpf_coordenador"
+      },
+      {
         "label": "Has_Phone",
         "fromVertexName": "titular",
         "toVertexName": "telefone"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "titular",
+        "toVertexName": "telefone_comercial"
       }
     ]
   }

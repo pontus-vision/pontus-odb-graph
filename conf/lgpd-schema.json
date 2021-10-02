@@ -3283,12 +3283,32 @@
       "unidirected": false
     },
     {
+      "name": "Is_Dependant",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Family",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Is_Lead",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
       "name": "Is_Located",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Relative",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Subordinate",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -3349,31 +3369,6 @@
     },
     {
       "name": "Works",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Is_Family",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Is_Dependant",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Is_Relative",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Is_Subordinate",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Is_Trainee",
       "multiplicity": "MULTI",
       "unidirected": false
     }
