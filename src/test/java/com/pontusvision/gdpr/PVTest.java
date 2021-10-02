@@ -347,40 +347,6 @@ public class PVTest extends AppTest {
   }
 
   @Test
-  public void test00012ADP() throws InterruptedException {
-    try {
-      csvTestUtil("ADP.csv",  "ADP");
-
-      String countDataSources =
-              App.executor.eval("App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))\n" +
-                      ".count().next().toString()").get().toString();
-      assertEquals("7", countDataSources);
-
-      String countCommercialPhoneNumbers =
-              App.executor.eval("App.g.V().has('Object.Phone_Number.Type', eq('Telefone Comercial'))" +
-                              ".count().next().toString()").get().toString();
-      assertEquals("1", countCommercialPhoneNumbers);
-
-      String countForeignLocationAddress =
-              App.executor.eval("App.g.V().has('Location.Address.Type', eq('Endereço Exterior'))" +
-                      ".count().next().toString()").get().toString();
-      assertEquals("1", countForeignLocationAddress);
-
-      App.executor.eval("App.g.V().values('Object.Identity_Card.Id_Value').next().toString()");
-
-      App.executor.eval("App.g.V().values('Person.Employee.Role').count().next().toString()");
-
-
-    } catch (ExecutionException e) {
-      e.printStackTrace();
-      assertNull(e);
-
-    }
-
-
-  }
-
-  @Test
   public void test00006SQL() {
     Gson gson = new Gson();
     RecordRequest req = gson.fromJson(jsonReq, RecordRequest.class);
@@ -645,6 +611,65 @@ public class PVTest extends AppTest {
               .get().toString();
 
       assertEquals( "1", numDataEventEmailMessageGroups, "Ensure that We only have one Email Message Group");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+  @Test
+  public void test00012ADP() throws InterruptedException {
+    try {
+      csvTestUtil("ADP.csv",  "ADP");
+
+      String adpDsqueryPrefix = "App.g.V().has('Object.Data_Source.Type', eq('ADP'))\n";
+
+      String countDataSources =
+          App.executor.eval( adpDsqueryPrefix +
+              ".count().next().toString()").get().toString();
+      assertEquals("1", countDataSources, "Expect 1 Data Source (ADP)");
+
+
+      adpDsqueryPrefix += ".out('Has_Ingestion_Event')";
+
+      String countDataEventGroups =
+          App.executor.eval( adpDsqueryPrefix +
+              ".count().next().toString()").get().toString();
+      assertEquals("1", countDataEventGroups, "Expect 1 Ingestion Data Group ");
+
+      adpDsqueryPrefix += ".out('Has_Ingestion_Event')";
+
+      String countDataEvents =
+          App.executor.eval( adpDsqueryPrefix +
+              ".count().next().toString()").get().toString();
+      assertEquals("7", countDataEvents, "Expect 7 Ingestion Events ");
+
+      adpDsqueryPrefix += ".in('Has_Ingestion_Event').has('Metadata.Type.Person.Natural', eq('Person.Natural'))";
+
+      String countPersonObjects =
+          App.executor.eval( adpDsqueryPrefix +
+              ".count().next().toString()").get().toString();
+      assertEquals("7", countPersonObjects, "Expect 7 Person.Natural entries ");
+
+//
+//      String countCommercialPhoneNumbers =
+//          App.executor.eval("App.g.V().has('Object.Phone_Number.Type', eq('Telefone Comercial'))" +
+//              ".count().next().toString()").get().toString();
+//      assertEquals("1", countCommercialPhoneNumbers);
+//
+//      String countForeignLocationAddress =
+//          App.executor.eval("App.g.V().has('Location.Address.Type', eq('Endereço Exterior'))" +
+//              ".count().next().toString()").get().toString();
+//      assertEquals("1", countForeignLocationAddress);
+//
+//      App.executor.eval("App.g.V().values('Object.Identity_Card.Id_Value').next().toString()");
+//
+//      App.executor.eval("App.g.V().values('Person.Employee.Role').count().next().toString()");
 
 
     } catch (ExecutionException e) {

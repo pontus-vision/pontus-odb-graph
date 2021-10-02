@@ -11,7 +11,7 @@ updatereq:
         - name: Person.Natural.Type
           val: cliente
           excludeFromSearch: True
-        - name: Person.Natural.Customer_ID
+        - name: Person.Natural.ID
           val: ${Customer_ID?.trim()}
         - name: Person.Natural.Date_Of_Birth
           val: ${DateofBirth}
@@ -39,7 +39,7 @@ updatereq:
       condition: ${ (Email_address != null) && ! (Email_address.isEmpty())}
       props:
         - name: Object.Email_Address.Email
-          val: ${Email_address}
+          val: ${Email_address?.trim()?.toLowerCase()}
     
     - label: Location.Address
       props:

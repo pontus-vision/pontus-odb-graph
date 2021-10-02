@@ -2066,11 +2066,27 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Is_Dependant
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Family
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Is_Lead
     multiplicity: MULTI
     unidirected: False
 
   - name: Is_Located
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Relative
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Subordinate
     multiplicity: MULTI
     unidirected: False
 
@@ -2119,26 +2135,6 @@ edgeLabels:
     unidirected: False
 
   - name: Works
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Is_Family
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Is_Dependant
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Is_Relative
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Is_Subordinate
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Is_Trainee
     multiplicity: MULTI
     unidirected: False
 vertexIndexes:

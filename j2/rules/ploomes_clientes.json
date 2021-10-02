@@ -11,8 +11,8 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${CPF}",
+            "name": "Person.Natural.ID",
+            "val": "${CPF?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
@@ -28,7 +28,7 @@
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
-            "val": "${CNPJ}",
+            "val": "${CNPJ?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
@@ -41,12 +41,12 @@
           },
           {
             "name": "Person.Organisation.Id",
-            "val": "${CNPJ}",
+            "val": "${CNPJ?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
             "name": "Person.Organisation.Email",
-            "val": "${Email}"
+            "val": "${Email?.trim()?.toLowerCase()}"
           }
         ]
       },
@@ -56,7 +56,7 @@
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${CPF?.trim()?.toUpperCase()}",
+            "val": "${CPF?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
@@ -72,7 +72,7 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${Email}"
+            "val": "${Email?.trim()?.toLowerCase()}"
           }
         ]
       },
@@ -133,25 +133,30 @@
         "label": "Event.Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${currDate}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "name": "Event.Group_Ingestion.Type",
+            "val": "ploomes/clientes",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Type",
-            "val": "ploomes/clientes",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Operation",
-            "val": "Structured Data Insertion",
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
             "excludeFromSearch": true
           }
         ]

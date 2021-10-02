@@ -29,7 +29,7 @@ updatereq:
     - label: Object.Email_Address
       props:
         - name: Object.Email_Address.Email
-          val: ${pg_nlp_res_emailaddress}
+          val: ${pg_nlp_res_emailaddress?.trim()?.toLowerCase()}
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
     
@@ -61,19 +61,22 @@ updatereq:
     
     - label: Event.Group_Ingestion
       props:
-        - name: Event.Group_Ingestion.Metadata_Start_Date
-          val: ${pg_currDate}
+        - name: Event.Group_Ingestion.Type
+          val: Contratos em AWS S3
           mandatoryInSearch: True
-          type: "java.util.Date"
-        - name: Event.Group_Ingestion.Metadata_End_Date
+        - name: Event.Group_Ingestion.Operation
+          val: Unstructured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Event.Group_Ingestion.Type
-          val: Contratos em AWS S3
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Operation
-          val: Unstructured Data Insertion
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          type: "java.util.Date"
           excludeFromSearch: True
 
   edges:

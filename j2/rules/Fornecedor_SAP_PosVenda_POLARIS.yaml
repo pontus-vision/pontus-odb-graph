@@ -7,7 +7,7 @@ updatereq:
       props:
         - name: Person.Natural.Full_Name
           val: ${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}
-        - name: Person.Natural.Customer_ID
+        - name: Person.Natural.ID
           val: ${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}
         - name: Person.Natural.Type
           val: Fornecedores
@@ -37,7 +37,7 @@ updatereq:
       props:
         - name: Person.Natural.Full_Name
           val: ${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}
-        - name: Person.Natural.Customer_ID
+        - name: Person.Natural.ID
           val: ${Vendor}
         - name: Person.Natural.Type
           val: Fornecedores Sem Tax
@@ -111,19 +111,22 @@ updatereq:
     
     - label: Event.Group_Ingestion
       props:
+        - name: Event.Group_Ingestion.Type
+          val: sap/fornecedores
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
-          mandatoryInSearch: True
           type: "java.util.Date"
+          excludeFromSearch: True
         - name: Event.Group_Ingestion.Metadata_End_Date
           val: ${new Date()}
           type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Type
-          val: sap/fornecedores
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Operation
-          val: Structured Data Insertion
           excludeFromSearch: True
     
     - label: Object.Data_Source

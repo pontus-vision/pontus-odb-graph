@@ -613,7 +613,7 @@ static def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>>
 
       sb?.append("\n Looking for  existing person based on the $customerId ")
 
-      def personTrav = App.g.V().has("Person.Natural.Customer_ID", customerId)
+      def personTrav = App.g.V().has("Person.Natural.ID", customerId)
 
       def person = null;
       if (personTrav.hasNext()) {
@@ -640,7 +640,7 @@ static def ingestCRMData(OrientStandardGraph graph, g, List<Map<String, String>>
           property("Person.Natural.Gender", gender).
           property("Person.Natural.Nationality", nationality).
           property("Person.Natural.Date_Of_Birth", dob).
-          property("Person.Natural.Customer_ID", customerId).
+          property("Person.Natural.ID", customerId).
           property("Person.Natural.Title", title).next()
 
       }

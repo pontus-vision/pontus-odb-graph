@@ -14,7 +14,7 @@ updatereq:
           excludeFromSearch: True
         - name: Person.Natural.Gender
           val: ${RA_SEXO}
-        - name: Person.Natural.Customer_ID
+        - name: Person.Natural.ID
           val: ${id}
           predicate: eq
           mandatoryInSearch: True
@@ -84,7 +84,7 @@ updatereq:
       name: email1
       props:
         - name: Object.Email_Address.Email
-          val: ${RA_EMAIL.trim()?.toUpperCase()}
+          val: ${RA_EMAIL.trim()?.toLowerCase()}
         - name: Object.Email_Address.Type
           val: ${(RA_EMAIL.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}
     
@@ -92,7 +92,7 @@ updatereq:
       name: email2
       props:
         - name: Object.Email_Address.Email
-          val: ${RA_EMAIL2.trim()?.toUpperCase()}
+          val: ${RA_EMAIL2?.trim()?.toLowerCase()}
         - name: Object.Email_Address.Type
           val: ${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}
     
@@ -123,19 +123,22 @@ updatereq:
     
     - label: Event.Group_Ingestion
       props:
-        - name: Event.Group_Ingestion.Metadata_Start_Date
-          val: ${currDate}
+        - name: Event.Group_Ingestion.Type
+          val: totvs/protheus/sra_funcionarios
           mandatoryInSearch: True
-          type: "java.util.Date"
-        - name: Event.Group_Ingestion.Metadata_End_Date
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Event.Group_Ingestion.Type
-          val: totvs/protheus/sra_funcionarios
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Operation
-          val: Structured Data Insertion
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          type: "java.util.Date"
           excludeFromSearch: True
     
     - label: Object.Data_Source

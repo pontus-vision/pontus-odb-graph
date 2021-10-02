@@ -23,7 +23,7 @@
             "val": "${RA_SEXO}"
           },
           {
-            "name": "Person.Natural.Customer_ID",
+            "name": "Person.Natural.ID",
             "val": "${id}",
             "predicate": "eq",
             "mandatoryInSearch": true
@@ -141,7 +141,7 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${RA_EMAIL.trim()?.toUpperCase()}"
+            "val": "${RA_EMAIL.trim()?.toLowerCase()}"
           },
           {
             "name": "Object.Email_Address.Type",
@@ -155,7 +155,7 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${RA_EMAIL2.trim()?.toUpperCase()}"
+            "val": "${RA_EMAIL2?.trim()?.toLowerCase()}"
           },
           {
             "name": "Object.Email_Address.Type",
@@ -208,25 +208,30 @@
         "label": "Event.Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${currDate}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "name": "Event.Group_Ingestion.Type",
+            "val": "totvs/protheus/sra_funcionarios",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Type",
-            "val": "totvs/protheus/sra_funcionarios",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Operation",
-            "val": "Structured Data Insertion",
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
             "excludeFromSearch": true
           }
         ]
