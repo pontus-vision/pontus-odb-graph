@@ -2140,41 +2140,6 @@ edgeLabels:
   - name: Works
     multiplicity: MULTI
     unidirected: False
-<<<<<<< HEAD
-
-  - name: Is_Family
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Is_Dependant
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Has_Identity_Card
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Has_Phone_Number
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Policy
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Sensitive_Data
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Completed_By
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Course_Training
-    multiplicity: MULTI
-    unidirected: False
-=======
->>>>>>> origin/master
 vertexIndexes:
   - name: "Event.Consent.MixedIdx"
     composite: false

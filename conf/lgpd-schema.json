@@ -3376,49 +3376,6 @@
       "name": "Works",
       "multiplicity": "MULTI",
       "unidirected": false
-<<<<<<< HEAD
-    },
-    {
-      "name": "Is_Family",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Is_Dependant",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Identity_Card",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Phone_Number",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Policy",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Sensitive_Data",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Completed_By",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Course_Training",
-      "multiplicity": "MULTI",
-      "unidirected": false
-=======
->>>>>>> origin/master
     }
   ],
   "vertexIndexes": [
