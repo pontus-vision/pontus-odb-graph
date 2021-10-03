@@ -414,9 +414,7 @@ rules:
         Ingestion_Date:
           val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           mandatoryInSearch: true
-
     edges:
-
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Object.Data_Source"
         toVertexLabel: "Event.Group_Ingestion"
