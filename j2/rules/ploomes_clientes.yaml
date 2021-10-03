@@ -9,7 +9,7 @@ updatereq:
           val: ${Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Customer_ID
-          val: ${CPF}
+          val: ${CPF?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person.Natural.Type
           val: Clientes
@@ -19,23 +19,23 @@ updatereq:
       condition: ${TypeId == 1 && CNPJ != null && Name != null}
       props:
         - name: Person.Organisation.Registration_Number
-          val: ${CNPJ}
+          val: ${CNPJ?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person.Organisation.Name
           val: ${(LegalName?.trim()?.length() > 0)?LegalName?.trim().toUpperCase():Name?.trim().toUpperCase() }
         - name: Person.Organisation.Short_Name
           val: ${Name}
         - name: Person.Organisation.Id
-          val: ${CNPJ}
+          val: ${CNPJ?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person.Organisation.Email
-          val: ${Email}
+          val: ${Email?.trim()?.toLowerCase()}
     
     - label: Object.Identity_Card
       condition: ${TypeId == 2  && CPF != null}
       props:
         - name: Object.Identity_Card.Id_Value
-          val: ${CPF?.trim()?.toUpperCase()}
+          val: ${CPF?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
@@ -45,7 +45,7 @@ updatereq:
       condition: ${Email != null}
       props:
         - name: Object.Email_Address.Email
-          val: ${Email}
+          val: ${Email?.trim()?.toLowerCase()}
     
     - label: Location.Address
       condition: ${StreetAddress != null}
@@ -82,19 +82,22 @@ updatereq:
     
     - label: Event.Group_Ingestion
       props:
-        - name: Event.Group_Ingestion.Metadata_Start_Date
-          val: ${currDate}
+        - name: Event.Group_Ingestion.Type
+          val: ploomes/clientes
           mandatoryInSearch: True
-          type: "java.util.Date"
-        - name: Event.Group_Ingestion.Metadata_End_Date
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Event.Group_Ingestion.Type
-          val: ploomes/clientes
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Operation
-          val: Structured Data Insertion
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          type: "java.util.Date"
           excludeFromSearch: True
     
     - label: Object.Data_Source

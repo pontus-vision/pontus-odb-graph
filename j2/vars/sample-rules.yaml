@@ -48,7 +48,7 @@ rules:
 
       - label:  Object.Email_Address
         props:
-          Email:  "${pg_EMAIL}"
+          Email:  "${pg_EMAIL?.trim()?.toLowerCase()}"
       - label: Location.Address
         props:
           Full_Address: "${pg_IMOVEL} ${pg_BAIRRO}, Sao Paulo, SP"
@@ -145,7 +145,7 @@ rules:
       - label:  Object.Email_Address
         condition: "${ (Email_address != null) && ! (Email_address.isEmpty())}"
         props:
-          Email:  "${Email_address}"
+          Email:  "${Email_address?.trim()?.toLowerCase()}"
 
       - label: Location.Address
         props:
@@ -215,7 +215,7 @@ rules:
       # EMAIL
       - label: Object.Email_Address
         props:
-          Email:  "${pg_EMAIL}"
+          Email:  "${pg_EMAIL?.trim()?.toLowerCase()}"
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location.Address
@@ -318,7 +318,7 @@ rules:
       # EMAIL
       - label: Object.Email_Address
         props:
-          Email:  "${pg_EMAIL}"
+          Email:  "${pg_EMAIL?.trim()?.toLowerCase()}"
 
 
 
@@ -366,21 +366,27 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Metadata_Start_Date:
-            val: "${pg_currDate}"
+          Type:
+            val: planilhas - S3
             mandatoryInSearch: true
-            excludeFromSearch: false
+          Operation:
+            val: Structured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            #            mandatoryInSearch: false
+            excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: planilhas - S3
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+
+
+
 
       - label: Event.Ingestion
         props:
@@ -481,7 +487,7 @@ rules:
       - label: Object.Email_Address
         props:
           Email:
-            val: "${pg_nlp_res_emailaddress}"
+            val: "${pg_nlp_res_emailaddress?.trim()?.toLowerCase()}"
             type: "[Ljava.lang.String;"
             excludeFromUpdate: true
             mandatoryInSearch: true
@@ -524,24 +530,24 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Metadata_Start_Date:
-            val: "${pg_currDate}"
+          Type:
+            val: Contratos em AWS S3
             mandatoryInSearch: true
-            excludeFromSearch: false
+          Operation:
+            val: Unstructured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            #            mandatoryInSearch: false
+            excludeFromSearch: true
             type: java.util.Date
-
           Metadata_End_Date:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-
-          Type:
-            val: Contratos em AWS S3
-            excludeFromSearch: true
-
-          Operation:
-            val: Unstructured Data Insertion
-            excludeFromSearch: true
 
 
     edges:
@@ -554,5 +560,4 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: Object.Data_Source
         toVertexLabel: Event.Group_Ingestion
-
 

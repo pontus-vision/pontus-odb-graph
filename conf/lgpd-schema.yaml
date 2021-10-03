@@ -232,7 +232,7 @@ propertyKeys:
   - name: Event.NLP_Group.Ingestion_Date
     dataType: String
     cardinality: SINGLE
-  - name: Event.NLP_Group.PersonId
+  - name: Event.NLP_Group.Person_Id
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Event.Email_Message
@@ -2069,11 +2069,27 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Is_Dependant
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Family
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Is_Lead
     multiplicity: MULTI
     unidirected: False
 
   - name: Is_Located
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Relative
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Subordinate
     multiplicity: MULTI
     unidirected: False
 
@@ -2124,6 +2140,7 @@ edgeLabels:
   - name: Works
     multiplicity: MULTI
     unidirected: False
+<<<<<<< HEAD
 
   - name: Is_Family
     multiplicity: MULTI
@@ -2156,6 +2173,8 @@ edgeLabels:
   - name: Course_Training
     multiplicity: MULTI
     unidirected: False
+=======
+>>>>>>> origin/master
 vertexIndexes:
   - name: "Event.Consent.MixedIdx"
     composite: false
@@ -2281,7 +2300,7 @@ vertexIndexes:
     propertyKeys:
       - Metadata.Type.Event.NLP_Group
       - Event.NLP_Group.Ingestion_Date
-      - Event.NLP_Group.PersonId
+      - Event.NLP_Group.Person_Id
     propertyKeysMappings:
     
       {}

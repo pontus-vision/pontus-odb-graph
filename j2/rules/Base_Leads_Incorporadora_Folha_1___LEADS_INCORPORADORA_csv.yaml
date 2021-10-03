@@ -67,7 +67,7 @@ updatereq:
     - label: Object.Email_Address
       props:
         - name: Object.Email_Address.Email
-          val: ${pg_EMAIL}
+          val: ${pg_EMAIL?.trim()?.toLowerCase()}
     
     - label: Location.Address
       props:
@@ -107,19 +107,22 @@ updatereq:
     
     - label: Event.Group_Ingestion
       props:
-        - name: Event.Group_Ingestion.Metadata_Start_Date
-          val: ${pg_currDate}
+        - name: Event.Group_Ingestion.Type
+          val: planilhas - S3
           mandatoryInSearch: True
-          type: "java.util.Date"
-        - name: Event.Group_Ingestion.Metadata_End_Date
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Event.Group_Ingestion.Type
-          val: planilhas - S3
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Operation
-          val: Structured Data Insertion
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          type: "java.util.Date"
           excludeFromSearch: True
     
     - label: Event.Ingestion

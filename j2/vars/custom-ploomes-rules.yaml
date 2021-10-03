@@ -9,7 +9,7 @@ rules:
             val: "${Name?.trim()?.toUpperCase()}"
             mandatoryInSearch: true
           Customer_ID:
-            val: "${CPF}"
+            val: "${CPF?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Type:
             val: "Clientes"
@@ -20,21 +20,21 @@ rules:
         condition: "${TypeId == 1 && CNPJ != null && Name != null}"
         props:
           Registration_Number:
-            val: "${CNPJ}"
+            val: "${CNPJ?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Name: "${(LegalName?.trim()?.length() > 0)?LegalName?.trim().toUpperCase():Name?.trim().toUpperCase() }"
           Short_Name: "${Name}"
           Id:
-            val: "${CNPJ}"
+            val: "${CNPJ?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
-          Email: "${Email}"
+          Email: "${Email?.trim()?.toLowerCase()}"
 
 
       - label: Object.Identity_Card
         condition: "${TypeId == 2  && CPF != null}"
         props:
           Id_Value:
-            val: "${CPF?.trim()?.toUpperCase()}"
+            val: "${CPF?.replaceAll('[^0-9]', '')}"
             mandatoryInSearch: true
           Id_Type:
             val: "CPF"
@@ -44,7 +44,7 @@ rules:
       - label: Object.Email_Address
         condition: "${Email != null}"
         props:
-          Email: "${Email}"
+          Email: "${Email?.trim()?.toLowerCase()}"
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location.Address
@@ -81,21 +81,29 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Metadata_Start_Date:
-            val: "${currDate}"
+          Type:
+            val: ploomes/clientes
             mandatoryInSearch: true
-            excludeFromSearch: false
+          Operation:
+            val: Structured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            #            mandatoryInSearch: false
+            excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: ploomes/clientes
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+
+
+
+
+
       - label: Object.Data_Source
         props:
           Name: ploomes/clientes

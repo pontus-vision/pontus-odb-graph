@@ -39,7 +39,7 @@ updatereq:
       condition: ${ (Email_address != null) && ! (Email_address.isEmpty())}
       props:
         - name: Object.Email_Address.Email
-          val: ${Email_address}
+          val: ${Email_address?.trim()?.toLowerCase()}
     
     - label: Location.Address
       props:

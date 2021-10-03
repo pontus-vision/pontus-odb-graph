@@ -1,0 +1,358 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person.Natural",
+        "name": "titular",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${Nome?.trim().toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Type",
+            "val": "colaborador",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${CPF?.replaceAll('[^0-9]', '')}"
+          },
+          {
+            "name": "Person.Natural.Date_Of_Birth",
+            "val": "${Data_de_Nascimento_Idade?.trim()}",
+            "predicate": "eq",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
+          }
+        ]
+      },
+      {
+        "label": "Person.Employee",
+        "props": [
+          {
+            "name": "Person.Employee.ID",
+            "val": "${CPF?.replaceAll('[^0-9]', '')}"
+          },
+          {
+            "name": "Person.Employee.Role",
+            "val": "${(Cargo?.trim()?.length()>0)?Cargo:'Cargo não definido'} - ${Funcao?.trim()?.length()>0?Funcao:'Função não definida'}"
+          },
+          {
+            "name": "Person.Employee.Full_Name",
+            "val": "${Nome?.trim().toUpperCase()}"
+          }
+        ]
+      },
+      {
+        "label": "Person.Natural",
+        "name": "responsavel",
+        "condition": "${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_Responsavel?.trim()?.length() > 0 }",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${Nome_do_Responsavel_Legal?.trim().toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${CPF_Responsavel?.replaceAll('[^0-9]', '')}"
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cpf_responsavel",
+        "condition": "${CPF_Responsavel?.trim()?.length() > 0 }",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${CPF_Responsavel.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person.Natural",
+        "name": "coordenador",
+        "condition": "${Nome_do_Coordenador?.trim()?.length() > 0 && CPF_do_Coordenador?.trim()?.length() > 0 }",
+        "props": [
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${Nome_do_Coordenador?.trim().toUpperCase()}"
+          },
+          {
+            "name": "Person.Natural.Type",
+            "val": "colaborador",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}"
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cpf_coordenador",
+        "condition": "${CPF_do_Coordenador?.trim()?.length() > 0 }",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cpf",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${CPF.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Email_Address",
+        "condition": "${(Email != null) && !(Email.isEmpty())}",
+        "props": [
+          {
+            "name": "Object.Email_Address.Email",
+            "val": "${Email?.trim()?.toLowerCase()}"
+          }
+        ]
+      },
+      {
+        "label": "Location.Address",
+        "props": [
+          {
+            "name": "Location.Address.Full_Address",
+            "val": "${Tipo_Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}"
+          },
+          {
+            "name": "Location.Address.Type",
+            "val": "${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Ingestion",
+        "props": [
+          {
+            "name": "Event.Ingestion.Type",
+            "val": "ADP",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Create_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "ADP",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Dados ADP RH de Colaboradores"
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "Structured"
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Ingestion",
+        "props": [
+          {
+            "name": "Event.Group_Ingestion.Type",
+            "val": "ADP",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Phone_Number",
+        "name": "telefone",
+        "condition": "${Telefone?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object.Phone_Number.Raw",
+            "val": "${Telefone}"
+          },
+          {
+            "name": "Object.Phone_Number.Type",
+            "val": "Telefone Fixo",
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Numbers_Only",
+            "val": "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Last_7_Digits",
+            "val": "${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Phone_Number",
+        "name": "telefone_comercial",
+        "condition": "${Telefone_Comercial?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object.Phone_Number.Raw",
+            "val": "${Telefone_Comercial}"
+          },
+          {
+            "name": "Object.Phone_Number.Type",
+            "val": "Telefone Comercial",
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Numbers_Only",
+            "val": "${(Telefone_Comercial?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Last_7_Digits",
+            "val": "${(((Telefone_Comercial?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object.Data_Source",
+        "toVertexLabel": "Event.Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Group_Ingestion",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "titular",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Person.Employee",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Is_Alias",
+        "fromVertexLabel": "Person.Employee",
+        "toVertexName": "titular"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "titular",
+        "toVertexLabel": "Object.Email_Address"
+      },
+      {
+        "label": "Is_Located",
+        "fromVertexName": "titular",
+        "toVertexLabel": "Location.Address"
+      },
+      {
+        "label": "Is_Subordinate",
+        "fromVertexName": "titular",
+        "toVertexName": "coordenador"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexName": "responsavel",
+        "toVertexName": "titular"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "titular",
+        "toVertexName": "cpf"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "responsavel",
+        "toVertexName": "cpf_responsavel"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "coordenador",
+        "toVertexName": "cpf_coordenador"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "titular",
+        "toVertexName": "telefone"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "titular",
+        "toVertexName": "telefone_comercial"
+      }
+    ]
+  }
+}

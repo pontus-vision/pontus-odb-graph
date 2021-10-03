@@ -146,7 +146,7 @@ schema:
       props:
         - name: Ingestion_Date
           # Use the Person.Natural.Id here:
-        - name: PersonId
+        - name: Person_Id
 
 
     - name: "Event.Email_Message"
@@ -950,8 +950,12 @@ schema:
   - name: Is_Data_Controller
   - name: Is_Data_Owner
   - name: Is_Data_Processor
+  - name: Is_Dependant
+  - name: Is_Family
   - name: Is_Lead
   - name: Is_Located
+  - name: Is_Relative
+  - name: Is_Subordinate
   - name: Is_Responsible
   - name: Lives
   - name: Made_SAR_Request
@@ -964,14 +968,3 @@ schema:
   - name: Uses_Data_Source
   - name: Uses_Email
   - name: Works
-  - name: Is_Family
-  - name: Is_Dependant
-  - name: Has_Identity_Card  # created for sap/polaris
-  - name: Has_Phone_Number  # created for sap/polaris
-  - name: Policy  # created for sharepoint-fonte-de-dados/ sharepoint-mapeamento-de-processo
-  - name: Sensitive_Data  # created for sharepoint-fonte-de-dados/ sharepoint-mapeamento-de-processo
-  - name: Completed_By  # created for sharepoint-treinamentos
-  - name: Course_Training  # created for sharepoint-treinamentos
-
-
-

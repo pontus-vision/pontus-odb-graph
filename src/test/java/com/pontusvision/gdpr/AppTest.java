@@ -1,37 +1,24 @@
 package com.pontusvision.gdpr;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.orientechnologies.apache.commons.csv.CSVFormat;
-import com.orientechnologies.apache.commons.csv.CSVRecord;
 import com.pontusvision.ingestion.Ingestion;
 import com.pontusvision.ingestion.IngestionCSVFileRequest;
 import com.pontusvision.ingestion.IngestionJsonObjArrayRequest;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
 import org.eclipse.jetty.server.Server;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Base64;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+//import static org.junit.Assert.assertNull;
 
 /**
  * Unit test for simple App.
@@ -825,8 +812,7 @@ public class AppTest {
       + "sb.toString()";
 
 
-
-  @AfterClass
+  @AfterAll
   public static void after() throws Exception {
 //    App.gserver.stop().join();
     server.stop();
@@ -840,6 +826,7 @@ public class AppTest {
     deleteDirectory(new File(databaseDir));
 
   }
+
   public static boolean deleteDirectory(File directoryToBeDeleted) {
     File[] allContents = directoryToBeDeleted.listFiles();
     if (allContents != null) {
@@ -850,7 +837,7 @@ public class AppTest {
     return directoryToBeDeleted.delete();
   }
 
-  @BeforeClass
+  @BeforeAll
   public static void before() throws Exception {
     Path resourceDirectory = Paths.get(".");
     String absolutePath = resourceDirectory.toFile().getAbsolutePath();
@@ -904,7 +891,7 @@ public class AppTest {
   }
 
 
-  public void csvTestUtil(String csvFile,  String ruleName) throws InterruptedException {
+  public void csvTestUtil(String csvFile, String ruleName) throws InterruptedException {
 
     String res = null;
     try {

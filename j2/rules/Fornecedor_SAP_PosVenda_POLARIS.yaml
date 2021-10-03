@@ -111,19 +111,22 @@ updatereq:
     
     - label: Event.Group_Ingestion
       props:
+        - name: Event.Group_Ingestion.Type
+          val: sap/fornecedores
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
-          mandatoryInSearch: True
           type: "java.util.Date"
+          excludeFromSearch: True
         - name: Event.Group_Ingestion.Metadata_End_Date
           val: ${new Date()}
           type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Type
-          val: sap/fornecedores
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Operation
-          val: Structured Data Insertion
           excludeFromSearch: True
     
     - label: Object.Data_Source

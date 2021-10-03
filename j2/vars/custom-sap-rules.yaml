@@ -123,21 +123,24 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
+          Type:
+            val: sap/clientes
+            mandatoryInSearch: true
+          Operation:
+            val: Structured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
           Metadata_Start_Date:
             val: "${new Date()}"
-            mandatoryInSearch: true
-            excludeFromSearch: false
+            #            mandatoryInSearch: false
+            excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: sap/clientes
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
 
       - label: Object.Data_Source
         props:
@@ -310,21 +313,25 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
+          Type:
+            val: sap/fornecedores
+            mandatoryInSearch: true
+          Operation:
+            val: Structured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
           Metadata_Start_Date:
             val: "${new Date()}"
-            mandatoryInSearch: true
-            excludeFromSearch: false
+            #            mandatoryInSearch: false
+            excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: sap/fornecedores
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+
 
       - label: Object.Data_Source
         props:

@@ -369,7 +369,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Event.NLP_Group.PersonId",
+      "name": "Event.NLP_Group.Person_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3288,12 +3288,32 @@
       "unidirected": false
     },
     {
+      "name": "Is_Dependant",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Family",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Is_Lead",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
       "name": "Is_Located",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Relative",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Subordinate",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -3356,6 +3376,7 @@
       "name": "Works",
       "multiplicity": "MULTI",
       "unidirected": false
+<<<<<<< HEAD
     },
     {
       "name": "Is_Family",
@@ -3396,6 +3417,8 @@
       "name": "Course_Training",
       "multiplicity": "MULTI",
       "unidirected": false
+=======
+>>>>>>> origin/master
     }
   ],
   "vertexIndexes": [
@@ -3524,7 +3547,7 @@
       "propertyKeys": [
         "Metadata.Type.Event.NLP_Group",
         "Event.NLP_Group.Ingestion_Date",
-        "Event.NLP_Group.PersonId"
+        "Event.NLP_Group.Person_Id"
       ],
       "propertyKeysMappings": {}
     },

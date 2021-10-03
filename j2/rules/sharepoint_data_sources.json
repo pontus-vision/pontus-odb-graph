@@ -7,22 +7,22 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sharepoint/fontes-de-dados"
+            "val": "sharepoint/data-sources"
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sharepoint/fontes-de-dados"
+            "val": "sharepoint/data-sources"
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros das Fontes de Dados LGPD"
+            "val": "Data Sources"
           }
         ]
       },
       {
         "label": "Object.Data_Source",
-        "name": "fontes_de_dados",
-        "condition": "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}",
+        "name": "data_sources",
+        "condition": "${field_Descri_x0020__x0020_o?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Data_Source.Name",
@@ -31,37 +31,37 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}",
+            "val": "${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Engine",
-            "val": "${Sistema}",
+            "val": "${field_Sistema}",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "${Tipo_x0020_Sistema}",
+            "val": "${field_Tipo_x0020_Sistema}",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Domain",
-            "val": "${Tabela}",
+            "val": "${field_Tabela}",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.URI_Delete",
-            "val": "${URL_x0020_Prefixo_x0020_Delete}",
+            "val": "${field_URL_x0020_Prefixo_x0020_Delete}",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.URI_Update",
-            "val": "${URL_x0020_Prefixo_x0020_Update}",
+            "val": "${field_URL_x0020_Prefixo_x0020_Update}",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.URI_Read",
-            "val": "${URL_x0020_Prefixo_x0020_Read}",
+            "val": "${field_URL_x0020_Prefixo_x0020_Read}",
             "excludeFromSearch": true
           }
         ]
@@ -71,12 +71,12 @@
         "props": [
           {
             "name": "Object.Data_Policy.Update_Frequency",
-            "val": "${Frequ_x00ea_ncia_x0020_de_x0020_}",
+            "val": "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Policy.Retention_Period",
-            "val": "${Pol_x00ed_tica_x0020_de_x0020_Re}",
+            "val": "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}",
             "mandatoryInSearch": true
           },
           {
@@ -91,7 +91,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sharepoint/fontes-de-dados",
+            "val": "sharepoint/data-sources",
             "excludeFromSearch": true
           },
           {
@@ -135,7 +135,7 @@
           },
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sharepoint/fontes-de-dados",
+            "val": "sharepoint/data-sources",
             "mandatoryInSearch": true
           },
           {
@@ -145,8 +145,11 @@
           },
           {
             "name": "Event.Group_Ingestion.Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          },
+          {
+            "name": "Event.Group_Ingestion.mandatoryInSearch",
+            "val": true
           }
         ]
       }
@@ -165,11 +168,11 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event.Ingestion",
-        "toVertexName": "fontes_de_dados"
+        "toVertexName": "data_sources"
       },
       {
         "label": "Has_Policy",
-        "fromVertexName": "fontes_de_dados",
+        "fromVertexName": "data_sources",
         "toVertexLabel": "Object.Data_Policy"
       }
     ]

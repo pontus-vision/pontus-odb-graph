@@ -29,7 +29,7 @@ Event.Email_CC_Group.Email
 Event.Email_BCC_Group.Ingestion_Date
 Event.Email_BCC_Group.Email
 Event.NLP_Group.Ingestion_Date
-Event.NLP_Group.PersonId
+Event.NLP_Group.Person_Id
 Event.Email_Message.Business_Rules
 Event.Email_Message.Domain_Unstructured_Data_b64
 Event.Email_Message.Domain_b64
