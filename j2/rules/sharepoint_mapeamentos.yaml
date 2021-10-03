@@ -39,7 +39,7 @@ updatereq:
           val: ${Finalidade_x0020_do_x0020_proces}
           mandatoryInSearch: True
         - name: Object.Data_Procedures.Info_Collected
-          val: ${Base_x0020_legal}
+          val: ${Dados_x0020_pessoais_x0020_utili}
           mandatoryInSearch: True
         - name: Object.Data_Procedures.Description
           val: ${Fluxo_x0020_interno_x0020_dos_x0}
@@ -50,6 +50,16 @@ updatereq:
         - name: Object.Sensitive_Data.Description
           val: ${Dados_x0020_pessoais_x0020_utili}
           mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+    
+    - label: Object.Lawful_Basis
+      props:
+        - name: Object.Lawful_Basis.Description
+          val: ${Base_x0020_legal}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
     
     - label: Event.Ingestion
       props:
@@ -92,19 +102,22 @@ updatereq:
           mandatoryInSearch: True
 
   edges:
-  - label: Sensitive_Data
-    fromVertexLabel: Object.Data_Procedures
-    toVertexLabel: Object.Sensitive_Data
-  - label: Policy
-    fromVertexLabel: Object.Data_Procedures
-    toVertexLabel: Object.Data_Policy
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Ingestion
-    toVertexLabel: Object.Data_Procedures
+    fromVertexLabel: Object.Data_Source
+    toVertexLabel: Event.Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object.Data_Source
-    toVertexLabel: Event.Group_Ingestion
+    fromVertexLabel: Event.Ingestion
+    toVertexLabel: Object.Data_Procedures
+  - label: Sensitive_Data
+    fromVertexLabel: Object.Data_Procedures
+    toVertexLabel: Object.Sensitive_Data
+  - label: Has_Lawful_Basis_On
+    fromVertexLabel: Object.Data_Procedures
+    toVertexLabel: Object.Lawful_Basis
+  - label: Has_Policy
+    fromVertexLabel: Object.Data_Procedures
+    toVertexLabel: Object.Data_Policy
 

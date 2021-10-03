@@ -353,7 +353,7 @@ rules:
           val: "${Finalidade_x0020_do_x0020_proces}"
           mandatoryInSearch: true
         Info_Collected:
-          val: "${Base_x0020_legal}"
+          val: "${Dados_x0020_pessoais_x0020_utili}"
           mandatoryInSearch: true
         Description:
           val: "${Fluxo_x0020_interno_x0020_dos_x0}"
@@ -363,7 +363,17 @@ rules:
       props:
         Description:
           val: "${Dados_x0020_pessoais_x0020_utili}"
+          type: "[Ljava.lang.String;"
           mandatoryInSearch: true
+          postProcessor: "${it?.toUpperCase()?.trim()}"
+
+    - label: Object.Lawful_Basis
+      props:
+        Description:
+          val: "${Base_x0020_legal}"
+          type: "[Ljava.lang.String;"
+          mandatoryInSearch: true
+          postProcessor: "${it?.toUpperCase()?.trim()}"
 
     - label: Event.Ingestion
       props:
@@ -406,22 +416,31 @@ rules:
           mandatoryInSearch: true
 
     edges:
-    - label: "Sensitive_Data"
-      fromVertexLabel: "Object.Data_Procedures"
-      toVertexLabel: "Object.Sensitive_Data"
 
-    - label: "Policy"
-      fromVertexLabel: "Object.Data_Procedures"
-      toVertexLabel: "Object.Data_Policy"
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
 
-    - label: "Has_Ingestion_Event"
-      fromVertexLabel: "Event.Ingestion"
-      toVertexLabel: "Object.Data_Procedures"
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
 
-    - label: "Has_Ingestion_Event"
-      fromVertexLabel: "Event.Group_Ingestion"
-      toVertexLabel: "Event.Ingestion"
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Object.Data_Procedures"
 
-    - label: "Has_Ingestion_Event"
-      toVertexLabel: "Event.Group_Ingestion"
-      fromVertexLabel: "Object.Data_Source"
+      - label: "Sensitive_Data"
+        fromVertexLabel: "Object.Data_Procedures"
+        toVertexLabel: "Object.Sensitive_Data"
+
+      - label: Has_Lawful_Basis_On
+        fromVertexLabel: "Object.Data_Procedures"
+        toVertexLabel: "Object.Lawful_Basis"
+
+      - label: "Has_Policy"
+        fromVertexLabel: "Object.Data_Procedures"
+        toVertexLabel: "Object.Data_Policy"
+
+
+
+

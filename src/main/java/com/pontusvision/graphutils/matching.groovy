@@ -1422,7 +1422,7 @@ class Matcher {
 
     }
 
-    static getTopHitsWithEdgeCheck(GraphTraversalSource g,
+    static Map<ORID, AtomicDouble> getTopHitsWithEdgeCheck(GraphTraversalSource g,
                                    Map<ORID, AtomicDouble> potentialHitIDs,
                                    double scoreThreshold,
                                    Map<String, Map<ORID, AtomicDouble>> matchIdsByVertexType,
