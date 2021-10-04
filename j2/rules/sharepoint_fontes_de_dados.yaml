@@ -21,7 +21,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          excludeFromSearch: True
         - name: Object.Data_Source.Engine
           val: ${Sistema}
           excludeFromSearch: True

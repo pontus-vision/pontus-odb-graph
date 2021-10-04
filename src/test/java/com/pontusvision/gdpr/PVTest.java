@@ -701,4 +701,69 @@ public class PVTest extends AppTest {
 
   }
 
+
+
+
+  @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
+  @CsvSource({
+      "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   sharepoint/mapeamento-de-processos",
+  })
+  public void test00014SharepointDataSources(String jsonFile, String ruleName, String dataSourceName) throws InterruptedException {
+    try {
+//      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+//          "sharepoint_data_sources");
+
+      jsonTestUtil(jsonFile, "$.queryResp[*].fields",
+          ruleName);
+
+      String queryPrefix = "App.g.V().has('Object.Data_Source.Name', eq('"+dataSourceName+"'))\n";
+//    test0000 for COUNT(dataSources)
+      String countDataSources =
+          App.executor.eval( queryPrefix+
+              ".count().next().toString()").get().toString();
+      assertEquals("1", countDataSources);
+
+//    test0000 for COUNT(event Ingestions)
+      String countEventGroupIngestions =
+          App.executor.eval(queryPrefix+
+              ".both()\n" +
+              ".count().next().toString()").get().toString();
+      assertEquals("1", countEventGroupIngestions);
+
+      String countEventIngestions =
+          App.executor.eval(queryPrefix+
+              ".out().out()\n" +
+              ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("6", countEventIngestions);
+
+
+      String countObjectDataProcessesIngested =
+          App.executor.eval(queryPrefix+
+              ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+//              ".in('Has_Policy')" +
+//              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
+              ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("6", countObjectDataProcessesIngested);
+
+      String countDataPolicy =
+          App.executor.eval(queryPrefix+
+              ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+              ".out('Has_Data_Source')" +
+              ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))" +
+              ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("14", countDataPolicy);
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
 }

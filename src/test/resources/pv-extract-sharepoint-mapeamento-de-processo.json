@@ -52,6 +52,16 @@
           "Per_x00ed_odo_x0020_de_x0020_ret": [
             "2 dias"
           ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
+          ],
           "Base_x0020_legal": [
             "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
           ],
@@ -116,6 +126,16 @@
             "Endereço",
             "E-mail",
             "Ocupação"
+          ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
           ],
           "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
           "Categoria_x0020_dos_x0020_titula": "TXXXXXXX",
@@ -190,6 +210,16 @@
             "Endereço",
             "E-mail"
           ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
+          ],
           "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
           "Categoria_x0020_dos_x0020_titula": "TXXXXXXX",
           "Finalidade_x0020_do_x0020_proces": "Necessário para gestão de contratos estratégicos formalizados com clientes/fornecedores",
@@ -262,6 +292,16 @@
             "RG",
             "Endereço",
             "E-mail"
+          ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
           ],
           "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
           "Categoria_x0020_dos_x0020_titula": "TXXXXXXX",
@@ -343,6 +383,16 @@
             "Certidão de Nascimento",
             "Dados Bancários"
           ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
+          ],
           "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
           "Categoria_x0020_dos_x0020_titula": "COLABORADOR",
           "Finalidade_x0020_do_x0020_proces": "Necessário para processamento e gestão do contrato de trabalho",
@@ -420,6 +470,16 @@
             "E-mail",
             "Dados Bancários",
             "Ocupação"
+          ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
           ],
           "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
           "Categoria_x0020_dos_x0020_titula": "TXXXXXXX",

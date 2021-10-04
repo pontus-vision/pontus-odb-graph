@@ -31,7 +31,7 @@
         "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('1')/fields/$entity",
         "fields": {
           "@odata.etag": "1b43a42e-aee3-34653456-abbf-gyhrtey,4",
-          "Title": "CRM-xxxxx",
+          "Title": "CRM-Leads",
           "Sistema": "xxxxx",
           "Tipo_x0020_Sistema": "SaaS",
           "Tabela": "Lyyyy",
@@ -91,7 +91,7 @@
         "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('2')/fields/$entity",
         "fields": {
           "@odata.etag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
-          "Title": "CRM-Czzzzzzz",
+          "Title": "CRM-Contatos",
           "Sistema": "xxxxx",
           "Tipo_x0020_Sistema": "SaaS",
           "Tabela": "Czzzzzzz",

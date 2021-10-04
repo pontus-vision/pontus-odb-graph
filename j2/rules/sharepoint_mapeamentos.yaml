@@ -3,6 +3,7 @@ updatereq:
   vertices:
     
     - label: Object.Data_Source
+      name: sharepoint
       props:
         - name: Object.Data_Source.Name
           val: sharepoint/mapeamento-de-processos
@@ -10,6 +11,15 @@ updatereq:
           val: sharepoint/mapeamento-de-processos
         - name: Object.Data_Source.Description
           val: Mapeamento de Processo LGPD
+    
+    - label: Object.Data_Source
+      name: attached_data_sources
+      props:
+        - name: Object.Data_Source.Name
+          val: ${new groovy.json.JsonBuilder(Teste)}
+          mandatoryInSearch: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}
     
     - label: Object.Data_Policy
       props:
@@ -103,7 +113,7 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object.Data_Source
+    fromVertexName: sharepoint
     toVertexLabel: Event.Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
@@ -120,4 +130,7 @@ updatereq:
   - label: Has_Policy
     fromVertexLabel: Object.Data_Procedures
     toVertexLabel: Object.Data_Policy
+  - label: Has_Data_Source
+    fromVertexName: Object.Data_Procedures
+    toVertexName: attached_data_sources
 

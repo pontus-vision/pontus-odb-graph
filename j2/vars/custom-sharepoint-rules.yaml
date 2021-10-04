@@ -127,7 +127,7 @@ rules:
             mandatoryInSearch: true
           Description:
             val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
+            excludeFromSearch: true
           Engine:
             val: "${Sistema}"
             excludeFromSearch: true
@@ -322,10 +322,21 @@ rules:
   sharepoint_mapeamentos:
     vertices:
     - label: Object.Data_Source
+      name: sharepoint
       props:
         Name: sharepoint/mapeamento-de-processos
         Type: sharepoint/mapeamento-de-processos
         Description: Mapeamento de Processo LGPD
+
+    - label: Object.Data_Source
+      name: attached_data_sources
+      props:
+        Name:
+          val: "${new groovy.json.JsonBuilder(Teste)}"
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+          mandatoryInSearch: true
+
 
     - label: Object.Data_Policy
       props:
@@ -416,7 +427,7 @@ rules:
           mandatoryInSearch: true
     edges:
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Object.Data_Source"
+        fromVertexName: "sharepoint"
         toVertexLabel: "Event.Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
@@ -431,7 +442,7 @@ rules:
         fromVertexLabel: "Object.Data_Procedures"
         toVertexLabel: "Object.Sensitive_Data"
 
-      - label: Has_Lawful_Basis_On
+      - label: "Has_Lawful_Basis_On"
         fromVertexLabel: "Object.Data_Procedures"
         toVertexLabel: "Object.Lawful_Basis"
 
@@ -439,6 +450,9 @@ rules:
         fromVertexLabel: "Object.Data_Procedures"
         toVertexLabel: "Object.Data_Policy"
 
+      - label: "Has_Data_Source"
+        fromVertexName: "Object.Data_Procedures"
+        toVertexName: "attached_data_sources"
 
 
 

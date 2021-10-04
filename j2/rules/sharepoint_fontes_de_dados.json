@@ -32,7 +32,7 @@
           {
             "name": "Object.Data_Source.Description",
             "val": "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Engine",

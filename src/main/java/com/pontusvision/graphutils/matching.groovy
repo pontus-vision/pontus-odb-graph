@@ -15,6 +15,7 @@ import com.pontusvision.gdpr.App
 import com.pontusvision.gdpr.mapping.VertexProps
 import com.pontusvision.utils.LocationAddress
 import com.pontusvision.utils.PostCode
+import com.pontusvision.utils.SharepointRef
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.text.GStringTemplateEngine
@@ -1306,6 +1307,8 @@ class Matcher {
                 }
             }
         }
+
+
         return [matchReqs, maxScoresByVertexName, percentageThresholdByVertexName]
 
     }
