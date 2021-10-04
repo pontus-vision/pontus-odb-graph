@@ -509,7 +509,7 @@ rules:
       - label: Person.Organisation
         name: fornecedor
         props:
-          Name: "${A2_NOME?.trim()?.toUpperCase()}"
+          Name: "${A2_NOMRESP?.trim()?.toUpperCase()}"
           Type:
             val: "Fornecedor"
             excludeFromSearch: true
@@ -527,8 +527,8 @@ rules:
       - label: Person.Natural
         name: rep
         props:
-          Full_Name: "${A2_NOMRESP?.trim()?.toUpperCase()}"
-          Full_Name_fuzzy: "${A2_NOMRESP?.trim()?.toUpperCase()}"
+          Full_Name: "${A2_NOME?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${A2_NOME?.trim()?.toUpperCase()}"
           Type:
             val: "forenecedor"
             excludeFromSearch: false
