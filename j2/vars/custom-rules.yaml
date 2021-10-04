@@ -24,7 +24,7 @@ rules:
   totvs_protheus_sa1_clientes:
     vertices:
       - label: Person.Natural
-        condition: "${A1_CGC?.trim()?.length() == 11}"
+        condition: "${A1_CGC?.replaceAll('[^0-9]','').length() == 11}"
         props:
           Full_Name: "${A1_NOME?.trim()?.toUpperCase()}"
           Full_Name_fuzzy: "${A1_NOME?.trim()?.toUpperCase()}"
@@ -33,12 +33,12 @@ rules:
             excludeFromSearch: true
 
           Customer_ID:
-            val: "${id}"
+            val: "${A1_CGC.replaceAll('[^0-9]','')}"
             mandatoryInSearch: true
             predicate: "eq"
 
       - label: Person.Organisation
-        condition: "${A1_CGC?.trim()?.length() == 14}"
+        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Registration_Number:
             val: "${A1_CGC?.trim()}"
@@ -65,22 +65,22 @@ rules:
 
       #RG
       - label: Object.Identity_Card
-        condition: "${A1_CGC?.trim()?.length() == 11}"
+        condition: "${A1_CGC?.replaceAll('[^0-9]', '')?.length() == 11}"
         name: RG
         props:
           Id_Value:
-            val: "${A1_RG?.trim()?.toUpperCase()}"
+            val: "${A1_RG?.replaceAll('[^0-9]','')}"
             mandatoryInSearch: true
           Id_Type:
             val: "RG"
             excludeFromSearch: true
 
       - label: Object.Identity_Card
-        condition: "${A1_CGC?.trim()?.length() == 11}"
+        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: CPF
         props:
           Id_Value:
-            val: "${A1_CGC?.trim()?.toUpperCase()}"
+            val: "${A1_CGC?.replaceAll('[^0-9]','')}"
             mandatoryInSearch: true
           Id_Type:
             val: "CPF"
@@ -93,7 +93,7 @@ rules:
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location.Address
-        condition: "${A1_CGC?.trim()?.length() == 14}"
+        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Full_Address: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
           Type:
@@ -101,7 +101,7 @@ rules:
             excludeFromSearch: true
 
       - label: Location.Address
-        condition: "${A1_CGC?.trim()?.length() == 11}"
+        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         props:
           Full_Address: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
           Type:
@@ -264,7 +264,7 @@ rules:
             excludeFromSearch: true
           Gender: "${RA_SEXO}"
           Customer_ID:
-            val: "${id}"
+            val: "${RA_CIC?.replaceAll('[^0-9]','')}"
             mandatoryInSearch: true
             predicate: "eq"
 
@@ -317,13 +317,35 @@ rules:
             type: "[Ljava.lang.String;"
 
       - label: Object.Identity_Card
-        name: rg
+        name: RG
         props:
           Id_Value:
-            val: "${RA_RG?.trim()?.toUpperCase()}"
+            val: "${RA_RG?.replaceAll('[^0-9]','')}"
             mandatoryInSearch: true
           Id_Type:
             val: "RG"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}"
+        name: CPF
+        props:
+          Id_Value:
+            val: "${RA_CIC?.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
+        name: CNPJ
+        props:
+          Id_Value:
+            val: "${RA_CIC?.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CNPJ"
             excludeFromSearch: true
 
       - label: Object.Email_Address
@@ -491,8 +513,8 @@ rules:
           Type:
             val: "Fornecedor"
             excludeFromSearch: true
-          Id:
-            val: "${id}"
+          Customer_ID:
+            val: "${A2_CGC.replaceAll('[^0-9]','')}"
             mandatoryInSearch: true
 
       - label: Location.Address

@@ -15,8 +15,8 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Organisation.Id",
-            "val": "${id}",
+            "name": "Person.Organisation.Customer_ID",
+            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           }
         ]
