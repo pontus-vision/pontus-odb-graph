@@ -271,7 +271,7 @@ rules:
       - label: Location.Address
         name: home
         props:
-          Full_Address: "${RA_ENDEREC} ${RA_COMPLEM} ${BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+          Full_Address: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
           Description: "moradia principal"
           Type: "home"
 
@@ -360,9 +360,9 @@ rules:
           Email:  "${RA_EMAIL2?.trim()?.toLowerCase()}"
           Type: "${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
 
-      - label: Location.Address
-        props:
-          Full_Address: "${A1_END}, ${A1_BAIRRO},  ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+#      - label: Location.Address
+#        props:
+#          Full_Address: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
 
       - label: Event.Ingestion
         props:
@@ -520,7 +520,7 @@ rules:
       - label: Location.Address
         name: business_addr
         props:
-          Full_Address: "${A2_END} ${A2_ENDCOMP} ${BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+          Full_Address: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
           Description: "endereco fornecedor"
           Type: "business"
 

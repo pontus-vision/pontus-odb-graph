@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Person.Organisation.Name",
-            "val": "${A2_NOME?.trim()?.toUpperCase()}"
+            "val": "${A2_NOMRESP?.trim()?.toUpperCase()}"
           },
           {
             "name": "Person.Organisation.Type",
@@ -27,7 +27,7 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A2_END} ${A2_ENDCOMP} ${BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
           },
           {
             "name": "Location.Address.Description",
@@ -45,11 +45,11 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${A2_NOMRESP?.trim()?.toUpperCase()}"
+            "val": "${A2_NOME?.trim()?.toUpperCase()}"
           },
           {
             "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${A2_NOMRESP?.trim()?.toUpperCase()}"
+            "val": "${A2_NOME?.trim()?.toUpperCase()}"
           },
           {
             "name": "Person.Natural.Type",

@@ -23,7 +23,7 @@ updatereq:
       name: home
       props:
         - name: Location.Address.Full_Address
-          val: ${RA_ENDEREC} ${RA_COMPLEM} ${BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}
+          val: ${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}
         - name: Location.Address.Description
           val: moradia principal
         - name: Location.Address.Type
@@ -117,11 +117,6 @@ updatereq:
           val: ${RA_EMAIL2?.trim()?.toLowerCase()}
         - name: Object.Email_Address.Type
           val: ${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}
-    
-    - label: Location.Address
-      props:
-        - name: Location.Address.Full_Address
-          val: ${A1_END}, ${A1_BAIRRO},  ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
     
     - label: Event.Ingestion
       props:
