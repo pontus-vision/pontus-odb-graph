@@ -507,9 +507,11 @@ rules:
   totvs_protheus_sa2_fornecedor:
     vertices:
       - label: Person.Organisation
+        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: fornecedor
         props:
           Name: "${A2_NOMRESP?.trim()?.toUpperCase()}"
+          Short_Name: "${A2_NOME?.trim()?.toUpperCase()}"
           Type:
             val: "Fornecedor"
             excludeFromSearch: true
@@ -518,20 +520,63 @@ rules:
             mandatoryInSearch: true
 
       - label: Location.Address
+        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: business_addr
         props:
           Full_Address: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
           Description: "endereco fornecedor"
           Type: "business"
 
+      - label: Location.Address
+        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
+        name: residence_addr
+        props:
+          Full_Address: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
+          Description: "endereco fornecedor"
+          Type: "residence"
+
       - label: Person.Natural
+        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: rep
         props:
           Full_Name: "${A2_NOME?.trim()?.toUpperCase()}"
           Full_Name_fuzzy: "${A2_NOME?.trim()?.toUpperCase()}"
           Type:
-            val: "forenecedor"
+            val: "fornecedor"
             excludeFromSearch: false
+
+      - label: Object.Identity_Card
+        condition: "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 11}"
+        name: RG
+        props:
+          Id_Value:
+            val: "${A2_RG?.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "RG"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        condition: "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}"
+        name: CNPJ
+        props:
+          Id_Value:
+            val: "${A2_CGC?.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CNPJ"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
+        name: CPF
+        props:
+          Id_Value:
+            val: "${A2_CGC?.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
 
       - label: Object.Phone_Number
         name: rep_phone
@@ -620,8 +665,8 @@ rules:
         toVertexLabel: Event.Ingestion
 
       - label: Has_Ingestion_Event
-        toVertexLabel: Event.Group_Ingestion
         fromVertexLabel: Object.Data_Source
+        toVertexLabel: Event.Group_Ingestion
 
       - label: Has_Phone
         fromVertexName: rep
@@ -631,10 +676,33 @@ rules:
         fromVertexName: rep
         toVertexName: email1
 
-      - label: Works
+      - label: Is_Located
         fromVertexName: rep
-        toVertexName: business_addr
+        toVertexName: residence_addr
 
+      - label: Has_Id_Card
+        fromVertexName: rep
+        toVertexName: RG
+
+      - label: Has_Id_Card
+        fromVertexName: rep
+        toVertexName: CPF
+
+      - label: Has_Id_Card
+        fromVertexName: fornecedor
+        toVertexName: CNPJ
+
+      - label: Uses_Email
+        fromVertexName: fornecedor
+        toVertexName: email1
+
+      - label: Has_Phone
+        fromVertexName: fornecedor
+        toVertexName: rep_phone
+
+      - label: Is_Located
+        fromVertexName: fornecedor
+        toVertexName: business_addr
 
   salesforce:
     vertices:

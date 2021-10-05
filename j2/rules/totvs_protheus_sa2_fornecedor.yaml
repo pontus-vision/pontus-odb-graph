@@ -4,9 +4,12 @@ updatereq:
     
     - label: Person.Organisation
       name: fornecedor
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Person.Organisation.Name
           val: ${A2_NOMRESP?.trim()?.toUpperCase()}
+        - name: Person.Organisation.Short_Name
+          val: ${A2_NOME?.trim()?.toUpperCase()}
         - name: Person.Organisation.Type
           val: Fornecedor
           excludeFromSearch: True
@@ -16,6 +19,7 @@ updatereq:
     
     - label: Location.Address
       name: business_addr
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Location.Address.Full_Address
           val: ${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}
@@ -24,15 +28,60 @@ updatereq:
         - name: Location.Address.Type
           val: business
     
+    - label: Location.Address
+      name: residence_addr
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}
+      props:
+        - name: Location.Address.Full_Address
+          val: ${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}
+        - name: Location.Address.Description
+          val: endereco fornecedor
+        - name: Location.Address.Type
+          val: residence
+    
     - label: Person.Natural
       name: rep
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}
       props:
         - name: Person.Natural.Full_Name
           val: ${A2_NOME?.trim()?.toUpperCase()}
         - name: Person.Natural.Full_Name_fuzzy
           val: ${A2_NOME?.trim()?.toUpperCase()}
         - name: Person.Natural.Type
-          val: forenecedor
+          val: fornecedor
+    
+    - label: Object.Identity_Card
+      name: RG
+      condition: ${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 11}
+      props:
+        - name: Object.Identity_Card.Id_Value
+          val: ${A2_RG?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object.Identity_Card.Id_Type
+          val: RG
+          excludeFromSearch: True
+    
+    - label: Object.Identity_Card
+      name: CNPJ
+      condition: ${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}
+      props:
+        - name: Object.Identity_Card.Id_Value
+          val: ${A2_CGC?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object.Identity_Card.Id_Type
+          val: CNPJ
+          excludeFromSearch: True
+    
+    - label: Object.Identity_Card
+      name: CPF
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}
+      props:
+        - name: Object.Identity_Card.Id_Value
+          val: ${A2_CGC?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object.Identity_Card.Id_Type
+          val: CPF
+          excludeFromSearch: True
     
     - label: Object.Phone_Number
       name: rep_phone
@@ -127,7 +176,25 @@ updatereq:
   - label: Uses_Email
     fromVertexName: rep
     toVertexName: email1
-  - label: Works
+  - label: Is_Located
     fromVertexName: rep
+    toVertexName: residence_addr
+  - label: Has_Id_Card
+    fromVertexName: rep
+    toVertexName: RG
+  - label: Has_Id_Card
+    fromVertexName: rep
+    toVertexName: CPF
+  - label: Has_Id_Card
+    fromVertexName: fornecedor
+    toVertexName: CNPJ
+  - label: Uses_Email
+    fromVertexName: fornecedor
+    toVertexName: email1
+  - label: Has_Phone
+    fromVertexName: fornecedor
+    toVertexName: rep_phone
+  - label: Is_Located
+    fromVertexName: fornecedor
     toVertexName: business_addr
 

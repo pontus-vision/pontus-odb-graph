@@ -708,17 +708,24 @@ public class PVTest extends AppTest {
 
       jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa2_fornecedor");
 
-      String naturalNameId =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('CLEUSA PAIVA DIA'))" +
-              ".next().id().toString()").get().toString();
+      String personNaturalEdgesCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("6", personNaturalEdgesCount, "2 Object.Identity_Card + 1 Object.Email_Address " +
+              "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
 
-      System.out.println("**************************************\n" + naturalNameId);
 
-      String orgNameId =
-              App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('ARMS MANUTENCAO E R'))" +
-              ".next().id().toString()").get().toString();
+      String orgName =
+              App.executor.eval("App.g.V().has('Person.Organisation.Short_Name',eq('CLEUSA PAIVA DIA'))" +
+                      ".properties('Person.Organisation.Name').value().next().toString()").get().toString();
+      assertEquals("ARMS MANUTENCAO E R", orgName, "O Empreendimento de Cleusa se chama Arms Manutenção e R(eparos)");
 
-      System.out.println("**************************************\n" + orgNameId);
+
+      String personOrgEdgesCount =
+              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("5", personOrgEdgesCount, "1 Object.Identity_Card + 1 Object.Email_Address " +
+              "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
 
 //      Resource res = new Resource();
 //      GremlinRequest gremlinReq = new GremlinRequest();
