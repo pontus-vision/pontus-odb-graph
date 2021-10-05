@@ -151,7 +151,7 @@ rules:
         props:
           Update_Frequency:
             val: "${Frequ_x00ea_ncia_x0020_de_x0020_}"
-            excludeFromSearch: true
+            mandatoryInSearch: true
           Retention_Period:
             val: "${Pol_x00ed_tica_x0020_de_x0020_Re}"
             mandatoryInSearch: true
@@ -324,9 +324,15 @@ rules:
     - label: Object.Data_Source
       name: sharepoint
       props:
-        Name: sharepoint/mapeamento-de-processos
-        Type: sharepoint/mapeamento-de-processos
-        Description: Mapeamento de Processo LGPD
+        Name:
+          val: sharepoint/mapeamento-de-processos
+          mandatoryInSearch: true
+        Type:
+          val: sharepoint/mapeamento-de-processos
+          mandatoryInSearch: true
+        Description:
+          val: Mapeamento de Processo LGPD
+          mandatoryInSearch: true
 
     - label: Object.Data_Source
       name: attached_data_sources
@@ -351,24 +357,28 @@ rules:
       props:
         Type:
           val: "${Acesso_x002c__x0020_Transfer_x00}"
-          excludeFromSearch: true
+          mandatoryInSearch: true
         Type_Of_Natural_Person:
           val: "${Categoria_x0020_dos_x0020_titula}"
           excludeFromSearch: true
-        BusinessAreaResponsible: "${_x00c1_rea} - ${Respons_x00e1_velLookupId}"
-        MacroProcessName: "${Processo}"
+        BusinessAreaResponsible:
+          val: "${_x00c1_rea} - ${Respons_x00e1_velLookupId}"
+          excludeFromSearch: true
+        MacroProcessName:
+          val: "${Processo}"
+          excludeFromSearch: true
         Country_Where_Stored:
           val: "${Pa_x00ed_s_x0020_onde_x0020_as_x}"
           excludeFromSearch: true
         Why_Is_It_Collected:
           val: "${Finalidade_x0020_do_x0020_proces}"
-          mandatoryInSearch: true
+          excludeFromSearch: true
         Info_Collected:
           val: "${Dados_x0020_pessoais_x0020_utili}"
-          mandatoryInSearch: true
+          excludeFromSearch: true
         Description:
           val: "${Fluxo_x0020_interno_x0020_dos_x0}"
-          mandatoryInSearch: true
+          excludeFromSearch: true
 
     - label: Object.Sensitive_Data
       props:

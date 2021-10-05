@@ -72,7 +72,7 @@
           {
             "name": "Object.Data_Policy.Update_Frequency",
             "val": "${Frequ_x00ea_ncia_x0020_de_x0020_}",
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Policy.Retention_Period",
