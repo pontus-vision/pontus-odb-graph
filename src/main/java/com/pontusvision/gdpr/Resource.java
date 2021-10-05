@@ -31,6 +31,7 @@ import org.glassfish.jersey.server.ContainerRequest;
 import javax.script.SimpleBindings;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.xml.ws.http.HTTPException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -69,6 +70,107 @@ public class Resource {
   public String helloWorld() {
     return "Hello, world!";
   }
+
+
+  @POST
+  @Path("md2_search")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Md2Reply md2Search(Md2Request req) {
+    if (req.settings == null || ){
+      throw new HTTPException(400);
+
+    }
+    if (req.cols != null && req.dataType != null) {
+
+      Set<String> valsSet = new HashSet<>();
+      Set<String> reportButtonsSet = new HashSet<>();
+      for (int i = 0, ilen = req.cols.length; i < ilen; i++) {
+        if (!req.cols[i].id.startsWith("@")) {
+          valsSet.add(req.cols[i].id);
+        } else {
+          reportButtonsSet.add(req.cols[i].id);
+        }
+
+      }
+
+      String[] vals = valsSet.toArray(new String[valsSet.size()]);
+
+      try {
+
+        String sqlQueryCount = req.getSQL(true);
+
+        String sqlQueryData = req.getSQL(false);
+
+        String dataType = req.dataType; //req.search.extraSearch[0].value;
+
+        boolean hasFilters = req.filters != null && req.filters.length > 0;
+
+        OGremlinResultSet resultSet = App.graph.executeSql(sqlQueryCount, Collections.EMPTY_MAP);
+        Long count = resultSet.iterator().next().getRawResult().getProperty("COUNT(*)");
+        resultSet.close();
+
+        if (count > 0) {
+          List<Map<String, Object>> res = new LinkedList<>();
+
+          OResultSet oResultSet = App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP).getRawResultSet();
+
+          while (oResultSet.hasNext()) {
+            OResult oResult = oResultSet.next();
+            Map<String, Object> props = new HashMap<>();
+
+            oResult.getPropertyNames().forEach(propName -> props.put(propName, oResult.getProperty(propName)));
+            oResult.getIdentity().ifPresent(id -> props.put("id", id.toString()));
+
+            res.add(props);
+          }
+
+          oResultSet.close();
+
+          String[] recs = new String[res.size()];
+          ObjectMapper objMapper = new ObjectMapper();
+
+          for (int i = 0, ilen = res.size(); i < ilen; i++) {
+            Map<String, Object> map = res.get(i);
+            Map<String, String> rec = new HashMap<>();
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+              Object val = entry.getValue();
+              if (val instanceof ArrayList) {
+                ArrayList<Object> arrayList = (ArrayList) val;
+
+                String val2 = arrayList.get(0).toString();
+
+                rec.put(entry.getKey(), val2);
+
+              } else {
+                rec.put(entry.getKey(), val == null ? null : val.toString());
+              }
+
+            }
+
+            recs[i] = objMapper.writeValueAsString(rec);
+          }
+          RecordReply reply = new RecordReply(req.from, req.to, count, recs);
+
+          return reply;
+
+        }
+
+        RecordReply reply = new RecordReply(req.from, req.to, count, new String[0]);
+
+        return reply;
+
+      } catch (Throwable t) {
+        t.printStackTrace();
+      }
+
+    }
+
+    return new RecordReply(req.from, req.to, 0L, new String[0]);
+
+  }
+
+
 
   @POST
   @Path("agrecords")
