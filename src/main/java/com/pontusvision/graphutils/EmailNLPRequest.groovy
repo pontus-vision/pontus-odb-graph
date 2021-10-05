@@ -230,14 +230,19 @@ class EmailNLPRequest implements   Serializable{
         finalVertexIdByVertexName.put((String) vertexTypeStr, topHits)
       } else {
         Map<ORID, AtomicDouble> newVertices = new HashMap<>()
-        ORID vId = Matcher.addNewVertexFromMatchReqs(g, (String) vertexTypeStr, matchReqsForThisVertexType)
-        newVertices.put(vId, new AtomicDouble(maxScore))
-        finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
+        List<ORID> vIds = Matcher.addNewVertexFromMatchReqs(g, (String) vertexTypeStr, matchReqsForThisVertexType)
+        int vlen = vIds.size();
+        for (int v = 0; v < vlen; v++){
+          ORID vId = vIds.get(v);
+          newVertices.put(vId, new AtomicDouble(maxScore))
+          finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
 
-        if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
-          String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
-          g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
+          if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
+            String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
+            g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
+          }
         }
+
 
       }
 

@@ -1473,38 +1473,69 @@ class Matcher {
 
     }
 
-    static addNewVertexFromMatchReqs(GraphTraversalSource g, String vertexTypeStr, List<MatchReq> matchReqsForThisVertexType,
+    static List<ORID> addNewVertexFromMatchReqs(GraphTraversalSource g, String vertexTypeStr, List<MatchReq> matchReqsForThisVertexType,
                                      StringBuffer sb = null) {
 
-        def localTrav = g
 
         List<MatchReq> matchesForUpdate = []
 
         matchesForUpdate.addAll(matchReqsForThisVertexType.findAll { it2 -> !(it2.excludeFromUpdate) })
 
+        Set<String> updateTypes = new HashSet<>();
+
+        matchesForUpdate.forEach{
+            updateTypes.add(it.propName);
+        }
+
+        boolean moreThanOneVertex = (matchesForUpdate.size() != updateTypes.size()) && updateTypes.size() == 1;
+
+
         boolean atLeastOneUpdate = matchesForUpdate.size() > 0
+
+        List<ORID> retVal = new LinkedList<>();
+        GraphTraversal localTrav;
 
         if (atLeastOneUpdate) {
 
             String vertexLabel = matchesForUpdate.get(0).vertexLabel
-            localTrav = localTrav.addV(vertexLabel)
-                    .property('Metadata.Type.' + vertexLabel, vertexLabel)
-                    .property('Metadata.Type', vertexLabel)
 
+            if (!moreThanOneVertex) {
+                localTrav = g.addV(vertexLabel)
+                        .property('Metadata.Type.' + vertexLabel, vertexLabel)
+                        .property('Metadata.Type', vertexLabel)
+
+            }
             matchesForUpdate.each { it ->
+                if (moreThanOneVertex) {
+                    localTrav = g.addV(vertexLabel)
+                            .property('Metadata.Type.' + vertexLabel, vertexLabel)
+                            .property('Metadata.Type', vertexLabel)
+
+                }
+
                 if (!it.excludeFromUpdate && it.attribNativeVal != null) {
                     localTrav = localTrav.property(it.getPropName(), it.attribNativeVal)
                 }
+                if (moreThanOneVertex) {
+                    retVal.add(localTrav.id().next() as ORID);
+                }
             }
 
-            ORID retVal = localTrav.next().id() as ORID
+            if (moreThanOneVertex){
+                return retVal
+            }
+            else {
+                ORID orid = localTrav.next().id() as ORID
+                sb?.append("\n in addNewVertexFromMatchReqs() - added new vertex of type ${vertexTypeStr}; id = ${retVal}")
+                retVal.add(orid);
 
-            sb?.append("\n in addNewVertexFromMatchReqs() - added new vertex of type ${vertexTypeStr}; id = ${retVal}")
-            return retVal
+                return retVal
+
+            }
         }
         sb?.append("\n in addNewVertexFromMatchReqs() - could not add ${vertexTypeStr}; no match requests marked for update")
 
-        return null
+        return retVal
 
 
     }
@@ -1691,22 +1722,27 @@ class Matcher {
                 finalVertexIdByVertexName.put((String) vertexTypeStr, topHits)
             } else {
                 Map<ORID, AtomicDouble> newVertices = new HashMap<>()
-                ORID vId = addNewVertexFromMatchReqs(g, (String) vertexTypeStr, matchReqsForThisVertexType, sb)
-                newVertices.put(vId, new AtomicDouble(maxScore))
-                finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
-
-                if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
+                List<ORID> vIds = addNewVertexFromMatchReqs(g, (String) vertexTypeStr, matchReqsForThisVertexType, sb)
+                int vlen = vIds.size();
+                for (int v = 0 ; v < vlen; v++){
+                    ORID vId = vIds.get(v);
+                    newVertices.put(vId, new AtomicDouble(maxScore))
+                    finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
+                    if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
 
 //        json rootKey: matchReqByVertexName
 
 //        String bizRule = JsonOutput.prettyPrint(json.toString())
-                    String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
+                        String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
 
-                    sb.append("\n\n\n ADDING Event.Ingestion.Business_Rules: ${bizRule}\n\n")
+                        sb.append("\n\n\n ADDING Event.Ingestion.Business_Rules: ${bizRule}\n\n")
 
 
-                    g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
+                        g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
+                    }
                 }
+
+
 
             }
 
