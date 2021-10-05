@@ -3,7 +3,7 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "condition": "${A1_CGC?.trim()?.length() == 11}",
+        "condition": "${A1_CGC?.replaceAll('[^0-9]','').length() == 11}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
@@ -20,7 +20,7 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${id}",
+            "val": "${A1_CGC.replaceAll('[^0-9]','')}",
             "predicate": "eq",
             "mandatoryInSearch": true
           }
@@ -28,7 +28,7 @@
       },
       {
         "label": "Person.Organisation",
-        "condition": "${A1_CGC?.trim()?.length() == 14}",
+        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
@@ -70,11 +70,11 @@
       {
         "label": "Object.Identity_Card",
         "name": "RG",
-        "condition": "${A1_CGC?.trim()?.length() == 11}",
+        "condition": "${A1_CGC?.replaceAll('[^0-9]', '')?.length() == 11}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${A1_RG?.trim()?.toUpperCase()}",
+            "val": "${A1_RG?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
@@ -87,11 +87,11 @@
       {
         "label": "Object.Identity_Card",
         "name": "CPF",
-        "condition": "${A1_CGC?.trim()?.length() == 11}",
+        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${A1_CGC?.trim()?.toUpperCase()}",
+            "val": "${A1_CGC?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
@@ -112,7 +112,7 @@
       },
       {
         "label": "Location.Address",
-        "condition": "${A1_CGC?.trim()?.length() == 14}",
+        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
@@ -127,7 +127,7 @@
       },
       {
         "label": "Location.Address",
-        "condition": "${A1_CGC?.trim()?.length() == 11}",
+        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
