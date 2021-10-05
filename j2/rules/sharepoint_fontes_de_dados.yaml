@@ -21,7 +21,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          excludeFromSearch: True
         - name: Object.Data_Source.Engine
           val: ${Sistema}
           excludeFromSearch: True
@@ -45,7 +45,7 @@ updatereq:
       props:
         - name: Object.Data_Policy.Update_Frequency
           val: ${Frequ_x00ea_ncia_x0020_de_x0020_}
-          excludeFromSearch: True
+          mandatoryInSearch: True
         - name: Object.Data_Policy.Retention_Period
           val: ${Pol_x00ed_tica_x0020_de_x0020_Re}
           mandatoryInSearch: True

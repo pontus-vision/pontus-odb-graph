@@ -1,0 +1,516 @@
+{
+    "queryResp": [
+      {
+        "@odata.etag": "123456234-ac452367-ca5161234-g234778-1237",
+        "createdDateTime": "2021-07-10T20:59:14Z",
+        "eTag": "123456234-ac452367-ca5161234-g234778-1237",
+        "id": "1",
+        "lastModifiedDateTime": "2021-08-23T13:26:29Z",
+        "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Mapeamento%20de%20Processo/1_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ea6478-0ffe-4426-3566-83423423",
+            "displayName": "Ayyyyyy Mzzzzzz"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "qualidade.onedrive@Sxxxxxxxx.com.br",
+            "id": "7838ac44-32455-4554-458745-213123",
+            "displayName": "Qualidade OneDrive"
+          }
+        },
+        "parentReference": {
+          "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,fd97ef96-8dc8-41f2-b2c9-d2b058c33118,f40ffdd1-c535-4212-b345-19f42f764383"
+        },
+        "contentType": {
+          "id": "834687464AC7-ca0234576ACCAB234-g234778-1237",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%ac43537d-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('a647454-5cf67-4467-a237-8ac6575d')/items('1')/fields/$entity",
+        "fields": {
+          "@odata.etag": "123456234-ac452367-ca5161234-g234778-1237",
+          "Title": "1",
+          "Respons_x00e1_velLookupId": "31",
+          "_x00c1_rea": "Distribuidores",
+          "Processo": "Gestão de Rede de Distribuidores",
+          "Dados_x0020_pessoais_x0020_utili": [
+            "Nome",
+            "CPF",
+            "RG",
+            "Endereço",
+            "E-mail",
+            "Ocupação"
+          ],
+          "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
+          "Categoria_x0020_dos_x0020_titula": "TXXXXXXX",
+          "Finalidade_x0020_do_x0020_proces": "Necessário para gestão da rede de distribuição (relatórios gerenciais)",
+          "Origem_x0020_dos_x0020_dados": "TXXXXXXX",
+          "Fluxo_x0020_interno_x0020_dos_x0": "Recebimento dos dados via e-mail e envio ao departamentos: Jxxxyyy e Fzzzzzzzzzz.",
+          "Acesso_x002c__x0020_Transfer_x00": "Acesso",
+          "Per_x00ed_odo_x0020_de_x0020_ret": [
+            "2 dias"
+          ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
+          ],
+          "Base_x0020_legal": [
+            "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
+          ],
+          "LinkTitleNoMenu": "1",
+          "LinkTitle": "1",
+          "Modified": "2021-08-23T13:26:29Z",
+          "id": "1",
+          "ContentType": "Item",
+          "Created": "2021-07-10T20:59:14Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "15",
+          "_UIVersionString": "11.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "g5467238f-6118-4139-645-57823764a",
+        "createdDateTime": "2021-07-10T20:59:14Z",
+        "eTag": "g5467238f-6118-4139-645-57823764a",
+        "id": "2",
+        "lastModifiedDateTime": "2021-09-20T16:32:37Z",
+        "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Mapeamento%20de%20Processo/2_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ea6478-0ffe-4426-3566-83423423",
+            "displayName": "Ayyyyyy Mzzzzzz"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "qualidade.onedrive@Sxxxxxxxx.com.br",
+            "id": "7838ac44-32455-4554-458745-213123",
+            "displayName": "Qualidade OneDrive"
+          }
+        },
+        "parentReference": {
+          "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,fd97ef96-8dc8-41f2-b2c9-d2b058c33118,f40ffdd1-c535-4212-b345-19f42f764383"
+        },
+        "contentType": {
+          "id": "834687464AC7-ca0234576ACCAB234-g234778-1237",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%ac43537d-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('a647454-5cf67-4467-a237-8ac6575d')/items('2')/fields/$entity",
+        "fields": {
+          "@odata.etag": "g5467238f-6118-4139-645-57823764a",
+          "Title": "2",
+          "Respons_x00e1_velLookupId": "21",
+          "_x00c1_rea": "Business",
+          "Processo": "Gestão de ferramenta gerencial (PowerBI)",
+          "Dados_x0020_pessoais_x0020_utili": [
+            "Nome",
+            "CPF",
+            "RG",
+            "Endereço",
+            "E-mail",
+            "Ocupação"
+          ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
+          ],
+          "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
+          "Categoria_x0020_dos_x0020_titula": "TXXXXXXX",
+          "Finalidade_x0020_do_x0020_proces": "Necessário para criação de relatórios gerenciais e de vendas",
+          "Origem_x0020_dos_x0020_dados": "TXXXXXXX",
+          "Fluxo_x0020_interno_x0020_dos_x0": "Informação é extraída da Planilha de Funil de Vendas e CRM, em ambos processos é o consultor de vendas que disponibiliza.",
+          "Acesso_x002c__x0020_Transfer_x00": "Acesso",
+          "Per_x00ed_odo_x0020_de_x0020_ret": [
+            "2 meses"
+          ],
+          "Base_x0020_legal": [
+            "Legítimo Interesse do controlador"
+          ],
+          "LinkTitleNoMenu": "2",
+          "LinkTitle": "2",
+          "Modified": "2021-09-20T16:32:37Z",
+          "id": "2",
+          "ContentType": "Item",
+          "Created": "2021-07-10T20:59:14Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "15",
+          "_UIVersionString": "8.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "5cc80060-24a9-4ec9-a19a-a1f1f246733c,6",
+        "createdDateTime": "2021-07-10T20:59:14Z",
+        "eTag": "5cc80060-24a9-4ec9-a19a-a1f1f246733c,6",
+        "id": "3",
+        "lastModifiedDateTime": "2021-08-23T13:26:42Z",
+        "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Mapeamento%20de%20Processo/3_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ea6478-0ffe-4426-3566-83423423",
+            "displayName": "Ayyyyyy Mzzzzzz"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "qualidade.onedrive@Sxxxxxxxx.com.br",
+            "id": "7838ac44-32455-4554-458745-213123",
+            "displayName": "Qualidade OneDrive"
+          }
+        },
+        "parentReference": {
+          "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,fd97ef96-8dc8-41f2-b2c9-d2b058c33118,f40ffdd1-c535-4212-b345-19f42f764383"
+        },
+        "contentType": {
+          "id": "834687464AC7-ca0234576ACCAB234-g234778-1237",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%ac43537d-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('a647454-5cf67-4467-a237-8ac6575d')/items('3')/fields/$entity",
+        "fields": {
+          "@odata.etag": "5cc80060-24a9-4ec9-a19a-a1f1f246733c,6",
+          "Title": "3",
+          "Respons_x00e1_velLookupId": "32",
+          "_x00c1_rea": "Administrativo-Financeiro",
+          "Processo": "Contratos Estratégicos",
+          "Dados_x0020_pessoais_x0020_utili": [
+            "Nome",
+            "CPF",
+            "RG",
+            "Endereço",
+            "E-mail"
+          ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
+          ],
+          "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
+          "Categoria_x0020_dos_x0020_titula": "TXXXXXXX",
+          "Finalidade_x0020_do_x0020_proces": "Necessário para gestão de contratos estratégicos formalizados com clientes/fornecedores",
+          "Origem_x0020_dos_x0020_dados": "TXXXXXXX",
+          "Fluxo_x0020_interno_x0020_dos_x0": "Recebimento e arquivo eletrônico",
+          "Acesso_x002c__x0020_Transfer_x00": "Acesso",
+          "Per_x00ed_odo_x0020_de_x0020_ret": [
+            "10 anos*"
+          ],
+          "Base_x0020_legal": [
+            "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
+          ],
+          "LinkTitleNoMenu": "3",
+          "LinkTitle": "3",
+          "Modified": "2021-08-23T13:26:42Z",
+          "id": "3",
+          "ContentType": "Item",
+          "Created": "2021-07-10T20:59:14Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "15",
+          "_UIVersionString": "6.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "70c81ab2-6f10-4eb8-a553-4d0cd0dc28b4,6",
+        "createdDateTime": "2021-07-10T20:59:14Z",
+        "eTag": "70c81ab2-6f10-4eb8-a553-4d0cd0dc28b4,6",
+        "id": "4",
+        "lastModifiedDateTime": "2021-08-23T13:27:08Z",
+        "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Mapeamento%20de%20Processo/4_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ea6478-0ffe-4426-3566-83423423",
+            "displayName": "Ayyyyyy Mzzzzzz"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "qualidade.onedrive@Sxxxxxxxx.com.br",
+            "id": "7838ac44-32455-4554-458745-213123",
+            "displayName": "Qualidade OneDrive"
+          }
+        },
+        "parentReference": {
+          "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,fd97ef96-8dc8-41f2-b2c9-d2b058c33118,f40ffdd1-c535-4212-b345-19f42f764383"
+        },
+        "contentType": {
+          "id": "834687464AC7-ca0234576ACCAB234-g234778-1237",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%ac43537d-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('a647454-5cf67-4467-a237-8ac6575d')/items('4')/fields/$entity",
+        "fields": {
+          "@odata.etag": "70c81ab2-6f10-4eb8-a553-4d0cd0dc28b4,6",
+          "Title": "4",
+          "Respons_x00e1_velLookupId": "32",
+          "_x00c1_rea": "Administrativo-Financeiro",
+          "Processo": "Termos de Confidencialidade ",
+          "Dados_x0020_pessoais_x0020_utili": [
+            "Nome",
+            "CPF",
+            "RG",
+            "Endereço",
+            "E-mail"
+          ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
+          ],
+          "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
+          "Categoria_x0020_dos_x0020_titula": "TXXXXXXX",
+          "Finalidade_x0020_do_x0020_proces": "Necessário para gestão de termo de confidencialidade formalizados com clientes/fornecedores",
+          "Origem_x0020_dos_x0020_dados": "TXXXXXXX",
+          "Fluxo_x0020_interno_x0020_dos_x0": "Recebimento e arquivo eletrônico",
+          "Acesso_x002c__x0020_Transfer_x00": "Acesso",
+          "Per_x00ed_odo_x0020_de_x0020_ret": [
+            "10 anos*"
+          ],
+          "Base_x0020_legal": [
+            "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
+          ],
+          "LinkTitleNoMenu": "4",
+          "LinkTitle": "4",
+          "Modified": "2021-08-23T13:27:08Z",
+          "id": "4",
+          "ContentType": "Item",
+          "Created": "2021-07-10T20:59:14Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "15",
+          "_UIVersionString": "6.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "4585bd0b-6b3c-4387-8cad-f536dc4e1fa7,7",
+        "createdDateTime": "2021-07-10T20:59:14Z",
+        "eTag": "4585bd0b-6b3c-4387-8cad-f536dc4e1fa7,7",
+        "id": "5",
+        "lastModifiedDateTime": "2021-08-23T13:27:20Z",
+        "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Mapeamento%20de%20Processo/5_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ea6478-0ffe-4426-3566-83423423",
+            "displayName": "Ayyyyyy Mzzzzzz"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "qualidade.onedrive@Sxxxxxxxx.com.br",
+            "id": "7838ac44-32455-4554-458745-213123",
+            "displayName": "Qualidade OneDrive"
+          }
+        },
+        "parentReference": {
+          "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,fd97ef96-8dc8-41f2-b2c9-d2b058c33118,f40ffdd1-c535-4212-b345-19f42f764383"
+        },
+        "contentType": {
+          "id": "834687464AC7-ca0234576ACCAB234-g234778-1237",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%ac43537d-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('a647454-5cf67-4467-a237-8ac6575d')/items('5')/fields/$entity",
+        "fields": {
+          "@odata.etag": "4585bd0b-6b3c-4387-8cad-f536dc4e1fa7,7",
+          "Title": "5",
+          "Respons_x00e1_velLookupId": "30",
+          "_x00c1_rea": "Recursos Humanos",
+          "Processo": "Prontuário do colaborador",
+          "Dados_x0020_pessoais_x0020_utili": [
+            "Nome Completo",
+            "Data de Nascimento",
+            "Local de Nascimento",
+            "Estado Civil",
+            "RG",
+            "CPF",
+            "Comprovante de Residência",
+            "Certificado de Escolaridade",
+            "PIS",
+            "Certidão de Casamento",
+            "Certidão de Nascimento",
+            "Dados Bancários"
+          ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
+          ],
+          "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
+          "Categoria_x0020_dos_x0020_titula": "COLABORADOR",
+          "Finalidade_x0020_do_x0020_proces": "Necessário para processamento e gestão do contrato de trabalho",
+          "Origem_x0020_dos_x0020_dados": "Colaborador",
+          "Fluxo_x0020_interno_x0020_dos_x0": "Recebimento dos Dados no processo de Recrutamento e Seleção.",
+          "Acesso_x002c__x0020_Transfer_x00": "Acesso",
+          "Per_x00ed_odo_x0020_de_x0020_ret": [
+            "15 anos*"
+          ],
+          "Base_x0020_legal": [
+            "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
+          ],
+          "LinkTitleNoMenu": "5",
+          "LinkTitle": "5",
+          "Modified": "2021-08-23T13:27:20Z",
+          "id": "5",
+          "ContentType": "Item",
+          "Created": "2021-07-10T20:59:14Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "15",
+          "_UIVersionString": "7.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "0123-abcd-4567-acbd-89ij",
+        "createdDateTime": "2021-07-10T20:59:15Z",
+        "eTag": "0123-abcd-4567-acbd-89ij",
+        "id": "6",
+        "lastModifiedDateTime": "2021-08-16T13:00:22Z",
+        "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Mapeamento%20de%20Processo/6_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ea6478-0ffe-4426-3566-83423423",
+            "displayName": "Ayyyyyy Mzzzzzz"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "qualidade.onedrive@Sxxxxxxxx.com.br",
+            "id": "7838ac44-32455-4554-458745-213123",
+            "displayName": "Qualidade OneDrive"
+          }
+        },
+        "parentReference": {
+          "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,fd97ef96-8dc8-41f2-b2c9-d2b058c33118,f40ffdd1-c535-4212-b345-19f42f764383"
+        },
+        "contentType": {
+          "id": "834687464AC7-ca0234576ACCAB234-g234778-1237",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.###### Got an axios error: 0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%ac43537d-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('a647454-5cf67-4467-a237-8ac6575d')/items('6')/fields/$entity",
+        "fields": {
+          "@odata.etag": "0123-abcd-4567-acbd-89ij",
+          "Title": "6",
+          "Respons_x00e1_velLookupId": "19",
+          "_x00c1_rea": "Compras",
+          "Processo": "Prestadores de Serviços e Fornecedores",
+          "Dados_x0020_pessoais_x0020_utili": [
+            "Nome",
+            "Data de Nascimento",
+            "Local de Nascimento",
+            "RG",
+            "CPF",
+            "Endereço",
+            "Telefone",
+            "E-mail",
+            "Dados Bancários",
+            "Ocupação"
+          ],
+          "Teste": [
+            {
+              "LookupId": 2,
+              "LookupValue": "CRM-Contatos"
+            },
+            {
+              "LookupId": 1,
+              "LookupValue": "CRM-Leads"
+            }
+          ],
+          "Pa_x00ed_s_x0020_onde_x0020_as_x": "Bxxxx",
+          "Categoria_x0020_dos_x0020_titula": "TXXXXXXX",
+          "Finalidade_x0020_do_x0020_proces": "Necessário para contratação de prestadores de serviços e/ou fornecedores pessoas físicas",
+          "Origem_x0020_dos_x0020_dados": "TXXXXXXX",
+          "Fluxo_x0020_interno_x0020_dos_x0": "Recebimento de dados via e-mail (exemplo: dados de motoristas das transportadoras) e informação repassada à fornecedores e/ou clientes onde será feita a coleta/entrega das mercadorias.",
+          "Acesso_x002c__x0020_Transfer_x00": "Recebimento / Transferência",
+          "Per_x00ed_odo_x0020_de_x0020_ret": [
+            "10* anos"
+          ],
+          "Base_x0020_legal": [
+            "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
+          ],
+          "LinkTitleNoMenu": "6",
+          "LinkTitle": "6",
+          "Modified": "2021-08-16T13:00:22Z",
+          "id": "6",
+          "ContentType": "Item",
+          "Created": "2021-07-10T20:59:15Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "15",
+          "_UIVersionString": "7.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      }
+    ]
+}

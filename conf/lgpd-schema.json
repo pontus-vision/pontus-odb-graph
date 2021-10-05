@@ -2454,6 +2454,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Sensitive_Data.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Person.Employee",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -4234,7 +4239,8 @@
         "Object.Sensitive_Data.Political_View",
         "Object.Sensitive_Data.Religion",
         "Object.Sensitive_Data.Sexual_Orientation",
-        "Object.Sensitive_Data.Union_Membership"
+        "Object.Sensitive_Data.Union_Membership",
+        "Object.Sensitive_Data.Description"
       ],
       "propertyKeysMappings": {}
     },
