@@ -218,8 +218,6 @@ rules:
         fromVertexName: "fontes_de_dados"
         toVertexLabel: "Object.Data_Policy"
 
-
-
   sharepoint_treinamentos:
     vertices:
       - label: Event.Training
@@ -317,7 +315,6 @@ rules:
       - label: "Has_Ingestion_Event"
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
-
 
   sharepoint_mapeamentos:
     vertices:
