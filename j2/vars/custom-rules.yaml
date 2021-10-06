@@ -515,7 +515,7 @@ rules:
           Type:
             val: "Fornecedor"
             excludeFromSearch: true
-          Customer_ID:
+          Id:
             val: "${A2_CGC.replaceAll('[^0-9]','')}"
             mandatoryInSearch: true
 

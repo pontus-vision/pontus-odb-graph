@@ -13,7 +13,7 @@ updatereq:
         - name: Person.Organisation.Type
           val: Fornecedor
           excludeFromSearch: True
-        - name: Person.Organisation.Customer_ID
+        - name: Person.Organisation.Id
           val: ${A2_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
     

@@ -727,6 +727,7 @@ schema:
         - name: Religion
         - name: Sexual_Orientation
         - name: Union_Membership
+        - name: Description
 
     - name: "Person.Employee"
       partition: false
@@ -967,6 +968,3 @@ schema:
   - name: Uses_Data_Source
   - name: Uses_Email
   - name: Works
-
-
-

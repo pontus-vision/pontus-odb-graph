@@ -1519,6 +1519,9 @@ propertyKeys:
   - name: Object.Sensitive_Data.Union_Membership
     dataType: String
     cardinality: SINGLE
+  - name: Object.Sensitive_Data.Description
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Person.Employee
     dataType: String
     cardinality: SINGLE
@@ -2998,6 +3001,7 @@ vertexIndexes:
       - Object.Sensitive_Data.Religion
       - Object.Sensitive_Data.Sexual_Orientation
       - Object.Sensitive_Data.Union_Membership
+      - Object.Sensitive_Data.Description
     propertyKeysMappings:
     
       {}

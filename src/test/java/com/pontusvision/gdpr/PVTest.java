@@ -11,13 +11,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-//import static org.junit.jupiter.api.Assert.assertEquals;
-//import static org.junit.jupiter.api.Assert.assertNull;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -189,10 +187,11 @@ public class PVTest extends AppTest {
 
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
-      "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   sharepoint/data-sources",
-      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   sharepoint/fontes-de-dados"
+      "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   sharepoint/data-sources, 7",
+      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   sharepoint/fontes-de-dados, 9"
   })
-  public void test00004SharepointDataSources(String jsonFile, String ruleName, String dataSourceName) throws InterruptedException {
+  public void test00004SharepointDataSources(String jsonFile, String ruleName, String dataSourceName,
+                                             String expectedDataPolicyCount) throws InterruptedException {
     try {
 //      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
 //          "sharepoint_data_sources");
@@ -200,23 +199,23 @@ public class PVTest extends AppTest {
       jsonTestUtil(jsonFile, "$.queryResp[*].fields",
           ruleName);
 
-      String queryPrefix = "App.g.V().has('Object.Data_Source.Name', eq('"+dataSourceName+"'))\n";
+      String queryPrefix = "App.g.V().has('Object.Data_Source.Name', eq('" + dataSourceName + "'))\n";
 //    test0000 for COUNT(dataSources)
       String countDataSources =
-          App.executor.eval( queryPrefix+
+          App.executor.eval(queryPrefix +
               ".count().next().toString()").get().toString();
       assertEquals("1", countDataSources);
 
 //    test0000 for COUNT(event Ingestions)
       String countEventGroupIngestions =
-          App.executor.eval(queryPrefix+
+          App.executor.eval(queryPrefix +
               ".both()\n" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals("1", countEventGroupIngestions);
 
       String countEventIngestions =
-          App.executor.eval(queryPrefix+
+          App.executor.eval(queryPrefix +
               ".out().out()\n" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
@@ -224,7 +223,7 @@ public class PVTest extends AppTest {
 
 
       String countObjectDataSourcesIngested =
-          App.executor.eval(queryPrefix+
+          App.executor.eval(queryPrefix +
               ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
 //              ".in('Has_Policy')" +
 //              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
@@ -233,13 +232,13 @@ public class PVTest extends AppTest {
       assertEquals("7", countObjectDataSourcesIngested);
 
       String countDataPolicy =
-          App.executor.eval(queryPrefix+
+          App.executor.eval(queryPrefix +
               ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
               ".out('Has_Policy')" +
               ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
-      assertEquals("7", countDataPolicy);
+      assertEquals(expectedDataPolicyCount, countDataPolicy);
 
 
     } catch (ExecutionException e) {
@@ -603,14 +602,14 @@ public class PVTest extends AppTest {
           App.executor.eval("App.g.V().has('Object.Data_Source.Name',eq('Office365/email')).count().next().toString()")
               .get().toString();
 
-      assertEquals( "1", numDataSources, "Ensure that We only have one data source");
+      assertEquals("1", numDataSources, "Ensure that We only have one data source");
 
       String currDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
       String numDataEventEmailMessageGroups =
           App.executor.eval("App.g.V().has('Event.Email_Msg_Group.Ingestion_Date',eq('" + currDate + "')).count().next().toString()")
               .get().toString();
 
-      assertEquals( "1", numDataEventEmailMessageGroups, "Ensure that We only have one Email Message Group");
+      assertEquals("1", numDataEventEmailMessageGroups, "Ensure that We only have one Email Message Group");
 
 
     } catch (ExecutionException e) {
@@ -625,12 +624,12 @@ public class PVTest extends AppTest {
   @Test
   public void test00012ADP() throws InterruptedException {
     try {
-      csvTestUtil("ADP.csv",  "ADP");
+      csvTestUtil("ADP.csv", "ADP");
 
       String adpDsqueryPrefix = "App.g.V().has('Object.Data_Source.Name', eq('ADP'))\n";
 
       String countDataSources =
-          App.executor.eval( adpDsqueryPrefix +
+          App.executor.eval(adpDsqueryPrefix +
               ".count().next().toString()").get().toString();
       assertEquals("1", countDataSources, "Expect 1 Data Source (ADP)");
 
@@ -638,7 +637,7 @@ public class PVTest extends AppTest {
       String adpDsqueryPrefix2 = adpDsqueryPrefix + ".out('Has_Ingestion_Event')";
 
       String countDataEventGroups =
-          App.executor.eval( adpDsqueryPrefix2 +
+          App.executor.eval(adpDsqueryPrefix2 +
               ".count().next().toString()").get().toString();
       assertEquals("1", countDataEventGroups, "Expect 1 Ingestion Data Group ");
 
@@ -646,7 +645,7 @@ public class PVTest extends AppTest {
       String adpDsqueryPrefix3 = adpDsqueryPrefix2 + ".out('Has_Ingestion_Event')";
 
       String countDataEvents =
-          App.executor.eval( adpDsqueryPrefix3 +
+          App.executor.eval(adpDsqueryPrefix3 +
               ".count().next().toString()").get().toString();
       assertEquals("7", countDataEvents, "Expect 7 Ingestion Events ");
 
@@ -654,26 +653,25 @@ public class PVTest extends AppTest {
           ".in('Has_Ingestion_Event').has('Metadata.Type.Person.Natural', eq('Person.Natural'))";
 
       String countPersonObjects =
-          App.executor.eval( adpDsqueryPrefix4 +
+          App.executor.eval(adpDsqueryPrefix4 +
               ".count().next().toString()").get().toString();
       assertEquals("7", countPersonObjects, "Expect 7 Person.Natural entries ");
 
-      String externalAddressCount =  App.executor.eval("App.g.V()" +
+      String externalAddressCount = App.executor.eval("App.g.V()" +
           ".has('Person.Natural.Full_Name', eq('IAN GAEL FERREIRA')).out('Is_Located')" +
-          ".has('Location.Address.Type', eq('Endereço Exterior'))"+
+          ".has('Location.Address.Type', eq('Endereço Exterior'))" +
           ".count().next().toString()").get().toString();
       assertEquals("1", externalAddressCount, "Expect IAN GAEL FERREIRA to have 1 Endereço Exterior ");
 
-      String coordenadorCPF =  App.executor.eval("App.g.V()" +
+      String coordenadorCPF = App.executor.eval("App.g.V()" +
           ".has('Person.Natural.Full_Name', eq('JOÃOZINHO')).has('Person.Natural.Customer_ID', eq('43376845409'))" +
           ".out('Is_Subordinate')" +
           ".out('Has_Id_Card')" +
 //          ".count().next().toString()").get().toString();
 
-      ".properties('Object.Identity_Card.Id_Value').value()" +
+          ".properties('Object.Identity_Card.Id_Value').value()" +
           ".next().toString()").get().toString();
       assertEquals("07856755466", coordenadorCPF, "CPF From Joaozinho's coordinator ");
-
 
 
 //
@@ -709,72 +707,23 @@ public class PVTest extends AppTest {
       jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa2_fornecedor");
 
       String personNaturalEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
-                      ".bothE().count().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
+              ".bothE().count().next().toString()").get().toString();
       assertEquals("6", personNaturalEdgesCount, "2 Object.Identity_Card + 1 Object.Email_Address " +
-              "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
 
 
       String orgName =
-              App.executor.eval("App.g.V().has('Person.Organisation.Short_Name',eq('CLEUSA PAIVA DIA'))" +
-                      ".properties('Person.Organisation.Name').value().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Person.Organisation.Short_Name',eq('CLEUSA PAIVA DIA'))" +
+              ".properties('Person.Organisation.Name').value().next().toString()").get().toString();
       assertEquals("ARMS MANUTENCAO E R", orgName, "O Empreendimento de Cleusa se chama Arms Manutenção e R(eparos)");
 
 
       String personOrgEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
-                      ".bothE().count().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
+              ".bothE().count().next().toString()").get().toString();
       assertEquals("5", personOrgEdgesCount, "1 Object.Identity_Card + 1 Object.Email_Address " +
-              "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
-
-//      Resource res = new Resource();
-//      GremlinRequest gremlinReq = new GremlinRequest();
-//      gremlinReq.setGremlin(
-//              "App.g.V().has('Person.Natural.Full_Name',eq('CLEUSA PAIVA DIA')).next().id().toString()");
-//      JsonObject obj = JsonParser.parseString(res.gremlinQuery(gson.toJson(gremlinReq))).getAsJsonObject();
-//      String stringifiedOutput = gson.toJson(obj);
-//      String res2;
-
-//      try {
-//        HttpClient client = HttpClients.createMinimal();
-//
-//        HttpPost request = new HttpPost(URI.create("http://localhost:3001/home/gremlin"));
-//
-//        request.setHeader("Content-Type", "application/json");
-//        request.setHeader("Accept", "application/json");
-//
-//        StringEntity data = new StringEntity(gson.toJson(gremlinReq));
-////        SerializableEntity data = new SerializableEntity(req);
-//
-//        request.setEntity(data);
-//
-//
-//        res2 = IOUtils.toString(client.execute(request).getEntity().getContent());
-//        System.out.println(res2);
-//
-//
-//        HttpGet getRequest = new HttpGet(URI.create("http://localhost:3001/home/hello"));
-//
-//        res2 = IOUtils.toString(client.execute(getRequest).getEntity().getContent());
-//
-//
-//        System.out.println("********************************************\n" + res2);
-//
-//      } catch (IOException e) {
-//        e.printStackTrace();
-//        assertNull(e);
-//      }
-
-//      assertEquals(userId, ((obj.get("result").getAsJsonObject())
-//              .getAsJsonObject().get("data").getAsJsonObject()).get("@value").getAsJsonArray().get(0).getAsString());
-//
-//      Map<String, Object> bindings = new HashMap() {{
-//        put("pg_id", userId);
-//        put("pg_templateText", "eyUgc2V0IHBvc3NpYmxlTWF0Y2hlcyA9IHB2OnBvc3NpYmxlTWF0Y2hlcyhjb250ZXh0LmlkLCd7Ik9iamVjdC5FbWFpbF9BZGRyZXNzIjogMTAuNSwgIk9iamVjdC5JZGVudGl0eV9DYXJkIjogOTAuNSwgIkxvY2F0aW9uLkFkZHJlc3MiOiAxMC4xLCAiT2JqZWN0LlBob25lX051bWJlciI6IDEuMCwgIk9iamVjdC5TZW5zdGl2ZV9EYXRhIjogMTAuMCwgIk9iamVjdC5IZWFsdGgiOiAxLjAsICJPYmplY3QuQmlvbWV0cmljIjogNTAuMCAsICJPYmplY3QuSW5zdXJhbmNlX1BvbGljeSI6IDEuMH0nKSAlfQp7JSBzZXQgbnVtTWF0Y2hlcyA9IHBvc3NpYmxlTWF0Y2hlcy5zaXplKCkgJX0KeyUgaWYgbnVtTWF0Y2hlcyA9PSAwICV9Cnt7IGNvbnRleHQuUGVyc29uX05hdHVyYWxfRnVsbF9OYW1lfX0gw6kgbyDDum5pY28gcmVnaXN0cm8gbm8gc2lzdGVtYS4KCnslIGVsc2UgJX0Ke3sgY29udGV4dC5QZXJzb25fTmF0dXJhbF9GdWxsX05hbWV9fSBDb3JyZXNwb25kZSBwb3RlbmNpYWxtZW50ZSBhIHt7IG51bU1hdGNoZXMgfX0gcmVnaXN0cm97JS0gaWYgbnVtTWF0Y2hlcyAhPSAxIC0lfXN7JSBlbmRpZiAlfS4KCgoKICB7eyAiPHRhYmxlIHN0eWxlPSdtYXJnaW46IDVweCc+PHRyIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+PHRoIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+VGl0dWxhcjwvdGg+PHRoIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+UGVyY2VudHVhbDwvdGg+PHRoIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+UHJvcHJpZWRhZGVzIGVtIENvbXVtPC90aD48L3RyPiIgfX0KICB7JSBmb3IgaXRlbSBpbiBwb3NzaWJsZU1hdGNoZXMuZW50cnlTZXQoKSAlfQogIHt7ICAiPHRyIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+PHRkIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+JXM8L3RkPjx0ZCBzdHlsZT0nYm9yZGVyOiAxcHggc29saWQgI2RkZGRkZDt0ZXh0LWFsaWduOiBsZWZ0O3BhZGRpbmc6IDhweDsnPiUuMmYlJTwvdGQ+PHRkIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+JXM8L3RkPiIgfCBmb3JtYXQgKGl0ZW0ua2V5LlBlcnNvbl9OYXR1cmFsX0Z1bGxfTmFtZSAsIGl0ZW0udmFsdWUgKiAxMDAuMCwgaXRlbS5rZXkuTGFiZWxzX0Zvcl9NYXRjaCApIH19CiAgeyUgZW5kZm9yICV9CiAge3sgIjwvdGFibGU+IiB9fQoKeyUgZW5kaWYgJX0=");
-//      }};
-//
-//      String report = App.executor.eval("renderReportInBase64(pg_id,pg_templateText)", bindings).get().toString();
-//      System.out.println(report);
+          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -783,6 +732,64 @@ public class PVTest extends AppTest {
     }
 
 
+  }
+
+  @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
+  @CsvSource({
+      "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   sharepoint/mapeamento-de-processos",
+  })
+  public void test00014SharepointDataSources(String jsonFile, String ruleName, String dataSourceName) throws InterruptedException {
+    try {
+//      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+//          "sharepoint_data_sources");
+
+      jsonTestUtil(jsonFile, "$.queryResp[*].fields",
+          ruleName);
+
+      String queryPrefix = "App.g.V().has('Object.Data_Source.Name', eq('" + dataSourceName + "'))\n";
+//    test0000 for COUNT(dataSources)
+      String countDataSources =
+          App.executor.eval(queryPrefix +
+              ".count().next().toString()").get().toString();
+      assertEquals("1", countDataSources);
+
+//    test0000 for COUNT(event Ingestions)
+      String countEventGroupIngestions =
+          App.executor.eval(queryPrefix +
+              ".both()\n" +
+              ".count().next().toString()").get().toString();
+      assertEquals("1", countEventGroupIngestions);
+
+      String countEventIngestions =
+          App.executor.eval(queryPrefix +
+              ".out().out()\n" +
+              ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("6", countEventIngestions);
+
+
+      String countObjectDataProcessesIngested =
+          App.executor.eval(queryPrefix +
+              ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+//              ".in('Has_Policy')" +
+//              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
+              ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("6", countObjectDataProcessesIngested);
+
+      String countDataPolicy =
+          App.executor.eval(queryPrefix +
+              ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+              ".out('Has_Data_Source')" +
+              ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))" +
+              ".count().next().toString()").get().toString();
+      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      assertEquals("12", countDataPolicy);
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
   }
 
   @Test
@@ -809,63 +816,10 @@ public class PVTest extends AppTest {
                       ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
       assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta" +
               "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
-
-//      Resource res = new Resource();
-//      GremlinRequest gremlinReq = new GremlinRequest();
-//      gremlinReq.setGremlin(
-//              "App.g.V().has('Person.Natural.Full_Name',eq('CLEUSA PAIVA DIA')).next().id().toString()");
-//      JsonObject obj = JsonParser.parseString(res.gremlinQuery(gson.toJson(gremlinReq))).getAsJsonObject();
-//      String stringifiedOutput = gson.toJson(obj);
-//      String res2;
-
-//      try {
-//        HttpClient client = HttpClients.createMinimal();
-//
-//        HttpPost request = new HttpPost(URI.create("http://localhost:3001/home/gremlin"));
-//
-//        request.setHeader("Content-Type", "application/json");
-//        request.setHeader("Accept", "application/json");
-//
-//        StringEntity data = new StringEntity(gson.toJson(gremlinReq));
-////        SerializableEntity data = new SerializableEntity(req);
-//
-//        request.setEntity(data);
-//
-//
-//        res2 = IOUtils.toString(client.execute(request).getEntity().getContent());
-//        System.out.println(res2);
-//
-//
-//        HttpGet getRequest = new HttpGet(URI.create("http://localhost:3001/home/hello"));
-//
-//        res2 = IOUtils.toString(client.execute(getRequest).getEntity().getContent());
-//
-//
-//        System.out.println("********************************************\n" + res2);
-//
-//      } catch (IOException e) {
-//        e.printStackTrace();
-//        assertNull(e);
-//      }
-
-//      assertEquals(userId, ((obj.get("result").getAsJsonObject())
-//              .getAsJsonObject().get("data").getAsJsonObject()).get("@value").getAsJsonArray().get(0).getAsString());
-//
-//      Map<String, Object> bindings = new HashMap() {{
-//        put("pg_id", userId);
-//        put("pg_templateText", "eyUgc2V0IHBvc3NpYmxlTWF0Y2hlcyA9IHB2OnBvc3NpYmxlTWF0Y2hlcyhjb250ZXh0LmlkLCd7Ik9iamVjdC5FbWFpbF9BZGRyZXNzIjogMTAuNSwgIk9iamVjdC5JZGVudGl0eV9DYXJkIjogOTAuNSwgIkxvY2F0aW9uLkFkZHJlc3MiOiAxMC4xLCAiT2JqZWN0LlBob25lX051bWJlciI6IDEuMCwgIk9iamVjdC5TZW5zdGl2ZV9EYXRhIjogMTAuMCwgIk9iamVjdC5IZWFsdGgiOiAxLjAsICJPYmplY3QuQmlvbWV0cmljIjogNTAuMCAsICJPYmplY3QuSW5zdXJhbmNlX1BvbGljeSI6IDEuMH0nKSAlfQp7JSBzZXQgbnVtTWF0Y2hlcyA9IHBvc3NpYmxlTWF0Y2hlcy5zaXplKCkgJX0KeyUgaWYgbnVtTWF0Y2hlcyA9PSAwICV9Cnt7IGNvbnRleHQuUGVyc29uX05hdHVyYWxfRnVsbF9OYW1lfX0gw6kgbyDDum5pY28gcmVnaXN0cm8gbm8gc2lzdGVtYS4KCnslIGVsc2UgJX0Ke3sgY29udGV4dC5QZXJzb25fTmF0dXJhbF9GdWxsX05hbWV9fSBDb3JyZXNwb25kZSBwb3RlbmNpYWxtZW50ZSBhIHt7IG51bU1hdGNoZXMgfX0gcmVnaXN0cm97JS0gaWYgbnVtTWF0Y2hlcyAhPSAxIC0lfXN7JSBlbmRpZiAlfS4KCgoKICB7eyAiPHRhYmxlIHN0eWxlPSdtYXJnaW46IDVweCc+PHRyIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+PHRoIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+VGl0dWxhcjwvdGg+PHRoIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+UGVyY2VudHVhbDwvdGg+PHRoIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+UHJvcHJpZWRhZGVzIGVtIENvbXVtPC90aD48L3RyPiIgfX0KICB7JSBmb3IgaXRlbSBpbiBwb3NzaWJsZU1hdGNoZXMuZW50cnlTZXQoKSAlfQogIHt7ICAiPHRyIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+PHRkIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+JXM8L3RkPjx0ZCBzdHlsZT0nYm9yZGVyOiAxcHggc29saWQgI2RkZGRkZDt0ZXh0LWFsaWduOiBsZWZ0O3BhZGRpbmc6IDhweDsnPiUuMmYlJTwvdGQ+PHRkIHN0eWxlPSdib3JkZXI6IDFweCBzb2xpZCAjZGRkZGRkO3RleHQtYWxpZ246IGxlZnQ7cGFkZGluZzogOHB4Oyc+JXM8L3RkPiIgfCBmb3JtYXQgKGl0ZW0ua2V5LlBlcnNvbl9OYXR1cmFsX0Z1bGxfTmFtZSAsIGl0ZW0udmFsdWUgKiAxMDAuMCwgaXRlbS5rZXkuTGFiZWxzX0Zvcl9NYXRjaCApIH19CiAgeyUgZW5kZm9yICV9CiAge3sgIjwvdGFibGU+IiB9fQoKeyUgZW5kaWYgJX0=");
-//      }};
-//
-//      String report = App.executor.eval("renderReportInBase64(pg_id,pg_templateText)", bindings).get().toString();
-//      System.out.println(report);
-
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
 
     }
-
-
   }
-
 }
