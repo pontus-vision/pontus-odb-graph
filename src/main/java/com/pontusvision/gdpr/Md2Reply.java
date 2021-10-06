@@ -88,14 +88,14 @@ public class Md2Reply implements  Serializable{
     String lastAccess;
   }
 
-  Integer total;
+  Long total;
   Register track;
 
-  public Integer getTotal() {
+  public Long getTotal() {
     return total;
   }
 
-  public void setTotal(Integer total) {
+  public void setTotal(Long total) {
     this.total = total;
   }
 

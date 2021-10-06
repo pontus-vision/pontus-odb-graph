@@ -250,42 +250,6 @@ public class PVTest extends AppTest {
 
   }
 
-//  @Test
-//  public void test00004SharepointFontesDeDados() throws InterruptedException {
-//    try {
-//
-//      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
-//          "sharepoint_fontes_de_dados");
-//
-////    test0000 for COUNT(dataSources)
-//      String countDataSources =
-//          App.executor.eval("App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))\n" +
-//              ".count().next().toString()").get().toString();
-//      assertEquals("8", countDataSources);
-//
-////    test0000 for COUNT(event Ingestions)
-//      String countEventIngestions =
-//          App.executor.eval("App.g.V().has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion'))\n" +
-//              ".count().next().toString()").get().toString();
-//      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
-//      assertEquals("7", countEventIngestions);
-//
-//      String countObjectDataPolicy =
-//          App.executor.eval("App.g.V().has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
-//              ".count().next().toString()").get().toString();
-//      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
-//      assertEquals("7", countObjectDataPolicy);
-//
-//    } catch (ExecutionException e) {
-//      e.printStackTrace();
-//      assertNull(e);
-//
-//    }
-//
-//
-//  }
-//
-
   @Test
   public void test00005TotvsPloomes() throws InterruptedException {
     try {

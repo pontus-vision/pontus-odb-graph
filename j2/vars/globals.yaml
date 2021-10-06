@@ -930,6 +930,7 @@ schema:
   - name: Has_Ingress_Peering
   - name: Has_Lawful_Basis_On
   - name: Has_Link
+  - name: Has_NLP_Events
   - name: Has_Parent_Or_Guardian
   - name: Has_Phone
   - name: Has_Policy

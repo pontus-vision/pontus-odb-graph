@@ -3,12 +3,14 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.orientechnologies.orient.core.id.ORID;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.mapping.MappingReq;
+import com.pontusvision.graphutils.PText;
 import com.pontusvision.graphutils.gdpr;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseMessage;
@@ -17,7 +19,9 @@ import org.apache.tinkerpop.gremlin.driver.ser.GraphSONMessageSerializerV3d0;
 import org.apache.tinkerpop.gremlin.driver.ser.SerializationException;
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.apache.tinkerpop.gremlin.orientdb.io.OrientIoRegistry;
+import org.apache.tinkerpop.gremlin.process.traversal.Order;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
+import org.apache.tinkerpop.gremlin.process.traversal.Text;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Direction;
@@ -77,97 +81,61 @@ public class Resource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   public Md2Reply md2Search(Md2Request req) {
-    if (req.settings == null || ){
+    if (req.settings == null || req.query == null || req.query.name == null ){
       throw new HTTPException(400);
-
-    }
-    if (req.cols != null && req.dataType != null) {
-
-      Set<String> valsSet = new HashSet<>();
-      Set<String> reportButtonsSet = new HashSet<>();
-      for (int i = 0, ilen = req.cols.length; i < ilen; i++) {
-        if (!req.cols[i].id.startsWith("@")) {
-          valsSet.add(req.cols[i].id);
-        } else {
-          reportButtonsSet.add(req.cols[i].id);
-        }
-
-      }
-
-      String[] vals = valsSet.toArray(new String[valsSet.size()]);
-
-      try {
-
-        String sqlQueryCount = req.getSQL(true);
-
-        String sqlQueryData = req.getSQL(false);
-
-        String dataType = req.dataType; //req.search.extraSearch[0].value;
-
-        boolean hasFilters = req.filters != null && req.filters.length > 0;
-
-        OGremlinResultSet resultSet = App.graph.executeSql(sqlQueryCount, Collections.EMPTY_MAP);
-        Long count = resultSet.iterator().next().getRawResult().getProperty("COUNT(*)");
-        resultSet.close();
-
-        if (count > 0) {
-          List<Map<String, Object>> res = new LinkedList<>();
-
-          OResultSet oResultSet = App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP).getRawResultSet();
-
-          while (oResultSet.hasNext()) {
-            OResult oResult = oResultSet.next();
-            Map<String, Object> props = new HashMap<>();
-
-            oResult.getPropertyNames().forEach(propName -> props.put(propName, oResult.getProperty(propName)));
-            oResult.getIdentity().ifPresent(id -> props.put("id", id.toString()));
-
-            res.add(props);
-          }
-
-          oResultSet.close();
-
-          String[] recs = new String[res.size()];
-          ObjectMapper objMapper = new ObjectMapper();
-
-          for (int i = 0, ilen = res.size(); i < ilen; i++) {
-            Map<String, Object> map = res.get(i);
-            Map<String, String> rec = new HashMap<>();
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-              Object val = entry.getValue();
-              if (val instanceof ArrayList) {
-                ArrayList<Object> arrayList = (ArrayList) val;
-
-                String val2 = arrayList.get(0).toString();
-
-                rec.put(entry.getKey(), val2);
-
-              } else {
-                rec.put(entry.getKey(), val == null ? null : val.toString());
-              }
-
-            }
-
-            recs[i] = objMapper.writeValueAsString(rec);
-          }
-          RecordReply reply = new RecordReply(req.from, req.to, count, recs);
-
-          return reply;
-
-        }
-
-        RecordReply reply = new RecordReply(req.from, req.to, count, new String[0]);
-
-        return reply;
-
-      } catch (Throwable t) {
-        t.printStackTrace();
-      }
-
     }
 
-    return new RecordReply(req.from, req.to, 0L, new String[0]);
+    GraphTraversal<Vertex, Vertex> gt =
+        App.g.V().has("Person.Natural.Full_Name",
+            PText.textContains(req.query.name.trim().toUpperCase(Locale.ROOT)));
 
+    if (req.query.docCpf != null){
+      gt = gt.has("Person.Natural.Customer_ID",eq(req.query.docCpf.replaceAll("[^0-9]","")));
+    }
+    try {
+      List<Object> ids = (gt.id().toList());
+      if (ids.size() != 1){
+        System.out.println("Found "+ids.size()+" ids matching the request");
+        throw new HTTPException(404);
+      }
+      if (req.query.email != null) {
+        if (!App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
+                eq(req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
+          throw new HTTPException(404);
+        }
+      }
+      Md2Reply reply = new Md2Reply();
+
+      reply.total = App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").count().next();
+
+      App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
+          .in("Has_NLP_Events").range(req.settings.start, req.settings.start + req.settings.limit)
+          .match(
+              __.has("Metadata.Type.Object.Email_Message_Body", eq("Object.Email_Message_Body")),
+              __.has("Metadata.Type.Object.Email_Message_Attachment",eq ("Object.Email_Message_Attachment")),
+              __.has("Metadata.Type.Object.Email_Message_Attachment",eq ("Object.Email_Message_Attachment")),
+
+
+              , __.as("data").valueMap().as("valueMap")
+          )
+          .select("id", "created", "fileType", "lastAccess", "name", "owner", "path", "server", "sizeByte");
+
+
+//          .properties("Object.Email_Message_Body", "Object.Email_Message_Attachment");
+
+//      reply.track.created;
+//      reply.track.fileType;
+//      reply.track.lastAccess;
+//      reply.track.name;
+//      reply.track.owner;
+//      reply.track.path;
+//      reply.track.server;
+//      reply.track.sizeBytes;
+
+      return reply;
+    } catch( Exception e){
+      throw new HTTPException(404);
+    }
   }
 
 
