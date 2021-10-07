@@ -8,11 +8,13 @@
         "props": [
           {
             "name": "Person.Organisation.Name",
-            "val": "${A2_NOMRESP?.trim()?.toUpperCase()}"
+            "val": "${A2_NOMRESP?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Organisation.Short_Name",
-            "val": "${A2_NOME?.trim()?.toUpperCase()}"
+            "val": "${A2_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Organisation.Type",
@@ -20,7 +22,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Organisation.Customer_ID",
+            "name": "Person.Organisation.Id",
             "val": "${A2_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           }
@@ -33,7 +35,8 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
+            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Location.Address.Description",
@@ -52,7 +55,8 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
+            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Location.Address.Description",
@@ -71,11 +75,8 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${A2_NOME?.trim()?.toUpperCase()}"
-          },
-          {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${A2_NOME?.trim()?.toUpperCase()}"
+            "val": "${A2_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
@@ -86,7 +87,7 @@
       {
         "label": "Object.Identity_Card",
         "name": "RG",
-        "condition": "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 11}",
+        "condition": "${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
@@ -137,6 +138,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "rep_phone",
+        "condition": "${A2_REPRTEL?.replaceAll('[^0-9]','').length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -164,14 +166,11 @@
       {
         "label": "Object.Email_Address",
         "name": "email1",
+        "condition": "${A2_REPR_EM?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Email_Address.Email",
             "val": "${A2_REPR_EM?.trim()?.toLowerCase()}"
-          },
-          {
-            "name": "Object.Email_Address.Type",
-            "val": "business"
           }
         ]
       },
