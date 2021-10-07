@@ -8,12 +8,14 @@ updatereq:
       props:
         - name: Person.Organisation.Name
           val: ${A2_NOMRESP?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Organisation.Short_Name
           val: ${A2_NOME?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Organisation.Type
           val: Fornecedor
           excludeFromSearch: True
-        - name: Person.Organisation.Customer_ID
+        - name: Person.Organisation.Id
           val: ${A2_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
     
@@ -23,6 +25,7 @@ updatereq:
       props:
         - name: Location.Address.Full_Address
           val: ${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}
+          mandatoryInSearch: True
         - name: Location.Address.Description
           val: endereco fornecedor
         - name: Location.Address.Type
@@ -34,6 +37,7 @@ updatereq:
       props:
         - name: Location.Address.Full_Address
           val: ${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}
+          mandatoryInSearch: True
         - name: Location.Address.Description
           val: endereco fornecedor
         - name: Location.Address.Type
@@ -45,14 +49,13 @@ updatereq:
       props:
         - name: Person.Natural.Full_Name
           val: ${A2_NOME?.trim()?.toUpperCase()}
-        - name: Person.Natural.Full_Name_fuzzy
-          val: ${A2_NOME?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Natural.Type
           val: fornecedor
     
     - label: Object.Identity_Card
       name: RG
-      condition: ${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 11}
+      condition: ${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}
       props:
         - name: Object.Identity_Card.Id_Value
           val: ${A2_RG?.replaceAll('[^0-9]','')}
@@ -85,6 +88,7 @@ updatereq:
     
     - label: Object.Phone_Number
       name: rep_phone
+      condition: ${A2_REPRTEL?.replaceAll('[^0-9]','').length() > 0}
       props:
         - name: Object.Phone_Number.Raw
           val: ${A2_REPRTEL}
@@ -102,11 +106,10 @@ updatereq:
     
     - label: Object.Email_Address
       name: email1
+      condition: ${A2_REPR_EM?.trim()?.length() > 0}
       props:
         - name: Object.Email_Address.Email
           val: ${A2_REPR_EM?.trim()?.toLowerCase()}
-        - name: Object.Email_Address.Type
-          val: business
     
     - label: Event.Ingestion
       props:
