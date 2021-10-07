@@ -329,7 +329,9 @@ public class VertexProps {
 
   public enum TypeEnum {
 
-    JAVA_UTIL_DATE("java.util.Date"), _LJAVA_LANG_STRING_("[Ljava.lang.String;"), JAVA_LANG_STRING("java.lang.String");
+    JAVA_UTIL_DATE("java.util.Date"), _LJAVA_LANG_STRING_("[Ljava.lang.String;"),
+    JAVA_LANG_STRING("java.lang.String"), JAVA_LANG_DOUBLE("java.lang.Double");
+
 
 
     private final String value;

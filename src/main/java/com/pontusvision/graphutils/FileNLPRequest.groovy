@@ -17,42 +17,51 @@ import org.apache.tinkerpop.gremlin.structure.Transaction
 
 import java.text.SimpleDateFormat
 
-class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
+class FileNLPRequest implements   Serializable{
+  String metadataController
+  String metadataGDPRStatus
+  String metadataLineage
+  String pg_currDate
+  String pg_content
+  String[] address
+  String[] cred_card
+  String[] email
+  String[] location
+  String[] person
+  String[] phone
+  String[] postcode
+  String[] policy_number
+  String[] org
+  String[] nationality
+  String[] language
+  String[] misc
+  String[] money
+  String[] date
+  String[] time
+  String[] categories
+  String[] cpf
+  String[] cnpj
+
+  String name;
+  String created;
+  String fileType;
+  String lastAccess;
+  String owner;
+  String path;
+  String server;
+  Long sizeBytes;
 
 
-  String attachmentContentType
-  String attachmentId
-
-  String emailSubject
-  String emailId
-  String emailUserId
-  String emailFolderId
-  String emailCreatedDateTime
-  String emailReceivedDateTime
-  String emailSentDateTime
-  String[] toEmailAddresses
-  String[] toEmailNames
-  String fromEmailAddresses
-  String fromEmailNames
-  String[] bccEmailAddresses
-  String[] bccEmailNames
-  String[] ccEmailAddresses
-  String[] ccEmailNames
-
-  static Map<String, String> getMapFromEmailNLPRequest(EmailNLPRequest req) {
+  static Map<String, String> getMapFromFileNLPRequest(FileNLPRequest req) {
     Map<String, String> retVal = [:]
 
-    retVal.put("emailSubject", req.emailSubject.toString()?:"[]")
-    retVal.put("emailId", req.emailId.toString()?:"[]")
-    retVal.put("emailUserId", req.emailUserId.toString()?:"[]")
-    retVal.put("emailFolderId", req.emailFolderId.toString()?:"[]")
-    retVal.put("emailCreatedDateTime", req.emailCreatedDateTime?.toString()?:"[]")
-    retVal.put("emailReceivedDateTime", req.emailReceivedDateTime?.toString()?:"[]")
-    retVal.put("emailSentDateTime", req.emailSentDateTime?.toString()?:"[]")
-    retVal.put("fromEmailAddresses", req.fromEmailAddresses?.toString()?:"[]")
-    retVal.put("fromEmailNames", req.fromEmailNames?.toString()?:"[]")
-    retVal.put("toEmailAddresses", req.toEmailAddresses?.toArrayString()?:"[]")
-    retVal.put("toEmailNames", req.toEmailNames?.toArrayString()?:"[]")
+    retVal.put("created", req.created)
+    retVal.put("fileType", req.fileType)
+    retVal.put("lastAccess", req.lastAccess)
+    retVal.put("name", req.name)
+    retVal.put("owner", req.owner)
+    retVal.put("path", req.path)
+    retVal.put("server", req.server)
     retVal.put("metadataController", req.metadataController?.toString()?:"[]")
     retVal.put("metadataGDPRStatus", req.metadataGDPRStatus?.toString()?:"[]")
     retVal.put("metadataLineage", req.metadataLineage?.toString()?:"[]")
@@ -66,11 +75,6 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
     retVal.put("nlp_nationality", req.nationality?.toArrayString()?:"[]")
     retVal.put("nlp_address", req.address?.toArrayString()?:"[]")
     retVal.put("nlp_cred_card", req.cred_card?.toString()?:"[]")
-    retVal.put("bccEmailAddresses", req.bccEmailAddresses?.toArrayString()?:"[]")
-    retVal.put("bccEmailNames", req.bccEmailNames?.toArrayString()?:"[]")
-    retVal.put("categories", req.categories?.toArrayString()?:"[]")
-    retVal.put("ccEmailAddresses", req.ccEmailAddresses?.toArrayString()?:"[]")
-    retVal.put("ccEmailNames", req.ccEmailNames?.toArrayString()?:"[]")
     retVal.put("nlp_email", req.email?.toArrayString()?:"[]")
     retVal.put("nlp_date", req.date?.toArrayString()?:"[]")
     retVal.put("nlp_time", req.time?.toArrayString()?:"[]")
@@ -82,17 +86,32 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
     return retVal
   }
 
-  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequestArray(
+  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email' ) {
+    final String vtxLabel = 'Object.Data_Source'
+    Vertex vtx = new Vertex()
+    vtx.label = vtxLabel
+    vtx.name = vtxLabel
+    VertexProps vtxProps = new VertexProps()
+    vtxProps.name = "${vtxLabel}.Name"
+    vtxProps.mandatoryInSearch = true
+    vtxProps.val = dataSourceType
+
+    vtx.props = [vtxProps]
+    req.vertices.push(vtx)
+    return vtx
+  }
+
+  static Map<String, Map<ORID, AtomicDouble>> upsertFileNLPRequestArray(
           OrientStandardGraph graph,
           GraphTraversalSource g,
-          EmailNLPRequest[] reqs) {
+          FileNLPRequest[] reqs) {
     Transaction trans = App.graph.tx()
     try {
       if (!trans.isOpen()) {
         trans.open()
       }
-      for (EmailNLPRequest req: reqs){
-        upsertEmailNLPRequest(graph,g,req);
+      for (FileNLPRequest req: reqs){
+        upsertFileNLPRequest(graph,g,req);
       }
       trans.commit()
     } catch (Throwable t) {
@@ -104,23 +123,23 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
   }
 
 
-  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequest(
+  static Map<String, Map<ORID, AtomicDouble>> upsertFileNLPRequest(
           OrientStandardGraph graph,
           GraphTraversalSource g,
-          EmailNLPRequest req) {
+          FileNLPRequest req) {
     Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName
 
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
     updateReq.edges = []
+    String dataSourceName = "file_server_${req.server}"
+    Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
+    Vertex eventGroupFileIngestionVtx = createEventGroupFileIngestionVtx(updateReq, dataSourceName)
 
-    Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq)
-    Vertex eventEmailMessageGroupVtx = createEventEmailMessageGroupVtx(updateReq)
-
-    createEdge('Has_Ingestion', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
+    createEdge('Has_Ingestion', dataSourceVtx.name, eventGroupFileIngestionVtx.name, updateReq)
 
     Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
-    createEdge('Has_Ingestion', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
+    createEdge('Has_Ingestion', eventGroupFileIngestionVtx.name, eventEmailVtx.name, updateReq)
 
     createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_To_Group', 'Email_To', req.toEmailAddresses)
     createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_From_Group', 'Email_From', req.toEmailAddresses)
@@ -134,7 +153,7 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
 
     StringBuffer sb = new StringBuffer()
     Double pcntThreshold = 1.0
-    Map<String, String> item = getMapFromEmailNLPRequest(req)
+    Map<String, String> item = getMapFromFileNLPRequest(req)
     def (
     List<MatchReq>            matchReqs,
     Map<String, AtomicDouble> maxScoresByVertexName,
@@ -162,10 +181,63 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
     return finalVertexIdByVertexName
   }
 
+  static Map<String, Map<ORID, AtomicDouble>> processUpdateReq(
+          final GraphTraversalSource g,
+          final Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName,
+          final Map<String, List<MatchReq>> matchReqByVertexName,
+          final Map<String, AtomicDouble> maxScoresByVertexName,
+          final Map<String, Double> percentageThresholdByVertexName,
+          final Map<String, List<EdgeRequest>> edgeReqsByVertexName,
+          final Set<EdgeRequest> edgeReqs
 
-  static Vertex createEventEmailMessageGroupVtx(UpdateReq updateReq) {
+  ) {
 
-    final String vtxLabel = 'Event.Email_Msg_Group'
+    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap()
+
+    vertexScoreMapByVertexName.each { String vertexTypeStr, Map<ORID, AtomicDouble> potentialHitIDs ->
+
+      List<MatchReq> matchReqsForThisVertexType = matchReqByVertexName.get(vertexTypeStr)
+
+      double maxScore = maxScoresByVertexName.get(vertexTypeStr).get()
+      double percentageThreshold = percentageThresholdByVertexName.get(vertexTypeStr)
+      double scoreThreshold = (double) (maxScore * 100 * (percentageThreshold / 100) / 100)
+
+      Map<ORID, AtomicDouble> topHits = Matcher.getTopHitsWithEdgeCheck(g, potentialHitIDs, scoreThreshold,
+              vertexScoreMapByVertexName, vertexTypeStr, edgeReqsByVertexName)
+
+      if (topHits != null && topHits.size() > 0) {
+
+        Matcher.updateExistingVertexWithMatchReqs(g, topHits, matchReqsForThisVertexType, scoreThreshold)
+        finalVertexIdByVertexName.put((String) vertexTypeStr, topHits)
+      } else {
+        Map<ORID, AtomicDouble> newVertices = new HashMap<>()
+        List<ORID> vIds = Matcher.addNewVertexFromMatchReqs(g, (String) vertexTypeStr, matchReqsForThisVertexType)
+        int vlen = vIds.size();
+        for (int v = 0; v < vlen; v++){
+          ORID vId = vIds.get(v);
+          newVertices.put(vId, new AtomicDouble(maxScore))
+          finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
+
+          if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
+            String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
+            g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
+          }
+        }
+
+
+      }
+
+
+    }
+
+    Matcher.createEdges(g, (Set<EdgeRequest>) edgeReqs, finalVertexIdByVertexName, maxScoresByVertexName)
+
+    return finalVertexIdByVertexName;
+  }
+
+  static Vertex createEventGroupFileIngestionVtx(UpdateReq updateReq, String groupName) {
+
+    final String vtxLabel = 'Event.File_Group_Ingestion'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
     vtx.name = vtxLabel
@@ -173,8 +245,12 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
     vtxProps.name = "${vtxLabel}.Ingestion_Date"
     vtxProps.mandatoryInSearch = true
     vtxProps.val = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
+    VertexProps vtxPropsGroupName = new VertexProps()
+    vtxPropsGroupName.name = "${vtxLabel}.Group_Name"
+    vtxPropsGroupName.mandatoryInSearch = true
+    vtxPropsGroupName.val = groupName
 
-    vtx.props = [vtxProps]
+    vtx.props = [vtxProps, vtxPropsGroupName]
 
     updateReq.vertices.push(vtx)
     return vtx
@@ -219,8 +295,8 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
 
   }
 
-  static Set<ORID> createEventNLPGroups(EmailNLPRequest req, ORID emailBodyOrAttachment,
-                                         minThreshold = 1, Integer maxThreshold = 100) {
+  static Set<ORID> createEventNLPGroups(FileNLPRequest req, ORID emailBodyOrAttachment,
+                                        minThreshold = 1, Integer maxThreshold = 100) {
 
     String[] person = req.person
 
@@ -290,72 +366,75 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
     return retVal
   }
 
-  static Vertex createEventEmailMessageVtx(EmailNLPRequest req, UpdateReq updateReq) {
-    String emailVtxLabel = 'Event.Email_Message'
-    Vertex emailVtx = new Vertex()
-    emailVtx.props = []
+  static Vertex createEventFileIngestionVtx(FileNLPRequest req, UpdateReq updateReq) {
+    String fileIngestionVtxLabel = 'Event.File_Ingestion'
+    Vertex fileIngestionVtx = new Vertex()
+    fileIngestionVtx.props = []
 
-    emailVtx.label = emailVtxLabel
-    emailVtx.name = req.emailId
-    VertexProps emailIdVtxProps = new VertexProps()
-    emailIdVtxProps.name = "${emailVtxLabel}.Email_Id"
-    emailIdVtxProps.mandatoryInSearch = true
-    emailIdVtxProps.val = req.emailId
+    fileIngestionVtx.label = fileIngestionVtxLabel
+    fileIngestionVtx.name = req.name
 
-    emailVtx.props.push(emailIdVtxProps)
 
-    if (req.emailCreatedDateTime) {
+
+    if (req.created) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Created_Date_Time"
+      props.name = "${fileIngestionVtxLabel}.Created"
       props.mandatoryInSearch = true
-      props.val = req.emailCreatedDateTime
-      emailVtx.props.push(props)
+      props.val = req.created
+      fileIngestionVtx.props.push(props)
     }
-    if (req.emailSentDateTime) {
+    if (req.fileType) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Sent_Date_Time"
+      props.name = "${fileIngestionVtxLabel}.File_Type"
       props.mandatoryInSearch = true
-      props.val = req.emailSentDateTime
-      emailVtx.props.push(props)
+      props.val = req.fileType
+      fileIngestionVtx.props.push(props)
     }
-    if (req.emailReceivedDateTime) {
+    if (req.lastAccess) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Received_Date_Time"
+      props.name = "${fileIngestionVtxLabel}.Last_Access"
       props.mandatoryInSearch = true
-      props.val = req.emailReceivedDateTime
-      emailVtx.props.push(props)
+      props.val = req.lastAccess
+      fileIngestionVtx.props.push(props)
     }
-    if (req.categories) {
+    if (req.name) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Categories"
-      props.mandatoryInSearch = false
-      props.val = req.categories.toArrayString()
-      emailVtx.props.push(props)
+      props.name = "${fileIngestionVtxLabel}.Name"
+      props.mandatoryInSearch = true
+      props.val = req.name
+      fileIngestionVtx.props.push(props)
     }
-    if (req.emailSubject) {
+    if (req.owner) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Subject"
-      props.mandatoryInSearch = false
-      props.val = req.emailSubject
-      emailVtx.props.push(props)
+      props.name = "${fileIngestionVtxLabel}.Owner"
+      props.mandatoryInSearch = true
+      props.val = req.owner
+      fileIngestionVtx.props.push(props)
     }
-    if (req.emailFolderId) {
+    if (req.path) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Folder_Id"
-      props.mandatoryInSearch = false
-      props.val = req.emailFolderId
-      emailVtx.props.push(props)
+      props.name = "${fileIngestionVtxLabel}.Path"
+      props.mandatoryInSearch = true
+      props.val = req.path
+      fileIngestionVtx.props.push(props)
     }
-    if (req.emailUserId) {
+    if (req.server) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.User_Id"
-      props.mandatoryInSearch = false
-      props.val = req.emailUserId
-      emailVtx.props.push(props)
+      props.name = "${fileIngestionVtxLabel}.Server"
+      props.mandatoryInSearch = true
+      props.val = req.server
+      fileIngestionVtx.props.push(props)
     }
-
-    updateReq.vertices.push(emailVtx)
-    return emailVtx
+    if (req.sizeBytes) {
+      VertexProps props = new VertexProps()
+      props.name = "${fileIngestionVtxLabel}.SizeBytes"
+      props.type = VertexProps.TypeEnum.JAVA_LANG_DOUBLE
+      props.mandatoryInSearch = true
+      props.val = req.sizeBytes.toString()
+      fileIngestionVtx.props.push(props)
+    }
+    updateReq.vertices.push(fileIngestionVtx)
+    return fileIngestionVtx
 
   }
 
@@ -377,11 +456,11 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
     return vtx
   }
 
-  static String getObjectEmailBodyOrAttachmentVtxLabel(EmailNLPRequest req) {
+  static String getObjectEmailBodyOrAttachmentVtxLabel(FileNLPRequest req) {
     return req.attachmentId ? 'Object.Email_Message_Attachment' : 'Object.Email_Message_Body'
   }
 
-  static Vertex createObjectEmailMessageBodyOrAttachmentVtx(EmailNLPRequest req, UpdateReq updateReq) {
+  static Vertex createObjectEmailMessageBodyOrAttachmentVtx(FileNLPRequest req, UpdateReq updateReq) {
     String emailVtxLabel = getObjectEmailBodyOrAttachmentVtxLabel(req)
     Vertex emailVtx = new Vertex()
     emailVtx.props = []
@@ -426,24 +505,18 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
 
   }
 
+  static Edge createEdge(String edgeLabel, String fromVtxName, String toVtxName, UpdateReq req) {
+    Edge edge = new Edge()
+    edge.label(edgeLabel)
+    edge.fromVertexName(fromVtxName)
+    edge.toVertexName(toVtxName)
 
-  static UpdateReq createEventEmailxxxGroupVtx(
-          UpdateReq updateReq,
-          Vertex emailEventVtx,
-          String vertexLabel,
-          String edgeLabel,
-          String[] emails) {
-    for (String email : emails) {
-      Vertex emailGroupVtx = createEmailGroupVtx(vertexLabel, "${email}_${vertexLabel}", email, updateReq)
-      Vertex emailVtx = createEmailAddressVertex(email, email, updateReq)
+    req.edges.push(edge)
 
-      createEdge(edgeLabel, emailGroupVtx.name, emailVtx.name, updateReq)
-      createEdge(edgeLabel, emailEventVtx.name, emailGroupVtx.name, updateReq)
-    }
-
-
-    return updateReq
+    return edge
   }
+
+
   String getMetadataController() {
     return metadataController
   }
@@ -620,21 +693,6 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
     this.cpf = cpf
   }
 
-  String getAttachmentContentType() {
-    return attachmentContentType
-  }
-
-  void setAttachmentContentType(String attachmentContentType) {
-    this.attachmentContentType = attachmentContentType
-  }
-
-  String getAttachmentId() {
-    return attachmentId
-  }
-
-  void setAttachmentId(String attachmentId) {
-    this.attachmentId = attachmentId
-  }
   String[] getCnpj() {
     return cnpj
   }
@@ -642,124 +700,68 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
   void setCnpj(String[] cnpj) {
     this.cnpj = cnpj
   }
-  String getEmailSubject() {
-    return emailSubject
+
+  String getName() {
+    return name
   }
 
-  void setEmailSubject(String emailSubject) {
-    this.emailSubject = emailSubject
+  void setName(String name) {
+    this.name = name
   }
 
-  String getEmailId() {
-    return emailId
+  String getCreated() {
+    return created
   }
 
-  void setEmailId(String emailId) {
-    this.emailId = emailId
+  void setCreated(String created) {
+    this.created = created
   }
 
-  String getEmailUserId() {
-    return emailUserId
+  String getFileType() {
+    return fileType
   }
 
-  void setEmailUserId(String emailUserId) {
-    this.emailUserId = emailUserId
+  void setFileType(String fileType) {
+    this.fileType = fileType
   }
 
-  String getEmailFolderId() {
-    return emailFolderId
+  String getLastAccess() {
+    return lastAccess
   }
 
-  void setEmailFolderId(String emailFolderId) {
-    this.emailFolderId = emailFolderId
+  void setLastAccess(String lastAccess) {
+    this.lastAccess = lastAccess
   }
 
-  String getEmailCreatedDateTime() {
-    return emailCreatedDateTime
+  String getOwner() {
+    return owner
   }
 
-  void setEmailCreatedDateTime(String emailCreatedDateTime) {
-    this.emailCreatedDateTime = emailCreatedDateTime
+  void setOwner(String owner) {
+    this.owner = owner
   }
 
-  String getEmailReceivedDateTime() {
-    return emailReceivedDateTime
+  String getPath() {
+    return path
   }
 
-  void setEmailReceivedDateTime(String emailReceivedDateTime) {
-    this.emailReceivedDateTime = emailReceivedDateTime
+  void setPath(String path) {
+    this.path = path
   }
 
-  String getEmailSentDateTime() {
-    return emailSentDateTime
+  String getServer() {
+    return server
   }
 
-  void setEmailSentDateTime(String emailSentDateTime) {
-    this.emailSentDateTime = emailSentDateTime
+  void setServer(String server) {
+    this.server = server
   }
 
-  String[] getToEmailAddresses() {
-    return toEmailAddresses
+  Long getSizeBytes() {
+    return sizeBytes
   }
 
-  void setToEmailAddresses(String[] toEmailAddresses) {
-    this.toEmailAddresses = toEmailAddresses
+  void setSizeBytes(Long sizeBytes) {
+    this.sizeBytes = sizeBytes
   }
-
-  String[] getToEmailNames() {
-    return toEmailNames
-  }
-
-  void setToEmailNames(String[] toEmailNames) {
-    this.toEmailNames = toEmailNames
-  }
-
-  String getFromEmailAddresses() {
-    return fromEmailAddresses
-  }
-
-  void setFromEmailAddresses(String fromEmailAddresses) {
-    this.fromEmailAddresses = fromEmailAddresses
-  }
-
-  String getFromEmailNames() {
-    return fromEmailNames
-  }
-
-  void setFromEmailNames(String fromEmailNames) {
-    this.fromEmailNames = fromEmailNames
-  }
-
-  String[] getBccEmailAddresses() {
-    return bccEmailAddresses
-  }
-
-  void setBccEmailAddresses(String[] bccEmailAddresses) {
-    this.bccEmailAddresses = bccEmailAddresses
-  }
-
-  String[] getBccEmailNames() {
-    return bccEmailNames
-  }
-
-  void setBccEmailNames(String[] bccEmailNames) {
-    this.bccEmailNames = bccEmailNames
-  }
-
-  String[] getCcEmailAddresses() {
-    return ccEmailAddresses
-  }
-
-  void setCcEmailAddresses(String[] ccEmailAddresses) {
-    this.ccEmailAddresses = ccEmailAddresses
-  }
-
-  String[] getCcEmailNames() {
-    return ccEmailNames
-  }
-
-  void setCcEmailNames(String[] ccEmailNames) {
-    this.ccEmailNames = ccEmailNames
-  }
-
 }

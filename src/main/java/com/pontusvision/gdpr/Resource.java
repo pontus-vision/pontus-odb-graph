@@ -111,14 +111,14 @@ public class Resource {
       App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
           .in("Has_NLP_Events").range(req.settings.start, req.settings.start + req.settings.limit)
           .match(
-              __.has("Metadata.Type.Object.Email_Message_Body", eq("Object.Email_Message_Body")),
-              __.has("Metadata.Type.Object.Email_Message_Attachment",eq ("Object.Email_Message_Attachment")),
-              __.has("Metadata.Type.Object.Email_Message_Attachment",eq ("Object.Email_Message_Attachment")),
-
-
-              , __.as("data").valueMap().as("valueMap")
+              __.has("Metadata.Type.Object.Email_Message_Body", eq("Object.Email_Message_Body")).valueMap().as("email_body"),
+              __.has("Metadata.Type.Object.Email_Message_Attachment",eq ("Object.Email_Message_Attachment")).valueMap().as("email_attachment"),
+              __.has("Metadata.Type.Event.File_Ingestion",eq ("Event.File_Ingestion")).valueMap().as("file")
           )
-          .select("id", "created", "fileType", "lastAccess", "name", "owner", "path", "server", "sizeByte");
+          .select("email_body", "email_attachment", "file").forEachRemaining( a -> {
+            System.out.println(a.toString());
+          }
+    );
 
 
 //          .properties("Object.Email_Message_Body", "Object.Email_Message_Attachment");

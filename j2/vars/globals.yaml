@@ -148,6 +148,29 @@ schema:
           # Use the Person.Natural.Id here:
         - name: Person_Id
 
+    - name: "Event.File_Group_Ingestion"
+      partition: false
+      useStatic: false
+      props:
+        - name: Ingestion_Date
+        - name: Group_Name
+
+    - name: "Event.File_Ingestion"
+      partition: false
+      useStatic: false
+      props:
+        - name: Metadata_Create_Date
+          dataType: Date
+        - name: Created
+        - name: File_Type
+        - name: Last_Access
+        - name: Name
+        - name: Owner
+        - name: Path
+        - name: Server
+        - name: SizeBytes
+          dataType: Double
+
 
     - name: "Event.Email_Message"
       partition: false
