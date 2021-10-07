@@ -722,8 +722,7 @@ public class PVTest extends AppTest {
       String personOrgEdgesCount =
           App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("5", personOrgEdgesCount, "1 Object.Identity_Card + 1 Object.Email_Address " +
-          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("3", personOrgEdgesCount, "1 Object.Identity_Card + 1 Location.Address + 1 Event.Ingestion");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -793,7 +792,7 @@ public class PVTest extends AppTest {
   }
 
   @Test
-  public void test00014TotvsProtheusRaFuncionarios() throws InterruptedException {
+  public void test00015TotvsProtheusRaFuncionarios() throws InterruptedException {
 
     try {
 

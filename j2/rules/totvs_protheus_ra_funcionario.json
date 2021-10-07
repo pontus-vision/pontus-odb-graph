@@ -4,14 +4,12 @@
       {
         "label": "Person.Natural",
         "name": "colaborador",
+        "condition": "${RA_CIC?.replaceAll('[^0-9]','').length() == 11}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${RA_NOMECMP?.trim()?.toUpperCase()}"
-          },
-          {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${RA_NOMECMP?.trim()?.toUpperCase()}"
+            "val": "${RA_NOMECMP?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
@@ -36,7 +34,8 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Location.Address.Description",
@@ -51,14 +50,12 @@
       {
         "label": "Person.Natural",
         "name": "mae",
+        "condition": "${RA_MAE?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${RA_MAE?.trim()?.toUpperCase()}"
-          },
-          {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${RA_MAE?.trim()?.toUpperCase()}"
+            "val": "${RA_MAE?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
@@ -73,10 +70,12 @@
       {
         "label": "Person.Natural",
         "name": "pai",
+        "condition": "${RA_PAI?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${RA_PAI?.trim()?.toUpperCase()}"
+            "val": "${RA_PAI?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Full_Name_fuzzy",
@@ -95,6 +94,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "phone",
+        "condition": "${RA_TELEFON?.replaceAll('[^0-9]','').length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -122,6 +122,7 @@
       {
         "label": "Object.Identity_Card",
         "name": "RG",
+        "condition": "${RA_RG?.replaceAll('[^0-9]','')?.length() > 0}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
@@ -172,6 +173,7 @@
       {
         "label": "Object.Email_Address",
         "name": "email1",
+        "condition": "${RA_EMAIL?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Email_Address.Email",
@@ -186,6 +188,7 @@
       {
         "label": "Object.Email_Address",
         "name": "email2",
+        "condition": "${RA_EMAIL2?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Email_Address.Email",
