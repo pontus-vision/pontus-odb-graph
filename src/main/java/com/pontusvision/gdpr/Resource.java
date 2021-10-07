@@ -99,8 +99,11 @@ public class Resource {
         throw new HTTPException(404);
       }
       if (req.query.email != null) {
-        if (!App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
+        if (! App.g.V(ids.get(0)).in("Uses_Email").has("Object.Email_Address.Email",
                 eq(req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
+          System.out.println("Not found email " + req.query.email + " associated with " +ids.size()+" (" +
+               req.query.name+")");
+
           throw new HTTPException(404);
         }
       }

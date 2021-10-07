@@ -17,7 +17,7 @@ import org.apache.tinkerpop.gremlin.structure.Transaction
 
 import java.text.SimpleDateFormat
 
-class FileNLPRequest implements   Serializable{
+class FileNLPRequest implements Serializable {
   String metadataController
   String metadataGDPRStatus
   String metadataLineage
@@ -42,14 +42,14 @@ class FileNLPRequest implements   Serializable{
   String[] cpf
   String[] cnpj
 
-  String name;
-  String created;
-  String fileType;
-  String lastAccess;
-  String owner;
-  String path;
-  String server;
-  Long sizeBytes;
+  String name
+  String created
+  String fileType
+  String lastAccess
+  String owner
+  String path
+  String server
+  Long sizeBytes
 
 
   static Map<String, String> getMapFromFileNLPRequest(FileNLPRequest req) {
@@ -62,31 +62,31 @@ class FileNLPRequest implements   Serializable{
     retVal.put("owner", req.owner)
     retVal.put("path", req.path)
     retVal.put("server", req.server)
-    retVal.put("metadataController", req.metadataController?.toString()?:"[]")
-    retVal.put("metadataGDPRStatus", req.metadataGDPRStatus?.toString()?:"[]")
-    retVal.put("metadataLineage", req.metadataLineage?.toString()?:"[]")
-    retVal.put("pg_currDate", req.pg_currDate?.toString()?:"[]")
-    retVal.put("pg_content", req.pg_content?.toString()?:"[]")
-    retVal.put("nlp_location", req.location?.toArrayString()?:"[]")
-    retVal.put("nlp_person", req.person?.toArrayString()?:"[]")
-    retVal.put("nlp_phone", req.phone?.toArrayString()?:"[]")
-    retVal.put("nlp_postcode", req.postcode?.toArrayString()?:"[]")
-    retVal.put("nlp_policy_number", req.policy_number?.toArrayString()?:"[]")
-    retVal.put("nlp_nationality", req.nationality?.toArrayString()?:"[]")
-    retVal.put("nlp_address", req.address?.toArrayString()?:"[]")
-    retVal.put("nlp_cred_card", req.cred_card?.toString()?:"[]")
-    retVal.put("nlp_email", req.email?.toArrayString()?:"[]")
-    retVal.put("nlp_date", req.date?.toArrayString()?:"[]")
-    retVal.put("nlp_time", req.time?.toArrayString()?:"[]")
-    retVal.put("nlp_money", req.money?.toArrayString()?:"[]")
-    retVal.put("nlp_misc", req.misc?.toArrayString()?:"[]")
-    retVal.put("nlp_language", req.language?.toArrayString()?:"[]")
-    retVal.put("nlp_org", req.org?.toArrayString()?:"[]")
+    retVal.put("metadataController", req.metadataController?.toString() ?: "[]")
+    retVal.put("metadataGDPRStatus", req.metadataGDPRStatus?.toString() ?: "[]")
+    retVal.put("metadataLineage", req.metadataLineage?.toString() ?: "[]")
+    retVal.put("pg_currDate", req.pg_currDate?.toString() ?: "[]")
+    retVal.put("pg_content", req.pg_content?.toString() ?: "[]")
+    retVal.put("nlp_location", req.location?.toArrayString() ?: "[]")
+    retVal.put("nlp_person", req.person?.toArrayString() ?: "[]")
+    retVal.put("nlp_phone", req.phone?.toArrayString() ?: "[]")
+    retVal.put("nlp_postcode", req.postcode?.toArrayString() ?: "[]")
+    retVal.put("nlp_policy_number", req.policy_number?.toArrayString() ?: "[]")
+    retVal.put("nlp_nationality", req.nationality?.toArrayString() ?: "[]")
+    retVal.put("nlp_address", req.address?.toArrayString() ?: "[]")
+    retVal.put("nlp_cred_card", req.cred_card?.toString() ?: "[]")
+    retVal.put("nlp_email", req.email?.toArrayString() ?: "[]")
+    retVal.put("nlp_date", req.date?.toArrayString() ?: "[]")
+    retVal.put("nlp_time", req.time?.toArrayString() ?: "[]")
+    retVal.put("nlp_money", req.money?.toArrayString() ?: "[]")
+    retVal.put("nlp_misc", req.misc?.toArrayString() ?: "[]")
+    retVal.put("nlp_language", req.language?.toArrayString() ?: "[]")
+    retVal.put("nlp_org", req.org?.toArrayString() ?: "[]")
 
     return retVal
   }
 
-  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email' ) {
+  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email') {
     final String vtxLabel = 'Object.Data_Source'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
@@ -101,7 +101,7 @@ class FileNLPRequest implements   Serializable{
     return vtx
   }
 
-  static Map<String, Map<ORID, AtomicDouble>> upsertFileNLPRequestArray(
+  static void upsertFileNLPRequestArray(
           OrientStandardGraph graph,
           GraphTraversalSource g,
           FileNLPRequest[] reqs) {
@@ -110,8 +110,8 @@ class FileNLPRequest implements   Serializable{
       if (!trans.isOpen()) {
         trans.open()
       }
-      for (FileNLPRequest req: reqs){
-        upsertFileNLPRequest(graph,g,req);
+      for (FileNLPRequest req : reqs) {
+        upsertFileNLPRequest(graph, g, req)
       }
       trans.commit()
     } catch (Throwable t) {
@@ -138,17 +138,8 @@ class FileNLPRequest implements   Serializable{
 
     createEdge('Has_Ingestion', dataSourceVtx.name, eventGroupFileIngestionVtx.name, updateReq)
 
-    Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
-    createEdge('Has_Ingestion', eventGroupFileIngestionVtx.name, eventEmailVtx.name, updateReq)
-
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_To_Group', 'Email_To', req.toEmailAddresses)
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_From_Group', 'Email_From', req.toEmailAddresses)
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_CC_Group', 'Email_CC', req.toEmailAddresses)
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_BCC_Group', 'Email_BCC', req.toEmailAddresses)
-
-    Vertex emailBodyOrAttachmentVtx = createObjectEmailMessageBodyOrAttachmentVtx(req, updateReq)
-
-    createEdge(req.attachmentId ? 'Email_Attachment' : 'Email_Body', eventEmailVtx.name, emailBodyOrAttachmentVtx.name, updateReq)
+    Vertex eventFileVtx = createEventFileIngestionVtx(req, updateReq)
+    createEdge('Has_Ingestion', eventGroupFileIngestionVtx.name, eventFileVtx.name, updateReq)
 
 
     StringBuffer sb = new StringBuffer()
@@ -173,8 +164,8 @@ class FileNLPRequest implements   Serializable{
     Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
             percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
 
-    finalVertexIdByVertexName.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
-      createEventNLPGroups(req, it.key)
+    finalVertexIdByVertexName.get("Event.File_Ingestion").entrySet().forEach({
+      createEventNLPGroups(req, it.key, req.email)
     })
 
 
@@ -212,9 +203,9 @@ class FileNLPRequest implements   Serializable{
       } else {
         Map<ORID, AtomicDouble> newVertices = new HashMap<>()
         List<ORID> vIds = Matcher.addNewVertexFromMatchReqs(g, (String) vertexTypeStr, matchReqsForThisVertexType)
-        int vlen = vIds.size();
-        for (int v = 0; v < vlen; v++){
-          ORID vId = vIds.get(v);
+        int vlen = vIds.size()
+        for (int v = 0; v < vlen; v++) {
+          ORID vId = vIds.get(v)
           newVertices.put(vId, new AtomicDouble(maxScore))
           finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
 
@@ -232,7 +223,7 @@ class FileNLPRequest implements   Serializable{
 
     Matcher.createEdges(g, (Set<EdgeRequest>) edgeReqs, finalVertexIdByVertexName, maxScoresByVertexName)
 
-    return finalVertexIdByVertexName;
+    return finalVertexIdByVertexName
   }
 
   static Vertex createEventGroupFileIngestionVtx(UpdateReq updateReq, String groupName) {
@@ -256,46 +247,7 @@ class FileNLPRequest implements   Serializable{
     return vtx
   }
 
-  static Vertex createEmailGroupVtx(String vtxLabel, String vtxName, String email, UpdateReq updateReq) {
-    Vertex emailGroupVtx = new Vertex()
-    emailGroupVtx.label = vtxLabel
-    emailGroupVtx.name = vtxName
-    VertexProps emailGroupIngestionDateVtxProps = new VertexProps()
-    emailGroupIngestionDateVtxProps.name = "${vtxLabel}.Ingestion_Date"
-    emailGroupIngestionDateVtxProps.mandatoryInSearch = true
-    emailGroupIngestionDateVtxProps.val = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
-
-    VertexProps emailVtxProps = new VertexProps()
-    emailVtxProps.name = "${vtxLabel}.Email"
-    emailVtxProps.mandatoryInSearch = true
-    emailVtxProps.val = email
-
-    emailGroupVtx.props = [emailGroupIngestionDateVtxProps, emailVtxProps]
-
-    updateReq.vertices.push(emailGroupVtx)
-    return emailGroupVtx
-
-  }
-
-  static Vertex createEmailAddressVertex(String email, String vtxName, UpdateReq req) {
-    String emailVtxLabel = 'Object.Email_Address'
-    Vertex emailVtx = new Vertex()
-    emailVtx.label = emailVtxLabel
-    emailVtx.name = vtxName
-    VertexProps emailAddrVtxProps = new VertexProps()
-    emailAddrVtxProps.name = "${emailVtxLabel}.Email"
-    emailAddrVtxProps.mandatoryInSearch = true
-    emailAddrVtxProps.val = email
-
-    emailVtx.props = [emailAddrVtxProps]
-
-    req.vertices.push(emailVtx)
-
-    return emailVtx
-
-  }
-
-  static Set<ORID> createEventNLPGroups(FileNLPRequest req, ORID emailBodyOrAttachment,
+  static Set<ORID> createEventNLPGroups(FileNLPRequest req, ORID emailBodyOrAttachment, String[] emailAddrs,
                                         minThreshold = 1, Integer maxThreshold = 100) {
 
     String[] person = req.person
@@ -311,9 +263,6 @@ class FileNLPRequest implements   Serializable{
       cpfOptions[i] = __.has('Person.Natural.Customer_Id', P.eq(cpfs[i]))
     }
 
-
-    String[] emailAddrs = [req.email, req.toEmailAddresses,
-                           req.fromEmailAddresses, req.ccEmailAddresses, req.bccEmailAddresses].flatten()
     Traversal[] emailOptions = new Traversal[emailAddrs.length]
     for (int i = 0; i < emailAddrs.length; i++) {
       emailOptions[i] = __.has('Object.Email_Address.Email', PText.textContains(emailAddrs[i]))
@@ -326,11 +275,11 @@ class FileNLPRequest implements   Serializable{
 
     def emails = App.g.V().or(emailOptions)
 
-    Set<ORID> retVal = null;
+    Set<ORID> retVal = null
     try {
       retVal = persons.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>
 
-    }catch (Throwable t){
+    } catch (Throwable t) {
       //ignore
     }
 
@@ -373,7 +322,6 @@ class FileNLPRequest implements   Serializable{
 
     fileIngestionVtx.label = fileIngestionVtxLabel
     fileIngestionVtx.name = req.name
-
 
 
     if (req.created) {
@@ -438,72 +386,6 @@ class FileNLPRequest implements   Serializable{
 
   }
 
-
-  static Vertex createEmailNLPVertexProp(String name, String[] val, Vertex vtx) {
-    if (!val) {
-      return vtx
-    }
-    VertexProps props = new VertexProps()
-    props.name = name
-//    props.mandatoryInSearch = true;
-    props.val = val.toArrayString()
-//    props.type = VertexProps.TypeEnum._LJAVA_LANG_STRING_;
-//    props.excludeFromUpdate = true;
-//    props.postProcessor=postProcessor;
-//      props.
-    vtx.props.push(props)
-
-    return vtx
-  }
-
-  static String getObjectEmailBodyOrAttachmentVtxLabel(FileNLPRequest req) {
-    return req.attachmentId ? 'Object.Email_Message_Attachment' : 'Object.Email_Message_Body'
-  }
-
-  static Vertex createObjectEmailMessageBodyOrAttachmentVtx(FileNLPRequest req, UpdateReq updateReq) {
-    String emailVtxLabel = getObjectEmailBodyOrAttachmentVtxLabel(req)
-    Vertex emailVtx = new Vertex()
-    emailVtx.props = []
-
-    emailVtx.label = emailVtxLabel
-    emailVtx.name = emailVtxLabel //req.attachmentId ?: req.emailId
-    VertexProps emailIdVtxProps = new VertexProps()
-    emailIdVtxProps.name = "${emailVtxLabel}.Email_Id"
-    emailIdVtxProps.mandatoryInSearch = true
-    emailIdVtxProps.val = req.emailId
-
-    emailVtx.props.push(emailIdVtxProps)
-
-    if (req.attachmentId) {
-      VertexProps attachmentIdVtxProp = new VertexProps()
-      attachmentIdVtxProp.name = "${emailVtxLabel}.Attachment_Id"
-      attachmentIdVtxProp.mandatoryInSearch = true
-      attachmentIdVtxProp.val = req.attachmentId
-    }
-    if (req.attachmentContentType) {
-      VertexProps attachmentIdVtxProp = new VertexProps()
-      attachmentIdVtxProp.name = "${emailVtxLabel}.Attachment_Content_Type"
-      attachmentIdVtxProp.mandatoryInSearch = true
-      attachmentIdVtxProp.val = req.attachmentContentType
-    }
-
-
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Address", req.address, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Cred_card", req.cred_card, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Email", req.email, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Location", req.location, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Person", req.person, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Phone", req.phone, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Postcode", req.postcode, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Policy_number", req.policy_number, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Org", req.org, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_CPF", req.cpf, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Money", req.money, emailVtx)
-
-    updateReq.vertices.push(emailVtx)
-    return emailVtx
-
-  }
 
   static Edge createEdge(String edgeLabel, String fromVtxName, String toVtxName, UpdateReq req) {
     Edge edge = new Edge()

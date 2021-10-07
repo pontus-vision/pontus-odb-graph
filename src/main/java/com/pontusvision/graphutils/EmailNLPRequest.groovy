@@ -3,21 +3,16 @@ package com.pontusvision.graphutils
 import com.google.common.util.concurrent.AtomicDouble
 import com.orientechnologies.orient.core.id.ORID
 import com.pontusvision.gdpr.App
-import com.pontusvision.gdpr.mapping.Edge
 import com.pontusvision.gdpr.mapping.UpdateReq
 import com.pontusvision.gdpr.mapping.Vertex
 import com.pontusvision.gdpr.mapping.VertexProps
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
-import org.apache.tinkerpop.gremlin.process.traversal.P
-import org.apache.tinkerpop.gremlin.process.traversal.Traversal
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Transaction
 
 import java.text.SimpleDateFormat
 
-class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
+class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
 
   String attachmentContentType
@@ -42,42 +37,42 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
   static Map<String, String> getMapFromEmailNLPRequest(EmailNLPRequest req) {
     Map<String, String> retVal = [:]
 
-    retVal.put("emailSubject", req.emailSubject.toString()?:"[]")
-    retVal.put("emailId", req.emailId.toString()?:"[]")
-    retVal.put("emailUserId", req.emailUserId.toString()?:"[]")
-    retVal.put("emailFolderId", req.emailFolderId.toString()?:"[]")
-    retVal.put("emailCreatedDateTime", req.emailCreatedDateTime?.toString()?:"[]")
-    retVal.put("emailReceivedDateTime", req.emailReceivedDateTime?.toString()?:"[]")
-    retVal.put("emailSentDateTime", req.emailSentDateTime?.toString()?:"[]")
-    retVal.put("fromEmailAddresses", req.fromEmailAddresses?.toString()?:"[]")
-    retVal.put("fromEmailNames", req.fromEmailNames?.toString()?:"[]")
-    retVal.put("toEmailAddresses", req.toEmailAddresses?.toArrayString()?:"[]")
-    retVal.put("toEmailNames", req.toEmailNames?.toArrayString()?:"[]")
-    retVal.put("metadataController", req.metadataController?.toString()?:"[]")
-    retVal.put("metadataGDPRStatus", req.metadataGDPRStatus?.toString()?:"[]")
-    retVal.put("metadataLineage", req.metadataLineage?.toString()?:"[]")
-    retVal.put("pg_currDate", req.pg_currDate?.toString()?:"[]")
-    retVal.put("pg_content", req.pg_content?.toString()?:"[]")
-    retVal.put("nlp_location", req.location?.toArrayString()?:"[]")
-    retVal.put("nlp_person", req.person?.toArrayString()?:"[]")
-    retVal.put("nlp_phone", req.phone?.toArrayString()?:"[]")
-    retVal.put("nlp_postcode", req.postcode?.toArrayString()?:"[]")
-    retVal.put("nlp_policy_number", req.policy_number?.toArrayString()?:"[]")
-    retVal.put("nlp_nationality", req.nationality?.toArrayString()?:"[]")
-    retVal.put("nlp_address", req.address?.toArrayString()?:"[]")
-    retVal.put("nlp_cred_card", req.cred_card?.toString()?:"[]")
-    retVal.put("bccEmailAddresses", req.bccEmailAddresses?.toArrayString()?:"[]")
-    retVal.put("bccEmailNames", req.bccEmailNames?.toArrayString()?:"[]")
-    retVal.put("categories", req.categories?.toArrayString()?:"[]")
-    retVal.put("ccEmailAddresses", req.ccEmailAddresses?.toArrayString()?:"[]")
-    retVal.put("ccEmailNames", req.ccEmailNames?.toArrayString()?:"[]")
-    retVal.put("nlp_email", req.email?.toArrayString()?:"[]")
-    retVal.put("nlp_date", req.date?.toArrayString()?:"[]")
-    retVal.put("nlp_time", req.time?.toArrayString()?:"[]")
-    retVal.put("nlp_money", req.money?.toArrayString()?:"[]")
-    retVal.put("nlp_misc", req.misc?.toArrayString()?:"[]")
-    retVal.put("nlp_language", req.language?.toArrayString()?:"[]")
-    retVal.put("nlp_org", req.org?.toArrayString()?:"[]")
+    retVal.put("emailSubject", req.emailSubject.toString() ?: "[]")
+    retVal.put("emailId", req.emailId.toString() ?: "[]")
+    retVal.put("emailUserId", req.emailUserId.toString() ?: "[]")
+    retVal.put("emailFolderId", req.emailFolderId.toString() ?: "[]")
+    retVal.put("emailCreatedDateTime", req.emailCreatedDateTime?.toString() ?: "[]")
+    retVal.put("emailReceivedDateTime", req.emailReceivedDateTime?.toString() ?: "[]")
+    retVal.put("emailSentDateTime", req.emailSentDateTime?.toString() ?: "[]")
+    retVal.put("fromEmailAddresses", req.fromEmailAddresses?.toString() ?: "[]")
+    retVal.put("fromEmailNames", req.fromEmailNames?.toString() ?: "[]")
+    retVal.put("toEmailAddresses", req.toEmailAddresses?.toArrayString() ?: "[]")
+    retVal.put("toEmailNames", req.toEmailNames?.toArrayString() ?: "[]")
+    retVal.put("metadataController", req.metadataController?.toString() ?: "[]")
+    retVal.put("metadataGDPRStatus", req.metadataGDPRStatus?.toString() ?: "[]")
+    retVal.put("metadataLineage", req.metadataLineage?.toString() ?: "[]")
+    retVal.put("pg_currDate", req.pg_currDate?.toString() ?: "[]")
+    retVal.put("pg_content", req.pg_content?.toString() ?: "[]")
+    retVal.put("nlp_location", req.location?.toArrayString() ?: "[]")
+    retVal.put("nlp_person", req.person?.toArrayString() ?: "[]")
+    retVal.put("nlp_phone", req.phone?.toArrayString() ?: "[]")
+    retVal.put("nlp_postcode", req.postcode?.toArrayString() ?: "[]")
+    retVal.put("nlp_policy_number", req.policy_number?.toArrayString() ?: "[]")
+    retVal.put("nlp_nationality", req.nationality?.toArrayString() ?: "[]")
+    retVal.put("nlp_address", req.address?.toArrayString() ?: "[]")
+    retVal.put("nlp_cred_card", req.cred_card?.toString() ?: "[]")
+    retVal.put("bccEmailAddresses", req.bccEmailAddresses?.toArrayString() ?: "[]")
+    retVal.put("bccEmailNames", req.bccEmailNames?.toArrayString() ?: "[]")
+    retVal.put("categories", req.categories?.toArrayString() ?: "[]")
+    retVal.put("ccEmailAddresses", req.ccEmailAddresses?.toArrayString() ?: "[]")
+    retVal.put("ccEmailNames", req.ccEmailNames?.toArrayString() ?: "[]")
+    retVal.put("nlp_email", req.email?.toArrayString() ?: "[]")
+    retVal.put("nlp_date", req.date?.toArrayString() ?: "[]")
+    retVal.put("nlp_time", req.time?.toArrayString() ?: "[]")
+    retVal.put("nlp_money", req.money?.toArrayString() ?: "[]")
+    retVal.put("nlp_misc", req.misc?.toArrayString() ?: "[]")
+    retVal.put("nlp_language", req.language?.toArrayString() ?: "[]")
+    retVal.put("nlp_org", req.org?.toArrayString() ?: "[]")
 
     return retVal
   }
@@ -91,8 +86,8 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
       if (!trans.isOpen()) {
         trans.open()
       }
-      for (EmailNLPRequest req: reqs){
-        upsertEmailNLPRequest(graph,g,req);
+      for (EmailNLPRequest req : reqs) {
+        upsertEmailNLPRequest(graph, g, req)
       }
       trans.commit()
     } catch (Throwable t) {
@@ -153,9 +148,10 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
 
     Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
             percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
-
+    String[] emailAddrs = [req.email, req.toEmailAddresses,
+                           req.fromEmailAddresses, req.ccEmailAddresses, req.bccEmailAddresses].flatten()
     finalVertexIdByVertexName.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
-      createEventNLPGroups(req, it.key)
+      createEventNLPGroups(req, it.key, emailAddrs)
     })
 
 
@@ -217,77 +213,6 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
 
     return emailVtx
 
-  }
-
-  static Set<ORID> createEventNLPGroups(EmailNLPRequest req, ORID emailBodyOrAttachment,
-                                         minThreshold = 1, Integer maxThreshold = 100) {
-
-    String[] person = req.person
-
-    Traversal[] personOptions = new Traversal[person.length]
-    for (int i = 0; i < person.length; i++) {
-      personOptions[i] = __.has('Person.Natural.Full_Name', PText.textContains(person[i]))
-    }
-
-    String[] cpfs = req.cpf
-    Traversal[] cpfOptions = new Traversal[cpfs.length]
-    for (int i = 0; i < cpfs.length; i++) {
-      cpfOptions[i] = __.has('Person.Natural.Customer_Id', P.eq(cpfs[i]))
-    }
-
-
-    String[] emailAddrs = [req.email, req.toEmailAddresses,
-                           req.fromEmailAddresses, req.ccEmailAddresses, req.bccEmailAddresses].flatten()
-    Traversal[] emailOptions = new Traversal[emailAddrs.length]
-    for (int i = 0; i < emailAddrs.length; i++) {
-      emailOptions[i] = __.has('Object.Email_Address.Email', PText.textContains(emailAddrs[i]))
-    }
-    Traversal[] personNameCpfOptions = [personOptions, cpfOptions].flatten().toArray(new Traversal[0])
-
-    def persons = (App.g.V().or(personNameCpfOptions))
-
-    GraphTraversal personsClone = persons.clone() as GraphTraversal
-
-    def emails = App.g.V().or(emailOptions)
-
-    Set<ORID> retVal = null;
-    try {
-      retVal = persons.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>
-
-    }catch (Throwable t){
-      //ignore
-    }
-
-    if (!retVal || retVal.size() <= minThreshold) {
-      retVal = personsClone.id().toSet() as Set<ORID>
-    }
-    String currDate = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
-
-    int count = 0
-    for (ORID orid : retVal) {
-
-      String custId = App.g.V(orid).properties('Person.Natural.Customer_Id').next().toString()
-      def nlpGroupTrav =
-              App.g.V().has('Event.NLP_Group.Person_Id', custId)
-                      .has('Event.NLP_Group.Ingestion_Date', currDate)
-
-      def nlpGroupVtxId
-      if (nlpGroupTrav.hasNext()) {
-        nlpGroupVtxId = nlpGroupTrav.id().next()
-      } else {
-        nlpGroupVtxId = App.g.addV('Event.NLP_Group')
-                .property('Event.NLP_Group.Person_Id', custId)
-                .property('Event.NLP_Group.Ingestion_Date', currDate).id().next()
-      }
-
-      App.g.addE('Has_NLP_Events').from(App.g.V(emailBodyOrAttachment)).to(App.g.V(nlpGroupVtxId))
-      App.g.addE('Has_NLP_Events').from(App.g.V(nlpGroupVtxId)).to(App.g.V(orid))
-      count++
-      if (count >= maxThreshold) {
-        break
-      }
-    }
-    return retVal
   }
 
   static Vertex createEventEmailMessageVtx(EmailNLPRequest req, UpdateReq updateReq) {
@@ -444,6 +369,7 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
 
     return updateReq
   }
+
   String getMetadataController() {
     return metadataController
   }
@@ -635,6 +561,7 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
   void setAttachmentId(String attachmentId) {
     this.attachmentId = attachmentId
   }
+
   String[] getCnpj() {
     return cnpj
   }
@@ -642,6 +569,7 @@ class EmailNLPRequest extends  FileNLPRequest implements   Serializable{
   void setCnpj(String[] cnpj) {
     this.cnpj = cnpj
   }
+
   String getEmailSubject() {
     return emailSubject
   }
