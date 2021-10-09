@@ -816,7 +816,7 @@ public class PVTest extends AppTest {
       String personNaturalEdgesCount =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
                       ".bothE().count().next().toString()").get().toString();
-      assertEquals("7", personNaturalEdgesCount, "????");
+      assertEquals("6", personNaturalEdgesCount, "????");
 
 
       String locationAddressDescription =
