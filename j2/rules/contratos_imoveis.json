@@ -17,6 +17,7 @@
             "name": "Person.Natural.Full_Name",
             "val": "${pg_nlp_res_person}",
             "predicate": "textContainsFuzzy",
+            "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
             "postProcessor": "${it?.toUpperCase()?.trim()}"
           }
@@ -52,21 +53,25 @@
           {
             "name": "Event.Ingestion.Type",
             "val": "PDF Form Files",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
             "val": "Unstructured Data Insertion",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -82,11 +87,13 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Contratos em AWS S3"
+            "val": "Contratos em AWS S3",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "Structured"
+            "val": "Structured",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -111,12 +118,14 @@
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }

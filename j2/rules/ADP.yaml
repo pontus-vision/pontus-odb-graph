@@ -7,11 +7,14 @@ updatereq:
       props:
         - name: Person.Natural.Full_Name
           val: ${Nome?.trim().toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Natural.Type
           val: colaborador
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Customer_ID
           val: ${CPF?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
         - name: Person.Natural.Date_Of_Birth
           val: ${Data_de_Nascimento_Idade?.trim()}
           predicate: eq
@@ -22,10 +25,14 @@ updatereq:
       props:
         - name: Person.Employee.ID
           val: ${CPF?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
         - name: Person.Employee.Role
           val: ${(Cargo?.trim()?.length()>0)?Cargo:'Cargo não definido'} - ${Funcao?.trim()?.length()>0?Funcao:'Função não definida'}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Person.Employee.Full_Name
           val: ${Nome?.trim().toUpperCase()}
+          mandatoryInSearch: True
     
     - label: Person.Natural
       name: responsavel
@@ -33,8 +40,10 @@ updatereq:
       props:
         - name: Person.Natural.Full_Name
           val: ${Nome_do_Responsavel_Legal?.trim().toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Natural.Customer_ID
           val: ${CPF_Responsavel?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
     
     - label: Object.Identity_Card
       name: cpf_responsavel
@@ -45,6 +54,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Person.Natural
@@ -53,11 +63,14 @@ updatereq:
       props:
         - name: Person.Natural.Full_Name
           val: ${Nome_do_Coordenador?.trim().toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Natural.Type
           val: colaborador
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Customer_ID
           val: ${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
     
     - label: Object.Identity_Card
       name: cpf_coordenador
@@ -68,6 +81,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Identity_Card
@@ -78,6 +92,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Email_Address
@@ -85,28 +100,35 @@ updatereq:
       props:
         - name: Object.Email_Address.Email
           val: ${Email?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
     
     - label: Location.Address
       props:
         - name: Location.Address.Full_Address
           val: ${Tipo_Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}
+          mandatoryInSearch: True
         - name: Location.Address.Type
           val: ${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
           val: ADP
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Domain_b64
           val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Create_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -117,8 +139,10 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: Dados ADP RH de Colaboradores
+          mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: Structured
+          mandatoryInSearch: True
     
     - label: Event.Group_Ingestion
       props:
@@ -133,10 +157,12 @@ updatereq:
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Metadata_End_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -146,11 +172,14 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telefone}
+          mandatoryInSearch: True
         - name: Object.Phone_Number.Type
           val: Telefone Fixo
+          mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Phone_Number.Last_7_Digits
           val: ${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
@@ -162,11 +191,14 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telefone_Comercial}
+          mandatoryInSearch: True
         - name: Object.Phone_Number.Type
           val: Telefone Comercial
+          mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telefone_Comercial?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Phone_Number.Last_7_Digits
           val: ${(((Telefone_Comercial?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}

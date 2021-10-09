@@ -14,6 +14,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Organisation.Type
           val: Fornecedor
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Organisation.Id
           val: ${A2_CGC.replaceAll('[^0-9]','')}
@@ -28,8 +29,10 @@ updatereq:
           mandatoryInSearch: True
         - name: Location.Address.Description
           val: endereco fornecedor
+          mandatoryInSearch: True
         - name: Location.Address.Type
           val: business
+          mandatoryInSearch: True
     
     - label: Location.Address
       name: residence_addr
@@ -40,8 +43,10 @@ updatereq:
           mandatoryInSearch: True
         - name: Location.Address.Description
           val: endereco fornecedor
+          mandatoryInSearch: True
         - name: Location.Address.Type
           val: residence
+          mandatoryInSearch: True
     
     - label: Person.Natural
       name: rep
@@ -52,6 +57,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Natural.Type
           val: fornecedor
+          mandatoryInSearch: True
     
     - label: Object.Identity_Card
       name: RG
@@ -62,6 +68,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: RG
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Identity_Card
@@ -73,6 +80,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CNPJ
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Identity_Card
@@ -84,6 +92,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Phone_Number
@@ -92,11 +101,14 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${A2_REPRTEL}
+          mandatoryInSearch: True
         - name: Object.Phone_Number.Type
           val: Office
+          mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
         - name: Object.Phone_Number.Last_7_Digits
@@ -110,24 +122,30 @@ updatereq:
       props:
         - name: Object.Email_Address.Email
           val: ${A2_REPR_EM?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
           val: totvs/protheus/sa2_fornecedor
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Domain_b64
           val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Create_Date
           val: ${firstUpdate}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Update_Date
           val: ${lastUpdate}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -144,10 +162,12 @@ updatereq:
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Metadata_End_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -155,10 +175,13 @@ updatereq:
       props:
         - name: Object.Data_Source.Name
           val: totvs/protheus/sa2_fornecedor
+          mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: totvs/protheus/sa2_fornecedor
+          mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: Registros de Fornecedores no protheus/Totvs
+          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event

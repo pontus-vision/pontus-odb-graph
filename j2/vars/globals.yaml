@@ -535,6 +535,7 @@ schema:
         - name: NLP_Date
         - name: NLP_Time
         - name: NLP_CPF
+        - name: Size_Bytes
 
     - name: "Object.Email_Message_Body"
       partition: false
@@ -561,6 +562,7 @@ schema:
         - name: NLP_Date
         - name: NLP_Time
         - name: NLP_CPF
+        - name: Size_Bytes
 
 
 

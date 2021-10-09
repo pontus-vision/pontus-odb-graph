@@ -77,7 +77,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     return retVal
   }
 
-  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequestArray(
+  static void upsertEmailNLPRequestArray(
           OrientStandardGraph graph,
           GraphTraversalSource g,
           EmailNLPRequest[] reqs) {
@@ -108,9 +108,10 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
     updateReq.edges = []
+    String dataSourceName = "Office365/email"
 
-    Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq)
-    Vertex eventEmailMessageGroupVtx = createEventEmailMessageGroupVtx(updateReq)
+    Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
+    Vertex eventEmailMessageGroupVtx = createEventGroupIngestionVtx(updateReq, dataSourceName,"Event.Email_Msg_Group")
 
     createEdge('Has_Ingestion', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
 
@@ -158,23 +159,6 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     return finalVertexIdByVertexName
   }
 
-
-  static Vertex createEventEmailMessageGroupVtx(UpdateReq updateReq) {
-
-    final String vtxLabel = 'Event.Email_Msg_Group'
-    Vertex vtx = new Vertex()
-    vtx.label = vtxLabel
-    vtx.name = vtxLabel
-    VertexProps vtxProps = new VertexProps()
-    vtxProps.name = "${vtxLabel}.Ingestion_Date"
-    vtxProps.mandatoryInSearch = true
-    vtxProps.val = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
-
-    vtx.props = [vtxProps]
-
-    updateReq.vertices.push(vtx)
-    return vtx
-  }
 
   static Vertex createEmailGroupVtx(String vtxLabel, String vtxName, String email, UpdateReq updateReq) {
     Vertex emailGroupVtx = new Vertex()
@@ -325,12 +309,24 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
       attachmentIdVtxProp.name = "${emailVtxLabel}.Attachment_Id"
       attachmentIdVtxProp.mandatoryInSearch = true
       attachmentIdVtxProp.val = req.attachmentId
+      emailVtx.props.push(attachmentIdVtxProp)
+
     }
     if (req.attachmentContentType) {
       VertexProps attachmentIdVtxProp = new VertexProps()
       attachmentIdVtxProp.name = "${emailVtxLabel}.Attachment_Content_Type"
       attachmentIdVtxProp.mandatoryInSearch = true
       attachmentIdVtxProp.val = req.attachmentContentType
+      emailVtx.props.push(attachmentIdVtxProp)
+
+    }
+    if (req.sizeBytes) {
+      VertexProps attachmentIdVtxProp = new VertexProps()
+      attachmentIdVtxProp.name = "${emailVtxLabel}.Size_Bytes"
+      attachmentIdVtxProp.mandatoryInSearch = true
+      attachmentIdVtxProp.val = req.sizeBytes.toString()
+      emailVtx.props.push(attachmentIdVtxProp)
+
     }
 
 
@@ -370,181 +366,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     return updateReq
   }
 
-  String getMetadataController() {
-    return metadataController
-  }
 
-  void setMetadataController(String metadataController) {
-    this.metadataController = metadataController
-  }
-
-  String getMetadataGDPRStatus() {
-    return metadataGDPRStatus
-  }
-
-  void setMetadataGDPRStatus(String metadataGDPRStatus) {
-    this.metadataGDPRStatus = metadataGDPRStatus
-  }
-
-  String getMetadataLineage() {
-    return metadataLineage
-  }
-
-  void setMetadataLineage(String metadataLineage) {
-    this.metadataLineage = metadataLineage
-  }
-
-  String getPg_currDate() {
-    return pg_currDate
-  }
-
-  void setPg_currDate(String pg_currDate) {
-    this.pg_currDate = pg_currDate
-  }
-
-  String getPg_content() {
-    return pg_content
-  }
-
-  void setPg_content(String pg_content) {
-    this.pg_content = pg_content
-  }
-
-  String[] getAddress() {
-    return address
-  }
-
-  void setAddress(String[] address) {
-    this.address = address
-  }
-
-  String[] getCred_card() {
-    return cred_card
-  }
-
-  void setCred_card(String[] cred_card) {
-    this.cred_card = cred_card
-  }
-
-  String[] getEmail() {
-    return email
-  }
-
-  void setEmail(String[] email) {
-    this.email = email
-  }
-
-  String[] getLocation() {
-    return location
-  }
-
-  void setLocation(String[] location) {
-    this.location = location
-  }
-
-  String[] getPerson() {
-    return person
-  }
-
-  void setPerson(String[] person) {
-    this.person = person
-  }
-
-  String[] getPhone() {
-    return phone
-  }
-
-  void setPhone(String[] phone) {
-    this.phone = phone
-  }
-
-  String[] getPostcode() {
-    return postcode
-  }
-
-  void setPostcode(String[] postcode) {
-    this.postcode = postcode
-  }
-
-  String[] getPolicy_number() {
-    return policy_number
-  }
-
-  void setPolicy_number(String[] policy_number) {
-    this.policy_number = policy_number
-  }
-
-  String[] getOrg() {
-    return org
-  }
-
-  void setOrg(String[] org) {
-    this.org = org
-  }
-
-  String[] getNationality() {
-    return nationality
-  }
-
-  void setNationality(String[] nationality) {
-    this.nationality = nationality
-  }
-
-  String[] getLanguage() {
-    return language
-  }
-
-  void setLanguage(String[] language) {
-    this.language = language
-  }
-
-  String[] getMisc() {
-    return misc
-  }
-
-  void setMisc(String[] misc) {
-    this.misc = misc
-  }
-
-  String[] getMoney() {
-    return money
-  }
-
-  void setMoney(String[] money) {
-    this.money = money
-  }
-
-  String[] getDate() {
-    return date
-  }
-
-  void setDate(String[] date) {
-    this.date = date
-  }
-
-  String[] getTime() {
-    return time
-  }
-
-  void setTime(String[] time) {
-    this.time = time
-  }
-
-  String[] getCategories() {
-    return categories
-  }
-
-  void setCategories(String[] categories) {
-    this.categories = categories
-  }
-
-  String[] getCpf() {
-    return cpf
-  }
-
-  void setCpf(String[] cpf) {
-    this.cpf = cpf
-  }
 
   String getAttachmentContentType() {
     return attachmentContentType
@@ -562,13 +384,6 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     this.attachmentId = attachmentId
   }
 
-  String[] getCnpj() {
-    return cnpj
-  }
-
-  void setCnpj(String[] cnpj) {
-    this.cnpj = cnpj
-  }
 
   String getEmailSubject() {
     return emailSubject

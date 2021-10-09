@@ -30,6 +30,17 @@ Event.Email_BCC_Group.Ingestion_Date
 Event.Email_BCC_Group.Email
 Event.NLP_Group.Ingestion_Date
 Event.NLP_Group.Person_Id
+Event.File_Group_Ingestion.Ingestion_Date
+Event.File_Group_Ingestion.Group_Name
+Event.File_Ingestion.Metadata_Create_Date
+Event.File_Ingestion.Created
+Event.File_Ingestion.File_Type
+Event.File_Ingestion.Last_Access
+Event.File_Ingestion.Name
+Event.File_Ingestion.Owner
+Event.File_Ingestion.Path
+Event.File_Ingestion.Server
+Event.File_Ingestion.SizeBytes
 Event.Email_Message.Business_Rules
 Event.Email_Message.Domain_Unstructured_Data_b64
 Event.Email_Message.Domain_b64

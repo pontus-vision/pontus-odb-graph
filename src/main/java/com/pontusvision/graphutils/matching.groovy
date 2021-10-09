@@ -1062,9 +1062,18 @@ class Matcher {
     static String ingestEmail(String jsonString, String jsonPath, String ruleName){
         EmailNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
 
-        return EmailNLPRequest.upsertEmailNLPRequestArray(App.graph,App.g,recordList).toString();
+        EmailNLPRequest.upsertEmailNLPRequestArray(App.graph,App.g,recordList)
+
+        return "Success";
     }
 
+    static String ingestFile(String jsonString, String jsonPath, String ruleName){
+        EmailNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
+
+        EmailNLPRequest.upsertFileNLPRequestArray(App.graph,App.g,recordList)
+
+        return "Success";
+    }
     static String ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g,
                                              String jsonString,
                                              String jsonPath,

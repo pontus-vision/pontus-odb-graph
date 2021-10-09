@@ -7,10 +7,13 @@ updatereq:
       props:
         - name: Person.Natural.Full_Name
           val: ${A1_NOME?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Natural.Full_Name_fuzzy
           val: ${A1_NOME?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Natural.Type
           val: Clientes
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Customer_ID
           val: ${A1_CGC.replaceAll('[^0-9]','')}
@@ -25,16 +28,20 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Organisation.Name
           val: ${A1_NOME?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
     
     - label: Object.Phone_Number
       props:
         - name: Object.Phone_Number.Raw
           val: ${A1_TEL}
+          mandatoryInSearch: True
         - name: Object.Phone_Number.Type
           val: Office
+          mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
         - name: Object.Phone_Number.Last_7_Digits
@@ -51,6 +58,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: RG
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Identity_Card
@@ -62,20 +70,24 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Email_Address
       props:
         - name: Object.Email_Address.Email
           val: ${A1_EMAIL?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
     
     - label: Location.Address
       condition: ${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Location.Address.Full_Address
           val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: True
         - name: Location.Address.Type
           val: Business
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Location.Address
@@ -83,27 +95,34 @@ updatereq:
       props:
         - name: Location.Address.Full_Address
           val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: True
         - name: Location.Address.Type
           val: Residence
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
           val: totvs/protheus/sa1_clientes
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Domain_b64
           val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Create_Date
           val: ${firstUpdate}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Update_Date
           val: ${lastUpdate}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -120,10 +139,12 @@ updatereq:
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Metadata_End_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -131,10 +152,13 @@ updatereq:
       props:
         - name: Object.Data_Source.Name
           val: totvs/protheus/sa1_clientes
+          mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: totvs/protheus/sa1_clientes
+          mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: Registros de Clientes no protheus/Totvs
+          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event

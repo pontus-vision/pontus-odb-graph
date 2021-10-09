@@ -14,11 +14,13 @@
           {
             "name": "Person.Natural.Type",
             "val": "Colaborador",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Gender",
-            "val": "${RA_SEXO}"
+            "val": "${RA_SEXO}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Customer_ID",
@@ -39,11 +41,13 @@
           },
           {
             "name": "Location.Address.Description",
-            "val": "moradia principal"
+            "val": "moradia principal",
+            "mandatoryInSearch": true
           },
           {
             "name": "Location.Address.Type",
-            "val": "home"
+            "val": "home",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -59,11 +63,13 @@
           },
           {
             "name": "Person.Natural.Type",
-            "val": "colaborador-pais"
+            "val": "colaborador-pais",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Gender",
-            "val": "F"
+            "val": "F",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -79,15 +85,18 @@
           },
           {
             "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${RA_PAI?.trim()?.toUpperCase()}"
+            "val": "${RA_PAI?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
-            "val": "colaborador-pais"
+            "val": "colaborador-pais",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Gender",
-            "val": "M"
+            "val": "M",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -98,16 +107,19 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${RA_TELEFON}"
+            "val": "${RA_TELEFON}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Phone_Number.Type",
             "val": "Office",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(RA_TELEFON?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
@@ -132,6 +144,7 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "RG",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -149,6 +162,7 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "CPF",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -166,6 +180,7 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "CNPJ",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -177,11 +192,13 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${RA_EMAIL.trim()?.toLowerCase()}"
+            "val": "${RA_EMAIL.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Email_Address.Type",
-            "val": "${(RA_EMAIL.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
+            "val": "${(RA_EMAIL.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -192,11 +209,13 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${RA_EMAIL2?.trim()?.toLowerCase()}"
+            "val": "${RA_EMAIL2?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Email_Address.Type",
-            "val": "${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
+            "val": "${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -206,27 +225,32 @@
           {
             "name": "Event.Ingestion.Type",
             "val": "totvs/protheus/sra_funcionarios",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
             "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
             "val": "${firstUpdate}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Update_Date",
             "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -253,12 +277,14 @@
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -269,15 +295,18 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "totvs/protheus/sra_funcionarios"
+            "val": "totvs/protheus/sra_funcionarios",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "totvs/protheus/sra_funcionarios"
+            "val": "totvs/protheus/sra_funcionarios",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Funcionarios no protheus/Totvs"
+            "val": "Registros de Funcionarios no protheus/Totvs",
+            "mandatoryInSearch": true
           }
         ]
       }

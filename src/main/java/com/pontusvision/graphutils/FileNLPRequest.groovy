@@ -134,7 +134,7 @@ class FileNLPRequest implements Serializable {
     updateReq.edges = []
     String dataSourceName = "file_server_${req.server}"
     Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
-    Vertex eventGroupFileIngestionVtx = createEventGroupFileIngestionVtx(updateReq, dataSourceName)
+    Vertex eventGroupFileIngestionVtx = createEventGroupIngestionVtx(updateReq, dataSourceName)
 
     createEdge('Has_Ingestion', dataSourceVtx.name, eventGroupFileIngestionVtx.name, updateReq)
 
@@ -226,9 +226,9 @@ class FileNLPRequest implements Serializable {
     return finalVertexIdByVertexName
   }
 
-  static Vertex createEventGroupFileIngestionVtx(UpdateReq updateReq, String groupName) {
+  static Vertex createEventGroupIngestionVtx(UpdateReq updateReq, String groupName,
+                                             final String vtxLabel = 'Event.File_Group_Ingestion') {
 
-    final String vtxLabel = 'Event.File_Group_Ingestion'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
     vtx.name = vtxLabel
@@ -375,8 +375,7 @@ class FileNLPRequest implements Serializable {
     }
     if (req.sizeBytes) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.SizeBytes"
-      props.type = VertexProps.TypeEnum.JAVA_LANG_DOUBLE
+      props.name = "${fileIngestionVtxLabel}.Size_Bytes"
       props.mandatoryInSearch = true
       props.val = req.sizeBytes.toString()
       fileIngestionVtx.props.push(props)

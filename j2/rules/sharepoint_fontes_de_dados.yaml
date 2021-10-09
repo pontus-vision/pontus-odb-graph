@@ -7,10 +7,13 @@ updatereq:
       props:
         - name: Object.Data_Source.Name
           val: sharepoint/fontes-de-dados
+          mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: sharepoint/fontes-de-dados
+          mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: Registros das Fontes de Dados LGPD
+          mandatoryInSearch: True
     
     - label: Object.Data_Source
       name: fontes_de_dados
@@ -21,24 +24,31 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Engine
           val: ${Sistema}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Type
           val: ${Tipo_x0020_Sistema}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Domain
           val: ${Tabela}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.URI_Delete
           val: ${URL_x0020_Prefixo_x0020_Delete}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.URI_Update
           val: ${URL_x0020_Prefixo_x0020_Update}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.URI_Read
           val: ${URL_x0020_Prefixo_x0020_Read}
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Data_Policy
@@ -57,19 +67,24 @@ updatereq:
       props:
         - name: Event.Ingestion.Type
           val: sharepoint/fontes-de-dados
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Domain_b64
           val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Create_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Update_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -77,10 +92,12 @@ updatereq:
       props:
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Metadata_End_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Type

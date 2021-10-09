@@ -56,6 +56,32 @@ public class Ingestion {
   }
 
   @POST
+  @Path("pv_file_json_obj_array")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public String pvFileJsonObjArray(IngestionJsonObjArrayRequest request) throws ExecutionException, InterruptedException {
+
+
+//    Map<String, Object> bindings = new HashMap() {{
+//      put("jsonString", request.jsonString);
+//      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
+//      put("ruleName", request.ruleName);
+//    }};
+
+
+    String res = com.pontusvision.graphutils.Matcher.ingestFile(
+        request.jsonString,
+        request.jsonPath,
+        request.ruleName);
+
+//    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
+//        bindings).get().toString();
+    return res;
+
+  }
+
+
+  @POST
   @Path("json_obj_array")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
@@ -70,6 +96,12 @@ public class Ingestion {
 
     if ("pv_email".equalsIgnoreCase(request.ruleName)){
       return com.pontusvision.graphutils.Matcher.ingestEmail(
+          request.jsonString,
+          request.jsonPath,
+          request.ruleName);
+    }
+    else if ("pv_file".equalsIgnoreCase(request.ruleName)){
+      return com.pontusvision.graphutils.Matcher.ingestFile(
           request.jsonString,
           request.jsonPath,
           request.ruleName);

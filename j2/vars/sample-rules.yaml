@@ -15,7 +15,7 @@ rules:
           Date_Of_Birth:
             val: "${pg_DATA_NASCIMENTO}"
             type: "java.util.Date"
-            mandatoryInSearch: true
+#            mandatoryInSearch: true
             predicate: "eq"
 
       #CONSENTIMENTO
@@ -38,9 +38,8 @@ rules:
 
       - label: Object.Identity_Card
         props:
-          Id_Value:
-            val: "${pg_CPF.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${pg_CPF.replaceAll('[^0-9]','')}"
+#            mandatoryInSearch: true
 
           Id_Type:
             val: "CPF"
@@ -120,7 +119,7 @@ rules:
           Date_Of_Birth:
             val: "${DateofBirth}"
             type: "java.util.Date"
-            mandatoryInSearch: true
+#            mandatoryInSearch: true
             predicate: "eq"
           Gender: "${Sex}"
 
@@ -180,7 +179,7 @@ rules:
           Natural.Date_Of_Birth:
             val: "${pg_DATA_NASCIMENTO}"
             type: "java.util.Date"
-            mandatoryInSearch: true
+#            mandatoryInSearch: true
             predicate: "eq"
 
 
@@ -199,7 +198,7 @@ rules:
             type: "[Ljava.lang.String;"
           Last_7_Digits:
             val: "${(((pg_CELULAR?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
+#            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       #CPF
@@ -207,7 +206,7 @@ rules:
         props:
           Id_Value:
             val: "${pg_CPF.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+#            mandatoryInSearch: true
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
@@ -295,7 +294,7 @@ rules:
             type: "[Ljava.lang.String;"
           Last_7_Digits:
             val: "${(((pg_TELEFONE?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
+#            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       #CONSENTIMENTO
@@ -334,9 +333,9 @@ rules:
             val: "Lead"
             excludeFromSearch: true
 
-          Code:
-            val: "{pg_IMOVEL_INTERESSE}"
-            mandatoryInSearch: true
+          Code: "{pg_IMOVEL_INTERESSE}"
+#            val: "{pg_IMOVEL_INTERESSE}"
+#            mandatoryInSearch: true
 
       - label: Event.Transaction
         props:
