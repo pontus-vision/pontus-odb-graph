@@ -74,7 +74,7 @@
         "props": [
           {
             "name": "Object.Sensitive_Data.Description",
-            "val": "${DadosPessoais}",
+            "val": "${new groovy.json.JsonBuilder(DadosPessoais)}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
             "postProcessor": "${it?.toUpperCase()?.trim()}"

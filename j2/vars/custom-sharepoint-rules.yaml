@@ -168,7 +168,7 @@ rules:
       - label: Object.Sensitive_Data
         props:
           Description:
-            val: "${DadosPessoais}"
+            val: "${new groovy.json.JsonBuilder(DadosPessoais)}"
             type: "[Ljava.lang.String;"
             mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
@@ -409,7 +409,7 @@ rules:
       - label: Object.Sensitive_Data
         props:
           Description:
-            val: "${Dados_x0020_pessoais_x0020_utili}"
+            val: "${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}"
             type: "[Ljava.lang.String;"
             mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
@@ -417,7 +417,7 @@ rules:
       - label: Object.Lawful_Basis
         props:
           Description:
-            val: "${Base_x0020_legal}"
+            val: "${new groovy.json.JsonBuilder(Base_x0020_legal)}"
             type: "[Ljava.lang.String;"
             mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"

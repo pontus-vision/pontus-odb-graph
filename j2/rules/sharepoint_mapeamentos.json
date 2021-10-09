@@ -100,7 +100,7 @@
         "props": [
           {
             "name": "Object.Sensitive_Data.Description",
-            "val": "${Dados_x0020_pessoais_x0020_utili}",
+            "val": "${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
             "postProcessor": "${it?.toUpperCase()?.trim()}"
@@ -112,7 +112,7 @@
         "props": [
           {
             "name": "Object.Lawful_Basis.Description",
-            "val": "${Base_x0020_legal}",
+            "val": "${new groovy.json.JsonBuilder(Base_x0020_legal)}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
             "postProcessor": "${it?.toUpperCase()?.trim()}"
