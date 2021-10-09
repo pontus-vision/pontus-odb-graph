@@ -240,6 +240,21 @@ public class PVTest extends AppTest {
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(expectedDataPolicyCount, countDataPolicy);
 
+//      String userId =
+//              App.executor.eval("App.g.V().has('Object.Sensitive_Data.Description', eq('TELEFONE'))\n" +
+//                      ".next().id().toString()").get().toString();
+//      String sensitiveDataConnectionsQuery = "App.g.V(\"" + userId + "\").bothE().count().next().toString()";
+//      String sensitiveDataConnections = App.executor.eval(sensitiveDataConnectionsQuery).get().toString();
+//      assertEquals("1", sensitiveDataConnections);
+//
+//      String userId1 =
+//              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('CRM-Contatos'))\n" +
+//                      ".next().id().toString()").get().toString();
+//
+//      String userId2 =
+//              App.executor.eval("App.g.V().has('Object.Data_Source.Domain', eq('Users'))\n" +
+//                      ".next().id().toString()").get().toString();
+
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -737,7 +752,7 @@ public class PVTest extends AppTest {
   @CsvSource({
       "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   sharepoint/mapeamento-de-processos",
   })
-  public void test00014SharepointDataSources(String jsonFile, String ruleName, String dataSourceName) throws InterruptedException {
+  public void test00014SharepointProcessMapping(String jsonFile, String ruleName, String dataSourceName) throws InterruptedException {
     try {
 //      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
 //          "sharepoint_data_sources");

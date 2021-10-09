@@ -50,6 +50,14 @@ rules:
             val: "${Title}"
             mandatoryInSearch: true
 
+#      - label: Object.Sensitive_Data
+#        props:
+#          Description:
+#            val: "${????????}"
+#            type: "[Ljava.lang.String;"
+#            mandatoryInSearch: true
+#            postProcessor: "${it?.toUpperCase()?.trim()}"
+
       - label: Event.Ingestion
         props:
           Type:
@@ -93,6 +101,10 @@ rules:
           mandatoryInSearch: true
 
     edges:
+#      - label: "Has_Sensitive_Data"
+#        fromVertexLabel: "data_sources"
+#        toVertexLabel: "Object.Sensitive_Data"
+
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
         toVertexLabel: "Event.Group_Ingestion"
@@ -114,9 +126,15 @@ rules:
       - label: Object.Data_Source
         name: sharepoint
         props:
-          Name: sharepoint/fontes-de-dados
-          Type: sharepoint/fontes-de-dados
-          Description: Registros das Fontes de Dados LGPD
+          Name:
+            val: sharepoint/fontes-de-dados
+            mandatoryInSearch: true
+          Type:
+            val: sharepoint/fontes-de-dados
+            mandatoryInSearch: true
+          Description:
+            val: Registros das Fontes de Dados LGPD
+            mandatoryInSearch: true
 
       - label: Object.Data_Source
         condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}"
@@ -146,6 +164,14 @@ rules:
           URI_Read:
             val: "${URL_x0020_Prefixo_x0020_Read}"
             excludeFromSearch: true
+
+      - label: Object.Sensitive_Data
+        props:
+          Description:
+            val: "${DadosPessoais}"
+            type: "[Ljava.lang.String;"
+            mandatoryInSearch: true
+            postProcessor: "${it?.toUpperCase()?.trim()}"
 
       - label: Object.Data_Policy
         props:
@@ -213,12 +239,13 @@ rules:
         fromVertexLabel: "Event.Ingestion"
         toVertexName: "fontes_de_dados"
 
-
       - label: "Has_Policy"
         fromVertexName: "fontes_de_dados"
         toVertexLabel: "Object.Data_Policy"
 
-
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object.Sensitive_Data"
 
   sharepoint_treinamentos:
     vertices:
@@ -318,7 +345,6 @@ rules:
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
 
-
   sharepoint_mapeamentos:
     vertices:
     - label: Object.Data_Source
@@ -338,7 +364,7 @@ rules:
       name: attached_data_sources
       props:
         Name:
-          val: "${new groovy.json.JsonBuilder(Teste)}"
+          val: "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}"
           type: "[Lcom.pontusvision.utils.SharepointRef;"
           postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
           mandatoryInSearch: true
@@ -448,7 +474,7 @@ rules:
         fromVertexLabel: "Event.Ingestion"
         toVertexLabel: "Object.Data_Procedures"
 
-      - label: "Sensitive_Data"
+      - label: "Has_Sensitive_Data"
         fromVertexLabel: "Object.Data_Procedures"
         toVertexLabel: "Object.Sensitive_Data"
 
@@ -461,7 +487,7 @@ rules:
         toVertexLabel: "Object.Data_Policy"
 
       - label: "Has_Data_Source"
-        fromVertexName: "Object.Data_Procedures"
+        fromVertexLabel: "Object.Data_Procedures"
         toVertexName: "attached_data_sources"
 
 

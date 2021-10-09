@@ -7,10 +7,13 @@ updatereq:
       props:
         - name: Object.Data_Source.Name
           val: sharepoint/fontes-de-dados
+          mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: sharepoint/fontes-de-dados
+          mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: Registros das Fontes de Dados LGPD
+          mandatoryInSearch: True
     
     - label: Object.Data_Source
       name: fontes_de_dados
@@ -40,6 +43,14 @@ updatereq:
         - name: Object.Data_Source.URI_Read
           val: ${URL_x0020_Prefixo_x0020_Read}
           excludeFromSearch: True
+    
+    - label: Object.Sensitive_Data
+      props:
+        - name: Object.Sensitive_Data.Description
+          val: ${DadosPessoais}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
     
     - label: Object.Data_Policy
       props:
@@ -106,4 +117,7 @@ updatereq:
   - label: Has_Policy
     fromVertexName: fontes_de_dados
     toVertexLabel: Object.Data_Policy
+  - label: Has_Sensitive_Data
+    fromVertexName: fontes_de_dados
+    toVertexLabel: Object.Sensitive_Data
 

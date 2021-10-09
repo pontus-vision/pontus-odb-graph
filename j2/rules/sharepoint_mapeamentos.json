@@ -28,7 +28,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "${new groovy.json.JsonBuilder(Teste)}",
+            "val": "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}",
             "mandatoryInSearch": true,
             "type": "[Lcom.pontusvision.utils.SharepointRef;",
             "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
@@ -201,7 +201,7 @@
         "toVertexLabel": "Object.Data_Procedures"
       },
       {
-        "label": "Sensitive_Data",
+        "label": "Has_Sensitive_Data",
         "fromVertexLabel": "Object.Data_Procedures",
         "toVertexLabel": "Object.Sensitive_Data"
       },
@@ -217,7 +217,7 @@
       },
       {
         "label": "Has_Data_Source",
-        "fromVertexName": "Object.Data_Procedures",
+        "fromVertexLabel": "Object.Data_Procedures",
         "toVertexName": "attached_data_sources"
       }
     ]
