@@ -359,7 +359,7 @@ rules:
           Description:
             val: Mapeamento de Processo LGPD
             mandatoryInSearch: true
-  
+
       - label: Object.Data_Source
         name: attached_data_sources
         props:
