@@ -240,6 +240,16 @@ public class PVTest extends AppTest {
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(expectedDataPolicyCount, countDataPolicy);
 
+      if ("sharepoint_fontes_de_dados".equals(ruleName)){
+        String userId =
+        App.executor.eval("App.g.V().has('Object.Sensitive_Data.Description', eq('TELEFONE'))\n" +
+                ".next().id().toString()").get().toString();
+        String sensitiveDataConnectionsQuery = "App.g.V(\"" + userId + "\").bothE().count().next().toString()";
+        String sensitiveDataConnections = App.executor.eval(sensitiveDataConnectionsQuery).get().toString();
+        assertEquals("1", sensitiveDataConnections);
+
+      }
+
 //      String userId =
 //              App.executor.eval("App.g.V().has('Object.Sensitive_Data.Description', eq('TELEFONE'))\n" +
 //                      ".next().id().toString()").get().toString();
