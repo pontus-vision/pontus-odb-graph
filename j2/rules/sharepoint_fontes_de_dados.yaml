@@ -48,6 +48,7 @@ updatereq:
       props:
         - name: Object.Sensitive_Data.Description
           val: ${new groovy.json.JsonBuilder(DadosPessoais)}
+          processAll: True
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}

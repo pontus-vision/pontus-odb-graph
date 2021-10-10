@@ -172,6 +172,7 @@ rules:
             type: "[Ljava.lang.String;"
             mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
 
       - label: Object.Data_Policy
         props:

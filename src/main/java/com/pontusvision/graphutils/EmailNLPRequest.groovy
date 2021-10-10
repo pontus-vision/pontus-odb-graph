@@ -181,7 +181,9 @@ class EmailNLPRequest implements   Serializable{
 
     def (
     Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexNameLocal,
-    Map<String, List<MatchReq>>          matchReqByVertexName
+    Map<String, List<MatchReq>>          matchReqByVertexName,
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
+
     ) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
 
     vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
