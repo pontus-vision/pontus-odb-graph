@@ -19,7 +19,8 @@ updatereq:
       name: attached_data_sources
       props:
         - name: Object.Data_Source.Name
-          val: ${new groovy.json.JsonBuilder(Teste)}
+          val: ${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}
+          processAll: True
           mandatoryInSearch: True
           type: "[Lcom.pontusvision.utils.SharepointRef;"
           postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}
@@ -63,7 +64,8 @@ updatereq:
     - label: Object.Sensitive_Data
       props:
         - name: Object.Sensitive_Data.Description
-          val: ${Dados_x0020_pessoais_x0020_utili}
+          val: ${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}
+          processAll: True
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
@@ -71,7 +73,8 @@ updatereq:
     - label: Object.Lawful_Basis
       props:
         - name: Object.Lawful_Basis.Description
-          val: ${Base_x0020_legal}
+          val: ${new groovy.json.JsonBuilder(Base_x0020_legal)}
+          processAll: True
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
@@ -126,7 +129,7 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Ingestion
     toVertexLabel: Object.Data_Procedures
-  - label: Sensitive_Data
+  - label: Has_Sensitive_Data
     fromVertexLabel: Object.Data_Procedures
     toVertexLabel: Object.Sensitive_Data
   - label: Has_Lawful_Basis_On
@@ -136,6 +139,6 @@ updatereq:
     fromVertexLabel: Object.Data_Procedures
     toVertexLabel: Object.Data_Policy
   - label: Has_Data_Source
-    fromVertexName: Object.Data_Procedures
+    fromVertexLabel: Object.Data_Procedures
     toVertexName: attached_data_sources
 
