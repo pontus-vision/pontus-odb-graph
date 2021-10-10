@@ -38,6 +38,14 @@
           "Descri_x00e7__x00e3_o": "Sistema de CRM para captura de Lyyyy",
           "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
           "Pol_x00ed_tica_x0020_de_x0020_Re": "2 anos",
+          "DadosPessoais": [
+            "Nome",
+            "CPF",
+            "RG",
+            "Endereço",
+            "E-mail",
+            "Ocupação"
+          ],
           "URL_x0020_Prefixo_x0020_Delete": "https://app.xxxxx.com/",
           "URL_x0020_Prefixo_x0020_Read": "https://app.xxxxx.com/",
           "URL_x0020_Prefixo_x0020_Update": "https://app.xxxxx.com/",
@@ -98,6 +106,13 @@
           "Descri_x00e7__x00e3_o": "Sistema de CRM para armazenamento dos Czzzzzzz dos clientes",
           "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
           "Pol_x00ed_tica_x0020_de_x0020_Re": "5 anos",
+          "DadosPessoais": [
+            "Nome",
+            "CNPJ",
+            "Endereço",
+            "Fax",
+            "Telefone"
+          ],
           "URL_x0020_Prefixo_x0020_Delete": "https://app.xxxxx.com/",
           "URL_x0020_Prefixo_x0020_Read": "https://app.xxxxx.com/",
           "URL_x0020_Prefixo_x0020_Update": "https://app.xxxxx.com/",
@@ -158,6 +173,11 @@
           "Descri_x00e7__x00e3_o": "Sistema de CRM para armazenamento dos usuários",
           "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
           "Pol_x00ed_tica_x0020_de_x0020_Re": "3 anos",
+          "DadosPessoais": [
+            "RG",
+            "Telefone",
+            "Estado Civil"
+          ],
           "URL_x0020_Prefixo_x0020_Delete": "https://app.xxxxx.com/",
           "URL_x0020_Prefixo_x0020_Read": "https://app.xxxxx.com/",
           "URL_x0020_Prefixo_x0020_Update": "https://app.xxxxx.com/",
@@ -218,6 +238,13 @@
           "Descri_x00e7__x00e3_o": "Sistema de ERP para cadastro dos clientes, para emissão de NF e fluxo financeiro",
           "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
           "Pol_x00ed_tica_x0020_de_x0020_Re": "10 anos",
+          "DadosPessoais": [
+            "Nome",
+            "E-mail",
+            "Ocupação",
+            "Orientação Sexual",
+            "Religião"
+          ],
           "URL_x0020_Prefixo_x0020_Delete": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
           "URL_x0020_Prefixo_x0020_Read": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
           "URL_x0020_Prefixo_x0020_Update": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
@@ -278,6 +305,11 @@
           "Descri_x00e7__x00e3_o": "Sistema de ERP para cadastro dos colaboradores",
           "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
           "Pol_x00ed_tica_x0020_de_x0020_Re": "25 anos",
+          "DadosPessoais": [
+            "Nome",
+            "CPF",
+            "CNH"
+          ],
           "URL_x0020_Prefixo_x0020_Delete": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
           "URL_x0020_Prefixo_x0020_Read": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
           "URL_x0020_Prefixo_x0020_Update": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
@@ -338,6 +370,13 @@
           "Descri_x00e7__x00e3_o": "Sistema de ERP para cadastro dos fornecedores",
           "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
           "Pol_x00ed_tica_x0020_de_x0020_Re": "5 anos",
+          "DadosPessoais": [
+            "Endereço",
+            "E-mail",
+            "Ocupação",
+            "Nome da Mãe",
+            "Nome do Pai"
+          ],
           "URL_x0020_Prefixo_x0020_Delete": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
           "URL_x0020_Prefixo_x0020_Read": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
           "URL_x0020_Prefixo_x0020_Update": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
@@ -398,6 +437,11 @@
           "Descri_x00e7__x00e3_o": "Sistema de ERP para cadastro dos dependentes dos colaboradores",
           "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
           "Pol_x00ed_tica_x0020_de_x0020_Re": "25 anos",
+          "DadosPessoais": [
+            "Nome",
+            "CPF",
+            "Ocupação"
+          ],
           "URL_x0020_Prefixo_x0020_Delete": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
           "URL_x0020_Prefixo_x0020_Read": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",
           "URL_x0020_Prefixo_x0020_Update": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxxx/1.0.0/",

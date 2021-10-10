@@ -50,6 +50,14 @@ rules:
             val: "${Title}"
             mandatoryInSearch: true
 
+#      - label: Object.Sensitive_Data
+#        props:
+#          Description:
+#            val: "${????????}"
+#            type: "[Ljava.lang.String;"
+#            mandatoryInSearch: true
+#            postProcessor: "${it?.toUpperCase()?.trim()}"
+
       - label: Event.Ingestion
         props:
           Type:
@@ -93,6 +101,10 @@ rules:
           mandatoryInSearch: true
 
     edges:
+#      - label: "Has_Sensitive_Data"
+#        fromVertexLabel: "data_sources"
+#        toVertexLabel: "Object.Sensitive_Data"
+
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
         toVertexLabel: "Event.Group_Ingestion"
@@ -114,9 +126,15 @@ rules:
       - label: Object.Data_Source
         name: sharepoint
         props:
-          Name: sharepoint/fontes-de-dados
-          Type: sharepoint/fontes-de-dados
-          Description: Registros das Fontes de Dados LGPD
+          Name:
+            val: sharepoint/fontes-de-dados
+            mandatoryInSearch: true
+          Type:
+            val: sharepoint/fontes-de-dados
+            mandatoryInSearch: true
+          Description:
+            val: Registros das Fontes de Dados LGPD
+            mandatoryInSearch: true
 
       - label: Object.Data_Source
         condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}"
@@ -146,6 +164,15 @@ rules:
           URI_Read:
             val: "${URL_x0020_Prefixo_x0020_Read}"
             excludeFromSearch: true
+
+      - label: Object.Sensitive_Data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(DadosPessoais)}"
+            type: "[Ljava.lang.String;"
+            mandatoryInSearch: true
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
 
       - label: Object.Data_Policy
         props:
@@ -213,10 +240,13 @@ rules:
         fromVertexLabel: "Event.Ingestion"
         toVertexName: "fontes_de_dados"
 
-
       - label: "Has_Policy"
         fromVertexName: "fontes_de_dados"
         toVertexLabel: "Object.Data_Policy"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object.Sensitive_Data"
 
   sharepoint_treinamentos:
     vertices:
@@ -318,120 +348,124 @@ rules:
 
   sharepoint_mapeamentos:
     vertices:
-    - label: Object.Data_Source
-      name: sharepoint
-      props:
-        Name:
-          val: sharepoint/mapeamento-de-processos
-          mandatoryInSearch: true
-        Type:
-          val: sharepoint/mapeamento-de-processos
-          mandatoryInSearch: true
-        Description:
-          val: Mapeamento de Processo LGPD
-          mandatoryInSearch: true
+      - label: Object.Data_Source
+        name: sharepoint
+        props:
+          Name:
+            val: sharepoint/mapeamento-de-processos
+            mandatoryInSearch: true
+          Type:
+            val: sharepoint/mapeamento-de-processos
+            mandatoryInSearch: true
+          Description:
+            val: Mapeamento de Processo LGPD
+            mandatoryInSearch: true
 
-    - label: Object.Data_Source
-      name: attached_data_sources
-      props:
-        Name:
-          val: "${new groovy.json.JsonBuilder(Teste)}"
-          type: "[Lcom.pontusvision.utils.SharepointRef;"
-          postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
-          mandatoryInSearch: true
+      - label: Object.Data_Source
+        name: attached_data_sources
+        props:
+          Name:
+            val: "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            mandatoryInSearch: true
+            processAll: true
 
 
-    - label: Object.Data_Policy
-      props:
-        Type:
-          val: "${Title}"
-          mandatoryInSearch: true
-        Retention_Period:
-          val: "${Per_x00ed_odo_x0020_de_x0020_ret}"
-          mandatoryInSearch: true
 
-    - label: Object.Data_Procedures
-      props:
-        Type:
-          val: "${Acesso_x002c__x0020_Transfer_x00}"
-          mandatoryInSearch: true
-        Type_Of_Natural_Person:
-          val: "${Categoria_x0020_dos_x0020_titula}"
-          excludeFromSearch: true
-        BusinessAreaResponsible:
-          val: "${_x00c1_rea} - ${Respons_x00e1_velLookupId}"
-          excludeFromSearch: true
-        MacroProcessName:
-          val: "${Processo}"
-          excludeFromSearch: true
-        Country_Where_Stored:
-          val: "${Pa_x00ed_s_x0020_onde_x0020_as_x}"
-          excludeFromSearch: true
-        Why_Is_It_Collected:
-          val: "${Finalidade_x0020_do_x0020_proces}"
-          excludeFromSearch: true
-        Info_Collected:
-          val: "${Dados_x0020_pessoais_x0020_utili}"
-          excludeFromSearch: true
-        Description:
-          val: "${Fluxo_x0020_interno_x0020_dos_x0}"
-          excludeFromSearch: true
+      - label: Object.Data_Policy
+        props:
+          Type:
+            val: "${Title}"
+            mandatoryInSearch: true
+          Retention_Period:
+            val: "${Per_x00ed_odo_x0020_de_x0020_ret}"
+            mandatoryInSearch: true
 
-    - label: Object.Sensitive_Data
-      props:
-        Description:
-          val: "${Dados_x0020_pessoais_x0020_utili}"
-          type: "[Ljava.lang.String;"
-          mandatoryInSearch: true
-          postProcessor: "${it?.toUpperCase()?.trim()}"
+      - label: Object.Data_Procedures
+        props:
+          Type:
+            val: "${Acesso_x002c__x0020_Transfer_x00}"
+            mandatoryInSearch: true
+          Type_Of_Natural_Person:
+            val: "${Categoria_x0020_dos_x0020_titula}"
+            excludeFromSearch: true
+          BusinessAreaResponsible:
+            val: "${_x00c1_rea} - ${Respons_x00e1_velLookupId}"
+            excludeFromSearch: true
+          MacroProcessName:
+            val: "${Processo}"
+            excludeFromSearch: true
+          Country_Where_Stored:
+            val: "${Pa_x00ed_s_x0020_onde_x0020_as_x}"
+            excludeFromSearch: true
+          Why_Is_It_Collected:
+            val: "${Finalidade_x0020_do_x0020_proces}"
+            excludeFromSearch: true
+          Info_Collected:
+            val: "${Dados_x0020_pessoais_x0020_utili}"
+            excludeFromSearch: true
+          Description:
+            val: "${Fluxo_x0020_interno_x0020_dos_x0}"
+            excludeFromSearch: true
 
-    - label: Object.Lawful_Basis
-      props:
-        Description:
-          val: "${Base_x0020_legal}"
-          type: "[Ljava.lang.String;"
-          mandatoryInSearch: true
-          postProcessor: "${it?.toUpperCase()?.trim()}"
+      - label: Object.Sensitive_Data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}"
+            type: "[Ljava.lang.String;"
+            mandatoryInSearch: true
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
 
-    - label: Event.Ingestion
-      props:
-        Type:
-          val: sharepoint/mapeamento-de-processo
-          excludeFromSearch: true
-        Operation:
-          val: Structured Data Insertion
-          excludeFromSearch: true
-        Domain_b64:
-          val: "${original_request?.bytes?.encodeBase64()?.toString()}"
-          excludeFromSearch: true
-        Metadata_Create_Date:
-          val: "${new Date()}" # Date COLUMN
-          excludeFromSearch: true
-          type: java.util.Date
-        Metadata_Update_Date:
-          val: "${new Date()}"
-          excludeFromSearch: true
-          type: java.util.Date
+      - label: Object.Lawful_Basis
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Base_x0020_legal)}"
+            type: "[Ljava.lang.String;"
+            mandatoryInSearch: true
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
 
-    - label: Event.Group_Ingestion
-      props:
-        Metadata_Start_Date:
-          val: "${new Date()}"
-          excludeFromSearch: true
-          type: java.util.Date
-        Metadata_End_Date:
-          val: "${new Date()}"
-          excludeFromSearch: true
-          type: java.util.Date
-        Type:
-          val: sharepoint/mapeamento-de-processo
-          mandatoryInSearch: true
-        Operation:
-          val: Structured Data Insertion
-          mandatoryInSearch: true
-        Ingestion_Date:
-          val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-          mandatoryInSearch: true
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: sharepoint/mapeamento-de-processo
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: sharepoint/mapeamento-de-processo
+            mandatoryInSearch: true
+          Operation:
+            val: Structured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
@@ -445,7 +479,7 @@ rules:
         fromVertexLabel: "Event.Ingestion"
         toVertexLabel: "Object.Data_Procedures"
 
-      - label: "Sensitive_Data"
+      - label: "Has_Sensitive_Data"
         fromVertexLabel: "Object.Data_Procedures"
         toVertexLabel: "Object.Sensitive_Data"
 
@@ -458,7 +492,7 @@ rules:
         toVertexLabel: "Object.Data_Policy"
 
       - label: "Has_Data_Source"
-        fromVertexName: "Object.Data_Procedures"
+        fromVertexLabel: "Object.Data_Procedures"
         toVertexName: "attached_data_sources"
 
 

@@ -28,7 +28,8 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "${new groovy.json.JsonBuilder(Teste)}",
+            "val": "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}",
+            "processAll": true,
             "mandatoryInSearch": true,
             "type": "[Lcom.pontusvision.utils.SharepointRef;",
             "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
@@ -100,7 +101,8 @@
         "props": [
           {
             "name": "Object.Sensitive_Data.Description",
-            "val": "${Dados_x0020_pessoais_x0020_utili}",
+            "val": "${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}",
+            "processAll": true,
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
             "postProcessor": "${it?.toUpperCase()?.trim()}"
@@ -112,7 +114,8 @@
         "props": [
           {
             "name": "Object.Lawful_Basis.Description",
-            "val": "${Base_x0020_legal}",
+            "val": "${new groovy.json.JsonBuilder(Base_x0020_legal)}",
+            "processAll": true,
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
             "postProcessor": "${it?.toUpperCase()?.trim()}"
@@ -201,7 +204,7 @@
         "toVertexLabel": "Object.Data_Procedures"
       },
       {
-        "label": "Sensitive_Data",
+        "label": "Has_Sensitive_Data",
         "fromVertexLabel": "Object.Data_Procedures",
         "toVertexLabel": "Object.Sensitive_Data"
       },
@@ -217,7 +220,7 @@
       },
       {
         "label": "Has_Data_Source",
-        "fromVertexName": "Object.Data_Procedures",
+        "fromVertexLabel": "Object.Data_Procedures",
         "toVertexName": "attached_data_sources"
       }
     ]

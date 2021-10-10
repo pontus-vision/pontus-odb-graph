@@ -22,7 +22,16 @@ public class VertexProps {
   private @Valid String postProcessorVar = "it";
   private @Valid Double matchWeight = null;
   private @Valid String splitChar = null;
+  private @Valid Boolean processAll = false;
 
+  @JsonProperty("processAll")
+  public Boolean isProcessAll() {
+    return processAll;
+  }
+
+  public void setProcessAll(Boolean processAll) {
+    this.processAll = processAll;
+  }
 
   @JsonProperty("excludeFromUpdate")
   public Boolean getExcludeFromUpdate() {
@@ -255,6 +264,7 @@ public class VertexProps {
         Objects.equals(mandatoryInSearch, vertexPropsInner.mandatoryInSearch) &&
         Objects.equals(excludeFromSubsequenceSearch, vertexPropsInner.excludeFromSubsequenceSearch) &&
         Objects.equals(excludeFromSearch, vertexPropsInner.excludeFromSearch) &&
+        Objects.equals(processAll, vertexPropsInner.processAll) &&
         Objects.equals(type, vertexPropsInner.type) &&
         Objects.equals(postProcessor, vertexPropsInner.postProcessor) &&
         Objects.equals(postProcessorVar, vertexPropsInner.postProcessorVar);
@@ -262,7 +272,7 @@ public class VertexProps {
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, val, predicate, mandatoryInSearch, excludeFromSubsequenceSearch, excludeFromSearch, type, postProcessor, postProcessorVar);
+    return Objects.hash(name, val, predicate, mandatoryInSearch, excludeFromSubsequenceSearch, excludeFromSearch, type, postProcessor, postProcessorVar, processAll);
   }
 
   @Override
@@ -279,6 +289,7 @@ public class VertexProps {
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    postProcessor: ").append(toIndentedString(postProcessor)).append("\n");
     sb.append("    postProcessorVar: ").append(toIndentedString(postProcessorVar)).append("\n");
+    sb.append("    processAll: ").append(toIndentedString(processAll)).append("\n");
     sb.append("}");
     return sb.toString();
   }
