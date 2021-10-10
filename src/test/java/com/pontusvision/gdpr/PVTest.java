@@ -241,12 +241,21 @@ public class PVTest extends AppTest {
       assertEquals(expectedDataPolicyCount, countDataPolicy);
 
       if ("sharepoint_fontes_de_dados".equals(ruleName)){
-        String userId =
-        App.executor.eval("App.g.V().has('Object.Sensitive_Data.Description', eq('TELEFONE'))\n" +
-                ".next().id().toString()").get().toString();
-        String sensitiveDataConnectionsQuery = "App.g.V(\"" + userId + "\").bothE().count().next().toString()";
-        String sensitiveDataConnections = App.executor.eval(sensitiveDataConnectionsQuery).get().toString();
-        assertEquals("1", sensitiveDataConnections);
+
+        String numSensitiveData = App.executor.eval(queryPrefix +
+            ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+            ".out('Has_Sensitive_Data')" +
+            ".has('Metadata.Type.Object.Sensitive_Data', eq('Object.Sensitive_Data')).id().toSet()" +
+            ".size().toString()").get().toString();
+        assertEquals("15", numSensitiveData);
+
+        String numTelefones = App.executor.eval("App.g.V().has('Object.Sensitive_Data.Description', eq('TELEFONE'))\n" +
+            ".bothE().count().next().toString()").get().toString();
+        assertEquals("2", numTelefones);
+        String numNomes = App.executor.eval("App.g.V().has('Object.Sensitive_Data.Description', eq('NOME'))\n" +
+            ".bothE().count().next().toString()").get().toString();
+        assertEquals("5", numNomes);
+
 
       }
 

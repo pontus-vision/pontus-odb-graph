@@ -733,48 +733,48 @@ class Matcher {
       List<MatchReq> vFiltered = []
 
       vFiltered.addAll(v.findAll { it2 -> !(it2.excludeFromSearch) })
-
-      List<MatchReq> vCopy2 = []
-      vCopy2.addAll(vFiltered)
-
-
-      List<MatchReq> uniqueProps = vCopy2.unique { a, b -> a.propName <=> b.propName }
-
-
-      int maxExpectedSizeOfQueries = uniqueProps.size()
-
-
-      List<MatchReq> mandatoryFields = uniqueProps.findAll { it2 -> it2.mandatoryInSearch }
-
-      List<String> mandatoryFieldPropNames = []
-      mandatoryFields.each { it2 ->
-        mandatoryFieldPropNames << it2.propName
-      }
-
-      boolean processAll = mandatoryFields.size() > 0 && mandatoryFields.get(0).processAll
+      boolean processAll = vFiltered.size() > 0 && vFiltered.get(0).processAll
 
       if (processAll) {
-        mandatoryFields.each { matchReq ->
+        vFiltered.each { matchReq ->
           GraphTraversal exists =
                   gTravSource.V().has("Metadata.Type." + matchReq.vertexLabel, P.eq(matchReq.vertexLabel))
                           .has(matchReq.propName, matchReq.predicate(matchReq.attribNativeVal)).id()
-          ORID id;
+          ORID id
           if (exists.hasNext()) {
             id = exists.next() as ORID
-          }else {
+          } else {
             id = gTravSource.addV(matchReq.vertexLabel)
                     .property("Metadata.Type." + matchReq.vertexLabel, matchReq.vertexLabel)
                     .property("Metadata.Type", matchReq.vertexLabel)
-                    .property(matchReq.propName,matchReq.attribNativeVal)
+                    .property(matchReq.propName, matchReq.attribNativeVal)
                     .id()
                     .next() as ORID
           }
-          vertexScoreMapByVertexName.get(matchReq.vertexLabel).put(id, new AtomicDouble(matchReq.matchWeight))
-          matchReqListByOridByVertexName.get(matchReq.vertexLabel).put(id,[matchReq])
+
+          vertexScoreMapByVertexName.get(matchReq.vertexName).put(id, new AtomicDouble(matchReq.matchWeight))
+          matchReqListByOridByVertexName.get(matchReq.vertexName).put(id, [matchReq])
 
         }
 
       } else {
+        List<MatchReq> vCopy2 = []
+        vCopy2.addAll(vFiltered)
+
+
+        List<MatchReq> uniqueProps = vCopy2.unique { a, b -> a.propName <=> b.propName }
+
+
+        int maxExpectedSizeOfQueries = uniqueProps.size()
+
+
+        List<MatchReq> mandatoryFields = uniqueProps.findAll { it2 -> it2.mandatoryInSearch }
+
+        List<String> mandatoryFieldPropNames = []
+        mandatoryFields.each { it2 ->
+          mandatoryFieldPropNames << it2.propName
+        }
+
 
         Set<List<MatchReq>> subs = Matcher.subsequencesUniqueTypes(vFiltered)
         // LPPM - 08/02/2019 - subsequences was creating way too many entries;
@@ -1752,7 +1752,10 @@ class Matcher {
 
       boolean processAll = (matchReqsForThisVertexType.size() > 0 && matchReqsForThisVertexType.get(0).getProcessAll())
 
-      if (!processAll) {
+      if (processAll) {
+        finalVertexIdByVertexName.put(vertexTypeStr, potentialHitIDs)
+
+      } else { // if (!processAll) {
         double maxScore = maxScoresByVertexName.get(vertexTypeStr).get()
         double percentageThreshold = percentageThresholdByVertexName.get(vertexTypeStr)
         double scoreThreshold = (double) (maxScore * 100 * (percentageThreshold / 100) / 100)

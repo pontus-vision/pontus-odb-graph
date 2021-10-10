@@ -369,6 +369,8 @@ rules:
             type: "[Lcom.pontusvision.utils.SharepointRef;"
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
             mandatoryInSearch: true
+            processAll: true
+
 
 
       - label: Object.Data_Policy
@@ -414,6 +416,7 @@ rules:
             type: "[Ljava.lang.String;"
             mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
 
       - label: Object.Lawful_Basis
         props:
@@ -422,6 +425,7 @@ rules:
             type: "[Ljava.lang.String;"
             mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
 
       - label: Event.Ingestion
         props:
