@@ -77,6 +77,19 @@
         ]
       },
       {
+        "label": "Object.Sensitive_Data",
+        "props": [
+          {
+            "name": "Object.Sensitive_Data.Description",
+            "val": "${new groovy.json.JsonBuilder(DadosPessoais)}",
+            "processAll": true,
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
         "label": "Object.Data_Policy",
         "props": [
           {
@@ -188,6 +201,11 @@
         "label": "Has_Policy",
         "fromVertexName": "fontes_de_dados",
         "toVertexLabel": "Object.Data_Policy"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexLabel": "Object.Sensitive_Data"
       }
     ]
   }

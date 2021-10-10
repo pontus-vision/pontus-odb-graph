@@ -23,6 +23,9 @@ updatereq:
           predicate: {{props.predicate |default('eq', true)}}
           {%- endif %}
           mandatoryInSearch: {{props.mandatoryInSearch |default ( not (props.excludeFromSearch|default( false,true) )  ,true)}}
+          {%- if props.processAll|default (false,true) %}
+          processAll: {{props.processAll |default('true', true)}}
+          {%- endif %}
           {%- if props.excludeFromSubsequenceSearch|default (false,true) %}
           excludeFromSubsequenceSearch: {{props.excludeFromSubsequenceSearch |default('true', true)}}
           {%- endif %}
