@@ -1,5 +1,5 @@
 ---
-rule:
+rules:
   pv_md2:
     vertices:
       - label: Person.Natural

@@ -855,4 +855,35 @@ public class PVTest extends AppTest {
 
     }
   }
+
+  @Test
+  public void test00017MD2() throws InterruptedException {
+
+    try {
+
+      jsonTestUtil("md2.json", "$.person", "pv_md2");
+
+      String personNaturalEdgesCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("6", personNaturalEdgesCount, "????");
+
+
+      String locationAddressDescription =
+              App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA Ponte, Jaguarão - RS, 333333'))" +
+                      ".properties('Location.Address.Description').value().next().toString()").get().toString();
+      assertEquals("moradia principal", locationAddressDescription, "Descrição do Endereço");
+
+
+      String findingTheSonOfAMother =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('DONA SABRINA')).out('Is_Family')" +
+                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+      assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta" +
+              "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+  }
 }
