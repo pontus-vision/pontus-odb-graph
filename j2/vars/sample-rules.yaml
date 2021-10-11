@@ -220,7 +220,7 @@ rules:
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location.Address
         props:
-          Full_Address: "${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP} "
+          Full_Address: "${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP}"
           Type:
             val: "Business"
             excludeFromSearch: true
