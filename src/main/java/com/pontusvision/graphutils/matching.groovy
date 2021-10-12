@@ -1103,6 +1103,11 @@ class Matcher {
     return EmailNLPRequest.upsertEmailNLPRequestArray(App.graph, App.g, recordList).toString()
   }
 
+  static String ingestFile(String jsonString, String jsonPath, String ruleName) {
+    FileNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
+
+    return FileNLPRequest.upsertFileNLPRequestArray(App.graph, App.g, recordList).toString()
+  }
   static String ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g,
                                            String jsonString,
                                            String jsonPath,
@@ -1591,26 +1596,27 @@ class Matcher {
     vertices.each { vertexId, score ->
 
       if (score.get() >= scoreThreshold) {
-
-
         localTrav = g.V(vertexId)
 
         boolean atLeastOneUpdate = false
+
         matchReqsForThisVertexType.each { it ->
           if (!it.excludeFromUpdate && it.attribNativeVal != null) {
 
             String propName = it.getPropName()
             sb?.append("\n in updateExistingVertexWithMatchReqs() - updating new vertex of id = ${vertexId} prop=${propName} val = ${it.attribNativeVal}")
 
-            try {
-              deletionTrav.V(vertexId).properties(it.getPropName()).drop().iterate()
-
-            }
-            catch (Throwable t) {
-              sb?.append("\n in updateExistingVertexWithMatchReqs() - FAILED TO DELETE  = ${vertexId} prop=${propName} val = ${it.attribNativeVal}; err = $t")
-            }
-            localTrav = localTrav.property(propName, it.attribNativeVal)
-            atLeastOneUpdate = true
+//            try {
+//              deletionTrav.V(vertexId).properties(it.getPropName()).drop().iterate()
+//
+//            }
+//            catch (Throwable t) {
+//              sb?.append("\n in updateExistingVertexWithMatchReqs() - FAILED TO DELETE  = ${vertexId} prop=${propName} val = ${it.attribNativeVal}; err = $t")
+//            }
+              if (! g.V(vertexId).has(propName,P.eq(it.attribNativeVal)).hasNext()){
+                localTrav = localTrav.property(propName, it.attribNativeVal)
+                atLeastOneUpdate = true
+              }
 
           } else {
             sb?.append("\n in updateExistingVertexWithMatchReqs() - SKIPPING UPDATE either due to null value or excludeFromUpdate == ${it.excludeFromUpdate} ; vertexId = ${vertexId} prop=${it.propName} val = ${it.attribNativeVal} ")
@@ -1619,7 +1625,7 @@ class Matcher {
         }
 
         if (atLeastOneUpdate) {
-          localTrav.iterate()
+          localTrav.next()
           sb?.append("\n in updateExistingVertexWithMatchReqs() - updated vertex with  id ${vertexId}")
 
         } else {

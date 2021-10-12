@@ -7,11 +7,13 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${name?.trim()?.toUpperCase()}"
+            "val": "${name?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${document?.replaceAll('[^0-9]', '')}"
+            "val": "${document?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -21,11 +23,13 @@
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${document?.replaceAll('[^0-9]','')}"
+            "val": "${document?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "CPF",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -36,7 +40,8 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${email?.trim()?.toLowerCase()}"
+            "val": "${email?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -46,16 +51,19 @@
           {
             "name": "Event.Ingestion.Type",
             "val": "MD2",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
             "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -66,15 +74,18 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "MD2"
+            "val": "MD2",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Dados RH Colaboradores MD2"
+            "val": "Dados RH Colaboradores MD2",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "Structured"
+            "val": "Structured",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -83,25 +94,30 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "MD2"
+            "val": "MD2",
+            "mandatoryInSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Operation",
-            "val": "Structured Data Insertion"
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }

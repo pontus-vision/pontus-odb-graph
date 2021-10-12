@@ -7,6 +7,7 @@
           {
             "name": "Event.Training.Status",
             "val": "Passed",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -22,6 +23,7 @@
           {
             "name": "Object.Awareness_Campaign.Start_Date",
             "val": "${Realizadoem}",
+            "mandatoryInSearch": true,
             "type": "java.util.Date"
           }
         ]
@@ -31,7 +33,8 @@
         "props": [
           {
             "name": "Person.Employee.Full_Name",
-            "val": "${Nome0?.trim()?.toUpperCase()}"
+            "val": "${Nome0?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -41,27 +44,32 @@
           {
             "name": "Event.Ingestion.Type",
             "val": "sharepoint/treinamentos",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
             "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Update_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -73,12 +81,14 @@
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },

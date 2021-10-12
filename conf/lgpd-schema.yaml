@@ -235,6 +235,53 @@ propertyKeys:
   - name: Event.NLP_Group.Person_Id
     dataType: String
     cardinality: SINGLE
+  - name: Metadata.Type.Event.File_Group_Ingestion
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.File_Group_Ingestion.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Group_Ingestion.Ingestion_Date
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Group_Ingestion.Group_Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Event.File_Ingestion
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.File_Ingestion.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Ingestion.Metadata_Create_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.File_Ingestion.Created
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Ingestion.File_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Ingestion.Last_Access
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Ingestion.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Ingestion.Owner
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Ingestion.Path
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Ingestion.Server
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.File_Ingestion.Size_Bytes
+    dataType: Double
+    cardinality: SINGLE
   - name: Metadata.Type.Event.Email_Message
     dataType: String
     cardinality: SINGLE
@@ -965,10 +1012,16 @@ propertyKeys:
   - name: Object.Email_Message_Attachment.Type
     dataType: String
     cardinality: SINGLE
+  - name: Object.Email_Message_Attachment.Created_Date_Time
+    dataType: String
+    cardinality: SINGLE
   - name: Object.Email_Message_Attachment.Email_Id
     dataType: String
     cardinality: SINGLE
   - name: Object.Email_Message_Attachment.Attachment_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Attachment.Attachment_Name
     dataType: String
     cardinality: SINGLE
   - name: Object.Email_Message_Attachment.Attachment_Content_Type
@@ -1034,6 +1087,12 @@ propertyKeys:
   - name: Object.Email_Message_Attachment.NLP_CPF
     dataType: String
     cardinality: SINGLE
+  - name: Object.Email_Message_Attachment.Sent_Date_Time
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Attachment.Size_Bytes
+    dataType: Double
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Email_Message_Body
     dataType: String
     cardinality: SINGLE
@@ -1042,6 +1101,12 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object.Email_Message_Body.Email_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Body.Email_Subject
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Body.Created_Date_Time
     dataType: String
     cardinality: SINGLE
   - name: Object.Email_Message_Body.MetadataController
@@ -1103,6 +1168,12 @@ propertyKeys:
     cardinality: SINGLE
   - name: Object.Email_Message_Body.NLP_CPF
     dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Body.Sent_Date_Time
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Body.Size_Bytes
+    dataType: Double
     cardinality: SINGLE
   - name: Metadata.Type.Object.Form
     dataType: String
@@ -1767,6 +1838,12 @@ vertexLabels:
   - name: Event.NLP_Group
     partition: False
     useStatic: False
+  - name: Event.File_Group_Ingestion
+    partition: False
+    useStatic: False
+  - name: Event.File_Ingestion
+    partition: False
+    useStatic: False
   - name: Event.Email_Message
     partition: False
     useStatic: False
@@ -1994,6 +2071,10 @@ edgeLabels:
     unidirected: False
 
   - name: Has_Link
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_NLP_Events
     multiplicity: MULTI
     unidirected: False
 
@@ -2266,6 +2347,39 @@ vertexIndexes:
       - Metadata.Type.Event.NLP_Group
       - Event.NLP_Group.Ingestion_Date
       - Event.NLP_Group.Person_Id
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.File_Group_Ingestion.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.File_Group_Ingestion
+      - Event.File_Group_Ingestion.Ingestion_Date
+      - Event.File_Group_Ingestion.Group_Name
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.File_Ingestion.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.File_Ingestion
+      - Event.File_Ingestion.Metadata_Create_Date
+      - Event.File_Ingestion.Created
+      - Event.File_Ingestion.File_Type
+      - Event.File_Ingestion.Last_Access
+      - Event.File_Ingestion.Name
+      - Event.File_Ingestion.Owner
+      - Event.File_Ingestion.Path
+      - Event.File_Ingestion.Server
+      - Event.File_Ingestion.Size_Bytes
     propertyKeysMappings:
     
       {}
@@ -2695,8 +2809,10 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata.Type.Object.Email_Message_Attachment
+      - Object.Email_Message_Attachment.Created_Date_Time
       - Object.Email_Message_Attachment.Email_Id
       - Object.Email_Message_Attachment.Attachment_Id
+      - Object.Email_Message_Attachment.Attachment_Name
       - Object.Email_Message_Attachment.Attachment_Content_Type
       - Object.Email_Message_Attachment.MetadataController
       - Object.Email_Message_Attachment.MetadataGDPRStatus
@@ -2718,6 +2834,8 @@ vertexIndexes:
       - Object.Email_Message_Attachment.NLP_Date
       - Object.Email_Message_Attachment.NLP_Time
       - Object.Email_Message_Attachment.NLP_CPF
+      - Object.Email_Message_Attachment.Sent_Date_Time
+      - Object.Email_Message_Attachment.Size_Bytes
     propertyKeysMappings:
     
       {}
@@ -2730,6 +2848,8 @@ vertexIndexes:
     propertyKeys:
       - Metadata.Type.Object.Email_Message_Body
       - Object.Email_Message_Body.Email_Id
+      - Object.Email_Message_Body.Email_Subject
+      - Object.Email_Message_Body.Created_Date_Time
       - Object.Email_Message_Body.MetadataController
       - Object.Email_Message_Body.MetadataGDPRStatus
       - Object.Email_Message_Body.MetadataLineage
@@ -2750,6 +2870,8 @@ vertexIndexes:
       - Object.Email_Message_Body.NLP_Date
       - Object.Email_Message_Body.NLP_Time
       - Object.Email_Message_Body.NLP_CPF
+      - Object.Email_Message_Body.Sent_Date_Time
+      - Object.Email_Message_Body.Size_Bytes
     propertyKeysMappings:
     
       {}

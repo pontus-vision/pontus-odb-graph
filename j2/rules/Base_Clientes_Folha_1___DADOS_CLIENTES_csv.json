@@ -7,15 +7,18 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${pg_NOME?.trim().toUpperCase()}"
+            "val": "${pg_NOME?.trim().toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${pg_NOME?.trim().toUpperCase()}"
+            "val": "${pg_NOME?.trim().toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
             "val": "cliente",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
@@ -33,18 +36,21 @@
           {
             "name": "Event.Consent.Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Consent.Metadata.Create_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Consent.Status",
             "val": "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -60,6 +66,7 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "CPF",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -69,7 +76,8 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${pg_EMAIL?.trim()?.toLowerCase()}"
+            "val": "${pg_EMAIL?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -78,7 +86,8 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${pg_IMOVEL} ${pg_BAIRRO}, Sao Paulo, SP"
+            "val": "${pg_IMOVEL} ${pg_BAIRRO}, Sao Paulo, SP",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -88,27 +97,32 @@
           {
             "name": "Event.Transaction.Type",
             "val": "Venda",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Event.Transaction.Description",
             "val": "Venda da Propriedade",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Event.Transaction.Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Transaction.Currency",
             "val": "BRL",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Event.Transaction.Value",
-            "val": "${pg_VALOR?.replaceAll('[^0-9\\\\.]','')}"
+            "val": "${pg_VALOR?.replaceAll('[^0-9\\\\.]','')}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -118,11 +132,13 @@
         "props": [
           {
             "name": "Person.Natural.Name_Qualifier",
-            "val": "${pg_CORRETOR}"
+            "val": "${pg_CORRETOR}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
             "val": "corretor",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]

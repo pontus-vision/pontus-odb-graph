@@ -6,20 +6,24 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${pg_NOME?.trim().toUpperCase()}"
+            "val": "${pg_NOME?.trim().toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${pg_NOME?.trim().toUpperCase()}"
+            "val": "${pg_NOME?.trim().toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
             "val": "corretor",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Name_Qualifier",
-            "val": "${pg_CORRETOR}"
+            "val": "${pg_CORRETOR}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Natural.Date_Of_Birth",
@@ -35,16 +39,19 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${pg_CELULAR}"
+            "val": "${pg_CELULAR}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Phone_Number.Type",
             "val": "Celular",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(pg_CELULAR?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
@@ -67,6 +74,7 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "CPF",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -76,7 +84,8 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${pg_EMAIL?.trim()?.toLowerCase()}"
+            "val": "${pg_EMAIL?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -85,11 +94,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP}"
+            "val": "${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Location.Address.Type",
             "val": "Business",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]

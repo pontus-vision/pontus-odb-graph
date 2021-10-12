@@ -11,9 +11,11 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Natural.Type
           val: Colaborador
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Gender
           val: ${RA_SEXO}
+          mandatoryInSearch: True
         - name: Person.Natural.Customer_ID
           val: ${RA_CIC?.replaceAll('[^0-9]','')}
           predicate: eq
@@ -27,8 +29,10 @@ updatereq:
           mandatoryInSearch: True
         - name: Location.Address.Description
           val: moradia principal
+          mandatoryInSearch: True
         - name: Location.Address.Type
           val: home
+          mandatoryInSearch: True
     
     - label: Person.Natural
       name: mae
@@ -39,8 +43,10 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Natural.Type
           val: colaborador-pais
+          mandatoryInSearch: True
         - name: Person.Natural.Gender
           val: F
+          mandatoryInSearch: True
     
     - label: Person.Natural
       name: pai
@@ -51,10 +57,13 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Natural.Full_Name_fuzzy
           val: ${RA_PAI?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
         - name: Person.Natural.Type
           val: colaborador-pais
+          mandatoryInSearch: True
         - name: Person.Natural.Gender
           val: M
+          mandatoryInSearch: True
     
     - label: Object.Phone_Number
       name: phone
@@ -62,11 +71,14 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${RA_TELEFON}
+          mandatoryInSearch: True
         - name: Object.Phone_Number.Type
           val: Office
+          mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(RA_TELEFON?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
         - name: Object.Phone_Number.Last_7_Digits
@@ -83,6 +95,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: RG
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Identity_Card
@@ -94,6 +107,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Identity_Card
@@ -105,6 +119,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CNPJ
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Email_Address
@@ -113,8 +128,10 @@ updatereq:
       props:
         - name: Object.Email_Address.Email
           val: ${RA_EMAIL.trim()?.toLowerCase()}
+          mandatoryInSearch: True
         - name: Object.Email_Address.Type
           val: ${(RA_EMAIL.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}
+          mandatoryInSearch: True
     
     - label: Object.Email_Address
       name: email2
@@ -122,26 +139,33 @@ updatereq:
       props:
         - name: Object.Email_Address.Email
           val: ${RA_EMAIL2?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
         - name: Object.Email_Address.Type
           val: ${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}
+          mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
           val: totvs/protheus/sra_funcionarios
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Domain_b64
           val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Create_Date
           val: ${firstUpdate}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Update_Date
           val: ${lastUpdate}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -158,10 +182,12 @@ updatereq:
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Metadata_End_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -169,10 +195,13 @@ updatereq:
       props:
         - name: Object.Data_Source.Name
           val: totvs/protheus/sra_funcionarios
+          mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: totvs/protheus/sra_funcionarios
+          mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: Registros de Funcionarios no protheus/Totvs
+          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event

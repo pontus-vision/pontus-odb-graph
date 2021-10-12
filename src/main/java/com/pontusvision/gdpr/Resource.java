@@ -3,12 +3,14 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.orientechnologies.orient.core.id.ORID;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.mapping.MappingReq;
+import com.pontusvision.graphutils.PText;
 import com.pontusvision.graphutils.gdpr;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseMessage;
@@ -17,7 +19,9 @@ import org.apache.tinkerpop.gremlin.driver.ser.GraphSONMessageSerializerV3d0;
 import org.apache.tinkerpop.gremlin.driver.ser.SerializationException;
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.apache.tinkerpop.gremlin.orientdb.io.OrientIoRegistry;
+import org.apache.tinkerpop.gremlin.process.traversal.Order;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
+import org.apache.tinkerpop.gremlin.process.traversal.Text;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Direction;
@@ -31,6 +35,7 @@ import org.glassfish.jersey.server.ContainerRequest;
 import javax.script.SimpleBindings;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.xml.ws.http.HTTPException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -69,6 +74,134 @@ public class Resource {
   public String helloWorld() {
     return "Hello, world!";
   }
+
+
+  @POST
+  @Path("md2_search")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Md2Reply md2Search(Md2Request req) {
+    if (req.settings == null || req.query == null || req.query.name == null ){
+      throw new HTTPException(400);
+    }
+
+    GraphTraversal<Vertex, Vertex> gt =
+        App.g.V().has("Person.Natural.Full_Name",
+            PText.textContains(req.query.name.trim().toUpperCase(Locale.ROOT)));
+
+    if (req.query.docCpf != null){
+      gt = gt.has("Person.Natural.Customer_ID",eq(req.query.docCpf.replaceAll("[^0-9]","")));
+    }
+    try {
+      List<Object> ids = (gt.id().toList());
+      if (ids.size() != 1){
+        System.out.println("Found "+ids.size()+" ids matching the request");
+        throw new HTTPException(404);
+      }
+      if (req.query.email != null) {
+        if (! App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
+                eq(req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
+          System.out.println("Not found email " + req.query.email + " associated with " +ids.size()+" (" +
+               req.query.name+")");
+
+          throw new HTTPException(404);
+        }
+      }
+      Md2Reply reply = new Md2Reply();
+
+      reply.total =  App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
+
+      List<Map<String,Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
+          .in("Has_NLP_Events").dedup().range(req.settings.start, req.settings.start + req.settings.limit).as("EVENTS")
+//          .in()
+          .match(
+              __.as("EVENTS").id().as("ID"),
+//              __.as("EVENTS").has("Metadata.Type.Object.Email_Message_Body", P.eq("Object.Email_Message_Body")).valueMap().as("email_body"),
+//              __.as("EVENTS").has("Metadata.Type.Object.Email_Message_Attachment",P.eq ("Object.Email_Message_Attachment")).valueMap().as("email_attachment"),
+              __.as("EVENTS").label().as("eventType"),
+              __.as("EVENTS").valueMap().as("values")
+          )
+//          .select("id","email_body", "email_attachment", "file")
+          .select("ID","eventType","values")
+//          .has("Metadata.Type.Event.File_Ingestion",P.eq ("Event.File_Ingestion")).valueMap().as("file")
+          .toList();
+
+      reply.track = new Md2Reply.Register[res.size()];
+
+      for (int i = 0, ilen = res.size(); i < ilen; i ++){
+        Md2Reply.Register reg  = new Md2Reply.Register();
+        String eventType = res.get(i).get("eventType").toString();
+        Map<String,List<Object>> values = (Map<String,List<Object>>) res.get(i).get("values");
+        Object eventId = res.get(i).get("ID");
+
+        if ("Event.File_Ingestion".equalsIgnoreCase(eventType)){
+          reg.fileType = values.get("Event.File_Ingestion.File_Type").get(0).toString();
+          reg.sizeBytes = ((Double) values.get("Event.File_Ingestion.Size_Bytes").get(0)).longValue();
+          reg.name = values.get("Event.File_Ingestion.Name").get(0).toString();
+          reg.path = values.get("Event.File_Ingestion.Path").get(0).toString();
+          reg.created = values.get("Event.File_Ingestion.Created").get(0).toString();
+          reg.owner = values.get("Event.File_Ingestion.Owner") == null ? "":
+              values.get("Event.File_Ingestion.Owner").get(0).toString();
+          reg.server = values.get("Event.File_Ingestion.Server").get(0).toString();
+        }
+        else if ("Object.Email_Message_Attachment".equalsIgnoreCase(eventType)){
+          reg.fileType = "Email_Message_Attachment";
+          reg.sizeBytes = ((Double) values.get("Object.Email_Message_Attachment.Size_Bytes").get(0)).longValue();
+          reg.name = values.get("Object.Email_Message_Attachment.Attachment_Name").get(0).toString();
+          StringBuilder sb =  new StringBuilder();
+          sb.append(values.get("Object.Email_Message_Attachment.Email_Id").get(0)).append("/")
+              .append(values.get("Object.Email_Message_Attachment.Attachment_Id").get(0));
+          reg.path = sb.toString();
+          reg.created = values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString();
+          String owner = App.g.V(eventId).in("Email_Attachment")
+              .out("Email_From").values("Event.Email_From_Group.Email").next().toString();
+          reg.owner = owner;
+          reg.server = "office365/email";
+        }
+        else if ("Object.Email_Message_Body".equalsIgnoreCase(eventType)) {
+          reg.fileType = "Email_Message_Body";
+          reg.sizeBytes = ((Double) values.get("Object.Email_Message_Body.Size_Bytes").get(0)).longValue();
+          reg.name = values.get("Object.Email_Message_Body.Email_Subject").get(0).toString();
+          reg.path = values.get("Object.Email_Message_Body.Email_Id").get(0).toString();
+          reg.created = values.get("Object.Email_Message_Body.Created_Date_Time") == null? "":
+              values.get("Object.Email_Message_Body.Created_Date_Time").get(0).toString();
+
+          String owner = App.g.V(eventId).in("Email_Body")
+              .out("Email_From").values("Event.Email_From_Group.Email").next().toString();
+          reg.owner = owner;
+          reg.server = "office365/email";
+
+        }
+
+
+        reply.track[i] = reg;
+
+      }
+
+
+//          .properties("Object.Email_Message_Body", "Object.Email_Message_Attachment");
+
+//      reply.track.created;
+//      reply.track.fileType;
+//      reply.track.lastAccess;
+//      reply.track.name;
+//      reply.track.owner;
+//      reply.track.path;
+//      reply.track.server;
+//      reply.track.sizeBytes;
+
+
+
+
+      return reply;
+    } catch( Exception e){
+      System.err.println("Error processing data: "+ e.getMessage());
+      e.printStackTrace();
+      throw new HTTPException(404);
+    }
+  }
+
+
 
   @POST
   @Path("agrecords")
