@@ -96,4 +96,4 @@ rules:
 
       - label: "Uses_Email"
         fromVertexLabel: "Person.Natural"
-        toVErtexLabel: "Object.Email_Address"
+        toVertexLabel: "Object.Email_Address"
