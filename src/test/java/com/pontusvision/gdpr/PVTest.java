@@ -896,10 +896,37 @@ public class PVTest extends AppTest {
     try {
       jsonTestUtil("md2.json", "$.person", "pv_md2");
 
+      jsonTestUtil("pv-extract-file-ingest-md2.json", "$.value", "pv_file");
+      jsonTestUtil("pv-extract-o365-email-md2.json", "$.value", "pv_email");
+
       String getPersonNaturalFullName =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +
                       ".count().next().toString()").get().toString();
       assertEquals("1", getPersonNaturalFullName, "um registro em nome de CARLOS MAURICIO DIRIZ");
+
+
+      Resource res = new Resource();
+
+      Md2Request md2Request = new Md2Request();
+      md2Request.settings.limit = 2L;
+      md2Request.settings.start = 0L;
+      md2Request.query.name = "rose marie humenhuk";
+      md2Request.query.email = "MADROSE@bol.com.br";
+      md2Request.query.docCpf = "22028544953";
+
+      Md2Reply md2Reply = res.md2Search(md2Request);
+
+      assertEquals(3, md2Reply.total);
+      assertEquals(2, md2Reply.track.length);
+
+      md2Request.settings.start = 2L;
+
+      md2Reply = res.md2Search(md2Request);
+
+      assertEquals(3, md2Reply.total);
+      assertEquals(1, md2Reply.track.length);
+
+
 
 
     } catch (ExecutionException e) {

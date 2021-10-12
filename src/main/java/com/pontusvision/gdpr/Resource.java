@@ -109,10 +109,11 @@ public class Resource {
       }
       Md2Reply reply = new Md2Reply();
 
-      reply.total = App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").count().next();
+      reply.total =  App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
 
       List<Map<String,Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
-          .in("Has_NLP_Events").range(0, 100).as("EVENTS").in()
+          .in("Has_NLP_Events").dedup().range(req.settings.start, req.settings.start + req.settings.limit).as("EVENTS")
+//          .in()
           .match(
               __.as("EVENTS").id().as("ID"),
 //              __.as("EVENTS").has("Metadata.Type.Object.Email_Message_Body", P.eq("Object.Email_Message_Body")).valueMap().as("email_body"),
@@ -135,35 +136,37 @@ public class Resource {
 
         if ("Event.File_Ingestion".equalsIgnoreCase(eventType)){
           reg.fileType = values.get("Event.File_Ingestion.File_Type").get(0).toString();
-          reg.sizeBytes = (Long) values.get("Event.File_Ingestion.Size_Bytes").get(0);
+          reg.sizeBytes = ((Double) values.get("Event.File_Ingestion.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Event.File_Ingestion.Name").get(0).toString();
           reg.path = values.get("Event.File_Ingestion.Path").get(0).toString();
           reg.created = values.get("Event.File_Ingestion.Created").get(0).toString();
-          reg.owner = values.get("Event.File_Ingestion.Owner").get(0).toString();
+          reg.owner = values.get("Event.File_Ingestion.Owner") == null ? "":
+              values.get("Event.File_Ingestion.Owner").get(0).toString();
           reg.server = values.get("Event.File_Ingestion.Server").get(0).toString();
         }
         else if ("Object.Email_Message_Attachment".equalsIgnoreCase(eventType)){
           reg.fileType = "Email_Message_Attachment";
-          reg.sizeBytes = (Long) values.get("Object.Email_Message_Attachment.Size_Bytes").get(0);
+          reg.sizeBytes = ((Double) values.get("Object.Email_Message_Attachment.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Object.Email_Message_Attachment.Attachment_Name").get(0).toString();
           StringBuilder sb =  new StringBuilder();
           sb.append(values.get("Object.Email_Message_Attachment.Email_Id").get(0)).append("/")
               .append(values.get("Object.Email_Message_Attachment.Attachment_Id").get(0));
           reg.path = sb.toString();
           reg.created = values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString();
-          String owner = App.g.V(eventId).in("Email_Body")
+          String owner = App.g.V(eventId).in("Email_Attachment")
               .out("Email_From").values("Event.Email_From_Group.Email").next().toString();
           reg.owner = owner;
           reg.server = "office365/email";
         }
         else if ("Object.Email_Message_Body".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Body";
-          reg.sizeBytes = (Long) values.get("Object.Email_Message_Body.Size_Bytes").get(0);
+          reg.sizeBytes = ((Double) values.get("Object.Email_Message_Body.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Object.Email_Message_Body.Email_Subject").get(0).toString();
           reg.path = values.get("Object.Email_Message_Body.Email_Id").get(0).toString();
-          reg.created = values.get("Object.Email_Message_Body.Created_Date_Time").get(0).toString();
+          reg.created = values.get("Object.Email_Message_Body.Created_Date_Time") == null? "":
+              values.get("Object.Email_Message_Body.Created_Date_Time").get(0).toString();
 
-          String owner = App.g.V(eventId).in("Email_Attachment")
+          String owner = App.g.V(eventId).in("Email_Body")
               .out("Email_From").values("Event.Email_From_Group.Email").next().toString();
           reg.owner = owner;
           reg.server = "office365/email";
@@ -192,6 +195,8 @@ public class Resource {
 
       return reply;
     } catch( Exception e){
+      System.err.println("Error processing data: "+ e.getMessage());
+      e.printStackTrace();
       throw new HTTPException(404);
     }
   }
