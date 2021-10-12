@@ -3,29 +3,26 @@ rules:
   pv_md2:
     vertices:
       - label: Person.Natural
+        condition: "${name?.trim()?.length() > 0}"
         props:
-          Full_Name:
-            val: "${name?.trim().toUpperCase()}"
-            mandatoryInSearch: true
-          Type:
-            val: "colaborador"
-            excludeFromSearch: true
+          Full_Name: "${name?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "colaborador"
+#            excludeFromSearch: true
           Customer_ID: "${document?.replaceAll('[^0-9]', '')}"
 
       - label: Object.Identity_Card
+        condition: "${document?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
-          Id_Value:
-            val: "${document.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${document?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
 
       - label: Object.Email_Address
+        condition: "${email?.trim()?.length() > 0}"
         props:
-          Email:
-            val: "${email?.trim()?.toLowerCase()}"
-            mandatoryInSearch: true
+          Email: "${email?.trim()?.toLowerCase()}"
 
       - label: Event.Ingestion
         props:
@@ -33,10 +30,7 @@ rules:
             val: MD2
             excludeFromSearch: true
           Operation:
-            val: Unstructured Data Insertion
-            excludeFromSearch: true
-          Domain_b64:
-            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            val: Structured Data Insertion
             excludeFromSearch: true
           Metadata_Create_Date:
             val: "${new Date()}"
@@ -45,30 +39,15 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: MD2
-            mandatoryInSearch: true
-            excludeFromUpdate: false
-          Description:
-            val: Dados RH Colaboradores MD2
-            mandatoryInSearch: false
-            excludeFromUpdate: false
-          Type:
-            val: Unstructured
-            mandatoryInSearch: false
-            excludeFromUpdate: false
+          Name: MD2
+          Description: Dados RH Colaboradores MD2
+          Type: Structured
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: MD2
-            mandatoryInSearch: true
-          Operation:
-            val: Unstructured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+          Type: MD2
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
             excludeFromSearch: true

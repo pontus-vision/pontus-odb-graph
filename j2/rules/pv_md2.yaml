@@ -3,30 +3,27 @@ updatereq:
   vertices:
     
     - label: Person.Natural
+      condition: ${name?.trim()?.length() > 0}
       props:
         - name: Person.Natural.Full_Name
-          val: ${name?.trim().toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person.Natural.Type
-          val: colaborador
-          excludeFromSearch: True
+          val: ${name?.trim()?.toUpperCase()}
         - name: Person.Natural.Customer_ID
           val: ${document?.replaceAll('[^0-9]', '')}
     
     - label: Object.Identity_Card
+      condition: ${document?.replaceAll('[^0-9]','')?.length() > 0}
       props:
         - name: Object.Identity_Card.Id_Value
-          val: ${document.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
+          val: ${document?.replaceAll('[^0-9]','')}
         - name: Object.Identity_Card.Id_Type
           val: CPF
           excludeFromSearch: True
     
     - label: Object.Email_Address
+      condition: ${email?.trim()?.length() > 0}
       props:
         - name: Object.Email_Address.Email
           val: ${email?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
@@ -34,10 +31,7 @@ updatereq:
           val: MD2
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
-          val: Unstructured Data Insertion
-          excludeFromSearch: True
-        - name: Event.Ingestion.Domain_b64
-          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          val: Structured Data Insertion
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Create_Date
           val: ${new Date()}
@@ -48,23 +42,19 @@ updatereq:
       props:
         - name: Object.Data_Source.Name
           val: MD2
-          mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: Dados RH Colaboradores MD2
         - name: Object.Data_Source.Type
-          val: Unstructured
+          val: Structured
     
     - label: Event.Group_Ingestion
       props:
         - name: Event.Group_Ingestion.Type
           val: MD2
-          mandatoryInSearch: True
         - name: Event.Group_Ingestion.Operation
-          val: Unstructured Data Insertion
-          mandatoryInSearch: True
+          val: Structured Data Insertion
         - name: Event.Group_Ingestion.Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
           type: "java.util.Date"
