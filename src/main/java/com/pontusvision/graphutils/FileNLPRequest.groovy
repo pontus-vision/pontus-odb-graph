@@ -393,6 +393,7 @@ class FileNLPRequest implements Serializable {
       props.name = "${fileIngestionVtxLabel}.Size_Bytes"
       props.mandatoryInSearch = true
       props.val = req.sizeBytes.toString()
+      props.type = VertexProps.TypeEnum.JAVA_LANG_DOUBLE
       fileIngestionVtx.props.push(props)
     }
     updateReq.vertices.push(fileIngestionVtx)

@@ -3,13 +3,13 @@ package com.pontusvision.gdpr;
 import java.io.Serializable;
 
 public class Md2Reply implements  Serializable{
-  public class Register implements Serializable {
+  public static class Register implements Serializable {
     Integer request;
     String name;
     String server;
     String fileType;
     String path;
-    String sizeBytes;
+    Long sizeBytes;
     String owner;
     String created;
 
@@ -53,11 +53,11 @@ public class Md2Reply implements  Serializable{
       this.path = path;
     }
 
-    public String getSizeBytes() {
+    public Long getSizeBytes() {
       return sizeBytes;
     }
 
-    public void setSizeBytes(String sizeBytes) {
+    public void setSizeBytes(Long sizeBytes) {
       this.sizeBytes = sizeBytes;
     }
 
@@ -89,7 +89,7 @@ public class Md2Reply implements  Serializable{
   }
 
   Long total;
-  Register track;
+  Register[] track;
 
   public Long getTotal() {
     return total;
@@ -99,11 +99,11 @@ public class Md2Reply implements  Serializable{
     this.total = total;
   }
 
-  public Register getTrack() {
+  public Register[] getTrack() {
     return track;
   }
 
-  public void setTrack(Register track) {
+  public void setTrack(Register[] track) {
     this.track = track;
   }
 

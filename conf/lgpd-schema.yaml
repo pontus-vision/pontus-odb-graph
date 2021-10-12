@@ -279,7 +279,7 @@ propertyKeys:
   - name: Event.File_Ingestion.Server
     dataType: String
     cardinality: SINGLE
-  - name: Event.File_Ingestion.SizeBytes
+  - name: Event.File_Ingestion.Size_Bytes
     dataType: Double
     cardinality: SINGLE
   - name: Metadata.Type.Event.Email_Message
@@ -1012,10 +1012,16 @@ propertyKeys:
   - name: Object.Email_Message_Attachment.Type
     dataType: String
     cardinality: SINGLE
+  - name: Object.Email_Message_Attachment.Created_Date_Time
+    dataType: String
+    cardinality: SINGLE
   - name: Object.Email_Message_Attachment.Email_Id
     dataType: String
     cardinality: SINGLE
   - name: Object.Email_Message_Attachment.Attachment_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Attachment.Attachment_Name
     dataType: String
     cardinality: SINGLE
   - name: Object.Email_Message_Attachment.Attachment_Content_Type
@@ -1081,8 +1087,11 @@ propertyKeys:
   - name: Object.Email_Message_Attachment.NLP_CPF
     dataType: String
     cardinality: SINGLE
-  - name: Object.Email_Message_Attachment.Size_Bytes
+  - name: Object.Email_Message_Attachment.Sent_Date_Time
     dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Attachment.Size_Bytes
+    dataType: Double
     cardinality: SINGLE
   - name: Metadata.Type.Object.Email_Message_Body
     dataType: String
@@ -1092,6 +1101,12 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object.Email_Message_Body.Email_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Body.Email_Subject
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Body.Created_Date_Time
     dataType: String
     cardinality: SINGLE
   - name: Object.Email_Message_Body.MetadataController
@@ -1154,8 +1169,11 @@ propertyKeys:
   - name: Object.Email_Message_Body.NLP_CPF
     dataType: String
     cardinality: SINGLE
-  - name: Object.Email_Message_Body.Size_Bytes
+  - name: Object.Email_Message_Body.Sent_Date_Time
     dataType: String
+    cardinality: SINGLE
+  - name: Object.Email_Message_Body.Size_Bytes
+    dataType: Double
     cardinality: SINGLE
   - name: Metadata.Type.Object.Form
     dataType: String
@@ -2361,7 +2379,7 @@ vertexIndexes:
       - Event.File_Ingestion.Owner
       - Event.File_Ingestion.Path
       - Event.File_Ingestion.Server
-      - Event.File_Ingestion.SizeBytes
+      - Event.File_Ingestion.Size_Bytes
     propertyKeysMappings:
     
       {}
@@ -2791,8 +2809,10 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata.Type.Object.Email_Message_Attachment
+      - Object.Email_Message_Attachment.Created_Date_Time
       - Object.Email_Message_Attachment.Email_Id
       - Object.Email_Message_Attachment.Attachment_Id
+      - Object.Email_Message_Attachment.Attachment_Name
       - Object.Email_Message_Attachment.Attachment_Content_Type
       - Object.Email_Message_Attachment.MetadataController
       - Object.Email_Message_Attachment.MetadataGDPRStatus
@@ -2814,6 +2834,7 @@ vertexIndexes:
       - Object.Email_Message_Attachment.NLP_Date
       - Object.Email_Message_Attachment.NLP_Time
       - Object.Email_Message_Attachment.NLP_CPF
+      - Object.Email_Message_Attachment.Sent_Date_Time
       - Object.Email_Message_Attachment.Size_Bytes
     propertyKeysMappings:
     
@@ -2827,6 +2848,8 @@ vertexIndexes:
     propertyKeys:
       - Metadata.Type.Object.Email_Message_Body
       - Object.Email_Message_Body.Email_Id
+      - Object.Email_Message_Body.Email_Subject
+      - Object.Email_Message_Body.Created_Date_Time
       - Object.Email_Message_Body.MetadataController
       - Object.Email_Message_Body.MetadataGDPRStatus
       - Object.Email_Message_Body.MetadataLineage
@@ -2847,6 +2870,7 @@ vertexIndexes:
       - Object.Email_Message_Body.NLP_Date
       - Object.Email_Message_Body.NLP_Time
       - Object.Email_Message_Body.NLP_CPF
+      - Object.Email_Message_Body.Sent_Date_Time
       - Object.Email_Message_Body.Size_Bytes
     propertyKeysMappings:
     

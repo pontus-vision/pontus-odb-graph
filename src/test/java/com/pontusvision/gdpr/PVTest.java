@@ -809,7 +809,7 @@ public class PVTest extends AppTest {
     }
   }
   @Test
-  public void test00016FilesNLP() throws InterruptedException {
+  public void test00017FilesNLP() throws InterruptedException {
 
     csvTestUtil("phase1.csv", "phase1_csv");
     csvTestUtil("phase1.csv", "phase1_csv");
@@ -867,6 +867,22 @@ public class PVTest extends AppTest {
 
       assertEquals("1", mickeyCristinoMatchCount,
           "Ensure that We only have 1 NLP match (for Mickey Cristino)");
+
+      Resource res = new Resource();
+
+      Md2Request md2Request = new Md2Request();
+      md2Request.settings.limit = 10L;
+      md2Request.settings.start = 0L;
+      md2Request.query.name = "John Smith";
+      md2Request.query.email = "retoh@optonline.net";
+      md2Request.query.docCpf = "4736473678";
+
+      Md2Reply md2Reply = res.md2Search(md2Request);
+
+      assertEquals(1, md2Reply.total);
+      assertEquals(1, md2Reply.track.length);
+
+
 
 
     } catch (ExecutionException e) {

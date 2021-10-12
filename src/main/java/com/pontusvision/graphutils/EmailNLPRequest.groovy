@@ -17,6 +17,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
   String attachmentContentType
   String attachmentId
+  String attachmentName
 
   String emailSubject
   String emailId
@@ -36,6 +37,10 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
   static Map<String, String> getMapFromEmailNLPRequest(EmailNLPRequest req) {
     Map<String, String> retVal = [:]
+    retVal.put("attachmentContentType", req.attachmentContentType?:"")
+    retVal.put("attachmentId", req.attachmentId?:"")
+    retVal.put("attachmentName", req.attachmentName?:"")
+    retVal.put("sizeBytes", req.sizeBytes?.toString()?:"")
 
     retVal.put("emailSubject", req.emailSubject.toString() ?: "[]")
     retVal.put("emailId", req.emailId.toString() ?: "[]")
@@ -327,9 +332,24 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
       attachmentIdVtxProp.name = "${emailVtxLabel}.Size_Bytes"
       attachmentIdVtxProp.mandatoryInSearch = true
       attachmentIdVtxProp.val = req.sizeBytes.toString()
+      attachmentIdVtxProp.type = VertexProps.TypeEnum.JAVA_LANG_DOUBLE
       emailVtx.props.push(attachmentIdVtxProp)
-
     }
+    if (req.attachmentName) {
+      VertexProps vtxProp = new VertexProps()
+      vtxProp.name = "${emailVtxLabel}.Attachment_Name"
+      vtxProp.mandatoryInSearch = true
+      vtxProp.val = req.attachmentName
+      emailVtx.props.push(vtxProp)
+    }
+    if (req.emailSubject) {
+      VertexProps vtxProp = new VertexProps()
+      vtxProp.name = "${emailVtxLabel}.Email_Subject"
+      vtxProp.mandatoryInSearch = true
+      vtxProp.val = req.emailSubject
+      emailVtx.props.push(vtxProp)
+    }
+
 
 
     createEmailNLPVertexProp("${emailVtxLabel}.NLP_Address", req.address, emailVtx)

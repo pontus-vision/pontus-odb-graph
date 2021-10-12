@@ -168,7 +168,7 @@ schema:
         - name: Owner
         - name: Path
         - name: Server
-        - name: SizeBytes
+        - name: Size_Bytes
           dataType: Double
 
 
@@ -512,8 +512,10 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Created_Date_Time
         - name: Email_Id
         - name: Attachment_Id
+        - name: Attachment_Name
         - name: Attachment_Content_Type
         - name: MetadataController
         - name: MetadataGDPRStatus
@@ -535,13 +537,17 @@ schema:
         - name: NLP_Date
         - name: NLP_Time
         - name: NLP_CPF
+        - name: Sent_Date_Time
         - name: Size_Bytes
+          dataType: Double
 
     - name: "Object.Email_Message_Body"
       partition: false
       useStatic: false
       props:
         - name: Email_Id
+        - name: Email_Subject
+        - name: Created_Date_Time
         - name: MetadataController
         - name: MetadataGDPRStatus
         - name: MetadataLineage
@@ -562,7 +568,9 @@ schema:
         - name: NLP_Date
         - name: NLP_Time
         - name: NLP_CPF
+        - name: Sent_Date_Time
         - name: Size_Bytes
+          dataType: Double
 
 
 

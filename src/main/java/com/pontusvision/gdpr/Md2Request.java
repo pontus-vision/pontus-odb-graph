@@ -3,7 +3,7 @@ package com.pontusvision.gdpr;
 import java.io.Serializable;
 
 public class Md2Request implements  Serializable{
-  public class Settings implements  Serializable{
+  public static class Settings implements  Serializable{
     Long start;
     Long limit;
 
@@ -24,7 +24,7 @@ public class Md2Request implements  Serializable{
     }
 
   }
-  public class Query implements Serializable{
+  public static class Query implements Serializable{
     String name;
     String docCpf;
     String email;
@@ -54,8 +54,8 @@ public class Md2Request implements  Serializable{
 
 
   }
-  Settings settings;
-  Query query;
+  Settings settings = new Settings();
+  Query query = new Query();
 
   public Settings getSettings() {
     return settings;
