@@ -113,10 +113,10 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
     Vertex eventEmailMessageGroupVtx = createEventGroupIngestionVtx(updateReq, dataSourceName,"Event.Email_Msg_Group")
 
-    createEdge('Has_Ingestion', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
+    createEdge('Has_Ingestion_Event', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
 
     Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
-    createEdge('Has_Ingestion', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
+    createEdge('Has_Ingestion_Event', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
 
     createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_To_Group', 'Email_To', req.toEmailAddresses)
     createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_From_Group', 'Email_From', req.toEmailAddresses)

@@ -268,8 +268,8 @@
           {
             "name": "Object.Phone_Number.Type",
             "val": "Telefone Fixo",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -297,8 +297,8 @@
           {
             "name": "Object.Phone_Number.Type",
             "val": "Telefone Comercial",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",

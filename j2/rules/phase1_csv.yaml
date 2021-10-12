@@ -12,8 +12,7 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Natural.Type
           val: cliente
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
         - name: Person.Natural.Customer_ID
           val: ${Customer_ID?.trim()}
           mandatoryInSearch: True

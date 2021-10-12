@@ -158,15 +158,15 @@ public class PVTest extends AppTest {
               "eq('1º CURSO - LGPD - LEI GERAL DE PROTEÇÃO DE DADOS')).next().id().toString()").get().toString();
       String curso1ConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
       String curso1Connections = App.executor.eval(curso1ConnectionsQuery).get().toString();
-      assertEquals(curso1Connections, "2");
+      assertEquals("1",curso1Connections );
 
 //    test0000 for Object.Awareness_Campaign.Description 2
-      String userId5 =
+      String curso2Connections =
           App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
-              "eq('BASES LEGAIS LGPD')).next().id().toString()").get().toString();
-      String curso2ConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
-      String curso2Connections = App.executor.eval(curso2ConnectionsQuery).get().toString();
-      assertEquals(curso2Connections, "2");
+              "eq('BASES LEGAIS LGPD')).bothE().count().next().toString()").get().toString();
+//      String curso2ConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
+//      String curso2Connections = App.executor.eval(curso2ConnectionsQuery).get().toString();
+      assertEquals("2",curso2Connections );
 
 //    test0000 for Object.Awareness_Campaign.Description 3
       String userId6 =
@@ -174,7 +174,7 @@ public class PVTest extends AppTest {
               "eq('LGPD - MULTAS E SANÇÕES')).next().id().toString()").get().toString();
       String curso3ConnectionsQuery = "App.g.V(\"" + userId6 + "\").bothE().count().next().toString()";
       String curso3Connections = App.executor.eval(curso3ConnectionsQuery).get().toString();
-      assertEquals(curso3Connections, "1");
+      assertEquals("1",curso3Connections);
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -403,29 +403,18 @@ public class PVTest extends AppTest {
 
     String res = null;
     try {
-      Path resourceDirectory = Paths.get(".");
-      String pwdAbsolutePath = resourceDirectory.toFile().getAbsolutePath();
-      String csvPath = Paths.get(pwdAbsolutePath, "src", "test", "resources", "phase1.csv").toString();
+      // Ingest twice, and ensure only one JOHN SMITH remains
+      csvTestUtil("phase1.csv", "phase1_csv");
+      csvTestUtil("phase1.csv", "phase1_csv");
 
-      Reader in = new FileReader(csvPath);
-      Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
+      String numJohnSmiths = App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('JOHN SMITH')).id()" +
+              ".count().next().toString()")
+          .get().toString();
 
-      List<Map> listOfMaps = new ArrayList<>();
-      for (CSVRecord record : records) {
-        Map recMap = record.toMap();
-        recMap.put("currDate", new Date().toString());
-        listOfMaps.add(recMap);
-      }
+      assertEquals("1", numJohnSmiths, "only one John smith after multiple trials");
 
 
-      Map<String, Object> bindings = new HashMap() {{
-        put("listOfMaps", listOfMaps);
-      }};
-
-      res = App.executor.eval(phase1QueryStr, bindings).get().toString();
-      System.out.println(res);
-
-    } catch (ExecutionException | IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);
     }
@@ -819,4 +808,74 @@ public class PVTest extends AppTest {
 
     }
   }
+  @Test
+  public void test00016FilesNLP() throws InterruptedException {
+
+    csvTestUtil("phase1.csv", "phase1_csv");
+    csvTestUtil("phase1.csv", "phase1_csv");
+
+    jsonTestUtil("pv-extract-file-ingest.json", "$.value", "pv_file");
+
+    try {
+      String numDataSources =
+          App.executor.eval("App.g.V().has('Object.Data_Source.Name',eq('file_server_srv1')).count().next().toString()")
+              .get().toString();
+
+      assertEquals("1", numDataSources, "Ensure that We only have one data source");
+
+      String currDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+      String numDataEventFileGroups =
+          App.executor.eval("App.g.V().has('Event.File_Group_Ingestion.Ingestion_Date',eq('" + currDate + "')).count().next().toString()")
+              .get().toString();
+
+      assertEquals("1", numDataEventFileGroups, "Ensure that We only have one Group");
+
+
+      String numIngestionEvents = App.executor.eval("App.g.V().has('Event.File_Group_Ingestion.Ingestion_Date',eq('" + currDate + "'))" +
+              "out('Has_Ingestion_Event').count().next().toString()")
+          .get().toString();
+
+      assertEquals("3", numIngestionEvents, "Ensure that We only have 3 File events");
+
+      String numNLPEvents = App.executor.eval("App.g.V().has('Event.File_Group_Ingestion.Ingestion_Date',eq('" + currDate + "'))" +
+              ".out('Has_Ingestion_Event').out('Has_NLP_Events').count().next().toString()")
+          .get().toString();
+
+      assertEquals("2", numNLPEvents,
+          "Ensure that We only have 2 NLP events (for John Smith and Mickey Cristino)");
+
+      String numNLPEvents2 = App.executor.eval("App.g.V().has('Event.File_Ingestion.Name',eq('c.out'))" +
+              ".out('Has_NLP_Events').out('Has_NLP_Events').count().next().toString()")
+          .get().toString();
+
+      assertEquals("2", numNLPEvents2,
+          "Ensure that We only have 2 NLP events (for John Smith and Mickey Cristino)");
+
+
+      String johnSmithMatchCount = App.executor.eval("App.g.V().has('Event.File_Ingestion.Name',eq('c.out'))" +
+              ".out('Has_NLP_Events').out('Has_NLP_Events').has('Person.Natural.Full_Name', eq('JOHN SMITH'))" +
+              ".count().next().toString()")
+          .get().toString();
+
+      assertEquals("1", johnSmithMatchCount,
+          "Ensure that We only have 1 NLP match (for John Smith)");
+
+      String mickeyCristinoMatchCount = App.executor.eval("App.g.V().has('Event.File_Ingestion.Name',eq('c.out'))" +
+              ".out('Has_NLP_Events').out('Has_NLP_Events').has('Person.Natural.Full_Name', eq('MICKEY CRISTINO'))" +
+              ".count().next().toString()")
+          .get().toString();
+
+      assertEquals("1", mickeyCristinoMatchCount,
+          "Ensure that We only have 1 NLP match (for Mickey Cristino)");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
 }

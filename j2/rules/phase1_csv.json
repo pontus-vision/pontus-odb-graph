@@ -17,8 +17,7 @@
           {
             "name": "Person.Natural.Type",
             "val": "cliente",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Customer_ID",

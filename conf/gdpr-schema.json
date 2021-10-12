@@ -1744,6 +1744,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Email_Message_Attachment.Size_Bytes",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Object.Email_Message_Body",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1855,6 +1860,11 @@
     },
     {
       "name": "Object.Email_Message_Body.NLP_CPF",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Email_Message_Body.Size_Bytes",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -4079,7 +4089,8 @@
         "Object.Email_Message_Attachment.NLP_Money",
         "Object.Email_Message_Attachment.NLP_Date",
         "Object.Email_Message_Attachment.NLP_Time",
-        "Object.Email_Message_Attachment.NLP_CPF"
+        "Object.Email_Message_Attachment.NLP_CPF",
+        "Object.Email_Message_Attachment.Size_Bytes"
       ],
       "propertyKeysMappings": {}
     },
@@ -4111,7 +4122,8 @@
         "Object.Email_Message_Body.NLP_Money",
         "Object.Email_Message_Body.NLP_Date",
         "Object.Email_Message_Body.NLP_Time",
-        "Object.Email_Message_Body.NLP_CPF"
+        "Object.Email_Message_Body.NLP_CPF",
+        "Object.Email_Message_Body.Size_Bytes"
       ],
       "propertyKeysMappings": {}
     },

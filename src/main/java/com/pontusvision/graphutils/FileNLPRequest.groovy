@@ -136,10 +136,10 @@ class FileNLPRequest implements Serializable {
     Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
     Vertex eventGroupFileIngestionVtx = createEventGroupIngestionVtx(updateReq, dataSourceName)
 
-    createEdge('Has_Ingestion', dataSourceVtx.name, eventGroupFileIngestionVtx.name, updateReq)
+    createEdge('Has_Ingestion_Event', dataSourceVtx.name, eventGroupFileIngestionVtx.name, updateReq)
 
     Vertex eventFileVtx = createEventFileIngestionVtx(req, updateReq)
-    createEdge('Has_Ingestion', eventGroupFileIngestionVtx.name, eventFileVtx.name, updateReq)
+    createEdge('Has_Ingestion_Event', eventGroupFileIngestionVtx.name, eventFileVtx.name, updateReq)
 
 
     StringBuffer sb = new StringBuffer()
@@ -250,38 +250,52 @@ class FileNLPRequest implements Serializable {
   static Set<ORID> createEventNLPGroups(FileNLPRequest req, ORID emailBodyOrAttachment, String[] emailAddrs,
                                         minThreshold = 1, Integer maxThreshold = 100) {
 
-    String[] person = req.person
-
-    Traversal[] personOptions = new Traversal[person.length]
-    for (int i = 0; i < person.length; i++) {
-      personOptions[i] = __.has('Person.Natural.Full_Name', PText.textContains(person[i]))
+    List <Traversal> personOptions = new LinkedList<>()
+    if (req.person) {
+      String[] person = req.person
+      for (int i = 0; i < person.length; i++) {
+        personOptions.add( __.has('Person.Natural.Full_Name', PText.textContains(person[i]?.toUpperCase())))
+      }
     }
 
-    String[] cpfs = req.cpf
-    Traversal[] cpfOptions = new Traversal[cpfs.length]
-    for (int i = 0; i < cpfs.length; i++) {
-      cpfOptions[i] = __.has('Person.Natural.Customer_Id', P.eq(cpfs[i]))
+
+    List<Traversal> cpfOptions = new LinkedList<>()
+
+    if (req.cpf) {
+      String[] cpfs = req.cpf
+      for (int i = 0; i < cpfs.length; i++) {
+        cpfOptions.push( __.has('Person.Natural.Customer_Id', P.eq(cpfs[i])))
+      }
     }
 
-    Traversal[] emailOptions = new Traversal[emailAddrs.length]
-    for (int i = 0; i < emailAddrs.length; i++) {
-      emailOptions[i] = __.has('Object.Email_Address.Email', PText.textContains(emailAddrs[i]))
+    List<Traversal> emailOptions = new LinkedList<>()
+    if (emailAddrs) {
+      for (int i = 0; i < emailAddrs.length; i++) {
+        emailOptions.push(__.has('Object.Email_Address.Email', PText.textContains(emailAddrs[i]?.toLowerCase())))
+      }
     }
-    Traversal[] personNameCpfOptions = [personOptions, cpfOptions].flatten().toArray(new Traversal[0])
+
+    Traversal[] personNameCpfOptions =
+            [personOptions.toArray(new Traversal[0]), cpfOptions.toArray(new Traversal[0])]
+            .flatten().toArray(new Traversal[0])
 
     def persons = (App.g.V().or(personNameCpfOptions))
 
     GraphTraversal personsClone = persons.clone() as GraphTraversal
 
-    def emails = App.g.V().or(emailOptions)
-
     Set<ORID> retVal = null
-    try {
-      retVal = persons.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>
 
-    } catch (Throwable t) {
-      //ignore
+    if (emailOptions.size() > 0){
+      def emails = App.g.V().or(emailOptions.toArray(new Traversal[0]))
+
+      try {
+        retVal = persons.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>
+
+      } catch (Throwable t) {
+        //ignore
+      }
     }
+
 
     if (!retVal || retVal.size() <= minThreshold) {
       retVal = personsClone.id().toSet() as Set<ORID>
@@ -291,22 +305,23 @@ class FileNLPRequest implements Serializable {
     int count = 0
     for (ORID orid : retVal) {
 
-      String custId = App.g.V(orid).properties('Person.Natural.Customer_Id').next().toString()
+      String custId = App.g.V(orid).values('Person.Natural.Customer_ID').next().toString()
       def nlpGroupTrav =
               App.g.V().has('Event.NLP_Group.Person_Id', custId)
                       .has('Event.NLP_Group.Ingestion_Date', currDate)
+                      .id()
 
       def nlpGroupVtxId
       if (nlpGroupTrav.hasNext()) {
-        nlpGroupVtxId = nlpGroupTrav.id().next()
+        nlpGroupVtxId = nlpGroupTrav.next()
       } else {
         nlpGroupVtxId = App.g.addV('Event.NLP_Group')
                 .property('Event.NLP_Group.Person_Id', custId)
                 .property('Event.NLP_Group.Ingestion_Date', currDate).id().next()
       }
 
-      App.g.addE('Has_NLP_Events').from(App.g.V(emailBodyOrAttachment)).to(App.g.V(nlpGroupVtxId))
-      App.g.addE('Has_NLP_Events').from(App.g.V(nlpGroupVtxId)).to(App.g.V(orid))
+      App.g.addE('Has_NLP_Events').from(App.g.V(emailBodyOrAttachment)).to(App.g.V(nlpGroupVtxId)).next()
+      App.g.addE('Has_NLP_Events').from(App.g.V(nlpGroupVtxId)).to(App.g.V(orid)).next()
       count++
       if (count >= maxThreshold) {
         break
@@ -321,7 +336,7 @@ class FileNLPRequest implements Serializable {
     fileIngestionVtx.props = []
 
     fileIngestionVtx.label = fileIngestionVtxLabel
-    fileIngestionVtx.name = req.name
+    fileIngestionVtx.name = fileIngestionVtxLabel
 
 
     if (req.created) {

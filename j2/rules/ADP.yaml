@@ -175,8 +175,8 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Phone_Number.Type
           val: Telefone Fixo
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -194,8 +194,8 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Phone_Number.Type
           val: Telefone Comercial
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telefone_Comercial?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False

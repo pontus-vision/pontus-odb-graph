@@ -114,7 +114,7 @@ rules:
           Full_Name_fuzzy: "${First_Name?.trim().toUpperCase()} ${Last_Name?.trim().toUpperCase()}"
           Type:
             val: "cliente"
-            excludeFromSearch: true
+#            excludeFromSearch: true
           Customer_ID: "${Customer_ID?.trim()}"
           Date_Of_Birth:
             val: "${DateofBirth}"

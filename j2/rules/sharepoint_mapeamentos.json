@@ -29,8 +29,8 @@
           {
             "name": "Object.Data_Source.Name",
             "val": "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}",
-            "processAll": true,
             "mandatoryInSearch": true,
+            "processAll": true,
             "type": "[Lcom.pontusvision.utils.SharepointRef;",
             "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
           }
@@ -109,8 +109,8 @@
           {
             "name": "Object.Sensitive_Data.Description",
             "val": "${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}",
-            "processAll": true,
             "mandatoryInSearch": true,
+            "processAll": true,
             "type": "[Ljava.lang.String;",
             "postProcessor": "${it?.toUpperCase()?.trim()}"
           }
@@ -122,8 +122,8 @@
           {
             "name": "Object.Lawful_Basis.Description",
             "val": "${new groovy.json.JsonBuilder(Base_x0020_legal)}",
-            "processAll": true,
             "mandatoryInSearch": true,
+            "processAll": true,
             "type": "[Ljava.lang.String;",
             "postProcessor": "${it?.toUpperCase()?.trim()}"
           }
