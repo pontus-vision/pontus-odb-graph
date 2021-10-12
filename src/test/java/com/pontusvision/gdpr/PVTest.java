@@ -855,4 +855,24 @@ public class PVTest extends AppTest {
 
     }
   }
+
+  @Test
+  public void test00018MD2() throws InterruptedException {
+
+    try {
+
+      jsonTestUtil("md2.json", "$.person", "pv_md2");
+
+      String getPersonNaturalFullName =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("1", getPersonNaturalFullName, "um registro em nome de CARLOS MAURICIO DIRIZ");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+  }
 }
