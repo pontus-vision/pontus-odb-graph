@@ -17,11 +17,13 @@
           {
             "name": "Person.Natural.Type",
             "val": "Leads",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Title",
             "val": "${Title}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -38,6 +40,7 @@
           {
             "name": "Person.Organisation.Type",
             "val": "Leads",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -49,16 +52,19 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${Telephone_no}"
+            "val": "${Telephone_no}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Phone_Number.Type",
             "val": "Leads",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(Telephone_no?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
@@ -77,16 +83,19 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${Mobile_Number}"
+            "val": "${Mobile_Number}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Phone_Number.Type",
             "val": "Leads",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
@@ -114,23 +123,28 @@
         "props": [
           {
             "name": "Object.Contract.Date",
-            "val": "${Status_Since}"
+            "val": "${Status_Since}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Contract.Description",
-            "val": "${Description}"
+            "val": "${Description}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Contract.Id",
-            "val": "${Lead_Group} - ${Lead_ID} - ${Number}"
+            "val": "${Lead_Group} - ${Lead_ID} - ${Number}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Contract.Status",
-            "val": "${Customer_Status}"
+            "val": "${Customer_Status}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Contract.Type",
             "val": "Leads Contract",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -141,7 +155,8 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${E_Mail_Address?.trim()?.toLowerCase()}"
+            "val": "${E_Mail_Address?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -151,27 +166,32 @@
           {
             "name": "Event.Ingestion.Type",
             "val": "sap/c@p",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
             "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Update_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -198,12 +218,14 @@
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -214,15 +236,18 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p"
+            "val": "sap/c@p",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p"
+            "val": "sap/c@p",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Leads no SAP/C@P"
+            "val": "Registros de Leads no SAP/C@P",
+            "mandatoryInSearch": true
           }
         ]
       }
