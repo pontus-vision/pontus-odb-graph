@@ -3,47 +3,45 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "percentageThreshold": 10,
+        "condition": "${name?.trim()?.length() > 0}",
         "props": [
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${pg_nlp_res_person}",
-            "predicate": "textContainsFuzzy",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
+            "name": "Person.Natural.Full_Name",
+            "val": "${name?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Full_Name",
-            "val": "${pg_nlp_res_person}",
-            "predicate": "textContainsFuzzy",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
+            "name": "Person.Natural.Customer_ID",
+            "val": "${document?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Location.Address",
+        "label": "Object.Identity_Card",
+        "condition": "${document?.replaceAll('[^0-9]','')?.length() > 0}",
         "props": [
           {
-            "name": "Location.Address.parser.postcode",
-            "val": "${pg_nlp_res_post_code}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${com.pontusvision.utils.PostCode.format(eachPostCode)}",
-            "postProcessorVar": "eachPostCode"
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${document?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CPF",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
       {
         "label": "Object.Email_Address",
+        "condition": "${email?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${pg_nlp_res_emailaddress?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
+            "val": "${email?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -52,19 +50,13 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "PDF Form Files",
+            "val": "MD2",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
-            "val": "Unstructured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Ingestion.Domain_b64",
-            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "val": "Structured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -82,12 +74,12 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "Contratos",
+            "val": "MD2",
             "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Contratos em AWS S3",
+            "val": "Dados RH Colaboradores MD2",
             "mandatoryInSearch": true
           },
           {
@@ -102,12 +94,12 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "Contratos em AWS S3",
+            "val": "MD2",
             "mandatoryInSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Operation",
-            "val": "Unstructured Data Insertion",
+            "val": "Structured Data Insertion",
             "mandatoryInSearch": true
           },
           {
@@ -135,8 +127,8 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Object.Data_Source",
+        "toVertexLabel": "Event.Group_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
@@ -145,8 +137,18 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Identity_Card"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Email_Address"
       }
     ]
   }

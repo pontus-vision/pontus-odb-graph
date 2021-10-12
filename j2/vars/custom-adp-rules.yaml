@@ -21,7 +21,9 @@ rules:
         props:
           ID: "${CPF?.replaceAll('[^0-9]', '')}"
 #          Title: "${Matricula}"
-          Role: "${(Cargo?.trim()?.length()>0)?Cargo:'Cargo não definido'} - ${Funcao?.trim()?.length()>0?Funcao:'Função não definida'}"
+          Role:
+            val: "${(Cargo?.trim()?.length()>0)?Cargo:'Cargo não definido'} - ${Funcao?.trim()?.length()>0?Funcao:'Função não definida'}"
+            excludeFromSearch: true
           Full_Name: "${Nome?.trim().toUpperCase()}"
 
       - label: Person.Natural
@@ -154,7 +156,7 @@ rules:
             mandatoryInSearch: false
           Type:
             val: "Telefone Fixo"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
           Numbers_Only:
             val: "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -171,7 +173,7 @@ rules:
             mandatoryInSearch: false
           Type:
             val: "Telefone Comercial"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
           Numbers_Only:
             val: "${(Telefone_Comercial?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true

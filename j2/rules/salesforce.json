@@ -13,27 +13,32 @@
           {
             "name": "Person.Natural.Full_Name_fuzzy",
             "val": "${FirstName?.toUpperCase()?.trim()} ${LastName?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Last_Name",
             "val": "${LastName?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Person.Natural.Date_Of_Birth",
             "val": "${Birthdate?:'1666-01-01'}",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true,
             "type": "java.util.Date"
           },
           {
             "name": "Person.Natural.Title",
             "val": "${Title?:Salutation?:''}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Nationality",
             "val": "${MailingCountry?:'Unknown'}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
@@ -44,11 +49,13 @@
           {
             "name": "Person.Natural.Gender",
             "val": "Unknown",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Person.Natural.Type",
             "val": "${Tipo__c?Tipo__c.toLowerCase():'leads'}",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           }
         ]
@@ -60,6 +67,7 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "CPF",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
@@ -80,12 +88,14 @@
           {
             "name": "Location.Address.parser",
             "val": "${ ( (MailingStreet?:'')+ '\\\\n' + (MailingCity?:'') + '\\\\n' + (MailingState?:'') + '\\\\n' + (MailingCountry?:'')).replaceAll('\\\\n', ' ') }",
+            "mandatoryInSearch": false,
             "type": "com.pontusvision.utils.LocationAddress",
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(MailingPostalCode)}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -105,16 +115,19 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${Phone}"
+            "val": "${Phone}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Phone_Number.Type",
             "val": "Work",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(Phone?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
@@ -167,12 +180,14 @@
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -184,21 +199,25 @@
           {
             "name": "Event.Ingestion.Type",
             "val": "Salesforce CRM System",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
             "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -210,11 +229,13 @@
           {
             "name": "Event.Consent.Status",
             "val": "Consentimento",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Consent.Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -227,7 +248,8 @@
             "name": "Object.Privacy_Notice.Who_Is_Collecting",
             "val": [
               "CRM System"
-            ]
+            ],
+            "mandatoryInSearch": true
           }
         ]
       }

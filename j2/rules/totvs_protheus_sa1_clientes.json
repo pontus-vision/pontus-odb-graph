@@ -7,15 +7,18 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${A1_NOME?.trim()?.toUpperCase()}"
+            "val": "${A1_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${A1_NOME?.trim()?.toUpperCase()}"
+            "val": "${A1_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
             "val": "Clientes",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
@@ -37,7 +40,8 @@
           },
           {
             "name": "Person.Organisation.Name",
-            "val": "${A1_NOME?.trim()?.toUpperCase()}"
+            "val": "${A1_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -46,16 +50,19 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${A1_TEL}"
+            "val": "${A1_TEL}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Phone_Number.Type",
             "val": "Office",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
@@ -80,6 +87,7 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "RG",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -97,6 +105,7 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "CPF",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -106,7 +115,8 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${A1_EMAIL?.trim()?.toLowerCase()}"
+            "val": "${A1_EMAIL?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -116,11 +126,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Location.Address.Type",
             "val": "Business",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -131,11 +143,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Location.Address.Type",
             "val": "Residence",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -146,27 +160,32 @@
           {
             "name": "Event.Ingestion.Type",
             "val": "totvs/protheus/sa1_clientes",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
             "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
             "val": "${firstUpdate}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Update_Date",
             "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -193,12 +212,14 @@
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -209,15 +230,18 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "totvs/protheus/sa1_clientes"
+            "val": "totvs/protheus/sa1_clientes",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "totvs/protheus/sa1_clientes"
+            "val": "totvs/protheus/sa1_clientes",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Clientes no protheus/Totvs"
+            "val": "Registros de Clientes no protheus/Totvs",
+            "mandatoryInSearch": true
           }
         ]
       }

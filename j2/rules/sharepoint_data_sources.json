@@ -7,15 +7,18 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sharepoint/data-sources"
+            "val": "sharepoint/data-sources",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sharepoint/data-sources"
+            "val": "sharepoint/data-sources",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Data Sources"
+            "val": "Data Sources",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -37,31 +40,37 @@
           {
             "name": "Object.Data_Source.Engine",
             "val": "${field_Sistema}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
             "val": "${field_Tipo_x0020_Sistema}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Domain",
             "val": "${field_Tabela}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.URI_Delete",
             "val": "${field_URL_x0020_Prefixo_x0020_Delete}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.URI_Update",
             "val": "${field_URL_x0020_Prefixo_x0020_Update}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.URI_Read",
             "val": "${field_URL_x0020_Prefixo_x0020_Read}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -72,6 +81,7 @@
           {
             "name": "Object.Data_Policy.Update_Frequency",
             "val": "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
@@ -92,27 +102,32 @@
           {
             "name": "Event.Ingestion.Type",
             "val": "sharepoint/data-sources",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
             "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Update_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -124,12 +139,14 @@
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
@@ -145,11 +162,13 @@
           },
           {
             "name": "Event.Group_Ingestion.Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Event.Group_Ingestion.mandatoryInSearch",
-            "val": true
+            "val": true,
+            "mandatoryInSearch": true
           }
         ]
       }

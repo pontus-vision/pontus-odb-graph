@@ -7,15 +7,18 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
+            "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
+            "val": "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
             "val": "Fornecedores",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -32,6 +35,7 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "CPF",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -47,7 +51,8 @@
           },
           {
             "name": "Person.Organisation.Name",
-            "val": "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
+            "val": "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -57,15 +62,18 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
+            "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${Vendor}"
+            "val": "${Vendor}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
             "val": "Fornecedores Sem Tax",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
@@ -77,16 +85,19 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${Telephone_1}"
+            "val": "${Telephone_1}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Phone_Number.Type",
             "val": "Fornecedor",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
@@ -105,16 +116,19 @@
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${Telephone_2}"
+            "val": "${Telephone_2}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Phone_Number.Type",
             "val": "Fornecedor",
+            "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
@@ -148,27 +162,32 @@
           {
             "name": "Event.Ingestion.Type",
             "val": "sap/fornecedores",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Operation",
             "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Create_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Ingestion.Metadata_Update_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -195,12 +214,14 @@
           {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Metadata_End_Date",
             "val": "${new Date()}",
+            "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           }
@@ -211,15 +232,18 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/fornecedores"
+            "val": "sap/fornecedores",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/fornecedores"
+            "val": "sap/fornecedores",
+            "mandatoryInSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Fornecedores no Polaris/SAP"
+            "val": "Registros de Fornecedores no Polaris/SAP",
+            "mandatoryInSearch": true
           }
         ]
       }

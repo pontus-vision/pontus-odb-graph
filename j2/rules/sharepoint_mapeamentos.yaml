@@ -20,8 +20,8 @@ updatereq:
       props:
         - name: Object.Data_Source.Name
           val: ${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}
-          processAll: True
           mandatoryInSearch: True
+          processAll: True
           type: "[Lcom.pontusvision.utils.SharepointRef;"
           postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}
     
@@ -41,32 +41,39 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Data_Procedures.Type_Of_Natural_Person
           val: ${Categoria_x0020_dos_x0020_titula}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Procedures.BusinessAreaResponsible
           val: ${_x00c1_rea} - ${Respons_x00e1_velLookupId}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Procedures.MacroProcessName
           val: ${Processo}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Procedures.Country_Where_Stored
           val: ${Pa_x00ed_s_x0020_onde_x0020_as_x}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Procedures.Why_Is_It_Collected
           val: ${Finalidade_x0020_do_x0020_proces}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Procedures.Info_Collected
           val: ${Dados_x0020_pessoais_x0020_utili}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Procedures.Description
           val: ${Fluxo_x0020_interno_x0020_dos_x0}
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object.Sensitive_Data
       props:
         - name: Object.Sensitive_Data.Description
           val: ${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}
-          processAll: True
           mandatoryInSearch: True
+          processAll: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
     
@@ -74,8 +81,8 @@ updatereq:
       props:
         - name: Object.Lawful_Basis.Description
           val: ${new groovy.json.JsonBuilder(Base_x0020_legal)}
-          processAll: True
           mandatoryInSearch: True
+          processAll: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
     
@@ -83,19 +90,24 @@ updatereq:
       props:
         - name: Event.Ingestion.Type
           val: sharepoint/mapeamento-de-processo
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
           val: Structured Data Insertion
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Domain_b64
           val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Create_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Ingestion.Metadata_Update_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
@@ -103,10 +115,12 @@ updatereq:
       props:
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Metadata_End_Date
           val: ${new Date()}
+          mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Type
