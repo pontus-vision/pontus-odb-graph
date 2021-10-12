@@ -5,7 +5,7 @@ rules:
       - label: Person.Natural
         props:
           Full_Name:
-            val: "${First_Name}?.trim()?.toUpperCase() ${Last_Name}?.trim()?.toUpperCase()"
+            val: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
             mandatoryInSearch: true
           Customer_ID: # ?!?!? Lead_Group - Number - Code
             val: "${Lead_ID}"
@@ -93,9 +93,9 @@ rules:
             excludeFromSearch: true
 
       - label: Object.Email_Address
-        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+#        condition: "${Email_Address?.trim()?.length() > 0}"
         props:
-          Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
+          Email: "${Email_Address?.trim()?.toLowerCase()}"
 
       - label: Event.Ingestion
         props:
@@ -165,7 +165,7 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexName: "telephone"
 
-      - label: "Has_Phone_Number"
+      - label: "Has_Phone"
         fromVertexLabel: "Person.Natural"
         toVertexName: "mobile"
 

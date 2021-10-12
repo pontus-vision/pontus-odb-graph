@@ -5,7 +5,7 @@ updatereq:
     - label: Person.Natural
       props:
         - name: Person.Natural.Full_Name
-          val: ${First_Name}?.trim()?.toUpperCase() ${Last_Name}?.trim()?.toUpperCase()
+          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Customer_ID
           val: ${Lead_ID}
@@ -99,10 +99,9 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Email_Address
-      condition: ${E_Mail_Address?.trim()?.length() > 0}
       props:
         - name: Object.Email_Address.Email
-          val: ${E_Mail_Address?.trim()?.toLowerCase()}
+          val: ${Email_Address?.trim()?.toLowerCase()}
           mandatoryInSearch: True
     
     - label: Event.Ingestion
@@ -180,7 +179,7 @@ updatereq:
   - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexName: telephone
-  - label: Has_Phone_Number
+  - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexName: mobile
   - label: Uses_Email
