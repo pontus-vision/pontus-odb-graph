@@ -814,7 +814,7 @@ public class PVTest extends AppTest {
       String dirtyHeader = "A string. With; loads: of # Chars,{ a.;~^Ç``\"oçã}][";
       String cleanHdr = Ingestion.cleanHeader(dirtyHeader);
       assertEquals(
-          "A_string__With__loads__of__Chars___a____C___oca___",
+          "A_string__With__loads__of___Chars___a____C___oca___",
           cleanHdr,
           "check clean headers is OK");
 
