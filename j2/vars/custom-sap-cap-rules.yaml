@@ -4,82 +4,78 @@ rules:
     vertices:
       - label: Person.Natural
         props:
-          Full_Name:
-            val: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
-          Customer_ID: # ?!?!? Lead_Group - Number - Code
-            val: "${Lead_ID}"
-            mandatoryInSearch: true
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+          Customer_ID: "${Lead_ID}"
           Type:
-            val: "Leads"
+            val: "Costumer Prospect"
             excludeFromSearch: true
           Title:
             val: "${Title}"
+            excludeFromSearch: true
+          Nationality:
+            val: "${Nationality?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+#        condition: "${}"
+        name: CPF
+        props:
+          Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "CPF"
             excludeFromSearch: true
 
       - label: Person.Organisation
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
-          Name:
-            val: "${Company_Name_1?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
+          Name: "${Company_Name_1?.trim()?.toUpperCase()}"
           Type:
-            val: "Leads"
+            val: "Costumer Prospect"
             excludeFromSearch: true
 
       - label: Object.Phone_Number
-        condition: "${Telephone_no?.trim()?.length() > 0}"
+        condition: "${Telephone_no?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
           Raw:
             val: "${Telephone_no}"
-            mandatoryInSearch: false
           Type:
-            val: "Leads"
+            val: "Costumer Prospect"
             excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
-
           Last_7_Digits:
             val: "${(((Telephone_no?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Object.Phone_Number
-        condition: "${Mobile_Number?.trim()?.length() > 0}"
+        condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: mobile
         props:
           Raw:
             val: "${Mobile_Number}"
-            mandatoryInSearch: false
           Type:
-            val: "Leads"
+            val: "Costumer Prospect"
             excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
-
           Last_7_Digits:
             val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Location.Address
-        condition: "${Company_Name_1?.trim()?.length() > 0}"
+#        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
-          Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
-#            av. marcio gomes 333, AA3, Belo Horizonte - Brasil, 6758090
-            mandatoryInSearch: true
+          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
 #          Type:
 #            val: "Business"
 #            excludeFromSearch: true
 #          parser:
 #            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
-#            mandatoryInSearch: true
 #            type: "com.pontusvision.utils.LocationAddress"
 
       - label: Object.Contract
@@ -89,7 +85,7 @@ rules:
           Id: "${Lead_Group} - ${Lead_ID} - ${Number}"
           Status: "${Customer_Status}"
           Type:
-            val: "Leads Contract"
+            val: "Costumer Prospect Contract"
             excludeFromSearch: true
 
       - label: Object.Email_Address
@@ -100,7 +96,7 @@ rules:
       - label: Event.Ingestion
         props:
           Type:
-            val: sap/c@p
+            val: "sap/c@p Leads"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -120,17 +116,14 @@ rules:
       - label: Event.Group_Ingestion
         props:
           Type:
-            val: sap/c@p
-            mandatoryInSearch: true
+            val: "sap/c@p Leads"
+            excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
-            #            mandatoryInSearch: false
             excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
@@ -140,9 +133,15 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: sap/c@p
-          Type: sap/c@p
-          Description: Registros de Leads no SAP/C@P
+          Name:
+            val: "sap/c@p Leads"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Leads"
+            excludeFromSearch: true
+          Description:
+            val: "Registros de Costumer Prospect no SAP/C@P"
+            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -174,6 +173,171 @@ rules:
         toVertexLabel: "Object.Email_Address"
 
       - label: "Is_Lead"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Contract"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Person.Organisation"
+
+  cap_costumer_prospect:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
+          Type:
+            val: "Costumer Prospect"
+            excludeFromSearch: true
+          Title:
+            val: "${Title}"
+            excludeFromSearch: true
+          Date_Of_Birth: "${Date_of_Birth?.trim()}"
+
+      - label: Person.Organisation
+        condition: "${Company_Name_1?.trim()?.length() > 0}"
+        props:
+          Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+          Type:
+            val: "Costumer Prospect"
+            excludeFromSearch: true
+
+      - label: Object.Phone_Number
+        condition: "${Telephone_no?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: telephone
+        props:
+          Raw:
+            val: "${Telephone_no}"
+          Type:
+            val: "Costumer Prospect"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telephone_no?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Telephone_no?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+        condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: mobile
+        props:
+          Raw:
+            val: "${Mobile_Number}"
+          Type:
+            val: "Costumer Prospect"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Location.Address
+#        condition: "${Company_Name_1?.trim()?.length() > 0}"
+        props:
+          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+          Type:
+            val: "${Addresstype?.trim()}"
+            excludeFromSearch: true
+
+      - label: Object.Contract
+        props:
+          Description: "Responsável Sales Person: ${Resp_Sales_Person}"
+          Id: "${Porsche_ID} - ${Profile_ID}"
+          Status: "${Status}"
+          Type:
+            val: "Costumer Prospect Contract"
+            excludeFromSearch: true
+
+      - label: Object.Email_Address
+        #        condition: "${Email_Address?.trim()?.length() > 0}"
+        props:
+          Email: "${Email_Address?.trim()?.toLowerCase()}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p Costumer Prospect"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p Costumer Prospect"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Costumer Prospect"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Costumer Prospect"
+            excludeFromSearch: true
+          Description:
+            val: "Registros de Costumer Prospect no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Is_Located"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "telephone"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "mobile"
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Contract" # OR Is_Responsible ?!?!
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Contract"
 

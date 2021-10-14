@@ -48,7 +48,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "telephone",
-        "condition": "${Telephone_no?.trim()?.length() > 0}",
+        "condition": "${Telephone_no?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -79,7 +79,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "mobile",
-        "condition": "${Mobile_Number?.trim()?.length() > 0}",
+        "condition": "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -109,7 +109,6 @@
       },
       {
         "label": "Location.Address",
-        "condition": "${Company_Name_1?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Location.Address.Full_Address",

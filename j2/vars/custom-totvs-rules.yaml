@@ -429,14 +429,6 @@ rules:
         fromVertexName: colaborador
         toVertexLabel: Event.Ingestion
 
-      - label: Has_Ingestion_Event
-        fromVertexName: colaborador
-        toVertexLabel: Event.Ingestion
-
-      - label: Has_Ingestion_Event
-        fromVertexName: colaborador
-        toVertexLabel: Event.Ingestion
-
       - label: Is_Family
         fromVertexName: mae
         toVertexName: colaborador

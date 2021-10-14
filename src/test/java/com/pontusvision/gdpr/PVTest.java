@@ -788,7 +788,7 @@ public class PVTest extends AppTest {
       String personNaturalEdgesCount =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
                       ".bothE().count().next().toString()").get().toString();
-      assertEquals("6", personNaturalEdgesCount, "????");
+      assertEquals("6", personNaturalEdgesCount, "2 Uses_Email + 1 Lives + 2 Is_Family + 1 Has_Ingestion_Event");
 
 
       String locationAddressDescription =
@@ -816,11 +816,11 @@ public class PVTest extends AppTest {
 
       csvTestUtil("/sap-cap/leads.csv", "cap_leads");
 
-//      String personNaturalEdgesCount =
-//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('IGOR FERREIRA'))" +
-//                      ".bothE().count().next().toString()").get().toString();
-//      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
-//              "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
+      String personNaturalEdgesCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('IGOR FERREIRA'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
+              "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
 
 
       String leadId =
