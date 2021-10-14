@@ -7,22 +7,10 @@ rules:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
           Customer_ID: "${Lead_ID}"
           Type:
-            val: "Costumer Prospect"
+            val: "Leads"
             excludeFromSearch: true
           Title:
             val: "${Title}"
-            excludeFromSearch: true
-          Nationality:
-            val: "${Nationality?.trim()?.toUpperCase()}"
-            excludeFromSearch: true
-
-      - label: Object.Identity_Card
-#        condition: "${}"
-        name: CPF
-        props:
-          Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
-          Id_Type:
-            val: "CPF"
             excludeFromSearch: true
 
       - label: Person.Organisation
@@ -30,7 +18,7 @@ rules:
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
           Type:
-            val: "Costumer Prospect"
+            val: "Leads"
             excludeFromSearch: true
 
       - label: Object.Phone_Number
@@ -40,7 +28,7 @@ rules:
           Raw:
             val: "${Telephone_no}"
           Type:
-            val: "Costumer Prospect"
+            val: "Leads"
             excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no?.replaceAll('[^0-9]', '')?:'00000000')}"
@@ -57,7 +45,7 @@ rules:
           Raw:
             val: "${Mobile_Number}"
           Type:
-            val: "Costumer Prospect"
+            val: "Leads"
             excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
@@ -85,7 +73,7 @@ rules:
           Id: "${Lead_Group} - ${Lead_ID} - ${Number}"
           Status: "${Customer_Status}"
           Type:
-            val: "Costumer Prospect Contract"
+            val: "Leads Contract"
             excludeFromSearch: true
 
       - label: Object.Email_Address
@@ -140,7 +128,7 @@ rules:
             val: "sap/c@p Leads"
             excludeFromSearch: true
           Description:
-            val: "Registros de Costumer Prospect no SAP/C@P"
+            val: "Registros de Leads no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -180,26 +168,38 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Person.Organisation"
 
-  cap_costumer_prospect:
+  cap_customer_prospect:
     vertices:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
           Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
           Type:
-            val: "Costumer Prospect"
+            val: "Customer Prospect"
             excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
           Date_Of_Birth: "${Date_of_Birth?.trim()}"
+          Nationality:
+            val: "${Nationality?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        #        condition: "${}"
+        name: CPF
+        props:
+          Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
 
       - label: Person.Organisation
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
           Type:
-            val: "Costumer Prospect"
+            val: "Customer Prospect"
             excludeFromSearch: true
 
       - label: Object.Phone_Number
@@ -209,7 +209,7 @@ rules:
           Raw:
             val: "${Telephone_no}"
           Type:
-            val: "Costumer Prospect"
+            val: "Customer Prospect"
             excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no?.replaceAll('[^0-9]', '')?:'00000000')}"
@@ -226,7 +226,7 @@ rules:
           Raw:
             val: "${Mobile_Number}"
           Type:
-            val: "Costumer Prospect"
+            val: "Customer Prospect"
             excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
@@ -246,11 +246,11 @@ rules:
 
       - label: Object.Contract
         props:
-          Description: "Responsável Sales Person: ${Resp_Sales_Person}"
+          Description: "(Responsável Sales Person) ${Resp__Sales_Person}"
           Id: "${Porsche_ID} - ${Profile_ID}"
           Status: "${Status}"
           Type:
-            val: "Costumer Prospect Contract"
+            val: "Customer Prospect Contract"
             excludeFromSearch: true
 
       - label: Object.Email_Address
@@ -261,7 +261,7 @@ rules:
       - label: Event.Ingestion
         props:
           Type:
-            val: "sap/c@p Costumer Prospect"
+            val: "sap/c@p Customer Prospect"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -281,7 +281,7 @@ rules:
       - label: Event.Group_Ingestion
         props:
           Type:
-            val: "sap/c@p Costumer Prospect"
+            val: "sap/c@p Customer Prospect"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -299,13 +299,13 @@ rules:
       - label: Object.Data_Source
         props:
           Name:
-            val: "sap/c@p Costumer Prospect"
+            val: "sap/c@p Customer Prospect"
             excludeFromSearch: true
           Type:
-            val: "sap/c@p Costumer Prospect"
+            val: "sap/c@p Customer Prospect"
             excludeFromSearch: true
           Description:
-            val: "Registros de Costumer Prospect no SAP/C@P"
+            val: "Registros de Customer Prospect no SAP/C@P"
             excludeFromSearch: true
 
     edges:

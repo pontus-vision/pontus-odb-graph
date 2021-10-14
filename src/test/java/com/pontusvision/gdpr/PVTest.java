@@ -971,4 +971,36 @@ public class PVTest extends AppTest {
 
   }
 
+  @Test
+  public void test00019SapCapCustomerProspect() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("/sap-cap/customer-prospect.csv", "cap_customer_prospect");
+
+//      String personNaturalEdgesCount =
+//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('JAMIL GUPTA'))" +
+//                      ".bothE().count().next().toString()").get().toString();
+//      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
+//              "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
+
+
+      String dateOfBirth =
+              App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
+                      "eq('Rua Porto Alegre 12 , Bairro da Lama (Vila Loubos), Gralhas do Sul - Brasil, 85867-909'))" +
+                      ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
+      assertEquals("Fri Feb 13 00:00:00 BRT 1976", dateOfBirth, "Data de nascimento de Jamil Gupta");
+
+
+      String gettingEmailAddress =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('FERNANDA CASTELO')).out('Uses_Email')" +
+                      ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
+      assertEquals("fernanda_castelo@icloud.com", gettingEmailAddress, "E-mail de Fernanda Castelo");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
 }
