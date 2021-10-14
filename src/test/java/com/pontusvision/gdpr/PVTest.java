@@ -3,8 +3,7 @@ package com.pontusvision.gdpr;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.orientechnologies.apache.commons.csv.CSVFormat;
-import com.orientechnologies.apache.commons.csv.CSVRecord;
+import com.pontusvision.ingestion.Ingestion;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -17,14 +16,12 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URI;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -158,7 +155,7 @@ public class PVTest extends AppTest {
               "eq('1º CURSO - LGPD - LEI GERAL DE PROTEÇÃO DE DADOS')).next().id().toString()").get().toString();
       String curso1ConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
       String curso1Connections = App.executor.eval(curso1ConnectionsQuery).get().toString();
-      assertEquals("1",curso1Connections );
+      assertEquals("1", curso1Connections);
 
 //    test0000 for Object.Awareness_Campaign.Description 2
       String curso2Connections =
@@ -166,7 +163,7 @@ public class PVTest extends AppTest {
               "eq('BASES LEGAIS LGPD')).bothE().count().next().toString()").get().toString();
 //      String curso2ConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
 //      String curso2Connections = App.executor.eval(curso2ConnectionsQuery).get().toString();
-      assertEquals("2",curso2Connections );
+      assertEquals("2", curso2Connections);
 
 //    test0000 for Object.Awareness_Campaign.Description 3
       String userId6 =
@@ -174,7 +171,7 @@ public class PVTest extends AppTest {
               "eq('LGPD - MULTAS E SANÇÕES')).next().id().toString()").get().toString();
       String curso3ConnectionsQuery = "App.g.V(\"" + userId6 + "\").bothE().count().next().toString()";
       String curso3Connections = App.executor.eval(curso3ConnectionsQuery).get().toString();
-      assertEquals("1",curso3Connections);
+      assertEquals("1", curso3Connections);
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -240,7 +237,7 @@ public class PVTest extends AppTest {
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(expectedDataPolicyCount, countDataPolicy);
 
-      if ("sharepoint_fontes_de_dados".equals(ruleName)){
+      if ("sharepoint_fontes_de_dados".equals(ruleName)) {
 
         String numSensitiveData = App.executor.eval(queryPrefix +
             ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
@@ -786,22 +783,22 @@ public class PVTest extends AppTest {
       jsonTestUtil("totvs-ra.json", "$.objs", "totvs_protheus_ra_funcionario");
 
       String personNaturalEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
-                      ".bothE().count().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
+              ".bothE().count().next().toString()").get().toString();
       assertEquals("6", personNaturalEdgesCount, "2 Uses_Email + 1 Lives + 2 Is_Family + 1 Has_Ingestion_Event");
 
 
       String locationAddressDescription =
-              App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA Ponte, Jaguarão - RS, 333333'))" +
-                      ".properties('Location.Address.Description').value().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA Ponte, Jaguarão - RS, 333333'))" +
+              ".properties('Location.Address.Description').value().next().toString()").get().toString();
       assertEquals("moradia principal", locationAddressDescription, "Descrição do Endereço");
 
 
       String findingTheSonOfAMother =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('DONA SABRINA')).out('Is_Family')" +
-                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('DONA SABRINA')).out('Is_Family')" +
+              ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
       assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta" +
-              "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -814,25 +811,32 @@ public class PVTest extends AppTest {
 
     try {
 
-      csvTestUtil("/sap-cap/leads.csv", "cap_leads");
+      String dirtyHeader = "A string. With; loads: of # Chars,{ a.;~^Ç``\"oçã}][";
+      String cleanHdr = Ingestion.cleanHeader(dirtyHeader);
+      assertEquals(
+          "A_string__With__loads__of__Chars___a____C___oca___",
+          cleanHdr,
+          "check clean headers is OK");
+
+      csvTestUtil("sap-cap/leads.csv", "cap_leads");
 
       String personNaturalEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('IGOR FERREIRA'))" +
-                      ".bothE().count().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('IGOR FERREIRA'))" +
+              ".bothE().count().next().toString()").get().toString();
       assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
-              "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
+          "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
 
 
       String leadId =
-              App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
-                      "eq('av. marcio gomes 333 , AA3, Belo Horizonte - Brasil, 6758090')).in('Is_Located')" +
-                      ".properties('Person.Natural.Customer_ID').value().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
+              "eq('av. marcio gomes 333 , AA3, Belo Horizonte - Brasil, 6758090')).in('Is_Located')" +
+              ".properties('Person.Natural.Customer_ID').value().next().toString()").get().toString();
       assertEquals("1", leadId, "Lead ID de Igor Ferreira");
 
 
       String gettingEmailAddress =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('LARA MAGALHAES')).out('Uses_Email')" +
-                      ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('LARA MAGALHAES')).out('Uses_Email')" +
+              ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
       assertEquals("lara@yahoo.com", gettingEmailAddress, "E-mail de Lara Magalhaes");
 
     } catch (ExecutionException e) {
@@ -932,8 +936,8 @@ public class PVTest extends AppTest {
       jsonTestUtil("pv-extract-o365-email-md2.json", "$.value", "pv_email");
 
       String getPersonNaturalFullName =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +
-                      ".count().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +
+              ".count().next().toString()").get().toString();
       assertEquals("1", getPersonNaturalFullName, "um registro em nome de CARLOS MAURICIO DIRIZ");
 
 
@@ -959,14 +963,11 @@ public class PVTest extends AppTest {
       assertEquals(1, md2Reply.track.length);
 
 
-
-
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
 
     }
-
 
 
   }
@@ -976,7 +977,7 @@ public class PVTest extends AppTest {
 
     try {
 
-      csvTestUtil("/sap-cap/customer-prospect.csv", "cap_customer_prospect");
+      csvTestUtil("sap-cap/customer-prospect.csv", "cap_customer_prospect");
 
 //      String personNaturalEdgesCount =
 //              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('JAMIL GUPTA'))" +
@@ -986,15 +987,15 @@ public class PVTest extends AppTest {
 
 
       String dateOfBirth =
-              App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
-                      "eq('Rua Porto Alegre 12 , Bairro da Lama (Vila Loubos), Gralhas do Sul - Brasil, 85867-909'))" +
-                      ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
+              "eq('Rua Porto Alegre 12 , Bairro da Lama (Vila Loubos), Gralhas do Sul - Brasil, 85867-909'))" +
+              ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
       assertEquals("Fri Feb 13 00:00:00 BRT 1976", dateOfBirth, "Data de nascimento de Jamil Gupta");
 
 
       String gettingEmailAddress =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('FERNANDA CASTELO')).out('Uses_Email')" +
-                      ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('FERNANDA CASTELO')).out('Uses_Email')" +
+              ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
       assertEquals("fernanda_castelo@icloud.com", gettingEmailAddress, "E-mail de Fernanda Castelo");
 
     } catch (ExecutionException e) {
