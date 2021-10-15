@@ -77,18 +77,25 @@ public class StringReplacer {
     StringBuilder buf = new StringBuilder(str);
     boolean modified = false;
     int start = 0;
-    for (int i = 0; i < strLength; i++) {
-      start = buf.indexOf(searchChars, i);
+    char []searchCharArray = searchChars.toCharArray();
 
-      if (start == -1) {
-        if (i == 0) {
-          return str;
+    for (char chr: searchCharArray) {
+      String searchCharStr = Character.toString(chr);
+      for (int i = 0; i < strLength; i++) {
+        start = buf.indexOf(searchCharStr, i);
+
+        if (start == -1) {
+          if (i == 0) {
+            //return str;
+            continue;
+          }
+          //return buf.toString();
+          continue;
         }
-        return buf.toString();
-      }
-      buf = buf.replace(start, start + searchCharsLength, replaceChars);
-      modified = true;
+        buf = buf.replace(start, start + 1, replaceChars);
+        modified = true;
 
+      }
     }
     if (!modified) {
       return str;

@@ -384,3 +384,4 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Identity_Card"
 
+

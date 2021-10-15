@@ -61,7 +61,7 @@ updatereq:
     - label: Location.Address
       props:
         - name: Location.Address.Full_Address
-          val: ${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP} 
+          val: ${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP}
           mandatoryInSearch: True
         - name: Location.Address.Type
           val: Business
