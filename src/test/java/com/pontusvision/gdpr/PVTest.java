@@ -990,7 +990,8 @@ public class PVTest extends AppTest {
           App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
               "eq('Rua Porto Alegre 12 , Bairro da Lama (Vila Loubos), Gralhas do Sul - Brasil, 85867-909'))" +
               ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
-      assertEquals("Fri Feb 13 00:00:00 BRT 1976", dateOfBirth, "Data de nascimento de Jamil Gupta");
+      dateOfBirth = dateOfBirth.replaceAll("... 1976", "GMT 1976");
+      assertEquals("Fri Feb 13 00:00:00 GMT 1976", dateOfBirth, "Data de nascimento de Jamil Gupta");
 
 
       String gettingEmailAddress =
