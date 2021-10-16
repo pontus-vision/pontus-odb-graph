@@ -75,6 +75,27 @@ public class Resource {
     return "Hello, world!";
   }
 
+  //addRandomDataInit(App.graph,App.g)
+
+  @POST
+  @Path("clean_data")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String cleanData()
+  {
+    return gdpr.cleanData(App.graph,App.g);
+  }
+
+  @POST
+  @Path("random_init")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String randomInit()
+  {
+    return (String) gdpr.addRandomDataInit(App.graph,App.g);
+  }
+
+  /*
+   */
+
 
   @POST
   @Path("md2_search")
