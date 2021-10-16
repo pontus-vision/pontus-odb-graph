@@ -36,6 +36,9 @@ updatereq:
     
     - label: Object.Data_Procedures
       props:
+        - name: Object.Data_Procedures.Description
+          val: ${field_Purpose_x0020_of_x0020_the_x0020_process}
+          mandatoryInSearch: True
         - name: Object.Data_Procedures.Type
           val: ${field_Access_x0020__x0020_Transfer_x0020_to_x0020_AND_x0020_OR_x0020_Receipt_x0020_of_x0020_third_x0020_parties}
           mandatoryInSearch: True
@@ -61,10 +64,6 @@ updatereq:
           excludeFromSearch: True
         - name: Object.Data_Procedures.Info_Collected
           val: ${field_Personal_x0020_data_x0020_used}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Procedures.Description
-          val: ${field_Purpose_x0020_of_x0020_the_x0020_process}
           mandatoryInSearch: False
           excludeFromSearch: True
     

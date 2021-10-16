@@ -3426,8 +3426,7 @@ the end of the process.
                   property("Metadata.Lineage_Location_Tag", "GB").
                   property("Metadata.Type", "Object.AWS_VPC").
                   property("Metadata.Type.Object.AWS_VPC", "Object.AWS_VPC").
-                  property("Object.AWS_VPC.Id", it.toString()).next().
-                  id()
+                  property("Object.AWS_VPC.Id", it.toString()).id().next()
 
 //    trans.commit()
         } catch (Throwable t) {

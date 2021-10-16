@@ -720,7 +720,7 @@ public class PVTest extends AppTest {
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
       "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   sharepoint/mapeamento-de-processos,  6,  2",
-      "pv-extract-sharepoint-ropa.json,   sharepoint_ropa,   sharepoint/ropa,    125, 19"
+      "pv-extract-sharepoint-ropa.json,   sharepoint_ropa,   sharepoint/ropa,    125, 18"
   })
   public void test00014SharepointProcessMapping(String jsonFile, String ruleName, String dataSourceName, String numDataSrcs, String numDataPolicies) throws InterruptedException {
     try {
