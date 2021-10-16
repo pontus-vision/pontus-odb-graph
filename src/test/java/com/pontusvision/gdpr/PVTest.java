@@ -719,9 +719,10 @@ public class PVTest extends AppTest {
 
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
-      "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   sharepoint/mapeamento-de-processos",
+      "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   sharepoint/mapeamento-de-processos,  6,  2",
+      "pv-extract-sharepoint-ropa.json,   sharepoint_ropa,   sharepoint/ropa,    125, 19"
   })
-  public void test00014SharepointProcessMapping(String jsonFile, String ruleName, String dataSourceName) throws InterruptedException {
+  public void test00014SharepointProcessMapping(String jsonFile, String ruleName, String dataSourceName, String numDataSrcs, String numDataPolicies) throws InterruptedException {
     try {
 //      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
 //          "sharepoint_data_sources");
@@ -748,7 +749,7 @@ public class PVTest extends AppTest {
               ".out().out()\n" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
-      assertEquals("6", countEventIngestions);
+      assertEquals(numDataSrcs, countEventIngestions);
 
 
       String countObjectDataProcessesIngested =
@@ -758,16 +759,16 @@ public class PVTest extends AppTest {
 //              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
-      assertEquals("6", countObjectDataProcessesIngested);
+      assertEquals(numDataSrcs, countObjectDataProcessesIngested);
 
       String countDataPolicy =
           App.executor.eval(queryPrefix +
               ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
               ".out('Has_Data_Source')" +
-              ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))" +
+              ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source')).dedup()" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
-      assertEquals("12", countDataPolicy);
+      assertEquals(numDataPolicies, countDataPolicy);
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -990,6 +991,8 @@ public class PVTest extends AppTest {
           App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
               "eq('Rua Porto Alegre 12 , Bairro da Lama (Vila Loubos), Gralhas do Sul - Brasil, 85867-909'))" +
               ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
+      // replace the timezone with GMT; otherwise, if the test is run in Brazil, that appears as BRT 1976
+      // ... in regex means any character, so ... 1976 will replace BRT 1976 with GMT 1976
       dateOfBirth = dateOfBirth.replaceAll("... 1976", "GMT 1976");
       assertEquals("Fri Feb 13 00:00:00 GMT 1976", dateOfBirth, "Data de nascimento de Jamil Gupta");
 
