@@ -344,3 +344,48 @@ rules:
       - label: "Works"
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Person.Organisation"
+
+  cap_monthly_cockpits_and_reports:
+    vertices:
+      - label: Event.File_Ingestion
+        props:
+          Name: "${File_Name?.trim()?.toUpperCase()}"
+          Created: "${Creation_Date}"
+          Last_Access: "${Month}/${Calendar_Year}"
+#          File_Type: "${File_Name?.trim()?.split('.')[1]}"
+
+      - label: Event.File_Group_Ingestion
+        props:
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Group_Name:
+            val: "Monthly Cockpits and Reports"
+            excludeFromSearch: true
+
+      - label: Object.Data_Procedures
+        props:
+          ID: "${Report}"
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Monthly Cockpits and Reports"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Monthly Cockpits and Reports"
+            excludeFromSearch: true
+          Description:
+            val: "Registros de 'Monthly Cockpits and Reports' no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.File_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.File_Group_Ingestion"
+        toVertexLabel: "Event.File_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Procedures"
+        toVertexLabel: "Event.File_Ingestion"

@@ -979,11 +979,11 @@ public class PVTest extends AppTest {
 
       csvTestUtil("sap-cap/customer-prospect.csv", "cap_customer_prospect");
 
-//      String personNaturalEdgesCount =
-//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('JAMIL GUPTA'))" +
-//                      ".bothE().count().next().toString()").get().toString();
-//      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
-//              "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
+      String personNaturalEdgesCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('JAMIL GUPTA'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
+              "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
 
 
       String dateOfBirth =
@@ -998,6 +998,30 @@ public class PVTest extends AppTest {
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('FERNANDA CASTELO')).out('Uses_Email')" +
               ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
       assertEquals("fernanda_castelo@icloud.com", gettingEmailAddress, "E-mail de Fernanda Castelo");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
+  @Test
+  public void test00020SapCapMonthlyCockpitsAndReports() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("sap-cap/monthly-cockpits-and-reports.csv", "cap_monthly_cockpits_and_reports");
+
+      String personNaturalEdgesCount =
+              App.executor.eval("App.g.V().has('Event.File_Ingestion.Name', eq('PONTUS.PDF'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("2", personNaturalEdgesCount, "2 Has_Ingestion_Event");
+
+
+      String fileMonthAndYear =
+              App.executor.eval("App.g.V().has('Object.Data_Procedures.ID',eq('578')).out('Has_Ingestion_Event')" +
+                      ".properties('Event.File_Ingestion.Last_Access').value().next().toString()").get().toString();
+      assertEquals("11/2020", fileMonthAndYear, "Mês e Ano do FILE");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
