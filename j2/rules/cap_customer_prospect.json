@@ -76,11 +76,11 @@
       {
         "label": "Object.Phone_Number",
         "name": "telephone",
-        "condition": "${Telephone_no?.replaceAll('[^0-9]', '')?.length() > 0}",
+        "condition": "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
-            "val": "${Telephone_no}",
+            "val": "${Telephone_no_}",
             "mandatoryInSearch": true
           },
           {
@@ -91,14 +91,14 @@
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
-            "val": "${(Telephone_no?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Last_7_Digits",
-            "val": "${(((Telephone_no?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }
@@ -182,7 +182,7 @@
         "props": [
           {
             "name": "Object.Email_Address.Email",
-            "val": "${Email_Address?.trim()?.toLowerCase()}",
+            "val": "${E_Mail_Address?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true
           }
         ]
