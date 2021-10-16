@@ -41,7 +41,8 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Data_Procedures.Type
           val: ${field_Access_x0020__x0020_Transfer_x0020_to_x0020_AND_x0020_OR_x0020_Receipt_x0020_of_x0020_third_x0020_parties}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Data_Procedures.Type_Of_Natural_Person
           val: ${field_Data_x0020_subject_x0020_category}
           mandatoryInSearch: False
