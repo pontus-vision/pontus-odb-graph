@@ -1012,10 +1012,10 @@ public class PVTest extends AppTest {
 
       csvTestUtil("sap-cap/monthly-cockpits-and-reports.csv", "cap_monthly_cockpits_and_reports");
 
-      String personNaturalEdgesCount =
+      String fileIngestionNameEdgesCount =
               App.executor.eval("App.g.V().has('Event.File_Ingestion.Name', eq('PONTUS.PDF'))" +
                       ".bothE().count().next().toString()").get().toString();
-      assertEquals("2", personNaturalEdgesCount, "2 Has_Ingestion_Event");
+      assertEquals("2", fileIngestionNameEdgesCount, "2 Has_Ingestion_Event");
 
 
       String fileMonthAndYear =
