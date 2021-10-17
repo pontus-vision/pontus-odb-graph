@@ -8,7 +8,7 @@ updatereq:
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Customer_ID
-          val: ${Porsche_ID?.replaceAll('[^0-9]', '')}
+          val: ${Pxxxxxx_ID?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person.Natural.Type
           val: Customer Prospect
@@ -106,7 +106,7 @@ updatereq:
           val: (Responsável Sales Person) ${Resp__Sales_Person}
           mandatoryInSearch: True
         - name: Object.Contract.Id
-          val: ${Porsche_ID} - ${Profile_ID}
+          val: ${Pxxxxxx_ID} - ${Profile_ID}
           mandatoryInSearch: True
         - name: Object.Contract.Status
           val: ${Status}
@@ -182,7 +182,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros de Customer Prospect no SAP/C@P
+          val: Registros da tabela 'Customer Prospect' no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 

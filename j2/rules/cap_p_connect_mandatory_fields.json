@@ -10,15 +10,57 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${Pxxxxxx_ID?.replaceAll('[^0-9]', '')}",
+            "name": "Person.Natural.Type",
+            "val": "Pxxxxxx Connect Mandatory Fields",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person.Natural.Title",
+            "val": "${Title}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Phone_Number",
+        "name": "mobile",
+        "condition": "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}",
+        "props": [
+          {
+            "name": "Object.Phone_Number.Raw",
+            "val": "${Mobile_Number}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Type",
-            "val": "My Pxxxxxx Change Report",
+            "name": "Object.Phone_Number.Type",
+            "val": "Pxxxxxx Connect Mandatory Fields",
+            "mandatoryInSearch": true,
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Numbers_Only",
+            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
+            "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Last_7_Digits",
+            "val": "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
+          }
+        ]
+      },
+      {
+        "label": "Object.Email_Address",
+        "props": [
+          {
+            "name": "Object.Email_Address.Email",
+            "val": "${E_Mail_Address?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -27,7 +69,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -64,7 +106,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -100,19 +142,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'My Pxxxxxx Change Report' no SAP/C@P",
+            "val": "Registros da tabela 'Pxxxxxx Connect Mandatory Fields Report' no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -134,6 +176,16 @@
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "mobile"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Email_Address"
       }
     ]
   }

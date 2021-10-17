@@ -248,7 +248,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Leads no SAP/C@P",
+            "val": "Registros da tabela 'Leads' no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

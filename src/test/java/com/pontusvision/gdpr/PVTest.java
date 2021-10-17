@@ -693,8 +693,8 @@ public class PVTest extends AppTest {
       String personNaturalEdgesCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("6", personNaturalEdgesCount, "2 Object.Identity_Card + 1 Object.Email_Address " +
-          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("6", personNaturalEdgesCount, "2 Has_Id_Card + 1 Uses_Email " +
+          "+ 1 Has_Phone + 1 Is_Located + 1 Has_Ingestion_Event");
 
 
       String orgName =
@@ -706,7 +706,7 @@ public class PVTest extends AppTest {
       String personOrgEdgesCount =
           App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("3", personOrgEdgesCount, "1 Object.Identity_Card + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("3", personOrgEdgesCount, "1 Has_Id_Card + 1 Is_Located + 1 Has_Ingestion_Event");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -797,8 +797,7 @@ public class PVTest extends AppTest {
       String findingTheSonOfAMother =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('DONA SABRINA')).out('Is_Family')" +
               ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
-      assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta" +
-          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta");
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -823,7 +822,7 @@ public class PVTest extends AppTest {
       String personNaturalEdgesCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('IGOR FERREIRA'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
+      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Has_Ingestion_Event + 1 Works " +
           "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
 
 
@@ -982,8 +981,8 @@ public class PVTest extends AppTest {
       String personNaturalEdgesCount =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('JAMIL GUPTA'))" +
                       ".bothE().count().next().toString()").get().toString();
-      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
-              "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
+      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Has_Ingestion_Event + 1 Works " +
+              "+ 1 Is_Located + 1 Uses_Email + 1 Has_Contract");
 
 
       String dateOfBirth =
@@ -1046,6 +1045,30 @@ public class PVTest extends AppTest {
               App.executor.eval("App.g.V().has('Person.Natural.Customer_ID',eq('43344'))" +
                       ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
       assertEquals("MÔNICA COELHO", getFullNameById, "P Id 43344 is related to Mônica Coelho");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
+  @Test
+  public void test00022SapCapPConnectMandatoryFields() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("sap-cap/p-connect-mandatory-fields.csv", "cap_p_connect_mandatory_fields");
+
+      String getCustomerId =
+              App.executor.eval("App.g.V().has('Object.Email_Address.Email', eq('gandipunjabi@icloud.com')).in('Uses_Email')" +
+                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+      assertEquals("GANDI PUNJABI", getCustomerId, "gandipunjabi@icloud.com is used by Gandi Punjabi");
+
+
+      String getFullNameById =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('CAMILA DIOGINES')).out('Has_Phone')" +
+                      ".properties('Object.Phone_Number.Raw').value().next().toString()").get().toString();
+      assertEquals("+5541998675898", getFullNameById, "Camila Diogines' mobile number");
 
     } catch (ExecutionException e) {
       e.printStackTrace();

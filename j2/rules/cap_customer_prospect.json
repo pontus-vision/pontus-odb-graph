@@ -11,7 +11,7 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${Porsche_ID?.replaceAll('[^0-9]', '')}",
+            "val": "${Pxxxxxx_ID?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
@@ -161,7 +161,7 @@
           },
           {
             "name": "Object.Contract.Id",
-            "val": "${Porsche_ID} - ${Profile_ID}",
+            "val": "${Pxxxxxx_ID} - ${Profile_ID}",
             "mandatoryInSearch": true
           },
           {
@@ -277,7 +277,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Customer Prospect no SAP/C@P",
+            "val": "Registros da tabela 'Customer Prospect' no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
