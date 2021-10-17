@@ -1076,4 +1076,34 @@ public class PVTest extends AppTest {
     }
   }
 
+  @Test
+  public void test00023SapCapOwnershipChange() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("sap-cap/ownership-change.csv", "cap_ownership_change");
+
+      String getResponsibleDealer =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CAROL SANTANA')).in('Is_Responsible')" +
+                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+      assertEquals("FELLIPE XAXIM", getResponsibleDealer, "Felipe Xaxim is Carol's Responsible Dealer");
+
+
+      String getResponsibleOwner =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('VINICIUS GAMA')).out('Is_Responsible')" +
+                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+      assertEquals("ARMANDO ZACHARIA", getResponsibleOwner, "Armando Zacharia is Vinicius' client");
+
+      String getOwnerType =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('CAROL SANTANA'))" +
+                      ".properties('Person.Natural.Type').value().next().toString()").get().toString();
+      assertEquals("Pxxxxxx Ownership Change", getOwnerType, "Person.Natural (owner) Type");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
 }

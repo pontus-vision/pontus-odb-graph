@@ -1,1 +1,3 @@
-Vehicle Ident.,Model,Model Type,Model Type Text,Model Year of Vehicl,Changed on,Changed By,BP (new),First Name,Last Name,Valid From,Valid To,Transaction Number,Kind of Change,Change Reason,BP (old),First Name,Last Name,Valid From,Valid To,Status,Responsible Dealer,Name 1,Relationships,Product,Code,Code,Destination,Destination
+Vehicle Ident.,Model,Model Type,Model Type Text,Model Year of Vehicl,Changed on,Changed By,BP (new),First Name,Last Name,Valid From,Valid To,Transaction Number,Kind of Change,Change Reason,BP (old),Status,Responsible Dealer,Name 1,Relationships,Product,Code,Destination
+,,,,,,Magnolia,,Armando,Zacharia,,,,,,,,Vinicius Gama,Vinicius,Customer Relations,,,
+,,,,,,Magnolia,,Carol,Santana,,,,,,,,Fellipe Xaxim,Fellipe,Marketing,,,
