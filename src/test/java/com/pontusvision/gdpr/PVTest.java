@@ -1030,7 +1030,7 @@ public class PVTest extends AppTest {
 //  }
 
   @Test
-  public void test00021SapCapMyPorscheChangeReport() throws InterruptedException {
+  public void test00021SapCapMyPChangeReport() throws InterruptedException {
 
     try {
 
