@@ -1005,28 +1005,28 @@ public class PVTest extends AppTest {
     }
   }
 
-  @Test
-  public void test00020SapCapMonthlyCockpitsAndReports() throws InterruptedException {
-
-    try {
-
-      csvTestUtil("sap-cap/monthly-cockpits-and-reports.csv", "cap_monthly_cockpits_and_reports");
-
-      String fileIngestionNameEdgesCount =
-              App.executor.eval("App.g.V().has('Event.File_Ingestion.Name', eq('PONTUS.PDF'))" +
-                      ".bothE().count().next().toString()").get().toString();
-      assertEquals("2", fileIngestionNameEdgesCount, "2 Has_Ingestion_Event");
-
-
-      String fileMonthAndYear =
-              App.executor.eval("App.g.V().has('Object.Data_Procedures.ID',eq('578')).out('Has_Ingestion_Event')" +
-                      ".properties('Event.File_Ingestion.Last_Access').value().next().toString()").get().toString();
-      assertEquals("11/2020", fileMonthAndYear, "Mês e Ano do FILE");
-
-    } catch (ExecutionException e) {
-      e.printStackTrace();
-      assertNull(e);
-    }
-  }
+//  @Test
+//  public void test00020SapCapMonthlyCockpitsAndReports() throws InterruptedException {
+//
+//    try {
+//
+//      csvTestUtil("sap-cap/monthly-cockpits-and-reports.csv", "cap_monthly_cockpits_and_reports");
+//
+//      String fileIngestionNameEdgesCount =
+//              App.executor.eval("App.g.V().has('Event.File_Ingestion.Name', eq('PONTUS.PDF'))" +
+//                      ".bothE().count().next().toString()").get().toString();
+//      assertEquals("2", fileIngestionNameEdgesCount, "2 Has_Ingestion_Event");
+//
+//
+//      String fileMonthAndYear =
+//              App.executor.eval("App.g.V().has('Object.Data_Procedures.ID',eq('578')).out('Has_Ingestion_Event')" +
+//                      ".properties('Event.File_Ingestion.Last_Access').value().next().toString()").get().toString();
+//      assertEquals("11/2020", fileMonthAndYear, "Mês e Ano do FILE");
+//
+//    } catch (ExecutionException e) {
+//      e.printStackTrace();
+//      assertNull(e);
+//    }
+//  }
 
 }
