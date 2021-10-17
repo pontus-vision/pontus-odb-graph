@@ -389,3 +389,76 @@ rules:
 #      - label: "Has_Ingestion_Event"
 #        fromVertexLabel: "Object.Data_Procedures"
 #        toVertexLabel: "Event.File_Ingestion"
+
+  cap_my_p_change_report:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
+          Type:
+            val: "My Porsche Change Report"
+            excludeFromSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p My Porsche Change Report"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p My Porsche Change Report"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p My Porsche Change Report"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p My Porsche Change Report"
+            excludeFromSearch: true
+          Description:
+            val: "Registros de My Porsche Change Report no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"

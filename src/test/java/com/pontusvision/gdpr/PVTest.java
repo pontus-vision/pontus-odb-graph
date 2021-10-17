@@ -1029,4 +1029,28 @@ public class PVTest extends AppTest {
 //    }
 //  }
 
+  @Test
+  public void test00021SapCapMyPorscheChangeReport() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("sap-cap/my-p-change-report.csv", "cap_my_p_change_report");
+
+      String getCustomerId =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('FELIPE MAGNOLI'))" +
+                      ".properties('Person.Natural.Customer_ID').value().next().toString()").get().toString();
+      assertEquals("65746", getCustomerId, "P ID for Felipe Magnoli");
+
+
+      String getFullNameById =
+              App.executor.eval("App.g.V().has('Person.Natural.Customer_ID',eq('43344'))" +
+                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+      assertEquals("MÔNICA COELHO", getFullNameById, "P Id 43344 is related to Mônica Coelho");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
 }
