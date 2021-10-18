@@ -914,10 +914,13 @@ public class PVTest extends AppTest {
       md2Request.query.name = "John Smith";
       md2Request.query.email = "retoh@optonline.net";
       md2Request.query.docCpf = "4736473678";
+      md2Request.query.reqId = 4736473678L;
+
 
       Md2Reply md2Reply = res.md2Search(md2Request);
 
       assertEquals(1, md2Reply.total);
+      assertEquals(md2Request.query.reqId, md2Reply.reqId);
       assertEquals(1, md2Reply.track.length);
 
     } catch (ExecutionException e) {

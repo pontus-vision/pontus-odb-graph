@@ -3405,8 +3405,8 @@ the end of the process.
         newEntries = true
         long createMillis = System.currentTimeMillis() - (long) (randVal.nextDouble() * eighteenWeeks) * 2
         long updateMillis = createMillis + (long) (randVal.nextDouble() * eighteenWeeks)
-        metadataCreateDate = new Date((long) createMillis)
-        metadataUpdateDate = new Date((long) updateMillis)
+        def metadataCreateDate = new Date((long) createMillis)
+        def metadataUpdateDate = new Date((long) updateMillis)
 
         //  Transaction trans = graph.tx()
         try {
@@ -3464,8 +3464,8 @@ the end of the process.
 
           long createMillis = System.currentTimeMillis() - (long) (randVal.nextDouble() * eighteenWeeks)
           long updateMillis = createMillis + (long) (randVal.nextDouble() * eighteenWeeks) * 2
-          metadataCreateDate = new Date((long) createMillis)
-          metadataUpdateDate = new Date((long) updateMillis)
+          def metadataCreateDate = new Date((long) createMillis)
+          def metadataUpdateDate = new Date((long) updateMillis)
 
 //  Transaction trans = graph.tx()
           try {
@@ -3546,8 +3546,8 @@ the end of the process.
 
               long createMillis = System.currentTimeMillis() - (long) (randVal.nextDouble() * eighteenWeeks)
               long updateMillis = createMillis + (long) (randVal.nextDouble() * eighteenWeeks) * 2
-              metadataCreateDate = new Date((long) createMillis)
-              metadataUpdateDate = new Date((long) updateMillis)
+              def metadataCreateDate = new Date((long) createMillis)
+              def metadataUpdateDate = new Date((long) updateMillis)
 
               sgvId = App.g.addV("Object.AWS_Security_Group").
                       property("Metadata.Type", "Object.AWS_Security_Group").
@@ -3589,9 +3589,9 @@ the end of the process.
               sb.append("retrieving ").append(sgvId).append('\n')
               sb.append("retrieving ").append(sgvId.class).append('\n')
 
-              sgv = App.g.V(sgvId).next()
-              awsi = App.g.V(awsiId).next()
-              vpc = App.g.V(vpcId).next()
+              def sgv = App.g.V(sgvId).next()
+              def awsi = App.g.V(awsiId).next()
+              def vpc = App.g.V(vpcId).next()
 
               App.g.addE("Has_Server")
                       .from(sgv)
@@ -4173,19 +4173,20 @@ the end of the process.
 
   static def getInfoYouHoldScores(def scoresMap) {
 
-    long numEvents = App.g.V().has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion')).count().next()
+    long numDataSources = App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source')).count().next()
 
-    long numRecordsNoEdges =
+    long numRecordsWithoutDataProcedures =
             App.g.V()
-                    .has('Metadata.Type.Event.Ingestion', eq('Event.Ingestion'))
-                    .where(__.inE().count().is(eq(1)))
+                    .has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+                    .where(__.in('Has_Data_Source')
+                             .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).count().is(eq(0)))
                     .count().next()
 
 
     long scoreValue = 100L
-    if (numEvents > 0) {
+    if (numDataSources > 0) {
 
-      long pcntNoEdges = (long) (100L * numRecordsNoEdges / numEvents)
+      long pcntNoEdges = (long) (100L * numRecordsWithoutDataProcedures / numDataSources)
       if (pcntNoEdges > 5 && pcntNoEdges < 40) {
         scoreValue -= 40L
       } else if (pcntNoEdges > 40) {
