@@ -21,7 +21,8 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Natural.Full_Name_fuzzy
           val: ${Name_1?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Person.Natural.Type
           val: Pxxxxxx Responsible Dealer
           mandatoryInSearch: False

@@ -30,7 +30,8 @@
           {
             "name": "Person.Natural.Full_Name_fuzzy",
             "val": "${Name_1?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Type",

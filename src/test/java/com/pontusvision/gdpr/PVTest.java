@@ -1112,4 +1112,38 @@ public class PVTest extends AppTest {
     }
   }
 
+  @Test
+  public void test00024SapCapComplaint() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("sap-cap/complaint.csv", "cap_complaint");
+
+      String getComplaintDescription =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('DORIA MARCONDES')).out('Has_Contract')" +
+                      ".properties('Object.Contract.Description').value().next().toString()").get().toString();
+      assertEquals("O carro estava estragado.\n" +
+                      "Resolvido? = Sim.\n" +
+                      "Finalizado? = Sim.", getComplaintDescription,
+              "Descrição da reclamação de Doria");
+
+
+      String getComplaintStatus =
+              App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('MEI KELVIN')).in('Works').out('Has_Contract')" +
+                      ".properties('Object.Contract.Status').value().next().toString()").get().toString();
+      assertEquals("Em analise", getComplaintStatus, "Status do Complaint de Kelvin");
+
+      String countPersonNaturalEdges =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARCOS KELVIN'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("7", countPersonNaturalEdges, "1 Has_Phone + 1 Has_Mobile + 1 Has_Ingestion_Event + 1 Works " +
+              "+ 1 Is_Located + 1 Uses_Email + 1 Has_Contract");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
 }

@@ -2086,6 +2086,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Mobile
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Policy
     multiplicity: MULTI
     unidirected: False

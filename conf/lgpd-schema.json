@@ -3338,6 +3338,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_Mobile",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Policy",
       "multiplicity": "MULTI",
       "unidirected": false

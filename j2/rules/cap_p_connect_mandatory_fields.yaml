@@ -38,6 +38,7 @@ updatereq:
           type: "[Ljava.lang.String;"
     
     - label: Object.Email_Address
+      condition: ${E_Mail_Address?.trim()?.length() > 0}
       props:
         - name: Object.Email_Address.Email
           val: ${E_Mail_Address?.trim()?.toLowerCase()}
