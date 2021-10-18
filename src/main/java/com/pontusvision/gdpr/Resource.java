@@ -75,6 +75,27 @@ public class Resource {
     return "Hello, world!";
   }
 
+  //addRandomDataInit(App.graph,App.g)
+
+  @POST
+  @Path("clean_data")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String cleanData()
+  {
+    return gdpr.cleanData(App.graph,App.g);
+  }
+
+  @POST
+  @Path("random_init")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String randomInit()
+  {
+    return (String) gdpr.addRandomDataInit(App.graph,App.g);
+  }
+
+  /*
+   */
+
 
   @POST
   @Path("md2_search")
@@ -110,6 +131,7 @@ public class Resource {
       Md2Reply reply = new Md2Reply();
 
       reply.total =  App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
+      reply.reqId = req.query.reqId;
 
       List<Map<String,Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
           .in("Has_NLP_Events").dedup().range(req.settings.start, req.settings.start + req.settings.limit).as("EVENTS")

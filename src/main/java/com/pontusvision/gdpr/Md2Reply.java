@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Md2Reply implements  Serializable{
   public static class Register implements Serializable {
-    Integer request;
     String name;
     String server;
     String fileType;
@@ -13,13 +12,6 @@ public class Md2Reply implements  Serializable{
     String owner;
     String created;
 
-    public Integer getRequest() {
-      return request;
-    }
-
-    public void setRequest(Integer request) {
-      this.request = request;
-    }
 
     public String getName() {
       return name;
@@ -89,7 +81,17 @@ public class Md2Reply implements  Serializable{
   }
 
   Long total;
+  Long reqId;
+
   Register[] track;
+
+  public Long getReqId() {
+    return reqId;
+  }
+
+  public void setReqId(Long reqId) {
+    this.reqId = reqId;
+  }
 
   public Long getTotal() {
     return total;

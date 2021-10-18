@@ -1,0 +1,158 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Object.Data_Source
+      name: sharepoint
+      props:
+        - name: Object.Data_Source.Name
+          val: sharepoint/ropa
+          mandatoryInSearch: True
+        - name: Object.Data_Source.Type
+          val: sharepoint/ropa
+          mandatoryInSearch: True
+        - name: Object.Data_Source.Description
+          val: Reg of Procs and Activ
+          mandatoryInSearch: True
+    
+    - label: Object.Data_Source
+      name: attached_data_sources
+      props:
+        - name: Object.Data_Source.Name
+          val: ${new groovy.json.JsonBuilder(Data_x0020_Source)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}
+    
+    - label: Object.Data_Policy
+      props:
+        - name: Object.Data_Policy.Type
+          val: ${Title}
+          mandatoryInSearch: True
+        - name: Object.Data_Policy.Retention_Period
+          val: ${field_retention_x0020_period}
+          mandatoryInSearch: True
+    
+    - label: Object.Data_Procedures
+      props:
+        - name: Object.Data_Procedures.Description
+          val: ${field_Purpose_x0020_of_x0020_the_x0020_process}
+          mandatoryInSearch: True
+        - name: Object.Data_Procedures.Type
+          val: ${field_Access_x0020__x0020_Transfer_x0020_to_x0020_AND_x0020_OR_x0020_Receipt_x0020_of_x0020_third_x0020_parties}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Procedures.Type_Of_Natural_Person
+          val: ${field_Data_x0020_subject_x0020_category}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Procedures.BusinessAreaResponsible
+          val: ${field_Area} - ${field_Responsible}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Procedures.MacroProcessName
+          val: ${field_Process}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Procedures.Country_Where_Stored
+          val: ${field_Country_x0020_where_x0020_people_x0020_are_x0020_located}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Procedures.Why_Is_It_Collected
+          val: ${field_Purpose_x0020_of_x0020_the_x0020_process}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Procedures.Info_Collected
+          val: ${field_Personal_x0020_data_x0020_used}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object.Sensitive_Data
+      props:
+        - name: Object.Sensitive_Data.Description
+          val: ${new groovy.json.JsonBuilder(field_Personal_x0020_data_x0020_used)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+    
+    - label: Object.Lawful_Basis
+      props:
+        - name: Object.Lawful_Basis.Description
+          val: ${new groovy.json.JsonBuilder(field_Lawful_x0020_basis)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+    
+    - label: Event.Ingestion
+      props:
+        - name: Event.Ingestion.Type
+          val: sharepoint/ropa
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Ingestion.Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event.Group_Ingestion
+      props:
+        - name: Event.Group_Ingestion.Metadata_Start_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Type
+          val: sharepoint/ropa
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexName: sharepoint
+    toVertexLabel: Event.Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.Group_Ingestion
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.Ingestion
+    toVertexLabel: Object.Data_Procedures
+  - label: Has_Sensitive_Data
+    fromVertexLabel: Object.Data_Procedures
+    toVertexLabel: Object.Sensitive_Data
+  - label: Has_Lawful_Basis_On
+    fromVertexLabel: Object.Data_Procedures
+    toVertexLabel: Object.Lawful_Basis
+  - label: Has_Policy
+    fromVertexLabel: Object.Data_Procedures
+    toVertexLabel: Object.Data_Policy
+  - label: Has_Data_Source
+    fromVertexLabel: Object.Data_Procedures
+    toVertexName: attached_data_sources
+
