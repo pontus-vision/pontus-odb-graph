@@ -28,6 +28,16 @@ public class Md2Request implements  Serializable{
     String name;
     String docCpf;
     String email;
+    Long reqId = 0L;
+
+    public Long getReqId() {
+      return reqId;
+    }
+
+    public void setReqId(Long reqId) {
+      this.reqId = reqId;
+    }
+
 
     public String getName() {
       return name;

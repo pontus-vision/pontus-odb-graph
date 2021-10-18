@@ -47,6 +47,10 @@ public class LambdaHandler implements RequestHandler<AwsProxyRequest, AwsProxyRe
             System.setProperty("storage.diskCache.pinnedPages", "1");
             System.setProperty("storage.compressionMethod","gzip");
             System.setProperty("storage.useWAL","true");
+            System.setProperty("file.lock",System.getenv("PV_ODB_FILE_LOCK") != null ?
+                System.getenv("PV_ODB_FILE_LOCK"):
+                "true");
+//            file.lock
 
             System.setProperty("orientdb.config.file","/orientdb/config/orientdb-server-config.xml" );
             System.setProperty("orientdb.www.path","/orientdb/www" );
