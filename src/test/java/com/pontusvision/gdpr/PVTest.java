@@ -1177,4 +1177,36 @@ public class PVTest extends AppTest {
     }
   }
 
+  @Test
+  public void test00026SapCapWorkshopCampaignsAndRecalls() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("sap-cap/workshop-campaigns-and-recalls.csv", "cap_workshop_campaigns_and_recalls");
+
+      String getContractId =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CAMILLA FLAVINA')).out('Has_Contract')" +
+                      ".properties('Object.Contract.Id').value().next().toString()").get().toString();
+      assertEquals("Recall Campaing ID = 7856\n" +
+              "Vehicle Ident. = 28377487", getContractId,"Id do contrato de Camilla");
+
+
+      String getCampaignDescription =
+              App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
+                  "eq('Rua Germano de Rusky 551 , São Paulo (Região Norte), Marilia - Brasil, 84567-933')).in('Is_Located')" +
+                  ".out('Has_Contract').properties('Object.Contract.Description').value().next().toString()").get().toString();
+      assertEquals("Campanha de Marketing de novo modelo de carro", getCampaignDescription, "Descrição da campanha");
+
+      String countPersonNaturalEdges =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('VALERIA BITTENCOURT'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("3", countPersonNaturalEdges, "1 Has_Ingestion_Event + 1 Is_Located + 1 Has_Contract");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
 }
