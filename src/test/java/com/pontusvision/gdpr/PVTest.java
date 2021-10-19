@@ -957,15 +957,15 @@ public class PVTest extends AppTest {
 
       Md2Reply md2Reply = res.md2Search(md2Request);
 
-      assertEquals(3, md2Reply.total);
+      assertEquals(4, md2Reply.total);
       assertEquals(2, md2Reply.track.length);
 
       md2Request.settings.start = 2L;
 
       md2Reply = res.md2Search(md2Request);
 
-      assertEquals(3, md2Reply.total);
-      assertEquals(1, md2Reply.track.length);
+      assertEquals(4, md2Reply.total);
+      assertEquals(2, md2Reply.track.length);
 
 
     } catch (ExecutionException e) {
