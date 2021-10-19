@@ -1146,4 +1146,35 @@ public class PVTest extends AppTest {
     }
   }
 
+  @Test
+  public void test00025SapCapActivity() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("sap-cap/activity.csv", "cap_activity");
+
+      String getActivityDescription =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('QUASIMODO PARIS')).out('Has_Contract')" +
+                      ".properties('Object.Contract.Description').value().next().toString()").get().toString();
+      assertEquals("Cliente compra muitos carros", getActivityDescription,"Descrição da atividade de Quasimodo");
+
+
+      String getActivityStatus =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('ALEX KOVAS')).out('Has_Contract')" +
+                      ".properties('Object.Contract.Status').value().next().toString()").get().toString();
+      assertEquals("Inativo", getActivityStatus, "Status da Activity de Alex");
+
+      String countPersonNaturalEdges =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('QUASIMODO PARIS'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("5", countPersonNaturalEdges, "1 Has_Mobile + 1 Has_Ingestion_Event + 1 Works " +
+              "+ 1 Is_Located + 1 Has_Contract");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
 }
