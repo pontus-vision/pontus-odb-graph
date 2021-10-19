@@ -938,6 +938,7 @@ public class PVTest extends AppTest {
 
       jsonTestUtil("pv-extract-file-ingest-md2.json", "$.value", "pv_file");
       jsonTestUtil("pv-extract-o365-email-md2.json", "$.value", "pv_email");
+      jsonTestUtil("pv-extract-o365-email-md2-pt2.json", "$.value", "pv_email");
 
       String getPersonNaturalFullName =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +

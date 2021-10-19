@@ -279,31 +279,45 @@ class FileNLPRequest implements Serializable {
             [personOptions.toArray(new Traversal[0]), cpfOptions.toArray(new Traversal[0])]
             .flatten().toArray(new Traversal[0])
 
-    def persons = (App.g.V().or(personNameCpfOptions))
+    def persons = personNameCpfOptions.length> 0?
+            (App.g.V().or(personNameCpfOptions)):
+            null
 
-    GraphTraversal personsClone = persons.clone() as GraphTraversal
 
-    Set<ORID> retVal = null
+//    GraphTraversal personsClone =  persons?.clone() as GraphTraversal
+
+    Set<ORID> retVal = (persons?.id()?.toSet())
+    if (!retVal){
+      retVal = []
+    }
 
     if (emailOptions.size() > 0){
-      def emails = App.g.V().or(emailOptions.toArray(new Traversal[0]))
+      def emails = App.g.V().or(emailOptions.toArray(new Traversal[0]) as Traversal<?, ?>[])
+
 
       try {
-        retVal = persons.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>
+        Set<ORID> emailSet = emails?.in('Uses_Email')?.id()?.toSet()
+        if (emailSet && emailSet.size() > 0){
+          retVal.addAll(emailSet);
+
+        }
+
+//        retVal = persons?.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>:
+//                emails?.in('Uses_Email')?.id()?.toSet() as Set<ORID>
 
       } catch (Throwable t) {
         //ignore
       }
     }
 
-
-    if (!retVal || retVal.size() <= minThreshold) {
-      retVal = personsClone.id().toSet() as Set<ORID>
-    }
     String currDate = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
 
+    if (!retVal ) {
+      retVal = []
+    }
+
     int count = 0
-    for (ORID orid : retVal) {
+    for (ORID orid : (retVal as Set<ORID>)) {
 
       String custId = App.g.V(orid).values('Person.Natural.Customer_ID').next().toString()
       def nlpGroupTrav =
