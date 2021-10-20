@@ -6,23 +6,12 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${Name_at_Birth?:''}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${Recall_campaign_ID}",
+            "val": "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
-            "val": "SAP/C@P Workshop Campaigns and Recalls",
+            "val": "SAP/C@P Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -45,7 +34,7 @@
           },
           {
             "name": "Person.Organisation.Type",
-            "val": "SAP/C@P Workshop Campaigns and Recalls",
+            "val": "SAP/C@P Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -63,7 +52,7 @@
           },
           {
             "name": "Object.Phone_Number.Type",
-            "val": "SAP/C@P Workshop Campaigns and Recalls",
+            "val": "SAP/C@P Competitor Vehicles",
             "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
@@ -94,7 +83,7 @@
           },
           {
             "name": "Object.Phone_Number.Type",
-            "val": "CAP/S@P Workshop Campaigns and Recalls",
+            "val": "CAP/S@P Competitor Vehicles",
             "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
@@ -130,28 +119,22 @@
         ]
       },
       {
-        "label": "Object.Contract",
+        "label": "Object.Vehicle",
         "props": [
           {
-            "name": "Object.Contract.Date",
-            "val": "${Start_date}",
+            "name": "Object.Vehicle.License_Plate",
+            "val": "${License_Plate}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Contract.Description",
-            "val": "${Description}",
+            "name": "Object.Vehicle.Model",
+            "val": "${Model}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Contract.Id",
-            "val": "Recall Campaing ID = ${Recall_campaign_ID}\\nVehicle Ident. = ${Vehicle_Ident_}",
+            "name": "Object.Vehicle.Model_Year",
+            "val": "${Model_Year}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Type",
-            "val": "SAP/C@P Workshop Campaigns and Recalls Contract",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -171,7 +154,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p Workshop Campaigns and Recalls",
+            "val": "sap/c@p Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -208,7 +191,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p Workshop Campaigns and Recalls",
+            "val": "sap/c@p Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -244,19 +227,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Workshop Campaigns and Recalls",
+            "val": "sap/c@p Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Workshop Campaigns and Recalls",
+            "val": "sap/c@p Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Workshop Campaigns and Recalls' no SAP/C@P",
+            "val": "Registros da tabela 'Competitor Vehicles' no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -300,9 +283,9 @@
         "toVertexLabel": "Object.Email_Address"
       },
       {
-        "label": "Has_Contract",
+        "label": "Has_Vehicle",
         "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Contract"
+        "toVertexLabel": "Object.Vehicle"
       },
       {
         "label": "Works",

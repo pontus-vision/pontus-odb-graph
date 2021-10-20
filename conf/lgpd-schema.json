@@ -2574,6 +2574,31 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Vehicle",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Vehicle.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Vehicle.License_Plate",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Vehicle.Model",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Vehicle.Model_Year",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Person.Employee",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -3166,6 +3191,11 @@
       "useStatic": false
     },
     {
+      "name": "Object.Vehicle",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Person.Employee",
       "partition": false,
       "useStatic": false
@@ -3339,6 +3369,11 @@
     },
     {
       "name": "Has_Mobile",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Vehicle",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -4417,6 +4452,20 @@
         "Object.Sensitive_Data.Sexual_Orientation",
         "Object.Sensitive_Data.Union_Membership",
         "Object.Sensitive_Data.Description"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Vehicle.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Vehicle",
+        "Object.Vehicle.License_Plate",
+        "Object.Vehicle.Model",
+        "Object.Vehicle.Model_Year"
       ],
       "propertyKeysMappings": {}
     },
