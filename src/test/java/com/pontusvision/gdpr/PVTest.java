@@ -1245,4 +1245,39 @@ public class PVTest extends AppTest {
     }
   }
 
+  @Test
+  public void test00028SapCapVehicle() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("sap-cap/vehicle.csv", "cap_vehicle");
+
+      String getVehicleLicensePlate =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('HELGA BARBOSA')).out('Has_Vehicle')" +
+                      ".properties('Object.Vehicle.License_Plate').value().next().toString()").get().toString();
+      assertEquals("S987-T098", getVehicleLicensePlate,"Helga's Car's License plate");
+
+
+      String getVehicleModel =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('JORGE NIAGURA')).out('Has_Vehicle')" +
+                      ".properties('Object.Vehicle.Model').value().next().toString()").get().toString();
+      assertEquals("ZXR500", getVehicleModel, "Jorge's Vehicle's Model");
+
+      String getEmailAddress =
+              App.executor.eval("App.g.V().has('Object.Phone_Number.Last_7_Digits',eq('1657448')).in('Has_Mobile')" +
+                      ".out('Uses_Email').properties('Object.Email_Address.Email').value().next().toString()").get().toString();
+      assertEquals("jorginho10@icloud.com", getEmailAddress, "Jorge's Email");
+
+      String countPersonNaturalEdges =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('HELGA BARBOSA'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("4", countPersonNaturalEdges, "1 Has_Ingestion_Event + 1 Is_Located + 1 Has_Vehicle + 1 Has_Mobile");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
 }
