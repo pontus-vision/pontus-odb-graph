@@ -35,6 +35,7 @@ import org.glassfish.jersey.server.ContainerRequest;
 import javax.script.SimpleBindings;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.ws.http.HTTPException;
 import java.net.URLEncoder;
 import java.util.*;
@@ -102,7 +103,7 @@ public class Resource {
   @Path("md2_search")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Md2Reply md2Search(Md2Request req) {
+  public Md2Reply md2Search(Md2Request req) throws  HTTPException{
     if (req.settings == null || req.query == null || req.query.name == null ){
       throw new HTTPException(400);
     }
@@ -118,7 +119,7 @@ public class Resource {
       List<Object> ids = (gt.id().toList());
       if (ids.size() != 1){
         System.out.println("Found "+ids.size()+" ids matching the request");
-        throw new HTTPException(404);
+        return new Md2Reply(Response.Status.NOT_FOUND);
       }
       if (req.query.email != null) {
         if (! App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
@@ -126,10 +127,11 @@ public class Resource {
           System.out.println("Not found email " + req.query.email + " associated with " +ids.size()+" (" +
                req.query.name+")");
 
-          throw new HTTPException(404);
+          return new Md2Reply(Response.Status.NOT_FOUND);
+//          throw new HTTPException(404);
         }
       }
-      Md2Reply reply = new Md2Reply();
+      Md2Reply reply = new Md2Reply(Response.Status.OK);
 
       reply.total =  App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
       reply.reqId = req.query.reqId;
@@ -224,7 +226,7 @@ public class Resource {
     } catch( Exception e){
       System.err.println("Error processing data: "+ e.getMessage());
       e.printStackTrace();
-      throw new HTTPException(404);
+      return new Md2Reply(Response.Status.INTERNAL_SERVER_ERROR);
     }
   }
 

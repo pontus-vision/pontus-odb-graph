@@ -967,6 +967,14 @@ public class PVTest extends AppTest {
       assertEquals(4, md2Reply.total);
       assertEquals(2, md2Reply.track.length);
 
+      md2Request.settings.start = 2L;
+      md2Request.query.name = "NAME THAT DOES NOT EXIST";
+
+
+      md2Reply = res.md2Search(md2Request);
+
+      assertEquals(404, md2Reply.getStatus());
+
 
     } catch (ExecutionException e) {
       e.printStackTrace();
