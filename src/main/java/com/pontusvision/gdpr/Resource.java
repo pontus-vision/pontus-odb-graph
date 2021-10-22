@@ -36,6 +36,7 @@ import javax.script.SimpleBindings;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.xml.ws.http.HTTPException;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -184,7 +185,11 @@ public class Resource {
           reg.fileType = "Email_Message_Body";
           reg.sizeBytes = ((Double) values.get("Object.Email_Message_Body.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Object.Email_Message_Body.Email_Subject").get(0).toString();
-          reg.path = values.get("Object.Email_Message_Body.Email_Id").get(0).toString();
+          StringBuffer sb = new StringBuffer();
+          sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
+          String emailId = (values.get("Object.Email_Message_Body.Email_Id").get(0).toString());
+          sb.append(URLEncoder.encode(emailId, "UTF-8"));
+          reg.path = sb.toString();
           reg.created = values.get("Object.Email_Message_Body.Created_Date_Time") == null? "":
               values.get("Object.Email_Message_Body.Created_Date_Time").get(0).toString();
 
