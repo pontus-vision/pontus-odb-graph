@@ -5,13 +5,13 @@ updatereq:
     - label: Person.Natural
       props:
         - name: Person.Natural.Full_Name
-          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
+          val: ${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Customer_ID
-          val: ${Pxxxxxx_ID?.replaceAll('[^0-9]', '')}
+          val: ${ID_number?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person.Natural.Type
-          val: Customer Prospect
+          val: Data Quality
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Title
@@ -19,7 +19,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Date_Of_Birth
-          val: ${Date_of_Birth?.trim()}
+          val: ${Date_of_Birth?.trim()?:'1970-01-01'}
           mandatoryInSearch: True
         - name: Person.Natural.Nationality
           val: ${Nationality?.trim()?.toUpperCase()}
@@ -27,10 +27,21 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Identity_Card
-      name: cpf
+      name: cnpj
       props:
         - name: Object.Identity_Card.Id_Value
           val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object.Identity_Card.Id_Type
+          val: CNPJ
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object.Identity_Card
+      name: cpf
+      props:
+        - name: Object.Identity_Card.Id_Value
+          val: ${ID_number?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: CPF
@@ -44,7 +55,7 @@ updatereq:
           val: ${Company_Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Organisation.Type
-          val: Customer Prospect
+          val: Data Quality
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -56,7 +67,7 @@ updatereq:
           val: ${Telephone_no_}
           mandatoryInSearch: True
         - name: Object.Phone_Number.Type
-          val: Customer Prospect
+          val: Data Quality
           mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
@@ -77,7 +88,7 @@ updatereq:
           val: ${Mobile_Number}
           mandatoryInSearch: True
         - name: Object.Phone_Number.Type
-          val: Customer Prospect
+          val: Data Quality
           mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
@@ -93,7 +104,7 @@ updatereq:
     - label: Location.Address
       props:
         - name: Location.Address.Full_Address
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
         - name: Location.Address.Type
           val: ${Addresstype?.trim()}
@@ -110,7 +121,7 @@ updatereq:
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sap/c@p Customer Prospect
+          val: sap/c@p Data Quality
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -135,7 +146,7 @@ updatereq:
     - label: Event.Group_Ingestion
       props:
         - name: Event.Group_Ingestion.Type
-          val: sap/c@p Customer Prospect
+          val: sap/c@p Data Quality
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Operation
@@ -159,15 +170,15 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/c@p Customer Prospect
+          val: sap/c@p Data Quality
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Type
-          val: sap/c@p Customer Prospect
+          val: sap/c@p Data Quality
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros da tabela 'Customer Prospect' no SAP/C@P
+          val: Registros da tabela 'Data Quality' no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 
@@ -187,7 +198,7 @@ updatereq:
   - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexName: telephone
-  - label: Has_Phone
+  - label: Has_Mobile
     fromVertexLabel: Person.Natural
     toVertexName: mobile
   - label: Uses_Email
@@ -196,6 +207,9 @@ updatereq:
   - label: Works
     fromVertexLabel: Person.Natural
     toVertexLabel: Person.Organisation
+  - label: Has_Id_Card
+    fromVertexLabel: Person.Natural
+    toVertexName: cnpj
   - label: Has_Id_Card
     fromVertexLabel: Person.Natural
     toVertexName: cpf

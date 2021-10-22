@@ -1280,4 +1280,29 @@ public class PVTest extends AppTest {
     }
   }
 
+  @Test
+  public void test00029SapCapDataQuality() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("sap-cap/data-quality.csv", "cap_data_quality");
+
+      String countPersonNaturalEdges =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('JAMES BONDINHO'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("8", countPersonNaturalEdges, "2 Has_Id_Card + 1 Is_Located " +
+              "+ 1 Has_Ingestion_Event + 1 Works + 1 Uses_Email + 1 Has_Phone + 1 Has_Mobile");
+
+      String onlyLastNameTest =
+              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('schoemacher_f1@gmail.com'))" +
+                      ".in('Uses_Email').properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+      assertEquals("SCHOEMACHER", onlyLastNameTest, "Last Name without white spaces");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
 }
