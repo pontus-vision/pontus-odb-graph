@@ -341,6 +341,9 @@ class FileNLPRequest implements Serializable {
         break
       }
     }
+    if (retVal.size() == 0){
+      System.out.println("Failed to find any NLP people for event " + req.toString())
+    }
     return retVal
   }
 
@@ -675,4 +678,42 @@ class FileNLPRequest implements Serializable {
   void setSizeBytes(Long sizeBytes) {
     this.sizeBytes = sizeBytes
   }
+
+
+//  @Override
+//  public String toString() {
+//    return "FileNLPRequest{" +
+//            "metadataController='" + metadataController + '\'' +
+//            ", metadataGDPRStatus='" + metadataGDPRStatus + '\'' +
+//            ", metadataLineage='" + metadataLineage + '\'' +
+//            ", pg_currDate='" + pg_currDate + '\'' +
+//            ", pg_content='" + pg_content + '\'' +
+//            ", address=" + Arrays.toString(address) +
+//            ", cred_card=" + Arrays.toString(cred_card) +
+//            ", email=" + Arrays.toString(email) +
+//            ", location=" + Arrays.toString(location) +
+//            ", person=" + Arrays.toString(person) +
+//            ", phone=" + Arrays.toString(phone) +
+//            ", postcode=" + Arrays.toString(postcode) +
+//            ", policy_number=" + Arrays.toString(policy_number) +
+//            ", org=" + Arrays.toString(org) +
+//            ", nationality=" + Arrays.toString(nationality) +
+//            ", language=" + Arrays.toString(language) +
+//            ", misc=" + Arrays.toString(misc) +
+//            ", money=" + Arrays.toString(money) +
+//            ", date=" + Arrays.toString(date) +
+//            ", time=" + Arrays.toString(time) +
+//            ", categories=" + Arrays.toString(categories) +
+//            ", cpf=" + Arrays.toString(cpf) +
+//            ", cnpj=" + Arrays.toString(cnpj) +
+//            ", name='" + name + '\'' +
+//            ", created='" + created + '\'' +
+//            ", fileType='" + fileType + '\'' +
+//            ", lastAccess='" + lastAccess + '\'' +
+//            ", owner='" + owner + '\'' +
+//            ", path='" + path + '\'' +
+//            ", server='" + server + '\'' +
+//            ", sizeBytes=" + sizeBytes +
+//            '}';
+//  }
 }
