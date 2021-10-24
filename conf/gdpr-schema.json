@@ -2659,6 +2659,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Person.Employee.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Person.Identity",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -4437,7 +4442,8 @@
         "Person.Employee.Place_Of_Birth",
         "Person.Employee.Religion",
         "Person.Employee.Role",
-        "Person.Employee.Title"
+        "Person.Employee.Title",
+        "Person.Employee.Type"
       ],
       "propertyKeysMappings": {}
     },

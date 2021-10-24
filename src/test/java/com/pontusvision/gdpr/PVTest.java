@@ -1011,4 +1011,26 @@ public class PVTest extends AppTest {
     }
   }
 
+  @Test
+  public void test00030ADPReal() throws InterruptedException {
+    try {
+      csvTestUtil("ADP-real.csv", "ADP");
+
+
+      String countPersonNaturalEdges =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('JULIANA SILVA SANTOS'))" +
+                      ".bothE().count().next().toString()").get().toString();
+      assertEquals("10", countPersonNaturalEdges, "3 Has_Id_Card + 1 Is_Located " +
+              "+ 1 Has_Ingestion_Event + 1 Is_Alias + 1 Uses_Email + 1 Has_Phone + 2 Has_Parent_Or_Guardian");
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
 }

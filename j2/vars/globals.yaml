@@ -782,6 +782,7 @@ schema:
         - name: Religion
         - name: Role
         - name: Title
+        - name: Type
 
     - name: "Person.Identity"
       partition: false

@@ -409,6 +409,7 @@ Person.Employee.Place_Of_Birth
 Person.Employee.Religion
 Person.Employee.Role
 Person.Employee.Title
+Person.Employee.Type
 Person.Identity.Date_Of_Birth
 Person.Identity.Ethnicity
 Person.Identity.First_Name
