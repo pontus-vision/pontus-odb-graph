@@ -938,6 +938,7 @@ public class PVTest extends AppTest {
 
       jsonTestUtil("pv-extract-file-ingest-md2.json", "$.value", "pv_file");
       jsonTestUtil("pv-extract-o365-email-md2.json", "$.value", "pv_email");
+      jsonTestUtil("pv-extract-o365-email-md2-pt2.json", "$.value", "pv_email");
 
       String getPersonNaturalFullName =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +
@@ -956,15 +957,23 @@ public class PVTest extends AppTest {
 
       Md2Reply md2Reply = res.md2Search(md2Request);
 
-      assertEquals(3, md2Reply.total);
+      assertEquals(4, md2Reply.total);
       assertEquals(2, md2Reply.track.length);
 
       md2Request.settings.start = 2L;
 
       md2Reply = res.md2Search(md2Request);
 
-      assertEquals(3, md2Reply.total);
-      assertEquals(1, md2Reply.track.length);
+      assertEquals(4, md2Reply.total);
+      assertEquals(2, md2Reply.track.length);
+
+      md2Request.settings.start = 2L;
+      md2Request.query.name = "NAME THAT DOES NOT EXIST";
+
+
+      md2Reply = res.md2Search(md2Request);
+
+      assertEquals(404, md2Reply.getStatus());
 
 
     } catch (ExecutionException e) {
