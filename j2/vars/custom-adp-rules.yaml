@@ -5,7 +5,7 @@ rules:
       - label: Person.Natural
         name: titular
         props:
-          Full_Name: "${Nome?.trim().toUpperCase()}"
+          Full_Name: "${Nome?.trim()?.toUpperCase()}"
           Type:
             val: "colaborador"
             excludeFromSearch: true
@@ -33,7 +33,7 @@ rules:
         props:
           ID: "${Matricula?.trim()}"
           Role:
-            val: "Cargo = ${Cargo?.trim()}\\\\nFunção = ${Funcao?.trim()}"
+            val: "Cargo = ${Cargo?.trim()}\\nFunção = ${Funcao?.trim()}"
             excludeFromSearch: true
           Type:
             val: "colaborador"
@@ -106,7 +106,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object.Identity_Card
-        condition: "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')?.length > 0}"
+        condition: "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')?.length() > 0}"
         name: rg
         props:
           Id_Value: "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')}"
@@ -135,63 +135,6 @@ rules:
           Type:
             val: "${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}"
             excludeFromSearch: true
-
-      - label: Event.Ingestion
-        props:
-          Type:
-            val: ADP
-            excludeFromSearch: true
-
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
-
-          Domain_b64:
-            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
-            excludeFromSearch: true
-
-          Metadata_Create_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-
-      - label: Object.Data_Source
-        props:
-          Name:
-            val: ADP
-            mandatoryInSearch: true
-            excludeFromUpdate: false
-
-          Description:
-            val: Dados ADP RH de Colaboradores
-            mandatoryInSearch: false
-            excludeFromUpdate: false
-
-          Type:
-            val: Structured
-            mandatoryInSearch: false
-            excludeFromUpdate: false
-
-      - label: Event.Group_Ingestion
-        props:
-          Type:
-            val: ADP
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            #            mandatoryInSearch: false
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
 
       - label: Object.Phone_Number
         condition: "${Telefone?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -261,8 +204,38 @@ rules:
             val: "${(((Outros_Telefones?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             mandatoryInSearch: true
 
-#       Work In Progress
-#      - label: Object.Phone_Number
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "ADP"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name: "ADP"
+          Description: "Dados RH Colaboradores ADP"
+          Type: "Structured Data Insertion"
+
+      - label: Event.Group_Ingestion
+        props:
+          Type: "ADP"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -285,7 +258,6 @@ rules:
         fromVertexName: "chefe"
         toVertexName: "colaborador"
 
-#       name: telefone_opcional
       - label: "Uses_Email"
         fromVertexName: "titular"
         toVertexName: "email"

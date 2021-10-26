@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${Nome?.trim().toUpperCase()}",
+            "val": "${Nome?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
@@ -65,7 +65,7 @@
           },
           {
             "name": "Person.Employee.Role",
-            "val": "Cargo = ${Cargo?.trim()}\\\\nFunção = ${Funcao?.trim()}",
+            "val": "Cargo = ${Cargo?.trim()}\\nFunção = ${Funcao?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -210,7 +210,7 @@
       {
         "label": "Object.Identity_Card",
         "name": "rg",
-        "condition": "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')?.length > 0}",
+        "condition": "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')?.length() > 0}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
@@ -266,90 +266,6 @@
             "name": "Location.Address.Type",
             "val": "${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}",
             "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event.Ingestion",
-        "props": [
-          {
-            "name": "Event.Ingestion.Type",
-            "val": "ADP",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Ingestion.Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Ingestion.Domain_b64",
-            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Ingestion.Metadata_Create_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Data_Source",
-        "props": [
-          {
-            "name": "Object.Data_Source.Name",
-            "val": "ADP",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Dados ADP RH de Colaboradores",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "Structured",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event.Group_Ingestion",
-        "props": [
-          {
-            "name": "Event.Group_Ingestion.Type",
-            "val": "ADP",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
             "excludeFromSearch": true
           }
         ]
@@ -467,6 +383,84 @@
             "name": "Object.Phone_Number.Last_7_Digits",
             "val": "${(((Outros_Telefones?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
             "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Ingestion",
+        "props": [
+          {
+            "name": "Event.Ingestion.Type",
+            "val": "ADP",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "ADP",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Dados RH Colaboradores ADP",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Ingestion",
+        "props": [
+          {
+            "name": "Event.Group_Ingestion.Type",
+            "val": "ADP",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       }
