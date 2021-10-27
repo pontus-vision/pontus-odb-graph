@@ -2817,7 +2817,8 @@ the end of the process.
                 .property("Metadata.Type", "Object.Notification_Templates")
                 .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
                 .property("Object.Notification_Templates.Id", "DATA BREACH PERSON TEMPLATE")
-                .property("Object.Notification_Templates.Text", ("<div style='padding: 10px; background: black'>\n" +
+                .property("Object.Notification_Templates.Text", (
+                        "<div style='padding: 10px; background: white; color: black;'>\n" +
                         "<hr/>\n" +
                         "\n" +
                         "<h1> Summary of Data Breach Impact </h1>\n" +
