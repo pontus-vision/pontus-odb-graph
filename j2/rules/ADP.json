@@ -86,7 +86,7 @@
       {
         "label": "Person.Natural",
         "name": "responsavel",
-        "condition": "${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_do_Responsavel?.replaceAll('[^0-9]', '')?.length() > 0 }",
+        "condition": "${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
@@ -95,7 +95,7 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${CPF_do_Responsavel?.replaceAll('[^0-9]', '')}",
+            "val": "${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           }
         ]
@@ -103,11 +103,11 @@
       {
         "label": "Object.Identity_Card",
         "name": "cpf_responsavel",
-        "condition": "${CPF_do_Responsavel?.replaceAll('[^0-9]', '')?.length() > 0 }",
+        "condition": "${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
-            "val": "${CPF_do_Responsavel.replaceAll('[^0-9]','')}",
+            "val": "${CPF_do_Responsavel_Legal.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {

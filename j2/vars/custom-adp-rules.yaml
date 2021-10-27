@@ -43,17 +43,17 @@ rules:
           ID: "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}"
 
       - label: Person.Natural
-        condition: "${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_do_Responsavel?.replaceAll('[^0-9]', '')?.length() > 0 }"
+        condition: "${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }"
         name: responsavel
         props:
           Full_Name: "${Nome_do_Responsavel_Legal?.trim().toUpperCase()}"
-          Customer_ID: "${CPF_do_Responsavel?.replaceAll('[^0-9]', '')}"
+          Customer_ID: "${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')}"
 
       - label: Object.Identity_Card
-        condition: "${CPF_do_Responsavel?.replaceAll('[^0-9]', '')?.length() > 0 }"
+        condition: "${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }"
         name: cpf_responsavel
         props:
-          Id_Value: "${CPF_do_Responsavel.replaceAll('[^0-9]','')}"
+          Id_Value: "${CPF_do_Responsavel_Legal.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
