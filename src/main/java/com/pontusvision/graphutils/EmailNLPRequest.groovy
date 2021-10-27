@@ -158,8 +158,8 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
     Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
             percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
-    String[] emailAddrs = [req.email, req.toEmailAddresses,
-                           req.fromEmailAddresses, req.ccEmailAddresses, req.bccEmailAddresses].flatten()
+    String[] emailAddrs = [req.email?:[], req.toEmailAddresses?:[],
+                           req.fromEmailAddresses?:[], req.ccEmailAddresses?:[], req.bccEmailAddresses?:[]].flatten()
 
     req.person = [ req.person?:[], req.fromEmailNames?:[],
                    req.toEmailNames?:[], req.ccEmailNames?:[], req.bccEmailNames?:[]  ].flatten()
