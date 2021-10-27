@@ -44,7 +44,7 @@ updatereq:
           val: ${Matricula?.trim()}
           mandatoryInSearch: True
         - name: Person.Employee.Role
-          val: Cargo = ${Cargo?.trim()}\nFunção = ${Funcao?.trim()}
+          val: ${Cargo?.trim()}/${Funcao?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Employee.Type
@@ -181,7 +181,7 @@ updatereq:
     
     - label: Object.Phone_Number
       name: telefone
-      condition: ${Telefone?.replaceAll('[^0-9]', '')?.length() > 0}
+      condition: ${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telefone}
@@ -200,7 +200,7 @@ updatereq:
     
     - label: Object.Phone_Number
       name: telefone_comercial
-      condition: ${Telefone_Comercial?.trim()?.length() > 0}
+      condition: ${Telefone_Comercial?.trim()?.length() >= 7}
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telefone_Comercial}
@@ -219,7 +219,7 @@ updatereq:
     
     - label: Object.Phone_Number
       name: telefone_comercial
-      condition: ${Telefone_Opcional?.trim()?.length() > 0}
+      condition: ${Telefone_Opcional?.trim()?.length() >= 7}
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telefone_Opcional}
@@ -238,7 +238,7 @@ updatereq:
     
     - label: Object.Phone_Number
       name: telefone_comercial
-      condition: ${Outros_Telefones?.trim()?.length() > 0}
+      condition: ${Outros_Telefones?.trim()?.length() >= 7}
       props:
         - name: Object.Phone_Number.Raw
           val: ${Outros_Telefones}

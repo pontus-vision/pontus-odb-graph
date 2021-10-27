@@ -65,7 +65,7 @@
           },
           {
             "name": "Person.Employee.Role",
-            "val": "Cargo = ${Cargo?.trim()}\\nFunção = ${Funcao?.trim()}",
+            "val": "${Cargo?.trim()}/${Funcao?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -273,7 +273,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "telefone",
-        "condition": "${Telefone?.replaceAll('[^0-9]', '')?.length() > 0}",
+        "condition": "${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -302,7 +302,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "telefone_comercial",
-        "condition": "${Telefone_Comercial?.trim()?.length() > 0}",
+        "condition": "${Telefone_Comercial?.trim()?.length() >= 7}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -331,7 +331,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "telefone_comercial",
-        "condition": "${Telefone_Opcional?.trim()?.length() > 0}",
+        "condition": "${Telefone_Opcional?.trim()?.length() >= 7}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -360,7 +360,7 @@
       {
         "label": "Object.Phone_Number",
         "name": "telefone_comercial",
-        "condition": "${Outros_Telefones?.trim()?.length() > 0}",
+        "condition": "${Outros_Telefones?.trim()?.length() >= 7}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",

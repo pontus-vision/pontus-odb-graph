@@ -33,7 +33,7 @@ rules:
         props:
           ID: "${Matricula?.trim()}"
           Role:
-            val: "Cargo = ${Cargo?.trim()}\\nFunção = ${Funcao?.trim()}"
+            val: "${Cargo?.trim()}/${Funcao?.trim()}"
             excludeFromSearch: true
           Type:
             val: "colaborador"
@@ -137,7 +137,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object.Phone_Number
-        condition: "${Telefone?.replaceAll('[^0-9]', '')?.length() > 0}"
+        condition: "${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}"
         name: telefone
         props:
           Raw:
@@ -154,7 +154,7 @@ rules:
             mandatoryInSearch: true
 
       - label: Object.Phone_Number
-        condition: "${Telefone_Comercial?.trim()?.length() > 0}"
+        condition: "${Telefone_Comercial?.trim()?.length() >= 7}"
         name: telefone_comercial
         props:
           Raw:
@@ -171,7 +171,7 @@ rules:
             mandatoryInSearch: true
 
       - label: Object.Phone_Number
-        condition: "${Telefone_Opcional?.trim()?.length() > 0}"
+        condition: "${Telefone_Opcional?.trim()?.length() >= 7}"
         name: telefone_comercial
         props:
           Raw:
@@ -188,7 +188,7 @@ rules:
             mandatoryInSearch: true
 
       - label: Object.Phone_Number
-        condition: "${Outros_Telefones?.trim()?.length() > 0}"
+        condition: "${Outros_Telefones?.trim()?.length() >= 7}"
         name: telefone_comercial
         props:
           Raw:
