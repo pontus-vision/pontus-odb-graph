@@ -1645,9 +1645,6 @@ propertyKeys:
   - name: Person.Employee.Title
     dataType: String
     cardinality: SINGLE
-  - name: Person.Employee.Type
-    dataType: String
-    cardinality: SINGLE
   - name: Metadata.Type.Person.Identity
     dataType: String
     cardinality: SINGLE
@@ -3153,7 +3150,6 @@ vertexIndexes:
       - Person.Employee.Religion
       - Person.Employee.Role
       - Person.Employee.Title
-      - Person.Employee.Type
     propertyKeysMappings:
     
       {}

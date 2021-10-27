@@ -35,18 +35,12 @@ rules:
           Role:
             val: "${Cargo?.trim()}/${Funcao?.trim()}"
             excludeFromSearch: true
-          Type:
-            val: "colaborador"
-            excludeFromSearch: true
 
       - label: Person.Employee
         condition: "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: chefe
         props:
           ID: "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}"
-          Type:
-            val: "chefe"
-            excludeFromSearch: true
 
       - label: Person.Natural
         condition: "${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_do_Responsavel?.replaceAll('[^0-9]', '')?.length() > 0 }"

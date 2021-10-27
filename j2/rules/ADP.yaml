@@ -47,10 +47,6 @@ updatereq:
           val: ${Cargo?.trim()}/${Funcao?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Person.Employee.Type
-          val: colaborador
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Person.Employee
       name: chefe
@@ -59,10 +55,6 @@ updatereq:
         - name: Person.Employee.ID
           val: ${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
-        - name: Person.Employee.Type
-          val: chefe
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Person.Natural
       name: responsavel

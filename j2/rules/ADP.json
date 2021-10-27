@@ -68,12 +68,6 @@
             "val": "${Cargo?.trim()}/${Funcao?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
-          },
-          {
-            "name": "Person.Employee.Type",
-            "val": "colaborador",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -86,12 +80,6 @@
             "name": "Person.Employee.ID",
             "val": "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Employee.Type",
-            "val": "chefe",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
