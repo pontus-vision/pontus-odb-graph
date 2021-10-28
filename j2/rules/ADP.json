@@ -60,7 +60,7 @@
         "props": [
           {
             "name": "Person.Employee.ID",
-            "val": "${Matricula?.trim()}",
+            "val": "${Matricula?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
@@ -84,41 +84,6 @@
         ]
       },
       {
-        "label": "Person.Natural",
-        "name": "responsavel",
-        "condition": "${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }",
-        "props": [
-          {
-            "name": "Person.Natural.Full_Name",
-            "val": "${Nome_do_Responsavel_Legal?.trim().toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Identity_Card",
-        "name": "cpf_responsavel",
-        "condition": "${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }",
-        "props": [
-          {
-            "name": "Object.Identity_Card.Id_Value",
-            "val": "${CPF_do_Responsavel_Legal.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Identity_Card.Id_Type",
-            "val": "CPF",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
         "label": "Object.Identity_Card",
         "name": "rne",
         "condition": "${RNE?.replaceAll('[^0-9]', '')?.length() > 0 }",
@@ -131,47 +96,6 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "RNE",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Person.Natural",
-        "name": "coordenador",
-        "condition": "${Nome_do_Coordenador?.trim()?.length() > 0 && CPF_do_Coordenador?.replaceAll('[^0-9]', '')?.length() > 0 }",
-        "props": [
-          {
-            "name": "Person.Natural.Full_Name",
-            "val": "${Nome_do_Coordenador?.trim().toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "colaborador",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Identity_Card",
-        "name": "cpf_coordenador",
-        "condition": "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')?.length() > 0 }",
-        "props": [
-          {
-            "name": "Object.Identity_Card.Id_Value",
-            "val": "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Identity_Card.Id_Type",
-            "val": "CPF",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -221,7 +145,7 @@
       },
       {
         "label": "Object.Email_Address",
-        "condition": "${(Email != null) && !(Email.isEmpty())}",
+        "condition": "${Email?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Email_Address.Email",
@@ -233,7 +157,7 @@
       {
         "label": "Object.Email_Address",
         "name": "email_opcional",
-        "condition": "${(E_Mail_Opcional != null) && !(E_Mail_Opcional.isEmpty())}",
+        "condition": "${E_Mail_Opcional?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Email_Address.Email",
@@ -260,7 +184,6 @@
       },
       {
         "label": "Object.Phone_Number",
-        "name": "telefone",
         "condition": "${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}",
         "props": [
           {
@@ -283,93 +206,6 @@
           {
             "name": "Object.Phone_Number.Last_7_Digits",
             "val": "${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Phone_Number",
-        "name": "telefone_comercial",
-        "condition": "${Telefone_Comercial?.trim()?.length() >= 7}",
-        "props": [
-          {
-            "name": "Object.Phone_Number.Raw",
-            "val": "${Telefone_Comercial}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Telefone Comercial",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Numbers_Only",
-            "val": "${(Telefone_Comercial?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Last_7_Digits",
-            "val": "${(((Telefone_Comercial?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Phone_Number",
-        "name": "telefone_comercial",
-        "condition": "${Telefone_Opcional?.trim()?.length() >= 7}",
-        "props": [
-          {
-            "name": "Object.Phone_Number.Raw",
-            "val": "${Telefone_Opcional}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Telefone Opcional",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Numbers_Only",
-            "val": "${(Telefone_Opcional?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Last_7_Digits",
-            "val": "${(((Telefone_Opcional?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Phone_Number",
-        "name": "telefone_comercial",
-        "condition": "${Outros_Telefones?.trim()?.length() >= 7}",
-        "props": [
-          {
-            "name": "Object.Phone_Number.Raw",
-            "val": "${Outros_Telefones}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Outros Telefones",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Numbers_Only",
-            "val": "${(Outros_Telefones?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Last_7_Digits",
-            "val": "${(((Outros_Telefones?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
             "mandatoryInSearch": true
           }
         ]
@@ -476,8 +312,8 @@
       },
       {
         "label": "Is_Subordinate",
-        "fromVertexName": "chefe",
-        "toVertexName": "colaborador"
+        "fromVertexName": "colaborador",
+        "toVertexName": "chefe"
       },
       {
         "label": "Uses_Email",
@@ -495,16 +331,6 @@
         "toVertexLabel": "Location.Address"
       },
       {
-        "label": "Is_Subordinate",
-        "fromVertexName": "colaborador",
-        "toVertexName": "coordenador"
-      },
-      {
-        "label": "Is_Responsible",
-        "fromVertexName": "responsavel",
-        "toVertexName": "colaborador"
-      },
-      {
         "label": "Has_Id_Card",
         "fromVertexName": "titular",
         "toVertexName": "cpf"
@@ -520,34 +346,9 @@
         "toVertexName": "rne"
       },
       {
-        "label": "Has_Id_Card",
-        "fromVertexName": "responsavel",
-        "toVertexName": "cpf_responsavel"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexName": "coordenador",
-        "toVertexName": "cpf_coordenador"
-      },
-      {
         "label": "Has_Phone",
         "fromVertexName": "titular",
-        "toVertexName": "telefone"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "titular",
-        "toVertexName": "telefone_comercial"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "titular",
-        "toVertexName": "telefone_opcional"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "titular",
-        "toVertexName": "outros_telefones"
+        "toVertexLabel": "Object.Phone_Number"
       },
       {
         "label": "Has_Parent_Or_Guardian",

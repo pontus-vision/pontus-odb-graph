@@ -41,7 +41,7 @@ updatereq:
       name: colaborador
       props:
         - name: Person.Employee.ID
-          val: ${Matricula?.trim()}
+          val: ${Matricula?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person.Employee.Role
           val: ${Cargo?.trim()}/${Funcao?.trim()}
@@ -56,29 +56,6 @@ updatereq:
           val: ${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
     
-    - label: Person.Natural
-      name: responsavel
-      condition: ${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }
-      props:
-        - name: Person.Natural.Full_Name
-          val: ${Nome_do_Responsavel_Legal?.trim().toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person.Natural.Customer_ID
-          val: ${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
-    
-    - label: Object.Identity_Card
-      name: cpf_responsavel
-      condition: ${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }
-      props:
-        - name: Object.Identity_Card.Id_Value
-          val: ${CPF_do_Responsavel_Legal.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object.Identity_Card.Id_Type
-          val: CPF
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
     - label: Object.Identity_Card
       name: rne
       condition: ${RNE?.replaceAll('[^0-9]', '')?.length() > 0 }
@@ -88,33 +65,6 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Identity_Card.Id_Type
           val: RNE
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
-    - label: Person.Natural
-      name: coordenador
-      condition: ${Nome_do_Coordenador?.trim()?.length() > 0 && CPF_do_Coordenador?.replaceAll('[^0-9]', '')?.length() > 0 }
-      props:
-        - name: Person.Natural.Full_Name
-          val: ${Nome_do_Coordenador?.trim().toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person.Natural.Type
-          val: colaborador
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Person.Natural.Customer_ID
-          val: ${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
-    
-    - label: Object.Identity_Card
-      name: cpf_coordenador
-      condition: ${CPF_do_Coordenador?.replaceAll('[^0-9]', '')?.length() > 0 }
-      props:
-        - name: Object.Identity_Card.Id_Value
-          val: ${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
-        - name: Object.Identity_Card.Id_Type
-          val: CPF
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -147,7 +97,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Email_Address
-      condition: ${(Email != null) && !(Email.isEmpty())}
+      condition: ${Email?.trim()?.length() > 0}
       props:
         - name: Object.Email_Address.Email
           val: ${Email?.trim()?.toLowerCase()}
@@ -155,7 +105,7 @@ updatereq:
     
     - label: Object.Email_Address
       name: email_opcional
-      condition: ${(E_Mail_Opcional != null) && !(E_Mail_Opcional.isEmpty())}
+      condition: ${E_Mail_Opcional?.trim()?.length() > 0}
       props:
         - name: Object.Email_Address.Email
           val: ${E_Mail_Opcional?.trim()?.toLowerCase()}
@@ -172,7 +122,6 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Phone_Number
-      name: telefone
       condition: ${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}
       props:
         - name: Object.Phone_Number.Raw
@@ -188,63 +137,6 @@ updatereq:
           excludeFromSearch: True
         - name: Object.Phone_Number.Last_7_Digits
           val: ${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
-          mandatoryInSearch: True
-    
-    - label: Object.Phone_Number
-      name: telefone_comercial
-      condition: ${Telefone_Comercial?.trim()?.length() >= 7}
-      props:
-        - name: Object.Phone_Number.Raw
-          val: ${Telefone_Comercial}
-          mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Telefone Comercial
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Phone_Number.Numbers_Only
-          val: ${(Telefone_Comercial?.replaceAll('[^0-9]', '')?:'00000000')}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Phone_Number.Last_7_Digits
-          val: ${(((Telefone_Comercial?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
-          mandatoryInSearch: True
-    
-    - label: Object.Phone_Number
-      name: telefone_comercial
-      condition: ${Telefone_Opcional?.trim()?.length() >= 7}
-      props:
-        - name: Object.Phone_Number.Raw
-          val: ${Telefone_Opcional}
-          mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Telefone Opcional
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Phone_Number.Numbers_Only
-          val: ${(Telefone_Opcional?.replaceAll('[^0-9]', '')?:'00000000')}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Phone_Number.Last_7_Digits
-          val: ${(((Telefone_Opcional?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
-          mandatoryInSearch: True
-    
-    - label: Object.Phone_Number
-      name: telefone_comercial
-      condition: ${Outros_Telefones?.trim()?.length() >= 7}
-      props:
-        - name: Object.Phone_Number.Raw
-          val: ${Outros_Telefones}
-          mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Outros Telefones
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Phone_Number.Numbers_Only
-          val: ${(Outros_Telefones?.replaceAll('[^0-9]', '')?:'00000000')}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Phone_Number.Last_7_Digits
-          val: ${(((Outros_Telefones?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
           mandatoryInSearch: True
     
     - label: Event.Ingestion
@@ -311,8 +203,8 @@ updatereq:
     fromVertexName: titular
     toVertexLabel: colaborador
   - label: Is_Subordinate
-    fromVertexName: chefe
-    toVertexName: colaborador
+    fromVertexName: colaborador
+    toVertexName: chefe
   - label: Uses_Email
     fromVertexName: titular
     toVertexName: email
@@ -322,12 +214,6 @@ updatereq:
   - label: Is_Located
     fromVertexName: titular
     toVertexLabel: Location.Address
-  - label: Is_Subordinate
-    fromVertexName: colaborador
-    toVertexName: coordenador
-  - label: Is_Responsible
-    fromVertexName: responsavel
-    toVertexName: colaborador
   - label: Has_Id_Card
     fromVertexName: titular
     toVertexName: cpf
@@ -337,24 +223,9 @@ updatereq:
   - label: Has_Id_Card
     fromVertexName: titular
     toVertexName: rne
-  - label: Has_Id_Card
-    fromVertexName: responsavel
-    toVertexName: cpf_responsavel
-  - label: Has_Id_Card
-    fromVertexName: coordenador
-    toVertexName: cpf_coordenador
   - label: Has_Phone
     fromVertexName: titular
-    toVertexName: telefone
-  - label: Has_Phone
-    fromVertexName: titular
-    toVertexName: telefone_comercial
-  - label: Has_Phone
-    fromVertexName: titular
-    toVertexName: telefone_opcional
-  - label: Has_Phone
-    fromVertexName: titular
-    toVertexName: outros_telefones
+    toVertexLabel: Object.Phone_Number
   - label: Has_Parent_Or_Guardian
     fromVertexName: titular
     toVertexName: mae
