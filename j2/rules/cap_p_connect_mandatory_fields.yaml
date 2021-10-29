@@ -8,7 +8,7 @@ updatereq:
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Type
-          val: Pxxxxxx Connect Mandatory Fields
+          val: Porsche Connect Mandatory Fields
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Title
@@ -24,7 +24,7 @@ updatereq:
           val: ${Mobile_Number}
           mandatoryInSearch: True
         - name: Object.Phone_Number.Type
-          val: Pxxxxxx Connect Mandatory Fields
+          val: Porsche Connect Mandatory Fields
           mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
@@ -47,7 +47,7 @@ updatereq:
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sap/c@p Pxxxxxx Connect Mandatory Fields
+          val: sap/c@p Porsche Connect Mandatory Fields
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -72,7 +72,7 @@ updatereq:
     - label: Event.Group_Ingestion
       props:
         - name: Event.Group_Ingestion.Type
-          val: sap/c@p Pxxxxxx Connect Mandatory Fields
+          val: sap/c@p Porsche Connect Mandatory Fields
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Operation
@@ -96,15 +96,15 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/c@p Pxxxxxx Connect Mandatory Fields
+          val: sap/c@p Porsche Connect Mandatory Fields
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Type
-          val: sap/c@p Pxxxxxx Connect Mandatory Fields
+          val: sap/c@p Porsche Connect Mandatory Fields
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros da tabela 'Pxxxxxx Connect Mandatory Fields Report' no SAP/C@P
+          val: Registros da tabela 'Porsche Connect Mandatory Fields Report' no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 

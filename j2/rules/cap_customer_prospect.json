@@ -11,7 +11,7 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${Pxxxxxx_ID?.replaceAll('[^0-9]', '')}",
+            "val": "${Porsche_ID?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {

@@ -11,7 +11,7 @@
           },
           {
             "name": "Person.Natural.Type",
-            "val": "Pxxxxxx Connect Mandatory Fields",
+            "val": "Porsche Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -35,7 +35,7 @@
           },
           {
             "name": "Object.Phone_Number.Type",
-            "val": "Pxxxxxx Connect Mandatory Fields",
+            "val": "Porsche Connect Mandatory Fields",
             "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
@@ -70,7 +70,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
+            "val": "sap/c@p Porsche Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -107,7 +107,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
+            "val": "sap/c@p Porsche Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -143,19 +143,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
+            "val": "sap/c@p Porsche Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
+            "val": "sap/c@p Porsche Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Pxxxxxx Connect Mandatory Fields Report' no SAP/C@P",
+            "val": "Registros da tabela 'Porsche Connect Mandatory Fields Report' no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

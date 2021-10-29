@@ -1103,7 +1103,7 @@ public class PVTest extends AppTest {
       String getOwnerType =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('CAROL SANTANA'))" +
                       ".properties('Person.Natural.Type').value().next().toString()").get().toString();
-      assertEquals("Pxxxxxx Ownership Change", getOwnerType, "Person.Natural (owner) Type");
+      assertEquals("Porsche Ownership Change", getOwnerType, "Person.Natural (owner) Type");
 
 
     } catch (ExecutionException e) {

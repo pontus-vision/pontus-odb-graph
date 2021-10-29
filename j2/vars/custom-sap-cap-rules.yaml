@@ -173,7 +173,7 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Pxxxxxx_ID?.replaceAll('[^0-9]', '')}"
+          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
           Type:
             val: "Customer Prospect"
             excludeFromSearch: true
@@ -247,7 +247,7 @@ rules:
 #      - label: Object.Contract
 #        props:
 #          Description: "(Responsável Sales Person) ${Resp__Sales_Person}"
-#          Id: "${Pxxxxxx_ID} - ${Profile_ID}"
+#          Id: "${Porsche_ID} - ${Profile_ID}"
 #          Status: "${Status}"
 #          Type:
 #            val: "Customer Prospect Contract"
@@ -399,15 +399,15 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Pxxxxxx_ID?.replaceAll('[^0-9]', '')}"
+          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
           Type:
-            val: "My Pxxxxxx Change Report"
+            val: "My Porsche Change Report"
             excludeFromSearch: true
 
       - label: Event.Ingestion
         props:
           Type:
-            val: "sap/c@p My Pxxxxxx Change Report"
+            val: "sap/c@p My Porsche Change Report"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -427,7 +427,7 @@ rules:
       - label: Event.Group_Ingestion
         props:
           Type:
-            val: "sap/c@p My Pxxxxxx Change Report"
+            val: "sap/c@p My Porsche Change Report"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -445,13 +445,13 @@ rules:
       - label: Object.Data_Source
         props:
           Name:
-            val: "sap/c@p My Pxxxxxx Change Report"
+            val: "sap/c@p My Porsche Change Report"
             excludeFromSearch: true
           Type:
-            val: "sap/c@p My Pxxxxxx Change Report"
+            val: "sap/c@p My Porsche Change Report"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'My Pxxxxxx Change Report' no SAP/C@P"
+            val: "Registros da tabela 'My Porsche Change Report' no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -473,7 +473,7 @@ rules:
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
           Type:
-            val: "Pxxxxxx Connect Mandatory Fields"
+            val: "Porsche Connect Mandatory Fields"
             excludeFromSearch: true
           Title:
             val: "${Title}"
@@ -486,7 +486,7 @@ rules:
           Raw:
             val: "${Mobile_Number}"
           Type:
-            val: "Pxxxxxx Connect Mandatory Fields"
+            val: "Porsche Connect Mandatory Fields"
             excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
@@ -504,7 +504,7 @@ rules:
       - label: Event.Ingestion
         props:
           Type:
-            val: "sap/c@p Pxxxxxx Connect Mandatory Fields"
+            val: "sap/c@p Porsche Connect Mandatory Fields"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -524,7 +524,7 @@ rules:
       - label: Event.Group_Ingestion
         props:
           Type:
-            val: "sap/c@p Pxxxxxx Connect Mandatory Fields"
+            val: "sap/c@p Porsche Connect Mandatory Fields"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -542,13 +542,13 @@ rules:
       - label: Object.Data_Source
         props:
           Name:
-            val: "sap/c@p Pxxxxxx Connect Mandatory Fields"
+            val: "sap/c@p Porsche Connect Mandatory Fields"
             excludeFromSearch: true
           Type:
-            val: "sap/c@p Pxxxxxx Connect Mandatory Fields"
+            val: "sap/c@p Porsche Connect Mandatory Fields"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Pxxxxxx Connect Mandatory Fields Report' no SAP/C@P"
+            val: "Registros da tabela 'Porsche Connect Mandatory Fields Report' no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -579,7 +579,7 @@ rules:
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
           Type:
-            val: "Pxxxxxx Ownership Change"
+            val: "Porsche Ownership Change"
             excludeFromSearch: true
 
       - label: Person.Natural
@@ -590,13 +590,13 @@ rules:
             val: "${Name_1?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Type:
-            val: "Pxxxxxx Responsible Dealer"
+            val: "Porsche Responsible Dealer"
             excludeFromSearch: true
 
       - label: Event.Ingestion
         props:
           Type:
-            val: "sap/c@p Pxxxxxx Ownership Change"
+            val: "sap/c@p Porsche Ownership Change"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -616,7 +616,7 @@ rules:
       - label: Event.Group_Ingestion
         props:
           Type:
-            val: "sap/c@p Pxxxxxx Ownership Change"
+            val: "sap/c@p Porsche Ownership Change"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -634,13 +634,13 @@ rules:
       - label: Object.Data_Source
         props:
           Name:
-            val: "sap/c@p Pxxxxxx Ownership Change"
+            val: "sap/c@p Porsche Ownership Change"
             excludeFromSearch: true
           Type:
-            val: "sap/c@p Pxxxxxx Ownership Change"
+            val: "sap/c@p Porsche Ownership Change"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Pxxxxxx Ownership Change' no SAP/C@P"
+            val: "Registros da tabela 'Porsche Ownership Change' no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -1564,7 +1564,7 @@ rules:
       #      - label: Object.Contract
       #        props:
       #          Description: "(Responsável Sales Person) ${Resp__Sales_Person}"
-      #          Id: "${Pxxxxxx_ID} - ${Profile_ID}"
+      #          Id: "${Porsche_ID} - ${Profile_ID}"
       #          Status: "${Status}"
       #          Type:
       #            val: "Customer Prospect Contract"

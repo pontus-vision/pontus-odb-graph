@@ -9,7 +9,7 @@ updatereq:
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Type
-          val: Pxxxxxx Ownership Change
+          val: Porsche Ownership Change
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -24,14 +24,14 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Type
-          val: Pxxxxxx Responsible Dealer
+          val: Porsche Responsible Dealer
           mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sap/c@p Pxxxxxx Ownership Change
+          val: sap/c@p Porsche Ownership Change
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -56,7 +56,7 @@ updatereq:
     - label: Event.Group_Ingestion
       props:
         - name: Event.Group_Ingestion.Type
-          val: sap/c@p Pxxxxxx Ownership Change
+          val: sap/c@p Porsche Ownership Change
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Operation
@@ -80,15 +80,15 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/c@p Pxxxxxx Ownership Change
+          val: sap/c@p Porsche Ownership Change
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Type
-          val: sap/c@p Pxxxxxx Ownership Change
+          val: sap/c@p Porsche Ownership Change
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros da tabela 'Pxxxxxx Ownership Change' no SAP/C@P
+          val: Registros da tabela 'Porsche Ownership Change' no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 

@@ -12,7 +12,7 @@
           },
           {
             "name": "Person.Natural.Type",
-            "val": "Pxxxxxx Ownership Change",
+            "val": "Porsche Ownership Change",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -35,7 +35,7 @@
           },
           {
             "name": "Person.Natural.Type",
-            "val": "Pxxxxxx Responsible Dealer",
+            "val": "Porsche Responsible Dealer",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -46,7 +46,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p Pxxxxxx Ownership Change",
+            "val": "sap/c@p Porsche Ownership Change",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -83,7 +83,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p Pxxxxxx Ownership Change",
+            "val": "sap/c@p Porsche Ownership Change",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -119,19 +119,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Pxxxxxx Ownership Change",
+            "val": "sap/c@p Porsche Ownership Change",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Pxxxxxx Ownership Change",
+            "val": "sap/c@p Porsche Ownership Change",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Pxxxxxx Ownership Change' no SAP/C@P",
+            "val": "Registros da tabela 'Porsche Ownership Change' no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

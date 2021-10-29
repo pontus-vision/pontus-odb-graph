@@ -11,12 +11,12 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${Pxxxxxx_ID?.replaceAll('[^0-9]', '')}",
+            "val": "${Porsche_ID?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
-            "val": "My Pxxxxxx Change Report",
+            "val": "My Porsche Change Report",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -27,7 +27,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p My Porsche Change Report",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -64,7 +64,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p My Porsche Change Report",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -100,19 +100,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p My Porsche Change Report",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p My Porsche Change Report",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'My Pxxxxxx Change Report' no SAP/C@P",
+            "val": "Registros da tabela 'My Porsche Change Report' no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
