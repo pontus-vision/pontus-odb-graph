@@ -35,15 +35,6 @@ rules:
             mandatoryInSearch: true
             predicate: "eq"
 
-      - label: Person.Organisation
-        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
-        props:
-          Registration_Number:
-            val: "${A1_CGC?.trim()}"
-            mandatoryInSearch: true
-          Name: "${A1_NOME?.trim()?.toUpperCase()}"
-
-        #CELULAR
       - label: Object.Phone_Number
         props:
           Raw:
@@ -64,7 +55,7 @@ rules:
       #RG
       - label: Object.Identity_Card
         condition: "${A1_CGC?.replaceAll('[^0-9]', '')?.length() == 11}"
-        name: RG
+        name: rg
         props:
           Id_Value:
             val: "${A1_RG?.replaceAll('[^0-9]','')}"
@@ -75,7 +66,7 @@ rules:
 
       - label: Object.Identity_Card
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
-        name: CPF
+        name: cpf
         props:
           Id_Value:
             val: "${A1_CGC?.replaceAll('[^0-9]','')}"
@@ -84,6 +75,16 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
+      - label: Object.Identity_Card
+        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
+        name: cnpj
+        props:
+          Id_Value:
+            val: "${A1_CGC?.replaceAll('[^0-9]','')}"
+            mandatoryInSearch: true
+          Id_Type:
+            val: "CNPJ"
+            excludeFromSearch: true
       # EMAIL
       - label: Object.Email_Address
         props:
@@ -92,6 +93,7 @@ rules:
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location.Address
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
+        name: business
         props:
           Full_Address: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
           Type:
@@ -100,6 +102,7 @@ rules:
 
       - label: Location.Address
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
+        name: residence
         props:
           Full_Address: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
           Type:
@@ -147,23 +150,24 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-
       - label: Object.Data_Source
         props:
           Name: totvs/protheus/sa1_clientes
           Type: totvs/protheus/sa1_clientes
           Description: Registros de Clientes no protheus/Totvs
+
     edges:
       - label: Has_Ingestion_Event
         fromVertexLabel: Person.Natural
         toVertexLabel: Event.Ingestion
+
       - label: Has_Ingestion_Event
         fromVertexLabel: Event.Group_Ingestion
         toVertexLabel: Event.Ingestion
-      - label: Has_Ingestion_Event
-        toVertexLabel: Event.Group_Ingestion
-        fromVertexLabel: Object.Data_Source
 
+      - label: Has_Ingestion_Event
+        fromVertexLabel: Object.Data_Source
+        toVertexLabel: Event.Group_Ingestion
 
       - label: "Uses_Email"
         fromVertexLabel: "Person.Natural"
@@ -171,15 +175,27 @@ rules:
 
       - label: "Has_Id_Card"
         fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Identity_Card"
+        toVertexName: rg
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: cpf
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: cnpj
 
       - label: "Works"
         fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+        toVertexName: business
 
       - label: "Lives"
         fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+        toVertexName: residence
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: Object.Phone_Number
 
 #    {
 #      "id": "string"
@@ -270,7 +286,6 @@ rules:
             predicate: "eq"
 
       - label: Location.Address
-        name: home
         props:
           Full_Address:
             val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
@@ -309,7 +324,6 @@ rules:
 
       - label: Object.Phone_Number
         condition: "${RA_TELEFON?.replaceAll('[^0-9]','').length() > 0}"
-        name: phone
         props:
           Raw:
             val: "${RA_TELEFON}"
@@ -328,7 +342,7 @@ rules:
 
       - label: Object.Identity_Card
         condition: "${RA_RG?.replaceAll('[^0-9]','')?.length() > 0}"
-        name: RG
+        name: rg
         props:
           Id_Value:
             val: "${RA_RG?.replaceAll('[^0-9]','')}"
@@ -339,7 +353,7 @@ rules:
 
       - label: Object.Identity_Card
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}"
-        name: CPF
+        name: cpf
         props:
           Id_Value:
             val: "${RA_CIC?.replaceAll('[^0-9]','')}"
@@ -350,7 +364,7 @@ rules:
 
       - label: Object.Identity_Card
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
-        name: CNPJ
+        name: cnpj
         props:
           Id_Value:
             val: "${RA_CIC?.replaceAll('[^0-9]','')}"
@@ -372,10 +386,6 @@ rules:
         props:
           Email: "${RA_EMAIL2?.trim()?.toLowerCase()}"
           Type: "${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
-
-      #      - label: Location.Address
-      #        props:
-      #          Full_Address: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
 
       - label: Event.Ingestion
         props:
@@ -418,7 +428,6 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-
       - label: Object.Data_Source
         props:
           Name: totvs/protheus/sra_funcionarios
@@ -438,20 +447,16 @@ rules:
         toVertexName: colaborador
 
       - label: Has_Ingestion_Event
-        fromVertexName: mae
-        toVertexLabel: Event.Ingestion
-
-      - label: Has_Ingestion_Event
         fromVertexLabel: Event.Group_Ingestion
         toVertexLabel: Event.Ingestion
 
       - label: Has_Ingestion_Event
-        toVertexLabel: Event.Group_Ingestion
         fromVertexLabel: Object.Data_Source
+        toVertexLabel: Event.Group_Ingestion
 
       - label: Has_Phone
         fromVertexName: colaborador
-        toVertexName: phone
+        toVertexLabel: Object.Phone_Number
 
       - label: Uses_Email
         fromVertexName: colaborador
@@ -465,9 +470,17 @@ rules:
         fromVertexName: colaborador
         toVertexName: rg
 
+      - label: Has_Id_Card
+        fromVertexName: colaborador
+        toVertexName: cpf
+
+      - label: Has_Id_Card
+        fromVertexName: colaborador
+        toVertexName: cnpj
+
       - label: Lives
         fromVertexName: colaborador
-        toVertexName: home
+        toVertexLabel: Location.Address
 
 
 #   {
@@ -558,7 +571,7 @@ rules:
 
       - label: Object.Identity_Card
         condition: "${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}"
-        name: RG
+        name: rg
         props:
           Id_Value:
             val: "${A2_RG?.replaceAll('[^0-9]','')}"
@@ -569,7 +582,7 @@ rules:
 
       - label: Object.Identity_Card
         condition: "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}"
-        name: CNPJ
+        name: cnpj
         props:
           Id_Value:
             val: "${A2_CGC?.replaceAll('[^0-9]','')}"
@@ -580,7 +593,7 @@ rules:
 
       - label: Object.Identity_Card
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
-        name: CPF
+        name: cpf
         props:
           Id_Value:
             val: "${A2_CGC?.replaceAll('[^0-9]','')}"
@@ -657,7 +670,6 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-
       - label: Object.Data_Source
         props:
           Name: totvs/protheus/sa2_fornecedor
@@ -695,15 +707,15 @@ rules:
 
       - label: Has_Id_Card
         fromVertexName: rep
-        toVertexName: RG
+        toVertexName: rg
 
       - label: Has_Id_Card
         fromVertexName: rep
-        toVertexName: CPF
+        toVertexName: cpf
 
       - label: Has_Id_Card
         fromVertexName: fornecedor
-        toVertexName: CNPJ
+        toVertexName: cnpj
 
       - label: Uses_Email
         fromVertexName: fornecedor

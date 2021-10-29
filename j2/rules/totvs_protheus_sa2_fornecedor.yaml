@@ -60,7 +60,7 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Object.Identity_Card
-      name: RG
+      name: rg
       condition: ${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}
       props:
         - name: Object.Identity_Card.Id_Value
@@ -72,7 +72,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Identity_Card
-      name: CNPJ
+      name: cnpj
       condition: ${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}
       props:
         - name: Object.Identity_Card.Id_Value
@@ -84,7 +84,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Identity_Card
-      name: CPF
+      name: cpf
       condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}
       props:
         - name: Object.Identity_Card.Id_Value
@@ -207,13 +207,13 @@ updatereq:
     toVertexName: residence_addr
   - label: Has_Id_Card
     fromVertexName: rep
-    toVertexName: RG
+    toVertexName: rg
   - label: Has_Id_Card
     fromVertexName: rep
-    toVertexName: CPF
+    toVertexName: cpf
   - label: Has_Id_Card
     fromVertexName: fornecedor
-    toVertexName: CNPJ
+    toVertexName: cnpj
   - label: Uses_Email
     fromVertexName: fornecedor
     toVertexName: email1

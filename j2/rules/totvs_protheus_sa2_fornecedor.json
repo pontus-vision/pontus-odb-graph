@@ -92,7 +92,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "RG",
+        "name": "rg",
         "condition": "${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
@@ -110,7 +110,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "CNPJ",
+        "name": "cnpj",
         "condition": "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}",
         "props": [
           {
@@ -128,7 +128,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "CPF",
+        "name": "cpf",
         "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
         "props": [
           {
@@ -318,17 +318,17 @@
       {
         "label": "Has_Id_Card",
         "fromVertexName": "rep",
-        "toVertexName": "RG"
+        "toVertexName": "rg"
       },
       {
         "label": "Has_Id_Card",
         "fromVertexName": "rep",
-        "toVertexName": "CPF"
+        "toVertexName": "cpf"
       },
       {
         "label": "Has_Id_Card",
         "fromVertexName": "fornecedor",
-        "toVertexName": "CNPJ"
+        "toVertexName": "cnpj"
       },
       {
         "label": "Uses_Email",
