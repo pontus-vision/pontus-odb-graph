@@ -22,7 +22,6 @@ rules:
   totvs_protheus_sa1_clientes:
     vertices:
       - label: Person.Natural
-        condition: "${A1_CGC?.replaceAll('[^0-9]','').length() == 11}"
         props:
           Full_Name: "${A1_NOME?.trim()?.toUpperCase()}"
           Full_Name_fuzzy: "${A1_NOME?.trim()?.toUpperCase()}"
@@ -54,7 +53,6 @@ rules:
 
       #RG
       - label: Object.Identity_Card
-        condition: "${A1_CGC?.replaceAll('[^0-9]', '')?.length() == 11}"
         name: rg
         props:
           Id_Value:
@@ -318,9 +316,6 @@ rules:
             val: "colaborador-pais"
             excludeFromSearch: false
           Gender: "M"
-
-
-        #CELULAR
 
       - label: Object.Phone_Number
         condition: "${RA_TELEFON?.replaceAll('[^0-9]','').length() > 0}"
@@ -621,13 +616,55 @@ rules:
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
+      - label: Object.Phone_Number
+        condition: "${A2_TEL?.replaceAll('[^0-9]','').length() > 0}"
+        name: phone2
+        props:
+          Raw:
+            val: "${A2_TEL}"
+            mandatoryInSearch: false
+          Type:
+            val: "Telefone 2"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((A2_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+        condition: "${A2_REPR_EN?.replaceAll('[^0-9]','').length() > 0}"
+        name: mobile
+        props:
+          Raw:
+            val: "${A2_REPR_EN}"
+            mandatoryInSearch: false
+          Type:
+            val: "Mobile"
+            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(A2_REPR_EN?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((A2_REPR_EN?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            mandatoryInSearch: true
+            type: "[Ljava.lang.String;"
+
       - label: Object.Email_Address
         condition: "${A2_REPR_EM?.trim()?.length() > 0}"
         name: email1
         props:
           Email: "${A2_REPR_EM?.trim()?.toLowerCase()}"
-      #          Type: "business"
 
+      - label: Object.Email_Address
+        condition: "${A2_EMAIL?.trim()?.length() > 0}"
+        name: email2
+        props:
+          Email: "${A2_EMAIL?.trim()?.toLowerCase()}"
 
       - label: Event.Ingestion
         props:
@@ -697,9 +734,21 @@ rules:
         fromVertexName: rep
         toVertexName: rep_phone
 
+      - label: Has_Phone
+        fromVertexName: rep
+        toVertexName: phone2
+
+      - label: Has_Phone
+        fromVertexName: rep
+        toVertexName: mobile
+
       - label: Uses_Email
         fromVertexName: rep
         toVertexName: email1
+
+      - label: Uses_Email
+        fromVertexName: rep
+        toVertexName: email2
 
       - label: Is_Located
         fromVertexName: rep
@@ -721,9 +770,21 @@ rules:
         fromVertexName: fornecedor
         toVertexName: email1
 
+      - label: Uses_Email
+        fromVertexName: fornecedor
+        toVertexName: email2
+
       - label: Has_Phone
         fromVertexName: fornecedor
         toVertexName: rep_phone
+
+      - label: Has_Phone
+        fromVertexName: fornecedor
+        toVertexName: phone2
+
+      - label: Has_Phone
+        fromVertexName: fornecedor
+        toVertexName: mobile
 
       - label: Is_Located
         fromVertexName: fornecedor

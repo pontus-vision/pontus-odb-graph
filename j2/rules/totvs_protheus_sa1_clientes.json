@@ -3,7 +3,6 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "condition": "${A1_CGC?.replaceAll('[^0-9]','').length() == 11}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
@@ -61,7 +60,6 @@
       {
         "label": "Object.Identity_Card",
         "name": "rg",
-        "condition": "${A1_CGC?.replaceAll('[^0-9]', '')?.length() == 11}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",

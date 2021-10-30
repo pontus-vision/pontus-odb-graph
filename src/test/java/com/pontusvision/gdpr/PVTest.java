@@ -486,6 +486,19 @@ public class PVTest extends AppTest {
       String report = App.executor.eval("renderReportInBase64(pg_id,pg_templateText)", bindings).get().toString();
       System.out.println(report);
 
+      String countEdges =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 2'))" +
+                              ".bothE().count().next().toString()").get().toString();
+      assertEquals("6", countEdges, "1 Has_Ingestion_Event + 2 Has_Id_Card (cnpj, rg) " +
+              "+ 1 Has_Phone + 1 Uses_Email + 1 Works");
+
+      String getPhoneNumber =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).out('Has_Phone')" +
+                              ".properties('Object.Phone_Number.Raw').value().next().toString()").get().toString();
+      assertEquals("111111111", getPhoneNumber, "Número de telefone de Comidas 1");
+
+
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -636,8 +649,8 @@ public class PVTest extends AppTest {
       String personNaturalEdgesCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("6", personNaturalEdgesCount, "2 Object.Identity_Card + 1 Object.Email_Address " +
-          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("8", personNaturalEdgesCount, "2 Has_Id_Card + 2 Uses_Email " +
+          "+ 2 Has_Phone + 1 Is_Located + 1 Has_Ingestion_Event");
 
 
       String orgName =
@@ -649,7 +662,8 @@ public class PVTest extends AppTest {
       String personOrgEdgesCount =
           App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("3", personOrgEdgesCount, "1 Object.Identity_Card + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("5", personOrgEdgesCount, "1 Has_Id_Card + 1 Is_Located + 1 Has_Ingestion_Event " +
+              "+ 1 Uses_Email + 1 Has_Phone");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
