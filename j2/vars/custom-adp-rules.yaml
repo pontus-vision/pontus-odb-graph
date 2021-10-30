@@ -31,7 +31,7 @@ rules:
       - label: Person.Employee
         name: colaborador
         props:
-          ID: "${Matricula?.trim()}"
+          ID: "${Matricula?.replaceAll('[^0-9]', '')}"
           Role:
             val: "${Cargo?.trim()}/${Funcao?.trim()}"
             excludeFromSearch: true
@@ -42,22 +42,6 @@ rules:
         props:
           ID: "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}"
 
-      - label: Person.Natural
-        condition: "${Nome_do_Responsavel_Legal?.trim()?.length() > 0 && CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }"
-        name: responsavel
-        props:
-          Full_Name: "${Nome_do_Responsavel_Legal?.trim().toUpperCase()}"
-          Customer_ID: "${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')}"
-
-      - label: Object.Identity_Card
-        condition: "${CPF_do_Responsavel_Legal?.replaceAll('[^0-9]', '')?.length() > 0 }"
-        name: cpf_responsavel
-        props:
-          Id_Value: "${CPF_do_Responsavel_Legal.replaceAll('[^0-9]','')}"
-          Id_Type:
-            val: "CPF"
-            excludeFromSearch: true
-
       - label: Object.Identity_Card
         condition: "${RNE?.replaceAll('[^0-9]', '')?.length() > 0 }"
         name: rne
@@ -67,25 +51,6 @@ rules:
             mandatoryInSearch: true
           Id_Type:
             val: "RNE"
-            excludeFromSearch: true
-
-      - label: Person.Natural
-        condition: "${Nome_do_Coordenador?.trim()?.length() > 0 && CPF_do_Coordenador?.replaceAll('[^0-9]', '')?.length() > 0 }"
-        name: coordenador
-        props:
-          Full_Name: "${Nome_do_Coordenador?.trim().toUpperCase()}"
-          Type:
-            val: "colaborador"
-            excludeFromSearch: true
-          Customer_ID: "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}"
-
-      - label: Object.Identity_Card
-        condition: "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')?.length() > 0 }"
-        name: cpf_coordenador
-        props:
-          Id_Value: "${CPF_do_Coordenador?.replaceAll('[^0-9]', '')}"
-          Id_Type:
-            val: "CPF"
             excludeFromSearch: true
 
       - label: Object.Identity_Card
@@ -113,7 +78,7 @@ rules:
 
       - label: Object.Email_Address
         condition: "${(Email != null) && !(Email.isEmpty())}"
-        nome: email
+        name: email
         props:
           Email: "${Email?.trim()?.toLowerCase()}"
 
@@ -132,7 +97,6 @@ rules:
 
       - label: Object.Phone_Number
         condition: "${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}"
-        name: telefone
         props:
           Raw:
             val: "${Telefone}"
@@ -145,57 +109,6 @@ rules:
             excludeFromSearch: true
           Last_7_Digits:
             val: "${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
-
-      - label: Object.Phone_Number
-        condition: "${Telefone_Comercial?.trim()?.length() >= 7}"
-        name: telefone_comercial
-        props:
-          Raw:
-            val: "${Telefone_Comercial}"
-            mandatoryInSearch: false
-          Type:
-            val: "Telefone Comercial"
-            excludeFromSearch: true
-          Numbers_Only:
-            val: "${(Telefone_Comercial?.replaceAll('[^0-9]', '')?:'00000000')}"
-            excludeFromSearch: true
-          Last_7_Digits:
-            val: "${(((Telefone_Comercial?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
-
-      - label: Object.Phone_Number
-        condition: "${Telefone_Opcional?.trim()?.length() >= 7}"
-        name: telefone_comercial
-        props:
-          Raw:
-            val: "${Telefone_Opcional}"
-            mandatoryInSearch: false
-          Type:
-            val: "Telefone Opcional"
-            excludeFromSearch: true
-          Numbers_Only:
-            val: "${(Telefone_Opcional?.replaceAll('[^0-9]', '')?:'00000000')}"
-            excludeFromSearch: true
-          Last_7_Digits:
-            val: "${(((Telefone_Opcional?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
-
-      - label: Object.Phone_Number
-        condition: "${Outros_Telefones?.trim()?.length() >= 7}"
-        name: telefone_comercial
-        props:
-          Raw:
-            val: "${Outros_Telefones}"
-            mandatoryInSearch: false
-          Type:
-            val: "Outros Telefones"
-            excludeFromSearch: true
-          Numbers_Only:
-            val: "${(Outros_Telefones?.replaceAll('[^0-9]', '')?:'00000000')}"
-            excludeFromSearch: true
-          Last_7_Digits:
-            val: "${(((Outros_Telefones?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             mandatoryInSearch: true
 
       - label: Event.Ingestion
@@ -249,8 +162,8 @@ rules:
         toVertexLabel: "colaborador"
 
       - label: "Is_Subordinate"
-        fromVertexName: "chefe"
-        toVertexName: "colaborador"
+        fromVertexName: "colaborador"
+        toVertexName: "chefe"
 
       - label: "Uses_Email"
         fromVertexName: "titular"
@@ -264,14 +177,6 @@ rules:
         fromVertexName: "titular"
         toVertexLabel: "Location.Address"
 
-      - label: "Is_Subordinate"
-        fromVertexName: "colaborador"
-        toVertexName: "coordenador"
-
-      - label: "Is_Responsible"
-        fromVertexName: "responsavel"
-        toVertexName: "colaborador"
-
       - label: "Has_Id_Card"
         fromVertexName: "titular"
         toVertexName: "cpf"
@@ -284,29 +189,9 @@ rules:
         fromVertexName: "titular"
         toVertexName: "rne"
 
-      - label: "Has_Id_Card"
-        fromVertexName: "responsavel"
-        toVertexName: "cpf_responsavel"
-
-      - label: "Has_Id_Card"
-        fromVertexName: "coordenador"
-        toVertexName: "cpf_coordenador"
-
       - label: "Has_Phone"
         fromVertexName: "titular"
-        toVertexName: "telefone"
-
-      - label: "Has_Phone"
-        fromVertexName: "titular"
-        toVertexName: "telefone_comercial"
-
-      - label: "Has_Phone"
-        fromVertexName: "titular"
-        toVertexName: "telefone_opcional"
-
-      - label: "Has_Phone"
-        fromVertexName: "titular"
-        toVertexName: "outros_telefones"
+        toVertexLabel: "Object.Phone_Number"
 
       - label: "Has_Parent_Or_Guardian"
         fromVertexName: "titular"
