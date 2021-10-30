@@ -614,8 +614,19 @@ public class PVTest extends AppTest {
       String countPersonNaturalEdges =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("11", countPersonNaturalEdges, "3 Has_Id_Card + 1 Is_Located " +
-          "+ 1 Has_Ingestion_Event + 1 Is_Alias + 1 Uses_Email + 2 Has_Phone + 2 Has_Parent_Or_Guardian");
+      assertEquals("11", countPersonNaturalEdges, "3 Has_Id_Card + 2 Uses_Email" +
+              " + 2 Has_Parent_Or_Guardian + 1 Is_Located + 1 Has_Ingestion_Event + 1 Is_Alias + 1 Has_Phone");
+
+      String getBossId =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
+                      ".out('Is_Alias').out('Is_Subordinate').properties('Person.Employee.ID').value().next().toString()").get().toString();
+      assertEquals("5", getBossId, "Maria's Boss (José Dorival) has an Id of 5");
+
+      String getBossName =
+              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('12345678901'))" +
+                      ".in('Has_Id_Card').out('Is_Alias').out('Is_Subordinate').in('Is_Alias')" +
+                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+      assertEquals("JOSÉ DORIVAL", getBossName, "Maria's Boss' Full Name");
 
 
     } catch (ExecutionException e) {
