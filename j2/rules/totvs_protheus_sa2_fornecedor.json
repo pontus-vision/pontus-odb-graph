@@ -37,6 +37,18 @@
           {
             "name": "Location.Address.Full_Address",
             "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(A2_CEP)}",
             "mandatoryInSearch": true
           },
           {
@@ -47,7 +59,8 @@
           {
             "name": "Location.Address.Type",
             "val": "business",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -59,6 +72,18 @@
           {
             "name": "Location.Address.Full_Address",
             "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(A2_CEP)}",
             "mandatoryInSearch": true
           },
           {
@@ -69,7 +94,8 @@
           {
             "name": "Location.Address.Type",
             "val": "residence",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },

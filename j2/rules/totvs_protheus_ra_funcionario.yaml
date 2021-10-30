@@ -25,13 +25,22 @@ updatereq:
       props:
         - name: Location.Address.Full_Address
           val: ${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location.Address.Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(RA_CEP)}
           mandatoryInSearch: True
         - name: Location.Address.Description
           val: moradia principal
           mandatoryInSearch: True
         - name: Location.Address.Type
           val: home
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Person.Natural
       name: mae

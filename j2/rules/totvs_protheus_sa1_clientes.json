@@ -128,6 +128,18 @@
           {
             "name": "Location.Address.Full_Address",
             "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(A1_CEP)}",
             "mandatoryInSearch": true
           },
           {
@@ -146,6 +158,18 @@
           {
             "name": "Location.Address.Full_Address",
             "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(A1_CEP)}",
             "mandatoryInSearch": true
           },
           {

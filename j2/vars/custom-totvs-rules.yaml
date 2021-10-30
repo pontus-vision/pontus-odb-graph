@@ -93,7 +93,13 @@ rules:
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: business
         props:
-          Full_Address: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+          Full_Address:
+            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            excludeFromSearch: true
+          parser:
+            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(A1_CEP)}"
           Type:
             val: "Business"
             excludeFromSearch: true
@@ -102,7 +108,13 @@ rules:
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: residence
         props:
-          Full_Address: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+          Full_Address:
+            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            excludeFromSearch: true
+          parser:
+            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(A1_CEP)}"
           Type:
             val: "Residence"
             excludeFromSearch: true
@@ -287,9 +299,15 @@ rules:
         props:
           Full_Address:
             val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
-            mandatoryInSearch: true
+            excludeFromSearch: true
+          parser:
+            val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(RA_CEP)}"
           Description: "moradia principal"
-          Type: "home"
+          Type:
+            val: "home"
+            excludeFromSearch: true
 
       - label: Person.Natural
         condition: "${RA_MAE?.trim()?.length() > 0}"
@@ -538,9 +556,15 @@ rules:
         props:
           Full_Address:
             val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
-            mandatoryInSearch: true
+            excludeFromSearch: true
+          parser:
+            val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(A2_CEP)}"
           Description: "endereco fornecedor"
-          Type: "business"
+          Type:
+            val: "business"
+            excludeFromSearch: true
 
       - label: Location.Address
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
@@ -548,9 +572,15 @@ rules:
         props:
           Full_Address:
             val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
-            mandatoryInSearch: true
+            excludeFromSearch: true
+          parser:
+            val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(A2_CEP)}"
           Description: "endereco fornecedor"
-          Type: "residence"
+          Type:
+            val: "residence"
+            excludeFromSearch: true
 
       - label: Person.Natural
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"

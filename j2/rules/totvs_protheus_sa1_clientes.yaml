@@ -85,6 +85,14 @@ updatereq:
       props:
         - name: Location.Address.Full_Address
           val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location.Address.Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(A1_CEP)}
           mandatoryInSearch: True
         - name: Location.Address.Type
           val: Business
@@ -97,6 +105,14 @@ updatereq:
       props:
         - name: Location.Address.Full_Address
           val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location.Address.Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(A1_CEP)}
           mandatoryInSearch: True
         - name: Location.Address.Type
           val: Residence

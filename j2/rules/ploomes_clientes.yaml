@@ -58,7 +58,8 @@ updatereq:
       props:
         - name: Location.Address.Full_Address
           val: ${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Location.Address.Type
           val: Business
           mandatoryInSearch: False
@@ -67,6 +68,9 @@ updatereq:
           val: ${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
+        - name: Location.Address.Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(ZipCode)}
+          mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
