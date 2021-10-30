@@ -97,7 +97,8 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Email_Address
-      condition: ${Email?.trim()?.length() > 0}
+      name: email
+      condition: ${(Email != null) && !(Email.isEmpty())}
       props:
         - name: Object.Email_Address.Email
           val: ${Email?.trim()?.toLowerCase()}
@@ -105,7 +106,7 @@ updatereq:
     
     - label: Object.Email_Address
       name: email_opcional
-      condition: ${E_Mail_Opcional?.trim()?.length() > 0}
+      condition: ${(E_Mail_Opcional != null) && !(E_Mail_Opcional.isEmpty())}
       props:
         - name: Object.Email_Address.Email
           val: ${E_Mail_Opcional?.trim()?.toLowerCase()}

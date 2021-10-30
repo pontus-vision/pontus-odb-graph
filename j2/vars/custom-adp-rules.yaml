@@ -78,7 +78,7 @@ rules:
 
       - label: Object.Email_Address
         condition: "${(Email != null) && !(Email.isEmpty())}"
-        nome: email
+        name: email
         props:
           Email: "${Email?.trim()?.toLowerCase()}"
 
