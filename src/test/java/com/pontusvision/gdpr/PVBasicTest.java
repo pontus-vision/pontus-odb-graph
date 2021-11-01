@@ -320,7 +320,7 @@ public class PVBasicTest extends AppTest {
               ".next().id().toString()").get().toString();
       String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
       String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
-      assertEquals(emailConnections, "1");
+      assertEquals("1",emailConnections);
 
 //    test0000 COUNT(Edges) for Object.Phone_Number
       String userId5 =
@@ -754,7 +754,7 @@ public class PVBasicTest extends AppTest {
       String personNaturalEdgesCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("6", personNaturalEdgesCount, "2 Uses_Email + 1 Lives + 2 Is_Family + 1 Has_Ingestion_Event");
+      assertEquals("8", personNaturalEdgesCount, "2 Uses_Email + 2 Is_Family + 2 Has_Id_Card +  1 Lives + 1 Has_Ingestion_Event");
 
 
       String locationAddressDescription =
