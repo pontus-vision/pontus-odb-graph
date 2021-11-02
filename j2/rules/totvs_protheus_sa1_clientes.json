@@ -10,11 +10,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${A1_NOME?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person.Natural.Type",
             "val": "Clientes",
             "mandatoryInSearch": false,

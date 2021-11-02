@@ -96,11 +96,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${RA_PAI?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person.Natural.Type",
             "val": "colaborador-pais",
             "mandatoryInSearch": true

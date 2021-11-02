@@ -24,7 +24,7 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${A1_NOME?.trim()?.toUpperCase()}"
-          Full_Name_fuzzy: "${A1_NOME?.trim()?.toUpperCase()}"
+#          Full_Name_fuzzy: "${A1_NOME?.trim()?.toUpperCase()}"
           Type:
             val: "Clientes"
             excludeFromSearch: true
@@ -329,7 +329,7 @@ rules:
           Full_Name:
             val: "${RA_PAI?.trim()?.toUpperCase()}"
             mandatoryInSearch: true
-          Full_Name_fuzzy: "${RA_PAI?.trim()?.toUpperCase()}"
+#          Full_Name_fuzzy: "${RA_PAI?.trim()?.toUpperCase()}"
           Type:
             val: "colaborador-pais"
             excludeFromSearch: false

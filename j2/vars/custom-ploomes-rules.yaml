@@ -42,7 +42,7 @@ rules:
 
       # EMAIL
       - label: Object.Email_Address
-        condition: "${Email != null}"
+        condition: "${Email?.trim()?.length() > 0 }"
         props:
           Email: "${Email?.trim()?.toLowerCase()}"
 

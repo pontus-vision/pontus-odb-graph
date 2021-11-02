@@ -328,7 +328,7 @@ public class PVBasicTest extends AppTest {
               ".next().id().toString()").get().toString();
       String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
       String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
-      assertEquals(phoneConnections, "0");
+      assertEquals("1",phoneConnections );
 
 
     } catch (ExecutionException e) {
@@ -419,8 +419,9 @@ public class PVBasicTest extends AppTest {
 
   @Test
   public void test00009TotvsProtheusSa1Clientes() throws InterruptedException {
-
+    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
     jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+//    jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
 //    jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa1_clientes");
 
     try {
@@ -488,9 +489,10 @@ public class PVBasicTest extends AppTest {
 
       String countEdges =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 2'))" +
-                              ".bothE().count().next().toString()").get().toString();
-      assertEquals("6", countEdges, "1 Has_Ingestion_Event + 2 Has_Id_Card (cnpj, rg) " +
-              "+ 1 Has_Phone + 1 Uses_Email + 1 Works");
+                              ".both().dedup().count().next().toString()").get().toString();
+      assertEquals("10", countEdges, "2 Has_Ingestion_Event (from now + 2 from test5) " +
+              "+ 2 Has_Id_Card (cnpj, rg) " +
+              "+ 1 Has_Phone + 1 Uses_Email + 2 Locations");
 
       String getPhoneNumber =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).out('Has_Phone')" +
