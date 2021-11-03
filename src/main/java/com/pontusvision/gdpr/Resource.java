@@ -105,7 +105,7 @@ public class Resource {
   @Consumes(MediaType.APPLICATION_JSON)
   public Md2Reply md2Search(Md2Request req) throws  HTTPException{
     if (req.settings == null || req.query == null || req.query.name == null ){
-      throw new HTTPException(400);
+      return new Md2Reply(Response.Status.BAD_REQUEST);
     }
 
     GraphTraversal<Vertex, Vertex> gt =
@@ -177,7 +177,11 @@ public class Resource {
           sb.append(values.get("Object.Email_Message_Attachment.Email_Id").get(0)).append("/")
               .append(values.get("Object.Email_Message_Attachment.Attachment_Id").get(0));
           reg.path = sb.toString();
-          reg.created = values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString();
+          List<Object> createdDateTime = values.get("Object.Email_Message_Attachment.Created_Date_Time");
+
+          reg.created = createdDateTime != null?
+              values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString():
+              "";
           String owner = App.g.V(eventId).in("Email_Attachment")
               .out("Email_From").values("Event.Email_From_Group.Email").next().toString();
           reg.owner = owner;
@@ -195,8 +199,12 @@ public class Resource {
           reg.created = values.get("Object.Email_Message_Body.Created_Date_Time") == null? "":
               values.get("Object.Email_Message_Body.Created_Date_Time").get(0).toString();
 
-          String owner = App.g.V(eventId).in("Email_Body")
-              .out("Email_From").values("Event.Email_From_Group.Email").next().toString();
+          GraphTraversal trav = App.g.V(eventId).in("Email_Body")
+              .out("Email_From").values("Event.Email_From_Group.Email");
+          //.next().toString();
+
+          String owner = trav.hasNext()? trav.next().toString() : "";
+
           reg.owner = owner;
           reg.server = "office365/email";
 
