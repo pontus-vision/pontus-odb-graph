@@ -279,31 +279,45 @@ class FileNLPRequest implements Serializable {
             [personOptions.toArray(new Traversal[0]), cpfOptions.toArray(new Traversal[0])]
             .flatten().toArray(new Traversal[0])
 
-    def persons = (App.g.V().or(personNameCpfOptions))
+    def persons = personNameCpfOptions.length> 0?
+            (App.g.V().or(personNameCpfOptions)):
+            null
 
-    GraphTraversal personsClone = persons.clone() as GraphTraversal
 
-    Set<ORID> retVal = null
+//    GraphTraversal personsClone =  persons?.clone() as GraphTraversal
+
+    Set<ORID> retVal = (persons?.id()?.toSet())
+    if (!retVal){
+      retVal = []
+    }
 
     if (emailOptions.size() > 0){
-      def emails = App.g.V().or(emailOptions.toArray(new Traversal[0]))
+      def emails = App.g.V().or(emailOptions.toArray(new Traversal[0]) as Traversal<?, ?>[])
+
 
       try {
-        retVal = persons.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>
+        Set<ORID> emailSet = emails?.in('Uses_Email')?.id()?.toSet()
+        if (emailSet && emailSet.size() > 0){
+          retVal.addAll(emailSet);
+
+        }
+
+//        retVal = persons?.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>:
+//                emails?.in('Uses_Email')?.id()?.toSet() as Set<ORID>
 
       } catch (Throwable t) {
         //ignore
       }
     }
 
-
-    if (!retVal || retVal.size() <= minThreshold) {
-      retVal = personsClone.id().toSet() as Set<ORID>
-    }
     String currDate = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
 
+    if (!retVal ) {
+      retVal = []
+    }
+
     int count = 0
-    for (ORID orid : retVal) {
+    for (ORID orid : (retVal as Set<ORID>)) {
 
       String custId = App.g.V(orid).values('Person.Natural.Customer_ID').next().toString()
       def nlpGroupTrav =
@@ -326,6 +340,9 @@ class FileNLPRequest implements Serializable {
       if (count >= maxThreshold) {
         break
       }
+    }
+    if (retVal.size() == 0){
+      System.out.println("Failed to find any NLP people for event " + req.toString())
     }
     return retVal
   }
@@ -661,4 +678,42 @@ class FileNLPRequest implements Serializable {
   void setSizeBytes(Long sizeBytes) {
     this.sizeBytes = sizeBytes
   }
+
+
+//  @Override
+//  public String toString() {
+//    return "FileNLPRequest{" +
+//            "metadataController='" + metadataController + '\'' +
+//            ", metadataGDPRStatus='" + metadataGDPRStatus + '\'' +
+//            ", metadataLineage='" + metadataLineage + '\'' +
+//            ", pg_currDate='" + pg_currDate + '\'' +
+//            ", pg_content='" + pg_content + '\'' +
+//            ", address=" + Arrays.toString(address) +
+//            ", cred_card=" + Arrays.toString(cred_card) +
+//            ", email=" + Arrays.toString(email) +
+//            ", location=" + Arrays.toString(location) +
+//            ", person=" + Arrays.toString(person) +
+//            ", phone=" + Arrays.toString(phone) +
+//            ", postcode=" + Arrays.toString(postcode) +
+//            ", policy_number=" + Arrays.toString(policy_number) +
+//            ", org=" + Arrays.toString(org) +
+//            ", nationality=" + Arrays.toString(nationality) +
+//            ", language=" + Arrays.toString(language) +
+//            ", misc=" + Arrays.toString(misc) +
+//            ", money=" + Arrays.toString(money) +
+//            ", date=" + Arrays.toString(date) +
+//            ", time=" + Arrays.toString(time) +
+//            ", categories=" + Arrays.toString(categories) +
+//            ", cpf=" + Arrays.toString(cpf) +
+//            ", cnpj=" + Arrays.toString(cnpj) +
+//            ", name='" + name + '\'' +
+//            ", created='" + created + '\'' +
+//            ", fileType='" + fileType + '\'' +
+//            ", lastAccess='" + lastAccess + '\'' +
+//            ", owner='" + owner + '\'' +
+//            ", path='" + path + '\'' +
+//            ", server='" + server + '\'' +
+//            ", sizeBytes=" + sizeBytes +
+//            '}';
+//  }
 }

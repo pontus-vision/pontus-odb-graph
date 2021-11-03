@@ -8,9 +8,6 @@ updatereq:
         - name: Person.Natural.Full_Name
           val: ${A1_NOME?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Natural.Full_Name_fuzzy
-          val: ${A1_NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
         - name: Person.Natural.Type
           val: Clientes
           mandatoryInSearch: False
@@ -20,17 +17,8 @@ updatereq:
           predicate: eq
           mandatoryInSearch: True
     
-    - label: Person.Organisation
-      condition: ${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}
-      props:
-        - name: Person.Organisation.Registration_Number
-          val: ${A1_CGC?.trim()}
-          mandatoryInSearch: True
-        - name: Person.Organisation.Name
-          val: ${A1_NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    
     - label: Object.Phone_Number
+      condition: ${A1_TEL?.replaceAll('[^0-9]','').length() > 0}
       props:
         - name: Object.Phone_Number.Raw
           val: ${A1_TEL}
@@ -50,8 +38,8 @@ updatereq:
           type: "[Ljava.lang.String;"
     
     - label: Object.Identity_Card
-      name: RG
-      condition: ${A1_CGC?.replaceAll('[^0-9]', '')?.length() == 11}
+      name: rg
+      condition: ${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0 }
       props:
         - name: Object.Identity_Card.Id_Value
           val: ${A1_RG?.replaceAll('[^0-9]','')}
@@ -62,7 +50,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Identity_Card
-      name: CPF
+      name: cpf
       condition: ${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}
       props:
         - name: Object.Identity_Card.Id_Value
@@ -73,6 +61,18 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
     
+    - label: Object.Identity_Card
+      name: cnpj
+      condition: ${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}
+      props:
+        - name: Object.Identity_Card.Id_Value
+          val: ${A1_CGC?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object.Identity_Card.Id_Type
+          val: CNPJ
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
     - label: Object.Email_Address
       props:
         - name: Object.Email_Address.Email
@@ -80,10 +80,19 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Location.Address
+      name: business
       condition: ${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Location.Address.Full_Address
           val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location.Address.Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(A1_CEP)}
           mandatoryInSearch: True
         - name: Location.Address.Type
           val: Business
@@ -91,10 +100,19 @@ updatereq:
           excludeFromSearch: True
     
     - label: Location.Address
+      name: residence
       condition: ${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}
       props:
         - name: Location.Address.Full_Address
           val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location.Address.Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(A1_CEP)}
           mandatoryInSearch: True
         - name: Location.Address.Type
           val: Residence
@@ -175,11 +193,20 @@ updatereq:
     toVertexLabel: Object.Email_Address
   - label: Has_Id_Card
     fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Identity_Card
+    toVertexName: rg
+  - label: Has_Id_Card
+    fromVertexLabel: Person.Natural
+    toVertexName: cpf
+  - label: Has_Id_Card
+    fromVertexLabel: Person.Natural
+    toVertexName: cnpj
   - label: Works
     fromVertexLabel: Person.Natural
-    toVertexLabel: Location.Address
+    toVertexName: business
   - label: Lives
     fromVertexLabel: Person.Natural
-    toVertexLabel: Location.Address
+    toVertexName: residence
+  - label: Has_Phone
+    fromVertexLabel: Person.Natural
+    toVertexName: Object.Phone_Number
 

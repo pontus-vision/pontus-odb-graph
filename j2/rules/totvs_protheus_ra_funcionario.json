@@ -32,11 +32,22 @@
       },
       {
         "label": "Location.Address",
-        "name": "home",
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
+            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(RA_CEP)}",
             "mandatoryInSearch": true
           },
           {
@@ -47,7 +58,8 @@
           {
             "name": "Location.Address.Type",
             "val": "home",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -84,11 +96,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${RA_PAI?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person.Natural.Type",
             "val": "colaborador-pais",
             "mandatoryInSearch": true
@@ -102,7 +109,6 @@
       },
       {
         "label": "Object.Phone_Number",
-        "name": "phone",
         "condition": "${RA_TELEFON?.replaceAll('[^0-9]','').length() > 0}",
         "props": [
           {
@@ -133,7 +139,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "RG",
+        "name": "rg",
         "condition": "${RA_RG?.replaceAll('[^0-9]','')?.length() > 0}",
         "props": [
           {
@@ -151,7 +157,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "CPF",
+        "name": "cpf",
         "condition": "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}",
         "props": [
           {
@@ -169,7 +175,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "CNPJ",
+        "name": "cnpj",
         "condition": "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
@@ -329,11 +335,6 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "mae",
-        "toVertexLabel": "Event.Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event.Group_Ingestion",
         "toVertexLabel": "Event.Ingestion"
       },
@@ -345,7 +346,7 @@
       {
         "label": "Has_Phone",
         "fromVertexName": "colaborador",
-        "toVertexName": "phone"
+        "toVertexLabel": "Object.Phone_Number"
       },
       {
         "label": "Uses_Email",
@@ -363,9 +364,19 @@
         "toVertexName": "rg"
       },
       {
+        "label": "Has_Id_Card",
+        "fromVertexName": "colaborador",
+        "toVertexName": "cpf"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "colaborador",
+        "toVertexName": "cnpj"
+      },
+      {
         "label": "Lives",
         "fromVertexName": "colaborador",
-        "toVertexName": "home"
+        "toVertexLabel": "Location.Address"
       }
     ]
   }

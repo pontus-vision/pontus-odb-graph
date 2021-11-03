@@ -11,11 +11,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${A1_NOME?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person.Natural.Type",
             "val": "Clientes",
             "mandatoryInSearch": false,
@@ -30,23 +25,8 @@
         ]
       },
       {
-        "label": "Person.Organisation",
-        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
-        "props": [
-          {
-            "name": "Person.Organisation.Registration_Number",
-            "val": "${A1_CGC?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Name",
-            "val": "${A1_NOME?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
         "label": "Object.Phone_Number",
+        "condition": "${A1_TEL?.replaceAll('[^0-9]','').length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -76,8 +56,8 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "RG",
-        "condition": "${A1_CGC?.replaceAll('[^0-9]', '')?.length() == 11}",
+        "name": "rg",
+        "condition": "${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0 }",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
@@ -94,7 +74,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "CPF",
+        "name": "cpf",
         "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
         "props": [
           {
@@ -105,6 +85,24 @@
           {
             "name": "Object.Identity_Card.Id_Type",
             "val": "CPF",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cnpj",
+        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${A1_CGC?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CNPJ",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -122,11 +120,24 @@
       },
       {
         "label": "Location.Address",
+        "name": "business",
         "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
             "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(A1_CEP)}",
             "mandatoryInSearch": true
           },
           {
@@ -139,11 +150,24 @@
       },
       {
         "label": "Location.Address",
+        "name": "residence",
         "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
             "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(A1_CEP)}",
             "mandatoryInSearch": true
           },
           {
@@ -270,17 +294,32 @@
       {
         "label": "Has_Id_Card",
         "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Identity_Card"
+        "toVertexName": "rg"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "cpf"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "cnpj"
       },
       {
         "label": "Works",
         "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Location.Address"
+        "toVertexName": "business"
       },
       {
         "label": "Lives",
         "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Location.Address"
+        "toVertexName": "residence"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "Object.Phone_Number"
       }
     ]
   }
