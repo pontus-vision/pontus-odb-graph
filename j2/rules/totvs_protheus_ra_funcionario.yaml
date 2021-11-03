@@ -241,7 +241,7 @@ updatereq:
   - label: Has_Id_Card
     fromVertexName: colaborador
     toVertexName: cnpj
-  - label: Is_Located
+  - label: Lives
     fromVertexName: colaborador
     toVertexLabel: Location.Address
 

@@ -60,6 +60,10 @@ updatereq:
           val: ${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Location.Address.Type
+          val: Business
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Location.Address.parser
           val: ${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}
           mandatoryInSearch: True
@@ -149,7 +153,7 @@ updatereq:
   - label: Has_Id_Card
     fromVertexLabel: Person.Natural
     toVertexLabel: Object.Identity_Card
-  - label: Is_Located
+  - label: Works
     fromVertexLabel: Person.Natural
     toVertexLabel: Location.Address
   - label: Is_Located

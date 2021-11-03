@@ -374,7 +374,7 @@
         "toVertexName": "cnpj"
       },
       {
-        "label": "Is_Located",
+        "label": "Lives",
         "fromVertexName": "colaborador",
         "toVertexLabel": "Location.Address"
       }

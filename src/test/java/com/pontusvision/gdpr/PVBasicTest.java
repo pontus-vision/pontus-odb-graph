@@ -328,7 +328,7 @@ public class PVBasicTest extends AppTest {
               ".next().id().toString()").get().toString();
       String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
       String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
-      assertEquals("1", phoneConnections);
+      assertEquals("1",phoneConnections );
 
 
     } catch (ExecutionException e) {

@@ -3,11 +3,11 @@
   "value": [
     {
       "Id": 13181008,
-      "TypeId": 1,
+      "TypeId": 2,
       "Name": "COMIDAS 1",
       "LegalName": "Subaru automotiva",
       "Register": null,
-      "CNPJ": "06963123456789",
+      "CNPJ": null,
       "CPF": "100985674",
       "StatusId": 109656,
       "CompanyId": null,

@@ -93,6 +93,12 @@
             "excludeFromSearch": true
           },
           {
+            "name": "Location.Address.Type",
+            "val": "Business",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
             "name": "Location.Address.parser",
             "val": "${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}",
             "mandatoryInSearch": true,
@@ -234,7 +240,7 @@
         "toVertexLabel": "Object.Identity_Card"
       },
       {
-        "label": "Is_Located",
+        "label": "Works",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Location.Address"
       },

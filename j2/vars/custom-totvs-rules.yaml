@@ -196,11 +196,11 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexName: cnpj
 
-      - label: "Is_Located"
+      - label: "Works"
         fromVertexLabel: "Person.Natural"
         toVertexName: business
 
-      - label: "Is_Located"
+      - label: "Lives"
         fromVertexLabel: "Person.Natural"
         toVertexName: residence
 
@@ -492,7 +492,7 @@ rules:
         fromVertexName: colaborador
         toVertexName: cnpj
 
-      - label: Is_Located
+      - label: Lives
         fromVertexName: colaborador
         toVertexLabel: Location.Address
 
