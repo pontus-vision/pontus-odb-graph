@@ -41,7 +41,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "CPF",
+        "name": "cpf",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
@@ -152,33 +152,8 @@
         ]
       },
       {
-        "label": "Object.Contract",
-        "props": [
-          {
-            "name": "Object.Contract.Description",
-            "val": "(Responsável Sales Person) ${Resp__Sales_Person}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Id",
-            "val": "${Porsche_ID} - ${Profile_ID}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Status",
-            "val": "${Status}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Type",
-            "val": "Customer Prospect Contract",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
         "label": "Object.Email_Address",
+        "condition": "${E_Mail_Address?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Email_Address.Email",
@@ -277,7 +252,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros de Customer Prospect no SAP/C@P",
+            "val": "Registros da tabela 'Customer Prospect' no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -321,14 +296,14 @@
         "toVertexLabel": "Object.Email_Address"
       },
       {
-        "label": "Has_Contract",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Contract"
-      },
-      {
         "label": "Works",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Person.Organisation"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "cpf"
       }
     ]
   }

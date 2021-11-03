@@ -10,13 +10,19 @@
             "mandatoryInSearch": true
           },
           {
+            "name": "Person.Natural.Full_Name_fuzzy",
+            "val": "${Name_at_Birth?:''}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
             "name": "Person.Natural.Customer_ID",
-            "val": "${Lead_ID}",
+            "val": "${Recall_campaign_ID}",
             "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Type",
-            "val": "Leads",
+            "val": "SAP/C@P Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -39,7 +45,7 @@
           },
           {
             "name": "Person.Organisation.Type",
-            "val": "Leads",
+            "val": "SAP/C@P Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -57,7 +63,7 @@
           },
           {
             "name": "Object.Phone_Number.Type",
-            "val": "Leads",
+            "val": "SAP/C@P Workshop Campaigns and Recalls",
             "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
@@ -88,7 +94,7 @@
           },
           {
             "name": "Object.Phone_Number.Type",
-            "val": "Leads",
+            "val": "CAP/S@P Workshop Campaigns and Recalls",
             "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
@@ -112,8 +118,14 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Location.Address.Type",
+            "val": "${Addresstype?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -122,7 +134,7 @@
         "props": [
           {
             "name": "Object.Contract.Date",
-            "val": "${Status_Since}",
+            "val": "${Start_date}",
             "mandatoryInSearch": true
           },
           {
@@ -132,17 +144,12 @@
           },
           {
             "name": "Object.Contract.Id",
-            "val": "${Lead_Group} - ${Lead_ID} - ${Number}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Status",
-            "val": "${Customer_Status}",
+            "val": "Recall Campaing ID = ${Recall_campaign_ID}\\nVehicle Ident. = ${Vehicle_Ident_}",
             "mandatoryInSearch": true
           },
           {
             "name": "Object.Contract.Type",
-            "val": "Leads Contract",
+            "val": "SAP/C@P Workshop Campaigns and Recalls Contract",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -164,7 +171,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p Leads",
+            "val": "sap/c@p Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -201,7 +208,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p Leads",
+            "val": "sap/c@p Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -237,19 +244,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Leads",
+            "val": "sap/c@p Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Leads",
+            "val": "sap/c@p Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Leads' no SAP/C@P",
+            "val": "Registros da tabela 'Workshop Campaigns and Recalls' no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -283,7 +290,7 @@
         "toVertexName": "telephone"
       },
       {
-        "label": "Has_Phone",
+        "label": "Has_Mobile",
         "fromVertexLabel": "Person.Natural",
         "toVertexName": "mobile"
       },
@@ -293,7 +300,7 @@
         "toVertexLabel": "Object.Email_Address"
       },
       {
-        "label": "Is_Lead",
+        "label": "Has_Contract",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Object.Contract"
       },

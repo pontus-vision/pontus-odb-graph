@@ -1593,6 +1593,22 @@ propertyKeys:
   - name: Object.Sensitive_Data.Description
     dataType: String
     cardinality: SINGLE
+  - name: Metadata.Type.Object.Vehicle
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Vehicle.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Vehicle.License_Plate
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Vehicle.Model
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Vehicle.Model_Year
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Person.Employee
     dataType: String
     cardinality: SINGLE
@@ -1952,6 +1968,9 @@ vertexLabels:
   - name: Object.Sensitive_Data
     partition: False
     useStatic: False
+  - name: Object.Vehicle
+    partition: False
+    useStatic: False
   - name: Person.Employee
     partition: False
     useStatic: False
@@ -2083,6 +2102,14 @@ edgeLabels:
     unidirected: False
 
   - name: Has_Phone
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Mobile
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Vehicle
     multiplicity: MULTI
     unidirected: False
 
@@ -3124,6 +3151,20 @@ vertexIndexes:
       - Object.Sensitive_Data.Sexual_Orientation
       - Object.Sensitive_Data.Union_Membership
       - Object.Sensitive_Data.Description
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Vehicle.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Vehicle
+      - Object.Vehicle.License_Plate
+      - Object.Vehicle.Model
+      - Object.Vehicle.Model_Year
     propertyKeysMappings:
     
       {}

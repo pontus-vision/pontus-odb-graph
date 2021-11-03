@@ -5,13 +5,10 @@ updatereq:
     - label: Person.Natural
       props:
         - name: Person.Natural.Full_Name
-          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person.Natural.Customer_ID
-          val: ${Lead_ID}
+          val: ${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Type
-          val: Leads
+          val: SAP/C@P Competitor Vehicles
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Title
@@ -26,7 +23,7 @@ updatereq:
           val: ${Company_Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Organisation.Type
-          val: Leads
+          val: SAP/C@P Competitor Vehicles
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -38,7 +35,7 @@ updatereq:
           val: ${Telephone_no_}
           mandatoryInSearch: True
         - name: Object.Phone_Number.Type
-          val: Leads
+          val: SAP/C@P Competitor Vehicles
           mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
@@ -59,7 +56,7 @@ updatereq:
           val: ${Mobile_Number}
           mandatoryInSearch: True
         - name: Object.Phone_Number.Type
-          val: Leads
+          val: CAP/S@P Competitor Vehicles
           mandatoryInSearch: True
           excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
@@ -75,27 +72,24 @@ updatereq:
     - label: Location.Address
       props:
         - name: Location.Address.Full_Address
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
-    
-    - label: Object.Contract
-      props:
-        - name: Object.Contract.Date
-          val: ${Status_Since}
-          mandatoryInSearch: True
-        - name: Object.Contract.Description
-          val: ${Description}
-          mandatoryInSearch: True
-        - name: Object.Contract.Id
-          val: ${Lead_Group} - ${Lead_ID} - ${Number}
-          mandatoryInSearch: True
-        - name: Object.Contract.Status
-          val: ${Customer_Status}
-          mandatoryInSearch: True
-        - name: Object.Contract.Type
-          val: Leads Contract
+        - name: Location.Address.Type
+          val: ${Addresstype?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
+    
+    - label: Object.Vehicle
+      props:
+        - name: Object.Vehicle.License_Plate
+          val: ${License_Plate}
+          mandatoryInSearch: True
+        - name: Object.Vehicle.Model
+          val: ${Model}
+          mandatoryInSearch: True
+        - name: Object.Vehicle.Model_Year
+          val: ${Model_Year}
+          mandatoryInSearch: True
     
     - label: Object.Email_Address
       condition: ${E_Mail_Address?.trim()?.length() > 0}
@@ -107,7 +101,7 @@ updatereq:
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sap/c@p Leads
+          val: sap/c@p Competitor Vehicles
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -132,7 +126,7 @@ updatereq:
     - label: Event.Group_Ingestion
       props:
         - name: Event.Group_Ingestion.Type
-          val: sap/c@p Leads
+          val: sap/c@p Competitor Vehicles
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Operation
@@ -156,15 +150,15 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/c@p Leads
+          val: sap/c@p Competitor Vehicles
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Type
-          val: sap/c@p Leads
+          val: sap/c@p Competitor Vehicles
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros da tabela 'Leads' no SAP/C@P
+          val: Registros da tabela 'Competitor Vehicles' no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 
@@ -184,15 +178,15 @@ updatereq:
   - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexName: telephone
-  - label: Has_Phone
+  - label: Has_Mobile
     fromVertexLabel: Person.Natural
     toVertexName: mobile
   - label: Uses_Email
     fromVertexLabel: Person.Natural
     toVertexLabel: Object.Email_Address
-  - label: Is_Lead
+  - label: Has_Vehicle
     fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Contract
+    toVertexLabel: Object.Vehicle
   - label: Works
     fromVertexLabel: Person.Natural
     toVertexLabel: Person.Organisation

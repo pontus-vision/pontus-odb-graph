@@ -762,6 +762,15 @@ schema:
         - name: Union_Membership
         - name: Description
 
+    - name: "Object.Vehicle"
+      partition: false
+      useStatic: false
+      props:
+        - name: License_Plate
+        - name: Model
+        - name: Model_Year
+#        - name: CNH
+
     - name: "Person.Employee"
       partition: false
       useStatic: false
@@ -966,6 +975,9 @@ schema:
   - name: Has_NLP_Events
   - name: Has_Parent_Or_Guardian
   - name: Has_Phone
+#  - name: Has_Telephone
+  - name: Has_Mobile
+  - name: Has_Vehicle
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice

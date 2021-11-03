@@ -1,0 +1,58 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Event.File_Ingestion
+      props:
+        - name: Event.File_Ingestion.Name
+          val: ${File_Name?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Event.File_Ingestion.Created
+          val: ${Creation_Date}
+          mandatoryInSearch: True
+        - name: Event.File_Ingestion.Last_Access
+          val: ${Month}/${Calendar_Year}
+          mandatoryInSearch: True
+    
+    - label: Event.File_Group_Ingestion
+      props:
+        - name: Event.File_Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event.File_Group_Ingestion.Group_Name
+          val: Monthly Cockpits and Reports
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object.Data_Procedures
+      props:
+        - name: Object.Data_Procedures.ID
+          val: ${Report}
+          mandatoryInSearch: True
+    
+    - label: Object.Data_Source
+      props:
+        - name: Object.Data_Source.Name
+          val: sap/c@p Monthly Cockpits and Reports
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Source.Type
+          val: sap/c@p Monthly Cockpits and Reports
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Source.Description
+          val: Registros de 'Monthly Cockpits and Reports' no SAP/C@P
+          mandatoryInSearch: False
+          excludeFromSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object.Data_Source
+    toVertexLabel: Event.File_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.File_Group_Ingestion
+    toVertexLabel: Event.File_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object.Data_Procedures
+    toVertexLabel: Event.File_Ingestion
+
