@@ -3,7 +3,6 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.orientechnologies.orient.core.id.ORID;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OType;
@@ -21,7 +20,6 @@ import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.apache.tinkerpop.gremlin.orientdb.io.OrientIoRegistry;
 import org.apache.tinkerpop.gremlin.process.traversal.Order;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
-import org.apache.tinkerpop.gremlin.process.traversal.Text;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Direction;
@@ -32,7 +30,6 @@ import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper;
 import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
 import org.glassfish.jersey.server.ContainerRequest;
 
-import javax.script.SimpleBindings;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -182,8 +179,10 @@ public class Resource {
           reg.created = createdDateTime != null?
               values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString():
               "";
-          String owner = App.g.V(eventId).in("Email_Attachment")
-              .out("Email_From").values("Event.Email_From_Group.Email").next().toString();
+
+          GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Attachment")
+              .out("Email_From").values("Event.Email_From_Group.Email");
+          String owner = trav.hasNext()? trav.next().toString(): "";
           reg.owner = owner;
           reg.server = "office365/email";
         }
@@ -199,7 +198,7 @@ public class Resource {
           reg.created = values.get("Object.Email_Message_Body.Created_Date_Time") == null? "":
               values.get("Object.Email_Message_Body.Created_Date_Time").get(0).toString();
 
-          GraphTraversal trav = App.g.V(eventId).in("Email_Body")
+          GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Body")
               .out("Email_From").values("Event.Email_From_Group.Email");
           //.next().toString();
 
