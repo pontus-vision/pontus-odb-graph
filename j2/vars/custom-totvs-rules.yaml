@@ -22,6 +22,7 @@ rules:
   totvs_protheus_sa1_clientes:
     vertices:
       - label: Person.Natural
+        condition: "${A1_CGC?.replaceAll('[^0-9]','').length() == 11}"
         props:
           Full_Name: "${A1_NOME?.trim()?.toUpperCase()}"
 #          Full_Name_fuzzy: "${A1_NOME?.trim()?.toUpperCase()}"
@@ -54,6 +55,7 @@ rules:
 
       #RG
       - label: Object.Identity_Card
+        condition: "${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0 }"
         name: rg
         props:
           Id_Value:

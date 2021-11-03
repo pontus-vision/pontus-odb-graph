@@ -490,9 +490,10 @@ public class PVBasicTest extends AppTest {
       String countEdges =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 2'))" +
                               ".both().dedup().count().next().toString()").get().toString();
-      assertEquals("10", countEdges, "2 Has_Ingestion_Event (from now + 2 from test5) " +
-              "+ 2 Has_Id_Card (cnpj, rg) " +
-              "+ 1 Has_Phone + 1 Uses_Email + 2 Locations");
+      assertEquals("5", countEdges, "2 Has_Ingestion_Event " +
+          "+ 1 Has_Id_Card (cpf) " +
+          "+ 1 email" +
+          "+ 1 Location");
 
       String getPhoneNumber =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).out('Has_Phone')" +
