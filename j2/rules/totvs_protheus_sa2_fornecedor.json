@@ -37,6 +37,18 @@
           {
             "name": "Location.Address.Full_Address",
             "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(A2_CEP)}",
             "mandatoryInSearch": true
           },
           {
@@ -47,7 +59,8 @@
           {
             "name": "Location.Address.Type",
             "val": "business",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -59,6 +72,18 @@
           {
             "name": "Location.Address.Full_Address",
             "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location.Address.parser",
+            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(A2_CEP)}",
             "mandatoryInSearch": true
           },
           {
@@ -69,7 +94,8 @@
           {
             "name": "Location.Address.Type",
             "val": "residence",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -92,7 +118,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "RG",
+        "name": "rg",
         "condition": "${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
@@ -110,7 +136,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "CNPJ",
+        "name": "cnpj",
         "condition": "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}",
         "props": [
           {
@@ -128,7 +154,7 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "CPF",
+        "name": "cpf",
         "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
         "props": [
           {
@@ -176,6 +202,68 @@
         ]
       },
       {
+        "label": "Object.Phone_Number",
+        "name": "phone2",
+        "condition": "${A2_TEL?.replaceAll('[^0-9]','').length() > 0}",
+        "props": [
+          {
+            "name": "Object.Phone_Number.Raw",
+            "val": "${A2_TEL}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Type",
+            "val": "Telefone 2",
+            "mandatoryInSearch": true,
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Numbers_Only",
+            "val": "${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
+            "type": "[Ljava.lang.String;",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Last_7_Digits",
+            "val": "${(((A2_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
+          }
+        ]
+      },
+      {
+        "label": "Object.Phone_Number",
+        "name": "mobile",
+        "condition": "${A2_REPR_EN?.replaceAll('[^0-9]','').length() > 0}",
+        "props": [
+          {
+            "name": "Object.Phone_Number.Raw",
+            "val": "${A2_REPR_EN}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Type",
+            "val": "Mobile",
+            "mandatoryInSearch": true,
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Numbers_Only",
+            "val": "${(A2_REPR_EN?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
+            "type": "[Ljava.lang.String;",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Phone_Number.Last_7_Digits",
+            "val": "${(((A2_REPR_EN?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
+          }
+        ]
+      },
+      {
         "label": "Object.Email_Address",
         "name": "email1",
         "condition": "${A2_REPR_EM?.trim()?.length() > 0}",
@@ -183,6 +271,18 @@
           {
             "name": "Object.Email_Address.Email",
             "val": "${A2_REPR_EM?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Email_Address",
+        "name": "email2",
+        "condition": "${A2_EMAIL?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object.Email_Address.Email",
+            "val": "${A2_EMAIL?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true
           }
         ]
@@ -306,9 +406,24 @@
         "toVertexName": "rep_phone"
       },
       {
+        "label": "Has_Phone",
+        "fromVertexName": "rep",
+        "toVertexName": "phone2"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "rep",
+        "toVertexName": "mobile"
+      },
+      {
         "label": "Uses_Email",
         "fromVertexName": "rep",
         "toVertexName": "email1"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "rep",
+        "toVertexName": "email2"
       },
       {
         "label": "Is_Located",
@@ -318,17 +433,17 @@
       {
         "label": "Has_Id_Card",
         "fromVertexName": "rep",
-        "toVertexName": "RG"
+        "toVertexName": "rg"
       },
       {
         "label": "Has_Id_Card",
         "fromVertexName": "rep",
-        "toVertexName": "CPF"
+        "toVertexName": "cpf"
       },
       {
         "label": "Has_Id_Card",
         "fromVertexName": "fornecedor",
-        "toVertexName": "CNPJ"
+        "toVertexName": "cnpj"
       },
       {
         "label": "Uses_Email",
@@ -336,9 +451,24 @@
         "toVertexName": "email1"
       },
       {
+        "label": "Uses_Email",
+        "fromVertexName": "fornecedor",
+        "toVertexName": "email2"
+      },
+      {
         "label": "Has_Phone",
         "fromVertexName": "fornecedor",
         "toVertexName": "rep_phone"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "fornecedor",
+        "toVertexName": "phone2"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "fornecedor",
+        "toVertexName": "mobile"
       },
       {
         "label": "Is_Located",

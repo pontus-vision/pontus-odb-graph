@@ -320,7 +320,7 @@ public class PVBasicTest extends AppTest {
               ".next().id().toString()").get().toString();
       String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
       String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
-      assertEquals(emailConnections, "1");
+      assertEquals("1",emailConnections);
 
 //    test0000 COUNT(Edges) for Object.Phone_Number
       String userId5 =
@@ -328,7 +328,7 @@ public class PVBasicTest extends AppTest {
               ".next().id().toString()").get().toString();
       String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
       String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
-      assertEquals(phoneConnections, "0");
+      assertEquals("1",phoneConnections );
 
 
     } catch (ExecutionException e) {
@@ -419,8 +419,9 @@ public class PVBasicTest extends AppTest {
 
   @Test
   public void test00009TotvsProtheusSa1Clientes() throws InterruptedException {
-
+    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
     jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+//    jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
 //    jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa1_clientes");
 
     try {
@@ -485,6 +486,21 @@ public class PVBasicTest extends AppTest {
 
       String report = App.executor.eval("renderReportInBase64(pg_id,pg_templateText)", bindings).get().toString();
       System.out.println(report);
+
+      String countEdges =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 2'))" +
+                              ".both().dedup().count().next().toString()").get().toString();
+      assertEquals("5", countEdges, "2 Has_Ingestion_Event " +
+          "+ 1 Has_Id_Card (cpf) " +
+          "+ 1 email" +
+          "+ 1 Location");
+
+      String getPhoneNumber =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).out('Has_Phone')" +
+                              ".properties('Object.Phone_Number.Raw').value().next().toString()").get().toString();
+      assertEquals("111111111", getPhoneNumber, "Número de telefone de Comidas 1");
+
+
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -647,8 +663,8 @@ public class PVBasicTest extends AppTest {
       String personNaturalEdgesCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("6", personNaturalEdgesCount, "2 Object.Identity_Card + 1 Object.Email_Address " +
-          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("8", personNaturalEdgesCount, "2 Has_Id_Card + 2 Uses_Email " +
+          "+ 2 Has_Phone + 1 Is_Located + 1 Has_Ingestion_Event");
 
 
       String orgName =
@@ -660,7 +676,8 @@ public class PVBasicTest extends AppTest {
       String personOrgEdgesCount =
           App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("3", personOrgEdgesCount, "1 Object.Identity_Card + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("5", personOrgEdgesCount, "1 Has_Id_Card + 1 Is_Located + 1 Has_Ingestion_Event " +
+              "+ 1 Uses_Email + 1 Has_Phone");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -740,11 +757,11 @@ public class PVBasicTest extends AppTest {
       String personNaturalEdgesCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("6", personNaturalEdgesCount, "2 Uses_Email + 1 Lives + 2 Is_Family + 1 Has_Ingestion_Event");
+      assertEquals("8", personNaturalEdgesCount, "2 Uses_Email + 2 Is_Family + 2 Has_Id_Card +  1 Lives + 1 Has_Ingestion_Event");
 
 
       String locationAddressDescription =
-          App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA Ponte, Jaguarão - RS, 333333'))" +
+          App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA 3333 AP 33 Ponte, Jaguarão - RS, 333333'))" +
               ".properties('Location.Address.Description').value().next().toString()").get().toString();
       assertEquals("moradia principal", locationAddressDescription, "Descrição do Endereço");
 

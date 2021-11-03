@@ -42,7 +42,7 @@ rules:
 
       # EMAIL
       - label: Object.Email_Address
-        condition: "${Email != null}"
+        condition: "${Email?.trim()?.length() > 0 }"
         props:
           Email: "${Email?.trim()?.toLowerCase()}"
 
@@ -50,14 +50,16 @@ rules:
       - label: Location.Address
         condition: "${StreetAddress != null}"
         props:
-          Full_Address: "${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}"
+          Full_Address:
+            val: "${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}"
+            excludeFromSearch: true
           Type:
             val: "Business"
             excludeFromSearch: true
           parser:
             val: "${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}"
-            mandatoryInSearch: true
             type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(ZipCode)}"
 
       - label: Event.Ingestion
         props:
