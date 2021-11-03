@@ -760,7 +760,7 @@ public class PVBasicTest extends AppTest {
 
 
       String locationAddressDescription =
-          App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA Ponte, Jaguarão - RS, 333333'))" +
+          App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA 3333 AP 33 Ponte, Jaguarão - RS, 333333'))" +
               ".properties('Location.Address.Description').value().next().toString()").get().toString();
       assertEquals("moradia principal", locationAddressDescription, "Descrição do Endereço");
 

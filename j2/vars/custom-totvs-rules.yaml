@@ -35,6 +35,7 @@ rules:
             predicate: "eq"
 
       - label: Object.Phone_Number
+        condition: "${A1_TEL?.replaceAll('[^0-9]','').length() > 0}"
         props:
           Raw:
             val: "${A1_TEL}"
@@ -298,10 +299,10 @@ rules:
       - label: Location.Address
         props:
           Full_Address:
-            val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+            val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
             excludeFromSearch: true
           parser:
-            val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+            val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(RA_CEP)}"
           Description: "moradia principal"
