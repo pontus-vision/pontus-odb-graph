@@ -35,13 +35,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
+            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
+            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
@@ -92,11 +92,6 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${RA_PAI?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Full_Name_fuzzy",
             "val": "${RA_PAI?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
@@ -379,7 +374,7 @@
         "toVertexName": "cnpj"
       },
       {
-        "label": "Lives",
+        "label": "Is_Located",
         "fromVertexName": "colaborador",
         "toVertexLabel": "Location.Address"
       }
