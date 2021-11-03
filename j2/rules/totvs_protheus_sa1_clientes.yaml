@@ -17,6 +17,7 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Object.Phone_Number
+      condition: ${A1_TEL?.replaceAll('[^0-9]','').length() > 0}
       props:
         - name: Object.Phone_Number.Raw
           val: ${A1_TEL}
@@ -197,10 +198,10 @@ updatereq:
   - label: Has_Id_Card
     fromVertexLabel: Person.Natural
     toVertexName: cnpj
-  - label: Works
+  - label: Is_Located
     fromVertexLabel: Person.Natural
     toVertexName: business
-  - label: Lives
+  - label: Is_Located
     fromVertexLabel: Person.Natural
     toVertexName: residence
   - label: Has_Phone

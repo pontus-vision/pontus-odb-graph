@@ -25,6 +25,7 @@
       },
       {
         "label": "Object.Phone_Number",
+        "condition": "${A1_TEL?.replaceAll('[^0-9]','').length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
@@ -304,12 +305,12 @@
         "toVertexName": "cnpj"
       },
       {
-        "label": "Works",
+        "label": "Is_Located",
         "fromVertexLabel": "Person.Natural",
         "toVertexName": "business"
       },
       {
-        "label": "Lives",
+        "label": "Is_Located",
         "fromVertexLabel": "Person.Natural",
         "toVertexName": "residence"
       },
