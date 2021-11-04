@@ -244,9 +244,17 @@ rules:
       - label: Location.Address
 #        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
           Type:
             val: "${Addresstype?.trim()}"
+            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
             excludeFromSearch: true
 
 #      - label: Object.Contract
@@ -722,9 +730,17 @@ rules:
 
       - label: Location.Address
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
           Type:
             val: "${Addresstype?.trim()}"
+            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
             excludeFromSearch: true
 
       - label: Object.Contract
@@ -886,9 +902,17 @@ rules:
 
       - label: Location.Address
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
           Type:
             val: "${Addresstype?.trim()}"
+            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
             excludeFromSearch: true
 
       - label: Object.Contract
@@ -1053,10 +1077,17 @@ rules:
 
       - label: Location.Address
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
-#                        "Rua Germano de Rusky 551, São Paulo (Região Norte), Marilia - Brasil, 84567-933"
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
           Type:
             val: "${Addresstype?.trim()}"
+            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
             excludeFromSearch: true
 
       - label: Object.Contract
@@ -1218,9 +1249,17 @@ rules:
 
       - label: Location.Address
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
           Type:
             val: "${Addresstype?.trim()}"
+            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
             excludeFromSearch: true
 
       - label: Object.Vehicle
@@ -1378,10 +1417,15 @@ rules:
 
       - label: Location.Address
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
-#          Type:
-#            val: "${Addresstype?.trim()}"
-#            excludeFromSearch: true
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
+            excludeFromSearch: true
 
       - label: Object.Vehicle
         props:
@@ -1559,11 +1603,18 @@ rules:
             type: "[Ljava.lang.String;"
 
       - label: Location.Address
-        #        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
           Type:
             val: "${Addresstype?.trim()}"
+            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
             excludeFromSearch: true
 
       #      - label: Object.Contract
