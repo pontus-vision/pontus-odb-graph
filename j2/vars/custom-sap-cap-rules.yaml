@@ -58,23 +58,28 @@ rules:
       - label: Location.Address
 #        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Business"
 #            excludeFromSearch: true
-#          parser:
-#            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
-#            type: "com.pontusvision.utils.LocationAddress"
-
-      - label: Object.Contract
-        props:
-          Date: "${Status_Since}"
-          Description: "${Description}"
-          Id: "${Lead_Group} - ${Lead_ID} - ${Number}"
-          Status: "${Customer_Status}"
-          Type:
-            val: "Leads Contract"
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
             excludeFromSearch: true
+
+#      - label: Object.Contract
+#        props:
+#          Date: "${Status_Since}"
+#          Description: "${Description}"
+#          Id: "${Lead_Group} - ${Lead_ID} - ${Number}"
+#          Status: "${Customer_Status}"
+#          Type:
+#            val: "Leads Contract"
+#            excludeFromSearch: true
 
       - label: Object.Email_Address
         condition: "${E_Mail_Address?.trim()?.length() > 0}"
@@ -160,9 +165,9 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
 
-      - label: "Is_Lead"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Contract"
+#      - label: "Is_Lead"
+#        fromVertexLabel: "Person.Natural"
+#        toVertexLabel: "Object.Contract"
 
       - label: "Works"
         fromVertexLabel: "Person.Natural"

@@ -112,37 +112,19 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Contract",
-        "props": [
-          {
-            "name": "Object.Contract.Date",
-            "val": "${Status_Since}",
-            "mandatoryInSearch": true
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
-            "name": "Object.Contract.Description",
-            "val": "${Description}",
-            "mandatoryInSearch": true
+            "name": "Location.Address.parser",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
           },
           {
-            "name": "Object.Contract.Id",
-            "val": "${Lead_Group} - ${Lead_ID} - ${Number}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Status",
-            "val": "${Customer_Status}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Type",
-            "val": "Leads Contract",
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -291,11 +273,6 @@
         "label": "Uses_Email",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Object.Email_Address"
-      },
-      {
-        "label": "Is_Lead",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Contract"
       },
       {
         "label": "Works",

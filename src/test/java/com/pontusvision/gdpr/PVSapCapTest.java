@@ -48,6 +48,7 @@ public class PVSapCapTest extends AppTest {
 
   @Test
   public void test00001SapCapLeads() throws InterruptedException {
+  // updated to real style data leads.csv
 
     try {
 
@@ -61,23 +62,24 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("sap-cap/leads.csv", "cap_leads");
 
       String personNaturalEdgesCount =
-          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('IGOR FERREIRA'))" +
+           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARCEL MOLICA ARAÚJO'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
-          "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
+      // Object.Contract has been removed ... so no more Is_Lead EDGE ... total of 6 EDGES
+      assertEquals("6", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
+          "+ 1 Is_Located + 1 Uses_Email");
 
 
       String leadId =
           App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
-              "eq('av. marcio gomes 333 , AA3, Belo Horizonte - Brasil, 6758090')).in('Is_Located')" +
+              "eq('Rua Tarcisio Vanderbilt 260 Casa, Araraquara, São Paulo (SP) - BR, 88650024')).in('Is_Located')" +
               ".properties('Person.Natural.Customer_ID').value().next().toString()").get().toString();
-      assertEquals("1", leadId, "Lead ID de Igor Ferreira");
+      assertEquals("4874886", leadId, "Lead ID de Marcel Molica Araújo");
 
 
       String gettingEmailAddress =
-          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('LARA MAGALHAES')).out('Uses_Email')" +
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARCEL MOLICA ARAÚJO')).out('Uses_Email')" +
               ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
-      assertEquals("lara@yahoo.com", gettingEmailAddress, "E-mail de Lara Magalhaes");
+      assertEquals("marcelmolica@hotmail.com", gettingEmailAddress, "E-mail de Marcel Molica Araújo");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
