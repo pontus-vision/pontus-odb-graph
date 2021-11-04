@@ -175,28 +175,42 @@ rules:
 
   cap_customer_prospect:
     vertices:
+
+      # TODO => Vertex for Consent, with data such: "Telephone_Consent", "E_Mail_Consent", "Mail_Consent", "Fax_SMS_Consent" and "Social_Media_Consent" !!!
+
       - label: Person.Natural
         props:
-          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
+          Full_Name: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]', '')}"
           Type:
             val: "Customer Prospect"
             excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
-          Date_Of_Birth: "${Date_of_Birth?.trim()}"
+          Date_Of_Birth:
+            val: "${Date_of_Birth}"
+            type: "java.util.Date"
           Nationality:
             val: "${Nationality?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Object.Identity_Card
-        #        condition: "${}"
+        condition: "${Tax_Number?.replaceAll('[^0-9]', '').length() == 11}"
         name: cpf
         props:
           Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CPF"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        condition: "${Tax_Number?.replaceAll('[^0-9]', '').length() == 14}"
+        name: cnpj
+        props:
+          Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "CNPJ"
             excludeFromSearch: true
 
       - label: Person.Organisation
@@ -245,17 +259,19 @@ rules:
 #        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''} ${District?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
           Type:
             val: "${Addresstype?.trim()}"
             excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''} ${District?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code:
             val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
             excludeFromSearch: true
+
+#      There is no need for an OBJECT.CONTRACT vertex, because this Table doesn't retrieve "Terms & COnditions" from the DB
 
 #      - label: Object.Contract
 #        props:
@@ -361,6 +377,10 @@ rules:
       - label: "Has_Id_Card"
         fromVertexLabel: "Person.Natural"
         toVertexName: "cpf"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "cnpj"
 
 #  cap_monthly_cockpits_and_reports:
 #    vertices:
@@ -1537,7 +1557,9 @@ rules:
           Title:
             val: "${Title}"
             excludeFromSearch: true
-          Date_Of_Birth: "${Date_of_Birth?.trim()?:'1970-01-01'}"
+          Date_Of_Birth:
+            val: "${Date_of_Birth}"
+            type: "java.util.Date"
           Nationality:
             val: "${Nationality?.trim()?.toUpperCase()}"
             excludeFromSearch: true
