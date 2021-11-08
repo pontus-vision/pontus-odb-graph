@@ -254,7 +254,7 @@ class FileNLPRequest implements Serializable {
     if (req.person) {
       String[] person = req.person
       for (int i = 0; i < person.length; i++) {
-        personOptions.add( __.has('Person.Natural.Full_Name', PText.textContains(person[i]?.toUpperCase())))
+        personOptions.add( __.has('Person.Natural.Full_Name', P.eq(person[i]?.toUpperCase())))
       }
     }
 
@@ -271,7 +271,7 @@ class FileNLPRequest implements Serializable {
     List<Traversal> emailOptions = new LinkedList<>()
     if (emailAddrs) {
       for (int i = 0; i < emailAddrs.length; i++) {
-        emailOptions.push(__.has('Object.Email_Address.Email', PText.textContains(emailAddrs[i]?.toLowerCase())))
+        emailOptions.push(__.has('Object.Email_Address.Email', P.eq(emailAddrs[i]?.toLowerCase())))
       }
     }
 

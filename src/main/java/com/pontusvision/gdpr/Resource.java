@@ -9,6 +9,8 @@ import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.mapping.MappingReq;
+import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
+import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
 import com.pontusvision.graphutils.PText;
 import com.pontusvision.graphutils.gdpr;
 import org.apache.commons.lang.StringUtils;
@@ -171,8 +173,8 @@ public class Resource {
           reg.sizeBytes = ((Double) values.get("Object.Email_Message_Attachment.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Object.Email_Message_Attachment.Attachment_Name").get(0).toString();
           StringBuilder sb =  new StringBuilder();
-          sb.append(values.get("Object.Email_Message_Attachment.Email_Id").get(0)).append("/")
-              .append(values.get("Object.Email_Message_Attachment.Attachment_Id").get(0));
+          sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
+          sb.append(values.get("Object.Email_Message_Attachment.Attachment_Id").get(0));
           reg.path = sb.toString();
           List<Object> createdDateTime = values.get("Object.Email_Message_Attachment.Created_Date_Time");
 
@@ -836,6 +838,26 @@ status: "success", message: "Data source is working", title: "Success"
         .property("", "").next().id().toString();
 
   }
+
+
+  @POST
+  @Path("admin/report/template/upsert")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+
+  public ReportTemplateUpsertResponse reportTemplateUpsert(ReportTemplateUpsertRequest request) {
+
+    String templateName = request.getTemplateName();
+    String templatePOLEType = request.getTemplatePOLEType();
+    String templateId = gdpr.upsertNotificationTemplate(templatePOLEType,templateName, request.getReportTextBase64());
+    System.out.println("Upsert templateId ");
+
+    ReportTemplateUpsertResponse reply = new ReportTemplateUpsertResponse(templatePOLEType,
+        templateName, templateId);
+    return reply;
+
+  }
+
 
   @GET
   @Path("kpi/calculatePOLECounts")

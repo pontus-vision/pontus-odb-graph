@@ -502,14 +502,14 @@ class PontusJ2ReportingFunctions {
   }
 
   static Map<String, String> context(String pg_id) {
-    def context = App.g.V(new ORecordId(pg_id)).valueMap(true)[0].collectEntries { key, val ->
+    def context = App.g.V(new ORecordId(pg_id)).elementMap()[0].collectEntries { key, val ->
       [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
     }
     return context
   }
 
   static List<Map<String, String>> neighbours(String pg_id) {
-    def neighbours = App.g.V(new ORecordId(pg_id)).both().valueMap(true).toList().collect { item ->
+    def neighbours = App.g.V(new ORecordId(pg_id)).both().elementMap().toList().collect { item ->
       item.collectEntries { key, val ->
         [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
       }
@@ -519,6 +519,16 @@ class PontusJ2ReportingFunctions {
 
   }
 
+  static List<Map<String, String>> neighboursByType(String pg_id, String edgeType) {
+    def neighbours = App.g.V(new ORecordId(pg_id)).both(edgeType).elementMap().toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+    }
+
+    return neighbours
+
+  }
   static String htmlTableCustomHeader(Map<String, String> map, String tableHeader, String tableFooter) {
     StringBuilder htmlBuilder = new StringBuilder()
     htmlBuilder.append(tableHeader)
@@ -617,25 +627,59 @@ class PontusJ2ReportingFunctions {
   static Long getNumNaturalPersonForPIA(String piaId) {
     return App.g.V(new ORecordId(piaId))
             .in('Has_Privacy_Impact_Assessment')
-            .filter(has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
+            .filter(__.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
             .out('Has_Ingestion_Event')
             .out('Has_Ingestion_Event')
             .in('Has_Ingestion_Event')
-            .filter(has('Metadata.Type.Person.Natural', P.eq('Person.Natural')))
+            .filter(__.has('Metadata.Type.Person.Natural', P.eq('Person.Natural')))
             .count()
             .next()
 
 
   }
 
+
+  static Long getNumNaturalPersonForDataProcess(String processId) {
+    return App.g.V(new ORecordId(processId))
+            .out('Has_Data_Source') // Data Source
+            .out('Has_Ingestion_Event')  // Event Group
+            .out('Has_Ingestion_Event') // Event Ingestion
+            .in('Has_Ingestion_Event')
+            .filter(__.has('Metadata.Type.Person.Natural', P.eq('Person.Natural')))
+            .dedup()
+            .count()
+            .next()
+
+
+  }
+
+
+//  | Data Policy Type | Data Policy Frequency | Data Policy Retention Period|
+
+  static List<Map<String,String>> getDataPoliciesForDataProcess(String processId) {
+    def ret = App.g.V(new com.orientechnologies.orient.core.id.ORecordId(processId))
+            .out('Has_Data_Source') // Data Source
+            .out('Has_Policy')  // Object.Data_Policy
+            .dedup()
+            .elementMap().toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+    }
+
+    return ret as List<Map<String, String>>
+
+  }
+
+
   static String getDataProceduresPerPerson(String userId) {
     return App.g.V(new ORecordId(userId))
 
             .out('Has_Ingestion_Event')
             .in('Has_Ingestion_Event')
-            .filter(has('Metadata.Type.Event.Group_Ingestion', P.eq('Event.Group_Ingestion')))
+            .filter(__.has('Metadata.Type.Event.Group_Ingestion', P.eq('Event.Group_Ingestion')))
             .in('Has_Ingestion_Event')
-            .filter(has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
+            .filter(__.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
             .in('Has_Data_Source')
             .dedup()
             .elementMap().toList().collect { item ->
@@ -912,6 +956,8 @@ class PontusJ2ReportingFunctions {
             PontusJ2ReportingFunctions.class, "context", String.class))
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "connected_data",
             PontusJ2ReportingFunctions.class, "neighbours", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "neighboursByType",
+            PontusJ2ReportingFunctions.class, "neighboursByType", String.class, String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTableCustomHeader",
             PontusJ2ReportingFunctions.class, "htmlTableCustomHeader", Map.class, String.class, String.class))
@@ -941,6 +987,14 @@ class PontusJ2ReportingFunctions {
             PontusJ2ReportingFunctions.class, "getNumSensitiveInfoForPIA", String.class))
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataProceduresPerPerson",
             PontusJ2ReportingFunctions.class, "getDataProceduresPerPerson", String.class))
+
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForDataProcess",
+            PontusJ2ReportingFunctions.class, "getNumNaturalPersonForDataProcess", String.class))
+
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataPoliciesForDataProcess",
+            PontusJ2ReportingFunctions.class, "getDataPoliciesForDataProcess", String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "t",
             PontusJ2ReportingFunctions.class, "translate", String.class))
