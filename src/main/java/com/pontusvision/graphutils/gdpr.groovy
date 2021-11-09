@@ -1,5 +1,6 @@
 package com.pontusvision.graphutils
 
+import com.orientechnologies.orient.core.id.ORecordId
 import com.orientechnologies.orient.core.metadata.schema.OClass
 import com.orientechnologies.orient.core.metadata.schema.OProperty
 
@@ -2650,10 +2651,12 @@ the end of the process.
       GraphTraversal<Vertex, Vertex> trav = App.g.V()
               .has("Object.Notification_Templates.Id", P.eq(templateId))
               .has("Object.Notification_Templates.Types", P.eq(templatePOLEType))
-              .has("Object.Notification_Templates.Label", P.eq(templateName))
+              .has("Object.Notification_Templates.Label", P.eq(templateName)).id()
 
       if (trav.hasNext()) {
-        trav.properties("Object.Notification_Templates.Text", reportTextBase64).id().next().toString()
+        String id = trav.next().toString()
+        App.g.V(new ORecordId(id))
+                .property("Object.Notification_Templates.Text", reportTextBase64).next()
       } else {
         App.g.addV("Object.Notification_Templates")
                 .property("Metadata.Type", "Object.Notification_Templates")
