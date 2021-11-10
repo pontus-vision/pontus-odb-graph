@@ -10,17 +10,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${Lead_ID}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "Leads",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Person.Natural.Title",
             "val": "${Title}",
             "mandatoryInSearch": false,
@@ -36,12 +25,6 @@
             "name": "Person.Organisation.Name",
             "val": "${Company_Name_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Type",
-            "val": "Leads",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -53,13 +36,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Leads",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -84,13 +62,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Mobile_Number}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Leads",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -145,7 +118,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p Leads",
+            "val": "sap/c@p Lead",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -182,7 +155,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p Leads",
+            "val": "sap/c@p Lead",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -218,19 +191,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Leads",
+            "val": "sap/c@p Lead",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Leads",
+            "val": "sap/c@p Lead",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Leads no SAP/C@P",
+            "val": "Registros da tabela Lead no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
