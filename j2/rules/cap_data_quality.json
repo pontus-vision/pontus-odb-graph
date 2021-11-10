@@ -6,7 +6,7 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
+            "val": "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
@@ -36,11 +36,28 @@
       },
       {
         "label": "Object.Identity_Card",
-        "name": "cpf",
+        "name": "cnpj",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
             "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Identity_Card.Id_Type",
+            "val": "CNPJ",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Identity_Card",
+        "name": "cpf",
+        "props": [
+          {
+            "name": "Object.Identity_Card.Id_Value",
+            "val": "${ID_number?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
@@ -119,13 +136,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
@@ -152,7 +169,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Data Quality",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -189,7 +206,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Data Quality",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -225,19 +242,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Data Quality",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Data Quality",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Customer Prospect no SAP/C@P",
+            "val": "Registros da tabela Data Quality no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -271,7 +288,7 @@
         "toVertexName": "telephone"
       },
       {
-        "label": "Has_Phone",
+        "label": "Has_Mobile",
         "fromVertexLabel": "Person.Natural",
         "toVertexName": "mobile"
       },
@@ -284,6 +301,11 @@
         "label": "Works",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Person.Organisation"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "cnpj"
       },
       {
         "label": "Has_Id_Card",

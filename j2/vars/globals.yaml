@@ -261,6 +261,23 @@ schema:
         - name: Type
         - name: Value
 
+    - name: "Event.Complaint"
+      partition: false
+      useStatic: false
+      props:
+        - name: Date
+          dataType: Date
+        - name: Description
+        - name: Expiry
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Id
+        - name: Link
+        - name: Status
+        - name: Type
+
     - name: "Location.Address"
       partition: false
       useStatic: false
@@ -391,6 +408,23 @@ schema:
         - name: Date
           dataType: Date
 
+        - name: Description
+        - name: Expiry
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Id
+        - name: Link
+        - name: Status
+        - name: Type
+
+    - name: "Object.Campaign"
+      partition: false
+      useStatic: false
+      props:
+        - name: Date
+          dataType: Date
         - name: Description
         - name: Expiry
         - name: Form_Id
@@ -814,6 +848,15 @@ schema:
         - name: Union_Membership
         - name: Description
 
+    - name: "Object.Vehicle"
+      partition: false
+      useStatic: false
+      props:
+        - name: License_Plate
+        - name: Model
+        - name: Model_Year
+#        - name: CNH
+
     - name: "Person.Employee"
       partition: false
       useStatic: false
@@ -1002,8 +1045,10 @@ schema:
   - name: Email_Attachment
   - name: Has_Address
   - name: Has_Application
+  - name: Has_Campaign
   - name: Has_Column
   - name: Has_Contract
+  - name: Has_Complaint
   - name: Has_Credential
   - name: Has_Data_Procedures
   - name: Has_Data_Source
@@ -1018,6 +1063,9 @@ schema:
   - name: Has_NLP_Events
   - name: Has_Parent_Or_Guardian
   - name: Has_Phone
+#  - name: Has_Telephone
+  - name: Has_Mobile
+  - name: Has_Vehicle
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice

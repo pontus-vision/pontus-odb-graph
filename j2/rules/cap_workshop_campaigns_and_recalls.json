@@ -10,42 +10,14 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
+            "name": "Person.Natural.Full_Name_fuzzy",
+            "val": "${Name_at_Birth?:''}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Title",
             "val": "${Title}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person.Natural.Date_Of_Birth",
-            "val": "${Date_of_Birth?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Person.Natural.Nationality",
-            "val": "${Nationality?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Identity_Card",
-        "name": "cpf",
-        "props": [
-          {
-            "name": "Object.Identity_Card.Id_Value",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Identity_Card.Id_Type",
-            "val": "CPF",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -137,6 +109,32 @@
         ]
       },
       {
+        "label": "Object.Campaign",
+        "props": [
+          {
+            "name": "Object.Campaign.Date",
+            "val": "${Start_date}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Campaign.Description",
+            "val": "${Description}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Campaign.Id",
+            "val": "${Recall_campaign_ID?.trim()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Campaign.Type",
+            "val": "SAP/C@P Workshop Campaigns and Recalls Contract",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
         "label": "Object.Email_Address",
         "condition": "${E_Mail_Address?.trim()?.length() > 0}",
         "props": [
@@ -152,7 +150,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -189,7 +187,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -225,19 +223,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Workshop Campaigns and Recalls",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Customer Prospect no SAP/C@P",
+            "val": "Registros da tabela Workshop Campaigns and Recalls no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -271,7 +269,7 @@
         "toVertexName": "telephone"
       },
       {
-        "label": "Has_Phone",
+        "label": "Has_Mobile",
         "fromVertexLabel": "Person.Natural",
         "toVertexName": "mobile"
       },
@@ -281,14 +279,14 @@
         "toVertexLabel": "Object.Email_Address"
       },
       {
+        "label": "Has_Campaign",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Campaign"
+      },
+      {
         "label": "Works",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Person.Organisation"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexName": "cpf"
       }
     ]
   }

@@ -6,46 +6,12 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
+            "val": "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
             "name": "Person.Natural.Title",
             "val": "${Title}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person.Natural.Date_Of_Birth",
-            "val": "${Date_of_Birth?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Person.Natural.Nationality",
-            "val": "${Nationality?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Identity_Card",
-        "name": "cpf",
-        "props": [
-          {
-            "name": "Object.Identity_Card.Id_Value",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Identity_Card.Id_Type",
-            "val": "CPF",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -137,6 +103,26 @@
         ]
       },
       {
+        "label": "Object.Vehicle",
+        "props": [
+          {
+            "name": "Object.Vehicle.License_Plate",
+            "val": "${License_Plate}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Vehicle.Model",
+            "val": "${Model}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Vehicle.Model_Year",
+            "val": "${Model_Year}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
         "label": "Object.Email_Address",
         "condition": "${E_Mail_Address?.trim()?.length() > 0}",
         "props": [
@@ -152,7 +138,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -189,7 +175,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -225,19 +211,19 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Customer Prospect",
+            "val": "sap/c@p Competitor Vehicles",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Customer Prospect no SAP/C@P",
+            "val": "Registros da tabela Competitor Vehicles no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -271,7 +257,7 @@
         "toVertexName": "telephone"
       },
       {
-        "label": "Has_Phone",
+        "label": "Has_Mobile",
         "fromVertexLabel": "Person.Natural",
         "toVertexName": "mobile"
       },
@@ -281,14 +267,14 @@
         "toVertexLabel": "Object.Email_Address"
       },
       {
+        "label": "Has_Vehicle",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Vehicle"
+      },
+      {
         "label": "Works",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Person.Organisation"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexName": "cpf"
       }
     ]
   }

@@ -769,8 +769,7 @@ public class PVBasicTest extends AppTest {
       String findingTheSonOfAMother =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('DONA SABRINA')).out('Is_Family')" +
               ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
-      assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta" +
-          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta");
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);

@@ -7,30 +7,12 @@ updatereq:
         - name: Person.Natural.Full_Name
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Natural.Customer_ID
-          val: ${Tax_Number?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
+        - name: Person.Natural.Full_Name_fuzzy
+          val: ${Name_at_Birth?:''}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Person.Natural.Title
           val: ${Title}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Person.Natural.Date_Of_Birth
-          val: ${Date_of_Birth?.trim()?:'01/01/1666'}
-          mandatoryInSearch: True
-          type: "java.util.Date"
-        - name: Person.Natural.Nationality
-          val: ${Nationality?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
-    - label: Object.Identity_Card
-      name: cpf
-      props:
-        - name: Object.Identity_Card.Id_Value
-          val: ${Tax_Number?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object.Identity_Card.Id_Type
-          val: CPF
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -91,6 +73,22 @@ updatereq:
           val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
           mandatoryInSearch: True
     
+    - label: Object.Campaign
+      props:
+        - name: Object.Campaign.Date
+          val: ${Start_date}
+          mandatoryInSearch: True
+        - name: Object.Campaign.Description
+          val: ${Description}
+          mandatoryInSearch: True
+        - name: Object.Campaign.Id
+          val: ${Recall_campaign_ID?.trim()}
+          mandatoryInSearch: True
+        - name: Object.Campaign.Type
+          val: SAP/C@P Workshop Campaigns and Recalls Contract
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
     - label: Object.Email_Address
       condition: ${E_Mail_Address?.trim()?.length() > 0}
       props:
@@ -101,7 +99,7 @@ updatereq:
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sap/c@p Customer Prospect
+          val: sap/c@p Workshop Campaigns and Recalls
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -126,7 +124,7 @@ updatereq:
     - label: Event.Group_Ingestion
       props:
         - name: Event.Group_Ingestion.Type
-          val: sap/c@p Customer Prospect
+          val: sap/c@p Workshop Campaigns and Recalls
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Operation
@@ -150,15 +148,15 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/c@p Customer Prospect
+          val: sap/c@p Workshop Campaigns and Recalls
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Type
-          val: sap/c@p Customer Prospect
+          val: sap/c@p Workshop Campaigns and Recalls
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros da tabela Customer Prospect no SAP/C@P
+          val: Registros da tabela Workshop Campaigns and Recalls no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 
@@ -178,16 +176,16 @@ updatereq:
   - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexName: telephone
-  - label: Has_Phone
+  - label: Has_Mobile
     fromVertexLabel: Person.Natural
     toVertexName: mobile
   - label: Uses_Email
     fromVertexLabel: Person.Natural
     toVertexLabel: Object.Email_Address
+  - label: Has_Campaign
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Object.Campaign
   - label: Works
     fromVertexLabel: Person.Natural
     toVertexLabel: Person.Organisation
-  - label: Has_Id_Card
-    fromVertexLabel: Person.Natural
-    toVertexName: cpf
 
