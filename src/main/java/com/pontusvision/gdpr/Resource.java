@@ -104,7 +104,10 @@ public class Resource {
   @Consumes(MediaType.APPLICATION_JSON)
   public Md2Reply md2Search(Md2Request req) throws  HTTPException{
     if (req.settings == null || req.query == null || req.query.name == null ){
-      return new Md2Reply(Response.Status.BAD_REQUEST);
+
+      Md2Reply reply = new Md2Reply(Response.Status.BAD_REQUEST);
+      reply.errorStr = "Invalid Request; missing the settings, query, or query.name fields";
+      return reply;
     }
 
     GraphTraversal<Vertex, Vertex> gt =
@@ -118,7 +121,9 @@ public class Resource {
       List<Object> ids = (gt.id().toList());
       if (ids.size() == 0){
         System.out.println("Found 0 ids matching the request");
-        return new Md2Reply(Response.Status.NOT_FOUND);
+        Md2Reply reply =  new Md2Reply(Response.Status.NOT_FOUND);
+        reply.errorStr = "Found 0 ids matching the request";
+        return  reply;
       }
       else if (ids.size() > 1){
         Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
