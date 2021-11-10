@@ -34,6 +34,8 @@ sed -e 's/Ì/\&Igrave;/g' | \
 sed -e 's/í/\&iacute;/g' | \
 sed -e 's/ì/\&igrave;/g' | \
 sed -e 's/Ç/\&Ccedil;/g' | \
-sed -e 's/ç/\&ccedil;/g' > file2.txt
+sed -e 's/ç/\&ccedil;/g' | \
+sed -e 's/§/\&sect;/g' | \
+sed -e 's/º/\&ordm;/g' | > file2.txt
    
    
