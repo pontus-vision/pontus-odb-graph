@@ -907,6 +907,51 @@ public class PVBasicTest extends AppTest {
 
       assertEquals(404, md2Reply.getStatus());
 
+      md2Request.query.name = "MARIA APARECIDA KEIKO INABA";
+      md2Request.query.docCpf = "06451990876";
+      md2Request.query.email = "mkeiko@lykeslines.com.br";
+      md2Request.settings.limit=1000L;
+      md2Request.settings.start=0L;
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus());
+      assertEquals(0L,md2Reply.total);
+
+      md2Request.query.name = "MARIA APARECIDA KEIKO INABA";
+      md2Request.query.docCpf = "06546543431";
+      md2Request.query.email = "mkeiko@lykeslines.com.br";
+      md2Request.settings.limit=1000L;
+      md2Request.settings.start=0L;
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus());
+      assertEquals(1L,md2Reply.total);
+
+      md2Request.query.name = "MARIA APARECIDA KEIKO INABA";
+      md2Request.query.docCpf = null;
+      md2Request.query.email = "mkeiko@lykeslines.com.br";
+      md2Request.settings.limit=1000L;
+      md2Request.settings.start=0L;
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(409, md2Reply.getStatus(),"Found more than one person with the same name");
+
+      md2Request.query.name="HUGO SANCHEZ CORREIA";
+      md2Request.query.docCpf="219.594.684-99";
+      md2Request.query.email=null;
+      md2Reply = res.md2Search(md2Request);
+
+      assertEquals(200, md2Reply.getStatus(),"Found one masked CPF");
+      assertEquals(1L,md2Reply.total);
+
+      md2Request.query.name="HUGO SANCHEZ CORREIA";
+      md2Request.query.docCpf="21959468499";
+      md2Request.query.email=null;
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus(),"Found one unmasked CPF");
+      assertEquals(1L,md2Reply.total);
+
+
 
     } catch (ExecutionException e) {
       e.printStackTrace();

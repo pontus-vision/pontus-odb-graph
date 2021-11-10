@@ -1,0 +1,131 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object.Data_Source",
+        "name": "sharepoint",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "sharepoint/risk-mitigations",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "sharepoint/risk-mitigations",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Risk Mitigations",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Risk_Mitigation_Data_Source",
+        "props": [
+          {
+            "name": "Object.Risk_Mitigation_Data_Source.Mitigation_Id",
+            "val": "${Title}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Risk_Mitigation_Data_Source.Description",
+            "val": "${Description}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Ingestion",
+        "props": [
+          {
+            "name": "Event.Ingestion.Type",
+            "val": "risk-mitigations",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Update_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Ingestion",
+        "props": [
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Type",
+            "val": "sharepoint/risk-mitigations",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "sharepoint",
+        "toVertexLabel": "Event.Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Group_Ingestion",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Ingestion",
+        "toVertexLabel": "Object.Risk_Mitigation_Data_Source"
+      }
+    ]
+  }
+}
