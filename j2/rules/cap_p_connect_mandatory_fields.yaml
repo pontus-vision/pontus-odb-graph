@@ -19,6 +19,9 @@ updatereq:
         - name: Object.Phone_Number.Raw
           val: ${Mobile_Number}
           mandatoryInSearch: True
+        - name: Object.Phone_Number.excludeFromSearch
+          val: True
+          mandatoryInSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False

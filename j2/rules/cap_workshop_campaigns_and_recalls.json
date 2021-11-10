@@ -16,11 +16,6 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${Recall_campaign_ID}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person.Natural.Title",
             "val": "${Title}",
             "mandatoryInSearch": false,
@@ -47,7 +42,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -72,7 +68,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Mobile_Number}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -108,6 +105,32 @@
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
             "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Campaign",
+        "props": [
+          {
+            "name": "Object.Campaign.Date",
+            "val": "${Start_date}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Campaign.Description",
+            "val": "${Description}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Campaign.Id",
+            "val": "${Recall_campaign_ID?.trim()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Campaign.Type",
+            "val": "SAP/C@P Workshop Campaigns and Recalls Contract",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -254,6 +277,11 @@
         "label": "Uses_Email",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Object.Email_Address"
+      },
+      {
+        "label": "Has_Campaign",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Campaign"
       },
       {
         "label": "Works",

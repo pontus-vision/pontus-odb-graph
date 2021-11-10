@@ -10,11 +10,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${ID}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person.Natural.Title",
             "val": "${Title}",
             "mandatoryInSearch": false,
@@ -41,7 +36,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -66,7 +62,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Mobile_Number}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",

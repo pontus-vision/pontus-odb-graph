@@ -11,9 +11,6 @@ updatereq:
           val: ${Name_at_Birth?:''}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Person.Natural.Customer_ID
-          val: ${Recall_campaign_ID}
-          mandatoryInSearch: True
         - name: Person.Natural.Title
           val: ${Title}
           mandatoryInSearch: False
@@ -32,7 +29,8 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_no_}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -49,7 +47,8 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${Mobile_Number}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -73,6 +72,22 @@ updatereq:
         - name: Location.Address.Post_Code
           val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
           mandatoryInSearch: True
+    
+    - label: Object.Campaign
+      props:
+        - name: Object.Campaign.Date
+          val: ${Start_date}
+          mandatoryInSearch: True
+        - name: Object.Campaign.Description
+          val: ${Description}
+          mandatoryInSearch: True
+        - name: Object.Campaign.Id
+          val: ${Recall_campaign_ID?.trim()}
+          mandatoryInSearch: True
+        - name: Object.Campaign.Type
+          val: SAP/C@P Workshop Campaigns and Recalls Contract
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object.Email_Address
       condition: ${E_Mail_Address?.trim()?.length() > 0}
@@ -167,6 +182,9 @@ updatereq:
   - label: Uses_Email
     fromVertexLabel: Person.Natural
     toVertexLabel: Object.Email_Address
+  - label: Has_Campaign
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Object.Campaign
   - label: Works
     fromVertexLabel: Person.Natural
     toVertexLabel: Person.Organisation

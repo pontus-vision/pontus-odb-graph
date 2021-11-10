@@ -11,7 +11,7 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${ID_number?.replaceAll('[^0-9]', '')}",
+            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
@@ -22,8 +22,9 @@
           },
           {
             "name": "Person.Natural.Date_Of_Birth",
-            "val": "${Date_of_Birth?.trim()?:'1970-01-01'}",
-            "mandatoryInSearch": true
+            "val": "${Date_of_Birth?.trim()?:'01/01/1666'}",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
           },
           {
             "name": "Person.Natural.Nationality",
@@ -86,7 +87,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -111,7 +113,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Mobile_Number}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",

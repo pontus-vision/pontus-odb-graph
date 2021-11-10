@@ -8,15 +8,16 @@ updatereq:
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Customer_ID
-          val: ${Porsche_ID?.replaceAll('[^0-9]', '')}
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Person.Natural.Title
           val: ${Title}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Date_Of_Birth
-          val: ${Date_of_Birth?.trim()}
+          val: ${Date_of_Birth?.trim()?:'01/01/1666'}
           mandatoryInSearch: True
+          type: "java.util.Date"
         - name: Person.Natural.Nationality
           val: ${Nationality?.trim()?.toUpperCase()}
           mandatoryInSearch: False
@@ -46,7 +47,8 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_no_}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -63,7 +65,8 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${Mobile_Number}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False

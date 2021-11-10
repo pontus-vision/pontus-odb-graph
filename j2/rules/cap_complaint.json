@@ -10,11 +10,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${Campaign_ID}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person.Natural.Title",
             "val": "${Title}",
             "mandatoryInSearch": false,
@@ -41,7 +36,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -66,7 +62,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Mobile_Number}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -102,6 +99,32 @@
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
             "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Complaint",
+        "props": [
+          {
+            "name": "Event.Complaint.Description",
+            "val": "${Description}; Resolvido = ${Solved}; Finalizado = ${Closed}.",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Complaint.Id",
+            "val": "${Campaign_ID}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Complaint.Status",
+            "val": "${Status}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Complaint.Type",
+            "val": "SAP/C@P Complaint Contract",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -248,6 +271,11 @@
         "label": "Uses_Email",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Object.Email_Address"
+      },
+      {
+        "label": "Has_Complaint",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Complaint"
       },
       {
         "label": "Works",

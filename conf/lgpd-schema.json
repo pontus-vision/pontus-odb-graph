@@ -714,6 +714,71 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Event.Complaint",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Expiry",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Link",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Complaint.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Location.Address",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1235,6 +1300,71 @@
     },
     {
       "name": "Object.Contract.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Campaign",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Expiry",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Link",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Status",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Campaign.Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3241,6 +3371,11 @@
       "useStatic": false
     },
     {
+      "name": "Event.Complaint",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Location.Address",
       "partition": false,
       "useStatic": false
@@ -3282,6 +3417,11 @@
     },
     {
       "name": "Object.Contract",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Campaign",
       "partition": false,
       "useStatic": false
     },
@@ -3498,12 +3638,22 @@
       "unidirected": false
     },
     {
+      "name": "Has_Campaign",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Column",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
       "name": "Has_Contract",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Complaint",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -4035,6 +4185,28 @@
       "propertyKeysMappings": {}
     },
     {
+      "name": "Event.Complaint.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Event.Complaint",
+        "Event.Complaint.Date",
+        "Event.Complaint.Description",
+        "Event.Complaint.Expiry",
+        "Event.Complaint.Form_Id",
+        "Event.Complaint.Form_Owner_Id",
+        "Event.Complaint.Form_Submission_Id",
+        "Event.Complaint.Form_Submission_Owner_Id",
+        "Event.Complaint.Id",
+        "Event.Complaint.Link",
+        "Event.Complaint.Status",
+        "Event.Complaint.Type"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
       "name": "Location.Address.MixedIdx",
       "composite": false,
       "unique": false,
@@ -4217,6 +4389,28 @@
         "Object.Contract.Link",
         "Object.Contract.Status",
         "Object.Contract.Type"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Campaign.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Campaign",
+        "Object.Campaign.Date",
+        "Object.Campaign.Description",
+        "Object.Campaign.Expiry",
+        "Object.Campaign.Form_Id",
+        "Object.Campaign.Form_Owner_Id",
+        "Object.Campaign.Form_Submission_Id",
+        "Object.Campaign.Form_Submission_Owner_Id",
+        "Object.Campaign.Id",
+        "Object.Campaign.Link",
+        "Object.Campaign.Status",
+        "Object.Campaign.Type"
       ],
       "propertyKeysMappings": {}
     },
