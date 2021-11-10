@@ -264,7 +264,7 @@ class FileNLPRequest implements Serializable {
     if (req.cpf) {
       String[] cpfs = req.cpf
       for (int i = 0; i < cpfs.length; i++) {
-        cpfOptions.push( __.has('Person.Natural.Customer_Id', P.eq(cpfs[i])))
+        cpfOptions.push( __.has('Person.Natural.Customer_ID', P.eq(cpfs[i])))
       }
     }
 
@@ -333,9 +333,8 @@ class FileNLPRequest implements Serializable {
                 .property('Event.NLP_Group.Person_Id', custId)
                 .property('Event.NLP_Group.Ingestion_Date', currDate).id().next()
       }
-
-      App.g.addE('Has_NLP_Events').from(App.g.V(emailBodyOrAttachment)).to(App.g.V(nlpGroupVtxId)).next()
-      App.g.addE('Has_NLP_Events').from(App.g.V(nlpGroupVtxId)).to(App.g.V(orid)).next()
+      upsertEdge (emailBodyOrAttachment,nlpGroupVtxId,'Has_NLP_Events')
+      upsertEdge (nlpGroupVtxId,orid, 'Has_NLP_Events')
       count++
       if (count >= maxThreshold) {
         break
@@ -345,6 +344,20 @@ class FileNLPRequest implements Serializable {
       System.out.println("Failed to find any NLP people for event " + req.toString())
     }
     return retVal
+  }
+
+  static void upsertEdge(ORID fromId, ORID toId, String label){
+    ORID[] foundIds = App.g.V(toId)
+            .both(label)
+            .hasId(P.within(fromId)).id()
+            .toSet() as ORID[]
+
+
+    if (foundIds.size() == 0) {
+      App.g.addE(label).from(App.g.V(fromId)).to(App.g.V(toId)).next()
+
+    }
+
   }
 
   static Vertex createEventFileIngestionVtx(FileNLPRequest req, UpdateReq updateReq) {

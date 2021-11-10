@@ -907,6 +907,34 @@ public class PVBasicTest extends AppTest {
 
       assertEquals(404, md2Reply.getStatus());
 
+      md2Request.query.name = "MARIA APARECIDA KEIKO INABA";
+      md2Request.query.docCpf = "06451990876";
+      md2Request.query.email = "mkeiko@lykeslines.com.br";
+      md2Request.settings.limit=1000L;
+      md2Request.settings.start=0L;
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus());
+      assertEquals(0L,md2Reply.total);
+
+      md2Request.query.name = "MARIA APARECIDA KEIKO INABA";
+      md2Request.query.docCpf = "06546543431";
+      md2Request.query.email = "mkeiko@lykeslines.com.br";
+      md2Request.settings.limit=1000L;
+      md2Request.settings.start=0L;
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus());
+      assertEquals(1L,md2Reply.total);
+
+      md2Request.query.name = "MARIA APARECIDA KEIKO INABA";
+      md2Request.query.docCpf = null;
+      md2Request.query.email = "mkeiko@lykeslines.com.br";
+      md2Request.settings.limit=1000L;
+      md2Request.settings.start=0L;
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(409, md2Reply.getStatus(),"Found more than one person with the same name");
 
     } catch (ExecutionException e) {
       e.printStackTrace();

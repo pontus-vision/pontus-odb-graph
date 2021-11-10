@@ -116,9 +116,19 @@ public class Resource {
     }
     try {
       List<Object> ids = (gt.id().toList());
-      if (ids.size() != 1){
-        System.out.println("Found "+ids.size()+" ids matching the request");
+      if (ids.size() == 0){
+        System.out.println("Found 0 ids matching the request");
         return new Md2Reply(Response.Status.NOT_FOUND);
+      }
+      else if (ids.size() > 1){
+        Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
+
+        reply.reqId = req.query.reqId;
+        reply.errorStr = "Found more than one person associated with " +req.query.name+" (docCpf=" +
+            req.query.docCpf+")";
+
+        return reply;
+
       }
       if (req.query.email != null) {
         if (! App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
@@ -126,7 +136,14 @@ public class Resource {
           System.out.println("Not found email " + req.query.email + " associated with " +ids.size()+" (" +
                req.query.name+")");
 
-          return new Md2Reply(Response.Status.NOT_FOUND);
+          Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
+
+          reply.reqId = req.query.reqId;
+          reply.errorStr = "Not found email " + req.query.email + " associated with " +req.query.name+" (docCpf=" +
+              req.query.docCpf+")";
+
+          return reply;
+
 //          throw new HTTPException(404);
         }
       }

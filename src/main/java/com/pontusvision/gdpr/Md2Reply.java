@@ -94,6 +94,8 @@ public class Md2Reply extends Response implements  Serializable   {
 
   Register[] track;
 
+  String errorStr = null;
+
   Status status = Status.OK;
   Response localResp;
   public Md2Reply() {
@@ -104,6 +106,14 @@ public class Md2Reply extends Response implements  Serializable   {
     this.status = status;
     localResp = Response.status(this.status).entity(this).build();
 
+  }
+
+  public String getErrorStr() {
+    return errorStr;
+  }
+
+  public void setErrorStr(String errorStr) {
+    this.errorStr = errorStr;
   }
 
   @Override
