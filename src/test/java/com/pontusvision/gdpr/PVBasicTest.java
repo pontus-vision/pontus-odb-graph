@@ -936,6 +936,23 @@ public class PVBasicTest extends AppTest {
       md2Reply = res.md2Search(md2Request);
       assertEquals(409, md2Reply.getStatus(),"Found more than one person with the same name");
 
+      md2Request.query.name="HUGO SANCHEZ CORREIA";
+      md2Request.query.docCpf="219.594.684-99";
+      md2Request.query.email=null;
+      md2Reply = res.md2Search(md2Request);
+
+      assertEquals(200, md2Reply.getStatus(),"Found one masked CPF");
+      assertEquals(1L,md2Reply.total);
+
+      md2Request.query.name="HUGO SANCHEZ CORREIA";
+      md2Request.query.docCpf="21959468499";
+      md2Request.query.email=null;
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus(),"Found one unmasked CPF");
+      assertEquals(1L,md2Reply.total);
+
+
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);

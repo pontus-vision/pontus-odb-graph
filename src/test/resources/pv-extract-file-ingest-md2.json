@@ -178,6 +178,40 @@
         "06546543431"
       ],
       "cnpj": []
+    },
+    {
+      "address": [],
+      "cred_card": [],
+      "date": [],
+      "email": [],
+      "language": [],
+      "location": [],
+      "misc": [],
+      "money": [],
+      "nationality": [],
+      "org": [],
+      "person": [],
+      "phone": [],
+      "policy_number": [],
+      "postcode": [],
+      "time": [],
+      "fileType": "text/plain",
+      "name": "test-data/aaa.txt",
+      "path": "test-data/aaa.txt",
+      "owner": "Unknown",
+      "created": "2021-11-10T15:24:12.893Z",
+      "lastAccess": "2021-11-10T15:24:21.901Z",
+      "sizeBytes": 26,
+      "categories": [],
+      "metadataController": "",
+      "metadataGDPRStatus": "",
+      "metadataLineage": "test-data/aaa.txt",
+      "pg_currDate": "2021-11-10",
+      "server": "localhost",
+      "cpf": [
+        "219.594.684-99"
+      ],
+      "cnpj": []
     }
   ]
 }

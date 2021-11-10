@@ -264,7 +264,11 @@ class FileNLPRequest implements Serializable {
     if (req.cpf) {
       String[] cpfs = req.cpf
       for (int i = 0; i < cpfs.length; i++) {
-        cpfOptions.push( __.has('Person.Natural.Customer_ID', P.eq(cpfs[i])))
+        String cpf = cpfs[i] != null? cpfs[i].replaceAll("[^0-9]",""): null;
+        if (cpf == null){
+          continue;
+        }
+        cpfOptions.push( __.has('Person.Natural.Customer_ID', P.eq(cpf)))
       }
     }
 
