@@ -15,12 +15,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Type",
-            "val": "Customer Prospect",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Person.Natural.Title",
             "val": "${Title}",
             "mandatoryInSearch": false,
@@ -64,12 +58,6 @@
             "name": "Person.Organisation.Name",
             "val": "${Company_Name_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Type",
-            "val": "Customer Prospect",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -82,12 +70,6 @@
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Customer Prospect",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -115,12 +97,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Phone_Number.Type",
-            "val": "Customer Prospect",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
-          },
-          {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
@@ -145,12 +121,6 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Location.Address.Type",
-            "val": "${Addresstype?.trim()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Location.Address.parser",
             "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": true,
@@ -159,8 +129,7 @@
           {
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -265,7 +234,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Customer Prospect' no SAP/C@P",
+            "val": "Registros da tabela Customer Prospect no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

@@ -15,12 +15,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Type",
-            "val": "SAP/C@P Complaint",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Person.Natural.Title",
             "val": "${Title}",
             "mandatoryInSearch": false,
@@ -36,12 +30,6 @@
             "name": "Person.Organisation.Name",
             "val": "${Company_Name_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Type",
-            "val": "SAP/C@P Complaint",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -54,12 +42,6 @@
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "SAP/C@P Complaint",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -87,12 +69,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Phone_Number.Type",
-            "val": "CAP/S@P Complaint",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
-          },
-          {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
@@ -117,12 +93,6 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Location.Address.Type",
-            "val": "${Addresstype?.trim()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Location.Address.parser",
             "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": true,
@@ -131,34 +101,7 @@
           {
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Contract",
-        "props": [
-          {
-            "name": "Object.Contract.Description",
-            "val": "${Description}.\\nResolvido? = ${Solved}.\\nFinalizado? = ${Closed}.",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Id",
-            "val": "${Campaign_ID}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Status",
-            "val": "${Status}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Type",
-            "val": "SAP/C@P Complaint Contract",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -263,7 +206,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Complaint' no SAP/C@P",
+            "val": "Registros da tabela Complaint no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -305,11 +248,6 @@
         "label": "Uses_Email",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Object.Email_Address"
-      },
-      {
-        "label": "Has_Contract",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Contract"
       },
       {
         "label": "Works",

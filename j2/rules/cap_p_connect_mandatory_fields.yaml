@@ -7,10 +7,6 @@ updatereq:
         - name: Person.Natural.Full_Name
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Natural.Type
-          val: Porsche Connect Mandatory Fields
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Person.Natural.Title
           val: ${Title}
           mandatoryInSearch: False
@@ -23,10 +19,6 @@ updatereq:
         - name: Object.Phone_Number.Raw
           val: ${Mobile_Number}
           mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Porsche Connect Mandatory Fields
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -104,7 +96,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros da tabela 'Porsche Connect Mandatory Fields Report' no SAP/C@P
+          val: Registros da tabela Porsche Connect Mandatory Fields Report no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 

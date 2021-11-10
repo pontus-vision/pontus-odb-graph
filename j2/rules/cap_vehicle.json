@@ -10,12 +10,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Type",
-            "val": "SAP/C@P Vehicle",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Person.Natural.Title",
             "val": "${Title}",
             "mandatoryInSearch": false,
@@ -31,12 +25,6 @@
             "name": "Person.Organisation.Name",
             "val": "${Company_Name_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Type",
-            "val": "SAP/C@P Vehicle",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -49,12 +37,6 @@
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "SAP/C@P Vehicle",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -80,12 +62,6 @@
             "name": "Object.Phone_Number.Raw",
             "val": "${Mobile_Number}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "CAP/S@P Vehicle",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -120,8 +96,7 @@
           {
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -246,7 +221,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Vehicle' no SAP/C@P",
+            "val": "Registros da tabela Vehicle no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

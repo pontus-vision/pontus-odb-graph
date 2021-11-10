@@ -10,10 +10,6 @@ updatereq:
         - name: Person.Natural.Customer_ID
           val: ${ID_number?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
-        - name: Person.Natural.Type
-          val: Data Quality
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Person.Natural.Title
           val: ${Title}
           mandatoryInSearch: False
@@ -54,10 +50,6 @@ updatereq:
         - name: Person.Organisation.Name
           val: ${Company_Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Organisation.Type
-          val: Data Quality
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Object.Phone_Number
       name: telephone
@@ -66,10 +58,6 @@ updatereq:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_no_}
           mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Data Quality
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -87,10 +75,6 @@ updatereq:
         - name: Object.Phone_Number.Raw
           val: ${Mobile_Number}
           mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Data Quality
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -107,18 +91,13 @@ updatereq:
           val: ${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Location.Address.Type
-          val: ${Addresstype?.trim()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Location.Address.parser
           val: ${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location.Address.Post_Code
           val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
     
     - label: Object.Email_Address
       condition: ${E_Mail_Address?.trim()?.length() > 0}
@@ -187,7 +166,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros da tabela 'Data Quality' no SAP/C@P
+          val: Registros da tabela Data Quality no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 

@@ -125,8 +125,7 @@
           {
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -231,7 +230,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Leads' no SAP/C@P",
+            "val": "Registros da tabela Leads no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

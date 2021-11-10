@@ -1,27 +1,10 @@
 package com.pontusvision.gdpr;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.pontusvision.ingestion.Ingestion;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
-import java.io.IOException;
-import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,7 +31,7 @@ public class PVSapCapTest extends AppTest {
 
   @Test
   public void test00001SapCapLeads() throws InterruptedException {
-  // updated to real style data leads.csv
+  // updated to real style data lead.csv
 
     try {
 
@@ -59,7 +42,7 @@ public class PVSapCapTest extends AppTest {
           cleanHdr,
           "check clean headers is OK");
 
-      csvTestUtil("sap-cap/leads.csv", "cap_leads");
+      csvTestUtil("sap-cap/lead.csv", "cap_leads");
 
       String personNaturalEdgesCount =
            App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARCEL MOLICA ARAÚJO'))" +
@@ -212,10 +195,10 @@ public class PVSapCapTest extends AppTest {
                       ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
       assertEquals("ARMANDO ZACHARIA", getResponsibleOwner, "Armando Zacharia is Vinicius' client");
 
-      String getOwnerType =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('CAROL SANTANA'))" +
-                      ".properties('Person.Natural.Type').value().next().toString()").get().toString();
-      assertEquals("Porsche Ownership Change", getOwnerType, "Person.Natural (owner) Type");
+//      String getOwnerType =
+//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('CAROL SANTANA'))" +
+//                      ".properties('Person.Natural.Type').value().next().toString()").get().toString();
+//      assertEquals("Porsche Ownership Change", getOwnerType, "Person.Natural (owner) Type");
 
 
     } catch (ExecutionException e) {

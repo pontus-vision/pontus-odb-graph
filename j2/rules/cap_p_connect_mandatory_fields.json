@@ -10,12 +10,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Type",
-            "val": "Porsche Connect Mandatory Fields",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Person.Natural.Title",
             "val": "${Title}",
             "mandatoryInSearch": false,
@@ -32,12 +26,6 @@
             "name": "Object.Phone_Number.Raw",
             "val": "${Mobile_Number}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Porsche Connect Mandatory Fields",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -155,7 +143,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Porsche Connect Mandatory Fields Report' no SAP/C@P",
+            "val": "Registros da tabela Porsche Connect Mandatory Fields Report no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

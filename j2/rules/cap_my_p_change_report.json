@@ -13,12 +13,6 @@
             "name": "Person.Natural.Customer_ID",
             "val": "${Porsche_ID?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "My Porsche Change Report",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -112,7 +106,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'My Porsche Change Report' no SAP/C@P",
+            "val": "Registros da tabela My Porsche Change Report no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
