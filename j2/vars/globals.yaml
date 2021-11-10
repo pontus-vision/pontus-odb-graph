@@ -709,6 +709,58 @@ schema:
           dataType: Date
 
 
+    - name: "Object.Risk_Data_Source"
+      partition: false
+      useStatic: false
+      props:
+        - name: Risk_Id
+        - name: Description
+        - name: Probability
+        - name: Impact
+        - name: Residual_Probability
+        - name: Residual_Impact
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Intrusion_On_Privacy
+        - name: Probability_Risk_Of_Reputational_Damage
+        - name: Probability_Risk_To_Corporation
+        - name: Probability_Risk_To_Individuals
+        - name: Impact_Risk_Of_Reputational_Damage
+        - name: Impact_Risk_To_Corporation
+        - name: Impact_Risk_To_Individuals
+        - name: Start_Date
+          dataType: Date
+        - name: Update_Date
+          dataType: Date
+
+
+    - name: "Object.Risk_Mitigation_Data_Source"
+      partition: false
+      useStatic: false
+      props:
+        - name: Mitigation_Id
+        - name: Description
+        - name: Probability_Reduction
+        - name: Impact_Reduction
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+        - name: Intrusion_On_Privacy
+        - name: Probability_Risk_Of_Reputational_Damage
+        - name: Probability_Risk_To_Corporation
+        - name: Probability_Risk_To_Individuals
+        - name: Impact_Risk_Of_Reputational_Damage
+        - name: Impact_Risk_To_Corporation
+        - name: Impact_Risk_To_Individuals
+        - name: Start_Date
+          dataType: Date
+        - name: Update_Date
+          dataType: Date
+
+
     - name: "Object.Privacy_Notice"
       partition: false
       useStatic: false
@@ -981,6 +1033,7 @@ schema:
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice
+  - name: Has_Risk
   - name: Has_Salary
   - name: Has_Security_Group
   - name: Has_Security_Group_Connectivity
@@ -1005,6 +1058,7 @@ schema:
   - name: Is_Responsible
   - name: Lives
   - name: Made_SAR_Request
+  - name: Mitigates_Risk
   - name: Pays_Salary
   - name: Reports_To
   - name: Runs_On

@@ -1473,6 +1473,128 @@ propertyKeys:
   - name: Object.Privacy_Impact_Assessment.Start_Date
     dataType: Date
     cardinality: SINGLE
+  - name: Metadata.Type.Object.Risk_Data_Source
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Risk_Data_Source.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Risk_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Probability
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Impact
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Residual_Probability
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Residual_Impact
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Intrusion_On_Privacy
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Probability_Risk_Of_Reputational_Damage
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Probability_Risk_To_Corporation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Probability_Risk_To_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Impact_Risk_Of_Reputational_Damage
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Impact_Risk_To_Corporation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Impact_Risk_To_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Start_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Update_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Risk_Mitigation_Data_Source
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Risk_Mitigation_Data_Source.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Mitigation_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Probability_Reduction
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Impact_Reduction
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Intrusion_On_Privacy
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Probability_Risk_Of_Reputational_Damage
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Probability_Risk_To_Corporation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Probability_Risk_To_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Impact_Risk_Of_Reputational_Damage
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Corporation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Start_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Update_Date
+    dataType: Date
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Privacy_Notice
     dataType: String
     cardinality: SINGLE
@@ -1959,6 +2081,12 @@ vertexLabels:
   - name: Object.Privacy_Impact_Assessment
     partition: False
     useStatic: False
+  - name: Object.Risk_Data_Source
+    partition: False
+    useStatic: False
+  - name: Object.Risk_Mitigation_Data_Source
+    partition: False
+    useStatic: False
   - name: Object.Privacy_Notice
     partition: False
     useStatic: False
@@ -2125,6 +2253,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Risk
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Salary
     multiplicity: MULTI
     unidirected: False
@@ -2210,6 +2342,10 @@ edgeLabels:
     unidirected: False
 
   - name: Made_SAR_Request
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Mitigates_Risk
     multiplicity: MULTI
     unidirected: False
 
@@ -3085,6 +3221,64 @@ vertexIndexes:
       - Object.Privacy_Impact_Assessment.Risk_To_Corporation
       - Object.Privacy_Impact_Assessment.Risk_To_Individuals
       - Object.Privacy_Impact_Assessment.Start_Date
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Risk_Data_Source.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Risk_Data_Source
+      - Object.Risk_Data_Source.Risk_Id
+      - Object.Risk_Data_Source.Description
+      - Object.Risk_Data_Source.Probability
+      - Object.Risk_Data_Source.Impact
+      - Object.Risk_Data_Source.Residual_Probability
+      - Object.Risk_Data_Source.Residual_Impact
+      - Object.Risk_Data_Source.Form_Id
+      - Object.Risk_Data_Source.Form_Owner_Id
+      - Object.Risk_Data_Source.Form_Submission_Id
+      - Object.Risk_Data_Source.Form_Submission_Owner_Id
+      - Object.Risk_Data_Source.Intrusion_On_Privacy
+      - Object.Risk_Data_Source.Probability_Risk_Of_Reputational_Damage
+      - Object.Risk_Data_Source.Probability_Risk_To_Corporation
+      - Object.Risk_Data_Source.Probability_Risk_To_Individuals
+      - Object.Risk_Data_Source.Impact_Risk_Of_Reputational_Damage
+      - Object.Risk_Data_Source.Impact_Risk_To_Corporation
+      - Object.Risk_Data_Source.Impact_Risk_To_Individuals
+      - Object.Risk_Data_Source.Start_Date
+      - Object.Risk_Data_Source.Update_Date
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Risk_Mitigation_Data_Source.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Risk_Mitigation_Data_Source
+      - Object.Risk_Mitigation_Data_Source.Mitigation_Id
+      - Object.Risk_Mitigation_Data_Source.Description
+      - Object.Risk_Mitigation_Data_Source.Probability_Reduction
+      - Object.Risk_Mitigation_Data_Source.Impact_Reduction
+      - Object.Risk_Mitigation_Data_Source.Form_Id
+      - Object.Risk_Mitigation_Data_Source.Form_Owner_Id
+      - Object.Risk_Mitigation_Data_Source.Form_Submission_Id
+      - Object.Risk_Mitigation_Data_Source.Form_Submission_Owner_Id
+      - Object.Risk_Mitigation_Data_Source.Intrusion_On_Privacy
+      - Object.Risk_Mitigation_Data_Source.Probability_Risk_Of_Reputational_Damage
+      - Object.Risk_Mitigation_Data_Source.Probability_Risk_To_Corporation
+      - Object.Risk_Mitigation_Data_Source.Probability_Risk_To_Individuals
+      - Object.Risk_Mitigation_Data_Source.Impact_Risk_Of_Reputational_Damage
+      - Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Corporation
+      - Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Individuals
+      - Object.Risk_Mitigation_Data_Source.Start_Date
+      - Object.Risk_Mitigation_Data_Source.Update_Date
     propertyKeysMappings:
     
       {}

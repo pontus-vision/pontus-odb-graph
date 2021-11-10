@@ -120,14 +120,18 @@ try {
 
     System.out.println("results after loading conf/gdpr-schema.json: ${retVal}\n\n\n\n\n")
     if (!App.g) {
-        App.g = graph.traversal();
+        App.g = graph.traversal()
+    }
+    if (!App.graph) {
+        App.graph = graph
     }
 
     retVal = Matcher.loadDataMappingFiles(graph, '/orientdb/j2/rules', 'j2/rules/')
     System.out.println("results after loadDataMappingFiles: ${retVal}\n\n\n\n\n")
 
-
     gdpr.createNotificationTemplates()
+
+    gdpr.createNotificationTemplatesFromFiles(graph,'/orientdb/conf/reports', 'conf/reports' )
     gdpr.addLawfulBasisAndPrivacyNotices(graph, App.g)
 
 } catch (e) {

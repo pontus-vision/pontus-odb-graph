@@ -364,7 +364,6 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
       emailVtx.props.push(vtxProp)
     }
 
-
     createEmailNLPVertexProp("${emailVtxLabel}.NLP_Address", req.address, emailVtx)
     createEmailNLPVertexProp("${emailVtxLabel}.NLP_Cred_card", req.cred_card, emailVtx)
     createEmailNLPVertexProp("${emailVtxLabel}.NLP_Email", req.email, emailVtx)
