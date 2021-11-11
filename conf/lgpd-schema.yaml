@@ -86,6 +86,15 @@ propertyKeys:
   - name: Event.Consent.Type
     dataType: String
     cardinality: SINGLE
+  - name: Event.Consent.Data_Origin
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Created_By
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Changed_By
+    dataType: String
+    cardinality: SINGLE
   - name: Event.Consent.Date
     dataType: Date
     cardinality: SINGLE
@@ -2486,6 +2495,9 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata.Type.Event.Consent
+      - Event.Consent.Data_Origin
+      - Event.Consent.Created_By
+      - Event.Consent.Changed_By
       - Event.Consent.Date
       - Event.Consent.Form_Id
       - Event.Consent.Form_Owner_Id

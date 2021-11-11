@@ -22,7 +22,7 @@
           },
           {
             "name": "Person.Natural.Date_Of_Birth",
-            "val": "${Date_of_Birth?.trim()?:'01/01/1666'}",
+            "val": "${Date_of_Birth?.trim()?.replaceAll('\\\\.', '/')?:'01/01/1666'}",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
           },

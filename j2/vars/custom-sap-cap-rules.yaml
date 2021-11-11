@@ -186,7 +186,7 @@ rules:
             val: "${Title}"
             excludeFromSearch: true
           Date_Of_Birth:
-            val: "${Date_of_Birth?.trim()?:'01/01/1666'}"
+            val: "${Date_of_Birth?.trim()?.replaceAll('\\\\.', '/')?:'01/01/1666'}"
             type: "java.util.Date"
           Nationality:
             val: "${Nationality?.trim()?.toUpperCase()}"
@@ -323,6 +323,60 @@ rules:
             val: "Registros da tabela Customer Prospect no SAP/C@P"
             excludeFromSearch: true
 
+
+      - label: Event.Consent
+        props:
+          Created_By: "${Created_By}"
+          Changed_By: "${Changed_by}"
+          Metadata.Create_Date:
+            val: "${Created_on}"
+            type: "java.util.Date"
+          Metadata.Update_Date:
+            val: "${Changed_on}"
+            type: "java.util.Date"
+
+#      TODO => Object.Privacy_Notice
+#      Terms & Conditions V; Terms & Conditions a
+#      Many Event.Consent to 1 Object.Privacy_Notice || many/one to many/one ?!?!
+
+      - label: Object.Privacy_Notice
+        condition: "${Mail_Consent == 'Y'}"
+        name: mail_consent
+        props:
+          Description: "Mail Consent"
+      #          Info_Collected: "????"
+
+      - label: Object.Privacy_Notice
+        condition: "${E_Mail_Consent == 'Y'}"
+        name: e_mail_consent
+        props:
+          Description: "E-mail Consent"
+
+
+      - label: Object.Privacy_Notice
+        condition: "${Telephone_Consent == 'Y'}"
+        name: telefone_consent
+        props:
+          Description: "Telephone Consent"
+
+      - label: Object.Privacy_Notice
+        condition: "${Cust____Pros__Care == 'Y'}"
+        name: cust_pros_consent
+        props:
+          Description: "Cust. & Pros. Care"
+
+      - label: Object.Privacy_Notice
+        condition: "${Fax_SMS_Consent == 'Y'}"
+        name: fax_sms_consent
+        props:
+          Description: "Fax/SMS Consent"
+
+      - label: Object.Privacy_Notice
+        condition: "${Social_Media_Consent == 'Y'}"
+        name: social_media_consent
+        props:
+          Description: "Social Media Consent"
+
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Object.Data_Source"
@@ -363,6 +417,43 @@ rules:
       - label: "Has_Id_Card"
         fromVertexLabel: "Person.Natural"
         toVertexName: "cpf"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Consent"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Consent"
+
+      - label: "Has_Consent"
+        fromVertexName: "social_media_consent"
+        toVertexLabel: "Event.Consent"
+
+      - label: "Has_Consent"
+        fromVertexName: "fax_sms_consent"
+        toVertexLabel: "Event.Consent"
+
+      - label: "Has_Consent"
+        fromVertexName: "cust_pros_consent"
+        toVertexLabel: "Event.Consent"
+
+      - label: "Has_Consent"
+        fromVertexName: "telefone_consent"
+        toVertexLabel: "Event.Consent"
+
+      - label: "Has_Consent"
+        fromVertexName: "e_mail_consent"
+        toVertexLabel: "Event.Consent"
+
+      - label: "Has_Consent"
+        fromVertexName: "mail_consent"
+        toVertexLabel: "Event.Consent"
+
+#      - label: "Has_Data_Procedures"
+#        fromVertexLabel: "Object.Data_Procedures"
+#        toVertexLabel: "Object.Privacy_Notice"
+
 
 #  cap_monthly_cockpits_and_reports:
 #    vertices:
@@ -1540,7 +1631,7 @@ rules:
             val: "${Title}"
             excludeFromSearch: true
           Date_Of_Birth:
-            val: "${Date_of_Birth?.trim()?:'01/01/1666'}"
+            val: "${Date_of_Birth?.trim()?.replaceAll('\\\\.', '/')?:'01/01/1666'}"
             type: "java.util.Date"
           Nationality:
             val: "${Nationality?.trim()?.toUpperCase()}"

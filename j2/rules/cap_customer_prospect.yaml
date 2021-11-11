@@ -15,7 +15,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Date_Of_Birth
-          val: ${Date_of_Birth?.trim()?:'01/01/1666'}
+          val: ${Date_of_Birth?.trim()?.replaceAll('\\.', '/')?:'01/01/1666'}
           mandatoryInSearch: True
           type: "java.util.Date"
         - name: Person.Natural.Nationality
@@ -161,6 +161,71 @@ updatereq:
           val: Registros da tabela Customer Prospect no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
+    
+    - label: Event.Consent
+      props:
+        - name: Event.Consent.Created_By
+          val: ${Created_By}
+          mandatoryInSearch: True
+        - name: Event.Consent.Changed_By
+          val: ${Changed_by}
+          mandatoryInSearch: True
+        - name: Event.Consent.Metadata.Create_Date
+          val: ${Created_on}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event.Consent.Metadata.Update_Date
+          val: ${Changed_on}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+    
+    - label: Object.Privacy_Notice
+      name: mail_consent
+      condition: ${Mail_Consent == 'Y'}
+      props:
+        - name: Object.Privacy_Notice.Description
+          val: Mail Consent
+          mandatoryInSearch: True
+    
+    - label: Object.Privacy_Notice
+      name: e_mail_consent
+      condition: ${E_Mail_Consent == 'Y'}
+      props:
+        - name: Object.Privacy_Notice.Description
+          val: E-mail Consent
+          mandatoryInSearch: True
+    
+    - label: Object.Privacy_Notice
+      name: telefone_consent
+      condition: ${Telephone_Consent == 'Y'}
+      props:
+        - name: Object.Privacy_Notice.Description
+          val: Telephone Consent
+          mandatoryInSearch: True
+    
+    - label: Object.Privacy_Notice
+      name: cust_pros_consent
+      condition: ${Cust____Pros__Care == 'Y'}
+      props:
+        - name: Object.Privacy_Notice.Description
+          val: Cust. & Pros. Care
+          mandatoryInSearch: True
+    
+    - label: Object.Privacy_Notice
+      name: fax_sms_consent
+      condition: ${Fax_SMS_Consent == 'Y'}
+      props:
+        - name: Object.Privacy_Notice.Description
+          val: Fax/SMS Consent
+          mandatoryInSearch: True
+    
+    - label: Object.Privacy_Notice
+      name: social_media_consent
+      condition: ${Social_Media_Consent == 'Y'}
+      props:
+        - name: Object.Privacy_Notice.Description
+          val: Social Media Consent
+          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event
@@ -190,4 +255,28 @@ updatereq:
   - label: Has_Id_Card
     fromVertexLabel: Person.Natural
     toVertexName: cpf
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.Consent
+    toVertexLabel: Event.Ingestion
+  - label: Has_Consent
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Event.Consent
+  - label: Has_Consent
+    fromVertexName: social_media_consent
+    toVertexLabel: Event.Consent
+  - label: Has_Consent
+    fromVertexName: fax_sms_consent
+    toVertexLabel: Event.Consent
+  - label: Has_Consent
+    fromVertexName: cust_pros_consent
+    toVertexLabel: Event.Consent
+  - label: Has_Consent
+    fromVertexName: telefone_consent
+    toVertexLabel: Event.Consent
+  - label: Has_Consent
+    fromVertexName: e_mail_consent
+    toVertexLabel: Event.Consent
+  - label: Has_Consent
+    fromVertexName: mail_consent
+    toVertexLabel: Event.Consent
 
