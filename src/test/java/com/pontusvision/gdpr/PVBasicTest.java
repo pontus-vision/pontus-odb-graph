@@ -950,6 +950,16 @@ public class PVBasicTest extends AppTest {
       assertEquals(200, md2Reply.getStatus(),"Found one unmasked CPF");
       assertEquals(1L,md2Reply.total);
 
+      md2Request.settings.limit = 200L;
+      md2Request.settings.start = 0L;
+      md2Request.query.name = "RAIMUNDO CESAR FERREIRA DA SILVA";
+      md2Request.query.email = null;
+      md2Request.query.docCpf = "05596491004";
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus(),"Found two masked CPF entries in a PDF file (email + fs)");
+      assertEquals(2L,md2Reply.total, "Found two masked CPF entries in a PDF file (email + fs)");
+
 
 
     } catch (ExecutionException e) {
