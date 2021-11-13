@@ -185,7 +185,7 @@ public class PVBasicTest extends AppTest {
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
       "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 7",
-      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 9"
+      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 7"
   })
   public void test00004SharepointDataSources(String jsonFile, String ruleName, String dataSourceName,
                                              String expectedDataPolicyCount) throws InterruptedException {

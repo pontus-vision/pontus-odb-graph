@@ -75,21 +75,21 @@ public class PVSharepointRiskTest extends AppTest {
       assertEquals("14",numRiskMitigations, "14 Risks");
 
       String numDataSourcesR02 =
-          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).out('Has_Risk')\n" +
+          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).in('Has_Risk')\n" +
               ".count().next().toString()").get().toString();
 
 
       assertEquals("5",numDataSourcesR02, "5 Data sources associated with R02");
 
       String numMitigationsR02 =
-          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).out('Mitigates_Risk')\n" +
+          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).in('Mitigates_Risk')\n" +
               ".count().next().toString()").get().toString();
 
 
       assertEquals("1",numMitigationsR02, "1 Risk Mitigation associated with R02");
 
       String mitigationsR02 =
-          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).out('Mitigates_Risk')\n" +
+          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).in('Mitigates_Risk')\n" +
               ".values('Object.Risk_Mitigation_Data_Source.Mitigation_Id').next().toString()").get().toString();
 
 

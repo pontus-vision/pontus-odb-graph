@@ -652,7 +652,7 @@ rules:
           Mitigation_Id:
             val: "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
             mandatoryInSearch: true
             processAll: true
 
