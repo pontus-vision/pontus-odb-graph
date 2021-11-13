@@ -99,6 +99,12 @@ public class PVSapCapTest extends AppTest {
               ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
       assertEquals("fernanda_castelo@icloud.com", gettingEmailAddress, "E-mail de Fernanda Castelo");
 
+
+      String eventConsentCreatedBy =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
+                      ".properties('Event.Consent.Created_By').value().next().toString()").get().toString();
+      assertEquals("DBR0200WK", eventConsentCreatedBy, "Porsche Employee code");
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);

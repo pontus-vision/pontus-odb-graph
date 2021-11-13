@@ -181,7 +181,7 @@ updatereq:
     
     - label: Object.Privacy_Notice
       name: mail_consent
-      condition: ${Mail_Consent == 'Y'}
+      condition: ${Mail_Consent.equals('Y')}
       props:
         - name: Object.Privacy_Notice.Description
           val: Mail Consent
@@ -189,7 +189,7 @@ updatereq:
     
     - label: Object.Privacy_Notice
       name: e_mail_consent
-      condition: ${E_Mail_Consent == 'Y'}
+      condition: ${E_Mail_Consent.equals('Y')}
       props:
         - name: Object.Privacy_Notice.Description
           val: E-mail Consent
@@ -197,7 +197,7 @@ updatereq:
     
     - label: Object.Privacy_Notice
       name: telefone_consent
-      condition: ${Telephone_Consent == 'Y'}
+      condition: ${Telephone_Consent.equals('Y')}
       props:
         - name: Object.Privacy_Notice.Description
           val: Telephone Consent
@@ -205,7 +205,7 @@ updatereq:
     
     - label: Object.Privacy_Notice
       name: cust_pros_consent
-      condition: ${Cust____Pros__Care == 'Y'}
+      condition: ${Cust____Pros__Care.equals('Y')}
       props:
         - name: Object.Privacy_Notice.Description
           val: Cust. & Pros. Care
@@ -213,7 +213,7 @@ updatereq:
     
     - label: Object.Privacy_Notice
       name: fax_sms_consent
-      condition: ${Fax_SMS_Consent == 'Y'}
+      condition: ${Fax_SMS_Consent.equals('Y')}
       props:
         - name: Object.Privacy_Notice.Description
           val: Fax/SMS Consent
@@ -221,7 +221,7 @@ updatereq:
     
     - label: Object.Privacy_Notice
       name: social_media_consent
-      condition: ${Social_Media_Consent == 'Y'}
+      condition: ${Social_Media_Consent.equals('Y')}
       props:
         - name: Object.Privacy_Notice.Description
           val: Social Media Consent

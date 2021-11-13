@@ -340,39 +340,39 @@ rules:
 #      Many Event.Consent to 1 Object.Privacy_Notice || many/one to many/one ?!?!
 
       - label: Object.Privacy_Notice
-        condition: "${Mail_Consent == 'Y'}"
+        condition: "${Mail_Consent.equals('Y')}"
         name: mail_consent
         props:
           Description: "Mail Consent"
       #          Info_Collected: "????"
 
       - label: Object.Privacy_Notice
-        condition: "${E_Mail_Consent == 'Y'}"
+        condition: "${E_Mail_Consent.equals('Y')}"
         name: e_mail_consent
         props:
           Description: "E-mail Consent"
 
 
       - label: Object.Privacy_Notice
-        condition: "${Telephone_Consent == 'Y'}"
+        condition: "${Telephone_Consent.equals('Y')}"
         name: telefone_consent
         props:
           Description: "Telephone Consent"
 
       - label: Object.Privacy_Notice
-        condition: "${Cust____Pros__Care == 'Y'}"
+        condition: "${Cust____Pros__Care.equals('Y')}"
         name: cust_pros_consent
         props:
           Description: "Cust. & Pros. Care"
 
       - label: Object.Privacy_Notice
-        condition: "${Fax_SMS_Consent == 'Y'}"
+        condition: "${Fax_SMS_Consent.equals('Y')}"
         name: fax_sms_consent
         props:
           Description: "Fax/SMS Consent"
 
       - label: Object.Privacy_Notice
-        condition: "${Social_Media_Consent == 'Y'}"
+        condition: "${Social_Media_Consent.equals('Y')}"
         name: social_media_consent
         props:
           Description: "Social Media Consent"
