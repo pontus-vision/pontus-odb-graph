@@ -10,17 +10,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${ID}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "SAP/C@P Activity",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Person.Natural.Title",
             "val": "${Title}",
             "mandatoryInSearch": false,
@@ -36,12 +25,6 @@
             "name": "Person.Organisation.Name",
             "val": "${Company_Name_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Type",
-            "val": "SAP/C@P Activity",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -53,13 +36,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "SAP/C@P Activity",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -84,13 +62,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Mobile_Number}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "CAP/S@P Activity",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -113,44 +86,19 @@
           {
             "name": "Location.Address.Full_Address",
             "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Location.Address.Type",
-            "val": "${Addresstype?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Contract",
-        "props": [
-          {
-            "name": "Object.Contract.Date",
-            "val": "${Created_On}",
-            "mandatoryInSearch": true
           },
           {
-            "name": "Object.Contract.Description",
-            "val": "${Description}",
-            "mandatoryInSearch": true
+            "name": "Location.Address.parser",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
           },
           {
-            "name": "Object.Contract.Id",
-            "val": "${ID}",
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Status",
-            "val": "${User_Status}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Contract.Type",
-            "val": "SAP/C@P Activity Contract",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -255,7 +203,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Activity' no SAP/C@P",
+            "val": "Registros da tabela Activity no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -297,11 +245,6 @@
         "label": "Uses_Email",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Object.Email_Address"
-      },
-      {
-        "label": "Has_Contract",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Contract"
       },
       {
         "label": "Works",

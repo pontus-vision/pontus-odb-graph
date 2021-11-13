@@ -2,28 +2,37 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Person.Natural",
-        "name": "owner",
+        "label": "Object.Data_Source",
+        "name": "sharepoint",
         "props": [
           {
-            "name": "Person.Natural.Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
+            "name": "Object.Data_Source.Name",
+            "val": "sharepoint/risk-mitigations",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Type",
+            "val": "sharepoint/risk-mitigations",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Source.Description",
+            "val": "Risk Mitigations",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Person.Natural",
-        "name": "responsible_dealer",
+        "label": "Object.Risk_Mitigation_Data_Source",
         "props": [
           {
-            "name": "Person.Natural.Full_Name",
-            "val": "${Responsible_Dealer?.trim()?.toUpperCase()}",
+            "name": "Object.Risk_Mitigation_Data_Source.Mitigation_Id",
+            "val": "${Title}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
-            "val": "${Name_1?.trim()?.toUpperCase()}",
+            "name": "Object.Risk_Mitigation_Data_Source.Description",
+            "val": "${Description}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -34,7 +43,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sap/c@p Porsche Ownership Change",
+            "val": "risk-mitigations",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -70,23 +79,6 @@
         "label": "Event.Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Type",
-            "val": "sap/c@p Porsche Ownership Change",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Event.Group_Ingestion.Metadata_Start_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
@@ -99,29 +91,21 @@
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Data_Source",
-        "props": [
-          {
-            "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Porsche Ownership Change",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Porsche Ownership Change",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "name": "Event.Group_Ingestion.Type",
+            "val": "sharepoint/risk-mitigations",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Porsche Ownership Change no SAP/C@P",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
           }
         ]
       }
@@ -129,7 +113,7 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
+        "fromVertexName": "sharepoint",
         "toVertexLabel": "Event.Group_Ingestion"
       },
       {
@@ -139,13 +123,8 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "owner",
-        "toVertexLabel": "Event.Ingestion"
-      },
-      {
-        "label": "Is_Responsible",
-        "fromVertexName": "responsible_dealer",
-        "toVertexName": "owner"
+        "fromVertexLabel": "Event.Ingestion",
+        "toVertexLabel": "Object.Risk_Mitigation_Data_Source"
       }
     ]
   }

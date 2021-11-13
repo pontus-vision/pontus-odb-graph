@@ -1,4 +1,9 @@
 package com.pontusvision.graphutils
+
+import com.orientechnologies.orient.core.id.ORecordId
+import com.orientechnologies.orient.core.metadata.schema.OClass
+import com.orientechnologies.orient.core.metadata.schema.OProperty
+
 // Long count = App.g.V()
 //   .has("Object.Contract.Description", eq("This is a Data Sharing Contract"))
 //   .count()
@@ -12,15 +17,12 @@ package com.pontusvision.graphutils
 
 // res
 
-import com.orientechnologies.orient.core.metadata.schema.OClass
-import com.orientechnologies.orient.core.metadata.schema.OProperty
 import com.orientechnologies.orient.core.metadata.schema.OType
 import com.pontusvision.gdpr.*
 import com.pontusvision.utils.LocationAddress
 import groovy.json.JsonSlurper
 import org.apache.commons.math3.distribution.EnumeratedDistribution
 import org.apache.commons.math3.util.Pair
-import org.apache.tinkerpop.gremlin.orientdb.OrientGraph
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet
 import org.apache.tinkerpop.gremlin.process.traversal.Order
@@ -2637,6 +2639,87 @@ the end of the process.
 
   }
 
+  static String upsertNotificationTemplate(String templatePOLEType, String templateName, String reportTextBase64) {
+    String templateId = new StringBuffer(templatePOLEType).append("/").append(templateName).toString()
+
+    def trans = App.graph.tx()
+    try {
+      if (!trans.isOpen()) {
+        trans.open()
+      }
+
+      GraphTraversal<Vertex, Vertex> trav = App.g.V()
+              .has("Object.Notification_Templates.Id", P.eq(templateId))
+              .has("Object.Notification_Templates.Types", P.eq(templatePOLEType))
+              .has("Object.Notification_Templates.Label", P.eq(templateName)).id()
+
+      if (trav.hasNext()) {
+        String id = trav.next().toString()
+        App.g.V(new ORecordId(id))
+                .property("Object.Notification_Templates.Text", reportTextBase64).next()
+      } else {
+        App.g.addV("Object.Notification_Templates")
+                .property("Metadata.Type", "Object.Notification_Templates")
+                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
+                .property("Object.Notification_Templates.Id", templateId)
+                .property("Object.Notification_Templates.Text", reportTextBase64)
+                .property("Object.Notification_Templates.Types", templatePOLEType)
+                .property("Object.Notification_Templates.Label", templateName)
+                .id().next().toString()
+      }
+      trans.commit()
+    }
+    catch (Throwable t) {
+      trans.rollback()
+      t.printStackTrace()
+      templateId = null
+    }
+    finally {
+      trans.close()
+    }
+    return templateId
+
+  }
+
+
+  static def createNotificationTemplatesFromFiles(OrientStandardGraph graph, String... dirs) {
+
+    StringBuffer sb = new StringBuffer()
+
+
+    def jsonSuffix = ".html"
+    for (d in dirs) {
+      sb.append("\nLoading report templates from folder ${d}")
+      def jsonDir = new File(d)
+      if (jsonDir.exists()) {
+        jsonDir.traverse {
+
+          String fileName = it.name
+
+          if (fileName.endsWith(jsonSuffix)) {
+
+            String[] fileParts = fileName.split("\\.")
+
+            String templatePOLEType = fileParts[0] + '.' + fileParts[1]
+            String templateName = fileParts[2]
+
+            System.out.println("\nLoading template ${templateName} for POLE Type ${templatePOLEType}")
+
+            def templateStr = it.text
+
+            upsertNotificationTemplate(templatePOLEType, templateName,
+                    templateStr.getBytes().encodeBase64().toString()
+            )
+            System.out.println("\nUpsert template ${templateName} for POLE Type ${templatePOLEType}")
+
+          }
+        }
+      }
+    }
+
+    return sb.toString()
+  }
+
 
   static def createNotificationTemplates() {
 //  Transaction trans = graph.tx()
@@ -2819,60 +2902,60 @@ the end of the process.
                 .property("Object.Notification_Templates.Id", "DATA BREACH PERSON TEMPLATE")
                 .property("Object.Notification_Templates.Text", (
                         "<div style='padding: 10px; background: white; color: black;'>\n" +
-                        "<hr/>\n" +
-                        "\n" +
-                        "<h1> Summary of Data Breach Impact </h1>\n" +
-                        "<hr/>\n" +
-                        "  People: {{ impacted_people | length }}<br/>\n" +
-                        "  Data Sources: {{ impacted_data_sources | length }}<br/>\n" +
-                        "  Servers : {{ impacted_servers | length }}<br/>\n" +
-                        "\n" +
-                        "<hr/>\n" +
-                        "<hr/>\n" +
-                        "\n" +
-                        "\n" +
-                        "{% if impacted_people[0] is defined %}\n" +
-                        "  <h2> List of {{ impacted_people | length }} People impacted </h2>\n" +
-                        "  <table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Date Of Birth</th></tr>\n" +
-                        "\n" +
-                        " {% for mainkey in impacted_people %}\n" +
-                        "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (mainkey['Person_Natural_Full_Name'] , mainkey['Person_Natural_Date_Of_Birth'] )}}\n" +
-                        "  {% endfor %}\n" +
-                        "    {{ \"</table>\" }}\n" +
-                        "\n" +
-                        "{% else %}\n" +
-                        "  <h2> No people impacted </h2>\n" +
-                        "{% endif %}\n" +
-                        "\n" +
-                        "\n" +
-                        "{% if impacted_data_sources[0] is defined %}\n" +
-                        "  <h2> List of {{ impacted_data_sources | length }} Data Sources impacted </h2>\n" +
-                        "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Update Date</th></tr>\" }}\n" +
-                        "\n" +
-                        " {% for mainkey in impacted_data_sources %}\n" +
-                        "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (mainkey['Object_Data_Source_Name'] , mainkey['Object_Data_Source_Update_Date'] )}}\n" +
-                        "  {% endfor %}\n" +
-                        "    {{ \"</table>\" }}\n" +
-                        "\n" +
-                        "{% else %}\n" +
-                        "  <h2> No data sources impacted </h2>\n" +
-                        "{% endif %}\n" +
-                        "    \n" +
-                        "{% if impacted_servers[0] is defined %}\n" +
-                        "  <h2> List of {{ impacted_servers | length }} Servers impacted </h2>\n" +
-                        "\n" +
-                        " {% for mainkey in impacted_servers %}\n" +
-                        "  <h3>{{ mainkey.Metadata_Type |replace('.',' ')|replace('_',' ') }}</h3>\n" +
-                        "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Value</th></tr>\" }}\n" +
-                        "  {% for key, value in mainkey.items() %}\n" +
-                        "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (key , value )}}\n" +
-                        "  {% endfor %}\n" +
-                        "  {{ \"</table>\" }}\n" +
-                        "  {% endfor %}\n" +
-                        "{% else %}\n" +
-                        "  <h2> No Servers impacted </h2>\n" +
-                        "{% endif %}    \n" +
-                        "</div>").bytes.encodeBase64().toString())
+                                "<hr/>\n" +
+                                "\n" +
+                                "<h1> Summary of Data Breach Impact </h1>\n" +
+                                "<hr/>\n" +
+                                "  People: {{ impacted_people | length }}<br/>\n" +
+                                "  Data Sources: {{ impacted_data_sources | length }}<br/>\n" +
+                                "  Servers : {{ impacted_servers | length }}<br/>\n" +
+                                "\n" +
+                                "<hr/>\n" +
+                                "<hr/>\n" +
+                                "\n" +
+                                "\n" +
+                                "{% if impacted_people[0] is defined %}\n" +
+                                "  <h2> List of {{ impacted_people | length }} People impacted </h2>\n" +
+                                "  <table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Date Of Birth</th></tr>\n" +
+                                "\n" +
+                                " {% for mainkey in impacted_people %}\n" +
+                                "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (mainkey['Person_Natural_Full_Name'] , mainkey['Person_Natural_Date_Of_Birth'] )}}\n" +
+                                "  {% endfor %}\n" +
+                                "    {{ \"</table>\" }}\n" +
+                                "\n" +
+                                "{% else %}\n" +
+                                "  <h2> No people impacted </h2>\n" +
+                                "{% endif %}\n" +
+                                "\n" +
+                                "\n" +
+                                "{% if impacted_data_sources[0] is defined %}\n" +
+                                "  <h2> List of {{ impacted_data_sources | length }} Data Sources impacted </h2>\n" +
+                                "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Update Date</th></tr>\" }}\n" +
+                                "\n" +
+                                " {% for mainkey in impacted_data_sources %}\n" +
+                                "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (mainkey['Object_Data_Source_Name'] , mainkey['Object_Data_Source_Update_Date'] )}}\n" +
+                                "  {% endfor %}\n" +
+                                "    {{ \"</table>\" }}\n" +
+                                "\n" +
+                                "{% else %}\n" +
+                                "  <h2> No data sources impacted </h2>\n" +
+                                "{% endif %}\n" +
+                                "    \n" +
+                                "{% if impacted_servers[0] is defined %}\n" +
+                                "  <h2> List of {{ impacted_servers | length }} Servers impacted </h2>\n" +
+                                "\n" +
+                                " {% for mainkey in impacted_servers %}\n" +
+                                "  <h3>{{ mainkey.Metadata_Type |replace('.',' ')|replace('_',' ') }}</h3>\n" +
+                                "  {{ \"<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Value</th></tr>\" }}\n" +
+                                "  {% for key, value in mainkey.items() %}\n" +
+                                "  {{  \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\" | format (key , value )}}\n" +
+                                "  {% endfor %}\n" +
+                                "  {{ \"</table>\" }}\n" +
+                                "  {% endfor %}\n" +
+                                "{% else %}\n" +
+                                "  <h2> No Servers impacted </h2>\n" +
+                                "{% endif %}    \n" +
+                                "</div>").bytes.encodeBase64().toString())
                 .property("Object.Notification_Templates.URL", "https://localhost:18443/get_data_breach_person_report")
                 .property("Object.Notification_Templates.Types", "Event.Data_Breach")
                 .property("Object.Notification_Templates.Label", "Data Breach")
@@ -3684,7 +3767,7 @@ the end of the process.
       trans.rollback()
     }
     trans.close()
-    return sb.toString();
+    return sb.toString()
 
   }
 
@@ -4180,7 +4263,7 @@ the end of the process.
             App.g.V()
                     .has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
                     .where(__.in('Has_Data_Source')
-                             .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).count().is(eq(0)))
+                            .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).count().is(eq(0)))
                     .count().next()
 
 
