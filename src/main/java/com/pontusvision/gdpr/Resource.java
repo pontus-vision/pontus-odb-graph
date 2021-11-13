@@ -3,13 +3,14 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.orientechnologies.orient.core.id.ORID;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.mapping.MappingReq;
+import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
+import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
 import com.pontusvision.graphutils.PText;
 import com.pontusvision.graphutils.gdpr;
 import org.apache.commons.lang.StringUtils;
@@ -21,7 +22,6 @@ import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.apache.tinkerpop.gremlin.orientdb.io.OrientIoRegistry;
 import org.apache.tinkerpop.gremlin.process.traversal.Order;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
-import org.apache.tinkerpop.gremlin.process.traversal.Text;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Direction;
@@ -32,10 +32,11 @@ import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper;
 import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
 import org.glassfish.jersey.server.ContainerRequest;
 
-import javax.script.SimpleBindings;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.ws.http.HTTPException;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -75,14 +76,38 @@ public class Resource {
     return "Hello, world!";
   }
 
+  //addRandomDataInit(App.graph,App.g)
+
+  @POST
+  @Path("clean_data")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String cleanData()
+  {
+    return gdpr.cleanData(App.graph,App.g);
+  }
+
+  @POST
+  @Path("random_init")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String randomInit()
+  {
+    return (String) gdpr.addRandomDataInit(App.graph,App.g);
+  }
+
+  /*
+   */
+
 
   @POST
   @Path("md2_search")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Md2Reply md2Search(Md2Request req) {
+  public Md2Reply md2Search(Md2Request req) throws  HTTPException{
     if (req.settings == null || req.query == null || req.query.name == null ){
-      throw new HTTPException(400);
+
+      Md2Reply reply = new Md2Reply(Response.Status.BAD_REQUEST);
+      reply.errorStr = "Invalid Request; missing the settings, query, or query.name fields";
+      return reply;
     }
 
     GraphTraversal<Vertex, Vertex> gt =
@@ -94,9 +119,21 @@ public class Resource {
     }
     try {
       List<Object> ids = (gt.id().toList());
-      if (ids.size() != 1){
-        System.out.println("Found "+ids.size()+" ids matching the request");
-        throw new HTTPException(404);
+      if (ids.size() == 0){
+        System.out.println("Found 0 ids matching the request");
+        Md2Reply reply =  new Md2Reply(Response.Status.NOT_FOUND);
+        reply.errorStr = "Found 0 ids matching the request";
+        return  reply;
+      }
+      else if (ids.size() > 1){
+        Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
+
+        reply.reqId = req.query.reqId;
+        reply.errorStr = "Found more than one person associated with " +req.query.name+" (docCpf=" +
+            req.query.docCpf+")";
+
+        return reply;
+
       }
       if (req.query.email != null) {
         if (! App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
@@ -104,12 +141,21 @@ public class Resource {
           System.out.println("Not found email " + req.query.email + " associated with " +ids.size()+" (" +
                req.query.name+")");
 
-          throw new HTTPException(404);
+          Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
+
+          reply.reqId = req.query.reqId;
+          reply.errorStr = "Not found email " + req.query.email + " associated with " +req.query.name+" (docCpf=" +
+              req.query.docCpf+")";
+
+          return reply;
+
+//          throw new HTTPException(404);
         }
       }
-      Md2Reply reply = new Md2Reply();
+      Md2Reply reply = new Md2Reply(Response.Status.OK);
 
       reply.total =  App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
+      reply.reqId = req.query.reqId;
 
       List<Map<String,Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
           .in("Has_NLP_Events").dedup().range(req.settings.start, req.settings.start + req.settings.limit).as("EVENTS")
@@ -149,12 +195,18 @@ public class Resource {
           reg.sizeBytes = ((Double) values.get("Object.Email_Message_Attachment.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Object.Email_Message_Attachment.Attachment_Name").get(0).toString();
           StringBuilder sb =  new StringBuilder();
-          sb.append(values.get("Object.Email_Message_Attachment.Email_Id").get(0)).append("/")
-              .append(values.get("Object.Email_Message_Attachment.Attachment_Id").get(0));
+          sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
+          sb.append(values.get("Object.Email_Message_Attachment.Attachment_Id").get(0));
           reg.path = sb.toString();
-          reg.created = values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString();
-          String owner = App.g.V(eventId).in("Email_Attachment")
-              .out("Email_From").values("Event.Email_From_Group.Email").next().toString();
+          List<Object> createdDateTime = values.get("Object.Email_Message_Attachment.Created_Date_Time");
+
+          reg.created = createdDateTime != null?
+              values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString():
+              "";
+
+          GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Attachment")
+              .out("Email_From").values("Event.Email_From_Group.Email");
+          String owner = trav.hasNext()? trav.next().toString(): "";
           reg.owner = owner;
           reg.server = "office365/email";
         }
@@ -162,12 +214,20 @@ public class Resource {
           reg.fileType = "Email_Message_Body";
           reg.sizeBytes = ((Double) values.get("Object.Email_Message_Body.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Object.Email_Message_Body.Email_Subject").get(0).toString();
-          reg.path = values.get("Object.Email_Message_Body.Email_Id").get(0).toString();
+          StringBuffer sb = new StringBuffer();
+          sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
+          String emailId = (values.get("Object.Email_Message_Body.Email_Id").get(0).toString());
+          sb.append(URLEncoder.encode(emailId, "UTF-8"));
+          reg.path = sb.toString();
           reg.created = values.get("Object.Email_Message_Body.Created_Date_Time") == null? "":
               values.get("Object.Email_Message_Body.Created_Date_Time").get(0).toString();
 
-          String owner = App.g.V(eventId).in("Email_Body")
-              .out("Email_From").values("Event.Email_From_Group.Email").next().toString();
+          GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Body")
+              .out("Email_From").values("Event.Email_From_Group.Email");
+          //.next().toString();
+
+          String owner = trav.hasNext()? trav.next().toString() : "";
+
           reg.owner = owner;
           reg.server = "office365/email";
 
@@ -197,7 +257,7 @@ public class Resource {
     } catch( Exception e){
       System.err.println("Error processing data: "+ e.getMessage());
       e.printStackTrace();
-      throw new HTTPException(404);
+      return new Md2Reply(Response.Status.INTERNAL_SERVER_ERROR);
     }
   }
 
@@ -800,6 +860,26 @@ status: "success", message: "Data source is working", title: "Success"
         .property("", "").next().id().toString();
 
   }
+
+
+  @POST
+  @Path("admin/report/template/upsert")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+
+  public ReportTemplateUpsertResponse reportTemplateUpsert(ReportTemplateUpsertRequest request) {
+
+    String templateName = request.getTemplateName();
+    String templatePOLEType = request.getTemplatePOLEType();
+    String templateId = gdpr.upsertNotificationTemplate(templatePOLEType,templateName, request.getReportTextBase64());
+    System.out.println("Upsert templateId ");
+
+    ReportTemplateUpsertResponse reply = new ReportTemplateUpsertResponse(templatePOLEType,
+        templateName, templateId);
+    return reply;
+
+  }
+
 
   @GET
   @Path("kpi/calculatePOLECounts")

@@ -496,4 +496,323 @@ rules:
         toVertexName: "attached_data_sources"
 
 
+  sharepoint_ropa:
+    vertices:
+      - label: Object.Data_Source
+        name: sharepoint
+        props:
+          Name:
+            val: sharepoint/ropa
+            mandatoryInSearch: true
+          Type:
+            val: sharepoint/ropa
+            mandatoryInSearch: true
+          Description:
+            val: Reg of Procs and Activ
+            mandatoryInSearch: true
+
+      - label: Object.Data_Source
+        name: attached_data_sources
+        props:
+          Name:
+            val: "${new groovy.json.JsonBuilder(Data_x0020_Source)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            mandatoryInSearch: true
+            processAll: true
+
+
+
+      - label: Object.Data_Policy
+        props:
+          Type:
+            val: "${Title}"
+            mandatoryInSearch: true
+          Retention_Period:
+            val: "${field_retention_x0020_period}"
+            mandatoryInSearch: true
+
+      - label: Object.Data_Procedures
+        props:
+          Description: "${field_Purpose_x0020_of_x0020_the_x0020_process}"
+          Type:
+            val: "${field_Access_x0020__x0020_Transfer_x0020_to_x0020_AND_x0020_OR_x0020_Receipt_x0020_of_x0020_third_x0020_parties}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person:
+            val: "${field_Data_x0020_subject_x0020_category}"
+            excludeFromSearch: true
+          BusinessAreaResponsible:
+            val: "${field_Area} - ${field_Responsible}"
+            excludeFromSearch: true
+          MacroProcessName:
+            val: "${field_Process}"
+            excludeFromSearch: true
+          Country_Where_Stored:
+            val: "${field_Country_x0020_where_x0020_people_x0020_are_x0020_located}"
+            excludeFromSearch: true
+          Why_Is_It_Collected:
+            val: "${field_Purpose_x0020_of_x0020_the_x0020_process}"
+            excludeFromSearch: true
+          Info_Collected:
+            val: "${field_Personal_x0020_data_x0020_used}"
+            excludeFromSearch: true
+
+      - label: Object.Sensitive_Data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(field_Personal_x0020_data_x0020_used)}"
+            type: "[Ljava.lang.String;"
+            mandatoryInSearch: true
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object.Lawful_Basis
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(field_Lawful_x0020_basis)}"
+            type: "[Ljava.lang.String;"
+            mandatoryInSearch: true
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: sharepoint/ropa
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: sharepoint/ropa
+            mandatoryInSearch: true
+          Operation:
+            val: Structured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Object.Data_Procedures"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexLabel: "Object.Data_Procedures"
+        toVertexLabel: "Object.Sensitive_Data"
+
+      - label: "Has_Lawful_Basis_On"
+        fromVertexLabel: "Object.Data_Procedures"
+        toVertexLabel: "Object.Lawful_Basis"
+
+      - label: "Has_Policy"
+        fromVertexLabel: "Object.Data_Procedures"
+        toVertexLabel: "Object.Data_Policy"
+
+      - label: "Has_Data_Source"
+        fromVertexLabel: "Object.Data_Procedures"
+        toVertexName: "attached_data_sources"
+
+
+  sharepoint_risk:
+    vertices:
+      - label: Object.Data_Source
+        name: sharepoint
+        props:
+          Name: sharepoint/risk
+          Type: sharepoint/risk
+          Description:  Data Source Risk
+
+      - label: Object.Data_Source
+        name: attached_data_sources
+        props:
+          Name:
+            val: "${new groovy.json.JsonBuilder(Data_x0020_Sources)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            mandatoryInSearch: true
+            processAll: true
+
+      - label: Object.Risk_Data_Source
+        props:
+          Risk_Id: "${Title}"
+          Description: "${Description}"
+          Probability: "${Probability}"
+          Impact: "${Impact}"
+          Residual_Probability: "${ResidualProbability}"
+          Residual_Impact: "${ResidualImpact}"
+
+
+      - label: Object.Risk_Mitigation_Data_Source
+        props:
+          Mitigation_Id:
+            val: "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            mandatoryInSearch: true
+            processAll: true
+
+
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: sharepoint/risk
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: sharepoint/risk
+            mandatoryInSearch: true
+          Operation:
+            val: Structured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Object.Risk_Data_Source"
+
+      - label: "Has_Risk"
+        fromVertexName: "attached_data_sources"
+        toVertexLabel: "Object.Risk_Data_Source"
+
+      - label: "Mitigates_Risk"
+        fromVertexLabel: "Object.Risk_Mitigation_Data_Source"
+        toVertexLabel: "Object.Risk_Data_Source"
+
+
+
+
+  sharepoint_risk_mitigation:
+    vertices:
+      - label: Object.Data_Source
+        name: sharepoint
+        props:
+          Name: sharepoint/risk-mitigations
+          Type: sharepoint/risk-mitigations
+          Description:  Risk Mitigations
+
+
+      - label: Object.Risk_Mitigation_Data_Source
+        props:
+          Mitigation_Id: "${Title}"
+          Description:
+            val: "${Description}"
+            excludeFromSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: risk-mitigations
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: sharepoint/risk-mitigations
+            mandatoryInSearch: true
+          Operation:
+            val: Structured Data Insertion
+            mandatoryInSearch: true
+          Ingestion_Date:
+            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+            mandatoryInSearch: true
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Object.Risk_Mitigation_Data_Source"
 

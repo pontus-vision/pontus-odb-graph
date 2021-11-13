@@ -1,14 +1,14 @@
 ---
 rules:
-  cap_leads:
+  cap_lead:
     vertices:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Lead_ID}"
-          Type:
-            val: "Leads"
-            excludeFromSearch: true
+#          Customer_ID: "${Lead_ID}"
+#          Type:
+#            val: "Leads"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
@@ -17,9 +17,9 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "Leads"
-            excludeFromSearch: true
+#          Type:
+#            val: "Leads"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -27,9 +27,10 @@ rules:
         props:
           Raw:
             val: "${Telephone_no_}"
-          Type:
-            val: "Leads"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Leads"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -44,9 +45,10 @@ rules:
         props:
           Raw:
             val: "${Mobile_Number}"
-          Type:
-            val: "Leads"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Leads"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -58,33 +60,36 @@ rules:
       - label: Location.Address
 #        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Business"
 #            excludeFromSearch: true
-#          parser:
-#            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
-#            type: "com.pontusvision.utils.LocationAddress"
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
-      - label: Object.Contract
-        props:
-          Date: "${Status_Since}"
-          Description: "${Description}"
-          Id: "${Lead_Group} - ${Lead_ID} - ${Number}"
-          Status: "${Customer_Status}"
-          Type:
-            val: "Leads Contract"
-            excludeFromSearch: true
+#      - label: Object.Contract
+#        props:
+#          Date: "${Status_Since}"
+#          Description: "${Description}"
+#          Id: "${Lead_Group} - ${Lead_ID} - ${Number}"
+#          Status: "${Customer_Status}"
+#          Type:
+#            val: "Leads Contract"
+#            excludeFromSearch: true
 
       - label: Object.Email_Address
-#        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+        condition: "${E_Mail_Address?.trim()?.length() > 0}"
         props:
           Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
 
       - label: Event.Ingestion
         props:
           Type:
-            val: "sap/c@p Leads"
+            val: "sap/c@p Lead"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -104,7 +109,7 @@ rules:
       - label: Event.Group_Ingestion
         props:
           Type:
-            val: "sap/c@p Leads"
+            val: "sap/c@p Lead"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -122,13 +127,13 @@ rules:
       - label: Object.Data_Source
         props:
           Name:
-            val: "sap/c@p Leads"
+            val: "sap/c@p Lead"
             excludeFromSearch: true
           Type:
-            val: "sap/c@p Leads"
+            val: "sap/c@p Lead"
             excludeFromSearch: true
           Description:
-            val: "Registros de Leads no SAP/C@P"
+            val: "Registros da tabela Lead no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -160,9 +165,9 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
 
-      - label: "Is_Lead"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Contract"
+#      - label: "Is_Lead"
+#        fromVertexLabel: "Person.Natural"
+#        toVertexLabel: "Object.Contract"
 
       - label: "Works"
         fromVertexLabel: "Person.Natural"
@@ -173,21 +178,23 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
-          Type:
-            val: "Customer Prospect"
-            excludeFromSearch: true
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]','')}"
+#          Type:
+#            val: "Customer Prospect"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
-          Date_Of_Birth: "${Date_of_Birth?.trim()}"
+          Date_Of_Birth:
+            val: "${Date_of_Birth?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
           Nationality:
             val: "${Nationality?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Object.Identity_Card
         #        condition: "${}"
-        name: CPF
+        name: cpf
         props:
           Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
           Id_Type:
@@ -198,9 +205,9 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "Customer Prospect"
-            excludeFromSearch: true
+#          Type:
+#            val: "Customer Prospect"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -208,9 +215,10 @@ rules:
         props:
           Raw:
             val: "${Telephone_no_}"
-          Type:
-            val: "Customer Prospect"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Customer Prospect"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -225,9 +233,10 @@ rules:
         props:
           Raw:
             val: "${Mobile_Number}"
-          Type:
-            val: "Customer Prospect"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Customer Prospect"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -239,22 +248,28 @@ rules:
       - label: Location.Address
 #        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
-          Full_Address: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
-          Type:
-            val: "${Addresstype?.trim()}"
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
-      - label: Object.Contract
-        props:
-          Description: "(Responsável Sales Person) ${Resp__Sales_Person}"
-          Id: "${Porsche_ID} - ${Profile_ID}"
-          Status: "${Status}"
-          Type:
-            val: "Customer Prospect Contract"
-            excludeFromSearch: true
+#      - label: Object.Contract
+#        props:
+#          Description: "(Responsável Sales Person) ${Resp__Sales_Person}"
+#          Id: "${Porsche_ID} - ${Profile_ID}"
+#          Status: "${Status}"
+#          Type:
+#            val: "Customer Prospect Contract"
+#            excludeFromSearch: true
 
       - label: Object.Email_Address
-        #        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+        condition: "${E_Mail_Address?.trim()?.length() > 0}"
         props:
           Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
 
@@ -305,7 +320,7 @@ rules:
             val: "sap/c@p Customer Prospect"
             excludeFromSearch: true
           Description:
-            val: "Registros de Customer Prospect no SAP/C@P"
+            val: "Registros da tabela Customer Prospect no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -337,13 +352,17 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
 
-      - label: "Has_Contract" # OR Is_Responsible ?!?!
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Contract"
+#      - label: "Has_Contract" # OR Is_Responsible ?!?!
+#        fromVertexLabel: "Person.Natural"
+#        toVertexLabel: "Object.Contract"
 
       - label: "Works"
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Person.Organisation"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "cpf"
 
 #  cap_monthly_cockpits_and_reports:
 #    vertices:
@@ -374,7 +393,7 @@ rules:
 #            val: "sap/c@p Monthly Cockpits and Reports"
 #            excludeFromSearch: true
 #          Description:
-#            val: "Registros de 'Monthly Cockpits and Reports' no SAP/C@P"
+#            val: "Registros da tabela Monthly Cockpits and Reports no SAP/C@P"
 #            excludeFromSearch: true
 #
 #    edges:
@@ -389,3 +408,1324 @@ rules:
 #      - label: "Has_Ingestion_Event"
 #        fromVertexLabel: "Object.Data_Procedures"
 #        toVertexLabel: "Event.File_Ingestion"
+
+  cap_my_p_change_report:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+#          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
+#          Type:
+#            val: "My Porsche Change Report"
+#            excludeFromSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p My Porsche Change Report"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p My Porsche Change Report"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p My Porsche Change Report"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p My Porsche Change Report"
+            excludeFromSearch: true
+          Description:
+            val: "Registros da tabela My Porsche Change Report no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+  cap_p_connect_mandatory_fields:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "Porsche Connect Mandatory Fields"
+#            excludeFromSearch: true
+          Title:
+            val: "${Title}"
+            excludeFromSearch: true
+
+      - label: Object.Phone_Number
+        condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: mobile
+        props:
+          Raw: "${Mobile_Number}"
+          excludeFromSearch: true
+#          Type:
+#            val: "Porsche Connect Mandatory Fields"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Email_Address
+        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+        props:
+          Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p Porsche Connect Mandatory Fields"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p Porsche Connect Mandatory Fields"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Porsche Connect Mandatory Fields"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Porsche Connect Mandatory Fields"
+            excludeFromSearch: true
+          Description:
+            val: "Registros da tabela Porsche Connect Mandatory Fields Report no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "mobile"
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+  cap_ownership_change:
+    vertices:
+      - label: Person.Natural
+        name: owner
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "Porsche Ownership Change"
+#            excludeFromSearch: true
+
+      - label: Person.Natural
+        name: responsible_dealer
+        props:
+          Full_Name: "${Responsible_Dealer?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy:
+            val: "${Name_1?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+#          Type:
+#            val: "Porsche Responsible Dealer"
+#            excludeFromSearch: true
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p Porsche Ownership Change"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p Porsche Ownership Change"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Porsche Ownership Change"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Porsche Ownership Change"
+            excludeFromSearch: true
+          Description:
+            val: "Registros da tabela Porsche Ownership Change no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "owner"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Is_Responsible"
+        fromVertexName: "responsible_dealer"
+        toVertexName: "owner"
+
+  cap_complaint:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+#          Customer_ID: "${Campaign_ID}"
+#          Type:
+#            val: "SAP/C@P Complaint"
+#            excludeFromSearch: true
+          Title:
+            val: "${Title}"
+            excludeFromSearch: true
+
+      - label: Person.Organisation
+        condition: "${Company_Name_1?.trim()?.length() > 0}"
+        props:
+          Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "SAP/C@P Complaint"
+#            excludeFromSearch: true
+
+      - label: Object.Phone_Number
+        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: telephone
+        props:
+          Raw: 
+            val: "${Telephone_no_}"
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Complaint"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+        condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: mobile
+        props:
+          Raw: 
+            val: "${Mobile_Number}"
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Complaint"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Location.Address
+        props:
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
+
+      - label: Event.Complaint
+        props:
+#          Date: "${Due_Date}"
+          Description: "${Description}; Resolvido = ${Solved}; Finalizado = ${Closed}."
+          Id: "${Campaign_ID}"
+          Status: "${Status}"
+          Type:
+            val: "SAP/C@P Complaint Contract"
+            excludeFromSearch: true
+
+      - label: Object.Email_Address
+        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+        props:
+          Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p Complaint"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p Complaint"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Complaint"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Complaint"
+            excludeFromSearch: true
+          Description:
+            val: "Registros da tabela Complaint no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Is_Located"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "telephone"
+
+      - label: "Has_Mobile"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "mobile"
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Complaint"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Complaint"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Person.Organisation"
+
+  cap_activity:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+#          Customer_ID: "${ID}"
+#          Type:
+#            val: "SAP/C@P Activity"
+#            excludeFromSearch: true
+          Title:
+            val: "${Title}"
+            excludeFromSearch: true
+
+      - label: Person.Organisation
+        condition: "${Company_Name_1?.trim()?.length() > 0}"
+        props:
+          Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "SAP/C@P Activity"
+#            excludeFromSearch: true
+
+      - label: Object.Phone_Number
+        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: telephone
+        props:
+          Raw:
+            val: "${Telephone_no_}"
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Activity"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+        condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: mobile
+        props:
+          Raw:
+            val: "${Mobile_Number}"
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Activity"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Location.Address
+        props:
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
+
+#      - label: Object.Campaign
+#        props:
+#          Date: "${Created_On}"
+#          Description: "${Description}"
+#          Id: "${ID}"
+#          Status: "${User_Status}"
+#          Type:
+#            val: "SAP/C@P Activity Campaign"
+#            excludeFromSearch: true
+
+      - label: Object.Email_Address
+        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+        props:
+          Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p Activity"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p Activity"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Activity"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Activity"
+            excludeFromSearch: true
+          Description:
+            val: "Registros da tabela Activity no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Is_Located"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "telephone"
+
+      - label: "Has_Mobile"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "mobile"
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+#      - label: "Has_Campaign"
+#        fromVertexLabel: "Person.Natural"
+#        toVertexLabel: "Object.Campaign"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Person.Organisation"
+
+  cap_workshop_campaigns_and_recalls:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy:
+            val: "${Name_at_Birth?:''}"
+            excludeFromSearch: true
+#          Customer_ID: "${Recall_campaign_ID}"
+#          Type:
+#            val: "SAP/C@P Workshop Campaigns and Recalls"
+#            excludeFromSearch: true
+          Title:
+            val: "${Title}"
+            excludeFromSearch: true
+
+      - label: Person.Organisation
+        condition: "${Company_Name_1?.trim()?.length() > 0}"
+        props:
+          Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "SAP/C@P Workshop Campaigns and Recalls"
+#            excludeFromSearch: true
+
+      - label: Object.Phone_Number
+        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: telephone
+        props:
+          Raw:
+            val: "${Telephone_no_}"
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Workshop Campaigns and Recalls"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+        condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: mobile
+        props:
+          Raw:
+            val: "${Mobile_Number}"
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Workshop Campaigns and Recalls"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Location.Address
+        props:
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
+
+      - label: Object.Campaign
+        props:
+          Date: "${Start_date}"
+          Description: "${Description}"
+          Id: "${Recall_campaign_ID?.trim()}"
+#          Status: "${}"
+          Type:
+            val: "SAP/C@P Workshop Campaigns and Recalls Contract"
+            excludeFromSearch: true
+
+      - label: Object.Email_Address
+        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+        props:
+          Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p Workshop Campaigns and Recalls"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p Workshop Campaigns and Recalls"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Workshop Campaigns and Recalls"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Workshop Campaigns and Recalls"
+            excludeFromSearch: true
+          Description:
+            val: "Registros da tabela Workshop Campaigns and Recalls no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Is_Located"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "telephone"
+
+      - label: "Has_Mobile"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "mobile"
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Campaign"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Campaign"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Person.Organisation"
+
+  cap_competitor_vehicles:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
+#          Customer_ID: "${Recall_campaign_ID}"
+#          Type:
+#            val: "SAP/C@P Competitor Vehicles"
+#            excludeFromSearch: true
+          Title:
+            val: "${Title}"
+            excludeFromSearch: true
+
+      - label: Person.Organisation
+        condition: "${Company_Name_1?.trim()?.length() > 0}"
+        props:
+          Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "SAP/C@P Competitor Vehicles"
+#            excludeFromSearch: true
+
+      - label: Object.Phone_Number
+        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: telephone
+        props:
+          Raw:
+            val: "${Telephone_no_}"
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Competitor Vehicles"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+        condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: mobile
+        props:
+          Raw:
+            val: "${Mobile_Number}"
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Competitor Vehicles"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Location.Address
+        props:
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
+
+      - label: Object.Vehicle
+        props:
+          License_Plate: "${License_Plate}"
+          Model: "${Model}"
+          Model_Year: "${Model_Year}"
+
+      - label: Object.Email_Address
+        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+        props:
+          Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p Competitor Vehicles"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p Competitor Vehicles"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Competitor Vehicles"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Competitor Vehicles"
+            excludeFromSearch: true
+          Description:
+            val: "Registros da tabela Competitor Vehicles no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Is_Located"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "telephone"
+
+      - label: "Has_Mobile"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "mobile"
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Vehicle"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Vehicle"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Person.Organisation"
+
+  cap_vehicle:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
+#          Customer_ID: "${Recall_campaign_ID}"
+#          Type:
+#            val: "SAP/C@P Vehicle"
+#            excludeFromSearch: true
+          Title:
+            val: "${Title}"
+            excludeFromSearch: true
+
+      - label: Person.Organisation
+        condition: "${Company_Name_1?.trim()?.length() > 0}"
+        props:
+          Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "SAP/C@P Vehicle"
+#            excludeFromSearch: true
+
+      - label: Object.Phone_Number
+        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: telephone
+        props:
+          Raw:
+            val: "${Telephone_no_}"
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Vehicle"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+        condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: mobile
+        props:
+          Raw:
+            val: "${Mobile_Number}"
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Vehicle"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Location.Address
+        props:
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
+
+      - label: Object.Vehicle
+        props:
+          License_Plate: "${Vehicle_License_Plat}"
+          Model: "${Model}"
+          Model_Year: "${Model_Year_of_Vehicl}"
+
+      - label: Object.Email_Address
+        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+        props:
+          Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p Vehicle"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p Vehicle"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Vehicle"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Vehicle"
+            excludeFromSearch: true
+          Description:
+            val: "Registros da tabela Vehicle no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Is_Located"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "telephone"
+
+      - label: "Has_Mobile"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "mobile"
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+      - label: "Has_Vehicle"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Vehicle"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Person.Organisation"
+
+  cap_data_quality:
+    vertices:
+      - label: Person.Natural
+        props:
+          Full_Name: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]','')}"
+#          Type:
+#            val: "Data Quality"
+#            excludeFromSearch: true
+          Title:
+            val: "${Title}"
+            excludeFromSearch: true
+          Date_Of_Birth:
+            val: "${Date_of_Birth?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
+          Nationality:
+            val: "${Nationality?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        #        condition: "${}"
+        name: cnpj
+        props:
+          Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "CNPJ"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        #        condition: "${}"
+        name: cpf
+        props:
+          Id_Value: "${ID_number?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+      - label: Person.Organisation
+        condition: "${Company_Name_1?.trim()?.length() > 0}"
+        props:
+          Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "Data Quality"
+#            excludeFromSearch: true
+
+      - label: Object.Phone_Number
+        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: telephone
+        props:
+          Raw:
+            val: "${Telephone_no_}"
+            excludeFromSearch: true
+#          Type:
+#            val: "Data Quality"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Object.Phone_Number
+        condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
+        name: mobile
+        props:
+          Raw:
+            val: "${Mobile_Number}"
+            excludeFromSearch: true
+#          Type:
+#            val: "Data Quality"
+#            excludeFromSubsequenceSearch: true
+          Numbers_Only:
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Location.Address
+        props:
+          Full_Address:
+            val: "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
+            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
+          parser:
+            val: "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
+
+      #      - label: Object.Contract
+      #        props:
+      #          Description: "(Responsável Sales Person) ${Resp__Sales_Person}"
+      #          Id: "${Porsche_ID} - ${Profile_ID}"
+      #          Status: "${Status}"
+      #          Type:
+      #            val: "Customer Prospect Contract"
+      #            excludeFromSearch: true
+
+      - label: Object.Email_Address
+        condition: "${E_Mail_Address?.trim()?.length() > 0}"
+        props:
+          Email: "${E_Mail_Address?.trim()?.toLowerCase()}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "sap/c@p Data Quality"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Type:
+            val: "sap/c@p Data Quality"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name:
+            val: "sap/c@p Data Quality"
+            excludeFromSearch: true
+          Type:
+            val: "sap/c@p Data Quality"
+            excludeFromSearch: true
+          Description:
+            val: "Registros da tabela Data Quality no SAP/C@P"
+            excludeFromSearch: true
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Is_Located"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Location.Address"
+
+      - label: "Has_Phone"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "telephone"
+
+      - label: "Has_Mobile"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "mobile"
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"
+
+#      - label: "Has_Contract" # OR Is_Responsible ?!?!
+#        fromVertexLabel: "Person.Natural"
+#        toVertexLabel: "Object.Contract"
+
+      - label: "Works"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Person.Organisation"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "cnpj"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "cpf"

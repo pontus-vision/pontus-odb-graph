@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -33,6 +34,9 @@ public class AppTest {
   /**
    * @return the suite of tests being tested
    */
+
+  public static int TOTAL_NUM_TEST_CLASSES = 2;
+  public static AtomicInteger counter = new AtomicInteger(TOTAL_NUM_TEST_CLASSES);
 
   public static Server server;
 
@@ -109,15 +113,20 @@ public class AppTest {
   @AfterAll
   public static void after() throws Exception {
 //    App.gserver.stop().join();
-    server.stop();
-    App.oServer.dropDatabase("demodb");
-    App.oServer.shutdown();
-    App.oServer.waitForShutdown();
-    Path resourceDirectory = Paths.get(".");
-    String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
-    String databaseDir = Paths.get(absolutePath, "databases").toString();
-    deleteDirectory(new File(databaseDir));
+    int localCount = counter.decrementAndGet();
+
+    if (localCount == 0) {
+      server.stop();
+      App.oServer.dropDatabase("demodb");
+      App.oServer.shutdown();
+      App.oServer.waitForShutdown();
+      Path resourceDirectory = Paths.get(".");
+      String absolutePath = resourceDirectory.toFile().getAbsolutePath();
+
+      String databaseDir = Paths.get(absolutePath, "databases").toString();
+      deleteDirectory(new File(databaseDir));
+    }
 
   }
 
@@ -133,24 +142,28 @@ public class AppTest {
 
   @BeforeAll
   public static void before() throws Exception {
-    Path resourceDirectory = Paths.get(".");
-    String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
-    String databaseDir = Paths.get(absolutePath, "databases").toString();
-    deleteDirectory(new File(databaseDir));
+    int localCount = counter.get();
+    if (localCount == TOTAL_NUM_TEST_CLASSES) {
+      Path resourceDirectory = Paths.get(".");
+      String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
-    String jpostalDataDir = Paths.get(absolutePath, "jpostal", "libpostal").toString();
-    System.setProperty("user.dir", absolutePath);
-    System.setProperty("ORIENTDB_ROOT_PASSWORD", "pa55word");
-    System.setProperty("ORIENTDB_HOME", absolutePath);
-    System.setProperty("pg.jpostal.datadir", jpostalDataDir);
+      String databaseDir = Paths.get(absolutePath, "databases").toString();
+      deleteDirectory(new File(databaseDir));
 
-    server = App.createJettyServer();
+      String jpostalDataDir = Paths.get(absolutePath, "jpostal", "libpostal").toString();
+      System.setProperty("user.dir", absolutePath);
+      System.setProperty("ORIENTDB_ROOT_PASSWORD", "pa55word");
+      System.setProperty("ORIENTDB_HOME", absolutePath);
+      System.setProperty("pg.jpostal.datadir", jpostalDataDir);
 
-    server.start();
-    App.init(Paths.get(absolutePath, "config", "gremlin-server.yaml").toString());
+      server = App.createJettyServer();
 
-    System.out.println("finished Init");
+      server.start();
+      App.init(Paths.get(absolutePath, "config", "gremlin-server.yaml").toString());
+
+      System.out.println("finished Init");
+    }
   }
 
 

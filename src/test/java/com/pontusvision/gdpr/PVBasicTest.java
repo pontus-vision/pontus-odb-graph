@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 //@RunWith(JUnitPlatform.class)
-public class PVTest extends AppTest {
+public class PVBasicTest extends AppTest {
   /**
    * Create the test0000 case
    *
@@ -320,7 +320,7 @@ public class PVTest extends AppTest {
               ".next().id().toString()").get().toString();
       String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
       String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
-      assertEquals(emailConnections, "1");
+      assertEquals("1",emailConnections);
 
 //    test0000 COUNT(Edges) for Object.Phone_Number
       String userId5 =
@@ -328,7 +328,7 @@ public class PVTest extends AppTest {
               ".next().id().toString()").get().toString();
       String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
       String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
-      assertEquals(phoneConnections, "0");
+      assertEquals("1",phoneConnections );
 
 
     } catch (ExecutionException e) {
@@ -419,8 +419,9 @@ public class PVTest extends AppTest {
 
   @Test
   public void test00009TotvsProtheusSa1Clientes() throws InterruptedException {
-
+    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
     jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+//    jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
 //    jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa1_clientes");
 
     try {
@@ -485,6 +486,21 @@ public class PVTest extends AppTest {
 
       String report = App.executor.eval("renderReportInBase64(pg_id,pg_templateText)", bindings).get().toString();
       System.out.println(report);
+
+      String countEdges =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 2'))" +
+                              ".both().dedup().count().next().toString()").get().toString();
+      assertEquals("5", countEdges, "2 Has_Ingestion_Event " +
+          "+ 1 Has_Id_Card (cpf) " +
+          "+ 1 email" +
+          "+ 1 Location");
+
+      String getPhoneNumber =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).out('Has_Phone')" +
+                              ".properties('Object.Phone_Number.Raw').value().next().toString()").get().toString();
+      assertEquals("111111111", getPhoneNumber, "Número de telefone de Comidas 1");
+
+
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -608,70 +624,25 @@ public class PVTest extends AppTest {
   @Test
   public void test00012ADP() throws InterruptedException {
     try {
-      csvTestUtil("ADP.csv", "ADP");
-
-      String adpDsqueryPrefix = "App.g.V().has('Object.Data_Source.Name', eq('ADP'))\n";
-
-      String countDataSources =
-          App.executor.eval(adpDsqueryPrefix +
-              ".count().next().toString()").get().toString();
-      assertEquals("1", countDataSources, "Expect 1 Data Source (ADP)");
+      csvTestUtil("ADP-real.csv", "ADP");
 
 
-      String adpDsqueryPrefix2 = adpDsqueryPrefix + ".out('Has_Ingestion_Event')";
+      String countPersonNaturalEdges =
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
+              ".bothE().count().next().toString()").get().toString();
+      assertEquals("11", countPersonNaturalEdges, "3 Has_Id_Card + 2 Uses_Email" +
+              " + 2 Has_Parent_Or_Guardian + 1 Is_Located + 1 Has_Ingestion_Event + 1 Is_Alias + 1 Has_Phone");
 
-      String countDataEventGroups =
-          App.executor.eval(adpDsqueryPrefix2 +
-              ".count().next().toString()").get().toString();
-      assertEquals("1", countDataEventGroups, "Expect 1 Ingestion Data Group ");
+      String getBossId =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
+                      ".out('Is_Alias').out('Is_Subordinate').properties('Person.Employee.ID').value().next().toString()").get().toString();
+      assertEquals("5", getBossId, "Maria's Boss (José Dorival) has an Id of 5");
 
-
-      String adpDsqueryPrefix3 = adpDsqueryPrefix2 + ".out('Has_Ingestion_Event')";
-
-      String countDataEvents =
-          App.executor.eval(adpDsqueryPrefix3 +
-              ".count().next().toString()").get().toString();
-      assertEquals("7", countDataEvents, "Expect 7 Ingestion Events ");
-
-      String adpDsqueryPrefix4 = adpDsqueryPrefix3 +
-          ".in('Has_Ingestion_Event').has('Metadata.Type.Person.Natural', eq('Person.Natural'))";
-
-      String countPersonObjects =
-          App.executor.eval(adpDsqueryPrefix4 +
-              ".count().next().toString()").get().toString();
-      assertEquals("7", countPersonObjects, "Expect 7 Person.Natural entries ");
-
-      String externalAddressCount = App.executor.eval("App.g.V()" +
-          ".has('Person.Natural.Full_Name', eq('IAN GAEL FERREIRA')).out('Is_Located')" +
-          ".has('Location.Address.Type', eq('Endereço Exterior'))" +
-          ".count().next().toString()").get().toString();
-      assertEquals("1", externalAddressCount, "Expect IAN GAEL FERREIRA to have 1 Endereço Exterior ");
-
-      String coordenadorCPF = App.executor.eval("App.g.V()" +
-          ".has('Person.Natural.Full_Name', eq('JOÃOZINHO')).has('Person.Natural.Customer_ID', eq('43376845409'))" +
-          ".out('Is_Subordinate')" +
-          ".out('Has_Id_Card')" +
-//          ".count().next().toString()").get().toString();
-
-          ".properties('Object.Identity_Card.Id_Value').value()" +
-          ".next().toString()").get().toString();
-      assertEquals("07856755466", coordenadorCPF, "CPF From Joaozinho's coordinator ");
-
-
-//
-//      String countCommercialPhoneNumbers =
-//          App.executor.eval("App.g.V().has('Object.Phone_Number.Type', eq('Telefone Comercial'))" +
-//              ".count().next().toString()").get().toString();
-//      assertEquals("1", countCommercialPhoneNumbers);
-//
-//      String countForeignLocationAddress =
-//          App.executor.eval("App.g.V().has('Location.Address.Type', eq('Endereço Exterior'))" +
-//              ".count().next().toString()").get().toString();
-//      assertEquals("1", countForeignLocationAddress);
-//
-//      App.executor.eval("App.g.V().values('Object.Identity_Card.Id_Value').next().toString()");
-//
-//      App.executor.eval("App.g.V().values('Person.Employee.Role').count().next().toString()");
+      String getBossName =
+              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('12345678901'))" +
+                      ".in('Has_Id_Card').out('Is_Alias').out('Is_Subordinate').in('Is_Alias')" +
+                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+      assertEquals("JOSÉ DORIVAL", getBossName, "Maria's Boss' Full Name");
 
 
     } catch (ExecutionException e) {
@@ -679,7 +650,6 @@ public class PVTest extends AppTest {
       assertNull(e);
 
     }
-
 
   }
 
@@ -693,8 +663,8 @@ public class PVTest extends AppTest {
       String personNaturalEdgesCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("6", personNaturalEdgesCount, "2 Object.Identity_Card + 1 Object.Email_Address " +
-          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("8", personNaturalEdgesCount, "2 Has_Id_Card + 2 Uses_Email " +
+          "+ 2 Has_Phone + 1 Is_Located + 1 Has_Ingestion_Event");
 
 
       String orgName =
@@ -706,7 +676,8 @@ public class PVTest extends AppTest {
       String personOrgEdgesCount =
           App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("3", personOrgEdgesCount, "1 Object.Identity_Card + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("5", personOrgEdgesCount, "1 Has_Id_Card + 1 Is_Located + 1 Has_Ingestion_Event " +
+              "+ 1 Uses_Email + 1 Has_Phone");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -719,9 +690,10 @@ public class PVTest extends AppTest {
 
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
-      "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   sharepoint/mapeamento-de-processos",
+      "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   sharepoint/mapeamento-de-processos,  6,  2",
+      "pv-extract-sharepoint-ropa.json,   sharepoint_ropa,   sharepoint/ropa,    125, 18"
   })
-  public void test00014SharepointProcessMapping(String jsonFile, String ruleName, String dataSourceName) throws InterruptedException {
+  public void test00014SharepointProcessMapping(String jsonFile, String ruleName, String dataSourceName, String numDataSrcs, String numDataPolicies) throws InterruptedException {
     try {
 //      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
 //          "sharepoint_data_sources");
@@ -748,7 +720,7 @@ public class PVTest extends AppTest {
               ".out().out()\n" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
-      assertEquals("6", countEventIngestions);
+      assertEquals(numDataSrcs, countEventIngestions);
 
 
       String countObjectDataProcessesIngested =
@@ -758,16 +730,16 @@ public class PVTest extends AppTest {
 //              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
-      assertEquals("6", countObjectDataProcessesIngested);
+      assertEquals(numDataSrcs, countObjectDataProcessesIngested);
 
       String countDataPolicy =
           App.executor.eval(queryPrefix +
               ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
               ".out('Has_Data_Source')" +
-              ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))" +
+              ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source')).dedup()" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
-      assertEquals("12", countDataPolicy);
+      assertEquals(numDataPolicies, countDataPolicy);
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -785,11 +757,11 @@ public class PVTest extends AppTest {
       String personNaturalEdgesCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
               ".bothE().count().next().toString()").get().toString();
-      assertEquals("6", personNaturalEdgesCount, "2 Uses_Email + 1 Lives + 2 Is_Family + 1 Has_Ingestion_Event");
+      assertEquals("8", personNaturalEdgesCount, "2 Uses_Email + 2 Is_Family + 2 Has_Id_Card +  1 Lives + 1 Has_Ingestion_Event");
 
 
       String locationAddressDescription =
-          App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA Ponte, Jaguarão - RS, 333333'))" +
+          App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA 3333 AP 33 Ponte, Jaguarão - RS, 333333'))" +
               ".properties('Location.Address.Description').value().next().toString()").get().toString();
       assertEquals("moradia principal", locationAddressDescription, "Descrição do Endereço");
 
@@ -797,8 +769,7 @@ public class PVTest extends AppTest {
       String findingTheSonOfAMother =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('DONA SABRINA')).out('Is_Family')" +
               ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
-      assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta" +
-          "+ 1 Object.Phone_Number + 1 Location.Address + 1 Event.Ingestion");
+      assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta");
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -806,47 +777,8 @@ public class PVTest extends AppTest {
     }
   }
 
-  @Test
-  public void test00016SapCapLeads() throws InterruptedException {
-
-    try {
-
-      String dirtyHeader = "A string. With; loads: of # Chars,{ a.;~^Ç``\"oçã}][";
-      String cleanHdr = Ingestion.cleanHeader(dirtyHeader);
-      assertEquals(
-          "A_string__With__loads__of___Chars___a____C___oca___",
-          cleanHdr,
-          "check clean headers is OK");
-
-      csvTestUtil("sap-cap/leads.csv", "cap_leads");
-
-      String personNaturalEdgesCount =
-          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('IGOR FERREIRA'))" +
-              ".bothE().count().next().toString()").get().toString();
-      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
-          "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
-
-
-      String leadId =
-          App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
-              "eq('av. marcio gomes 333 , AA3, Belo Horizonte - Brasil, 6758090')).in('Is_Located')" +
-              ".properties('Person.Natural.Customer_ID').value().next().toString()").get().toString();
-      assertEquals("1", leadId, "Lead ID de Igor Ferreira");
-
-
-      String gettingEmailAddress =
-          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('LARA MAGALHAES')).out('Uses_Email')" +
-              ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
-      assertEquals("lara@yahoo.com", gettingEmailAddress, "E-mail de Lara Magalhaes");
-
-    } catch (ExecutionException e) {
-      e.printStackTrace();
-      assertNull(e);
-    }
-  }
-
-  @Test
-  public void test00017FilesNLP() throws InterruptedException {
+ @Test
+  public void test00016FilesNLP() throws InterruptedException {
 
     csvTestUtil("phase1.csv", "phase1_csv");
     csvTestUtil("phase1.csv", "phase1_csv");
@@ -913,10 +845,13 @@ public class PVTest extends AppTest {
       md2Request.query.name = "John Smith";
       md2Request.query.email = "retoh@optonline.net";
       md2Request.query.docCpf = "4736473678";
+      md2Request.query.reqId = 4736473678L;
+
 
       Md2Reply md2Reply = res.md2Search(md2Request);
 
       assertEquals(1, md2Reply.total);
+      assertEquals(md2Request.query.reqId, md2Reply.reqId);
       assertEquals(1, md2Reply.track.length);
 
     } catch (ExecutionException e) {
@@ -927,13 +862,14 @@ public class PVTest extends AppTest {
   }
 
   @Test
-  public void test00018MD2() throws InterruptedException {
+  public void test00017MD2() throws InterruptedException {
 
     try {
       jsonTestUtil("md2.json", "$.person", "pv_md2");
 
       jsonTestUtil("pv-extract-file-ingest-md2.json", "$.value", "pv_file");
       jsonTestUtil("pv-extract-o365-email-md2.json", "$.value", "pv_email");
+      jsonTestUtil("pv-extract-o365-email-md2-pt2.json", "$.value", "pv_email");
 
       String getPersonNaturalFullName =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +
@@ -952,15 +888,78 @@ public class PVTest extends AppTest {
 
       Md2Reply md2Reply = res.md2Search(md2Request);
 
-      assertEquals(3, md2Reply.total);
+      assertEquals(4, md2Reply.total);
       assertEquals(2, md2Reply.track.length);
 
       md2Request.settings.start = 2L;
 
       md2Reply = res.md2Search(md2Request);
 
-      assertEquals(3, md2Reply.total);
-      assertEquals(1, md2Reply.track.length);
+      assertEquals(4, md2Reply.total);
+      assertEquals(2, md2Reply.track.length);
+
+      md2Request.settings.start = 2L;
+      md2Request.query.name = "NAME THAT DOES NOT EXIST";
+
+
+      md2Reply = res.md2Search(md2Request);
+
+      assertEquals(404, md2Reply.getStatus());
+
+      md2Request.query.name = "MARIA APARECIDA KEIKO INABA";
+      md2Request.query.docCpf = "06451990876";
+      md2Request.query.email = "mkeiko@lykeslines.com.br";
+      md2Request.settings.limit=1000L;
+      md2Request.settings.start=0L;
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus());
+      assertEquals(0L,md2Reply.total);
+
+      md2Request.query.name = "MARIA APARECIDA KEIKO INABA";
+      md2Request.query.docCpf = "06546543431";
+      md2Request.query.email = "mkeiko@lykeslines.com.br";
+      md2Request.settings.limit=1000L;
+      md2Request.settings.start=0L;
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus());
+      assertEquals(1L,md2Reply.total);
+
+      md2Request.query.name = "MARIA APARECIDA KEIKO INABA";
+      md2Request.query.docCpf = null;
+      md2Request.query.email = "mkeiko@lykeslines.com.br";
+      md2Request.settings.limit=1000L;
+      md2Request.settings.start=0L;
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(409, md2Reply.getStatus(),"Found more than one person with the same name");
+
+      md2Request.query.name="HUGO SANCHEZ CORREIA";
+      md2Request.query.docCpf="219.594.684-99";
+      md2Request.query.email=null;
+      md2Reply = res.md2Search(md2Request);
+
+      assertEquals(200, md2Reply.getStatus(),"Found one masked CPF");
+      assertEquals(1L,md2Reply.total);
+
+      md2Request.query.name="HUGO SANCHEZ CORREIA";
+      md2Request.query.docCpf="21959468499";
+      md2Request.query.email=null;
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus(),"Found one unmasked CPF");
+      assertEquals(1L,md2Reply.total);
+
+      md2Request.settings.limit = 200L;
+      md2Request.settings.start = 0L;
+      md2Request.query.name = "RAIMUNDO CESAR FERREIRA DA SILVA";
+      md2Request.query.email = null;
+      md2Request.query.docCpf = "05596491004";
+
+      md2Reply = res.md2Search(md2Request);
+      assertEquals(200, md2Reply.getStatus(),"Found two masked CPF entries in a PDF file (email + fs)");
+      assertEquals(2L,md2Reply.total, "Found two masked CPF entries in a PDF file (email + fs)");
+
 
 
     } catch (ExecutionException e) {
@@ -972,61 +971,5 @@ public class PVTest extends AppTest {
 
   }
 
-  @Test
-  public void test00019SapCapCustomerProspect() throws InterruptedException {
-
-    try {
-
-      csvTestUtil("sap-cap/customer-prospect.csv", "cap_customer_prospect");
-
-      String personNaturalEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('JAMIL GUPTA'))" +
-                      ".bothE().count().next().toString()").get().toString();
-      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
-              "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
-
-
-      String dateOfBirth =
-          App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
-              "eq('Rua Porto Alegre 12 , Bairro da Lama (Vila Loubos), Gralhas do Sul - Brasil, 85867-909'))" +
-              ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
-      dateOfBirth = dateOfBirth.replaceAll("... 1976", "GMT 1976");
-      assertEquals("Fri Feb 13 00:00:00 GMT 1976", dateOfBirth, "Data de nascimento de Jamil Gupta");
-
-
-      String gettingEmailAddress =
-          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('FERNANDA CASTELO')).out('Uses_Email')" +
-              ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
-      assertEquals("fernanda_castelo@icloud.com", gettingEmailAddress, "E-mail de Fernanda Castelo");
-
-    } catch (ExecutionException e) {
-      e.printStackTrace();
-      assertNull(e);
-    }
-  }
-
-//  @Test
-//  public void test00020SapCapMonthlyCockpitsAndReports() throws InterruptedException {
-//
-//    try {
-//
-//      csvTestUtil("sap-cap/monthly-cockpits-and-reports.csv", "cap_monthly_cockpits_and_reports");
-//
-//      String fileIngestionNameEdgesCount =
-//              App.executor.eval("App.g.V().has('Event.File_Ingestion.Name', eq('PONTUS.PDF'))" +
-//                      ".bothE().count().next().toString()").get().toString();
-//      assertEquals("2", fileIngestionNameEdgesCount, "2 Has_Ingestion_Event");
-//
-//
-//      String fileMonthAndYear =
-//              App.executor.eval("App.g.V().has('Object.Data_Procedures.ID',eq('578')).out('Has_Ingestion_Event')" +
-//                      ".properties('Event.File_Ingestion.Last_Access').value().next().toString()").get().toString();
-//      assertEquals("11/2020", fileMonthAndYear, "Mês e Ano do FILE");
-//
-//    } catch (ExecutionException e) {
-//      e.printStackTrace();
-//      assertNull(e);
-//    }
-//  }
 
 }
