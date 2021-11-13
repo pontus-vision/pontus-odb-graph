@@ -142,7 +142,7 @@ public class PVBasicTest extends AppTest {
 
 //    test0000 for Object.Data_Source.Name
       String sharepointDataSourceId =
-          App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('sharepoint/treinamentos'))" +
+          App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('SHAREPOINT/TREINAMENTOS'))" +
               ".next().id().toString()").get().toString();
 //      assertEquals(userId3,"#82:0"); -- Id can change!!
       String rootConnectionsQuery = "App.g.V(\"" + sharepointDataSourceId + "\").bothE().count().next().toString()";
@@ -184,8 +184,8 @@ public class PVBasicTest extends AppTest {
 
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
-      "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   sharepoint/data-sources, 7",
-      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   sharepoint/fontes-de-dados, 9"
+      "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 7",
+      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 9"
   })
   public void test00004SharepointDataSources(String jsonFile, String ruleName, String dataSourceName,
                                              String expectedDataPolicyCount) throws InterruptedException {
@@ -300,7 +300,7 @@ public class PVBasicTest extends AppTest {
 
 //    test0000 for Object.Data_Source.Name
       String userId2 =
-          App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('totvs/protheus/sa1_clientes'))" +
+          App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
               ".next().id().toString()").get().toString();
       String rootConnectionsQuery = "App.g.V(\"" + userId2 + "\").bothE().count().next().toString()";
       String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
@@ -690,8 +690,8 @@ public class PVBasicTest extends AppTest {
 
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
-      "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   sharepoint/mapeamento-de-processos,  6,  2",
-      "pv-extract-sharepoint-ropa.json,   sharepoint_ropa,   sharepoint/ropa,    125, 18"
+      "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   SHAREPOINT/MAPEAMENTO-DE-PROCESSOS,  6,  2",
+      "pv-extract-sharepoint-ropa.json,   sharepoint_ropa,   SHAREPOINT/ROPA,    125, 18"
   })
   public void test00014SharepointProcessMapping(String jsonFile, String ruleName, String dataSourceName, String numDataSrcs, String numDataPolicies) throws InterruptedException {
     try {

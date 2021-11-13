@@ -90,10 +90,10 @@ public class PVSharepointRiskTest extends AppTest {
 
       String mitigationsR02 =
           App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).out('Mitigates_Risk')\n" +
-              ".values('').next().toString()").get().toString();
+              ".values('Object.Risk_Mitigation_Data_Source.Mitigation_Id').next().toString()").get().toString();
 
 
-      assertEquals("M-DATA-ENCR-FLIGHT",numMitigationsR02, "1 Risk Mitigation associated with R02");
+      assertEquals("M-DATA-ENCR-FLIGHT",mitigationsR02, "1 Risk Mitigation associated with R02");
 
 
 
