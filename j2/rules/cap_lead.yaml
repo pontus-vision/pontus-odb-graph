@@ -1,0 +1,168 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Person.Natural
+      props:
+        - name: Person.Natural.Full_Name
+          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Person.Natural.Title
+          val: ${Title}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Person.Organisation
+      condition: ${Company_Name_1?.trim()?.length() > 0}
+      props:
+        - name: Person.Organisation.Name
+          val: ${Company_Name_1?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
+    - label: Object.Phone_Number
+      name: telephone
+      condition: ${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}
+      props:
+        - name: Object.Phone_Number.Raw
+          val: ${Telephone_no_}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Phone_Number.Numbers_Only
+          val: ${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object.Phone_Number.Last_7_Digits
+          val: ${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    
+    - label: Object.Phone_Number
+      name: mobile
+      condition: ${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}
+      props:
+        - name: Object.Phone_Number.Raw
+          val: ${Mobile_Number}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Phone_Number.Numbers_Only
+          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object.Phone_Number.Last_7_Digits
+          val: ${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    
+    - label: Location.Address
+      props:
+        - name: Location.Address.Full_Address
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location.Address.Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
+          mandatoryInSearch: True
+    
+    - label: Object.Email_Address
+      condition: ${E_Mail_Address?.trim()?.length() > 0}
+      props:
+        - name: Object.Email_Address.Email
+          val: ${E_Mail_Address?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+    
+    - label: Event.Ingestion
+      props:
+        - name: Event.Ingestion.Type
+          val: sap/c@p Lead
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Ingestion.Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event.Group_Ingestion
+      props:
+        - name: Event.Group_Ingestion.Type
+          val: sap/c@p Lead
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Metadata_Start_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Object.Data_Source
+      props:
+        - name: Object.Data_Source.Name
+          val: sap/c@p Lead
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Source.Type
+          val: sap/c@p Lead
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Data_Source.Description
+          val: Registros da tabela Lead no SAP/C@P
+          mandatoryInSearch: False
+          excludeFromSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object.Data_Source
+    toVertexLabel: Event.Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.Group_Ingestion
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Event.Ingestion
+  - label: Is_Located
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Location.Address
+  - label: Has_Phone
+    fromVertexLabel: Person.Natural
+    toVertexName: telephone
+  - label: Has_Phone
+    fromVertexLabel: Person.Natural
+    toVertexName: mobile
+  - label: Uses_Email
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Object.Email_Address
+  - label: Works
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Person.Organisation
+

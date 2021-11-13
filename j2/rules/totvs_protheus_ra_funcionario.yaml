@@ -22,17 +22,25 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Location.Address
-      name: home
       props:
         - name: Location.Address.Full_Address
-          val: ${RA_ENDEREC} ${RA_COMPLEM} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}
+          val: ${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location.Address.Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(RA_CEP)}
           mandatoryInSearch: True
         - name: Location.Address.Description
           val: moradia principal
           mandatoryInSearch: True
         - name: Location.Address.Type
           val: home
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Person.Natural
       name: mae
@@ -55,9 +63,6 @@ updatereq:
         - name: Person.Natural.Full_Name
           val: ${RA_PAI?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Natural.Full_Name_fuzzy
-          val: ${RA_PAI?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
         - name: Person.Natural.Type
           val: colaborador-pais
           mandatoryInSearch: True
@@ -66,7 +71,6 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Object.Phone_Number
-      name: phone
       condition: ${RA_TELEFON?.replaceAll('[^0-9]','').length() > 0}
       props:
         - name: Object.Phone_Number.Raw
@@ -87,7 +91,7 @@ updatereq:
           type: "[Ljava.lang.String;"
     
     - label: Object.Identity_Card
-      name: RG
+      name: rg
       condition: ${RA_RG?.replaceAll('[^0-9]','')?.length() > 0}
       props:
         - name: Object.Identity_Card.Id_Value
@@ -99,7 +103,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Identity_Card
-      name: CPF
+      name: cpf
       condition: ${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}
       props:
         - name: Object.Identity_Card.Id_Value
@@ -111,7 +115,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object.Identity_Card
-      name: CNPJ
+      name: cnpj
       condition: ${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Object.Identity_Card.Id_Value
@@ -214,9 +218,6 @@ updatereq:
     fromVertexName: pai
     toVertexName: colaborador
   - label: Has_Ingestion_Event
-    fromVertexName: mae
-    toVertexLabel: Event.Ingestion
-  - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
@@ -224,7 +225,7 @@ updatereq:
     toVertexLabel: Event.Group_Ingestion
   - label: Has_Phone
     fromVertexName: colaborador
-    toVertexName: phone
+    toVertexLabel: Object.Phone_Number
   - label: Uses_Email
     fromVertexName: colaborador
     toVertexName: email1
@@ -234,7 +235,13 @@ updatereq:
   - label: Has_Id_Card
     fromVertexName: colaborador
     toVertexName: rg
+  - label: Has_Id_Card
+    fromVertexName: colaborador
+    toVertexName: cpf
+  - label: Has_Id_Card
+    fromVertexName: colaborador
+    toVertexName: cnpj
   - label: Lives
     fromVertexName: colaborador
-    toVertexName: home
+    toVertexLabel: Location.Address
 

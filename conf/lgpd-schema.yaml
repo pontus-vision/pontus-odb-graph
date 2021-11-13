@@ -447,6 +447,46 @@ propertyKeys:
   - name: Event.Transaction.Value
     dataType: String
     cardinality: SINGLE
+  - name: Metadata.Type.Event.Complaint
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Complaint.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Complaint.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Expiry
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Link
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Complaint.Type
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Location.Address
     dataType: String
     cardinality: SINGLE
@@ -769,6 +809,46 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object.Contract.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Campaign
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Campaign.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Campaign.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Expiry
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Link
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Campaign.Type
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Object.Credential
@@ -1473,6 +1553,128 @@ propertyKeys:
   - name: Object.Privacy_Impact_Assessment.Start_Date
     dataType: Date
     cardinality: SINGLE
+  - name: Metadata.Type.Object.Risk_Data_Source
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Risk_Data_Source.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Risk_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Probability
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Impact
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Residual_Probability
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Residual_Impact
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Intrusion_On_Privacy
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Probability_Risk_Of_Reputational_Damage
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Probability_Risk_To_Corporation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Probability_Risk_To_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Impact_Risk_Of_Reputational_Damage
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Impact_Risk_To_Corporation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Impact_Risk_To_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Start_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Risk_Data_Source.Update_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Risk_Mitigation_Data_Source
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Risk_Mitigation_Data_Source.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Mitigation_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Probability_Reduction
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Impact_Reduction
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Intrusion_On_Privacy
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Probability_Risk_Of_Reputational_Damage
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Probability_Risk_To_Corporation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Probability_Risk_To_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Impact_Risk_Of_Reputational_Damage
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Corporation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Individuals
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Start_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Object.Risk_Mitigation_Data_Source.Update_Date
+    dataType: Date
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Privacy_Notice
     dataType: String
     cardinality: SINGLE
@@ -1591,6 +1793,22 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object.Sensitive_Data.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Vehicle
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Vehicle.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Vehicle.License_Plate
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Vehicle.Model
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Vehicle.Model_Year
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Person.Employee
@@ -1862,6 +2080,9 @@ vertexLabels:
   - name: Event.Transaction
     partition: False
     useStatic: False
+  - name: Event.Complaint
+    partition: False
+    useStatic: False
   - name: Location.Address
     partition: False
     useStatic: False
@@ -1887,6 +2108,9 @@ vertexLabels:
     partition: False
     useStatic: False
   - name: Object.Contract
+    partition: False
+    useStatic: False
+  - name: Object.Campaign
     partition: False
     useStatic: False
   - name: Object.Credential
@@ -1943,6 +2167,12 @@ vertexLabels:
   - name: Object.Privacy_Impact_Assessment
     partition: False
     useStatic: False
+  - name: Object.Risk_Data_Source
+    partition: False
+    useStatic: False
+  - name: Object.Risk_Mitigation_Data_Source
+    partition: False
+    useStatic: False
   - name: Object.Privacy_Notice
     partition: False
     useStatic: False
@@ -1950,6 +2180,9 @@ vertexLabels:
     partition: False
     useStatic: False
   - name: Object.Sensitive_Data
+    partition: False
+    useStatic: False
+  - name: Object.Vehicle
     partition: False
     useStatic: False
   - name: Person.Employee
@@ -2022,11 +2255,19 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Campaign
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Column
     multiplicity: MULTI
     unidirected: False
 
   - name: Has_Contract
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Complaint
     multiplicity: MULTI
     unidirected: False
 
@@ -2086,6 +2327,14 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Mobile
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Vehicle
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Policy
     multiplicity: MULTI
     unidirected: False
@@ -2095,6 +2344,10 @@ edgeLabels:
     unidirected: False
 
   - name: Has_Privacy_Notice
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Risk
     multiplicity: MULTI
     unidirected: False
 
@@ -2183,6 +2436,10 @@ edgeLabels:
     unidirected: False
 
   - name: Made_SAR_Request
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Mitigates_Risk
     multiplicity: MULTI
     unidirected: False
 
@@ -2487,6 +2744,28 @@ vertexIndexes:
     
       {}
     
+  - name: "Event.Complaint.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Complaint
+      - Event.Complaint.Date
+      - Event.Complaint.Description
+      - Event.Complaint.Expiry
+      - Event.Complaint.Form_Id
+      - Event.Complaint.Form_Owner_Id
+      - Event.Complaint.Form_Submission_Id
+      - Event.Complaint.Form_Submission_Owner_Id
+      - Event.Complaint.Id
+      - Event.Complaint.Link
+      - Event.Complaint.Status
+      - Event.Complaint.Type
+    propertyKeysMappings:
+    
+      {}
+    
   - name: "Location.Address.MixedIdx"
     composite: false
     unique: false
@@ -2669,6 +2948,28 @@ vertexIndexes:
       - Object.Contract.Link
       - Object.Contract.Status
       - Object.Contract.Type
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Campaign.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Campaign
+      - Object.Campaign.Date
+      - Object.Campaign.Description
+      - Object.Campaign.Expiry
+      - Object.Campaign.Form_Id
+      - Object.Campaign.Form_Owner_Id
+      - Object.Campaign.Form_Submission_Id
+      - Object.Campaign.Form_Submission_Owner_Id
+      - Object.Campaign.Id
+      - Object.Campaign.Link
+      - Object.Campaign.Status
+      - Object.Campaign.Type
     propertyKeysMappings:
     
       {}
@@ -3062,6 +3363,64 @@ vertexIndexes:
     
       {}
     
+  - name: "Object.Risk_Data_Source.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Risk_Data_Source
+      - Object.Risk_Data_Source.Risk_Id
+      - Object.Risk_Data_Source.Description
+      - Object.Risk_Data_Source.Probability
+      - Object.Risk_Data_Source.Impact
+      - Object.Risk_Data_Source.Residual_Probability
+      - Object.Risk_Data_Source.Residual_Impact
+      - Object.Risk_Data_Source.Form_Id
+      - Object.Risk_Data_Source.Form_Owner_Id
+      - Object.Risk_Data_Source.Form_Submission_Id
+      - Object.Risk_Data_Source.Form_Submission_Owner_Id
+      - Object.Risk_Data_Source.Intrusion_On_Privacy
+      - Object.Risk_Data_Source.Probability_Risk_Of_Reputational_Damage
+      - Object.Risk_Data_Source.Probability_Risk_To_Corporation
+      - Object.Risk_Data_Source.Probability_Risk_To_Individuals
+      - Object.Risk_Data_Source.Impact_Risk_Of_Reputational_Damage
+      - Object.Risk_Data_Source.Impact_Risk_To_Corporation
+      - Object.Risk_Data_Source.Impact_Risk_To_Individuals
+      - Object.Risk_Data_Source.Start_Date
+      - Object.Risk_Data_Source.Update_Date
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Risk_Mitigation_Data_Source.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Risk_Mitigation_Data_Source
+      - Object.Risk_Mitigation_Data_Source.Mitigation_Id
+      - Object.Risk_Mitigation_Data_Source.Description
+      - Object.Risk_Mitigation_Data_Source.Probability_Reduction
+      - Object.Risk_Mitigation_Data_Source.Impact_Reduction
+      - Object.Risk_Mitigation_Data_Source.Form_Id
+      - Object.Risk_Mitigation_Data_Source.Form_Owner_Id
+      - Object.Risk_Mitigation_Data_Source.Form_Submission_Id
+      - Object.Risk_Mitigation_Data_Source.Form_Submission_Owner_Id
+      - Object.Risk_Mitigation_Data_Source.Intrusion_On_Privacy
+      - Object.Risk_Mitigation_Data_Source.Probability_Risk_Of_Reputational_Damage
+      - Object.Risk_Mitigation_Data_Source.Probability_Risk_To_Corporation
+      - Object.Risk_Mitigation_Data_Source.Probability_Risk_To_Individuals
+      - Object.Risk_Mitigation_Data_Source.Impact_Risk_Of_Reputational_Damage
+      - Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Corporation
+      - Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Individuals
+      - Object.Risk_Mitigation_Data_Source.Start_Date
+      - Object.Risk_Mitigation_Data_Source.Update_Date
+    propertyKeysMappings:
+    
+      {}
+    
   - name: "Object.Privacy_Notice.MixedIdx"
     composite: false
     unique: false
@@ -3124,6 +3483,20 @@ vertexIndexes:
       - Object.Sensitive_Data.Sexual_Orientation
       - Object.Sensitive_Data.Union_Membership
       - Object.Sensitive_Data.Description
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Vehicle.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Vehicle
+      - Object.Vehicle.License_Plate
+      - Object.Vehicle.Model
+      - Object.Vehicle.Model_Year
     propertyKeysMappings:
     
       {}
