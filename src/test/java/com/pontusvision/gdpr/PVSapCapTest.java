@@ -277,10 +277,10 @@ public class PVSapCapTest extends AppTest {
 
       csvTestUtil("sap-cap/workshop-campaigns-and-recalls.csv", "cap_workshop_campaigns_and_recalls");
 
-      String getContractId =
+      String getRecallCampaignId =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CAMILLA FLAVINA')).out('Has_Campaign')" +
                       ".properties('Object.Campaign.Id').value().next().toString()").get().toString();
-      assertEquals("7856", getContractId,"Id do contrato de Camilla");
+      assertEquals("7856", getRecallCampaignId,"Id do contrato de Camilla");
 
 
       String getCampaignDescription =
