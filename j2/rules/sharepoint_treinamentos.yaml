@@ -75,7 +75,7 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sharepoint/treinamentos
+          val: SHAREPOINT/TREINAMENTOS
           mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: sharepoint/treinamentos

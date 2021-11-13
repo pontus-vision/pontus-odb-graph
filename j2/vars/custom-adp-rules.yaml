@@ -127,8 +127,8 @@ rules:
       - label: Object.Data_Source
         props:
           Name: "ADP"
-          Description: "Dados RH Colaboradores ADP"
-          Type: "Structured Data Insertion"
+#          Description: "Dados RH Colaboradores ADP"
+#          Type: "Structured Data Insertion"
 
       - label: Event.Group_Ingestion
         props:

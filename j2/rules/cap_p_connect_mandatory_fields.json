@@ -136,21 +136,8 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Porsche Connect Mandatory Fields",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Porsche Connect Mandatory Fields",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Porsche Connect Mandatory Fields Report no SAP/C@P",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "val": "SAP/C@P PORSCHE CONNECT MANDATORY FIELDS",
+            "mandatoryInSearch": true
           }
         ]
       }

@@ -187,17 +187,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "ploomes/clientes",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "ploomes/clientes",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros de Clientes no protheus/Totvs",
+            "val": "PLOOMES/CLIENTES",
             "mandatoryInSearch": true
           }
         ]

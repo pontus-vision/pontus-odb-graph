@@ -153,13 +153,7 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/fornecedores
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: sap/fornecedores
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros de Fornecedores no Polaris/SAP
+          val: SAP/FORNECEDORES
           mandatoryInSearch: True
 
   edges:

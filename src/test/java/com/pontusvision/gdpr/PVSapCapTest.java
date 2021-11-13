@@ -42,7 +42,7 @@ public class PVSapCapTest extends AppTest {
           cleanHdr,
           "check clean headers is OK");
 
-      csvTestUtil("sap-cap/lead.csv", "cap_leads");
+      csvTestUtil("sap-cap/lead.csv", "cap_lead");
 
       String personNaturalEdgesCount =
            App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARCEL MOLICA ARAÚJO'))" +
@@ -52,11 +52,11 @@ public class PVSapCapTest extends AppTest {
           "+ 1 Is_Located + 1 Uses_Email");
 
 
-      String leadId =
+      String fullName =
           App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
               "eq('Rua Tarcisio Vanderbilt 260 Casa, Araraquara, São Paulo (SP) - BR, 88650024')).in('Is_Located')" +
-              ".properties('Person.Natural.Customer_ID').value().next().toString()").get().toString();
-      assertEquals("4874886", leadId, "Lead ID de Marcel Molica Araújo");
+              ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+      assertEquals("MARCEL MOLICA ARAÚJO", fullName, "Full Name de Marcel Molica Araújo");
 
 
       String gettingEmailAddress =

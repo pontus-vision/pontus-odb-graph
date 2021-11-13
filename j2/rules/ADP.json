@@ -242,16 +242,6 @@
             "name": "Object.Data_Source.Name",
             "val": "ADP",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Dados RH Colaboradores ADP",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
           }
         ]
       },

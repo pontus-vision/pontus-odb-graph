@@ -5,7 +5,7 @@ rules:
       - label: Object.Data_Source
         name: sharepoint
         props:
-          Name: sharepoint/data-sources
+          Name: SHAREPOINT/DATA-SOURCES
           Type: sharepoint/data-sources
           Description: Data Sources
 
@@ -14,7 +14,7 @@ rules:
         name: data_sources
         props:
           Name:
-            val: "${Title}"
+            val: "${Title}?.toUpperCase()?.trim()"
             mandatoryInSearch: true
           Description:
             val: "${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}"
@@ -126,23 +126,15 @@ rules:
       - label: Object.Data_Source
         name: sharepoint
         props:
-          Name:
-            val: sharepoint/fontes-de-dados
-            mandatoryInSearch: true
-          Type:
-            val: sharepoint/fontes-de-dados
-            mandatoryInSearch: true
-          Description:
-            val: Registros das Fontes de Dados LGPD
-            mandatoryInSearch: true
+          Name: SHAREPOINT/FONTES-DE-DADOS
+          Type: sharepoint/fontes-de-dados
+          Description: Registros das Fontes de Dados LGPD
 
       - label: Object.Data_Source
         condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}"
         name: fontes_de_dados
         props:
-          Name:
-            val: "${Title}"
-            mandatoryInSearch: true
+          Name: "${Title?.toUpperCase()?.trim()}"
           Description:
             val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -315,15 +307,9 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: sharepoint/treinamentos
-            mandatoryInSearch: true
-          Type:
-            val: sharepoint/treinamentos
-            mandatoryInSearch: true
-          Description:
-            val: Registros de Treinamentos LGPD Colaboradores
-            mandatoryInSearch: true
+          Name: SHAREPOINT/TREINAMENTOS
+          Type: sharepoint/treinamentos
+          Description: Registros de Treinamentos LGPD Colaboradores
 
     edges:
       - label: "Course_Training"
@@ -351,15 +337,9 @@ rules:
       - label: Object.Data_Source
         name: sharepoint
         props:
-          Name:
-            val: sharepoint/mapeamento-de-processos
-            mandatoryInSearch: true
-          Type:
-            val: sharepoint/mapeamento-de-processos
-            mandatoryInSearch: true
-          Description:
-            val: Mapeamento de Processo LGPD
-            mandatoryInSearch: true
+          Name: SHAREPOINT/MAPEAMENTO-DE-PROCESSOS
+          Type: sharepoint/mapeamento-de-processos
+          Description: Mapeamento de Processo LGPD
 
       - label: Object.Data_Source
         name: attached_data_sources
@@ -367,7 +347,7 @@ rules:
           Name:
             val: "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
             mandatoryInSearch: true
             processAll: true
 
@@ -501,15 +481,9 @@ rules:
       - label: Object.Data_Source
         name: sharepoint
         props:
-          Name:
-            val: sharepoint/ropa
-            mandatoryInSearch: true
-          Type:
-            val: sharepoint/ropa
-            mandatoryInSearch: true
-          Description:
-            val: Reg of Procs and Activ
-            mandatoryInSearch: true
+          Name: SHAREPOINT/ROPA
+          Type: sharepoint/ropa
+          Description: Reg of Procs and Activ
 
       - label: Object.Data_Source
         name: attached_data_sources
@@ -517,7 +491,7 @@ rules:
           Name:
             val: "${new groovy.json.JsonBuilder(Data_x0020_Source)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
             mandatoryInSearch: true
             processAll: true
 
@@ -649,7 +623,7 @@ rules:
       - label: Object.Data_Source
         name: sharepoint
         props:
-          Name: sharepoint/risk
+          Name: SHAREPOINT/RISK
           Type: sharepoint/risk
           Description:  Data Source Risk
 
@@ -659,13 +633,13 @@ rules:
           Name:
             val: "${new groovy.json.JsonBuilder(Data_x0020_Sources)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
             mandatoryInSearch: true
             processAll: true
 
       - label: Object.Risk_Data_Source
         props:
-          Risk_Id: "${Title}"
+          Risk_Id: "${Title?.trim()?.toUpperCase()}"
           Description: "${Description}"
           Probability: "${Probability}"
           Impact: "${Impact}"
@@ -678,7 +652,7 @@ rules:
           Mitigation_Id:
             val: "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
             mandatoryInSearch: true
             processAll: true
 
@@ -752,14 +726,14 @@ rules:
       - label: Object.Data_Source
         name: sharepoint
         props:
-          Name: sharepoint/risk-mitigations
+          Name: SHAREPOINT/RISK-MITIGATIONS
           Type: sharepoint/risk-mitigations
           Description:  Risk Mitigations
 
 
       - label: Object.Risk_Mitigation_Data_Source
         props:
-          Mitigation_Id: "${Title}"
+          Mitigation_Id: "${Title?.trim()?.toUpperCase()}"
           Description:
             val: "${Description}"
             excludeFromSearch: true

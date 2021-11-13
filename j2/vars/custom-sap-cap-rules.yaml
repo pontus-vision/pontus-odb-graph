@@ -126,15 +126,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Lead"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Lead"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Lead no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P LEAD"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p Lead"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Lead no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -313,15 +312,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Customer Prospect"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Customer Prospect"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Customer Prospect no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P CUSTOMER PROSPECT"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p Customer Prospect"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Customer Prospect no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -459,15 +457,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p My Porsche Change Report"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p My Porsche Change Report"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela My Porsche Change Report no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P MY PORSCHE CHANGE REPORT"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p My Porsche Change Report"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela My Porsche Change Report no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -556,15 +553,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Porsche Connect Mandatory Fields"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Porsche Connect Mandatory Fields"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Porsche Connect Mandatory Fields Report no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P PORSCHE CONNECT MANDATORY FIELDS"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p Porsche Connect Mandatory Fields"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Porsche Connect Mandatory Fields Report no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -648,15 +644,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Porsche Ownership Change"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Porsche Ownership Change"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Porsche Ownership Change no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P PORSCHE OWNERSHIP CHANGE"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p Porsche Ownership Change"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Porsche Ownership Change no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -800,15 +795,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Complaint"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Complaint"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Complaint no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P COMPLAINT"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p Complaint"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Complaint no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -972,15 +966,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Activity"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Activity"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Activity no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P ACTIVITY"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p Activity"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Activity no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -1147,15 +1140,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Workshop Campaigns and Recalls"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Workshop Campaigns and Recalls"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Workshop Campaigns and Recalls no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P WORKSHOP CAMPAIGNS AND RECALLS"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p Workshop Campaigns and Recalls"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Workshop Campaigns and Recalls no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -1315,15 +1307,13 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Competitor Vehicles"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Competitor Vehicles"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Competitor Vehicles no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P COMPETITOR VEHICLES"
+#          Type:
+#            val: "sap/c@p Competitor Vehicles"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Competitor Vehicles no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -1480,15 +1470,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Vehicle"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Vehicle"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Vehicle no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P VEHICLE"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p Vehicle"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Vehicle no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -1675,15 +1664,14 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name:
-            val: "sap/c@p Data Quality"
-            excludeFromSearch: true
-          Type:
-            val: "sap/c@p Data Quality"
-            excludeFromSearch: true
-          Description:
-            val: "Registros da tabela Data Quality no SAP/C@P"
-            excludeFromSearch: true
+          Name: "SAP/C@P DATA QUALITY"
+#            excludeFromSearch: true
+#          Type:
+#            val: "sap/c@p Data Quality"
+#            excludeFromSearch: true
+#          Description:
+#            val: "Registros da tabela Data Quality no SAP/C@P"
+#            excludeFromSearch: true
 
     edges:
       - label: "Has_Ingestion_Event"

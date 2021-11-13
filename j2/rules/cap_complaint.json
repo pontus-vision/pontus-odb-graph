@@ -217,21 +217,8 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Complaint",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Complaint",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Complaint no SAP/C@P",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "val": "SAP/C@P COMPLAINT",
+            "mandatoryInSearch": true
           }
         ]
       }

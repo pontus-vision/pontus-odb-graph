@@ -6,7 +6,7 @@ updatereq:
       name: sharepoint
       props:
         - name: Object.Data_Source.Name
-          val: sharepoint/risk-mitigations
+          val: SHAREPOINT/RISK-MITIGATIONS
           mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: sharepoint/risk-mitigations
@@ -18,7 +18,7 @@ updatereq:
     - label: Object.Risk_Mitigation_Data_Source
       props:
         - name: Object.Risk_Mitigation_Data_Source.Mitigation_Id
-          val: ${Title}
+          val: ${Title?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Object.Risk_Mitigation_Data_Source.Description
           val: ${Description}
