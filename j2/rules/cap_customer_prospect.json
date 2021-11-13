@@ -52,24 +52,6 @@
         ]
       },
       {
-        "label": "Object.Identity_Card",
-        "name": "cnpj",
-        "condition": "${Tax_Number?.replaceAll('[^0-9]', '').length() == 14}",
-        "props": [
-          {
-            "name": "Object.Identity_Card.Id_Value",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Identity_Card.Id_Type",
-            "val": "CNPJ",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
         "label": "Person.Organisation",
         "condition": "${Company_Name_1?.trim()?.length() > 0}",
         "props": [
