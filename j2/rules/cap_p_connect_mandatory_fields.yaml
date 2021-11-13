@@ -91,17 +91,8 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/c@p Porsche Connect Mandatory Fields
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Type
-          val: sap/c@p Porsche Connect Mandatory Fields
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros da tabela Porsche Connect Mandatory Fields Report no SAP/C@P
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          val: SAP/C@P PORSCHE CONNECT MANDATORY FIELDS
+          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event

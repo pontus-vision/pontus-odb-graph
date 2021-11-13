@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sharepoint/ropa",
+            "val": "SHAREPOINT/ROPA",
             "mandatoryInSearch": true
           },
           {
@@ -32,7 +32,7 @@
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
           }
         ]
       },

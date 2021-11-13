@@ -254,7 +254,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "totvs/protheus/sa1_clientes",
+            "val": "TOTVS/PROTHEUS/SA1_CLIENTES",
             "mandatoryInSearch": true
           },
           {

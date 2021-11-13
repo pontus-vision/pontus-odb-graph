@@ -57,7 +57,7 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: Contratos
+          val: CONTRATOS
           mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: Contratos em AWS S3

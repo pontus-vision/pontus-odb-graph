@@ -114,7 +114,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sharepoint/treinamentos",
+            "val": "SHAREPOINT/TREINAMENTOS",
             "mandatoryInSearch": true
           },
           {

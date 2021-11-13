@@ -161,17 +161,8 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/c@p Data Quality
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Type
-          val: sap/c@p Data Quality
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros da tabela Data Quality no SAP/C@P
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          val: SAP/C@P DATA QUALITY
+          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event

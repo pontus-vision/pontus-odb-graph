@@ -148,17 +148,8 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/c@p Workshop Campaigns and Recalls
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Type
-          val: sap/c@p Workshop Campaigns and Recalls
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros da tabela Workshop Campaigns and Recalls no SAP/C@P
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          val: SAP/C@P WORKSHOP CAMPAIGNS AND RECALLS
+          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event

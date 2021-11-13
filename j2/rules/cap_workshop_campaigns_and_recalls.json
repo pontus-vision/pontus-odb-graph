@@ -223,21 +223,8 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Workshop Campaigns and Recalls",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Workshop Campaigns and Recalls",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Workshop Campaigns and Recalls no SAP/C@P",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "val": "SAP/C@P WORKSHOP CAMPAIGNS AND RECALLS",
+            "mandatoryInSearch": true
           }
         ]
       }

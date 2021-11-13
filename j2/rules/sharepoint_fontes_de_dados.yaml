@@ -6,7 +6,7 @@ updatereq:
       name: sharepoint
       props:
         - name: Object.Data_Source.Name
-          val: sharepoint/fontes-de-dados
+          val: SHAREPOINT/FONTES-DE-DADOS
           mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: sharepoint/fontes-de-dados
@@ -20,7 +20,7 @@ updatereq:
       condition: ${Descri_x00e7__x00e3_o?.trim()?.length() > 0}
       props:
         - name: Object.Data_Source.Name
-          val: ${Title}
+          val: ${Title?.toUpperCase()?.trim()}
           mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
