@@ -1390,7 +1390,17 @@ class Matcher {
       }
 
 
-      String propVal = PVValTemplate.getTemplate((String) prop.val).make(binding)
+      String propVal = null;
+
+      try {
+        PVValTemplate.getTemplate((String) prop.val).make(binding)
+
+      }
+      catch (Exception e){
+        System.err.println("Got an exception ${e.getMessage()}; ignoring error for now")
+//        e.printStackTrace()
+      }
+
 
 
       if (propVal != null && !"null".equals(propVal)) {
