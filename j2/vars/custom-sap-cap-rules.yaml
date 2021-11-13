@@ -213,15 +213,6 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
-        condition: "${Tax_Number?.replaceAll('[^0-9]', '').length() == 14}"
-        name: cnpj
-        props:
-          Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
-          Id_Type:
-            val: "CNPJ"
-            excludeFromSearch: true
-
       - label: Person.Organisation
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
