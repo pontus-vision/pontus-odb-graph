@@ -81,16 +81,6 @@ rules:
 #            val: "Leads Contract"
 #            excludeFromSearch: true
 
-#      - label: Object.Contract
-#        props:
-#          Date: "${Status_Since}"
-#          Description: "${Description}"
-#          Id: "${Lead_Group} - ${Lead_ID} - ${Number}"
-#          Status: "${Customer_Status}"
-#          Type:
-#            val: "Leads Contract"
-#            excludeFromSearch: true
-
       - label: Object.Email_Address
         condition: "${E_Mail_Address?.trim()?.length() > 0}"
         props:
@@ -184,9 +174,6 @@ rules:
 
   cap_customer_prospect:
     vertices:
-
-      # TODO => Vertex for Consent, with data such: "Telephone_Consent", "E_Mail_Consent", "Mail_Consent", "Fax_SMS_Consent" and "Social_Media_Consent" !!!
-
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
@@ -270,17 +257,6 @@ rules:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-
-#      - label: Object.Contract
-#        props:
-#          Description: "(Responsável Sales Person) ${Resp__Sales_Person}"
-#          Id: "${Porsche_ID} - ${Profile_ID}"
-#          Status: "${Status}"
-#          Type:
-#            val: "Customer Prospect Contract"
-#            excludeFromSearch: true
-
-#      There is no need for an OBJECT.CONTRACT vertex, because this Table doesn't retrieve "Terms & COnditions" from the DB
 
 #      - label: Object.Contract
 #        props:
