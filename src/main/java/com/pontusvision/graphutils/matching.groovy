@@ -1393,11 +1393,11 @@ class Matcher {
       String propVal = null;
 
       try {
-        PVValTemplate.getTemplate((String) prop.val).make(binding)
+        propVal = PVValTemplate.getTemplate((String) prop.val).make(binding)
 
       }
       catch (Exception e){
-        System.err.println("Got an exception ${e.getMessage()}; ignoring error for now")
+        System.err.println("Got an exception ${e.getMessage()} processing ${prop.name} (${prop.val}); ignoring error for now")
 //        e.printStackTrace()
       }
 

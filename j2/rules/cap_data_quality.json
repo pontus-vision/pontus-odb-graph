@@ -242,21 +242,8 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Data Quality",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Data Quality",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Data Quality no SAP/C@P",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "val": "SAP/C@P DATA QUALITY",
+            "mandatoryInSearch": true
           }
         ]
       }

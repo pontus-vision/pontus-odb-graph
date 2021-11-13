@@ -359,7 +359,7 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: planilhas - S3
+          Name: PLANILHAS - S3
           Type: planilhas - S3
           Description: planilhas guardadas na AWS S3
 
@@ -513,7 +513,7 @@ rules:
       - label: Object.Data_Source
         props:
           Name:
-            val: Contratos
+            val: CONTRATOS
             mandatoryInSearch: true
             excludeFromUpdate: false
 

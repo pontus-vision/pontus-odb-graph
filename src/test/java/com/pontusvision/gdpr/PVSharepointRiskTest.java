@@ -34,58 +34,22 @@ public class PVSharepointRiskTest extends AppTest {
     try {
 
       jsonTestUtil("pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
-          "sharepoint_treinamentos");
+          "sharepoint_risk_mitigation");
 
 //    test0000 for PEDRO Person.Employee NODE
-      String userId =
-          App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('PEDRO ALVARO CABRAL'))\n" +
-              ".next().id().toString()").get().toString();
-      String pedroConnectionsQuery = "App.g.V(\"" + userId + "\").bothE().count().next().toString()";
-      String pedroConnections = App.executor.eval(pedroConnectionsQuery).get().toString();
-      assertEquals(pedroConnections, "1");
+      String numRiskMitigations =
+          App.executor.eval("App.g.V().has('Metadata.Type.Object.Risk_Mitigation_Data_Source', eq('Object.Risk_Mitigation_Data_Source')).count()\n" +
+              ".next().toString()").get().toString();
 
-//    test0000 for MARCELA Person.Employee NODE
-      String userId1 =
-          App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('MARCELA ALVES'))\n" +
-              ".next().id().toString()").get().toString();
+      assertEquals("9",numRiskMitigations, "9 Risk Mitigations");
 
-//    test0000 for JOSE Person.Employee NODE
-      String userId2 =
-          App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('JOSE CARLOS MONSANTO'))\n" +
-              ".next().id().toString()").get().toString();
+      String mSystmPasswd =
+          App.executor.eval("App.g.V().has('Object.Risk_Mitigation_Data_Source.Mitigation_Id', eq('M-SYSTM-PASSWD')).count()\n" +
+              ".next().toString()").get().toString();
 
-//    test0000 for Object.Data_Source.Name
-      String sharepointDataSourceId =
-          App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('sharepoint/treinamentos'))" +
-              ".next().id().toString()").get().toString();
-//      assertEquals(userId3,"#82:0"); -- Id can change!!
-      String rootConnectionsQuery = "App.g.V(\"" + sharepointDataSourceId + "\").bothE().count().next().toString()";
-      String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
-      assertEquals("1", rootConnections);
 
-//    test0000 for Object.Awareness_Campaign.Description
-      String userId4 =
-          App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
-              "eq('1º CURSO - LGPD - LEI GERAL DE PROTEÇÃO DE DADOS')).next().id().toString()").get().toString();
-      String curso1ConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
-      String curso1Connections = App.executor.eval(curso1ConnectionsQuery).get().toString();
-      assertEquals("1", curso1Connections);
+      assertEquals("1",mSystmPasswd, "1 Risk Mitigation m-systm-passwd");
 
-//    test0000 for Object.Awareness_Campaign.Description 2
-      String curso2Connections =
-          App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
-              "eq('BASES LEGAIS LGPD')).bothE().count().next().toString()").get().toString();
-//      String curso2ConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
-//      String curso2Connections = App.executor.eval(curso2ConnectionsQuery).get().toString();
-      assertEquals("2", curso2Connections);
-
-//    test0000 for Object.Awareness_Campaign.Description 3
-      String userId6 =
-          App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
-              "eq('LGPD - MULTAS E SANÇÕES')).next().id().toString()").get().toString();
-      String curso3ConnectionsQuery = "App.g.V(\"" + userId6 + "\").bothE().count().next().toString()";
-      String curso3Connections = App.executor.eval(curso3ConnectionsQuery).get().toString();
-      assertEquals("1", curso3Connections);
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -96,5 +60,50 @@ public class PVSharepointRiskTest extends AppTest {
 
   }
 
+  @Test
+  public void test00002Risk() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+          "sharepoint_risk");
+
+//    test0000 for PEDRO Person.Employee NODE
+      String numRiskMitigations =
+          App.executor.eval("App.g.V().has('Metadata.Type.Object.Risk_Data_Source', eq('Object.Risk_Data_Source')).count()\n" +
+              ".next().toString()").get().toString();
+
+      assertEquals("14",numRiskMitigations, "14 Risks");
+
+      String numDataSourcesR02 =
+          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).out('Has_Risk')\n" +
+              ".count().next().toString()").get().toString();
+
+
+      assertEquals("5",numDataSourcesR02, "5 Data sources associated with R02");
+
+      String numMitigationsR02 =
+          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).out('Mitigates_Risk')\n" +
+              ".count().next().toString()").get().toString();
+
+
+      assertEquals("1",numMitigationsR02, "1 Risk Mitigation associated with R02");
+
+      String mitigationsR02 =
+          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).out('Mitigates_Risk')\n" +
+              ".values('').next().toString()").get().toString();
+
+
+      assertEquals("M-DATA-ENCR-FLIGHT",numMitigationsR02, "1 Risk Mitigation associated with R02");
+
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
 }

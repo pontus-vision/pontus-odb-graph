@@ -6,7 +6,7 @@ updatereq:
       name: sharepoint
       props:
         - name: Object.Data_Source.Name
-          val: sharepoint/ropa
+          val: SHAREPOINT/ROPA
           mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: sharepoint/ropa
@@ -23,7 +23,7 @@ updatereq:
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}
     
     - label: Object.Data_Policy
       props:

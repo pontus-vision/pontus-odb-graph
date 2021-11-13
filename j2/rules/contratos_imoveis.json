@@ -82,7 +82,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "Contratos",
+            "val": "CONTRATOS",
             "mandatoryInSearch": true
           },
           {

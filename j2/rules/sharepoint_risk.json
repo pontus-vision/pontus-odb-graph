@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sharepoint/risk",
+            "val": "SHAREPOINT/RISK",
             "mandatoryInSearch": true
           },
           {
@@ -32,7 +32,7 @@
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()}"
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
           }
         ]
       },
@@ -41,7 +41,7 @@
         "props": [
           {
             "name": "Object.Risk_Data_Source.Risk_Id",
-            "val": "${Title}",
+            "val": "${Title?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {

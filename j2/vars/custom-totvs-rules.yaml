@@ -165,7 +165,7 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: totvs/protheus/sa1_clientes
+          Name: TOTVS/PROTHEUS/SA1_CLIENTES
           Type: totvs/protheus/sa1_clientes
           Description: Registros de Clientes no protheus/Totvs
 
@@ -446,7 +446,7 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: totvs/protheus/sra_funcionarios
+          Name: TOTVS/PROTHEUS/SRA_FUNCIONARIOS
           Type: totvs/protheus/sra_funcionarios
           Description: Registros de Funcionarios no protheus/Totvs
     edges:
@@ -742,7 +742,7 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: totvs/protheus/sa2_fornecedor
+          Name: TOTVS/PROTHEUS/SA2_FORNECEDOR
           Type: totvs/protheus/sa2_fornecedor
           Description: Registros de Fornecedores no protheus/Totvs
 

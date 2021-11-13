@@ -35,7 +35,7 @@ public class AppTest {
    * @return the suite of tests being tested
    */
 
-  public static int TOTAL_NUM_TEST_CLASSES = 2;
+  public static int TOTAL_NUM_TEST_CLASSES = 3;
   public static AtomicInteger counter = new AtomicInteger(TOTAL_NUM_TEST_CLASSES);
 
   public static Server server;
