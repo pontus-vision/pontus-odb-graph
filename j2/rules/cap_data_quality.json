@@ -11,14 +11,8 @@
           },
           {
             "name": "Person.Natural.Customer_ID",
-            "val": "${ID_number?.replaceAll('[^0-9]', '')}",
+            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "Data Quality",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Title",
@@ -28,7 +22,7 @@
           },
           {
             "name": "Person.Natural.Date_Of_Birth",
-            "val": "${Date_of_Birth}",
+            "val": "${Date_of_Birth?.trim()?:'01/01/1666'}",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
           },
@@ -82,12 +76,6 @@
             "name": "Person.Organisation.Name",
             "val": "${Company_Name_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Type",
-            "val": "Data Quality",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -99,13 +87,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Telephone_no_}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Data Quality",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -130,13 +113,8 @@
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${Mobile_Number}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Data Quality",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -163,12 +141,6 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Location.Address.Type",
-            "val": "${Addresstype?.trim()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Location.Address.parser",
             "val": "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": true,
@@ -177,8 +149,7 @@
           {
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -283,7 +254,7 @@
           },
           {
             "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela 'Data Quality' no SAP/C@P",
+            "val": "Registros da tabela Data Quality no SAP/C@P",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

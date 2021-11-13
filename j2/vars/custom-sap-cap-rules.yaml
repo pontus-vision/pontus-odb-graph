@@ -1,14 +1,14 @@
 ---
 rules:
-  cap_leads:
+  cap_lead:
     vertices:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Lead_ID}"
-          Type:
-            val: "Leads"
-            excludeFromSearch: true
+#          Customer_ID: "${Lead_ID}"
+#          Type:
+#            val: "Leads"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
@@ -17,9 +17,9 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "Leads"
-            excludeFromSearch: true
+#          Type:
+#            val: "Leads"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -27,9 +27,10 @@ rules:
         props:
           Raw:
             val: "${Telephone_no_}"
-          Type:
-            val: "Leads"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Leads"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -44,9 +45,10 @@ rules:
         props:
           Raw:
             val: "${Mobile_Number}"
-          Type:
-            val: "Leads"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Leads"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -67,9 +69,17 @@ rules:
           parser:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
-          Post_Code:
-            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-            excludeFromSearch: true
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
+
+#      - label: Object.Contract
+#        props:
+#          Date: "${Status_Since}"
+#          Description: "${Description}"
+#          Id: "${Lead_Group} - ${Lead_ID} - ${Number}"
+#          Status: "${Customer_Status}"
+#          Type:
+#            val: "Leads Contract"
+#            excludeFromSearch: true
 
 #      - label: Object.Contract
 #        props:
@@ -89,7 +99,7 @@ rules:
       - label: Event.Ingestion
         props:
           Type:
-            val: "sap/c@p Leads"
+            val: "sap/c@p Lead"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -109,7 +119,7 @@ rules:
       - label: Event.Group_Ingestion
         props:
           Type:
-            val: "sap/c@p Leads"
+            val: "sap/c@p Lead"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -127,13 +137,13 @@ rules:
       - label: Object.Data_Source
         props:
           Name:
-            val: "sap/c@p Leads"
+            val: "sap/c@p Lead"
             excludeFromSearch: true
           Type:
-            val: "sap/c@p Leads"
+            val: "sap/c@p Lead"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Leads' no SAP/C@P"
+            val: "Registros da tabela Lead no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -180,23 +190,23 @@ rules:
 
       - label: Person.Natural
         props:
-          Full_Name: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]', '')}"
-          Type:
-            val: "Customer Prospect"
-            excludeFromSearch: true
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]','')}"
+#          Type:
+#            val: "Customer Prospect"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
           Date_Of_Birth:
-            val: "${Date_of_Birth}"
+            val: "${Date_of_Birth?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
           Nationality:
             val: "${Nationality?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Object.Identity_Card
-        condition: "${Tax_Number?.replaceAll('[^0-9]', '').length() == 11}"
+        #        condition: "${}"
         name: cpf
         props:
           Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
@@ -217,9 +227,9 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "Customer Prospect"
-            excludeFromSearch: true
+#          Type:
+#            val: "Customer Prospect"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -227,9 +237,10 @@ rules:
         props:
           Raw:
             val: "${Telephone_no_}"
-          Type:
-            val: "Customer Prospect"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Customer Prospect"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -244,9 +255,10 @@ rules:
         props:
           Raw:
             val: "${Mobile_Number}"
-          Type:
-            val: "Customer Prospect"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Customer Prospect"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -259,17 +271,24 @@ rules:
 #        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''} ${District?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
-          Type:
-            val: "${Addresstype?.trim()}"
-            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''} ${District?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
-          Post_Code:
-            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-            excludeFromSearch: true
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
+
+#      - label: Object.Contract
+#        props:
+#          Description: "(Responsável Sales Person) ${Resp__Sales_Person}"
+#          Id: "${Porsche_ID} - ${Profile_ID}"
+#          Status: "${Status}"
+#          Type:
+#            val: "Customer Prospect Contract"
+#            excludeFromSearch: true
 
 #      There is no need for an OBJECT.CONTRACT vertex, because this Table doesn't retrieve "Terms & COnditions" from the DB
 
@@ -334,7 +353,7 @@ rules:
             val: "sap/c@p Customer Prospect"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Customer Prospect' no SAP/C@P"
+            val: "Registros da tabela Customer Prospect no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -378,10 +397,6 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexName: "cpf"
 
-      - label: "Has_Id_Card"
-        fromVertexLabel: "Person.Natural"
-        toVertexName: "cnpj"
-
 #  cap_monthly_cockpits_and_reports:
 #    vertices:
 #      - label: Event.File_Ingestion
@@ -411,7 +426,7 @@ rules:
 #            val: "sap/c@p Monthly Cockpits and Reports"
 #            excludeFromSearch: true
 #          Description:
-#            val: "Registros da tabela 'Monthly Cockpits and Reports' no SAP/C@P"
+#            val: "Registros da tabela Monthly Cockpits and Reports no SAP/C@P"
 #            excludeFromSearch: true
 #
 #    edges:
@@ -432,10 +447,10 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
-          Type:
-            val: "My Porsche Change Report"
-            excludeFromSearch: true
+#          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
+#          Type:
+#            val: "My Porsche Change Report"
+#            excludeFromSearch: true
 
       - label: Event.Ingestion
         props:
@@ -484,7 +499,7 @@ rules:
             val: "sap/c@p My Porsche Change Report"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'My Porsche Change Report' no SAP/C@P"
+            val: "Registros da tabela My Porsche Change Report no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -505,9 +520,9 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Type:
-            val: "Porsche Connect Mandatory Fields"
-            excludeFromSearch: true
+#          Type:
+#            val: "Porsche Connect Mandatory Fields"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
@@ -516,11 +531,11 @@ rules:
         condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: mobile
         props:
-          Raw:
-            val: "${Mobile_Number}"
-          Type:
-            val: "Porsche Connect Mandatory Fields"
-            excludeFromSubsequenceSearch: true
+          Raw: "${Mobile_Number}"
+          excludeFromSearch: true
+#          Type:
+#            val: "Porsche Connect Mandatory Fields"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -581,7 +596,7 @@ rules:
             val: "sap/c@p Porsche Connect Mandatory Fields"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Porsche Connect Mandatory Fields Report' no SAP/C@P"
+            val: "Registros da tabela Porsche Connect Mandatory Fields Report no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -611,9 +626,9 @@ rules:
         name: owner
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Type:
-            val: "Porsche Ownership Change"
-            excludeFromSearch: true
+#          Type:
+#            val: "Porsche Ownership Change"
+#            excludeFromSearch: true
 
       - label: Person.Natural
         name: responsible_dealer
@@ -622,9 +637,9 @@ rules:
           Full_Name_fuzzy:
             val: "${Name_1?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-          Type:
-            val: "Porsche Responsible Dealer"
-            excludeFromSearch: true
+#          Type:
+#            val: "Porsche Responsible Dealer"
+#            excludeFromSearch: true
 
       - label: Event.Ingestion
         props:
@@ -673,7 +688,7 @@ rules:
             val: "sap/c@p Porsche Ownership Change"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Porsche Ownership Change' no SAP/C@P"
+            val: "Registros da tabela Porsche Ownership Change no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -698,10 +713,10 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${Campaign_ID}"
-          Type:
-            val: "SAP/C@P Complaint"
-            excludeFromSearch: true
+#          Customer_ID: "${Campaign_ID}"
+#          Type:
+#            val: "SAP/C@P Complaint"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
@@ -710,19 +725,20 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "SAP/C@P Complaint"
-            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Complaint"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
-          Raw:
+          Raw: 
             val: "${Telephone_no_}"
-          Type:
-            val: "SAP/C@P Complaint"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Complaint"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -735,11 +751,12 @@ rules:
         condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: mobile
         props:
-          Raw:
+          Raw: 
             val: "${Mobile_Number}"
-          Type:
-            val: "CAP/S@P Complaint"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Complaint"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -753,20 +770,18 @@ rules:
           Full_Address:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
-          Type:
-            val: "${Addresstype?.trim()}"
-            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
           parser:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
-          Post_Code:
-            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-            excludeFromSearch: true
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
-      - label: Object.Contract
+      - label: Event.Complaint
         props:
 #          Date: "${Due_Date}"
-          Description: "${Description}.\\nResolvido? = ${Solved}.\\nFinalizado? = ${Closed}."
+          Description: "${Description}; Resolvido = ${Solved}; Finalizado = ${Closed}."
           Id: "${Campaign_ID}"
           Status: "${Status}"
           Type:
@@ -825,7 +840,7 @@ rules:
             val: "sap/c@p Complaint"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Complaint' no SAP/C@P"
+            val: "Registros da tabela Complaint no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -857,9 +872,9 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
 
-      - label: "Has_Contract"
+      - label: "Has_Complaint"
         fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Contract"
+        toVertexLabel: "Event.Complaint"
 
       - label: "Works"
         fromVertexLabel: "Person.Natural"
@@ -870,10 +885,10 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${ID}"
-          Type:
-            val: "SAP/C@P Activity"
-            excludeFromSearch: true
+#          Customer_ID: "${ID}"
+#          Type:
+#            val: "SAP/C@P Activity"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
@@ -882,9 +897,9 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "SAP/C@P Activity"
-            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Activity"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -892,9 +907,10 @@ rules:
         props:
           Raw:
             val: "${Telephone_no_}"
-          Type:
-            val: "SAP/C@P Activity"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Activity"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -909,9 +925,10 @@ rules:
         props:
           Raw:
             val: "${Mobile_Number}"
-          Type:
-            val: "CAP/S@P Activity"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Activity"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -925,25 +942,23 @@ rules:
           Full_Address:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
-          Type:
-            val: "${Addresstype?.trim()}"
-            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
           parser:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
-          Post_Code:
-            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-            excludeFromSearch: true
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
-      - label: Object.Contract
-        props:
-          Date: "${Created_On}"
-          Description: "${Description}"
-          Id: "${ID}"
-          Status: "${User_Status}"
-          Type:
-            val: "SAP/C@P Activity Contract"
-            excludeFromSearch: true
+#      - label: Object.Campaign
+#        props:
+#          Date: "${Created_On}"
+#          Description: "${Description}"
+#          Id: "${ID}"
+#          Status: "${User_Status}"
+#          Type:
+#            val: "SAP/C@P Activity Campaign"
+#            excludeFromSearch: true
 
       - label: Object.Email_Address
         condition: "${E_Mail_Address?.trim()?.length() > 0}"
@@ -997,7 +1012,7 @@ rules:
             val: "sap/c@p Activity"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Activity' no SAP/C@P"
+            val: "Registros da tabela Activity no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -1029,9 +1044,9 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
 
-      - label: "Has_Contract"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Contract"
+#      - label: "Has_Campaign"
+#        fromVertexLabel: "Person.Natural"
+#        toVertexLabel: "Object.Campaign"
 
       - label: "Works"
         fromVertexLabel: "Person.Natural"
@@ -1045,10 +1060,10 @@ rules:
           Full_Name_fuzzy:
             val: "${Name_at_Birth?:''}"
             excludeFromSearch: true
-          Customer_ID: "${Recall_campaign_ID}"
-          Type:
-            val: "SAP/C@P Workshop Campaigns and Recalls"
-            excludeFromSearch: true
+#          Customer_ID: "${Recall_campaign_ID}"
+#          Type:
+#            val: "SAP/C@P Workshop Campaigns and Recalls"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
@@ -1057,9 +1072,9 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "SAP/C@P Workshop Campaigns and Recalls"
-            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Workshop Campaigns and Recalls"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -1067,9 +1082,10 @@ rules:
         props:
           Raw:
             val: "${Telephone_no_}"
-          Type:
-            val: "SAP/C@P Workshop Campaigns and Recalls"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Workshop Campaigns and Recalls"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -1084,9 +1100,10 @@ rules:
         props:
           Raw:
             val: "${Mobile_Number}"
-          Type:
-            val: "CAP/S@P Workshop Campaigns and Recalls"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Workshop Campaigns and Recalls"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -1100,21 +1117,19 @@ rules:
           Full_Address:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
-          Type:
-            val: "${Addresstype?.trim()}"
-            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
           parser:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
-          Post_Code:
-            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-            excludeFromSearch: true
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
-      - label: Object.Contract
+      - label: Object.Campaign
         props:
           Date: "${Start_date}"
           Description: "${Description}"
-          Id: "Recall Campaing ID = ${Recall_campaign_ID}\\nVehicle Ident. = ${Vehicle_Ident_}"
+          Id: "${Recall_campaign_ID?.trim()}"
 #          Status: "${}"
           Type:
             val: "SAP/C@P Workshop Campaigns and Recalls Contract"
@@ -1172,7 +1187,7 @@ rules:
             val: "sap/c@p Workshop Campaigns and Recalls"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Workshop Campaigns and Recalls' no SAP/C@P"
+            val: "Registros da tabela Workshop Campaigns and Recalls no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -1204,9 +1219,9 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
 
-      - label: "Has_Contract"
+      - label: "Has_Campaign"
         fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Contract"
+        toVertexLabel: "Object.Campaign"
 
       - label: "Works"
         fromVertexLabel: "Person.Natural"
@@ -1218,9 +1233,9 @@ rules:
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
 #          Customer_ID: "${Recall_campaign_ID}"
-          Type:
-            val: "SAP/C@P Competitor Vehicles"
-            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Competitor Vehicles"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
@@ -1229,9 +1244,9 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "SAP/C@P Competitor Vehicles"
-            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Competitor Vehicles"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -1239,9 +1254,10 @@ rules:
         props:
           Raw:
             val: "${Telephone_no_}"
-          Type:
-            val: "SAP/C@P Competitor Vehicles"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Competitor Vehicles"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -1256,9 +1272,10 @@ rules:
         props:
           Raw:
             val: "${Mobile_Number}"
-          Type:
-            val: "CAP/S@P Competitor Vehicles"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Competitor Vehicles"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -1272,15 +1289,13 @@ rules:
           Full_Address:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
-          Type:
-            val: "${Addresstype?.trim()}"
-            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
           parser:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
-          Post_Code:
-            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-            excludeFromSearch: true
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
       - label: Object.Vehicle
         props:
@@ -1340,7 +1355,7 @@ rules:
             val: "sap/c@p Competitor Vehicles"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Competitor Vehicles' no SAP/C@P"
+            val: "Registros da tabela Competitor Vehicles no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -1385,10 +1400,10 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
-          #          Customer_ID: "${Recall_campaign_ID}"
-          Type:
-            val: "SAP/C@P Vehicle"
-            excludeFromSearch: true
+#          Customer_ID: "${Recall_campaign_ID}"
+#          Type:
+#            val: "SAP/C@P Vehicle"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
@@ -1397,9 +1412,9 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "SAP/C@P Vehicle"
-            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Vehicle"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -1407,9 +1422,10 @@ rules:
         props:
           Raw:
             val: "${Telephone_no_}"
-          Type:
-            val: "SAP/C@P Vehicle"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "SAP/C@P Vehicle"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -1424,9 +1440,10 @@ rules:
         props:
           Raw:
             val: "${Mobile_Number}"
-          Type:
-            val: "CAP/S@P Vehicle"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "CAP/S@P Vehicle"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -1443,9 +1460,7 @@ rules:
           parser:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
-          Post_Code:
-            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-            excludeFromSearch: true
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
       - label: Object.Vehicle
         props:
@@ -1505,7 +1520,7 @@ rules:
             val: "sap/c@p Vehicle"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Vehicle' no SAP/C@P"
+            val: "Registros da tabela Vehicle no SAP/C@P"
             excludeFromSearch: true
 
     edges:
@@ -1550,15 +1565,15 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
-          Customer_ID: "${ID_number?.replaceAll('[^0-9]', '')}"
-          Type:
-            val: "Data Quality"
-            excludeFromSearch: true
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]','')}"
+#          Type:
+#            val: "Data Quality"
+#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
           Date_Of_Birth:
-            val: "${Date_of_Birth}"
+            val: "${Date_of_Birth?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
           Nationality:
             val: "${Nationality?.trim()?.toUpperCase()}"
@@ -1586,9 +1601,9 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-          Type:
-            val: "Data Quality"
-            excludeFromSearch: true
+#          Type:
+#            val: "Data Quality"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -1596,9 +1611,10 @@ rules:
         props:
           Raw:
             val: "${Telephone_no_}"
-          Type:
-            val: "Data Quality"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Data Quality"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -1613,9 +1629,10 @@ rules:
         props:
           Raw:
             val: "${Mobile_Number}"
-          Type:
-            val: "Data Quality"
-            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
+#          Type:
+#            val: "Data Quality"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -1629,15 +1646,13 @@ rules:
           Full_Address:
             val: "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
-          Type:
-            val: "${Addresstype?.trim()}"
-            excludeFromSearch: true
+#          Type:
+#            val: "${Addresstype?.trim()}"
+#            excludeFromSearch: true
           parser:
             val: "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
-          Post_Code:
-            val: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-            excludeFromSearch: true
+          Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
       #      - label: Object.Contract
       #        props:
@@ -1700,7 +1715,7 @@ rules:
             val: "sap/c@p Data Quality"
             excludeFromSearch: true
           Description:
-            val: "Registros da tabela 'Data Quality' no SAP/C@P"
+            val: "Registros da tabela Data Quality no SAP/C@P"
             excludeFromSearch: true
 
     edges:

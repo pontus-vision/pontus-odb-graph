@@ -2,16 +2,33 @@
 updatereq:
   vertices:
     
-    - label: Person.Natural
+    - label: Object.Data_Source
+      name: sharepoint
       props:
-        - name: Person.Natural.Full_Name
-          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
+        - name: Object.Data_Source.Name
+          val: sharepoint/risk-mitigations
           mandatoryInSearch: True
+        - name: Object.Data_Source.Type
+          val: sharepoint/risk-mitigations
+          mandatoryInSearch: True
+        - name: Object.Data_Source.Description
+          val: Risk Mitigations
+          mandatoryInSearch: True
+    
+    - label: Object.Risk_Mitigation_Data_Source
+      props:
+        - name: Object.Risk_Mitigation_Data_Source.Mitigation_Id
+          val: ${Title}
+          mandatoryInSearch: True
+        - name: Object.Risk_Mitigation_Data_Source.Description
+          val: ${Description}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sap/c@p My Porsche Change Report
+          val: risk-mitigations
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -35,17 +52,6 @@ updatereq:
     
     - label: Event.Group_Ingestion
       props:
-        - name: Event.Group_Ingestion.Type
-          val: sap/c@p My Porsche Change Report
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
         - name: Event.Group_Ingestion.Metadata_Start_Date
           val: ${new Date()}
           mandatoryInSearch: False
@@ -56,30 +62,24 @@ updatereq:
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-    
-    - label: Object.Data_Source
-      props:
-        - name: Object.Data_Source.Name
-          val: sap/c@p My Porsche Change Report
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Type
-          val: sap/c@p My Porsche Change Report
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros da tabela My Porsche Change Report no SAP/C@P
-          mandatoryInSearch: False
-          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Type
+          val: sharepoint/risk-mitigations
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object.Data_Source
+    fromVertexName: sharepoint
     toVertexLabel: Event.Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Event.Ingestion
+    fromVertexLabel: Event.Ingestion
+    toVertexLabel: Object.Risk_Mitigation_Data_Source
 

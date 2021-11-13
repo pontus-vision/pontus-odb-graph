@@ -8,10 +8,6 @@ updatereq:
         - name: Person.Natural.Full_Name
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Natural.Type
-          val: Porsche Ownership Change
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Person.Natural
       name: responsible_dealer
@@ -21,10 +17,6 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Natural.Full_Name_fuzzy
           val: ${Name_1?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Person.Natural.Type
-          val: Porsche Responsible Dealer
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -88,7 +80,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros da tabela 'Porsche Ownership Change' no SAP/C@P
+          val: Registros da tabela Porsche Ownership Change no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 

@@ -11,13 +11,6 @@ updatereq:
           val: ${Name_at_Birth?:''}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Person.Natural.Customer_ID
-          val: ${Recall_campaign_ID}
-          mandatoryInSearch: True
-        - name: Person.Natural.Type
-          val: SAP/C@P Workshop Campaigns and Recalls
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Person.Natural.Title
           val: ${Title}
           mandatoryInSearch: False
@@ -29,10 +22,6 @@ updatereq:
         - name: Person.Organisation.Name
           val: ${Company_Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Organisation.Type
-          val: SAP/C@P Workshop Campaigns and Recalls
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Object.Phone_Number
       name: telephone
@@ -40,11 +29,8 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_no_}
-          mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: SAP/C@P Workshop Campaigns and Recalls
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -61,11 +47,8 @@ updatereq:
       props:
         - name: Object.Phone_Number.Raw
           val: ${Mobile_Number}
-          mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: CAP/S@P Workshop Campaigns and Recalls
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -82,31 +65,26 @@ updatereq:
           val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Location.Address.Type
-          val: ${Addresstype?.trim()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Location.Address.parser
           val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location.Address.Post_Code
           val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
     
-    - label: Object.Contract
+    - label: Object.Campaign
       props:
-        - name: Object.Contract.Date
+        - name: Object.Campaign.Date
           val: ${Start_date}
           mandatoryInSearch: True
-        - name: Object.Contract.Description
+        - name: Object.Campaign.Description
           val: ${Description}
           mandatoryInSearch: True
-        - name: Object.Contract.Id
-          val: Recall Campaing ID = ${Recall_campaign_ID}\nVehicle Ident. = ${Vehicle_Ident_}
+        - name: Object.Campaign.Id
+          val: ${Recall_campaign_ID?.trim()}
           mandatoryInSearch: True
-        - name: Object.Contract.Type
+        - name: Object.Campaign.Type
           val: SAP/C@P Workshop Campaigns and Recalls Contract
           mandatoryInSearch: False
           excludeFromSearch: True
@@ -178,7 +156,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Source.Description
-          val: Registros da tabela 'Workshop Campaigns and Recalls' no SAP/C@P
+          val: Registros da tabela Workshop Campaigns and Recalls no SAP/C@P
           mandatoryInSearch: False
           excludeFromSearch: True
 
@@ -204,9 +182,9 @@ updatereq:
   - label: Uses_Email
     fromVertexLabel: Person.Natural
     toVertexLabel: Object.Email_Address
-  - label: Has_Contract
+  - label: Has_Campaign
     fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Contract
+    toVertexLabel: Object.Campaign
   - label: Works
     fromVertexLabel: Person.Natural
     toVertexLabel: Person.Organisation
