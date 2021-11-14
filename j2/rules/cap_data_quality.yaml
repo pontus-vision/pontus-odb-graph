@@ -15,7 +15,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person.Natural.Date_Of_Birth
-          val: ${Date_of_Birth?.trim()?:'01/01/1666'}
+          val: ${Date_of_Birth?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
           mandatoryInSearch: True
           type: "java.util.Date"
         - name: Person.Natural.Nationality

@@ -2,3 +2,4 @@
 target
 jpostal/
 databases/
+docker-lib/Dockerfile.template
