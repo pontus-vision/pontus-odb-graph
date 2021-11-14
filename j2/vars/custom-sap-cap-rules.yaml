@@ -185,7 +185,7 @@ rules:
             val: "${Title}"
             excludeFromSearch: true
           Date_Of_Birth:
-            val: "${Date_of_Birth?.trim()?:'01/01/1666'}"
+            val: "${Date_of_Birth?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
           Nationality:
             val: "${Nationality?.trim()?.toUpperCase()}"
@@ -1484,7 +1484,7 @@ rules:
             val: "${Title}"
             excludeFromSearch: true
           Date_Of_Birth:
-            val: "${Date_of_Birth?.trim()?:'01/01/1666'}"
+            val: "${Date_of_Birth?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
           Nationality:
             val: "${Nationality?.trim()?.toUpperCase()}"

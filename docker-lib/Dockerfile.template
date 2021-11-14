@@ -22,7 +22,9 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp
 RUN ln -s /tmp/libpostal.so /tmp/libpostal.so.1 || true && \
     ln -s /tmp/libjpostal_parser.so  /tmp/libjpostal_parser.so.1 || true && \
     ln -s /pontus-odb-graph /orientdb && \
-    mvn install
+    mvn install -DskipTests=true
+
+RUN mvn -X test -Dmaven.test.failure.ignore=false  -Dsurefire.useFile=false 
 
 RUN cd /root/.m2/repository && for i in *; do if [[ "com" == ${DOLLAR}i || "pv-gdpr" == ${DOLLAR}i ]]; then echo skip ; else rm -r ${DOLLAR}i; fi; done
 

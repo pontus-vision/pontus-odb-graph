@@ -89,8 +89,8 @@ public class PVSapCapTest extends AppTest {
       assertEquals("natinhobolderi@gmail.com", gettingEmailAddress, "E-mail de Natan Bolderi");
 
       String dateOfBirth =
-          App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
-              "eq('Avenida Fontoura Pinto Filho 1050 Q6 Lt 20 Condomínio Riacho Fundo 1, Recife, Pernambuco (PE) - BR, 14022-000'))" +
+          App.executor.eval("App.g.V().has('Location.Address.Post_Code'," +
+              "eq('14022-000'))" +
               ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
       // replace the timezone with GMT; otherwise, if the test is run in Brazil, that appears as BRT 1975
       // ... in regex means any character, so ... 1976 will replace BRT 1976 with GMT 1975
