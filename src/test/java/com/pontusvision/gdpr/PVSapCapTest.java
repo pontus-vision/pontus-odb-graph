@@ -83,21 +83,21 @@ public class PVSapCapTest extends AppTest {
 //      assertEquals("7", personNaturalEdgesCount, "2 Has_Phone + 1 Event.Ingestion + 1 Works " +
 //              "+ 1 Is_Located + 1 Uses_Email + 1 Is_Lead");
 
+      String gettingEmailAddress =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Uses_Email')" +
+                      ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
+      assertEquals("natinhobolderi@gmail.com", gettingEmailAddress, "E-mail de Natan Bolderi");
 
       String dateOfBirth =
-          App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
-              "eq('Rua Porto Alegre 12 , Bairro da Lama (Vila Loubos), Gralhas do Sul - Brasil, 85867-909'))" +
+          App.executor.eval("App.g.V().has('Location.Address.Post_Code'," +
+              "eq('14022-000'))" +
               ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
-      // replace the timezone with GMT; otherwise, if the test is run in Brazil, that appears as BRT 1976
-      // ... in regex means any character, so ... 1976 will replace BRT 1976 with GMT 1976
-      dateOfBirth = dateOfBirth.replaceAll("... 1976", "GMT 1976");
-      assertEquals("Fri Feb 13 01:01:01 GMT 1976", dateOfBirth, "Data de nascimento de Jamil Gupta");
+      // replace the timezone with GMT; otherwise, if the test is run in Brazil, that appears as BRT 1975
+      // ... in regex means any character, so ... 1976 will replace BRT 1976 with GMT 1975
+      dateOfBirth = dateOfBirth.replaceAll("... 1975", "GMT 1975");
+      assertEquals("Thu May 08 01:01:01 GMT 1975", dateOfBirth, "Data de nascimento de Natan Bolderi");
 
 
-      String gettingEmailAddress =
-          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('FERNANDA CASTELO')).out('Uses_Email')" +
-              ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
-      assertEquals("fernanda_castelo@icloud.com", gettingEmailAddress, "E-mail de Fernanda Castelo");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -277,10 +277,10 @@ public class PVSapCapTest extends AppTest {
 
       csvTestUtil("sap-cap/workshop-campaigns-and-recalls.csv", "cap_workshop_campaigns_and_recalls");
 
-      String getContractId =
+      String getRecallCampaignId =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CAMILLA FLAVINA')).out('Has_Campaign')" +
                       ".properties('Object.Campaign.Id').value().next().toString()").get().toString();
-      assertEquals("7856", getContractId,"Id do contrato de Camilla");
+      assertEquals("7856", getRecallCampaignId,"Id do contrato de Camilla");
 
 
       String getCampaignDescription =
