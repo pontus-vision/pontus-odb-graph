@@ -4274,7 +4274,7 @@ the end of the process.
       if (pcntNoEdges > 5 && pcntNoEdges < 40) {
         scoreValue -= 40L
       } else if (pcntNoEdges > 40) {
-        scoreValue -= (20L + Math.max(2L * pcntNoEdges, 70L))
+        scoreValue -= (20L + Math.min(2L * pcntNoEdges, 70L))
       } else {
         scoreValue -= (pcntNoEdges)
       }
@@ -5141,20 +5141,25 @@ the end of the process.
       }
 
 
-      App.g.V()
-              .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
-              .groupCount().by('Event.Subject_Access_Request.Request_Type')
-              .each {
-                it.each { it2 ->
-                  if (!firstTime) {
-                    sb.append("\n,")
-                  } else {
-                    firstTime = false
+      try {
+        App.g.V()
+                .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
+                .groupCount().by('Event.Subject_Access_Request.Request_Type')
+                .each {
+                  it.each { it2 ->
+                    if (!firstTime) {
+                      sb.append("\n,")
+                    } else {
+                      firstTime = false
+                    }
+                    sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (Total)\",")
+                    sb.append("\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": $it2.value }".toString())
                   }
-                  sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (Total)\",")
-                  sb.append("\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": $it2.value }".toString())
                 }
-              }
+      } catch (Exception e){
+        System.err("Ignoring error when processing Stats: ${e.getMessage()}; ${e.getCause()}")
+        e.printStackTrace()
+      }
 
       App.g.V()
               .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))

@@ -108,9 +108,9 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: ploomes/clientes
-          Type: ploomes/clientes
-          Description: Registros de Clientes no protheus/Totvs
+          Name: PLOOMES/CLIENTES
+#          Type: ploomes/clientes
+#          Description: Registros de Clientes no protheus/Totvs
     edges:
       - label: Has_Ingestion_Event
         fromVertexLabel: Person.Natural

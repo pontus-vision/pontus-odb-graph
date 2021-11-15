@@ -161,12 +161,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: ADP
           mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Dados RH Colaboradores ADP
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: Structured Data Insertion
-          mandatoryInSearch: True
     
     - label: Event.Group_Ingestion
       props:

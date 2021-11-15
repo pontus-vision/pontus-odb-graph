@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sharepoint/risk-mitigations",
+            "val": "SHAREPOINT/RISK-MITIGATIONS",
             "mandatoryInSearch": true
           },
           {
@@ -27,7 +27,7 @@
         "props": [
           {
             "name": "Object.Risk_Mitigation_Data_Source.Mitigation_Id",
-            "val": "${Title}",
+            "val": "${Title?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {

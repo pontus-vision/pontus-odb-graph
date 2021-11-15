@@ -6,7 +6,7 @@ updatereq:
       name: sharepoint
       props:
         - name: Object.Data_Source.Name
-          val: sharepoint/data-sources
+          val: SHAREPOINT/DATA-SOURCES
           mandatoryInSearch: True
         - name: Object.Data_Source.Type
           val: sharepoint/data-sources
@@ -20,7 +20,7 @@ updatereq:
       condition: ${field_Descri_x0020__x0020_o?.trim()?.length() > 0}
       props:
         - name: Object.Data_Source.Name
-          val: ${Title}
+          val: ${Title}?.toUpperCase()?.trim()
           mandatoryInSearch: True
         - name: Object.Data_Source.Description
           val: ${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}

@@ -144,17 +144,8 @@ updatereq:
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: sap/c@p Complaint
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Type
-          val: sap/c@p Complaint
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros da tabela Complaint no SAP/C@P
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          val: SAP/C@P COMPLAINT
+          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event

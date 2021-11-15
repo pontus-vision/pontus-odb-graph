@@ -22,7 +22,7 @@
           },
           {
             "name": "Person.Natural.Date_Of_Birth",
-            "val": "${Date_of_Birth?.trim()?.replaceAll('\\\\.', '/')?:'01/01/1666'}",
+            "val": "${Date_of_Birth?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
           },
@@ -242,21 +242,8 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sap/c@p Data Quality",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sap/c@p Data Quality",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros da tabela Data Quality no SAP/C@P",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "val": "SAP/C@P DATA QUALITY",
+            "mandatoryInSearch": true
           }
         ]
       }

@@ -301,7 +301,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "totvs/protheus/sra_funcionarios",
+            "val": "TOTVS/PROTHEUS/SRA_FUNCIONARIOS",
             "mandatoryInSearch": true
           },
           {

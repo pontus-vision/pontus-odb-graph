@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "sharepoint/fontes-de-dados",
+            "val": "SHAREPOINT/FONTES-DE-DADOS",
             "mandatoryInSearch": true
           },
           {
@@ -29,7 +29,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "${Title}",
+            "val": "${Title?.toUpperCase()?.trim()}",
             "mandatoryInSearch": true
           },
           {

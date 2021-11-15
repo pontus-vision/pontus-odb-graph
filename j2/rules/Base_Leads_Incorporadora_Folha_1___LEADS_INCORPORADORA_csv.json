@@ -188,7 +188,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "planilhas - S3",
+            "val": "PLANILHAS - S3",
             "mandatoryInSearch": true
           },
           {
