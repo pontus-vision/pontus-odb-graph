@@ -260,7 +260,7 @@
       {
         "label": "Object.Privacy_Notice",
         "name": "mail_consent",
-        "condition": "${Mail_Consent.equals('Y')}",
+        "condition": "${Mail_Consent?.equals('Y')}",
         "props": [
           {
             "name": "Object.Privacy_Notice.Description",
@@ -272,7 +272,7 @@
       {
         "label": "Object.Privacy_Notice",
         "name": "e_mail_consent",
-        "condition": "${E_Mail_Consent.equals('Y')}",
+        "condition": "${E_Mail_Consent?.equals('Y')}",
         "props": [
           {
             "name": "Object.Privacy_Notice.Description",
@@ -284,7 +284,7 @@
       {
         "label": "Object.Privacy_Notice",
         "name": "telefone_consent",
-        "condition": "${Telephone_Consent.equals('Y')}",
+        "condition": "${Telephone_Consent?.equals('Y')}",
         "props": [
           {
             "name": "Object.Privacy_Notice.Description",
@@ -296,7 +296,7 @@
       {
         "label": "Object.Privacy_Notice",
         "name": "cust_pros_consent",
-        "condition": "${Cust____Pros__Care.equals('Y')}",
+        "condition": "${Cust____Pros__Care?.equals('Y')}",
         "props": [
           {
             "name": "Object.Privacy_Notice.Description",
@@ -308,7 +308,7 @@
       {
         "label": "Object.Privacy_Notice",
         "name": "fax_sms_consent",
-        "condition": "${Fax_SMS_Consent.equals('Y')}",
+        "condition": "${Fax_SMS_Consent?.equals('Y')}",
         "props": [
           {
             "name": "Object.Privacy_Notice.Description",
@@ -320,7 +320,7 @@
       {
         "label": "Object.Privacy_Notice",
         "name": "social_media_consent",
-        "condition": "${Social_Media_Consent.equals('Y')}",
+        "condition": "${Social_Media_Consent?.equals('Y')}",
         "props": [
           {
             "name": "Object.Privacy_Notice.Description",
@@ -344,6 +344,11 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Consent",
         "toVertexLabel": "Event.Ingestion"
       },
       {
@@ -375,6 +380,41 @@
         "label": "Has_Id_Card",
         "fromVertexLabel": "Person.Natural",
         "toVertexName": "cpf"
+      },
+      {
+        "label": "Has_Consent",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexName": "Event.Consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event.Consent",
+        "toVertexName": "mail_consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event.Consent",
+        "toVertexName": "social_media_consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event.Consent",
+        "toVertexName": "fax_sms_consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event.Consent",
+        "toVertexName": "cust_pros_consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event.Consent",
+        "toVertexName": "telefone_consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event.Consent",
+        "toVertexName": "e_mail_consent"
       }
     ]
   }
