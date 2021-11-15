@@ -1108,12 +1108,13 @@ class Matcher {
 
     return FileNLPRequest.upsertFileNLPRequestArray(App.graph, App.g, recordList).toString()
   }
+
   static String ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g,
                                            String jsonString,
                                            String jsonPath,
                                            String ruleName) {
 
-    StringBuffer sb = new StringBuffer()
+    StringBuffer sb = null //  new StringBuffer()
 
 
     def recordList = JsonPath.read(jsonString, jsonPath)
@@ -1122,25 +1123,25 @@ class Matcher {
 
 
     Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
-    Transaction trans = graph.tx()
-    try {
-      if (!trans.isOpen()) {
-        trans.open()
-      }
-
-      def rules = getRule(ruleName)
-      //jsonSlurper.parseText(jsonRules) as com.pontusvision.com.pontusvision.graphutils.gdpr.mapping.Rules;
 
 
-      Double percentageThreshold = (rules.percentageThreshold == null) ? 10.0d
-              : (double) (rules.percentageThreshold)
-      int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
+    def rules = getRule(ruleName)
+    //jsonSlurper.parseText(jsonRules) as com.pontusvision.com.pontusvision.graphutils.gdpr.mapping.Rules;
 
-      def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
-      parseEdges(rules.updatereq)
+    int successCount = 0
+    int totalCount = 0;
 
-      for (def item in recordList) {
+    Double percentageThreshold = (rules.percentageThreshold == null) ? 10.0d
+            : (double) (rules.percentageThreshold)
+    int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
 
+    def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
+    parseEdges(rules.updatereq)
+
+    for (def item in recordList) {
+      Transaction trans = graph.tx()
+      try {
+        totalCount++
         def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName, Map<String, Double> percentageThresholdByVertexName) =
         getMatchRequests(item as Map<String, String>, rules.updatereq, percentageThreshold, sb)
 
@@ -1155,18 +1156,21 @@ class Matcher {
                 edgeReqs,
                 sb)
 
+        trans.commit()
+        successCount ++
+      } catch (Throwable t) {
+        trans.rollback()
+        sb?.append(t)
+        throw t
+      } finally {
+        trans.close()
       }
-
-
-      trans.commit()
-    } catch (Throwable t) {
-      trans.rollback()
-      sb.append(t)
-      throw t
-    } finally {
-      trans.close()
     }
-    return sb.toString()
+
+
+//    return sb?.toString()
+    return "{ \"status\": \"success\"," +
+            " \"successCount\": ${successCount} }"
   }
 
   static String upsertRule(GraphTraversalSource g, String ruleName, String ruleStr,
@@ -1390,17 +1394,16 @@ class Matcher {
       }
 
 
-      String propVal = null;
+      String propVal = null
 
       try {
         propVal = PVValTemplate.getTemplate((String) prop.val).make(binding)
 
       }
-      catch (Exception e){
+      catch (Exception e) {
         System.err.println("Got an exception ${e.getMessage()} processing ${prop.name} (${prop.val}); ignoring error for now")
 //        e.printStackTrace()
       }
-
 
 
       if (propVal != null && !"null".equals(propVal)) {
@@ -1623,10 +1626,10 @@ class Matcher {
 //            catch (Throwable t) {
 //              sb?.append("\n in updateExistingVertexWithMatchReqs() - FAILED TO DELETE  = ${vertexId} prop=${propName} val = ${it.attribNativeVal}; err = $t")
 //            }
-              if (! g.V(vertexId).has(propName,P.eq(it.attribNativeVal)).hasNext()){
-                localTrav = localTrav.property(propName, it.attribNativeVal)
-                atLeastOneUpdate = true
-              }
+            if (!g.V(vertexId).has(propName, P.eq(it.attribNativeVal)).hasNext()) {
+              localTrav = localTrav.property(propName, it.attribNativeVal)
+              atLeastOneUpdate = true
+            }
 
           } else {
             sb?.append("\n in updateExistingVertexWithMatchReqs() - SKIPPING UPDATE either due to null value or excludeFromUpdate == ${it.excludeFromUpdate} ; vertexId = ${vertexId} prop=${it.propName} val = ${it.attribNativeVal} ")
@@ -1792,7 +1795,7 @@ class Matcher {
             finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
             if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
               String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
-              sb.append("\n\n\n ADDING Event.Ingestion.Business_Rules: ${bizRule}\n\n")
+              sb?.append("\n\n\n ADDING Event.Ingestion.Business_Rules: ${bizRule}\n\n")
               g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
             }
           }
