@@ -423,27 +423,27 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexName: "Event.Consent"
 
-      - label: "Has_Privacy_Notice"
+      - label: "Has_Consent"
         fromVertexLabel: "Event.Consent"
         toVertexName: "mail_consent"
 
-      - label: "Has_Privacy_Notice"
+      - label: "Has_Consent"
         fromVertexLabel: "Event.Consent"
         toVertexName: "social_media_consent"
 
-      - label: "Has_Privacy_Notice"
+      - label: "Has_Consent"
         fromVertexLabel: "Event.Consent"
         toVertexName: "fax_sms_consent"
 
-      - label: "Has_Privacy_Notice"
+      - label: "Has_Consent"
         fromVertexLabel: "Event.Consent"
         toVertexName: "cust_pros_consent"
 
-      - label: "Has_Privacy_Notice"
+      - label: "Has_Consent"
         fromVertexLabel: "Event.Consent"
         toVertexName: "telefone_consent"
 
-      - label: "Has_Privacy_Notice"
+      - label: "Has_Consent"
         fromVertexLabel: "Event.Consent"
         toVertexName: "e_mail_consent"
 
