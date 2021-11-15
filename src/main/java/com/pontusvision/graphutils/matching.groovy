@@ -1129,7 +1129,6 @@ class Matcher {
     //jsonSlurper.parseText(jsonRules) as com.pontusvision.com.pontusvision.graphutils.gdpr.mapping.Rules;
 
     int successCount = 0
-    int totalCount = 0;
 
     Double percentageThreshold = (rules.percentageThreshold == null) ? 10.0d
             : (double) (rules.percentageThreshold)
@@ -1141,7 +1140,6 @@ class Matcher {
     for (def item in recordList) {
       Transaction trans = graph.tx()
       try {
-        totalCount++
         def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName, Map<String, Double> percentageThresholdByVertexName) =
         getMatchRequests(item as Map<String, String>, rules.updatereq, percentageThreshold, sb)
 
