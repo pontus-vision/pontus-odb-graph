@@ -859,11 +859,11 @@ class PontusJ2ReportingFunctions {
     return strToTranslate
   }
 
-  static def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
+  static String renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
     return renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g)
   }
 
-  static def renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
+  static String renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
 
     String vertType = App.g.V(pg_id).label().next()
     def allData = new HashMap<>()

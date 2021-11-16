@@ -477,6 +477,7 @@ schema:
         - name: Delete_Mechanism
         - name: Delete_URL
         - name: Info_Collected
+        - name: Name
         - name: Number_Of_Records_Monthly
         - name: Property
         - name: Type_Of_Natural_Person

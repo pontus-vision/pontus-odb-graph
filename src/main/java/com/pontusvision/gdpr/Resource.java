@@ -3,15 +3,19 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.orientechnologies.orient.core.id.ORecordId;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.mapping.MappingReq;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
+import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
+import com.pontusvision.gdpr.report.ReportTemplateRenderResponse;
 import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
+import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
 import com.pontusvision.graphutils.PText;
+import com.pontusvision.graphutils.PontusJ2ReportingFunctions;
 import com.pontusvision.graphutils.gdpr;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseMessage;
@@ -81,17 +85,15 @@ public class Resource {
   @POST
   @Path("clean_data")
   @Produces(MediaType.TEXT_PLAIN)
-  public String cleanData()
-  {
-    return gdpr.cleanData(App.graph,App.g);
+  public String cleanData() {
+    return gdpr.cleanData(App.graph, App.g);
   }
 
   @POST
   @Path("random_init")
   @Produces(MediaType.TEXT_PLAIN)
-  public String randomInit()
-  {
-    return (String) gdpr.addRandomDataInit(App.graph,App.g);
+  public String randomInit() {
+    return gdpr.addRandomDataInit(App.graph, App.g);
   }
 
   /*
@@ -102,8 +104,8 @@ public class Resource {
   @Path("md2_search")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Md2Reply md2Search(Md2Request req) throws  HTTPException{
-    if (req.settings == null || req.query == null || req.query.name == null ){
+  public Md2Reply md2Search(Md2Request req) throws HTTPException {
+    if (req.settings == null || req.query == null || req.query.name == null) {
 
       Md2Reply reply = new Md2Reply(Response.Status.BAD_REQUEST);
       reply.errorStr = "Invalid Request; missing the settings, query, or query.name fields";
@@ -114,38 +116,37 @@ public class Resource {
         App.g.V().has("Person.Natural.Full_Name",
             PText.textContains(req.query.name.trim().toUpperCase(Locale.ROOT)));
 
-    if (req.query.docCpf != null){
-      gt = gt.has("Person.Natural.Customer_ID",eq(req.query.docCpf.replaceAll("[^0-9]","")));
+    if (req.query.docCpf != null) {
+      gt = gt.has("Person.Natural.Customer_ID", eq(req.query.docCpf.replaceAll("[^0-9]", "")));
     }
     try {
       List<Object> ids = (gt.id().toList());
-      if (ids.size() == 0){
+      if (ids.size() == 0) {
         System.out.println("Found 0 ids matching the request");
-        Md2Reply reply =  new Md2Reply(Response.Status.NOT_FOUND);
+        Md2Reply reply = new Md2Reply(Response.Status.NOT_FOUND);
         reply.errorStr = "Found 0 ids matching the request";
-        return  reply;
-      }
-      else if (ids.size() > 1){
+        return reply;
+      } else if (ids.size() > 1) {
         Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
 
         reply.reqId = req.query.reqId;
-        reply.errorStr = "Found more than one person associated with " +req.query.name+" (docCpf=" +
-            req.query.docCpf+")";
+        reply.errorStr = "Found more than one person associated with " + req.query.name + " (docCpf=" +
+            req.query.docCpf + ")";
 
         return reply;
 
       }
       if (req.query.email != null) {
-        if (! App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
-                eq(req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
-          System.out.println("Not found email " + req.query.email + " associated with " +ids.size()+" (" +
-               req.query.name+")");
+        if (!App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
+            eq(req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
+          System.out.println("Not found email " + req.query.email + " associated with " + ids.size() + " (" +
+              req.query.name + ")");
 
           Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
 
           reply.reqId = req.query.reqId;
-          reply.errorStr = "Not found email " + req.query.email + " associated with " +req.query.name+" (docCpf=" +
-              req.query.docCpf+")";
+          reply.errorStr = "Not found email " + req.query.email + " associated with " + req.query.name + " (docCpf=" +
+              req.query.docCpf + ")";
 
           return reply;
 
@@ -154,10 +155,10 @@ public class Resource {
       }
       Md2Reply reply = new Md2Reply(Response.Status.OK);
 
-      reply.total =  App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
+      reply.total = App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
       reply.reqId = req.query.reqId;
 
-      List<Map<String,Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
+      List<Map<String, Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
           .in("Has_NLP_Events").dedup().range(req.settings.start, req.settings.start + req.settings.limit).as("EVENTS")
 //          .in()
           .match(
@@ -168,49 +169,47 @@ public class Resource {
               __.as("EVENTS").valueMap().as("values")
           )
 //          .select("id","email_body", "email_attachment", "file")
-          .select("ID","eventType","values")
+          .select("ID", "eventType", "values")
 //          .has("Metadata.Type.Event.File_Ingestion",P.eq ("Event.File_Ingestion")).valueMap().as("file")
           .toList();
 
       reply.track = new Md2Reply.Register[res.size()];
 
-      for (int i = 0, ilen = res.size(); i < ilen; i ++){
-        Md2Reply.Register reg  = new Md2Reply.Register();
+      for (int i = 0, ilen = res.size(); i < ilen; i++) {
+        Md2Reply.Register reg = new Md2Reply.Register();
         String eventType = res.get(i).get("eventType").toString();
-        Map<String,List<Object>> values = (Map<String,List<Object>>) res.get(i).get("values");
+        Map<String, List<Object>> values = (Map<String, List<Object>>) res.get(i).get("values");
         Object eventId = res.get(i).get("ID");
 
-        if ("Event.File_Ingestion".equalsIgnoreCase(eventType)){
+        if ("Event.File_Ingestion".equalsIgnoreCase(eventType)) {
           reg.fileType = values.get("Event.File_Ingestion.File_Type").get(0).toString();
           reg.sizeBytes = ((Double) values.get("Event.File_Ingestion.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Event.File_Ingestion.Name").get(0).toString();
           reg.path = values.get("Event.File_Ingestion.Path").get(0).toString();
           reg.created = values.get("Event.File_Ingestion.Created").get(0).toString();
-          reg.owner = values.get("Event.File_Ingestion.Owner") == null ? "":
+          reg.owner = values.get("Event.File_Ingestion.Owner") == null ? "" :
               values.get("Event.File_Ingestion.Owner").get(0).toString();
           reg.server = values.get("Event.File_Ingestion.Server").get(0).toString();
-        }
-        else if ("Object.Email_Message_Attachment".equalsIgnoreCase(eventType)){
+        } else if ("Object.Email_Message_Attachment".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Attachment";
           reg.sizeBytes = ((Double) values.get("Object.Email_Message_Attachment.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Object.Email_Message_Attachment.Attachment_Name").get(0).toString();
-          StringBuilder sb =  new StringBuilder();
+          StringBuilder sb = new StringBuilder();
           sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
           sb.append(values.get("Object.Email_Message_Attachment.Attachment_Id").get(0));
           reg.path = sb.toString();
           List<Object> createdDateTime = values.get("Object.Email_Message_Attachment.Created_Date_Time");
 
-          reg.created = createdDateTime != null?
-              values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString():
+          reg.created = createdDateTime != null ?
+              values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString() :
               "";
 
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Attachment")
               .out("Email_From").values("Event.Email_From_Group.Email");
-          String owner = trav.hasNext()? trav.next().toString(): "";
+          String owner = trav.hasNext() ? trav.next().toString() : "";
           reg.owner = owner;
           reg.server = "office365/email";
-        }
-        else if ("Object.Email_Message_Body".equalsIgnoreCase(eventType)) {
+        } else if ("Object.Email_Message_Body".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Body";
           reg.sizeBytes = ((Double) values.get("Object.Email_Message_Body.Size_Bytes").get(0)).longValue();
           reg.name = values.get("Object.Email_Message_Body.Email_Subject").get(0).toString();
@@ -219,14 +218,14 @@ public class Resource {
           String emailId = (values.get("Object.Email_Message_Body.Email_Id").get(0).toString());
           sb.append(URLEncoder.encode(emailId, "UTF-8"));
           reg.path = sb.toString();
-          reg.created = values.get("Object.Email_Message_Body.Created_Date_Time") == null? "":
+          reg.created = values.get("Object.Email_Message_Body.Created_Date_Time") == null ? "" :
               values.get("Object.Email_Message_Body.Created_Date_Time").get(0).toString();
 
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Body")
               .out("Email_From").values("Event.Email_From_Group.Email");
           //.next().toString();
 
-          String owner = trav.hasNext()? trav.next().toString() : "";
+          String owner = trav.hasNext() ? trav.next().toString() : "";
 
           reg.owner = owner;
           reg.server = "office365/email";
@@ -251,16 +250,13 @@ public class Resource {
 //      reply.track.sizeBytes;
 
 
-
-
       return reply;
-    } catch( Exception e){
-      System.err.println("Error processing data: "+ e.getMessage());
+    } catch (Exception e) {
+      System.err.println("Error processing data: " + e.getMessage());
       e.printStackTrace();
       return new Md2Reply(Response.Status.INTERNAL_SERVER_ERROR);
     }
   }
-
 
 
   @POST
@@ -562,72 +558,79 @@ public class Resource {
 
   public NodePropertyNamesReply nodeProperties(VertexLabelsReply req) {
 
+    if (req == null || req.labels == null || req.labels.length == 0 || req.labels[0].value == null) {
+      return new NodePropertyNamesReply(Response.Status.BAD_REQUEST, "Missing request labels");
+    }
     try {
-      if (req != null && req.labels != null && req.labels.length > 0 && req.labels[0].value != null) {
 
-        //        String[] labels = new String[req.labels.length - 1];
-        //        String label0 = req.labels[0].value;
-        //        GraphTraversal g = App.g.V();
-        //        for (int i = 0, ilen = req.labels.length; i < ilen; i++)
-        //        {
-        //          g = g.has("Metadata.Type", req.labels[i].value).range(0, 1);
-        //
-        //          //          labels[i] = (req.labels[i + 1].value);
-        //
-        //        }
+      //        String[] labels = new String[req.labels.length - 1];
+      //        String label0 = req.labels[0].value;
+      //        GraphTraversal g = App.g.V();
+      //        for (int i = 0, ilen = req.labels.length; i < ilen; i++)
+      //        {
+      //          g = g.has("Metadata.Type", req.labels[i].value).range(0, 1);
+      //
+      //          //          labels[i] = (req.labels[i + 1].value);
+      //
+      //        }
 
-        Set<String> props = new HashSet<>();
-        final String label = req.labels[0].value;
+      Set<String> props = new HashSet<>();
+      final String label = req.labels[0].value;
 
-        OClass oClass = App.graph.getRawDatabase().getMetadata().getSchema().getClass(label);
+      OClass oClass = App.graph.getRawDatabase().getMetadata().getSchema().getClass(label);
 
-        oClass.properties().forEach(oProperty ->
-            {
-              String currLabel = oProperty.getName();
-              if (currLabel.startsWith(label)) {
-                String labelPrefix = "#";
-                try {
-                  final AtomicReference<Boolean> isIndexed = new AtomicReference<>(false);
-                  oClass.getClassIndexes().forEach(idx ->
-                  {
-                    isIndexed.set(isIndexed.get() || idx.getDefinition().getFields().contains(currLabel));
+      oClass.properties().forEach(oProperty ->
+          {
+            String currLabel = oProperty.getName();
+            if (currLabel.startsWith(label)) {
+              String labelPrefix = "#";
+              try {
+                final AtomicReference<Boolean> isIndexed = new AtomicReference<>(false);
+                oClass.getClassIndexes().forEach(idx ->
+                {
+                  isIndexed.set(isIndexed.get() || idx.getDefinition().getFields().contains(currLabel));
 
-                  });
+                });
 
-                  if (!isIndexed.get()) {
-                    labelPrefix = "";
-                  }
-                } catch (Throwable t) {
+                if (!isIndexed.get()) {
                   labelPrefix = "";
                 }
-
-                props.add(labelPrefix + currLabel);
+              } catch (Throwable t) {
+                labelPrefix = "";
               }
 
+              props.add(labelPrefix + currLabel);
             }
 
+          }
+
+      );
+
+      List<Map<Object, Object>> notificationTemplates = App.g.V()
+          .has("Object.Notification_Templates.Types", eq(label))
+          .valueMap("Object.Notification_Templates.Label",
+              "Object.Notification_Templates.Text",
+              "Object.Notification_Templates.Id")
+          .toList();
+
+      boolean useNewMode = req.version != null && req.version.startsWith("v2.");
+      notificationTemplates.forEach(map -> {
+        props.add("@" + map.get("Object.Notification_Templates.Label") + "@" +
+            (useNewMode?
+              map.get("Object.Notification_Templates.Id"):
+              map.get("Object.Notification_Templates.Text"))
         );
 
-        List<Map<Object, Object>> notificationTemplates = App.g.V()
-            .has("Object.Notification_Templates.Types", eq(label))
-            .valueMap("Object.Notification_Templates.Label",
-                "Object.Notification_Templates.Text")
-            .toList();
+      });
 
-        notificationTemplates.forEach(map -> {
-          props.add("@" + map.get("Object.Notification_Templates.Label") + "@" + map
-              .get("Object.Notification_Templates.Text"));
+      return new NodePropertyNamesReply(props);
+//      return reply;
 
-        });
-
-        NodePropertyNamesReply reply = new NodePropertyNamesReply(props);
-        return reply;
-
-      }
     } catch (Throwable e) {
       e.printStackTrace();
+      return new NodePropertyNamesReply(Response.Status.INTERNAL_SERVER_ERROR,e.getMessage());
     }
-    return new NodePropertyNamesReply(Collections.EMPTY_SET);
+//    return new NodePropertyNamesReply(Collections.EMPTY_SET);
   }
 
   @POST
@@ -763,7 +766,7 @@ status: "success", message: "Data source is working", title: "Success"
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   public String gremlinQuery(String requestStr) {
-    GremlinRequest request = gson.fromJson(requestStr,GremlinRequest.class);
+    GremlinRequest request = gson.fromJson(requestStr, GremlinRequest.class);
     final UUID uuid = request.requestId == null ? UUID.randomUUID() :
         UUID.fromString(request.requestId);
     if (request.gremlin == null) {
@@ -869,9 +872,16 @@ status: "success", message: "Data source is working", title: "Success"
 
   public ReportTemplateUpsertResponse reportTemplateUpsert(ReportTemplateUpsertRequest request) {
 
+    if (request.getTemplateName() == null) {
+      return new ReportTemplateUpsertResponse(Response.Status.BAD_REQUEST, "Missing Template Name");
+    }
+    if (request.getTemplatePOLEType() == null) {
+      return new ReportTemplateUpsertResponse(Response.Status.BAD_REQUEST, "Missing POLE Type");
+    }
+
     String templateName = request.getTemplateName();
     String templatePOLEType = request.getTemplatePOLEType();
-    String templateId = gdpr.upsertNotificationTemplate(templatePOLEType,templateName, request.getReportTextBase64());
+    String templateId = gdpr.upsertNotificationTemplate(templatePOLEType, templateName, request.getReportTextBase64());
     System.out.println("Upsert templateId ");
 
     ReportTemplateUpsertResponse reply = new ReportTemplateUpsertResponse(templatePOLEType,
@@ -880,6 +890,43 @@ status: "success", message: "Data source is working", title: "Success"
 
   }
 
+  @POST
+  @Path("report/template/render")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+
+  public ReportTemplateRenderResponse reportTemplateRender(ReportTemplateRenderRequest request) {
+
+    if (request.getTemplateId() == null) {
+      return new ReportTemplateRenderResponse(Response.Status.BAD_REQUEST, "Missing ReportId");
+    }
+    if (request.getRefEntryId() == null) {
+      return new ReportTemplateRenderResponse(Response.Status.BAD_REQUEST, "Missing RefId");
+    }
+
+    String templateId = request.getTemplateId();
+
+    GraphTraversal<Vertex, Vertex> trav = App.g.V().has("Object.Notification_Templates.Id", P.eq(templateId));
+
+    if (!trav.hasNext()) {
+      return new ReportTemplateRenderResponse(Response.Status.NOT_FOUND, "Cannot find template id " +
+          templateId);
+
+    }
+
+
+    ORecordId refId = new ORecordId(request.getRefEntryId());
+
+    String templateTextBase64 = trav.values("Object.Notification_Templates.Text").next().toString();
+    String resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateTextBase64, App.g);
+
+    ReportTemplateRenderResponse reply = new ReportTemplateRenderResponse();
+    reply.setBase64Report(resolvedStr);
+    reply.setRefEntryId(request.getRefEntryId());
+    reply.setTemplateId(request.getTemplateId());
+    return reply;
+
+  }
 
   @GET
   @Path("kpi/calculatePOLECounts")

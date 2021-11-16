@@ -938,6 +938,9 @@ propertyKeys:
   - name: Object.Data_Procedures.Info_Collected
     dataType: String
     cardinality: SINGLE
+  - name: Object.Data_Procedures.Name
+    dataType: String
+    cardinality: SINGLE
   - name: Object.Data_Procedures.Number_Of_Records_Monthly
     dataType: String
     cardinality: SINGLE
@@ -3024,6 +3027,7 @@ vertexIndexes:
       - Object.Data_Procedures.Delete_Mechanism
       - Object.Data_Procedures.Delete_URL
       - Object.Data_Procedures.Info_Collected
+      - Object.Data_Procedures.Name
       - Object.Data_Procedures.Number_Of_Records_Monthly
       - Object.Data_Procedures.Property
       - Object.Data_Procedures.Type_Of_Natural_Person
