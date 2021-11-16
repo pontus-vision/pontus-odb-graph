@@ -917,7 +917,8 @@ status: "success", message: "Data source is working", title: "Success"
 
     ORecordId refId = new ORecordId(request.getRefEntryId());
 
-    String templateTextBase64 = trav.values("Object.Notification_Templates.Text").next().toString();
+    String templateTextBase64 = App.g.V().has("Object.Notification_Templates.Id", P.eq(templateId))
+        .values("Object.Notification_Templates.Text").next().toString();
     String resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateTextBase64, App.g);
 
     ReportTemplateRenderResponse reply = new ReportTemplateRenderResponse();
