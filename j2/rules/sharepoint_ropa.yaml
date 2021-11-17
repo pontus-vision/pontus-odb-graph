@@ -36,9 +36,17 @@ updatereq:
     
     - label: Object.Data_Procedures
       props:
+        - name: Object.Data_Procedures.ID
+          val: ${Title}
+          mandatoryInSearch: True
+        - name: Object.Data_Procedures.Name
+          val: ${field_Process}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Data_Procedures.Description
           val: ${field_Purpose_x0020_of_x0020_the_x0020_process}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Data_Procedures.Type
           val: ${field_Access_x0020__x0020_Transfer_x0020_to_x0020_AND_x0020_OR_x0020_Receipt_x0020_of_x0020_third_x0020_parties}
           mandatoryInSearch: False
@@ -49,10 +57,6 @@ updatereq:
           excludeFromSearch: True
         - name: Object.Data_Procedures.BusinessAreaResponsible
           val: ${field_Area} - ${field_Responsible}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Procedures.MacroProcessName
-          val: ${field_Process}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object.Data_Procedures.Country_Where_Stored

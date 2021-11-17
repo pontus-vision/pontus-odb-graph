@@ -15,20 +15,30 @@ import java.util.regex.Pattern;
 
     }
  */
-public class VertexLabelsReply
+public class VertexLabelsReply extends BaseReply
 {
 
   ReactSelectOptions[] labels;
 
+  String version;
+
   // must have this default constructor to get this class serialized as a reply!!!
+
+
+  public VertexLabelsReply(Status status, String errorMsg) {
+    super(status);
+    this.setErrorStr(errorMsg);
+  }
 
   public VertexLabelsReply()
   {
+    super();
 
   }
 
   public VertexLabelsReply(Collection<OClass> oClasses)
   {
+    super();
 
     LinkedList<ReactSelectOptions> labelsList = new LinkedList<>();
 
@@ -47,6 +57,7 @@ public class VertexLabelsReply
 
   }
 
+
   public ReactSelectOptions[] getLabels()
   {
     return labels;
@@ -55,5 +66,13 @@ public class VertexLabelsReply
   public void setLabels(ReactSelectOptions[] labels)
   {
     this.labels = labels;
+  }
+
+  public String getVersion() {
+    return version;
+  }
+
+  public void setVersion(String version) {
+    this.version = version;
   }
 }

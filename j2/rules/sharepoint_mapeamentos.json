@@ -55,9 +55,21 @@
         "label": "Object.Data_Procedures",
         "props": [
           {
+            "name": "Object.Data_Procedures.ID",
+            "val": "${Title}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Procedures.Name",
+            "val": "${Processo}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
             "name": "Object.Data_Procedures.Type",
             "val": "${Acesso_x002c__x0020_Transfer_x00}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Procedures.Type_Of_Natural_Person",
@@ -68,12 +80,6 @@
           {
             "name": "Object.Data_Procedures.BusinessAreaResponsible",
             "val": "${_x00c1_rea} - ${Respons_x00e1_velLookupId}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Procedures.MacroProcessName",
-            "val": "${Processo}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

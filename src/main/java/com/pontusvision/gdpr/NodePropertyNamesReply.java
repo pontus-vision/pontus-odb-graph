@@ -12,21 +12,28 @@ import java.util.regex.Pattern;
 
     }
  */
-public class NodePropertyNamesReply
+public class NodePropertyNamesReply extends BaseReply
 {
 
   ReactSelectOptions[] labels;
 
   // must have this default constructor to get this class serialized as a reply!!!
 
+
+  public NodePropertyNamesReply(Status status, String errorStr) {
+    super(status);
+    this.setErrorStr(errorStr);
+  }
+
   public NodePropertyNamesReply()
   {
+    super();
 
   }
 
   public NodePropertyNamesReply(Iterable<String> vertexProperties)
   {
-
+    super();
     LinkedList<ReactSelectOptions> labelsList = new LinkedList<>();
 
     for (String vertexLabel : vertexProperties)

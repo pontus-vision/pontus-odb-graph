@@ -18,7 +18,7 @@ rules:
             mandatoryInSearch: true
           Description:
             val: "${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
+            excludeFromSearch: true
           Engine:
             val: "${field_Sistema}"
             excludeFromSearch: true
@@ -364,17 +364,18 @@ rules:
 
       - label: Object.Data_Procedures
         props:
+          ID: "${Title}"
+          Name:
+            val: "${Processo}"
+            excludeFromSearch: true
           Type:
             val: "${Acesso_x002c__x0020_Transfer_x00}"
-            mandatoryInSearch: true
+            excludeFromSearch: true
           Type_Of_Natural_Person:
             val: "${Categoria_x0020_dos_x0020_titula}"
             excludeFromSearch: true
           BusinessAreaResponsible:
             val: "${_x00c1_rea} - ${Respons_x00e1_velLookupId}"
-            excludeFromSearch: true
-          MacroProcessName:
-            val: "${Processo}"
             excludeFromSearch: true
           Country_Where_Stored:
             val: "${Pa_x00ed_s_x0020_onde_x0020_as_x}"
@@ -508,7 +509,13 @@ rules:
 
       - label: Object.Data_Procedures
         props:
-          Description: "${field_Purpose_x0020_of_x0020_the_x0020_process}"
+          ID: "${Title}"
+          Name:
+            val: "${field_Process}"
+            excludeFromSearch: true
+          Description:
+            val: "${field_Purpose_x0020_of_x0020_the_x0020_process}"
+            excludeFromSearch: true
           Type:
             val: "${field_Access_x0020__x0020_Transfer_x0020_to_x0020_AND_x0020_OR_x0020_Receipt_x0020_of_x0020_third_x0020_parties}"
             excludeFromSearch: true
@@ -517,9 +524,6 @@ rules:
             excludeFromSearch: true
           BusinessAreaResponsible:
             val: "${field_Area} - ${field_Responsible}"
-            excludeFromSearch: true
-          MacroProcessName:
-            val: "${field_Process}"
             excludeFromSearch: true
           Country_Where_Stored:
             val: "${field_Country_x0020_where_x0020_people_x0020_are_x0020_located}"

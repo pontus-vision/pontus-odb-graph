@@ -55,9 +55,21 @@
         "label": "Object.Data_Procedures",
         "props": [
           {
+            "name": "Object.Data_Procedures.ID",
+            "val": "${Title}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Data_Procedures.Name",
+            "val": "${field_Process}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
             "name": "Object.Data_Procedures.Description",
             "val": "${field_Purpose_x0020_of_x0020_the_x0020_process}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Procedures.Type",
@@ -74,12 +86,6 @@
           {
             "name": "Object.Data_Procedures.BusinessAreaResponsible",
             "val": "${field_Area} - ${field_Responsible}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Procedures.MacroProcessName",
-            "val": "${field_Process}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
