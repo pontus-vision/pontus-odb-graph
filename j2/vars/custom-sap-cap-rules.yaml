@@ -424,28 +424,28 @@ rules:
         toVertexName: "Event.Consent"
 
       - label: "Has_Consent"
-        fromVertexLabel: "Event.Consent"
-        toVertexName: "mail_consent"
+        fromVertexName: "mail_consent"
+        toVertexLabel: "Event.Consent"
 
       - label: "Has_Consent"
-        fromVertexLabel: "Event.Consent"
-        toVertexName: "social_media_consent"
+        fromVertexName: "social_media_consent"
+        toVertexLabel: "Event.Consent"
 
       - label: "Has_Consent"
-        fromVertexLabel: "Event.Consent"
-        toVertexName: "fax_sms_consent"
+        fromVertexName: "fax_sms_consent"
+        toVertexLabel: "Event.Consent"
 
       - label: "Has_Consent"
-        fromVertexLabel: "Event.Consent"
-        toVertexName: "cust_pros_consent"
+        fromVertexName: "cust_pros_consent"
+        toVertexLabel: "Event.Consent"
 
       - label: "Has_Consent"
-        fromVertexLabel: "Event.Consent"
-        toVertexName: "telefone_consent"
+        fromVertexName: "telefone_consent"
+        toVertexLabel: "Event.Consent"
 
       - label: "Has_Consent"
-        fromVertexLabel: "Event.Consent"
-        toVertexName: "e_mail_consent"
+        fromVertexName: "e_mail_consent"
+        toVertexLabel: "Event.Consent"
 
   cap_my_p_change_report:
     vertices:
