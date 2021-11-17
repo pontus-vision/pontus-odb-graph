@@ -1,6 +1,8 @@
 package com.pontusvision.gdpr.report;
 
-public class ReportTemplateUpsertResponse {
+import com.pontusvision.gdpr.BaseReply;
+
+public class ReportTemplateUpsertResponse extends BaseReply {
   String templatePOLEType;
   String templateName;
   String templateId;
@@ -30,8 +32,21 @@ public class ReportTemplateUpsertResponse {
   }
 
   public ReportTemplateUpsertResponse(String templateType, String templateName, String templateId) {
+    this(Status.OK);
     this.templatePOLEType = templateType;
     this.templateName = templateName;
     this.templateId = templateId;
+  }
+
+  public ReportTemplateUpsertResponse() {
+    this(Status.OK);
+  }
+
+  public ReportTemplateUpsertResponse(Status status) {
+    super(status);
+  }
+  public ReportTemplateUpsertResponse(Status status, String errMsg) {
+    super(status);
+    this.setErrorStr(errMsg);
   }
 }
