@@ -12,6 +12,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -33,7 +34,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 /**
  * Unit test0000 for simple App.
  */
+
+@TestClassOrder(AnnotationTestsOrderer.class)
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@TestClassesOrder(1)
 //@RunWith(JUnitPlatform.class)
 public class PVBasicTest extends AppTest {
   /**
