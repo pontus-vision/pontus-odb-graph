@@ -3,6 +3,7 @@ package com.pontusvision.gdpr;
 import com.pontusvision.ingestion.Ingestion;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.concurrent.ExecutionException;
@@ -17,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * Unit test0000 for simple App.
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@TestClassOrder(AnnotationTestsOrderer.class)
+@TestClassesOrder(3)
 //@RunWith(JUnitPlatform.class)
 public class PVSharepointRiskTest extends AppTest {
   /**
@@ -81,6 +84,15 @@ public class PVSharepointRiskTest extends AppTest {
 
       assertEquals("5",numDataSourcesR02, "5 Data sources associated with R02");
 
+      String descriptionR02 =
+          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02'))" +
+              ".values('Object.Risk_Data_Source.Description')\n" +
+              ".next().toString()").get().toString();
+
+
+      assertEquals("Modificação não autorizada.",descriptionR02, "R02 description is correct");
+
+
       String numMitigationsR02 =
           App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).in('Mitigates_Risk')\n" +
               ".count().next().toString()").get().toString();
@@ -94,6 +106,20 @@ public class PVSharepointRiskTest extends AppTest {
 
 
       assertEquals("M-DATA-ENCR-FLIGHT",mitigationsR02, "1 Risk Mitigation associated with R02");
+
+      String mitigationsR02Description =
+          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).in('Mitigates_Risk')\n" +
+              ".values('Object.Risk_Mitigation_Data_Source.Description').next().toString()").get().toString();
+
+      assertEquals("CONTROLES CRIPTOGRÁFICOS QUANDO OS DADOS ESTÃO NA REDE",mitigationsR02Description, "Risk Mitigation description with R02");
+
+
+      String mitigationsR03Count =
+          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R03')).in('Mitigates_Risk')\n" +
+              ".count().next().toString()").get().toString();
+
+      assertEquals("0",mitigationsR03Count, "0 Risk Mitigations to R03");
+
 
 
 

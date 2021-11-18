@@ -644,11 +644,11 @@ rules:
       - label: Object.Risk_Data_Source
         props:
           Risk_Id: "${Title?.trim()?.toUpperCase()}"
-          Description: "${Description}"
-          Probability: "${Probability}"
-          Impact: "${Impact}"
-          Residual_Probability: "${ResidualProbability}"
-          Residual_Impact: "${ResidualImpact}"
+          Description: "${field_Description}"
+          Probability: "${field_Probability}"
+          Impact: "${field_Impact}"
+          Residual_Probability: "${field_ResidualProbability}"
+          Residual_Impact: "${field_ResidualImpact}"
 
 
       - label: Object.Risk_Mitigation_Data_Source
@@ -739,7 +739,7 @@ rules:
         props:
           Mitigation_Id: "${Title?.trim()?.toUpperCase()}"
           Description:
-            val: "${Description}"
+            val: "${field_Description}"
             excludeFromSearch: true
 
       - label: Event.Ingestion
