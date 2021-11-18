@@ -5,9 +5,6 @@ import com.pontusvision.ingestion.Ingestion;
 import com.pontusvision.ingestion.IngestionCSVFileRequest;
 import com.pontusvision.ingestion.IngestionJsonObjArrayRequest;
 import org.apache.commons.io.FileUtils;
-import org.eclipse.jetty.server.Server;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestClassOrder;
 
 import java.io.File;
@@ -16,7 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -30,22 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @TestClassOrder(AnnotationTestsOrderer.class)
 
 public class AppTest {
-  /**
-   * Create the test case
-   *
-   * @param testName name of the test case
-   */
-
-  /**
-   * @return the suite of tests being tested
-   */
-
-
-
-//  public static int TOTAL_NUM_TEST_CLASSES = 4;
-//  public static AtomicInteger counter = new AtomicInteger(TOTAL_NUM_TEST_CLASSES);
-
-//  public static Server server;
 
   public static String jsonReq = "{\n" +
       "    \"search\": {\n" +
@@ -117,70 +97,9 @@ public class AppTest {
       "}\n";
   static Gson gson = new Gson();
 
-//  @AfterAll
-//  public static void after() throws Exception {
-////    App.gserver.stop().join();
-//
-//    int localCount = counter.decrementAndGet();
-//
-//    if (localCount == 0) {
-////      server.stop();
-////      App.oServer.dropDatabase("demodb");
-////      App.oServer.shutdown();
-////      App.oServer.waitForShutdown();
-////      Path resourceDirectory = Paths.get(".");
-////      String absolutePath = resourceDirectory.toFile().getAbsolutePath();
-////
-////      String databaseDir = Paths.get(absolutePath, "databases").toString();
-////      deleteDirectory(new File(databaseDir));
-//    }
-//
-//  }
-//
-//  public static boolean deleteDirectory(File directoryToBeDeleted) {
-//    File[] allContents = directoryToBeDeleted.listFiles();
-//    if (allContents != null) {
-//      for (File file : allContents) {
-//        deleteDirectory(file);
-//      }
-//    }
-//    return directoryToBeDeleted.delete();
-//  }
-//
-//  @BeforeAll
-//  public static void before() throws Exception {
-//
-//    int localCount = counter.get();
-//    if (localCount == TOTAL_NUM_TEST_CLASSES) {
-//      Path resourceDirectory = Paths.get(".");
-//      String absolutePath = resourceDirectory.toFile().getAbsolutePath();
-//
-//      String databaseDir = Paths.get(absolutePath, "databases").toString();
-//      deleteDirectory(new File(databaseDir));
-//
-//      String jpostalDataDir = Paths.get(absolutePath, "jpostal", "libpostal").toString();
-//      System.setProperty("user.dir", absolutePath);
-//      System.setProperty("ORIENTDB_ROOT_PASSWORD", "pa55word");
-//      System.setProperty("ORIENTDB_HOME", absolutePath);
-//      System.setProperty("pg.jpostal.datadir", jpostalDataDir);
-//
-//      server = App.createJettyServer();
-//
-//      server.start();
-//      App.init(Paths.get(absolutePath, "config", "gremlin-server.yaml").toString());
-//
-//      System.out.println("finished Init");
-//    }
-//  }
-
-
-  //@Test
-  // totvs + ploomes
-  // test5
-
   public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName) throws InterruptedException {
 
-    String res = null;
+    String res;
     try {
       Path resourceDirectory = Paths.get(".");
       String pwdAbsolutePath = resourceDirectory.toFile().getAbsolutePath();
@@ -207,7 +126,7 @@ public class AppTest {
 
   public void csvTestUtil(String csvFile, String ruleName) throws InterruptedException {
 
-    String res = null;
+    String res;
     try {
       Path resourceDirectory = Paths.get(".");
       String pwdAbsolutePath = resourceDirectory.toFile().getAbsolutePath();
