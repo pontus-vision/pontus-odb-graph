@@ -11,6 +11,7 @@ import com.joestelmach.natty.DateGroup
 import com.joestelmach.natty.Parser
 import com.orientechnologies.orient.core.id.ORID
 import com.pontusvision.gdpr.App
+import com.pontusvision.gdpr.mapping.Rules
 import com.pontusvision.gdpr.mapping.VertexProps
 import com.pontusvision.utils.LocationAddress
 import com.pontusvision.utils.PostCode
@@ -1122,7 +1123,6 @@ class Matcher {
 //                new TypeReference<List<Map<String, String>>>(){} as TypeReference<List<Map<String, String>>>);
 
 
-    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
 
 
     def rules = getRule(ruleName)
@@ -1134,13 +1134,17 @@ class Matcher {
             : (double) (rules.percentageThreshold)
     int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
 
-    def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
-    parseEdges(rules.updatereq)
+
 
     for (def item in recordList) {
+      Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
+
+      def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) = parseEdges(rules.updatereq)
+
       Transaction trans = graph.tx()
       try {
-        def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName, Map<String, Double> percentageThresholdByVertexName) =
+        def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName,
+             Map<String, Double> percentageThresholdByVertexName) =
         getMatchRequests(item as Map<String, String>, rules.updatereq, percentageThreshold, sb)
 
 
@@ -1173,7 +1177,7 @@ class Matcher {
 
   static String upsertRule(GraphTraversalSource g, String ruleName, String ruleStr,
                            StringBuffer sb) {
-    def ruleJson = new JsonSlurper().parseText(ruleStr) as com.pontusvision.gdpr.mapping.Rules
+    def ruleJson = new JsonSlurper().parseText(ruleStr) as Rules
 
     if (ruleJson.updatereq) {
       String id = null
