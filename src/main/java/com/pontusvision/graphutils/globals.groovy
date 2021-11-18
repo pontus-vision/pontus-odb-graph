@@ -670,7 +670,55 @@ class PontusJ2ReportingFunctions {
     return ret as List<Map<String, String>>
 
   }
+  static Integer getHiMedLowNumber (String hml){
+    String lcHML = hml.toLowerCase()
 
+    if (lcHML.startsWith("h")||lcHML.startsWith("a")) {
+      return 15
+    }
+    else if (lcHML.startsWith("m"))
+      return 10
+    }
+
+    return 5
+
+  }
+  static List<Map<String,String>> getRisksForDataProcess(String processId) {
+    def ret = App.g.V(new ORecordId(processId))
+            .out('Has_Data_Source')
+            .out('Has_Risk')
+            .dedup()
+            .elementMap().toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+    }
+
+
+    for (Map<String, String> entry : ret as List<Map<String, String>> ){
+      String prob = entry.get('Object_Risk_Data_Source_Probability')
+      String imp  = entry.get('Object_Risk_Data_Source_Impact')
+      if ( prob && imp){
+        Integer probNum = PontusJ2ReportingFunctions.getHiMedLowNumber(prob);
+        Integer impNum = PontusJ2ReportingFunctions.getHiMedLowNumber(imp);
+        Integer riskNum = probNum * impNum
+        entry.put('Object_Risk_Data_Source_Probability_Num', probNum.toString())
+        entry.put('Object_Risk_Data_Source_Impact_Num', impNum.toString())
+        entry.put('Object_Risk_Data_Source_Risk_Num', riskNum.toString())
+      }
+    }
+
+    return ret as List<Map<String, String>>
+
+  }
+
+  static String getEnvVarDefVal(String envVar, String defVal) {
+    return System.getenv(envVar)?:defVal;
+  }
+
+  static String getEnvVar(String envVar) {
+    return System.getenv(envVar)
+  }
 
   static String getDataProceduresPerPerson(String userId) {
     return App.g.V(new ORecordId(userId))
@@ -988,6 +1036,12 @@ class PontusJ2ReportingFunctions {
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataProceduresPerPerson",
             PontusJ2ReportingFunctions.class, "getDataProceduresPerPerson", String.class))
 
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getEnvVarDefVal",
+            PontusJ2ReportingFunctions.class, "getEnvVarDefVal", String.class, String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getEnvVar",
+            PontusJ2ReportingFunctions.class, "getEnvVar", String.class))
+
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForDataProcess",
             PontusJ2ReportingFunctions.class, "getNumNaturalPersonForDataProcess", String.class))
@@ -995,6 +1049,9 @@ class PontusJ2ReportingFunctions {
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDataPoliciesForDataProcess",
             PontusJ2ReportingFunctions.class, "getDataPoliciesForDataProcess", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getRisksForDataProcess",
+            PontusJ2ReportingFunctions.class, "getRisksForDataProcess", String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "t",
             PontusJ2ReportingFunctions.class, "translate", String.class))
