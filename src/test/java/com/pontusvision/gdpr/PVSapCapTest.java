@@ -3,6 +3,7 @@ package com.pontusvision.gdpr;
 import com.pontusvision.ingestion.Ingestion;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.concurrent.ExecutionException;
@@ -17,6 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * Unit test0000 for simple App.
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@TestClassOrder(AnnotationTestsOrderer.class)
+@TestClassesOrder(2)
+
 //@RunWith(JUnitPlatform.class)
 public class PVSapCapTest extends AppTest {
   /**

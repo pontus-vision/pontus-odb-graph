@@ -7,6 +7,7 @@ import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Base64;
@@ -22,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * Unit test0000 for simple App.
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
+@TestClassOrder(AnnotationTestsOrderer.class)
+@TestClassesOrder(4)
 //@RunWith(JUnitPlatform.class)
 public class PVTemplateTests extends AppTest {
   /**

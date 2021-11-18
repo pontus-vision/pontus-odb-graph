@@ -25,7 +25,7 @@
 
         <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
-        <!--        <junit.platform.version>1.7.2</junit.platform.version>-->
+        <junit.platform.version>1.8.1</junit.platform.version>
         <!--        <junit.version>4.12</junit.version>-->
         <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
         <fmt-maven-plugin.version>2.1.0</fmt-maven-plugin.version>
@@ -546,6 +546,14 @@
 
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+
+        </dependency>
         <!--        <dependency>-->
         <!--            <groupId>org.junit.platform</groupId>-->
         <!--            <artifactId>junit-platform-runner</artifactId>-->
@@ -659,6 +667,12 @@
                     <artifactId>hamcrest-core</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.8.1</version>
+            <scope>test</scope>
         </dependency>
 
 

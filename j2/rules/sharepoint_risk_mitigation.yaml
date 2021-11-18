@@ -21,7 +21,7 @@ updatereq:
           val: ${Title?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Object.Risk_Mitigation_Data_Source.Description
-          val: ${Description}
+          val: ${field_Description}
           mandatoryInSearch: False
           excludeFromSearch: True
     

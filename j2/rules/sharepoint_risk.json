@@ -46,27 +46,27 @@
           },
           {
             "name": "Object.Risk_Data_Source.Description",
-            "val": "${Description}",
+            "val": "${field_Description}",
             "mandatoryInSearch": true
           },
           {
             "name": "Object.Risk_Data_Source.Probability",
-            "val": "${Probability}",
+            "val": "${field_Probability}",
             "mandatoryInSearch": true
           },
           {
             "name": "Object.Risk_Data_Source.Impact",
-            "val": "${Impact}",
+            "val": "${field_Impact}",
             "mandatoryInSearch": true
           },
           {
             "name": "Object.Risk_Data_Source.Residual_Probability",
-            "val": "${ResidualProbability}",
+            "val": "${field_ResidualProbability}",
             "mandatoryInSearch": true
           },
           {
             "name": "Object.Risk_Data_Source.Residual_Impact",
-            "val": "${ResidualImpact}",
+            "val": "${field_ResidualImpact}",
             "mandatoryInSearch": true
           }
         ]
