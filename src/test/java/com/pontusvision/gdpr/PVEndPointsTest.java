@@ -3,6 +3,7 @@ package com.pontusvision.gdpr;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import jdk.nashorn.internal.parser.JSONParser;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -10,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.json.JSONObject;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -88,7 +90,7 @@ public class PVEndPointsTest extends AppTest {
   }
 
   @Test
-  public void test00003GRaphanaBackend() throws InterruptedException {
+  public void test00003GraphanaBackend() throws InterruptedException {
 
     try {
       HttpClient client = HttpClients.createMinimal();
@@ -128,6 +130,10 @@ public class PVEndPointsTest extends AppTest {
 
       query1 = IOUtils.toString(client.execute(request).getEntity().getContent());
       System.out.println("print 1: " + query1);
+
+//      JSONObject json = new JSONObject(query1);
+//      String value = json.getJSONObject("@value").toString();
+//      System.out.println(value);
 
       gremlinReq.setGremlin("App.g.V().has('Person.Natural.Full_Name',eq('Pessoa Nova5')).next().id().toString()");
       data = new StringEntity(gson.toJson(gremlinReq));
