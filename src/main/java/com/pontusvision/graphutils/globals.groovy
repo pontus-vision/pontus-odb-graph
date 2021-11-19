@@ -13,6 +13,7 @@ import com.orientechnologies.orient.core.record.impl.ODocument
 import com.pontusvision.gdpr.App
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
+import jnr.ffi.annotations.In
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
@@ -23,6 +24,8 @@ import org.apache.tinkerpop.gremlin.structure.Edge
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONVersion
 
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.atomic.AtomicInteger
 
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.bothV
@@ -676,13 +679,23 @@ class PontusJ2ReportingFunctions {
     if (lcHML.startsWith("h")||lcHML.startsWith("a")) {
       return 15
     }
-    else if (lcHML.startsWith("m"))
+    else if (lcHML.startsWith("m")){
       return 10
     }
-
     return 5
-
   }
+
+  static String getRiskLevelColour(String riskLevelNumStr){
+    Integer riskLevelNum = Integer.parseInt(riskLevelNumStr);
+    if (riskLevelNum >= 150){
+      return 'red'
+    }
+    if (riskLevelNum <= 50 ){
+      return 'green'
+    }
+    return 'yellow'
+  }
+
   static List<Map<String,String>> getRisksForDataProcess(String processId) {
     def ret = App.g.V(new ORecordId(processId))
             .out('Has_Data_Source')
@@ -704,20 +717,73 @@ class PontusJ2ReportingFunctions {
         Integer riskNum = probNum * impNum
         entry.put('Object_Risk_Data_Source_Probability_Num', probNum.toString())
         entry.put('Object_Risk_Data_Source_Impact_Num', impNum.toString())
-        entry.put('Object_Risk_Data_Source_Risk_Num', riskNum.toString())
+        entry.put('Object_Risk_Data_Source_Risk_Level_Num', riskNum.toString())
       }
+      String probRes = entry.get('Object_Risk_Data_Source_Residual_Probability')
+      String impRes  = entry.get('Object_Risk_Data_Source_Residual_Impact')
+      if ( probRes && impRes){
+        Integer probNum = PontusJ2ReportingFunctions.getHiMedLowNumber(probRes);
+        Integer impNum = PontusJ2ReportingFunctions.getHiMedLowNumber(impRes);
+        Integer riskNum = probNum * impNum
+        entry.put('Object_Risk_Data_Source_Residual_Probability_Num', probNum.toString())
+        entry.put('Object_Risk_Data_Source_Residual_Impact_Num', impNum.toString())
+        entry.put('Object_Risk_Data_Source_Residual_Risk_Level_Num', riskNum.toString())
+      }
+
+
     }
 
     return ret as List<Map<String, String>>
 
   }
 
+  static List<Map<String,String>> getRiskMitigationsForRisk(String riskId) {
+    def ret = App.g.V(new ORecordId(riskId))
+            .in('Mitigates_Risk')
+            .dedup()
+            .elementMap().toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+    }
+
+
+
+    return ret as List<Map<String, String>>
+
+  }
+
+  static String getRiskMitigationsForRiskAsHTMLTable(String riskId, String style) {
+    List<Map<String, String>> riskMigitations = getRiskMitigationsForRisk(riskId)
+    StringBuilder sb = new StringBuilder("<table style='${style?:''}'>");
+    for (Map<String,String> riskMitigation : riskMigitations){
+      sb.append("<tr><td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Mitigation_Id')}</td>")
+        .append("<td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Description')}</td></tr>")
+    }
+
+    sb.append("</table>")
+
+
+    return sb.toString()
+
+  }
+  static String getEnv(String envVar) {
+    return System.getenv(envVar);
+  }
+
+  static String formatDateNow(String pattern){
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern ( pattern );
+
+    return  formatter.format ( LocalDate.now());
+
+  }
+
   static String getEnvVarDefVal(String envVar, String defVal) {
-    return System.getenv(envVar)?:defVal;
+    return getEnv(envVar)?:defVal;
   }
 
   static String getEnvVar(String envVar) {
-    return System.getenv(envVar)
+    return getEnv(envVar)
   }
 
   static String getDataProceduresPerPerson(String userId) {
@@ -1039,6 +1105,9 @@ class PontusJ2ReportingFunctions {
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getEnvVarDefVal",
             PontusJ2ReportingFunctions.class, "getEnvVarDefVal", String.class, String.class))
 
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "formatDateNow",
+            PontusJ2ReportingFunctions.class, "formatDateNow", String.class))
+
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getEnvVar",
             PontusJ2ReportingFunctions.class, "getEnvVar", String.class))
 
@@ -1052,6 +1121,15 @@ class PontusJ2ReportingFunctions {
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getRisksForDataProcess",
             PontusJ2ReportingFunctions.class, "getRisksForDataProcess", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getRiskLevelColour",
+            PontusJ2ReportingFunctions.class, "getRiskLevelColour", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getRiskMitigationsForRisk",
+            PontusJ2ReportingFunctions.class, "getRiskMitigationsForRisk", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getRiskMitigationsForRiskAsHTMLTable",
+            PontusJ2ReportingFunctions.class, "getRiskMitigationsForRiskAsHTMLTable", String.class, String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "t",
             PontusJ2ReportingFunctions.class, "translate", String.class))
