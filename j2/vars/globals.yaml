@@ -76,6 +76,7 @@ schema:
         - name: Metadata.Update_Date
           dataType: Date
         - name: Status
+        - name: Description
 
     - name: "Event.Data_Breach"
       partition: false

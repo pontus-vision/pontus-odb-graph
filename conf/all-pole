@@ -10,6 +10,7 @@ Event.Consent.Form_Submission_Owner_Id
 Event.Consent.Metadata.Create_Date
 Event.Consent.Metadata.Update_Date
 Event.Consent.Status
+Event.Consent.Description
 Event.Data_Breach.Description
 Event.Data_Breach.Id
 Event.Data_Breach.Impact

@@ -154,6 +154,7 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Event.Consent
+      condition: ${Mail_Consent || E_Mail_Consent || Telephone_Consent || Fax_SMS_Consent || Social_Media_Consent}
       props:
         - name: Event.Consent.Created_By
           val: ${Created_By}
@@ -169,53 +170,8 @@ updatereq:
           val: ${Changed_on}
           mandatoryInSearch: True
           type: "java.util.Date"
-    
-    - label: Object.Privacy_Notice
-      name: mail_consent
-      condition: ${Mail_Consent?.equals('Y')}
-      props:
-        - name: Object.Privacy_Notice.Description
-          val: Mail Consent
-          mandatoryInSearch: True
-    
-    - label: Object.Privacy_Notice
-      name: e_mail_consent
-      condition: ${E_Mail_Consent?.equals('Y')}
-      props:
-        - name: Object.Privacy_Notice.Description
-          val: E-mail Consent
-          mandatoryInSearch: True
-    
-    - label: Object.Privacy_Notice
-      name: telefone_consent
-      condition: ${Telephone_Consent?.equals('Y')}
-      props:
-        - name: Object.Privacy_Notice.Description
-          val: Telephone Consent
-          mandatoryInSearch: True
-    
-    - label: Object.Privacy_Notice
-      name: cust_pros_consent
-      condition: ${Cust____Pros__Care?.equals('Y')}
-      props:
-        - name: Object.Privacy_Notice.Description
-          val: Cust. & Pros. Care
-          mandatoryInSearch: True
-    
-    - label: Object.Privacy_Notice
-      name: fax_sms_consent
-      condition: ${Fax_SMS_Consent?.equals('Y')}
-      props:
-        - name: Object.Privacy_Notice.Description
-          val: Fax/SMS Consent
-          mandatoryInSearch: True
-    
-    - label: Object.Privacy_Notice
-      name: social_media_consent
-      condition: ${Social_Media_Consent?.equals('Y')}
-      props:
-        - name: Object.Privacy_Notice.Description
-          val: Social Media Consent
+        - name: Event.Consent.Description
+          val: ${Social_Media_Consent.equals('Y')?'Social Media Consent; ':''}${Fax_SMS_Consent.equals('Y')?'Fax/SMS Consent; ':''}${Telephone_Consent.equals('Y')?'Telephone Consent; ':''}${E_Mail_Consent.equals('Y')?'E-Mail Consent; ':''}${Mail_Consent.equals('Y')?'Mail Consent':''}
           mandatoryInSearch: True
 
   edges:
@@ -252,22 +208,4 @@ updatereq:
   - label: Has_Consent
     fromVertexLabel: Person.Natural
     toVertexName: Event.Consent
-  - label: Has_Consent
-    fromVertexName: mail_consent
-    toVertexLabel: Event.Consent
-  - label: Has_Consent
-    fromVertexName: social_media_consent
-    toVertexLabel: Event.Consent
-  - label: Has_Consent
-    fromVertexName: fax_sms_consent
-    toVertexLabel: Event.Consent
-  - label: Has_Consent
-    fromVertexName: cust_pros_consent
-    toVertexLabel: Event.Consent
-  - label: Has_Consent
-    fromVertexName: telefone_consent
-    toVertexLabel: Event.Consent
-  - label: Has_Consent
-    fromVertexName: e_mail_consent
-    toVertexLabel: Event.Consent
 

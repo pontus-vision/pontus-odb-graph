@@ -106,11 +106,17 @@ public class PVSapCapTest extends AppTest {
                       ".properties('Event.Consent.Created_By').value().next().toString()").get().toString();
       assertEquals("DBR0200WK", eventConsentCreatedBy, "Porsche Employee code");
 
-      String countEventConsentEdges =
+//      String countEventConsentEdges =
+//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
+//                      ".bothE().count().next().toString()").get().toString();
+//      assertEquals("8", countEventConsentEdges, "6 Has_Privacy_Notice (e_mail_consent, telefone_consent" +
+//              ", cust_pros_consent, fax_sms_consent, social_media_consent, mail_consent) + 1 Has_Consent + 1 Has_Ingestion_Event");
+
+      String eventConsentDescription =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
-                      ".bothE().count().next().toString()").get().toString();
-      assertEquals("8", countEventConsentEdges, "6 Has_Privacy_Notice (e_mail_consent, telefone_consent" +
-              ", cust_pros_consent, fax_sms_consent, social_media_consent, mail_consent) + 1 Has_Consent + 1 Has_Ingestion_Event");
+                      ".properties('Event.Consent.Description').value().next().toString()").get().toString();
+      assertEquals("Social Media Consent; Fax/SMS Consent; Telephone Consent; E-Mail Consent; Mail Consent",
+              eventConsentDescription, "Description of Consents given by Natan Bolderi");
 
     } catch (ExecutionException e) {
       e.printStackTrace();

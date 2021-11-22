@@ -194,6 +194,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Event.Consent.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Event.Data_Breach",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -3957,7 +3962,8 @@
         "Event.Consent.Form_Submission_Owner_Id",
         "Event.Consent.Metadata.Create_Date",
         "Event.Consent.Metadata.Update_Date",
-        "Event.Consent.Status"
+        "Event.Consent.Status",
+        "Event.Consent.Description"
       ],
       "propertyKeysMappings": {}
     },

@@ -323,6 +323,7 @@ rules:
 
 
       - label: Event.Consent
+        condition: "${Mail_Consent || E_Mail_Consent || Telephone_Consent || Fax_SMS_Consent || Social_Media_Consent}"
         props:
           Created_By: "${Created_By}"
           Changed_By: "${Changed_by}"
@@ -332,47 +333,42 @@ rules:
           Metadata.Update_Date:
             val: "${Changed_on}"
             type: "java.util.Date"
+          Description: "${Social_Media_Consent.equals('Y')?'Social Media Consent; ':''}${Fax_SMS_Consent.equals('Y')?'Fax/SMS Consent; ':''}${Telephone_Consent.equals('Y')?'Telephone Consent; ':''}${E_Mail_Consent.equals('Y')?'E-Mail Consent; ':''}${Mail_Consent.equals('Y')?'Mail Consent':''}"
 
 #      TODO => Object.Privacy_Notice
-#      Terms & Conditions V; Terms & Conditions a
-#      Many Event.Consent to 1 Object.Privacy_Notice || many/one to many/one ?!?!
+#      TODO 2 => Terms & Conditions V; Terms & Conditions a
+#      TODO 3 => Many Event.Consent to 1 Object.Privacy_Notice || many/one to many/one ?!?!
 
-      - label: Object.Privacy_Notice
-        condition: "${Mail_Consent?.equals('Y')}"
-        name: mail_consent
-        props:
-          Description: "Mail Consent"
-      #          Info_Collected: "????"
-
-      - label: Object.Privacy_Notice
-        condition: "${E_Mail_Consent?.equals('Y')}"
-        name: e_mail_consent
-        props:
-          Description: "E-mail Consent"
-
-      - label: Object.Privacy_Notice
-        condition: "${Telephone_Consent?.equals('Y')}"
-        name: telefone_consent
-        props:
-          Description: "Telephone Consent"
-
-      - label: Object.Privacy_Notice
-        condition: "${Cust____Pros__Care?.equals('Y')}"
-        name: cust_pros_consent
-        props:
-          Description: "Cust. & Pros. Care"
-
-      - label: Object.Privacy_Notice
-        condition: "${Fax_SMS_Consent?.equals('Y')}"
-        name: fax_sms_consent
-        props:
-          Description: "Fax/SMS Consent"
-
-      - label: Object.Privacy_Notice
-        condition: "${Social_Media_Consent?.equals('Y')}"
-        name: social_media_consent
-        props:
-          Description: "Social Media Consent"
+#      - label: Object.Privacy_Notice
+#        condition: "${Mail_Consent?.equals('Y')}"
+#        name: mail_consent
+#        props:
+#          Description: "Mail Consent"
+#      #          Info_Collected: "????"
+#
+#      - label: Object.Privacy_Notice
+#        condition: "${E_Mail_Consent?.equals('Y')}"
+#        name: e_mail_consent
+#        props:
+#          Description: "E-mail Consent"
+#
+#      - label: Object.Privacy_Notice
+#        condition: "${Telephone_Consent?.equals('Y')}"
+#        name: telefone_consent
+#        props:
+#          Description: "Telephone Consent"
+#
+#      - label: Object.Privacy_Notice
+#        condition: "${Fax_SMS_Consent?.equals('Y')}"
+#        name: fax_sms_consent
+#        props:
+#          Description: "Fax/SMS Consent"
+#
+#      - label: Object.Privacy_Notice
+#        condition: "${Social_Media_Consent?.equals('Y')}"
+#        name: social_media_consent
+#        props:
+#          Description: "Social Media Consent"
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -423,29 +419,25 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexName: "Event.Consent"
 
-      - label: "Has_Consent"
-        fromVertexName: "mail_consent"
-        toVertexLabel: "Event.Consent"
-
-      - label: "Has_Consent"
-        fromVertexName: "social_media_consent"
-        toVertexLabel: "Event.Consent"
-
-      - label: "Has_Consent"
-        fromVertexName: "fax_sms_consent"
-        toVertexLabel: "Event.Consent"
-
-      - label: "Has_Consent"
-        fromVertexName: "cust_pros_consent"
-        toVertexLabel: "Event.Consent"
-
-      - label: "Has_Consent"
-        fromVertexName: "telefone_consent"
-        toVertexLabel: "Event.Consent"
-
-      - label: "Has_Consent"
-        fromVertexName: "e_mail_consent"
-        toVertexLabel: "Event.Consent"
+#      - label: "Has_Consent"
+#        fromVertexName: "mail_consent"
+#        toVertexLabel: "Event.Consent"
+#
+#      - label: "Has_Consent"
+#        fromVertexName: "social_media_consent"
+#        toVertexLabel: "Event.Consent"
+#
+#      - label: "Has_Consent"
+#        fromVertexName: "fax_sms_consent"
+#        toVertexLabel: "Event.Consent"
+#
+#      - label: "Has_Consent"
+#        fromVertexName: "telefone_consent"
+#        toVertexLabel: "Event.Consent"
+#
+#      - label: "Has_Consent"
+#        fromVertexName: "e_mail_consent"
+#        toVertexLabel: "Event.Consent"
 
   cap_my_p_change_report:
     vertices:
