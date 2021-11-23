@@ -4788,7 +4788,6 @@
         "Metadata.Type.Object.Notification_Templates",
         "Object.Notification_Templates.Id",
         "Object.Notification_Templates.Label",
-        "Object.Notification_Templates.Text",
         "Object.Notification_Templates.Types",
         "Object.Notification_Templates.URL"
       ],

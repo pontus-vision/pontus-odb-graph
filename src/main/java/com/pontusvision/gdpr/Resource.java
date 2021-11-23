@@ -190,6 +190,9 @@ public class Resource {
           reg.owner = values.get("Event.File_Ingestion.Owner") == null ? "" :
               values.get("Event.File_Ingestion.Owner").get(0).toString();
           reg.server = values.get("Event.File_Ingestion.Server").get(0).toString();
+
+          reg.lastAccess = values.get("Event.File_Ingestion.Last_Access") == null ? "":
+              values.get("Event.File_Ingestion.Last_Access").get(0).toString();
         } else if ("Object.Email_Message_Attachment".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Attachment";
           reg.sizeBytes = ((Double) values.get("Object.Email_Message_Attachment.Size_Bytes").get(0)).longValue();
@@ -204,10 +207,13 @@ public class Resource {
               values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString() :
               "";
 
+          reg.created = createdDateTime != null ?
+              values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString() :
+              "";
+
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Attachment")
               .out("Email_From").values("Event.Email_From_Group.Email");
-          String owner = trav.hasNext() ? trav.next().toString() : "";
-          reg.owner = owner;
+          reg.owner = trav.hasNext() ? trav.next().toString() : "";
           reg.server = "office365/email";
         } else if ("Object.Email_Message_Body".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Body";
@@ -226,6 +232,13 @@ public class Resource {
           //.next().toString();
 
           String owner = trav.hasNext() ? trav.next().toString() : "";
+
+          reg.lastAccess = values.get("Object.Email_Message_Body.Received_Date_Time") != null ?
+              values.get("Object.Email_Message_Body.Received_Date_Time").get(0).toString():
+              (values.get("Object.Email_Message_Body.Sent_Date_Time") != null ?
+                  values.get("Object.Email_Message_Body.Sent_Date_Time").get(0).toString():
+                  "");
+
 
           reg.owner = owner;
           reg.server = "office365/email";

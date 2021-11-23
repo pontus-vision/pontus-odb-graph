@@ -242,39 +242,44 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>1.10.19</version>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>1.8.1</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
-          <artifactId>hamcrest-core</artifactId>
-          <groupId>org.hamcrest</groupId>
+          <artifactId>junit-platform-engine</artifactId>
+          <groupId>org.junit.platform</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>objenesis</artifactId>
-          <groupId>org.objenesis</groupId>
+          <artifactId>apiguardian-api</artifactId>
+          <groupId>org.apiguardian</groupId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.10.19</version>
+      <artifactId>mockito-inline</artifactId>
+      <version>3.6.28</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
           <artifactId>hamcrest-core</artifactId>
           <groupId>org.hamcrest</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>mockito-core</artifactId>
+          <groupId>org.mockito</groupId>
+        </exclusion>
       </exclusions>
     </dependency>
   </dependencies>
   <properties>
+    <junit.pioneer.version>1.5.0</junit.pioneer.version>
     <orientdb-version>3.1.12</orientdb-version>
-    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
-    <aws-lambda-version>1.5.2</aws-lambda-version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <aws-lambda-version>1.6</aws-lambda-version>
     <apache-commons-configuration.version>2.7</apache-commons-configuration.version>
     <jetty-version>9.4.39.v20210325</jetty-version>
     <junit.jupiter.version>5.8.1</junit.jupiter.version>
@@ -287,16 +292,17 @@
     <jukito.version>1.5</jukito.version>
     <slf4j.version>1.7.25</slf4j.version>
     <pontus-natty.version>100.15</pontus-natty.version>
-    <mockito-all.version>1.10.19</mockito-all.version>
+    <mockito-all.version>3.6.28</mockito-all.version>
     <guava-version>25.0-jre</guava-version>
     <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <tinkerpop-version>3.4.6</tinkerpop-version>
+    <junit.platform.version>1.8.1</junit.platform.version>
     <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
-    <netty-version>4.1.44.Final</netty-version>
+    <netty-version>4.1.70.Final</netty-version>
     <apache-commons-csv.version>1.8</apache-commons-csv.version>
-    <jackson2.version>[2.8.11.1,)</jackson2.version>
+    <jackson2.version>2.13.0</jackson2.version>
   </properties>
 </project>
 
