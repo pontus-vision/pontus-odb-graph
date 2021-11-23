@@ -123,20 +123,7 @@ public class App // implements RequestStreamHandler
 //    oServer.activate();
     logger.info("BEFORE Getting GRAPH  *******");
     graph = (OrientStandardGraph) g.getGraph();
-
-    graph.getRawDatabase().setConflictStrategy(new ORecordConflictResolver() {
-      @Override
-      public byte[] onUpdate(ORecordId rid, ORecordVersion iRecordVersion, byte[] iRecordContent, ORecordVersion iDatabaseVersion) {
-        ODocument storedRecord = rid.getRecord();
-        ODocument newRecord = new ODocument().fromStream(iRecordContent);
-
-        storedRecord.merge(newRecord, false, true);
-
-        iDatabaseVersion.setCounter(Math.max(iDatabaseVersion.getCounter(), iRecordVersion.getCounter()));
-
-        return storedRecord.toStream();
-      }
-    });
+    
 
   }
   public static Server createJettyServer(){
