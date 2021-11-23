@@ -686,6 +686,10 @@ class PontusJ2ReportingFunctions {
   }
 
   static String getRiskLevelColour(String riskLevelNumStr){
+
+    if (!riskLevelNumStr){
+      return 'blue'
+    }
     Integer riskLevelNum = Integer.parseInt(riskLevelNumStr);
     if (riskLevelNum >= 150){
       return 'red'
@@ -757,8 +761,8 @@ class PontusJ2ReportingFunctions {
     List<Map<String, String>> riskMigitations = getRiskMitigationsForRisk(riskId)
     StringBuilder sb = new StringBuilder("<table style='${style?:''}'>");
     for (Map<String,String> riskMitigation : riskMigitations){
-      sb.append("<tr><td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Mitigation_Id')}</td>")
-        .append("<td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Description')}</td></tr>")
+//      sb.append("<tr><td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Mitigation_Id')}</td>")
+      sb.append("<tr><td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Description')}</td></tr>")
     }
 
     sb.append("</table>")

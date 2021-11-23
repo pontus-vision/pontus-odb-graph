@@ -116,10 +116,13 @@ public class PVTemplateTests extends AppTest {
               "{% set risks=pv:getRisksForDataProcess(context.id) %}" +
                   "{% set lawfulBasis=pv:neighboursByType(context.id,'Has_Lawful_Basis_On') %}" +
                   "{% set riskMitigations=pv:getRiskMitigationsForRisk(risks[0].id) %}" +
-                  "{{ risks[0].Object_Risk_Data_Source_Risk_Id }}-{{ risks[0].Object_Risk_Data_Source_Risk_Level_Num }}=" +
+                  "{{ risks[0].Object_Risk_Data_Source_Risk_Id }}-{{ risks[0].Object_Risk_Data_Source_Risk_Level_Num }}" +
+                  "({{ pv:getRiskLevelColour(risks[0].Object_Risk_Data_Source_Risk_Level_Num) }})/" +
+                  "({{ pv:getRiskLevelColour(risks[0].blah) }})=" +
                   "{{ context.Object_Data_Procedures_ID }}-{{ riskMitigations[0].Object_Risk_Mitigation_Data_Source_Mitigation_Id }}->" +
                   "ENV_VAR1={{ pv:getEnvVar('ENV_VAR1') }};ENV_VAR2={{ pv:getEnvVarDefVal('ENV_VAR2','DEFVAL2') }};" +
                   "ENV_VAR3={{ pv:getEnvVarDefVal('ENV_VAR3','DEFVAL3') }}###{{ pv:formatDateNow('MMM') }}##" +
+                  "{{ pv:formatDateNow('dd')}}##{{ pv:formatDateNow('yyyy') }}##{{ pv:formatDateNow('dd/MM/yyyy') }}##" +
                   "{{ lawfulBasis[0].Object_Lawful_Basis_Description }}{% if 'EXECUÇÃO DE CONTRATO' in lawfulBasis.toString() %}" +
                   "##TEM Execução{% endif %}" +
                   "{% if 'BLAH DE CONTRATO' in lawfulBasis.toString()  %}" +
@@ -130,6 +133,19 @@ public class PVTemplateTests extends AppTest {
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern ( "MMM" );
 
       String month =  formatter.format ( LocalDate.now());
+      DateTimeFormatter formatterDay = DateTimeFormatter.ofPattern ( "dd" );
+
+      String day =  formatterDay.format ( LocalDate.now());
+
+
+      DateTimeFormatter formatterYear = DateTimeFormatter.ofPattern ( "yyyy" );
+
+      String year =  formatterYear.format ( LocalDate.now());
+
+      DateTimeFormatter formatterFull = DateTimeFormatter.ofPattern ( "dd/MM/yyyy" );
+
+      String fullDate =  formatterFull.format ( LocalDate.now());
+
 
           ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
 
@@ -154,7 +170,9 @@ public class PVTemplateTests extends AppTest {
 
       String lawfulBasis = "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular".
           toUpperCase(Locale.ROOT);
-      String expectedReport = "R07-150=1-M-PHYS-PROT->ENV_VAR1=;ENV_VAR2=DEFVAL2;ENV_VAR3=DEFVAL3###" + month +"##" +
+      String expectedReport = "R07-150(red)/(blue)=1-M-PHYS-PROT->ENV_VAR1=;ENV_VAR2=DEFVAL2;ENV_VAR3=DEFVAL3###"
+          + month +"##" + day + "##" + year + "##"+ fullDate +  "##"+
+
           lawfulBasis + "##TEM Execução";
       assertEquals(expectedReport, report);
 
