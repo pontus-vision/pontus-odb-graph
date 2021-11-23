@@ -710,6 +710,7 @@ schema:
         - name: Id
         - name: Label
         - name: Text
+          index: false
         - name: Types
         - name: URL
 

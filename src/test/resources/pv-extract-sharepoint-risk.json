@@ -435,8 +435,18 @@
         "field_Impact": "High",
         "field_Approved_x0020_by_x0020_DPO": "true",
         "field_Approved_x0020_by_x0020_Security": "true",
-        "Data_x0020_Sources": [],
-        "Risk_x0020_Mitigations": []
+        "Data_x0020_Sources": [
+          {
+            "LookupId": 11222,
+            "LookupValue": "CRM-Leads"
+          }
+        ],
+        "Risk_x0020_Mitigations": [
+          {
+            "LookupId": 5,
+            "LookupValue": "m-phys-prot"
+          }
+        ]
       }
     },
     {
