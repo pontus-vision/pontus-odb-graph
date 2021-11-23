@@ -123,7 +123,7 @@ public class App // implements RequestStreamHandler
 //    oServer.activate();
     logger.info("BEFORE Getting GRAPH  *******");
     graph = (OrientStandardGraph) g.getGraph();
-    
+
 
   }
   public static Server createJettyServer(){

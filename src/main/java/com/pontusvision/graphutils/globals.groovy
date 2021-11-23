@@ -36,7 +36,7 @@ class ODBSchemaManager {
 
     def dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     graph.executeSql('ALTER DATABASE DATETIMEFORMAT "' + dateFormat + '"', [:])
-    graph.executeSql('ALTER DATABASE CONFLICTSTRATEGY content"', [:])
+    graph.executeSql('ALTER DATABASE CONFLICTSTRATEGY "content" ', [:])
 
     Map<String, OProperty> propsMap = [:]
     for (f in files) {
