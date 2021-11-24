@@ -173,14 +173,14 @@ rules:
         toVertexLabel: "Person.Organisation"
 
   cap_customer_prospect:
+    #TODO => Object.Privacy_Notice
+    #TODO 2 => Terms & Conditions V; Terms & Conditions a
+    #TODO 3 => Many Event.Consent to 1 Object.Privacy_Notice || many/one to many/one ?!?!
     vertices:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
           Customer_ID: "${Tax_Number?.replaceAll('[^0-9]','')}"
-#          Type:
-#            val: "Customer Prospect"
-#            excludeFromSearch: true
           Title:
             val: "${Title}"
             excludeFromSearch: true
@@ -192,7 +192,6 @@ rules:
             excludeFromSearch: true
 
       - label: Object.Identity_Card
-        #        condition: "${}"
         name: cpf
         props:
           Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
@@ -204,9 +203,6 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
-#          Type:
-#            val: "Customer Prospect"
-#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -215,9 +211,6 @@ rules:
           Raw:
             val: "${Telephone_no_}"
             excludeFromSearch: true
-#          Type:
-#            val: "Customer Prospect"
-#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -233,9 +226,6 @@ rules:
           Raw:
             val: "${Mobile_Number}"
             excludeFromSearch: true
-#          Type:
-#            val: "Customer Prospect"
-#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -245,27 +235,14 @@ rules:
             type: "[Ljava.lang.String;"
 
       - label: Location.Address
-#        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Full_Address:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
-#          Type:
-#            val: "${Addresstype?.trim()}"
-#            excludeFromSearch: true
           parser:
             val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
-
-#      - label: Object.Contract
-#        props:
-#          Description: "(Responsável Sales Person) ${Resp__Sales_Person}"
-#          Id: "${Porsche_ID} - ${Profile_ID}"
-#          Status: "${Status}"
-#          Type:
-#            val: "Customer Prospect Contract"
-#            excludeFromSearch: true
 
       - label: Object.Email_Address
         condition: "${E_Mail_Address?.trim()?.length() > 0}"
@@ -313,62 +290,86 @@ rules:
       - label: Object.Data_Source
         props:
           Name: "SAP/C@P CUSTOMER PROSPECT"
-#            excludeFromSearch: true
-#          Type:
-#            val: "sap/c@p Customer Prospect"
-#            excludeFromSearch: true
-#          Description:
-#            val: "Registros da tabela Customer Prospect no SAP/C@P"
-#            excludeFromSearch: true
-
 
       - label: Event.Consent
-        condition: "${Mail_Consent || E_Mail_Consent || Telephone_Consent || Fax_SMS_Consent || Social_Media_Consent}"
+        condition: "${Mail_Consent?.trim()?.length() > 0}"
+        name: mail_consent
         props:
-          Created_By: "${Created_By}"
-          Changed_By: "${Changed_by}"
+          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
           Metadata.Create_Date:
-            val: "${Created_on}"
+            val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
           Metadata.Update_Date:
-            val: "${Changed_on}"
+            val: "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
-          Description: "${Social_Media_Consent.equals('Y')?'Social Media Consent; ':''}${Fax_SMS_Consent.equals('Y')?'Fax/SMS Consent; ':''}${Telephone_Consent.equals('Y')?'Telephone Consent; ':''}${E_Mail_Consent.equals('Y')?'E-Mail Consent; ':''}${Mail_Consent.equals('Y')?'Mail Consent':''}"
+          Description: "Mail Consent"
+          Status: "${Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
+          Data_Origin: "${Data_Origin?.trim()}"
 
-#      TODO => Object.Privacy_Notice
-#      TODO 2 => Terms & Conditions V; Terms & Conditions a
-#      TODO 3 => Many Event.Consent to 1 Object.Privacy_Notice || many/one to many/one ?!?!
+      - label: Event.Consent
+        condition: "${E_Mail_Consent?.trim()?.length() > 0}"
+        name: email_consent
+        props:
+          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Metadata.Create_Date:
+            val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
+          Metadata.Update_Date:
+            val: "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
+          Description: "E-Mail Consent"
+          Status: "${E_Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
+          Data_Origin: "${Data_Origin?.trim()}"
 
-#      - label: Object.Privacy_Notice
-#        condition: "${Mail_Consent?.equals('Y')}"
-#        name: mail_consent
-#        props:
-#          Description: "Mail Consent"
-#      #          Info_Collected: "????"
-#
-#      - label: Object.Privacy_Notice
-#        condition: "${E_Mail_Consent?.equals('Y')}"
-#        name: e_mail_consent
-#        props:
-#          Description: "E-mail Consent"
-#
-#      - label: Object.Privacy_Notice
-#        condition: "${Telephone_Consent?.equals('Y')}"
-#        name: telefone_consent
-#        props:
-#          Description: "Telephone Consent"
-#
-#      - label: Object.Privacy_Notice
-#        condition: "${Fax_SMS_Consent?.equals('Y')}"
-#        name: fax_sms_consent
-#        props:
-#          Description: "Fax/SMS Consent"
-#
-#      - label: Object.Privacy_Notice
-#        condition: "${Social_Media_Consent?.equals('Y')}"
-#        name: social_media_consent
-#        props:
-#          Description: "Social Media Consent"
+      - label: Event.Consent
+        condition: "${Telephone_Consent?.trim()?.length() > 0}"
+        name: telephone_consent
+        props:
+          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Metadata.Create_Date:
+            val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
+          Metadata.Update_Date:
+            val: "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
+          Description: "Telephone Consent"
+          Status: "${Telephone_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
+          Data_Origin: "${Data_Origin?.trim()}"
+
+      - label: Event.Consent
+        condition: "${Fax_SMS_Consent?.trim()?.length() > 0}"
+        name: fax_sms_consent
+        props:
+          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Metadata.Create_Date:
+            val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
+          Metadata.Update_Date:
+            val: "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
+          Description: "Fax/SMS Consent"
+          Status: "${Fax_SMS_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
+          Data_Origin: "${Data_Origin?.trim()}"
+
+      - label: Event.Consent
+        condition: "${Social_Media_Consent?.trim()?.length() > 0}"
+        name: social_media_consent
+        props:
+          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Metadata.Create_Date:
+            val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
+          Metadata.Update_Date:
+            val: "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+            type: "java.util.Date"
+          Description: "Social Media Consent"
+          Status: "${Social_Media_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
+          Data_Origin: "${Data_Origin?.trim()}"
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -403,10 +404,6 @@ rules:
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
 
-#      - label: "Has_Contract" # OR Is_Responsible ?!?!
-#        fromVertexLabel: "Person.Natural"
-#        toVertexLabel: "Object.Contract"
-
       - label: "Works"
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Person.Organisation"
@@ -417,27 +414,23 @@ rules:
 
       - label: "Has_Consent"
         fromVertexLabel: "Person.Natural"
-        toVertexName: "Event.Consent"
+        toVertexName: "mail_consent"
 
-#      - label: "Has_Consent"
-#        fromVertexName: "mail_consent"
-#        toVertexLabel: "Event.Consent"
-#
-#      - label: "Has_Consent"
-#        fromVertexName: "social_media_consent"
-#        toVertexLabel: "Event.Consent"
-#
-#      - label: "Has_Consent"
-#        fromVertexName: "fax_sms_consent"
-#        toVertexLabel: "Event.Consent"
-#
-#      - label: "Has_Consent"
-#        fromVertexName: "telefone_consent"
-#        toVertexLabel: "Event.Consent"
-#
-#      - label: "Has_Consent"
-#        fromVertexName: "e_mail_consent"
-#        toVertexLabel: "Event.Consent"
+      - label: "Has_Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "email_consent"
+
+      - label: "Has_Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "telephone_consent"
+
+      - label: "Has_Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "fax_sms_consent"
+
+      - label: "Has_Consent"
+        fromVertexLabel: "Person.Natural"
+        toVertexName: "social_media_consent"
 
   cap_my_p_change_report:
     vertices:
