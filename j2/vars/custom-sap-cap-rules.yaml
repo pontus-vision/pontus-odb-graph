@@ -295,8 +295,8 @@ rules:
         condition: "${Mail_Consent?.trim()?.length() > 0}"
         name: mail_consent
         props:
-          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
-          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Created_By: "${Created_By?.trim()}"
+          Changed_By: "${Changed_by?.trim()}"
           Metadata.Create_Date:
             val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
@@ -311,8 +311,8 @@ rules:
         condition: "${E_Mail_Consent?.trim()?.length() > 0}"
         name: email_consent
         props:
-          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
-          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Created_By: "${Created_By?.trim()}"
+          Changed_By: "${Changed_by?.trim()}"
           Metadata.Create_Date:
             val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
@@ -327,8 +327,8 @@ rules:
         condition: "${Telephone_Consent?.trim()?.length() > 0}"
         name: telephone_consent
         props:
-          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
-          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Created_By: "${Created_By?.trim()}"
+          Changed_By: "${Changed_by?.trim()}"
           Metadata.Create_Date:
             val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
@@ -343,8 +343,8 @@ rules:
         condition: "${Fax_SMS_Consent?.trim()?.length() > 0}"
         name: fax_sms_consent
         props:
-          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
-          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Created_By: "${Created_By?.trim()}"
+          Changed_By: "${Changed_by?.trim()}"
           Metadata.Create_Date:
             val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
@@ -359,8 +359,8 @@ rules:
         condition: "${Social_Media_Consent?.trim()?.length() > 0}"
         name: social_media_consent
         props:
-          Created_By: "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
-          Changed_By: "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
+          Created_By: "${Created_By?.trim()}"
+          Changed_By: "${Changed_by?.trim()}"
           Metadata.Create_Date:
             val: "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
@@ -385,7 +385,23 @@ rules:
         toVertexLabel: "Event.Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Consent"
+        fromVertexName: "mail_consent"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "email_consent"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "telephone_consent"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "fax_sms_consent"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "social_media_consent"
         toVertexLabel: "Event.Ingestion"
 
       - label: "Is_Located"

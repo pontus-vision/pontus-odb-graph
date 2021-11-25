@@ -150,7 +150,8 @@ public class PVSapCapTest extends AppTest {
       String lucciGucciBDay =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('LUCCI GUCCI'))" +
                       ".properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
-      assertEquals("Sat Jan 23 01:01:01 BRT 1965", lucciGucciBDay, "Lucci Gucci's Birthday");
+      lucciGucciBDay = lucciGucciBDay.replaceAll("... 1965", "GMT 1965");
+      assertEquals("Sat Jan 23 01:01:01 GMT 1965", lucciGucciBDay, "Lucci Gucci's Birthday");
       
       // testing for Virginia Mars
 
