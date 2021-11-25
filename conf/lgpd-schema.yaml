@@ -122,6 +122,9 @@ propertyKeys:
   - name: Event.Consent.Description
     dataType: String
     cardinality: SINGLE
+  - name: Event.Consent.Customer_ID
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Event.Data_Breach
     dataType: String
     cardinality: SINGLE
@@ -2513,6 +2516,7 @@ vertexIndexes:
       - Event.Consent.Metadata.Update_Date
       - Event.Consent.Status
       - Event.Consent.Description
+      - Event.Consent.Customer_ID
     propertyKeysMappings:
     
       {}

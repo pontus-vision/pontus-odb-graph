@@ -11,6 +11,7 @@ Event.Consent.Metadata.Create_Date
 Event.Consent.Metadata.Update_Date
 Event.Consent.Status
 Event.Consent.Description
+Event.Consent.Customer_ID
 Event.Data_Breach.Description
 Event.Data_Breach.Id
 Event.Data_Breach.Impact

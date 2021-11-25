@@ -158,10 +158,10 @@ updatereq:
       condition: ${Mail_Consent?.trim()?.length() > 0}
       props:
         - name: Event.Consent.Created_By
-          val: ${Created_By?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Created_By?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Changed_By
-          val: ${Changed_by?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Changed_by?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Metadata.Create_Date
           val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
@@ -177,8 +177,8 @@ updatereq:
         - name: Event.Consent.Status
           val: ${Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
           mandatoryInSearch: True
-        - name: Event.Consent.Data_Origin
-          val: ${Data_Origin?.trim()}
+        - name: Event.Consent.Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
     
     - label: Event.Consent
@@ -186,10 +186,10 @@ updatereq:
       condition: ${E_Mail_Consent?.trim()?.length() > 0}
       props:
         - name: Event.Consent.Created_By
-          val: ${Created_By?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Created_By?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Changed_By
-          val: ${Changed_by?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Changed_by?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Metadata.Create_Date
           val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
@@ -205,8 +205,8 @@ updatereq:
         - name: Event.Consent.Status
           val: ${E_Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
           mandatoryInSearch: True
-        - name: Event.Consent.Data_Origin
-          val: ${Data_Origin?.trim()}
+        - name: Event.Consent.Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
     
     - label: Event.Consent
@@ -214,10 +214,10 @@ updatereq:
       condition: ${Telephone_Consent?.trim()?.length() > 0}
       props:
         - name: Event.Consent.Created_By
-          val: ${Created_By?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Created_By?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Changed_By
-          val: ${Changed_by?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Changed_by?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Metadata.Create_Date
           val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
@@ -233,8 +233,8 @@ updatereq:
         - name: Event.Consent.Status
           val: ${Telephone_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
           mandatoryInSearch: True
-        - name: Event.Consent.Data_Origin
-          val: ${Data_Origin?.trim()}
+        - name: Event.Consent.Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
     
     - label: Event.Consent
@@ -242,10 +242,10 @@ updatereq:
       condition: ${Fax_SMS_Consent?.trim()?.length() > 0}
       props:
         - name: Event.Consent.Created_By
-          val: ${Created_By?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Created_By?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Changed_By
-          val: ${Changed_by?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Changed_by?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Metadata.Create_Date
           val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
@@ -261,8 +261,8 @@ updatereq:
         - name: Event.Consent.Status
           val: ${Fax_SMS_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
           mandatoryInSearch: True
-        - name: Event.Consent.Data_Origin
-          val: ${Data_Origin?.trim()}
+        - name: Event.Consent.Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
     
     - label: Event.Consent
@@ -270,10 +270,10 @@ updatereq:
       condition: ${Social_Media_Consent?.trim()?.length() > 0}
       props:
         - name: Event.Consent.Created_By
-          val: ${Created_By?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Created_By?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Changed_By
-          val: ${Changed_by?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          val: ${Changed_by?.trim()}
           mandatoryInSearch: True
         - name: Event.Consent.Metadata.Create_Date
           val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
@@ -289,8 +289,8 @@ updatereq:
         - name: Event.Consent.Status
           val: ${Social_Media_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
           mandatoryInSearch: True
-        - name: Event.Consent.Data_Origin
-          val: ${Data_Origin?.trim()}
+        - name: Event.Consent.Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
 
   edges:
@@ -304,7 +304,19 @@ updatereq:
     fromVertexLabel: Person.Natural
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Consent
+    fromVertexName: mail_consent
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexName: email_consent
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexName: telephone_consent
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexName: fax_sms_consent
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexName: social_media_consent
     toVertexLabel: Event.Ingestion
   - label: Is_Located
     fromVertexLabel: Person.Natural

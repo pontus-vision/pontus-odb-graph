@@ -237,12 +237,12 @@
         "props": [
           {
             "name": "Event.Consent.Created_By",
-            "val": "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Created_By?.trim()}",
             "mandatoryInSearch": true
           },
           {
             "name": "Event.Consent.Changed_By",
-            "val": "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Changed_by?.trim()}",
             "mandatoryInSearch": true
           },
           {
@@ -268,8 +268,8 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Consent.Data_Origin",
-            "val": "${Data_Origin?.trim()}",
+            "name": "Event.Consent.Customer_ID",
+            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           }
         ]
@@ -281,12 +281,12 @@
         "props": [
           {
             "name": "Event.Consent.Created_By",
-            "val": "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Created_By?.trim()}",
             "mandatoryInSearch": true
           },
           {
             "name": "Event.Consent.Changed_By",
-            "val": "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Changed_by?.trim()}",
             "mandatoryInSearch": true
           },
           {
@@ -312,8 +312,8 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Consent.Data_Origin",
-            "val": "${Data_Origin?.trim()}",
+            "name": "Event.Consent.Customer_ID",
+            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           }
         ]
@@ -325,12 +325,12 @@
         "props": [
           {
             "name": "Event.Consent.Created_By",
-            "val": "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Created_By?.trim()}",
             "mandatoryInSearch": true
           },
           {
             "name": "Event.Consent.Changed_By",
-            "val": "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Changed_by?.trim()}",
             "mandatoryInSearch": true
           },
           {
@@ -356,8 +356,8 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Consent.Data_Origin",
-            "val": "${Data_Origin?.trim()}",
+            "name": "Event.Consent.Customer_ID",
+            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           }
         ]
@@ -369,12 +369,12 @@
         "props": [
           {
             "name": "Event.Consent.Created_By",
-            "val": "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Created_By?.trim()}",
             "mandatoryInSearch": true
           },
           {
             "name": "Event.Consent.Changed_By",
-            "val": "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Changed_by?.trim()}",
             "mandatoryInSearch": true
           },
           {
@@ -400,8 +400,8 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Consent.Data_Origin",
-            "val": "${Data_Origin?.trim()}",
+            "name": "Event.Consent.Customer_ID",
+            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           }
         ]
@@ -413,12 +413,12 @@
         "props": [
           {
             "name": "Event.Consent.Created_By",
-            "val": "${Created_By?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Created_By?.trim()}",
             "mandatoryInSearch": true
           },
           {
             "name": "Event.Consent.Changed_By",
-            "val": "${Changed_by?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "val": "${Changed_by?.trim()}",
             "mandatoryInSearch": true
           },
           {
@@ -444,8 +444,8 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Consent.Data_Origin",
-            "val": "${Data_Origin?.trim()}",
+            "name": "Event.Consent.Customer_ID",
+            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           }
         ]
@@ -469,7 +469,27 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Consent",
+        "fromVertexName": "mail_consent",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "email_consent",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "telephone_consent",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "fax_sms_consent",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "social_media_consent",
         "toVertexLabel": "Event.Ingestion"
       },
       {

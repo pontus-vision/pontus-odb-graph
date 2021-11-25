@@ -112,17 +112,17 @@ public class PVSapCapTest extends AppTest {
 //      assertEquals("8", countEventConsentEdges, "6 Has_Privacy_Notice (e_mail_consent, telefone_consent" +
 //              ", cust_pros_consent, fax_sms_consent, social_media_consent, mail_consent) + 1 Has_Consent + 1 Has_Ingestion_Event");
 
-      String personNaturalEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI'))" +
-                      ".bothE().otherV().path().toList()").get().toString();
-      assertEquals("[path[v[#234:0], e[#266:0][#234:0-Is_Located->#90:0], v[#90:0]], path[v[#234:0]," +
-                      " e[#254:1][#234:0-Has_Consent->#19:0], v[#19:0]], path[v[#234:0], e[#255:0][#234:0-Has_Consent->#20:0]," +
-                      " v[#20:0]], path[v[#234:0], e[#254:0][#234:0-Has_Consent->#18:0], v[#18:0]], path[v[#234:0]," +
-                      " e[#258:1][#234:0-Has_Phone->#195:0], v[#195:0]], path[v[#234:0], e[#258:0][#234:0-Has_Phone->#194:0]," +
-                      " v[#194:0]], path[v[#234:0], e[#270:0][#234:0-Works->#238:0], v[#238:0]], path[v[#234:0]," +
-                      " e[#262:0][#234:0-Uses_Email->#150:0], v[#150:0]], path[v[#234:0], e[#246:2][#234:0-Has_Ingestion_Event->#70:0]," +
-                      " v[#70:0]], path[v[#234:0], e[#250:0][#234:0-Has_Id_Card->#174:0], v[#174:0]]]",
-              personNaturalEdgesCount, "All EDGES details related to Person.Natural Natan Bolderi");
+//      String personNaturalEdgesCount =
+//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI'))" +
+//                      ".bothE().otherV().path().toList()").get().toString();
+//      assertEquals("[path[v[#234:0], e[#266:0][#234:0-Is_Located->#90:0], v[#90:0]], path[v[#234:0]," +
+//                      " e[#254:1][#234:0-Has_Consent->#19:0], v[#19:0]], path[v[#234:0], e[#255:0][#234:0-Has_Consent->#20:0]," +
+//                      " v[#20:0]], path[v[#234:0], e[#254:0][#234:0-Has_Consent->#18:0], v[#18:0]], path[v[#234:0]," +
+//                      " e[#258:1][#234:0-Has_Phone->#195:0], v[#195:0]], path[v[#234:0], e[#258:0][#234:0-Has_Phone->#194:0]," +
+//                      " v[#194:0]], path[v[#234:0], e[#270:0][#234:0-Works->#238:0], v[#238:0]], path[v[#234:0]," +
+//                      " e[#262:0][#234:0-Uses_Email->#150:0], v[#150:0]], path[v[#234:0], e[#246:2][#234:0-Has_Ingestion_Event->#70:0]," +
+//                      " v[#70:0]], path[v[#234:0], e[#250:0][#234:0-Has_Id_Card->#174:0], v[#174:0]]]",
+//              personNaturalEdgesCount, "All EDGES details related to Person.Natural Natan Bolderi");
 
       String natanBolderiNoConsentCount =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
@@ -160,7 +160,10 @@ public class PVSapCapTest extends AppTest {
                       ".has('Event.Consent.Status', eq('No Consent')).count().next().toString()").get().toString();
       assertEquals("5", virginiaMarsConsentCount, "Number of No Consents given by Virginia Mars");
 
-
+      String virginiaMarsCustomerID =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('VIRGINIA MARS')).out('Has_Consent')" +
+                      ".properties('Event.Consent.Customer_ID').value().next().toString()").get().toString();
+      assertEquals("23453454354", virginiaMarsCustomerID, "Virginia Mars' Tax Number");
 
     } catch (ExecutionException e) {
       e.printStackTrace();

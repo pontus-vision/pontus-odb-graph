@@ -305,7 +305,7 @@ rules:
             type: "java.util.Date"
           Description: "Mail Consent"
           Status: "${Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
-          Data_Origin: "${Data_Origin?.trim()}"
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]', '')}"
 
       - label: Event.Consent
         condition: "${E_Mail_Consent?.trim()?.length() > 0}"
@@ -321,7 +321,7 @@ rules:
             type: "java.util.Date"
           Description: "E-Mail Consent"
           Status: "${E_Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
-          Data_Origin: "${Data_Origin?.trim()}"
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]', '')}"
 
       - label: Event.Consent
         condition: "${Telephone_Consent?.trim()?.length() > 0}"
@@ -337,7 +337,7 @@ rules:
             type: "java.util.Date"
           Description: "Telephone Consent"
           Status: "${Telephone_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
-          Data_Origin: "${Data_Origin?.trim()}"
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]', '')}"
 
       - label: Event.Consent
         condition: "${Fax_SMS_Consent?.trim()?.length() > 0}"
@@ -353,7 +353,7 @@ rules:
             type: "java.util.Date"
           Description: "Fax/SMS Consent"
           Status: "${Fax_SMS_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
-          Data_Origin: "${Data_Origin?.trim()}"
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]', '')}"
 
       - label: Event.Consent
         condition: "${Social_Media_Consent?.trim()?.length() > 0}"
@@ -369,7 +369,7 @@ rules:
             type: "java.util.Date"
           Description: "Social Media Consent"
           Status: "${Social_Media_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}"
-          Data_Origin: "${Data_Origin?.trim()}"
+          Customer_ID: "${Tax_Number?.replaceAll('[^0-9]', '')}"
 
     edges:
       - label: "Has_Ingestion_Event"
