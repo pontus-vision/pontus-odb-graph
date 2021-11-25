@@ -645,23 +645,23 @@ rules:
         props:
           Risk_Id: "${Title?.trim()?.toUpperCase()}"
           Description:
-            value: "${field_Description}"
+            val: "${field_Description}"
             mandatoryInSearch: false
           Probability:
-            value: "${field_Probability}"
+            val: "${field_Probability}"
             mandatoryInSearch: false
 
           Impact:
-            value: "${field_Impact}"
+            val: "${field_Impact}"
             mandatoryInSearch: false
 
           Residual_Probability:
-            value: "${field_Residual_x0020_Probability}"
+            val: "${field_Residual_x0020_Probability}"
             mandatoryInSearch: false
 
 
           Residual_Impact:
-            value: "${field_Residual_x0020_Impact}"
+            val: "${field_Residual_x0020_Impact}"
             mandatoryInSearch: false
 
 
