@@ -34,7 +34,7 @@ public class PVSapCapTest extends AppTest {
    */
 
   @Test
-  public void test00001SapCapLeads() throws InterruptedException {
+  public void test00001SapCapLead() throws InterruptedException {
   // updated to real style data lead.csv
 
     try {
@@ -92,16 +92,78 @@ public class PVSapCapTest extends AppTest {
                       ".properties('Object.Email_Address.Email').value().next().toString()").get().toString();
       assertEquals("natinhobolderi@gmail.com", gettingEmailAddress, "E-mail de Natan Bolderi");
 
-      String dateOfBirth =
+      String natanBDay =
           App.executor.eval("App.g.V().has('Location.Address.Post_Code'," +
               "eq('14022-000'))" +
               ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
       // replace the timezone with GMT; otherwise, if the test is run in Brazil, that appears as BRT 1975
       // ... in regex means any character, so ... 1976 will replace BRT 1976 with GMT 1975
-      dateOfBirth = dateOfBirth.replaceAll("... 1975", "GMT 1975");
-      assertEquals("Thu May 08 01:01:01 GMT 1975", dateOfBirth, "Data de nascimento de Natan Bolderi");
+      natanBDay = natanBDay.replaceAll("... 1975", "GMT 1975");
+      assertEquals("Thu May 08 01:01:01 GMT 1975", natanBDay, "Data de nascimento de Natan Bolderi");
 
+      String eventConsentCreatedBy =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
+                      ".properties('Event.Consent.Created_By').value().next().toString()").get().toString();
+      assertEquals("DBR0200WK", eventConsentCreatedBy, "Porsche Employee code");
 
+//      String countEventConsentEdges =
+//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
+//                      ".bothE().count().next().toString()").get().toString();
+//      assertEquals("8", countEventConsentEdges, "6 Has_Privacy_Notice (e_mail_consent, telefone_consent" +
+//              ", cust_pros_consent, fax_sms_consent, social_media_consent, mail_consent) + 1 Has_Consent + 1 Has_Ingestion_Event");
+
+//      String personNaturalEdgesCount =
+//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI'))" +
+//                      ".bothE().otherV().path().toList()").get().toString();
+//      assertEquals("[path[v[#234:0], e[#266:0][#234:0-Is_Located->#90:0], v[#90:0]], path[v[#234:0]," +
+//                      " e[#254:1][#234:0-Has_Consent->#19:0], v[#19:0]], path[v[#234:0], e[#255:0][#234:0-Has_Consent->#20:0]," +
+//                      " v[#20:0]], path[v[#234:0], e[#254:0][#234:0-Has_Consent->#18:0], v[#18:0]], path[v[#234:0]," +
+//                      " e[#258:1][#234:0-Has_Phone->#195:0], v[#195:0]], path[v[#234:0], e[#258:0][#234:0-Has_Phone->#194:0]," +
+//                      " v[#194:0]], path[v[#234:0], e[#270:0][#234:0-Works->#238:0], v[#238:0]], path[v[#234:0]," +
+//                      " e[#262:0][#234:0-Uses_Email->#150:0], v[#150:0]], path[v[#234:0], e[#246:2][#234:0-Has_Ingestion_Event->#70:0]," +
+//                      " v[#70:0]], path[v[#234:0], e[#250:0][#234:0-Has_Id_Card->#174:0], v[#174:0]]]",
+//              personNaturalEdgesCount, "All EDGES details related to Person.Natural Natan Bolderi");
+
+      String natanBolderiNoConsentCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
+                      ".has('Event.Consent.Status', eq('No Consent')).count().next().toString()").get().toString();
+      assertEquals("1", natanBolderiNoConsentCount, "Number of No Consents granted by Natan Bolderi");
+
+      String natanBolderiYesConsentCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
+                      ".has('Event.Consent.Status', eq('Consent')).count().next().toString()").get().toString();
+      assertEquals("2", natanBolderiYesConsentCount, "Number of Consents granted by Natan Bolderi");
+
+      String telephoneConsentStatus =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
+                      ".has('Event.Consent.Description', eq('Telephone Consent')).properties('Event.Consent.Status')" +
+                      ".value().next().toString()").get().toString();
+      assertEquals("No Consent", telephoneConsentStatus, "Status for Natan Bolderi's Telephone Consent");
+
+      // Testing for Lucci Gucci
+
+      String lucciGucciYesConsentCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('LUCCI GUCCI')).out('Has_Consent')" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("5", lucciGucciYesConsentCount, "Number of Consents granted by Lucci Gucci");
+
+      String lucciGucciBDay =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('LUCCI GUCCI'))" +
+                      ".properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
+      lucciGucciBDay = lucciGucciBDay.replaceAll("... 1965", "GMT 1965");
+      assertEquals("Sat Jan 23 01:01:01 GMT 1965", lucciGucciBDay, "Lucci Gucci's Birthday");
+      
+      // testing for Virginia Mars
+
+      String virginiaMarsConsentCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('VIRGINIA MARS')).out('Has_Consent')" +
+                      ".has('Event.Consent.Status', eq('No Consent')).count().next().toString()").get().toString();
+      assertEquals("5", virginiaMarsConsentCount, "Number of No Consents given by Virginia Mars");
+
+      String virginiaMarsCustomerID =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('VIRGINIA MARS')).out('Has_Consent')" +
+                      ".properties('Event.Consent.Customer_ID').value().next().toString()").get().toString();
+      assertEquals("23453454354", virginiaMarsCustomerID, "Virginia Mars' Tax Number");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
