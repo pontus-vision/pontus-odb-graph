@@ -31,19 +31,19 @@ updatereq:
           val: ${Title?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Object.Risk_Data_Source.Description
-          val: {'value': '${field_Description}', 'mandatoryInSearch': False}
+          val: ${field_Description}
           mandatoryInSearch: True
         - name: Object.Risk_Data_Source.Probability
-          val: {'value': '${field_Probability}', 'mandatoryInSearch': False}
+          val: ${field_Probability}
           mandatoryInSearch: True
         - name: Object.Risk_Data_Source.Impact
-          val: {'value': '${field_Impact}', 'mandatoryInSearch': False}
+          val: ${field_Impact}
           mandatoryInSearch: True
         - name: Object.Risk_Data_Source.Residual_Probability
-          val: {'value': '${field_Residual_x0020_Probability}', 'mandatoryInSearch': False}
+          val: ${field_Residual_x0020_Probability}
           mandatoryInSearch: True
         - name: Object.Risk_Data_Source.Residual_Impact
-          val: {'value': '${field_Residual_x0020_Impact}', 'mandatoryInSearch': False}
+          val: ${field_Residual_x0020_Impact}
           mandatoryInSearch: True
     
     - label: Object.Risk_Mitigation_Data_Source
