@@ -644,11 +644,25 @@ rules:
       - label: Object.Risk_Data_Source
         props:
           Risk_Id: "${Title?.trim()?.toUpperCase()}"
-          Description: "${field_Description}"
-          Probability: "${field_Probability}"
-          Impact: "${field_Impact}"
-          Residual_Probability: "${field_ResidualProbability}"
-          Residual_Impact: "${field_ResidualImpact}"
+          Description:
+            value: "${field_Description}"
+            mandatoryInSearch: false
+          Probability:
+            value: "${field_Probability}"
+            mandatoryInSearch: false
+
+          Impact:
+            value: "${field_Impact}"
+            mandatoryInSearch: false
+
+          Residual_Probability:
+            value: "${field_Residual_x0020_Probability}"
+            mandatoryInSearch: false
+
+
+          Residual_Impact:
+            value: "${field_Residual_x0020_Impact}"
+            mandatoryInSearch: false
 
 
       - label: Object.Risk_Mitigation_Data_Source

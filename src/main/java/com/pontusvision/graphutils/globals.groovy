@@ -698,7 +698,7 @@ class PontusJ2ReportingFunctions {
     if (riskLevelNum <= 50 ){
       return 'green'
     }
-    return 'yellow'
+    return 'orange'
   }
 
   static List<Map<String,String>> getRisksForDataProcess(String processId) {
