@@ -32,19 +32,24 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Risk_Data_Source.Description
           val: ${field_Description}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Risk_Data_Source.Probability
           val: ${field_Probability}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Risk_Data_Source.Impact
           val: ${field_Impact}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Risk_Data_Source.Residual_Probability
-          val: ${field_ResidualProbability}
-          mandatoryInSearch: True
+          val: ${field_Residual_x0020_Probability}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Risk_Data_Source.Residual_Impact
-          val: ${field_ResidualImpact}
-          mandatoryInSearch: True
+          val: ${field_Residual_x0020_Impact}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object.Risk_Mitigation_Data_Source
       props:
