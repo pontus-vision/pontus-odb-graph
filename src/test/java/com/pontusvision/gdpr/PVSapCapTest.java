@@ -34,7 +34,7 @@ public class PVSapCapTest extends AppTest {
    */
 
   @Test
-  public void test00001SapCapLeads() throws InterruptedException {
+  public void test00001SapCapLead() throws InterruptedException {
   // updated to real style data lead.csv
 
     try {
