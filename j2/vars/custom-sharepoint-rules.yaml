@@ -646,23 +646,23 @@ rules:
           Risk_Id: "${Title?.trim()?.toUpperCase()}"
           Description:
             val: "${field_Description}"
-            mandatoryInSearch: false
+            excludeFromSearch: true
           Probability:
             val: "${field_Probability}"
-            mandatoryInSearch: false
+            excludeFromSearch: true
 
           Impact:
             val: "${field_Impact}"
-            mandatoryInSearch: false
+            excludeFromSearch: true
 
           Residual_Probability:
             val: "${field_Residual_x0020_Probability}"
-            mandatoryInSearch: false
+            excludeFromSearch: true
 
 
           Residual_Impact:
             val: "${field_Residual_x0020_Impact}"
-            mandatoryInSearch: false
+            excludeFromSearch: true
 
 
       - label: Object.Risk_Mitigation_Data_Source
