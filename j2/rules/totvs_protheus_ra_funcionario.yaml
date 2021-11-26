@@ -4,7 +4,7 @@ updatereq:
     
     - label: Person.Natural
       name: colaborador
-      condition: ${RA_CIC?.replaceAll('[^0-9]','').length() == 11}
+      condition: ${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}
       props:
         - name: Person.Natural.Full_Name
           val: ${RA_NOMECMP?.trim()?.toUpperCase()}
@@ -15,10 +15,20 @@ updatereq:
           excludeFromSearch: True
         - name: Person.Natural.Gender
           val: ${RA_SEXO}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Person.Natural.Customer_ID
           val: ${RA_CIC?.replaceAll('[^0-9]','')}
-          predicate: eq
+          mandatoryInSearch: True
+    
+    - label: Person.Organisation
+      condition: ${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}
+      props:
+        - name: Person.Organisation.Name
+          val: ${RA_NOMECMP?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Person.Organisation.Id
+          val: ${RA_CIC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
     
     - label: Location.Address
@@ -34,13 +44,6 @@ updatereq:
         - name: Location.Address.Post_Code
           val: ${com.pontusvision.utils.PostCode.format(RA_CEP)}
           mandatoryInSearch: True
-        - name: Location.Address.Description
-          val: moradia principal
-          mandatoryInSearch: True
-        - name: Location.Address.Type
-          val: home
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Person.Natural
       name: mae
@@ -51,9 +54,6 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Natural.Type
           val: colaborador-pais
-          mandatoryInSearch: True
-        - name: Person.Natural.Gender
-          val: F
           mandatoryInSearch: True
     
     - label: Person.Natural
@@ -66,12 +66,9 @@ updatereq:
         - name: Person.Natural.Type
           val: colaborador-pais
           mandatoryInSearch: True
-        - name: Person.Natural.Gender
-          val: M
-          mandatoryInSearch: True
     
     - label: Object.Phone_Number
-      condition: ${RA_TELEFON?.replaceAll('[^0-9]','').length() > 0}
+      condition: ${RA_TELEFON?.replaceAll('[^0-9]','')?.length() > 0}
       props:
         - name: Object.Phone_Number.Raw
           val: ${RA_TELEFON}
@@ -134,8 +131,9 @@ updatereq:
           val: ${RA_EMAIL.trim()?.toLowerCase()}
           mandatoryInSearch: True
         - name: Object.Email_Address.Type
-          val: ${(RA_EMAIL.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}
-          mandatoryInSearch: True
+          val: ${(RA_EMAIL.trim()?.toLowerCase()?.contains('sunnyvale.com.br'))?'business':'personal'}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object.Email_Address
       name: email2
@@ -145,8 +143,9 @@ updatereq:
           val: ${RA_EMAIL2?.trim()?.toLowerCase()}
           mandatoryInSearch: True
         - name: Object.Email_Address.Type
-          val: ${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}
-          mandatoryInSearch: True
+          val: ${(RA_EMAIL2.trim()?.toLowerCase()?.contains('sunnyvale.com.br'))?'business':'personal'}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event.Ingestion
       props:
@@ -209,7 +208,16 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
+    fromVertexLabel: Object.Data_Source
+    toVertexLabel: Event.Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.Group_Ingestion
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
     fromVertexName: colaborador
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Person.Organisation
     toVertexLabel: Event.Ingestion
   - label: Is_Family
     fromVertexName: mae
@@ -217,20 +225,23 @@ updatereq:
   - label: Is_Family
     fromVertexName: pai
     toVertexName: colaborador
-  - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Group_Ingestion
-    toVertexLabel: Event.Ingestion
-  - label: Has_Ingestion_Event
-    fromVertexLabel: Object.Data_Source
-    toVertexLabel: Event.Group_Ingestion
   - label: Has_Phone
     fromVertexName: colaborador
+    toVertexLabel: Object.Phone_Number
+  - label: Has_Phone
+    fromVertexLabel: Person.Organisation
     toVertexLabel: Object.Phone_Number
   - label: Uses_Email
     fromVertexName: colaborador
     toVertexName: email1
   - label: Uses_Email
+    fromVertexLabel: Person.Organisation
+    toVertexName: email1
+  - label: Uses_Email
     fromVertexName: colaborador
+    toVertexName: email2
+  - label: Uses_Email
+    fromVertexLabel: Person.Organisation
     toVertexName: email2
   - label: Has_Id_Card
     fromVertexName: colaborador
@@ -239,9 +250,12 @@ updatereq:
     fromVertexName: colaborador
     toVertexName: cpf
   - label: Has_Id_Card
-    fromVertexName: colaborador
+    fromVertexLabel: Person.Organisation
     toVertexName: cnpj
-  - label: Lives
+  - label: Is_Located
     fromVertexName: colaborador
+    toVertexLabel: Location.Address
+  - label: Is_Located
+    fromVertexLabel: Person.Organisation
     toVertexLabel: Location.Address
 
