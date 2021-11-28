@@ -1,27 +1,10 @@
 package com.pontusvision.gdpr;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
-import java.io.IOException;
-import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,7 +26,7 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00001TotvsProtheusSa1Clientes() throws InterruptedException {
 
-    jsonTestUtil("totvs_sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+    jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
 
     try {
 
@@ -188,7 +171,7 @@ public class PVTotvsTest extends AppTest {
 //  public void test00004TotvsProtheusPlusPloomes() throws InterruptedException {
 //
 //    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
-//    jsonTestUtil("totvs_sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+//    jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
 //
 //    try {
 //
