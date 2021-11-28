@@ -30,6 +30,11 @@
             "name": "Person.Organisation.Id",
             "val": "${A1_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person.Organisation.Contact",
+            "val": "${A1_CONTATO?.trim()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -41,12 +46,6 @@
             "name": "Object.Phone_Number.Raw",
             "val": "${A1_TEL}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Office",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -66,7 +65,7 @@
       {
         "label": "Object.Identity_Card",
         "name": "rg",
-        "condition": "${A1_RG?.replaceAll('[^0-9]', '')?.length() == 11}",
+        "condition": "${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
@@ -130,18 +129,16 @@
       },
       {
         "label": "Location.Address",
-        "name": "business",
-        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "val": "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "val": "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
@@ -149,42 +146,6 @@
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(A1_CEP)}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Location.Address.Type",
-            "val": "Business",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Location.Address",
-        "name": "residence",
-        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
-        "props": [
-          {
-            "name": "Location.Address.Full_Address",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Location.Address.parser",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-          },
-          {
-            "name": "Location.Address.Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(A1_CEP)}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Location.Address.Type",
-            "val": "Residence",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -266,16 +227,6 @@
             "name": "Object.Data_Source.Name",
             "val": "TOTVS/PROTHEUS/SA1_CLIENTES",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "totvs/protheus/sa1_clientes",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros de Clientes no protheus/Totvs",
-            "mandatoryInSearch": true
           }
         ]
       }
@@ -329,12 +280,12 @@
       {
         "label": "Is_Located",
         "fromVertexLabel": "Person.Natural",
-        "toVertexName": "residence"
+        "toVertexLabel": "Location.Address"
       },
       {
         "label": "Is_Located",
         "fromVertexLabel": "Person.Organisation",
-        "toVertexName": "business"
+        "toVertexLabel": "Location.Address"
       },
       {
         "label": "Has_Phone",

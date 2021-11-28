@@ -19,6 +19,7 @@ rules:
 #      "A1_EST": "sss"
 #      "A1_MUN": "sss"
 #    }
+
   totvs_protheus_sa1_clientes:
     vertices:
       - label: Person.Natural
@@ -38,6 +39,7 @@ rules:
 #            val: "Clientes"
 #            excludeFromSearch: true
           Id: "${A1_CGC.replaceAll('[^0-9]','')}"
+          Contact: "${A1_CONTATO?.trim()}"
 
       - label: Object.Phone_Number
         condition: "${A1_TEL?.replaceAll('[^0-9]','')?.length() > 0}"
@@ -92,10 +94,10 @@ rules:
 #        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Full_Address:
-            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            val: "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}"
             excludeFromSearch: true
           parser:
-            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            val: "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(A1_CEP)}"
 #          Type:
@@ -196,9 +198,6 @@ rules:
         fromVertexLabel: "Person.Organisation"
         toVertexLabel: "Object.Phone_Number"
 
-#  TODO: {(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}
-#  TODO: "${StreetAddress} ${StreetAddressNumber} ${StreetAddressLine2?:''}, ${Neighborhood}, ${CityId} - ${StateId}, ${ZipCode}"
-
 #    {
 #      "id": "string"
 #      "lastUpdate": {}
@@ -274,7 +273,7 @@ rules:
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: colaborador
         props:
-          Full_Name: "${RA_NOMECMP?.trim()?.toUpperCase()}"
+          Full_Name: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "Colaborador"
 #            excludeFromSearch: true
@@ -286,7 +285,7 @@ rules:
       - label: Person.Organisation
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
-          Name: "${RA_NOMECMP?.trim()?.toUpperCase()}"
+          Name: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "Colaborador"
 #            excludeFromSearch: true
@@ -295,10 +294,10 @@ rules:
       - label: Location.Address
         props:
           Full_Address:
-            val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+            val: "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase():''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}"
             excludeFromSearch: true
           parser:
-            val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+            val: "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase():''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(RA_CEP)}"
 #          Description: "moradia principal"
@@ -539,35 +538,36 @@ rules:
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: fornecedor
         props:
-          Name: "${A2_NOME?.trim()?.toUpperCase()}"
+          Name: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "Fornecedor"
 #            excludeFromSearch: true
           Id: "${A2_CGC.replaceAll('[^0-9]','')}"
-
-      - label: Location.Address
-#        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
-        props:
-          Full_Address:
-            val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
-            excludeFromSearch: true
-          parser:
-            val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
-            type: "com.pontusvision.utils.LocationAddress"
-          Post_Code: "${com.pontusvision.utils.PostCode.format(A2_CEP)}"
-#          Description: "endereco fornecedor"
-#          Type:
-#            val: "business"
-#            excludeFromSearch: true
+          Contact: "${A2_CONTATO?.trim()}"
 
       - label: Person.Natural
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: rep
         props:
-          Full_Name: "${A2_NOME?.trim()?.toUpperCase()}"
-#          Type:
-#            val: "fornecedor"
-#            excludeFromSearch: false
+          Full_Name: "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}"
+          #          Type:
+          #            val: "fornecedor"
+          #            excludeFromSearch: false
+          #            excludeFromSearch: true
+
+      - label: Location.Address
+        #        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
+        props:
+          Full_Address:
+            val: "${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}"
+            excludeFromSearch: true
+          parser:
+            val: "${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(A2_CEP)}"
+      #          Description: "endereco fornecedor"
+      #          Type:
+      #            val: "business"
 
       - label: Object.Identity_Card
         condition: "${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}"

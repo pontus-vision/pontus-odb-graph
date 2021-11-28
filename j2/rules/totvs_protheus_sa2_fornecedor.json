@@ -8,79 +8,18 @@
         "props": [
           {
             "name": "Person.Organisation.Name",
-            "val": "${A2_NOME?.trim()?.toUpperCase()}",
+            "val": "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Type",
-            "val": "Fornecedor",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           },
           {
             "name": "Person.Organisation.Id",
             "val": "${A2_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Location.Address",
-        "name": "business_addr",
-        "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
-        "props": [
-          {
-            "name": "Location.Address.Full_Address",
-            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           },
           {
-            "name": "Location.Address.parser",
-            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-          },
-          {
-            "name": "Location.Address.Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(A2_CEP)}",
+            "name": "Person.Organisation.Contact",
+            "val": "${A2_CONTATO?.trim()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Location.Address.Type",
-            "val": "business",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Location.Address",
-        "name": "residence_addr",
-        "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
-        "props": [
-          {
-            "name": "Location.Address.Full_Address",
-            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Location.Address.parser",
-            "val": "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-          },
-          {
-            "name": "Location.Address.Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(A2_CEP)}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Location.Address.Type",
-            "val": "residence",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -91,12 +30,29 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${A2_NOME?.trim()?.toUpperCase()}",
+            "val": "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Location.Address",
+        "props": [
+          {
+            "name": "Location.Address.Full_Address",
+            "val": "${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
-            "name": "Person.Natural.Type",
-            "val": "fornecedor",
+            "name": "Location.Address.parser",
+            "val": "${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location.Address.Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(A2_CEP)}",
             "mandatoryInSearch": true
           }
         ]
@@ -104,7 +60,7 @@
       {
         "label": "Object.Identity_Card",
         "name": "rg",
-        "condition": "${A2_RG?.replaceAll('[^0-9]', '')?.length() == 11}",
+        "condition": "${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
@@ -166,12 +122,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Phone_Number.Type",
-            "val": "Telefone 1",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
-          },
-          {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
@@ -197,12 +147,6 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Phone_Number.Type",
-            "val": "Telefone 2",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
-          },
-          {
             "name": "Object.Phone_Number.Numbers_Only",
             "val": "${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
@@ -226,12 +170,6 @@
             "name": "Object.Phone_Number.Raw",
             "val": "${A2_REPR_EN}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Mobile",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -350,16 +288,6 @@
             "name": "Object.Data_Source.Name",
             "val": "TOTVS/PROTHEUS/SA2_FORNECEDOR",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "totvs/protheus/sa2_fornecedor",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros de Fornecedores no protheus/Totvs",
-            "mandatoryInSearch": true
           }
         ]
       }
@@ -413,7 +341,7 @@
       {
         "label": "Is_Located",
         "fromVertexName": "rep",
-        "toVertexName": "residence_addr"
+        "toVertexLabel": "Location.Address"
       },
       {
         "label": "Has_Id_Card",
@@ -458,7 +386,7 @@
       {
         "label": "Is_Located",
         "fromVertexName": "fornecedor",
-        "toVertexName": "business_addr"
+        "toVertexLabel": "Location.Address"
       }
     ]
   }

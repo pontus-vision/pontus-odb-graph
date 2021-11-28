@@ -21,6 +21,9 @@ updatereq:
         - name: Person.Organisation.Id
           val: ${A1_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
+        - name: Person.Organisation.Contact
+          val: ${A1_CONTATO?.trim()}
+          mandatoryInSearch: True
     
     - label: Object.Phone_Number
       condition: ${A1_TEL?.replaceAll('[^0-9]','')?.length() > 0}
@@ -28,10 +31,6 @@ updatereq:
         - name: Object.Phone_Number.Raw
           val: ${A1_TEL}
           mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Office
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -44,7 +43,7 @@ updatereq:
     
     - label: Object.Identity_Card
       name: rg
-      condition: ${A1_RG?.replaceAll('[^0-9]', '')?.length() == 11}
+      condition: ${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0}
       props:
         - name: Object.Identity_Card.Id_Value
           val: ${A1_RG?.replaceAll('[^0-9]','')}
@@ -86,44 +85,18 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Location.Address
-      name: business
-      condition: ${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Location.Address.Full_Address
-          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          val: ${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location.Address.parser
-          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
+          val: ${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location.Address.Post_Code
           val: ${com.pontusvision.utils.PostCode.format(A1_CEP)}
           mandatoryInSearch: True
-        - name: Location.Address.Type
-          val: Business
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
-    - label: Location.Address
-      name: residence
-      condition: ${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}
-      props:
-        - name: Location.Address.Full_Address
-          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Location.Address.parser
-          val: ${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}
-          mandatoryInSearch: True
-          type: "com.pontusvision.utils.LocationAddress"
-        - name: Location.Address.Post_Code
-          val: ${com.pontusvision.utils.PostCode.format(A1_CEP)}
-          mandatoryInSearch: True
-        - name: Location.Address.Type
-          val: Residence
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Event.Ingestion
       props:
@@ -177,12 +150,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: TOTVS/PROTHEUS/SA1_CLIENTES
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: totvs/protheus/sa1_clientes
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros de Clientes no protheus/Totvs
-          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event
@@ -214,10 +181,10 @@ updatereq:
     toVertexName: cnpj
   - label: Is_Located
     fromVertexLabel: Person.Natural
-    toVertexName: residence
+    toVertexLabel: Location.Address
   - label: Is_Located
     fromVertexLabel: Person.Organisation
-    toVertexName: business
+    toVertexLabel: Location.Address
   - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexLabel: Object.Phone_Number

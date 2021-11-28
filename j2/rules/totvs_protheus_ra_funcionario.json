@@ -8,14 +8,8 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${RA_NOMECMP?.trim()?.toUpperCase()}",
+            "val": "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "Colaborador",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           },
           {
             "name": "Person.Natural.Gender",
@@ -36,7 +30,7 @@
         "props": [
           {
             "name": "Person.Organisation.Name",
-            "val": "${RA_NOMECMP?.trim()?.toUpperCase()}",
+            "val": "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
@@ -51,13 +45,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
+            "val": "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase():''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}",
+            "val": "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase():''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
@@ -77,11 +71,6 @@
             "name": "Person.Natural.Full_Name",
             "val": "${RA_MAE?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "colaborador-pais",
-            "mandatoryInSearch": true
           }
         ]
       },
@@ -94,11 +83,6 @@
             "name": "Person.Natural.Full_Name",
             "val": "${RA_PAI?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "colaborador-pais",
-            "mandatoryInSearch": true
           }
         ]
       },
@@ -110,12 +94,6 @@
             "name": "Object.Phone_Number.Raw",
             "val": "${RA_TELEFON}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Office",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -195,12 +173,6 @@
             "name": "Object.Email_Address.Email",
             "val": "${RA_EMAIL.trim()?.toLowerCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Email_Address.Type",
-            "val": "${(RA_EMAIL.trim()?.toLowerCase()?.contains('sunnyvale.com.br'))?'business':'personal'}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -213,12 +185,6 @@
             "name": "Object.Email_Address.Email",
             "val": "${RA_EMAIL2?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Email_Address.Type",
-            "val": "${(RA_EMAIL2.trim()?.toLowerCase()?.contains('sunnyvale.com.br'))?'business':'personal'}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -299,16 +265,6 @@
           {
             "name": "Object.Data_Source.Name",
             "val": "TOTVS/PROTHEUS/SRA_FUNCIONARIOS",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "totvs/protheus/sra_funcionarios",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros de Funcionarios no protheus/Totvs",
             "mandatoryInSearch": true
           }
         ]
