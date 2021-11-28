@@ -86,6 +86,15 @@ propertyKeys:
   - name: Event.Consent.Type
     dataType: String
     cardinality: SINGLE
+  - name: Event.Consent.Data_Origin
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Created_By
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Changed_By
+    dataType: String
+    cardinality: SINGLE
   - name: Event.Consent.Date
     dataType: Date
     cardinality: SINGLE
@@ -108,6 +117,12 @@ propertyKeys:
     dataType: Date
     cardinality: SINGLE
   - name: Event.Consent.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Consent.Customer_ID
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Event.Data_Breach
@@ -2492,6 +2507,9 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata.Type.Event.Consent
+      - Event.Consent.Data_Origin
+      - Event.Consent.Created_By
+      - Event.Consent.Changed_By
       - Event.Consent.Date
       - Event.Consent.Form_Id
       - Event.Consent.Form_Owner_Id
@@ -2500,6 +2518,8 @@ vertexIndexes:
       - Event.Consent.Metadata.Create_Date
       - Event.Consent.Metadata.Update_Date
       - Event.Consent.Status
+      - Event.Consent.Description
+      - Event.Consent.Customer_ID
     propertyKeysMappings:
     
       {}
