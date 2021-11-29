@@ -277,9 +277,9 @@ rules:
 #          Type:
 #            val: "Colaborador"
 #            excludeFromSearch: true
-          Gender:
-            val: "${RA_SEXO}"
-            excludeFromSearch: true
+#          Gender:
+#            val: "${RA_SEXO}"
+#            excludeFromSearch: true
           Customer_ID: "${RA_CIC?.replaceAll('[^0-9]','')}"
 
       - label: Person.Organisation
@@ -294,10 +294,10 @@ rules:
       - label: Location.Address
         props:
           Full_Address:
-            val: "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase():''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}"
+            val: "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase()?:''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}"
             excludeFromSearch: true
           parser:
-            val: "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase():''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}"
+            val: "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase()?:''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(RA_CEP)}"
 #          Description: "moradia principal"

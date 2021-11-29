@@ -5,10 +5,10 @@ rules:
   ploomes_clientes:
     vertices:
       - label: Person.Natural
-        condition: "${TypeId == 2 && LegalName != null}"
+        condition: "${TypeId == 2 && Name != null}"
         props:
           Full_Name:
-            val: "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}"
+            val: "${Name?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
           Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
 #          Type:
@@ -16,7 +16,7 @@ rules:
 #            excludeFromSearch: true
 
       - label: Person.Organisation
-        condition: "${TypeId == 1 && CNPJ != null && Name != null}"
+        condition: "${TypeId == 1 && CNPJ != null && LegalName != null}"
         props:
           Registration_Number: "${CNPJ?.replaceAll('[^0-9]', '')}"
           Name:
@@ -56,13 +56,13 @@ rules:
         condition: "${StreetAddress != null}"
         props:
           Full_Address:
-            val: "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase():''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
+            val: "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
             excludeFromSearch: true
 #          Type:
 #            val: "Business"
 #            excludeFromSearch: true
           parser:
-            val: "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase():''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
+            val: "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(ZipCode)}"
 

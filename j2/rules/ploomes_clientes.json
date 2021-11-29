@@ -3,11 +3,11 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "condition": "${TypeId == 2 && LegalName != null}",
+        "condition": "${TypeId == 2 && Name != null}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}",
+            "val": "${Name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
@@ -19,7 +19,7 @@
       },
       {
         "label": "Person.Organisation",
-        "condition": "${TypeId == 1 && CNPJ != null && Name != null}",
+        "condition": "${TypeId == 1 && CNPJ != null && LegalName != null}",
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
@@ -96,13 +96,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase():''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+            "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase():''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+            "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },

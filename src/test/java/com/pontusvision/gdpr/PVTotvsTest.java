@@ -26,8 +26,8 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00001TotvsProtheusSa1Clientes() throws InterruptedException {
 
+    jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
     jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
-
     try {
 
       String OrganisationUruguayEdgeCount =
@@ -47,15 +47,15 @@ public class PVTotvsTest extends AppTest {
       assertEquals("5", PersonMatheusEdgesCount, "1 Has_Ingestion_Event + 1 Uses_Email + 1 Is_Located " +
               "+ 1 Has_Phone + 1 Has_Id_Card");
 
-      String personNaturalVerticesCount =
-              App.executor.eval("App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))" +
-                      ".count().next().toString()").get().toString();
-      assertEquals("1", personNaturalVerticesCount, "The only Person.Natural is Matheus Rocha");
-
-      String personOrganisationVerticesCount =
-              App.executor.eval("App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))" +
-                      ".count().next().toString()").get().toString();
-      assertEquals("3", personOrganisationVerticesCount, "URUGUAY AUTOMACAO INDL LTDA, DOMINGOS COML LTDA e DOCES JOINVILLE LTDA");
+//      String personNaturalVerticesCount =
+//              App.executor.eval("App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))" +
+//                      ".count().next().toString()").get().toString();
+//      assertEquals("1", personNaturalVerticesCount, "The only Person.Natural is Matheus Rocha");
+//
+//      String personOrganisationVerticesCount =
+//              App.executor.eval("App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))" +
+//                      ".count().next().toString()").get().toString();
+//      assertEquals("3", personOrganisationVerticesCount, "URUGUAY AUTOMACAO INDL LTDA, DOMINGOS COML LTDA e DOCES JOINVILLE LTDA");
 
       String matheusPhoneNumber =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MATHEUS ROCHA')).out('Has_Phone')" +
@@ -73,6 +73,19 @@ public class PVTotvsTest extends AppTest {
                       ".properties('Person.Organisation.Contact').value().next().toString()").get().toString();
       assertEquals("LEOPOLDO MONTES", docesJoinvilleContactPerson, "Contato da empresa Doces Joinville");
 
+      String generalPersonNaturalCount =
+              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('85647243000154'))" +
+                      ".in('Has_Id_Card').out('Has_Ingestion_Event').in('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+                      ".in('Has_Ingestion_Event').has('Metadata.Type.Person.Natural', eq('Person.Natural'))" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("??????", generalPersonNaturalCount, "Global count for Person.Natural Vertex");
+
+      String generalPersonOrgCount =
+              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('85647243000154'))" +
+                      ".in('Has_Id_Card').out('Has_Ingestion_Event').in('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+                      ".in('Has_Ingestion_Event').has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("??????", generalPersonOrgCount, "Global count for Person.Organisation Vertex");
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -171,52 +184,18 @@ public class PVTotvsTest extends AppTest {
 //  public void test00004TotvsProtheusPlusPloomes() throws InterruptedException {
 //
 //    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
-//    jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
 //
 //    try {
 //
-////    test0000 for COMIDAS 1 as Person.Natural
-//      String userId0 =
-//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 1'))\n" +
-//                      ".next().id().toString()").get().toString();
+//      String personNaturalCount =
+//              App.executor.eval("App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))" +
+//                      ".count().next().toString()").get().toString();
+//      assertEquals("1", personNaturalCount, "only one registry is TypeId = 1 = PF");
 //
-////      test0000 for COMIDAS 1 as Person.Organisation
-////      String userId1 =
-////              App.executor.eval("App.g.V().has('Person.Organisation.Short_Name', eq('COMIDAS 1'))\n" +
-////                      ".next().id().toString()").get().toString();
-//
-////    test0000 for Object.Data_Source.Name
-//      String userId2 =
-//              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
-//                      ".next().id().toString()").get().toString();
-//      String rootConnectionsQuery = "App.g.V(\"" + userId2 + "\").bothE().count().next().toString()";
-//      String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
-////      assertEquals(rootConnections,"5"); -- vertices podem variar dependendo do timing!
-//
-////    test0000 COUNT(Edges) for COMIDAS 2
-//      String userId3 =
-//              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 2'))" +
-//                      ".next().id().toString()").get().toString();
-//      String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 + "\").bothE().count().next().toString()";
-//      String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
-//      assertEquals("4", comidas2Connections);
-//
-////    test0000 COUNT(Edges) for Object.Email_Address
-//      String userId4 =
-//              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('jonas@comida1.com.br'))" +
-//                      ".next().id().toString()").get().toString();
-//      String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
-//      String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
-//      assertEquals("1", emailConnections);
-//
-////    test0000 COUNT(Edges) for Object.Phone_Number
-//      String userId5 =
-//              App.executor.eval("App.g.V().has('Object.Phone_Number.Numbers_Only',eq('111111111'))" +
-//                      ".next().id().toString()").get().toString();
-//      String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
-//      String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
-//      assertEquals("1", phoneConnections);
-//
+//      String personOrganisationCount =
+//              App.executor.eval("App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))" +
+//                      ".count().next().toString()").get().toString();
+//      assertEquals("4", personOrganisationCount, "4 registries are of TypeId = 2 = PJ");
 //
 //    } catch (ExecutionException e) {
 //      e.printStackTrace();

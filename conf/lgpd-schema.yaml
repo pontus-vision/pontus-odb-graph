@@ -2046,9 +2046,6 @@ propertyKeys:
   - name: Person.Organisation.orgCountrySet
     dataType: String
     cardinality: SINGLE
-  - name: Person.Organisation.Contact
-    dataType: String
-    cardinality: SINGLE
 vertexLabels:
   - name: Event.Consent
     partition: False
@@ -3636,7 +3633,6 @@ vertexIndexes:
       - Person.Organisation.Type
       - Person.Organisation.URL
       - Person.Organisation.orgCountrySet
-      - Person.Organisation.Contact
     propertyKeysMappings:
     
       {}
