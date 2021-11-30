@@ -156,14 +156,12 @@
           {
             "name": "Event.Group_Ingestion.Type",
             "val": "sap/c@p Activity",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Operation",
             "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Event.Group_Ingestion.Ingestion_Date",

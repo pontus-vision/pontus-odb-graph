@@ -80,10 +80,10 @@ public class PVEndPointsTest extends AppTest {
       HttpGet getRequest = new HttpGet(URI.create("http://localhost:3001/home/param?name=Omar"));
 
 //      getRequest.setHeader("Content-Type", "application/json");
-      getRequest.setHeader("AUTHORIZATION", "was granted");
+      getRequest.setHeader("AUTHORIZATION", ": granted");
 
       String res = IOUtils.toString(client.execute(getRequest).getEntity().getContent());
-      assertEquals("Hello, Omar AUTHORIZATION was granted", res, "message from ~/home/param endpoint");
+      assertEquals("Hello, Omar AUTHORIZATION: granted", res, "message from ~/home/param endpoint");
 
     } catch (IOException e) {
       e.printStackTrace();

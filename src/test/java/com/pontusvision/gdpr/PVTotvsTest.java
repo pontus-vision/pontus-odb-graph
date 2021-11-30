@@ -70,22 +70,30 @@ public class PVTotvsTest extends AppTest {
 
       String docesJoinvilleContactPerson =
               App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('85647243000154')).in('Has_Id_Card')" +
-                      ".properties('Person.Organisation.Contact').value().next().toString()").get().toString();
-      assertEquals("LEOPOLDO MONTES", docesJoinvilleContactPerson, "Contato da empresa Doces Joinville");
+                      ".properties('Person.Organisation.Name').value().next().toString()").get().toString();
+      assertEquals("DOCES JOINVILLE LTDA", docesJoinvilleContactPerson, "Noma da empresa de CNPJ 85647243000154 é Doces Joinville");
 
-      String generalPersonNaturalCount =
+      String totvsPersonNaturalCount =
               App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('85647243000154'))" +
-                      ".in('Has_Id_Card').out('Has_Ingestion_Event').in('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event').has('Metadata.Type.Person.Natural', eq('Person.Natural'))" +
+                      ".in('Has_Id_Card')" +
+                      ".out('Has_Ingestion_Event')" +
+                      ".in('Has_Ingestion_Event')" +
+                      ".in('Has_Ingestion_Event')" +
+                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+                      ".has('Metadata.Type.Person.Natural', eq('Person.Natural')).dedup()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("??????", generalPersonNaturalCount, "Global count for Person.Natural Vertex");
+      assertEquals("3", totvsPersonNaturalCount, "Count for Person.Natural Vertices from Data_Source TOTVS_SA1_CLIENTES");
 
-      String generalPersonOrgCount =
+      String totvsPersonOrgCount =
               App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('85647243000154'))" +
-                      ".in('Has_Id_Card').out('Has_Ingestion_Event').in('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event').has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))" +
+                      ".in('Has_Id_Card')" +
+                      ".out('Has_Ingestion_Event')" +
+                      ".in('Has_Ingestion_Event')" +
+                      ".in('Has_Ingestion_Event')" +
+                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+                      ".has('Metadata.Type.Person.Organisation', eq('Person.Organisation')).dedup()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("??????", generalPersonOrgCount, "Global count for Person.Organisation Vertex");
+      assertEquals("4", totvsPersonOrgCount, "Count for Person.Organisation Vertices from Data_Source TOTVS_SA1_CLIENTES");
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -103,9 +111,8 @@ public class PVTotvsTest extends AppTest {
 
       String personNaturalEdgesCount =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
-                      ".bothE().count().next().toString()").get().toString();
-      assertEquals("8", personNaturalEdgesCount, "2 Has_Id_Card + 2 Uses_Email " +
-              "+ 2 Has_Phone + 1 Is_Located + 1 Has_Ingestion_Event");
+                      ".bothE('Is_Located').count().next().toString()").get().toString();
+      assertEquals("1", personNaturalEdgesCount, "1 Is_Located");
 
       String orgIdCard =
               App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('ARMS MANUTENCAO E R')).out('Has_Id_Card')" +
@@ -114,9 +121,8 @@ public class PVTotvsTest extends AppTest {
 
       String personOrgEdgesCount =
               App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
-                      ".bothE().count().next().toString()").get().toString();
-      assertEquals("5", personOrgEdgesCount, "1 Has_Id_Card + 1 Is_Located + 1 Has_Ingestion_Event " +
-              "+ 1 Uses_Email + 1 Has_Phone");
+                      ".bothE('Has_Phone').count().next().toString()").get().toString();
+      assertEquals("1", personOrgEdgesCount, "1 Has_Phone");
 
       String yaraPhoneNumber =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('YARA SAMANTHA')).out('Has_Phone')" +
@@ -150,10 +156,10 @@ public class PVTotvsTest extends AppTest {
 
     try {
 
-      String personNaturalEdgesCount =
+      String martaParentsCount =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
-                      ".bothE().count().next().toString()").get().toString();
-      assertEquals("8", personNaturalEdgesCount, "2 Uses_Email + 2 Is_Family + 2 Has_Id_Card +  1 Lives + 1 Has_Ingestion_Event");
+                      ".bothE('Is_Family').count().next().toString()").get().toString();
+      assertEquals("2", martaParentsCount, "2  Is_Family");
 
       String getNameByLocationAddress =
               App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +

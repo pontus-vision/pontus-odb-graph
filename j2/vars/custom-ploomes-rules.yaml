@@ -16,7 +16,7 @@ rules:
 #            excludeFromSearch: true
 
       - label: Person.Organisation
-        condition: "${TypeId == 1 && CNPJ != null && LegalName != null}"
+        condition: "${TypeId == 1 && CNPJ != null}"
         props:
           Registration_Number: "${CNPJ?.replaceAll('[^0-9]', '')}"
           Name:

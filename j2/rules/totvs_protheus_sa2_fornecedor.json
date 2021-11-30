@@ -17,8 +17,8 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Organisation.Contact",
-            "val": "${A2_CONTATO?.trim()}",
+            "name": "Person.Organisation.Registration_Number",
+            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           }
         ]

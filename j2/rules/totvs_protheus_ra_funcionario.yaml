@@ -22,6 +22,9 @@ updatereq:
         - name: Person.Organisation.Id
           val: ${RA_CIC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
+        - name: Person.Organisation.Registration_Number
+          val: ${RA_CIC.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
     
     - label: Location.Address
       props:

@@ -12,9 +12,9 @@ rules:
 
           Customer_ID: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
           #          id: "${Customer}"
-          Type:
-            val: "Clientes"
-            excludeFromSearch: true
+#          Type:
+#            val: "Clientes"
+#            excludeFromSearch: true
 
       - label: Object.Identity_Card
         condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}"
@@ -30,9 +30,8 @@ rules:
       - label: Person.Organisation
         condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14}"
         props:
-          Registration_Number:
-            val: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
-            mandatoryInSearch: true
+          Registration_Number: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
+          Id: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
           Name: "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
 
       #  For Clientes Sem Tax
@@ -53,9 +52,9 @@ rules:
           Raw:
             val: "${Telephone_1}"
             mandatoryInSearch: false
-          Type:
-            val: "Cliente"
-            excludeFromSubsequenceSearch: true
+#          Type:
+#            val: "Cliente"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -73,9 +72,9 @@ rules:
           Raw:
             val: "${Telephone_2}"
             mandatoryInSearch: false
-          Type:
-            val: "Cliente"
-            excludeFromSubsequenceSearch: true
+#          Type:
+#            val: "Cliente"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -123,9 +122,7 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: sap/clientes
-            mandatoryInSearch: true
+          Type: sap/clientes
           Operation:
             val: Structured Data Insertion
             mandatoryInSearch: true
@@ -200,9 +197,9 @@ rules:
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
           Customer_ID: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
-          Type:
-            val: "Fornecedores"
-            excludeFromSearch: true
+#          Type:
+#            val: "Fornecedores"
+#            excludeFromSearch: true
 
       - label: Object.Identity_Card
         condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}"
@@ -217,9 +214,8 @@ rules:
       - label: Person.Organisation
         condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14}"
         props:
-          Registration_Number:
-            val: "${Tax_Number_1?.replaceAll('[^0-9]', '') || Tax_Number_2?.replaceAll('[^0-9]', '')}"
-            mandatoryInSearch: true
+          Registration_Number: "${Tax_Number_1?.replaceAll('[^0-9]', '') || Tax_Number_2?.replaceAll('[^0-9]', '')}"
+          Id: "${Tax_Number_1?.replaceAll('[^0-9]', '') || Tax_Number_2?.replaceAll('[^0-9]', '')}"
           Name: "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
 
       #     For FOREIGN Persons
@@ -243,9 +239,9 @@ rules:
           Raw:
             val: "${Telephone_1}"
             mandatoryInSearch: false
-          Type:
-            val: "Fornecedor"
-            excludeFromSubsequenceSearch: true
+#          Type:
+#            val: "Fornecedor"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -263,9 +259,9 @@ rules:
           Raw:
             val: "${Telephone_2}"
             mandatoryInSearch: false
-          Type:
-            val: "Fornecedor"
-            excludeFromSubsequenceSearch: true
+#          Type:
+#            val: "Fornecedor"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
@@ -313,15 +309,9 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: sap/fornecedores
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+          Type: sap/fornecedores
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
             #            mandatoryInSearch: false

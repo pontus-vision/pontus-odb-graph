@@ -108,12 +108,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Lead"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Lead"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -271,12 +267,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Customer Prospect"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Customer Prospect"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -480,12 +472,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p My Porsche Change Report"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p My Porsche Change Report"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -576,12 +564,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Porsche Connect Mandatory Fields"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Porsche Connect Mandatory Fields"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -667,12 +651,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Porsche Ownership Change"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Porsche Ownership Change"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -818,12 +798,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Complaint"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Complaint"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -989,12 +965,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Activity"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Activity"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -1163,12 +1135,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Workshop Campaigns and Recalls"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Workshop Campaigns and Recalls"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -1330,12 +1298,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Competitor Vehicles"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Competitor Vehicles"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -1493,12 +1457,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Vehicle"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Vehicle"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"
@@ -1687,12 +1647,8 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: "sap/c@p Data Quality"
-            excludeFromSearch: true
-          Operation:
-            val: Structured Data Insertion
-            excludeFromSearch: true
+          Type: "sap/c@p Data Quality"
+          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
           Metadata_Start_Date:
             val: "${new Date()}"

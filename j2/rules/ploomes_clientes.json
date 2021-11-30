@@ -19,7 +19,7 @@
       },
       {
         "label": "Person.Organisation",
-        "condition": "${TypeId == 1 && CNPJ != null && LegalName != null}",
+        "condition": "${TypeId == 1 && CNPJ != null}",
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
