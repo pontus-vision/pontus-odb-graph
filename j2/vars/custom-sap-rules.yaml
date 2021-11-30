@@ -170,19 +170,19 @@ rules:
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
 
-      - label: "Has_Phone_Number"
+      - label: "Has_Phone"
         fromVertexLabel: "Person.Organisation"
         toVertexName: "phone"
 
-      - label: "Has_Phone_Number"
+      - label: "Has_Phone"
         fromVertexLabel: "Person.Organisation"
         toVertexName: "phone2"
 
-      - label: "Has_Phone_Number"
+      - label: "Has_Phone"
         fromVertexLabel: "Person.Natural"
         toVertexName: "phone"
 
-      - label: "Has_Phone_Number"
+      - label: "Has_Phone"
         fromVertexLabel: "Person.Natural"
         toVertexName: "phone2"
 
@@ -354,19 +354,19 @@ rules:
         toVertexLabel: "Event.Group_Ingestion"
         fromVertexLabel: "Object.Data_Source"
 
-      - label: "Has_Phone_Number"
+      - label: "Has_Phone"
         fromVertexLabel: "Person.Organisation"
         toVertexName: "phone"
 
-      - label: "Has_Phone_Number"
+      - label: "Has_Phone"
         fromVertexLabel: "Person.Organisation"
         toVertexName: "phone2"
 
-      - label: "Has_Phone_Number"
+      - label: "Has_Phone"
         fromVertexLabel: "Person.Natural"
         toVertexName: "phone"
 
-      - label: "Has_Phone_Number"
+      - label: "Has_Phone"
         fromVertexLabel: "Person.Natural"
         toVertexName: "phone2"
 

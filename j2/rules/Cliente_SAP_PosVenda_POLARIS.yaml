@@ -166,16 +166,16 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Object.Data_Source
     toVertexLabel: Event.Group_Ingestion
-  - label: Has_Phone_Number
+  - label: Has_Phone
     fromVertexLabel: Person.Organisation
     toVertexName: phone
-  - label: Has_Phone_Number
+  - label: Has_Phone
     fromVertexLabel: Person.Organisation
     toVertexName: phone2
-  - label: Has_Phone_Number
+  - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexName: phone
-  - label: Has_Phone_Number
+  - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexName: phone2
   - label: Has_Identity_Card
