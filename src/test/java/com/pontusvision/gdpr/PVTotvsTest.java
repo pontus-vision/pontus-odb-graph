@@ -135,10 +135,10 @@ public class PVTotvsTest extends AppTest {
       assertEquals("RUA MOREIRA DA SILVA SAURO , BROOKLYN, RIO DE JANEIRO - RIO DE JANEIRO, 86785908",
               pabloLocationAddress, "Pablo's Address");
 
-      String gelonesePlusContactPerson =
+      String getOrgNameById =
               App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('37648576000198')).in('Has_Id_Card')" +
-                      ".properties('Person.Organisation.Contact').value().next().toString()").get().toString();
-      assertEquals("HERMINIA", gelonesePlusContactPerson, "Contato da empresa Gelonese Plus");
+                      ".properties('Person.Organisation.Name').value().next().toString()").get().toString();
+      assertEquals("GELONESE PLUS", getOrgNameById, "Nome da empresa com CNPJ 37648576000198");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
