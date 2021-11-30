@@ -117,12 +117,10 @@ updatereq:
       props:
         - name: Event.Group_Ingestion.Type
           val: sap/c@p Vehicle
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
         - name: Event.Group_Ingestion.Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True

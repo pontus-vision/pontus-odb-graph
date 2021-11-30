@@ -7,74 +7,35 @@ updatereq:
       condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Person.Organisation.Name
-          val: ${A2_NOMRESP?.trim()?.toUpperCase()}
+          val: ${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Organisation.Short_Name
-          val: ${A2_NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person.Organisation.Type
-          val: Fornecedor
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Person.Organisation.Id
           val: ${A2_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
-    
-    - label: Location.Address
-      name: business_addr
-      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}
-      props:
-        - name: Location.Address.Full_Address
-          val: ${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Location.Address.parser
-          val: ${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}
+        - name: Person.Organisation.Registration_Number
+          val: ${A2_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
-          type: "com.pontusvision.utils.LocationAddress"
-        - name: Location.Address.Post_Code
-          val: ${com.pontusvision.utils.PostCode.format(A2_CEP)}
-          mandatoryInSearch: True
-        - name: Location.Address.Description
-          val: endereco fornecedor
-          mandatoryInSearch: True
-        - name: Location.Address.Type
-          val: business
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
-    - label: Location.Address
-      name: residence_addr
-      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}
-      props:
-        - name: Location.Address.Full_Address
-          val: ${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Location.Address.parser
-          val: ${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}
-          mandatoryInSearch: True
-          type: "com.pontusvision.utils.LocationAddress"
-        - name: Location.Address.Post_Code
-          val: ${com.pontusvision.utils.PostCode.format(A2_CEP)}
-          mandatoryInSearch: True
-        - name: Location.Address.Description
-          val: endereco fornecedor
-          mandatoryInSearch: True
-        - name: Location.Address.Type
-          val: residence
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Person.Natural
       name: rep
       condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}
       props:
         - name: Person.Natural.Full_Name
-          val: ${A2_NOME?.trim()?.toUpperCase()}
+          val: ${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person.Natural.Type
-          val: fornecedor
+    
+    - label: Location.Address
+      props:
+        - name: Location.Address.Full_Address
+          val: ${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location.Address.Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(A2_CEP)}
           mandatoryInSearch: True
     
     - label: Object.Identity_Card
@@ -120,10 +81,6 @@ updatereq:
         - name: Object.Phone_Number.Raw
           val: ${A2_REPRTEL}
           mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Office
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -136,15 +93,11 @@ updatereq:
     
     - label: Object.Phone_Number
       name: phone2
-      condition: ${A2_TEL?.replaceAll('[^0-9]','').length() > 0}
+      condition: ${A2_TEL?.replaceAll('[^0-9]','')?.length() > 0}
       props:
         - name: Object.Phone_Number.Raw
           val: ${A2_TEL}
           mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Telefone 2
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -157,15 +110,11 @@ updatereq:
     
     - label: Object.Phone_Number
       name: mobile
-      condition: ${A2_REPR_EN?.replaceAll('[^0-9]','').length() > 0}
+      condition: ${A2_REPR_EN?.replaceAll('[^0-9]','')?.length() > 0}
       props:
         - name: Object.Phone_Number.Raw
           val: ${A2_REPR_EN}
           mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Mobile
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(A2_REPR_EN?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -244,12 +193,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: TOTVS/PROTHEUS/SA2_FORNECEDOR
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: totvs/protheus/sa2_fornecedor
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros de Fornecedores no protheus/Totvs
-          mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event
@@ -281,7 +224,7 @@ updatereq:
     toVertexName: email2
   - label: Is_Located
     fromVertexName: rep
-    toVertexName: residence_addr
+    toVertexLabel: Location.Address
   - label: Has_Id_Card
     fromVertexName: rep
     toVertexName: rg
@@ -308,5 +251,5 @@ updatereq:
     toVertexName: mobile
   - label: Is_Located
     fromVertexName: fornecedor
-    toVertexName: business_addr
+    toVertexLabel: Location.Address
 

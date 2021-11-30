@@ -19,48 +19,50 @@ rules:
 #      "A1_EST": "sss"
 #      "A1_MUN": "sss"
 #    }
+
   totvs_protheus_sa1_clientes:
     vertices:
       - label: Person.Natural
-        condition: "${A1_CGC?.replaceAll('[^0-9]','').length() == 11}"
+        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         props:
           Full_Name: "${A1_NOME?.trim()?.toUpperCase()}"
-#          Full_Name_fuzzy: "${A1_NOME?.trim()?.toUpperCase()}"
-          Type:
-            val: "Clientes"
-            excludeFromSearch: true
+#          Type:
+#            val: "Clientes"
+#            excludeFromSearch: true
+          Customer_ID: "${A1_CGC?.replaceAll('[^0-9]','')}"
 
-          Customer_ID:
-            val: "${A1_CGC.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
-            predicate: "eq"
+      - label: Person.Organisation
+        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
+        props:
+          Name: "${A1_NOME?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "Clientes"
+#            excludeFromSearch: true
+          Id: "${A1_CGC.replaceAll('[^0-9]','')}"
+          Registration_Number: "${A1_CGC.replaceAll('[^0-9]','')}"
+#          Contact: "${A1_CONTATO?.trim()}"
 
       - label: Object.Phone_Number
-        condition: "${A1_TEL?.replaceAll('[^0-9]','').length() > 0}"
+        condition: "${A1_TEL?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
-          Raw:
-            val: "${A1_TEL}"
-            mandatoryInSearch: false
-          Type:
-            val: "Office"
-            excludeFromSubsequenceSearch: true
+          Raw: "${A1_TEL}"
+#          Type:
+#            val: "Office"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
             val: "${(((A1_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       #RG
       - label: Object.Identity_Card
-        condition: "${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0 }"
+        condition: "${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: rg
         props:
-          Id_Value:
-            val: "${A1_RG?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${A1_RG?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "RG"
             excludeFromSearch: true
@@ -69,9 +71,7 @@ rules:
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: cpf
         props:
-          Id_Value:
-            val: "${A1_CGC?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${A1_CGC?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
@@ -80,55 +80,38 @@ rules:
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: cnpj
         props:
-          Id_Value:
-            val: "${A1_CGC?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${A1_CGC?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CNPJ"
             excludeFromSearch: true
       # EMAIL
       - label: Object.Email_Address
+        condition: "${A1_EMAIL?.trim()?.length() > 0}"
         props:
           Email: "${A1_EMAIL?.trim()?.toLowerCase()}"
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location.Address
-        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
-        name: business
+#        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Full_Address:
-            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            val: "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}"
             excludeFromSearch: true
           parser:
-            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
+            val: "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(A1_CEP)}"
-          Type:
-            val: "Business"
-            excludeFromSearch: true
-
-      - label: Location.Address
-        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
-        name: residence
-        props:
-          Full_Address:
-            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
-            excludeFromSearch: true
-          parser:
-            val: "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}"
-            type: "com.pontusvision.utils.LocationAddress"
-          Post_Code: "${com.pontusvision.utils.PostCode.format(A1_CEP)}"
-          Type:
-            val: "Residence"
-            excludeFromSearch: true
+#          Type:
+#            val: "Business"
+#            excludeFromSearch: true
 
       - label: Event.Ingestion
         props:
           Type:
-            val: totvs/protheus/sa1_clientes
+            val: "totvs/protheus/sa1_clientes"
             excludeFromSearch: true
           Operation:
-            val: Structured Data Insertion
+            val: "Structured Data Insertion"
             excludeFromSearch: true
           Domain_b64:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
@@ -144,18 +127,12 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: totvs/protheus/sa1_clientes
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
+          Type: "totvs/protheus/sa1_clientes"
+          Operation: "Structured Data Insertion"
           Ingestion_Date:
             val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
           Metadata_Start_Date:
             val: "${new Date()}"
-            #            mandatoryInSearch: false
             excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
@@ -165,50 +142,62 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: TOTVS/PROTHEUS/SA1_CLIENTES
-          Type: totvs/protheus/sa1_clientes
-          Description: Registros de Clientes no protheus/Totvs
+          Name: "TOTVS/PROTHEUS/SA1_CLIENTES"
+#          Type: "totvs/protheus/sa1_clientes"
+#          Description: "Registros de Clientes no protheus/Totvs"
 
     edges:
       - label: Has_Ingestion_Event
-        fromVertexLabel: Person.Natural
-        toVertexLabel: Event.Ingestion
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: Event.Group_Ingestion
-        toVertexLabel: Event.Ingestion
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: Object.Data_Source
-        toVertexLabel: Event.Group_Ingestion
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
 
-      - label: "Uses_Email"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Uses_Email
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
 
-      - label: "Has_Id_Card"
-        fromVertexLabel: "Person.Natural"
-        toVertexName: rg
+      - label: Uses_Email
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Object.Email_Address"
 
-      - label: "Has_Id_Card"
+      - label: Has_Id_Card
         fromVertexLabel: "Person.Natural"
-        toVertexName: cpf
+        toVertexName: "rg"
 
-      - label: "Has_Id_Card"
+      - label: Has_Id_Card
         fromVertexLabel: "Person.Natural"
-        toVertexName: cnpj
+        toVertexName: "cpf"
 
-      - label: "Works"
-        fromVertexLabel: "Person.Natural"
-        toVertexName: business
+      - label: Has_Id_Card
+        fromVertexLabel: "Person.Organisation"
+        toVertexName: "cnpj"
 
-      - label: "Lives"
+      - label: Is_Located
         fromVertexLabel: "Person.Natural"
-        toVertexName: residence
+        toVertexLabel: "Location.Address"
 
-      - label: "Has_Phone"
+      - label: Is_Located
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Location.Address"
+
+      - label: Has_Phone
         fromVertexLabel: "Person.Natural"
-        toVertexName: Object.Phone_Number
+        toVertexLabel: "Object.Phone_Number"
+
+      - label: Has_Phone
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Object.Phone_Number"
 
 #    {
 #      "id": "string"
@@ -282,87 +271,82 @@ rules:
   totvs_protheus_ra_funcionario:
     vertices:
       - label: Person.Natural
-        condition: "${RA_CIC?.replaceAll('[^0-9]','').length() == 11}"
+        condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: colaborador
         props:
-          Full_Name:
-            val: "${RA_NOMECMP?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
-          #          Full_Name_fuzzy: "${RA_NOMECMP?.trim()?.toUpperCase()}"
-          Type:
-            val: "Colaborador"
-            excludeFromSearch: true
-          Gender: "${RA_SEXO}"
-          Customer_ID:
-            val: "${RA_CIC?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
-            predicate: "eq"
+          Full_Name: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "Colaborador"
+#            excludeFromSearch: true
+#          Gender:
+#            val: "${RA_SEXO}"
+#            excludeFromSearch: true
+          Customer_ID: "${RA_CIC?.replaceAll('[^0-9]','')}"
+
+      - label: Person.Organisation
+        condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
+        props:
+          Name: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "Colaborador"
+#            excludeFromSearch: true
+          Id: "${RA_CIC.replaceAll('[^0-9]','')}"
+          Registration_Number: "${RA_CIC.replaceAll('[^0-9]','')}"
 
       - label: Location.Address
         props:
           Full_Address:
-            val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+            val: "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase()?:''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}"
             excludeFromSearch: true
           parser:
-            val: "${RA_ENDEREC} ${RA_COMPLEM} ${RA_CODMUN} ${RA_CODMUNE?:''} ${RA_BAIRRO}, ${RA_MUNICIP} - ${RA_ESTADO}, ${RA_CEP}"
+            val: "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase()?:''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(RA_CEP)}"
-          Description: "moradia principal"
-          Type:
-            val: "home"
-            excludeFromSearch: true
+#          Description: "moradia principal"
+#          Type:
+#            val: "home"
+#            excludeFromSearch: true
 
       - label: Person.Natural
         condition: "${RA_MAE?.trim()?.length() > 0}"
         name: mae
         props:
-          Full_Name:
-            val: "${RA_MAE?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
-          #          Full_Name_fuzzy: "${RA_MAE?.trim()?.toUpperCase()}"
-          Type:
-            val: "colaborador-pais"
-            excludeFromSearch: false
-          Gender: "F"
+          Full_Name: "${RA_MAE?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "colaborador-pais"
+#            excludeFromSearch: false
+#          Gender: "F"
 
       - label: Person.Natural
         condition: "${RA_PAI?.trim()?.length() > 0}"
         name: pai
         props:
-          Full_Name:
-            val: "${RA_PAI?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
-#          Full_Name_fuzzy: "${RA_PAI?.trim()?.toUpperCase()}"
-          Type:
-            val: "colaborador-pais"
-            excludeFromSearch: false
-          Gender: "M"
+          Full_Name: "${RA_PAI?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "colaborador-pais"
+#            excludeFromSearch: false
+#          Gender: "M"
 
       - label: Object.Phone_Number
-        condition: "${RA_TELEFON?.replaceAll('[^0-9]','').length() > 0}"
+        condition: "${RA_TELEFON?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
-          Raw:
-            val: "${RA_TELEFON}"
-            mandatoryInSearch: false
-          Type:
-            val: "Office"
-            excludeFromSubsequenceSearch: true
+          Raw: "${RA_TELEFON}"
+#          Type:
+#            val: "Office"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(RA_TELEFON?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
             val: "${(((RA_TELEFON?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Object.Identity_Card
         condition: "${RA_RG?.replaceAll('[^0-9]','')?.length() > 0}"
         name: rg
         props:
-          Id_Value:
-            val: "${RA_RG?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${RA_RG?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "RG"
             excludeFromSearch: true
@@ -371,9 +355,7 @@ rules:
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: cpf
         props:
-          Id_Value:
-            val: "${RA_CIC?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${RA_CIC?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
@@ -382,9 +364,7 @@ rules:
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: cnpj
         props:
-          Id_Value:
-            val: "${RA_CIC?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${RA_CIC?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CNPJ"
             excludeFromSearch: true
@@ -394,22 +374,26 @@ rules:
         name: email1
         props:
           Email: "${RA_EMAIL.trim()?.toLowerCase()}"
-          Type: "${(RA_EMAIL.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
+#          Type:
+#            val: "${(RA_EMAIL.trim()?.toLowerCase()?.contains('sunnyvale.com.br'))?'business':'personal'}"
+#            excludeFromSearch: true
 
       - label: Object.Email_Address
         condition: "${RA_EMAIL2?.trim()?.length() > 0}"
         name: email2
         props:
           Email: "${RA_EMAIL2?.trim()?.toLowerCase()}"
-          Type: "${(RA_EMAIL2.trim()?.toUpperCase()?.contains('SUNNYVALE.COM.BR'))?'business':'personal'}"
+#          Type:
+#            val: "${(RA_EMAIL2.trim()?.toLowerCase()?.contains('sunnyvale.com.br'))?'business':'personal'}"
+#            excludeFromSearch: true
 
       - label: Event.Ingestion
         props:
           Type:
-            val: totvs/protheus/sra_funcionarios
+            val: "totvs/protheus/sra_funcionarios"
             excludeFromSearch: true
           Operation:
-            val: Structured Data Insertion
+            val: "Structured Data Insertion"
             excludeFromSearch: true
           Domain_b64:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
@@ -426,17 +410,13 @@ rules:
       - label: Event.Group_Ingestion
         props:
           Type:
-            val: totvs/protheus/sra_funcionarios
-            mandatoryInSearch: true
+            val: "totvs/protheus/sra_funcionarios"
           Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
+            val: "Structured Data Insertion"
           Ingestion_Date:
             val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
           Metadata_Start_Date:
             val: "${new Date()}"
-            #            mandatoryInSearch: false
             excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
@@ -446,58 +426,78 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: TOTVS/PROTHEUS/SRA_FUNCIONARIOS
-          Type: totvs/protheus/sra_funcionarios
-          Description: Registros de Funcionarios no protheus/Totvs
+          Name: "TOTVS/PROTHEUS/SRA_FUNCIONARIOS"
+#          Type: "totvs/protheus/sra_funcionarios"
+#          Description: "Registros de Funcionarios no protheus/Totvs"
+
     edges:
       - label: Has_Ingestion_Event
-        fromVertexName: colaborador
-        toVertexLabel: Event.Ingestion
-
-      - label: Is_Family
-        fromVertexName: mae
-        toVertexName: colaborador
-
-      - label: Is_Family
-        fromVertexName: pai
-        toVertexName: colaborador
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: Event.Group_Ingestion
-        toVertexLabel: Event.Ingestion
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: Object.Data_Source
-        toVertexLabel: Event.Group_Ingestion
+        fromVertexName: "colaborador"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Is_Family
+        fromVertexName: "mae"
+        toVertexName: "colaborador"
+
+      - label: Is_Family
+        fromVertexName: "pai"
+        toVertexName: "colaborador"
 
       - label: Has_Phone
-        fromVertexName: colaborador
-        toVertexLabel: Object.Phone_Number
+        fromVertexName: "colaborador"
+        toVertexLabel: "Object.Phone_Number"
+
+      - label: Has_Phone
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Object.Phone_Number"
 
       - label: Uses_Email
-        fromVertexName: colaborador
-        toVertexName: email1
+        fromVertexName: "colaborador"
+        toVertexName: "email1"
 
       - label: Uses_Email
-        fromVertexName: colaborador
-        toVertexName: email2
+        fromVertexLabel: "Person.Organisation"
+        toVertexName: "email1"
+
+      - label: Uses_Email
+        fromVertexName: "colaborador"
+        toVertexName: "email2"
+
+      - label: Uses_Email
+        fromVertexLabel: "Person.Organisation"
+        toVertexName: "email2"
 
       - label: Has_Id_Card
-        fromVertexName: colaborador
-        toVertexName: rg
+        fromVertexName: "colaborador"
+        toVertexName: "rg"
 
       - label: Has_Id_Card
-        fromVertexName: colaborador
-        toVertexName: cpf
+        fromVertexName: "colaborador"
+        toVertexName: "cpf"
 
       - label: Has_Id_Card
-        fromVertexName: colaborador
-        toVertexName: cnpj
+        fromVertexLabel: "Person.Organisation"
+        toVertexName: "cnpj"
 
-      - label: Lives
-        fromVertexName: colaborador
-        toVertexLabel: Location.Address
+      - label: Is_Located
+        fromVertexName: "colaborador"
+        toVertexLabel: "Location.Address"
 
+      - label: Is_Located
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Location.Address"
 
 #   {
 #      "id": "string"
@@ -540,70 +540,43 @@ rules:
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: fornecedor
         props:
-          Name:
-            val: "${A2_NOMRESP?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
-          Short_Name:
-            val: "${A2_NOME?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
-          Type:
-            val: "Fornecedor"
-            excludeFromSearch: true
-          Id:
-            val: "${A2_CGC.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
-
-      - label: Location.Address
-        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
-        name: business_addr
-        props:
-          Full_Address:
-            val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
-            excludeFromSearch: true
-          parser:
-            val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
-            type: "com.pontusvision.utils.LocationAddress"
-          Post_Code: "${com.pontusvision.utils.PostCode.format(A2_CEP)}"
-          Description: "endereco fornecedor"
-          Type:
-            val: "business"
-            excludeFromSearch: true
-
-      - label: Location.Address
-        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
-        name: residence_addr
-        props:
-          Full_Address:
-            val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
-            excludeFromSearch: true
-          parser:
-            val: "${A2_END} ${A2_ENDCOMP} ${A2_BAIRRO}, ${A2_MUNICIP} - ${A2_ESTADO}, ${A2_CEP}"
-            type: "com.pontusvision.utils.LocationAddress"
-          Post_Code: "${com.pontusvision.utils.PostCode.format(A2_CEP)}"
-          Description: "endereco fornecedor"
-          Type:
-            val: "residence"
-            excludeFromSearch: true
+          Name: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
+#          Type:
+#            val: "Fornecedor"
+#            excludeFromSearch: true
+          Id: "${A2_CGC.replaceAll('[^0-9]','')}"
+          Registration_Number: "${A2_CGC.replaceAll('[^0-9]','')}"
+#          Contact: "${A2_CONTATO?.trim()}"
 
       - label: Person.Natural
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: rep
         props:
-          Full_Name:
-            val: "${A2_NOME?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
-          #          Full_Name_fuzzy: "${A2_NOME?.trim()?.toUpperCase()}"
-          Type:
-            val: "fornecedor"
-            excludeFromSearch: false
+          Full_Name: "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}"
+          #          Type:
+          #            val: "fornecedor"
+          #            excludeFromSearch: false
+          #            excludeFromSearch: true
+
+      - label: Location.Address
+        #        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
+        props:
+          Full_Address:
+            val: "${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}"
+            excludeFromSearch: true
+          parser:
+            val: "${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(A2_CEP)}"
+      #          Description: "endereco fornecedor"
+      #          Type:
+      #            val: "business"
 
       - label: Object.Identity_Card
         condition: "${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: rg
         props:
-          Id_Value:
-            val: "${A2_RG?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${A2_RG?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "RG"
             excludeFromSearch: true
@@ -612,9 +585,7 @@ rules:
         condition: "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}"
         name: cnpj
         props:
-          Id_Value:
-            val: "${A2_CGC?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${A2_CGC?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CNPJ"
             excludeFromSearch: true
@@ -623,9 +594,7 @@ rules:
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: cpf
         props:
-          Id_Value:
-            val: "${A2_CGC?.replaceAll('[^0-9]','')}"
-            mandatoryInSearch: true
+          Id_Value: "${A2_CGC?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
@@ -634,57 +603,48 @@ rules:
         condition: "${A2_REPRTEL?.replaceAll('[^0-9]','').length() > 0}"
         name: rep_phone
         props:
-          Raw:
-            val: "${A2_REPRTEL}"
-            mandatoryInSearch: false
-          Type:
-            val: "Office"
-            excludeFromSubsequenceSearch: true
+          Raw: "${A2_REPRTEL}"
+#          Type:
+#            val: "Telefone 1"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
             val: "${(((A2_REPRTEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Object.Phone_Number
-        condition: "${A2_TEL?.replaceAll('[^0-9]','').length() > 0}"
+        condition: "${A2_TEL?.replaceAll('[^0-9]','')?.length() > 0}"
         name: phone2
         props:
-          Raw:
-            val: "${A2_TEL}"
-            mandatoryInSearch: false
-          Type:
-            val: "Telefone 2"
-            excludeFromSubsequenceSearch: true
+          Raw: "${A2_TEL}"
+#          Type:
+#            val: "Telefone 2"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
             val: "${(((A2_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Object.Phone_Number
-        condition: "${A2_REPR_EN?.replaceAll('[^0-9]','').length() > 0}"
+        condition: "${A2_REPR_EN?.replaceAll('[^0-9]','')?.length() > 0}"
         name: mobile
         props:
-          Raw:
-            val: "${A2_REPR_EN}"
-            mandatoryInSearch: false
-          Type:
-            val: "Mobile"
-            excludeFromSubsequenceSearch: true
+          Raw: "${A2_REPR_EN}"
+#          Type:
+#            val: "Mobile"
+#            excludeFromSubsequenceSearch: true
           Numbers_Only:
             val: "${(A2_REPR_EN?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
             val: "${(((A2_REPR_EN?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Object.Email_Address
@@ -702,10 +662,10 @@ rules:
       - label: Event.Ingestion
         props:
           Type:
-            val: totvs/protheus/sa2_fornecedor
+            val: "totvs/protheus/sa2_fornecedor"
             excludeFromSearch: true
           Operation:
-            val: Structured Data Insertion
+            val: "Structured Data Insertion"
             excludeFromSearch: true
           Domain_b64:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
@@ -721,18 +681,12 @@ rules:
 
       - label: Event.Group_Ingestion
         props:
-          Type:
-            val: totvs/protheus/sa2_fornecedor
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
+          Type: "totvs/protheus/sa2_fornecedor"
+          Operation: "Structured Data Insertion"
           Ingestion_Date:
             val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
           Metadata_Start_Date:
             val: "${new Date()}"
-            #            mandatoryInSearch: false
             excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
@@ -742,83 +696,83 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: TOTVS/PROTHEUS/SA2_FORNECEDOR
-          Type: totvs/protheus/sa2_fornecedor
-          Description: Registros de Fornecedores no protheus/Totvs
+          Name: "TOTVS/PROTHEUS/SA2_FORNECEDOR"
+#          Type: "totvs/protheus/sa2_fornecedor"
+#          Description: "Registros de Fornecedores no protheus/Totvs"
 
     edges:
       - label: Has_Ingestion_Event
-        fromVertexName: fornecedor
-        toVertexLabel: Event.Ingestion
+        fromVertexName: "fornecedor"
+        toVertexLabel: "Event.Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexName: rep
-        toVertexLabel: Event.Ingestion
+        fromVertexName: "rep"
+        toVertexLabel: "Event.Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: Event.Group_Ingestion
-        toVertexLabel: Event.Ingestion
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: Object.Data_Source
-        toVertexLabel: Event.Group_Ingestion
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
 
       - label: Has_Phone
-        fromVertexName: rep
-        toVertexName: rep_phone
+        fromVertexName: "rep"
+        toVertexName: "rep_phone"
 
       - label: Has_Phone
-        fromVertexName: rep
-        toVertexName: phone2
+        fromVertexName: "rep"
+        toVertexName: "phone2"
 
       - label: Has_Phone
-        fromVertexName: rep
-        toVertexName: mobile
+        fromVertexName: "rep"
+        toVertexName: "mobile"
 
       - label: Uses_Email
-        fromVertexName: rep
-        toVertexName: email1
+        fromVertexName: "rep"
+        toVertexName: "email1"
 
       - label: Uses_Email
-        fromVertexName: rep
-        toVertexName: email2
+        fromVertexName: "rep"
+        toVertexName: "email2"
 
       - label: Is_Located
-        fromVertexName: rep
-        toVertexName: residence_addr
+        fromVertexName: "rep"
+        toVertexLabel: "Location.Address"
 
       - label: Has_Id_Card
-        fromVertexName: rep
-        toVertexName: rg
+        fromVertexName: "rep"
+        toVertexName: "rg"
 
       - label: Has_Id_Card
-        fromVertexName: rep
-        toVertexName: cpf
+        fromVertexName: "rep"
+        toVertexName: "cpf"
 
       - label: Has_Id_Card
-        fromVertexName: fornecedor
-        toVertexName: cnpj
+        fromVertexName: "fornecedor"
+        toVertexName: "cnpj"
 
       - label: Uses_Email
-        fromVertexName: fornecedor
-        toVertexName: email1
+        fromVertexName: "fornecedor"
+        toVertexName: "email1"
 
       - label: Uses_Email
-        fromVertexName: fornecedor
-        toVertexName: email2
+        fromVertexName: "fornecedor"
+        toVertexName: "email2"
 
       - label: Has_Phone
-        fromVertexName: fornecedor
-        toVertexName: rep_phone
+        fromVertexName: "fornecedor"
+        toVertexName: "rep_phone"
 
       - label: Has_Phone
-        fromVertexName: fornecedor
-        toVertexName: phone2
+        fromVertexName: "fornecedor"
+        toVertexName: "phone2"
 
       - label: Has_Phone
-        fromVertexName: fornecedor
-        toVertexName: mobile
+        fromVertexName: "fornecedor"
+        toVertexName: "mobile"
 
       - label: Is_Located
-        fromVertexName: fornecedor
-        toVertexName: business_addr
+        fromVertexName: "fornecedor"
+        toVertexLabel: "Location.Address"

@@ -3,7 +3,7 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "condition": "${A1_CGC?.replaceAll('[^0-9]','').length() == 11}",
+        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
@@ -11,33 +11,41 @@
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Type",
-            "val": "Clientes",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "name": "Person.Natural.Customer_ID",
+            "val": "${A1_CGC?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person.Organisation",
+        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
+        "props": [
+          {
+            "name": "Person.Organisation.Name",
+            "val": "${A1_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
+            "name": "Person.Organisation.Id",
             "val": "${A1_CGC.replaceAll('[^0-9]','')}",
-            "predicate": "eq",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person.Organisation.Registration_Number",
+            "val": "${A1_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
         "label": "Object.Phone_Number",
-        "condition": "${A1_TEL?.replaceAll('[^0-9]','').length() > 0}",
+        "condition": "${A1_TEL?.replaceAll('[^0-9]','')?.length() > 0}",
         "props": [
           {
             "name": "Object.Phone_Number.Raw",
             "val": "${A1_TEL}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Type",
-            "val": "Office",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
           },
           {
             "name": "Object.Phone_Number.Numbers_Only",
@@ -57,7 +65,7 @@
       {
         "label": "Object.Identity_Card",
         "name": "rg",
-        "condition": "${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0 }",
+        "condition": "${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
             "name": "Object.Identity_Card.Id_Value",
@@ -110,6 +118,7 @@
       },
       {
         "label": "Object.Email_Address",
+        "condition": "${A1_EMAIL?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object.Email_Address.Email",
@@ -120,18 +129,16 @@
       },
       {
         "label": "Location.Address",
-        "name": "business",
-        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "val": "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
+            "val": "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
@@ -139,42 +146,6 @@
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(A1_CEP)}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Location.Address.Type",
-            "val": "Business",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Location.Address",
-        "name": "residence",
-        "condition": "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
-        "props": [
-          {
-            "name": "Location.Address.Full_Address",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Location.Address.parser",
-            "val": "${A1_END}, ${A1_BAIRRO}, ${A1_MUN} - ${A1_ESTADO}, ${A1_CEP}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-          },
-          {
-            "name": "Location.Address.Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(A1_CEP)}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Location.Address.Type",
-            "val": "Residence",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -256,16 +227,6 @@
             "name": "Object.Data_Source.Name",
             "val": "TOTVS/PROTHEUS/SA1_CLIENTES",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "totvs/protheus/sa1_clientes",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros de Clientes no protheus/Totvs",
-            "mandatoryInSearch": true
           }
         ]
       }
@@ -273,8 +234,8 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Object.Data_Source",
+        "toVertexLabel": "Event.Group_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
@@ -283,12 +244,22 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexLabel": "Event.Ingestion"
       },
       {
         "label": "Uses_Email",
         "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Object.Email_Address"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexLabel": "Person.Organisation",
         "toVertexLabel": "Object.Email_Address"
       },
       {
@@ -303,23 +274,28 @@
       },
       {
         "label": "Has_Id_Card",
-        "fromVertexLabel": "Person.Natural",
+        "fromVertexLabel": "Person.Organisation",
         "toVertexName": "cnpj"
       },
       {
-        "label": "Works",
+        "label": "Is_Located",
         "fromVertexLabel": "Person.Natural",
-        "toVertexName": "business"
+        "toVertexLabel": "Location.Address"
       },
       {
-        "label": "Lives",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexName": "residence"
+        "label": "Is_Located",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexLabel": "Location.Address"
       },
       {
         "label": "Has_Phone",
         "fromVertexLabel": "Person.Natural",
-        "toVertexName": "Object.Phone_Number"
+        "toVertexLabel": "Object.Phone_Number"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexLabel": "Person.Organisation",
+        "toVertexLabel": "Object.Phone_Number"
       }
     ]
   }
