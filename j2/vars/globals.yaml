@@ -951,7 +951,6 @@ schema:
         - name: Type
         - name: URL
         - name: orgCountrySet
-        - name: Contact
 
 #  - name: "Object.Health"
 #

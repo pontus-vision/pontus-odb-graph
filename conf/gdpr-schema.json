@@ -3312,11 +3312,6 @@
       "name": "Person.Organisation.orgCountrySet",
       "dataType": "String",
       "cardinality": "SINGLE"
-    },
-    {
-      "name": "Person.Organisation.Contact",
-      "dataType": "String",
-      "cardinality": "SINGLE"
     }
   ],
   "vertexLabels": [
@@ -5100,8 +5095,7 @@
         "Person.Organisation.Tax_Id",
         "Person.Organisation.Type",
         "Person.Organisation.URL",
-        "Person.Organisation.orgCountrySet",
-        "Person.Organisation.Contact"
+        "Person.Organisation.orgCountrySet"
       ],
       "propertyKeysMappings": {}
     }

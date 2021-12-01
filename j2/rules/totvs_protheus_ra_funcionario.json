@@ -12,31 +12,6 @@
             "mandatoryInSearch": true
           },
           {
-<<<<<<< HEAD
-            "name": "Person.Natural.Gender",
-            "val": "${RA_SEXO}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${RA_CIC?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Person.Organisation",
-        "condition": "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}",
-        "props": [
-          {
-            "name": "Person.Organisation.Name",
-            "val": "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Id",
-=======
             "name": "Person.Natural.Customer_ID",
             "val": "${RA_CIC?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
@@ -59,7 +34,6 @@
           },
           {
             "name": "Person.Organisation.Registration_Number",
->>>>>>> origin/master
             "val": "${RA_CIC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           }
@@ -70,21 +44,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-<<<<<<< HEAD
-            "val": "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase():''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}",
-=======
             "val": "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase()?:''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}",
->>>>>>> origin/master
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-<<<<<<< HEAD
-            "val": "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase():''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}",
-=======
             "val": "${RA_ENDEREC?.toUpperCase()} ${RA_COMPLEM?.toUpperCase()} ${RA_CODMUN?.toUpperCase()} ${RA_CODMUNE?.toUpperCase()?:''}, ${RA_BAIRRO?.toUpperCase()}, ${RA_MUNICIP?.toUpperCase()} - ${RA_ESTADO?.toUpperCase()}, ${RA_CEP}",
->>>>>>> origin/master
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
