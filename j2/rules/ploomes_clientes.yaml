@@ -13,7 +13,7 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Person.Organisation
-      condition: ${TypeId == 1 && CNPJ != null && Name != null}
+      condition: ${TypeId == 1 && CNPJ != null}
       props:
         - name: Person.Organisation.Registration_Number
           val: ${CNPJ?.replaceAll('[^0-9]', '')}
@@ -63,11 +63,19 @@ updatereq:
       condition: ${StreetAddress != null}
       props:
         - name: Location.Address.Full_Address
+<<<<<<< HEAD
           val: ${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase():''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location.Address.parser
           val: ${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase():''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}
+=======
+          val: ${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location.Address.parser
+          val: ${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}
+>>>>>>> origin/master
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location.Address.Post_Code

@@ -3,19 +3,27 @@ package com.pontusvision.gdpr;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+<<<<<<< HEAD
 import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
 import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
 import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
+=======
+import jdk.nashorn.internal.parser.JSONParser;
+import org.apache.commons.io.IOUtils;
+>>>>>>> origin/master
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+<<<<<<< HEAD
 import org.apache.tinkerpop.gremlin.process.traversal.P;
+=======
+>>>>>>> origin/master
 import org.json.JSONObject;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -28,7 +36,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
+<<<<<<< HEAD
 import java.util.Base64;
+=======
+>>>>>>> origin/master
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +68,10 @@ public class PVEndPointsTest extends AppTest {
    * @return the suite of test0000s being test0000ed
    */
 
+<<<<<<< HEAD
 //   what about "InterruptedException" that are grayed out ?!?!
+=======
+>>>>>>> origin/master
   @Test
   public void test00001Hello() throws InterruptedException {
 
@@ -168,6 +182,7 @@ public class PVEndPointsTest extends AppTest {
 
   }
 
+<<<<<<< HEAD
 //  TODO: try to make a true reply from the Function, because till now, only error messages are being returned !!
   @Test
   public void test00005TemplateRender() throws InterruptedException {
@@ -245,4 +260,6 @@ public class PVEndPointsTest extends AppTest {
     }
   }
 
+=======
+>>>>>>> origin/master
 }

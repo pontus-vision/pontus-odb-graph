@@ -19,7 +19,7 @@
       },
       {
         "label": "Person.Organisation",
-        "condition": "${TypeId == 1 && CNPJ != null && Name != null}",
+        "condition": "${TypeId == 1 && CNPJ != null}",
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
@@ -96,13 +96,21 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
+<<<<<<< HEAD
             "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase():''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+=======
+            "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+>>>>>>> origin/master
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
+<<<<<<< HEAD
             "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase():''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+=======
+            "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+>>>>>>> origin/master
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },

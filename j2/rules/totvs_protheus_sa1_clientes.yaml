@@ -19,10 +19,17 @@ updatereq:
           val: ${A1_NOME?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Organisation.Id
+<<<<<<< HEAD
           val: ${A1_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Person.Organisation.Contact
           val: ${A1_CONTATO?.trim()}
+=======
+          val: ${A1_CGC.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person.Organisation.Registration_Number
+          val: ${A1_CGC.replaceAll('[^0-9]','')}
+>>>>>>> origin/master
           mandatoryInSearch: True
     
     - label: Object.Phone_Number

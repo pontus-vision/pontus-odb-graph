@@ -11,10 +11,6 @@ updatereq:
         - name: Person.Natural.Customer_ID
           val: ${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
-        - name: Person.Natural.Type
-          val: Clientes
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Object.Identity_Card
       condition: ${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}
@@ -31,6 +27,9 @@ updatereq:
       condition: ${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14}
       props:
         - name: Person.Organisation.Registration_Number
+          val: ${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
+        - name: Person.Organisation.Id
           val: ${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person.Organisation.Name
@@ -58,10 +57,6 @@ updatereq:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_1}
           mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Cliente
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -79,10 +74,6 @@ updatereq:
         - name: Object.Phone_Number.Raw
           val: ${Telephone_2}
           mandatoryInSearch: True
-        - name: Object.Phone_Number.Type
-          val: Cliente
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
         - name: Object.Phone_Number.Numbers_Only
           val: ${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -175,16 +166,16 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Object.Data_Source
     toVertexLabel: Event.Group_Ingestion
-  - label: Has_Phone_Number
+  - label: Has_Phone
     fromVertexLabel: Person.Organisation
     toVertexName: phone
-  - label: Has_Phone_Number
+  - label: Has_Phone
     fromVertexLabel: Person.Organisation
     toVertexName: phone2
-  - label: Has_Phone_Number
+  - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexName: phone
-  - label: Has_Phone_Number
+  - label: Has_Phone
     fromVertexLabel: Person.Natural
     toVertexName: phone2
   - label: Has_Identity_Card

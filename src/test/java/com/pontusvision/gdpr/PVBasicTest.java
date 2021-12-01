@@ -89,18 +89,18 @@ public class PVBasicTest extends AppTest {
       String userId0 =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MATEUS SILVA PINTO'))\n" +
               ".next().id().toString()").get().toString();
-      String pintoConnectionsQuery = "App.g.V(\"" + userId0 + "\").bothE().count().next().toString()";
+      String pintoConnectionsQuery = "App.g.V(\"" + userId0 + "\").bothE('Has_Phone').count().next().toString()";
       String pintoConnections = App.executor.eval(pintoConnectionsQuery)
           .get().toString();
-      assertEquals("5", pintoConnections); // 2 phone numbers + 1 identity card + 1 location + 1 ingestion event
+      assertEquals("2", pintoConnections, "2 Has_Phone"); // 2 phone numbers + 1 identity card + 1 location + 1 ingestion event
 
 //    Testing for Person.Natural withOUT Tax_Number
       String munirConnections =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MUNIR HANDAUS'))\n" +
-              ".bothE().count().next().toString()").get().toString();
+              ".bothE('Is_Located').count().next().toString()").get().toString();
 //      String munirConnectionsQuery = "App.g.V(\"" + userId1 +"\").bothE().count().next().toString()";
 //      String munirConnections = App.executor.eval(munirConnectionsQuery).get().toString();
-      assertEquals("3", munirConnections); // 1 phone number + 0 identity card (sem tax) + 1 location + 1 ingestion event
+      assertEquals("1", munirConnections, "1 Is_Located"); // 1 phone number + 0 identity card (sem tax) + 1 location + 1 ingestion event
 
       String personNaturalTypes =
           App.executor.eval("App.g.V().has('Person.Natural.Type', eq('Clientes Sem Tax'))" +
@@ -299,7 +299,7 @@ public class PVBasicTest extends AppTest {
 
 //      test0000 for COMIDAS 1 as Person.Organisation
 //      String userId1 =
-//              App.executor.eval("App.g.V().has('Person.Organisation.Short_Name', eq('COMIDAS 1'))\n" +
+//              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('COMIDAS 1'))\n" +
 //                      ".next().id().toString()").get().toString();
 
 //    test0000 for Object.Data_Source.Name
@@ -523,13 +523,13 @@ public class PVBasicTest extends AppTest {
 
     try {
       String userId =
-          App.executor.eval("App.g.V().has('Person.Organisation.Short_Name',eq('Pessoa Nova5')).next().id().toString()")
+          App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()")
               .get().toString();
 
       Resource res = new Resource();
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-          "App.g.V().has('Person.Organisation.Short_Name',eq('Pessoa Nova5')).next().id().toString()");
+          "App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
       JsonObject obj = JsonParser.parseString(res.gremlinQuery(gson.toJson(gremlinReq))).getAsJsonObject();
 //      Gson gson = new Gson();
       String stringifiedOutput = gson.toJson(obj);
@@ -671,10 +671,10 @@ public class PVBasicTest extends AppTest {
           "+ 2 Has_Phone + 1 Is_Located + 1 Has_Ingestion_Event");
 
 
-      String orgName =
-          App.executor.eval("App.g.V().has('Person.Organisation.Short_Name',eq('CLEUSA PAIVA DIA'))" +
-              ".properties('Person.Organisation.Name').value().next().toString()").get().toString();
-      assertEquals("ARMS MANUTENCAO E R", orgName, "O Empreendimento de Cleusa se chama Arms Manutenção e R(eparos)");
+      String orgCleusaId =
+          App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('ARMS MANUTENCAO E R'))" +
+              ".properties('Person.Organisation.Id').value().next().toString()").get().toString();
+      assertEquals("01243568000156", orgCleusaId, "Id/CNPJ do Empreendimento de Cleusa");
 
 
       String personOrgEdgesCount =
@@ -758,16 +758,16 @@ public class PVBasicTest extends AppTest {
 
       jsonTestUtil("totvs-ra.json", "$.objs", "totvs_protheus_ra_funcionario");
 
-      String personNaturalEdgesCount =
+      String martaEmailsCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
-              ".bothE().count().next().toString()").get().toString();
-      assertEquals("8", personNaturalEdgesCount, "2 Uses_Email + 2 Is_Family + 2 Has_Id_Card +  1 Lives + 1 Has_Ingestion_Event");
+              ".bothE('Uses_Email').count().next().toString()").get().toString();
+      assertEquals("2", martaEmailsCount, "2 Uses_Email");
 
 
       String locationAddressDescription =
-          App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA 3333 AP 33 Ponte, Jaguarão - RS, 333333'))" +
-              ".properties('Location.Address.Description').value().next().toString()").get().toString();
-      assertEquals("moradia principal", locationAddressDescription, "Descrição do Endereço");
+              App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA 3333 AP 33, PONTE, JAGUARÃO - RS, 333333'))" +
+                      ".properties('Location.Address.parser.city', 'Location.Address.parser.postcode').value().toList()").get().toString();
+      assertEquals("[jaguarão, 333333]", locationAddressDescription, "Address parser City and Post Code");
 
 
       String findingTheSonOfAMother =
