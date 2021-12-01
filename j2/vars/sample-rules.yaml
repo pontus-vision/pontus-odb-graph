@@ -6,8 +6,8 @@ rules:
         name: TITULAR
 
         props:
-          Full_Name: "${pg_NOME?.trim().toUpperCase()}"
-          Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
+          Full_Name: "${pg_NOME?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${pg_NOME?.trim()?.toUpperCase()}"
           Type:
             val: "cliente"
             excludeFromSearch: true
@@ -110,8 +110,8 @@ rules:
     vertices:
       - label: Person.Natural
         props:
-          Full_Name: "${First_Name?.trim().toUpperCase()} ${Last_Name?.trim().toUpperCase()}"
-          Full_Name_fuzzy: "${First_Name?.trim().toUpperCase()} ${Last_Name?.trim().toUpperCase()}"
+          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
           Type:
             val: "cliente"
 #            excludeFromSearch: true
@@ -169,8 +169,8 @@ rules:
     vertices:
       - label: Person.Natural
         props:
-          Full_Name: "${pg_NOME?.trim().toUpperCase()}"
-          Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
+          Full_Name: "${pg_NOME?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${pg_NOME?.trim()?.toUpperCase()}"
           Type:
             val: "corretor"
             excludeFromSearch: true
@@ -248,8 +248,8 @@ rules:
     vertices:
       - label: Person.Natural
         props:
-          Full_Name: "${pg_NOME?.trim().toUpperCase()}"
-          Full_Name_fuzzy: "${pg_NOME?.trim().toUpperCase()}"
+          Full_Name: "${pg_NOME?.trim()?.toUpperCase()}"
+          Full_Name_fuzzy: "${pg_NOME?.trim()?.toUpperCase()}"
           Type:
             val: "leads"
             excludeFromSearch: true

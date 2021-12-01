@@ -26,7 +26,7 @@ updatereq:
       condition: ${Nome_da_Mae?.trim()?.length() > 0}
       props:
         - name: Person.Natural.Full_Name
-          val: ${Nome_da_Mae?.trim().toUpperCase()}
+          val: ${Nome_da_Mae?.trim()?.toUpperCase()}
           mandatoryInSearch: True
     
     - label: Person.Natural
@@ -34,7 +34,7 @@ updatereq:
       condition: ${Nome_do_Pai?.trim()?.length() > 0}
       props:
         - name: Person.Natural.Full_Name
-          val: ${Nome_do_Pai?.trim().toUpperCase()}
+          val: ${Nome_do_Pai?.trim()?.toUpperCase()}
           mandatoryInSearch: True
     
     - label: Person.Employee

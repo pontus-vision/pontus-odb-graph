@@ -8,7 +8,7 @@ rules:
         condition: "${TypeId == 2 && LegalName != null}"
         props:
           Full_Name:
-            val: "${(Name?.trim().length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}"
+            val: "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
           Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
 #          Type:
@@ -23,9 +23,9 @@ rules:
             val: "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
           Id: "${CNPJ?.replaceAll('[^0-9]', '')}"
-          Email:
-            val: "${Email?.trim()?.toLowerCase()}"
-            excludeFromUpdate: true
+#          Email:
+#            val: "${Email?.trim()?.toLowerCase()}"
+#            excludeFromUpdate: true
 
       - label: Object.Identity_Card
         condition: "${TypeId == 2  && CPF != null}"
@@ -53,16 +53,16 @@ rules:
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location.Address
-        condition: "${StreetAddress != null}"
+#        condition: "${StreetAddress != null}"
         props:
           Full_Address:
-            val: "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
+            val: "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
             excludeFromSearch: true
 #          Type:
 #            val: "Business"
 #            excludeFromSearch: true
           parser:
-            val: "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
+            val: "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(ZipCode)}"
 

@@ -82,7 +82,7 @@ public class PVTotvsTest extends AppTest {
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
                       ".has('Metadata.Type.Person.Natural', eq('Person.Natural')).dedup()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("3", totvsPersonNaturalCount, "Count for Person.Natural Vertices from Data_Source TOTVS_SA1_CLIENTES");
+      assertEquals("4", totvsPersonNaturalCount, "Count for Person.Natural Vertices from Data_Source TOTVS_SA1_CLIENTES");
 
       String totvsPersonOrgCount =
               App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('85647243000154'))" +
@@ -186,30 +186,46 @@ public class PVTotvsTest extends AppTest {
     }
   }
 
-//  @Test
-//  public void test00004TotvsProtheusPlusPloomes() throws InterruptedException {
-//
-//    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
-//
-//    try {
-//
-//      String personNaturalCount =
-//              App.executor.eval("App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))" +
-//                      ".count().next().toString()").get().toString();
-//      assertEquals("1", personNaturalCount, "only one registry is TypeId = 1 = PF");
-//
-//      String personOrganisationCount =
-//              App.executor.eval("App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))" +
-//                      ".count().next().toString()").get().toString();
-//      assertEquals("4", personOrganisationCount, "4 registries are of TypeId = 2 = PJ");
-//
-//    } catch (ExecutionException e) {
-//      e.printStackTrace();
-//      assertNull(e);
-//
-//    }
-//
-//
-//  }
+  @Test
+  public void test00004TotvsProtheusPlusPloomes() throws InterruptedException {
+
+    jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+    jsonTestUtil("ploomes1-merge-totvs1-real.json", "$.value", "ploomes_clientes");
+
+    try {
+
+      String cpfGloria =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('GLÓRIA KRACKOVSZI'))" +
+                      ".out('Has_Id_Card').properties('Object.Identity_Card.Id_Value').value().next().toString()").get().toString();
+      assertEquals("01245367567", cpfGloria, "CPF de Glória Krackovszi");
+
+      String locationAddressCount =
+              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('DOCES JOINVILLE LTDA'))" +
+                      ".bothE('Is_Located').count().next().toString()").get().toString();
+      assertEquals("1", locationAddressCount, "Both Protheus & Ploomes share the same Location.Address vertex");
+
+      String getCityParser =
+              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('DOMINGOS COML LTDA'))" +
+                      ".out('Is_Located').properties('Location.Address.parser.city').value().next().toString()").get().toString();
+      assertEquals("jaboatao", getCityParser, "city of the company DOMINGOS COML LTDA");
+
+      String getPhoneNumberWithParser =
+              App.executor.eval("App.g.V().has('Location.Address.parser.postcode', eq('90420040'))" +
+                      ".in('Is_Located').out('Has_Phone').properties('Object.Phone_Number.Raw').value().next().toString()").get().toString();
+      assertEquals("33316400", getPhoneNumberWithParser, "Phone number of the company URUGUAY AUTOMACAO INDL LTDA");
+
+      String fromPhoneVertexToEmailVertex =
+              App.executor.eval("App.g.V().has('Object.Phone_Number.Last_7_Digits', eq('3238603'))" +
+                      ".in('Has_Phone').out('Uses_Email').properties('Object.Email_Address.Email').value().next().toString()").get().toString();
+      assertEquals("matheus@mail.com.br", fromPhoneVertexToEmailVertex, "Matheus' email");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
 }

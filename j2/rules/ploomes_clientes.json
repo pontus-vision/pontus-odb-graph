@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${(Name?.trim().length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}",
+            "val": "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
@@ -34,11 +34,6 @@
           {
             "name": "Person.Organisation.Id",
             "val": "${CNPJ?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Organisation.Email",
-            "val": "${Email?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true
           }
         ]
@@ -92,17 +87,16 @@
       },
       {
         "label": "Location.Address",
-        "condition": "${StreetAddress != null}",
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+            "val": "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${StreetAddress?.toUpperCase()} ${StreetAddressNumber?.toUpperCase()} ${StreetAddressLine2?.toUpperCase()?:''}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+            "val": "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },

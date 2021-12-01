@@ -6,10 +6,10 @@ updatereq:
       name: TITULAR
       props:
         - name: Person.Natural.Full_Name
-          val: ${pg_NOME?.trim().toUpperCase()}
+          val: ${pg_NOME?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Full_Name_fuzzy
-          val: ${pg_NOME?.trim().toUpperCase()}
+          val: ${pg_NOME?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Type
           val: cliente
