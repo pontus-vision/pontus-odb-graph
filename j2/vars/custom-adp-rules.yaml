@@ -20,13 +20,13 @@ rules:
         condition: "${Nome_da_Mae?.trim()?.length() > 0}"
         name: mae
         props:
-          Full_Name: "${Nome_da_Mae?.trim().toUpperCase()}"
+          Full_Name: "${Nome_da_Mae?.trim()?.toUpperCase()}"
 
       - label: Person.Natural
         condition: "${Nome_do_Pai?.trim()?.length() > 0}"
         name: pai
         props:
-          Full_Name: "${Nome_do_Pai?.trim().toUpperCase()}"
+          Full_Name: "${Nome_do_Pai?.trim()?.toUpperCase()}"
 
       - label: Person.Employee
         name: colaborador

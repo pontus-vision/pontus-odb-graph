@@ -3,11 +3,11 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "condition": "${TypeId == 2 && Name != null}",
+        "condition": "${TypeId == 2 && LegalName != null}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
-            "val": "${(Name?.trim()?.toUpperCase())?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}",
+            "val": "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {

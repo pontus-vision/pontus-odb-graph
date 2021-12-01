@@ -671,6 +671,7 @@ public class Resource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
 
+// why grafanaBackendHealthCheck function takes a String as param if it doesn't seem to make use of it ?!?!
   public GrafanaHealthcheckReply grafanaBackendHealthCheck(String str) {
     return new GrafanaHealthcheckReply("success", "success", "Data source is working");
 /*
@@ -861,7 +862,7 @@ status: "success", message: "Data source is working", title: "Success"
 
   }
 
-
+// Work In Progress
   @POST
   @Path("admin/mapping")
   @Produces(MediaType.TEXT_PLAIN)

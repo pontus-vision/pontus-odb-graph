@@ -5,10 +5,10 @@ updatereq:
     - label: Person.Natural
       props:
         - name: Person.Natural.Full_Name
-          val: ${First_Name?.trim().toUpperCase()} ${Last_Name?.trim().toUpperCase()}
+          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Full_Name_fuzzy
-          val: ${First_Name?.trim().toUpperCase()} ${Last_Name?.trim().toUpperCase()}
+          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person.Natural.Type
           val: cliente

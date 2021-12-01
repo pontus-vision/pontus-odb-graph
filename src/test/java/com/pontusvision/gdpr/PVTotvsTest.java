@@ -26,8 +26,8 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00001TotvsProtheusSa1Clientes() throws InterruptedException {
 
-    jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
     jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+
     try {
 
       String OrganisationUruguayEdgeCount =
@@ -46,16 +46,6 @@ public class PVTotvsTest extends AppTest {
                       ".bothE().count().next().toString()").get().toString();
       assertEquals("5", PersonMatheusEdgesCount, "1 Has_Ingestion_Event + 1 Uses_Email + 1 Is_Located " +
               "+ 1 Has_Phone + 1 Has_Id_Card");
-
-//      String personNaturalVerticesCount =
-//              App.executor.eval("App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))" +
-//                      ".count().next().toString()").get().toString();
-//      assertEquals("1", personNaturalVerticesCount, "The only Person.Natural is Matheus Rocha");
-//
-//      String personOrganisationVerticesCount =
-//              App.executor.eval("App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))" +
-//                      ".count().next().toString()").get().toString();
-//      assertEquals("3", personOrganisationVerticesCount, "URUGUAY AUTOMACAO INDL LTDA, DOMINGOS COML LTDA e DOCES JOINVILLE LTDA");
 
       String matheusPhoneNumber =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MATHEUS ROCHA')).out('Has_Phone')" +
