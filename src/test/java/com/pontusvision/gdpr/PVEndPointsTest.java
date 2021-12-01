@@ -1,15 +1,8 @@
 package com.pontusvision.gdpr;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
 import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
 import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -18,29 +11,18 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
-import org.json.JSONObject;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.text.SimpleDateFormat;
 import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-//import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertNull;
 
 /**
  * Unit test0000 for simple App.
@@ -150,13 +132,13 @@ public class PVEndPointsTest extends AppTest {
       data = new StringEntity(gson.toJson(gremlinReq));
       request.setEntity(data);
       query2 = IOUtils.toString(client.execute(request).getEntity().getContent());
-      System.out.println("print 2: " +query2);
+      System.out.println("print 2: " + query2);
 
       gremlinReq.setGremlin(null);
       data = new StringEntity(gson.toJson(gremlinReq));
       request.setEntity(data);
       query3 = IOUtils.toString(client.execute(request).getEntity().getContent());
-      System.out.println("print 3: " +query3);
+      System.out.println("print 3: " + query3);
 
 
     } catch (UnsupportedEncodingException e) {
@@ -170,7 +152,7 @@ public class PVEndPointsTest extends AppTest {
 
   }
 
-//  TODO: try to make a true reply from the Function, because till now, only error messages are being returned !!
+  //  TODO: try to make a true reply from the Function, because till now, only error messages are being returned !!
   @Test
   public void test00005TemplateRender() throws InterruptedException {
 
@@ -227,24 +209,24 @@ public class PVEndPointsTest extends AppTest {
   }
 
 //  TODO: Work on KPIs Endpoints Tests
-  @Test
-  public void test00006calPOLECounts() throws InterruptedException {
-
-    try {
-      HttpClient client = HttpClients.createMinimal();
-
-      HttpGet getRequest = new HttpGet(URI.create("http://localhost:3001/home/kpi/calculatePOLECounts"));
-
-//      getRequest.setHeader("Content-Type", "application/json");
-      getRequest.setHeader("Accept", "*/*");
-
-      String res = IOUtils.toString(client.execute(getRequest).getEntity().getContent());
-      assertEquals("????", res, "???? ~/home/kpi/calculatePOLECounts");
-
-    } catch (IOException e) {
-      e.printStackTrace();
-      assertNull(e);
-    }
-  }
+//  @Test
+//  public void test00006calPOLECounts() throws InterruptedException {
+//
+//    try {
+//      HttpClient client = HttpClients.createMinimal();
+//
+//      HttpGet getRequest = new HttpGet(URI.create("http://localhost:3001/home/kpi/calculatePOLECounts"));
+//
+////      getRequest.setHeader("Content-Type", "application/json");
+//      getRequest.setHeader("Accept", "*/*");
+//
+//      String res = IOUtils.toString(client.execute(getRequest).getEntity().getContent());
+//      assertEquals("????", res, "???? ~/home/kpi/calculatePOLECounts");
+//
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//      assertNull(e);
+//    }
+//  }
 
 }
