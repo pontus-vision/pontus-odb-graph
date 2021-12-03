@@ -5,7 +5,8 @@ rules:
   ploomes_clientes:
     vertices:
       - label: Person.Natural
-        condition: "${TypeId == 2 && LegalName != null}"
+#        TODO: Sometimes LegalName can be null ... sometimes its Name that is null ... CPF was taken out because it is usually null
+        condition: "${TypeId == 2 && (LegalName != null || Name != null)}"
         props:
           Full_Name:
             val: "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}"
@@ -16,7 +17,8 @@ rules:
 #            excludeFromSearch: true
 
       - label: Person.Organisation
-        condition: "${TypeId == 1 && CNPJ != null}"
+#        TODO: Sometimes LegalName can be null ... sometimes its Name that is null ... CPF was taken out because it is usually null
+        condition: "${TypeId == 1 && (LegalName != null || Name != null)}"
         props:
           Registration_Number: "${CNPJ?.replaceAll('[^0-9]', '')}"
           Name:
@@ -51,20 +53,20 @@ rules:
         props:
           Email: "${Email?.trim()?.toLowerCase()}"
 
-      #ENDERECO,BAIRRO,CIDADE,UF,CEP
-      - label: Location.Address
-#        condition: "${StreetAddress != null}"
-        props:
-          Full_Address:
-            val: "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
-            excludeFromSearch: true
-#          Type:
-#            val: "Business"
+#      TODO: Os registros na Ploomes não tem dado algum ou insuficiente ou apenas dados de id para endereço ... por isso não terá vertex Location
+#      - label: Location.Address
+##        condition: "${StreetAddress != null}"
+#        props:
+#          Full_Address:
+#            val: "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
 #            excludeFromSearch: true
-          parser:
-            val: "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
-            type: "com.pontusvision.utils.LocationAddress"
-          Post_Code: "${com.pontusvision.utils.PostCode.format(ZipCode)}"
+##          Type:
+##            val: "Business"
+##            excludeFromSearch: true
+#          parser:
+#            val: "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}"
+#            type: "com.pontusvision.utils.LocationAddress"
+#          Post_Code: "${com.pontusvision.utils.PostCode.format(ZipCode)}"
 
       - label: Event.Ingestion
         props:
@@ -138,10 +140,10 @@ rules:
         fromVertexLabel: "Person.Organisation"
         toVertexName: "cnpj"
 
-      - label: Is_Located
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
-
-      - label: Is_Located
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Location.Address"
+#      - label: Is_Located
+#        fromVertexLabel: "Person.Natural"
+#        toVertexLabel: "Location.Address"
+#
+#      - label: Is_Located
+#        fromVertexLabel: "Person.Organisation"
+#        toVertexLabel: "Location.Address"

@@ -3,7 +3,7 @@
     "vertices": [
       {
         "label": "Person.Natural",
-        "condition": "${TypeId == 2 && LegalName != null}",
+        "condition": "${TypeId == 2 && (LegalName != null || Name != null)}",
         "props": [
           {
             "name": "Person.Natural.Full_Name",
@@ -19,7 +19,7 @@
       },
       {
         "label": "Person.Organisation",
-        "condition": "${TypeId == 1 && CNPJ != null}",
+        "condition": "${TypeId == 1 && (LegalName != null || Name != null)}",
         "props": [
           {
             "name": "Person.Organisation.Registration_Number",
@@ -81,28 +81,6 @@
           {
             "name": "Object.Email_Address.Email",
             "val": "${Email?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Location.Address",
-        "props": [
-          {
-            "name": "Location.Address.Full_Address",
-            "val": "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Location.Address.parser",
-            "val": "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-          },
-          {
-            "name": "Location.Address.Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(ZipCode)}",
             "mandatoryInSearch": true
           }
         ]
@@ -229,16 +207,6 @@
         "label": "Has_Id_Card",
         "fromVertexLabel": "Person.Organisation",
         "toVertexName": "cnpj"
-      },
-      {
-        "label": "Is_Located",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Location.Address"
-      },
-      {
-        "label": "Is_Located",
-        "fromVertexLabel": "Person.Organisation",
-        "toVertexLabel": "Location.Address"
       }
     ]
   }
