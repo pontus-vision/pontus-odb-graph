@@ -6,7 +6,7 @@ import org.apache.tinkerpop.gremlin.structure.Vertex;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GraphReply
+public class GraphReply extends BaseReply
 {
   GraphNode nodes[];
 
@@ -14,12 +14,19 @@ public class GraphReply
 
   public GraphReply()
   {
+    super();
     nodes = null;
     edges = null;
   }
 
+  public GraphReply(Status status, String err)
+  {
+    super(status,err);
+
+  }
   public GraphReply(Vertex vtx, Set<Vertex> inNodes, Set<Vertex> outNodes, Set<Edge> inEdges, Set<Edge> outEdges)
   {
+    super();
     Set<GraphNode> nodes = new HashSet<>();
 
     GraphNode vtxNode = new GraphNode(vtx);

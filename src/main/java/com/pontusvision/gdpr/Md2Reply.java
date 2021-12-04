@@ -17,7 +17,10 @@ public class Md2Reply extends BaseReply {
   public Md2Reply(Status status) {
     super(status);
   }
-
+  public Md2Reply(Status status, String err) {
+    super(status);
+    this.setErrorStr(err);
+  }
   public Long getReqId() {
     return reqId;
   }
