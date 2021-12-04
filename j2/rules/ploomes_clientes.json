@@ -90,13 +90,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+            "val": "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${CityId?.toUpperCase()} - ${StateId?.toUpperCase()}, ${ZipCode}",
+            "val": "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },

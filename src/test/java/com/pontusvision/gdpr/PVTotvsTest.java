@@ -55,7 +55,7 @@ public class PVTotvsTest extends AppTest {
       String domingosOrgLocationAddress =
               App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('DOMINGOS COML LTDA')).out('Is_Located')" +
                       ".properties('Location.Address.Full_Address').value().next().toString()").get().toString();
-      assertEquals("RUA PESANHA 433 3 ACESSO MONTE GUADALUPE, JD JORDANA, JABOATAO - PE, 54315085",
+      assertEquals("RUA PESANHA 433 3 ACESSO MONTE GUADALUPE, JD JORDANA, JABOATÃO DOS GUARARAPES - PE, 54315085",
               domingosOrgLocationAddress, "Localização da loja Domingos Coml LTDA");
 
       String docesJoinvilleContactPerson =
@@ -197,7 +197,7 @@ public class PVTotvsTest extends AppTest {
       String getCityParser =
               App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('DOMINGOS COML LTDA'))" +
                       ".out('Is_Located').properties('Location.Address.parser.city').value().next().toString()").get().toString();
-      assertEquals("jaboatao", getCityParser, "city of the company DOMINGOS COML LTDA");
+      assertEquals("jaboatão dos guararapes", getCityParser, "city of the company DOMINGOS COML LTDA");
 
       String getPhoneNumberWithParser =
               App.executor.eval("App.g.V().has('Location.Address.parser.postcode', eq('90420040'))" +
