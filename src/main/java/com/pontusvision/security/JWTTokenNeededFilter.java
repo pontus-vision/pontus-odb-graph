@@ -63,7 +63,7 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
     @SerializedName("account-service")
     String accountService;
     @SerializedName("tokens-not-before")
-    String tokensNotBefore;
+    Long tokensNotBefore;
 
   }
 
@@ -229,7 +229,7 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
     String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
     if (!jwtAuthEnabled){
-      createDummyDecodedJWT();
+      requestContext.setProperty("pvDecodedJWT", createDummyDecodedJWT());
       return;
     }
     // Get the HTTP Authorization header from the request
