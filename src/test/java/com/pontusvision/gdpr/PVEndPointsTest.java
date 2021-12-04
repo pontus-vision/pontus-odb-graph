@@ -112,7 +112,7 @@ public class PVEndPointsTest extends AppTest {
 
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-          "App.g.V().has('Person.Organisation.Short_Name',eq('Pessoa Nova5')).next().id().toString()");
+          "App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
       String query1, query2, query3;
 
       HttpClient client = HttpClients.createMinimal();
@@ -129,7 +129,7 @@ public class PVEndPointsTest extends AppTest {
 //      String value = json.getJSONObject("@value").toString();
 //      System.out.println(value);
 
-      gremlinReq.setGremlin("App.g.V().has('Person.Natural.Full_Name',eq('Pessoa Nova5')).next().id().toString()");
+      gremlinReq.setGremlin("App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
       data = new StringEntity(gson.toJson(gremlinReq));
       request.setEntity(data);
       query2 = IOUtils.toString(client.execute(request).getEntity().getContent());
