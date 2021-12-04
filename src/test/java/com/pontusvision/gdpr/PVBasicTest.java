@@ -10,6 +10,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.glassfish.jersey.internal.MapPropertiesDelegate;
+import org.glassfish.jersey.internal.PropertiesDelegate;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -55,7 +57,7 @@ public class PVBasicTest extends AppTest {
   public PVBasicTest() throws URISyntaxException {
     super();
     fakeContainerReqContext = new ContainerRequest(new URI("http://localhost:18443"),
-        new URI("http://localhost:18443"),"POST",null,null,null);
+        new URI("http://localhost:18443"),"POST",null,new MapPropertiesDelegate(),null);
 
     fakeContainerReqContext.setProperty("pvDecodedJWT", JWTTokenNeededFilter.createDummyDecodedJWT());
   }
