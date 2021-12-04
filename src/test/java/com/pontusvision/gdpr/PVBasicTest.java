@@ -765,9 +765,9 @@ public class PVBasicTest extends AppTest {
 
 
       String locationAddressDescription =
-              App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA 3333 AP 33, PONTE, JAGUARÃO - RS, 333333'))" +
+              App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA 3333 AP 33, PONTE, JAGUARÃO - RS, 333333, BRASIL'))" +
                       ".properties('Location.Address.parser.city', 'Location.Address.parser.postcode').value().toList()").get().toString();
-      assertEquals("[jaguarão, 333333]", locationAddressDescription, "Address parser City and Post Code");
+      assertEquals("[[jaguarao, jaguarão], [333333]]", locationAddressDescription, "Address parser City and Post Code");
 
 
       String findingTheSonOfAMother =

@@ -32,9 +32,9 @@
       "StreetAddressLine2": null,
       "Neighborhood": "STA BARBARA",
       "ZipCode": "90420040",
-      "CityId": "PORTO ALEGRE",
-      "StateId": "RS",
-      "CountryId": null,
+      "CityId": 3941,
+      "StateId": 21,
+      "CountryId": 76,
       "CurrencyId": null,
       "EmailMarketing": null,
       "CNAECode": null,
@@ -61,7 +61,31 @@
       "Key": null,
       "LastDocumentId": null,
       "AvatarUrl": null,
-      "HasConsent": null
+      "HasConsent": null,
+      "City": {
+        "Id": 3941,
+        "Name": "PORTO ALEGRE",
+        "CountryId": 76,
+        "StateId": 21,
+        "IBGECode": 4314902,
+        "LastUpdateDate": "2014-09-17T19:27:14.81-03:00",
+        "Editable": false,
+        "Latitude": "-30.1146",
+        "Longitude": "-51.1639"
+      },
+      "State": {
+        "Id": 21,
+        "Short": "RS",
+        "Name": "RIO GRANDE DO SUL",
+        "CountryId": 76
+      },
+      "Country": {
+        "Id": 76,
+        "Short": "BRA",
+        "Short2": "BR",
+        "Name": "BRASIL",
+        "PhoneMask": "(99) 9999?9-9999"
+      }
     },
     {
       "Id": "1238974658712345",
@@ -94,9 +118,9 @@
       "StreetAddressLine2": null,
       "Neighborhood": "JD JORDANA",
       "ZipCode": "54315085",
-      "CityId": "JABOATAO",
-      "StateId": "PE",
-      "CountryId": "BR",
+      "CityId": 2460,
+      "StateId": 17,
+      "CountryId": 76,
       "CurrencyId": null,
       "EmailMarketing": null,
       "CNAECode": null,
@@ -123,7 +147,31 @@
       "Key": null,
       "LastDocumentId": null,
       "AvatarUrl": null,
-      "HasConsent": null
+      "HasConsent": null,
+      "City": {
+        "Id": 2460,
+        "Name": "JABOATÃO DOS GUARARAPES",
+        "CountryId": 76,
+        "StateId": 17,
+        "IBGECode": 2607901,
+        "LastUpdateDate": "2014-09-17T19:27:14.81-03:00",
+        "Editable": false,
+        "Latitude": "-8.1457",
+        "Longitude": "-34.9738"
+      },
+      "State": {
+        "Id": 17,
+        "Short": "PE",
+        "Name": "PERNAMBUCO",
+        "CountryId": 76
+      },
+      "Country": {
+        "Id": 76,
+        "Short": "BRA",
+        "Short2": "BR",
+        "Name": "BRASIL",
+        "PhoneMask": "(99) 9999?9-9999"
+      }
     },
     {
       "Id": "24562346579786",
@@ -156,9 +204,9 @@
       "StreetAddressLine2": null,
       "Neighborhood": "BUCAREIN",
       "ZipCode": "89202350",
-      "CityId": "JOINVILLE",
-      "StateId": "SC",
-      "CountryId": null,
+      "CityId": 2603,
+      "StateId": 24,
+      "CountryId": 76,
       "CurrencyId": null,
       "EmailMarketing": null,
       "CNAECode": null,
@@ -185,7 +233,31 @@
       "Key": null,
       "LastDocumentId": null,
       "AvatarUrl": null,
-      "HasConsent": null
+      "HasConsent": null,
+      "City": {
+        "Id": 2603,
+        "Name": "JOINVILLE",
+        "CountryId": 76,
+        "StateId": 24,
+        "IBGECode": 4209102,
+        "LastUpdateDate": "2014-09-17T19:27:14.81-03:00",
+        "Editable": false,
+        "Latitude": "-26.2659",
+        "Longitude": "-48.9987"
+      },
+      "State": {
+        "Id": 24,
+        "Short": "SC",
+        "Name": "SANTA CATARINA",
+        "CountryId": 76
+      },
+      "Country": {
+        "Id": 76,
+        "Short": "BRA",
+        "Short2": "BR",
+        "Name": "BRASIL",
+        "PhoneMask": "(99) 9999?9-9999"
+      }
     },
     {
       "Id": "6347637547366",
@@ -218,9 +290,9 @@
       "StreetAddressLine2": null,
       "Neighborhood": "JD LARANJEIRAS",
       "ZipCode": "86758974",
-      "CityId": "LONDRINA",
-      "StateId": "PR",
-      "CountryId": null,
+      "CityId": 2790,
+      "StateId": 16,
+      "CountryId": 76,
       "CurrencyId": null,
       "EmailMarketing": null,
       "CNAECode": null,
@@ -247,7 +319,31 @@
       "Key": null,
       "LastDocumentId": null,
       "AvatarUrl": null,
-      "HasConsent": null
+      "HasConsent": null,
+      "City": {
+        "Id": 2790,
+        "Name": "LONDRINA",
+        "CountryId": 76,
+        "StateId": 16,
+        "IBGECode": 4113700,
+        "LastUpdateDate": "2014-09-17T19:27:14.81-03:00",
+        "Editable": false,
+        "Latitude": "-23.5864",
+        "Longitude": "-51.0874"
+      },
+      "State": {
+        "Id": 16,
+        "Short": "PR",
+        "Name": "PARANÁ",
+        "CountryId": 76
+      },
+      "Country": {
+        "Id": 76,
+        "Short": "BRA",
+        "Short2": "BR",
+        "Name": "BRASIL",
+        "PhoneMask": "(99) 9999?9-9999"
+      }
     },
     {
       "Id": "76454937863",
@@ -280,9 +376,9 @@
       "StreetAddressLine2": null,
       "Neighborhood": "MARACANÃ",
       "ZipCode": "86758045",
-      "CityId": "NITERÓI",
-      "StateId": "RJ",
-      "CountryId": null,
+      "CityId": 3268,
+      "StateId": 19,
+      "CountryId": 76,
       "CurrencyId": null,
       "EmailMarketing": null,
       "CNAECode": null,
@@ -309,7 +405,31 @@
       "Key": null,
       "LastDocumentId": null,
       "AvatarUrl": null,
-      "HasConsent": null
+      "HasConsent": null,
+      "City": {
+        "Id": 3268,
+        "Name": "NITERÓI",
+        "CountryId": 76,
+        "StateId": 19,
+        "IBGECode": 3303302,
+        "LastUpdateDate": "2014-09-17T19:27:14.81-03:00",
+        "Editable": false,
+        "Latitude": "-22.9172",
+        "Longitude": "-43.0839"
+      },
+      "State": {
+        "Id": 19,
+        "Short": "RJ",
+        "Name": "RIO DE JANEIRO",
+        "CountryId": 76
+      },
+      "Country": {
+        "Id": 76,
+        "Short": "BRA",
+        "Short2": "BR",
+        "Name": "BRASIL",
+        "PhoneMask": "(99) 9999?9-9999"
+      }
     }
   ]
 }
