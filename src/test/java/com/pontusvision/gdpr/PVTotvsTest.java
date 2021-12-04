@@ -55,7 +55,7 @@ public class PVTotvsTest extends AppTest {
       String domingosOrgLocationAddress =
               App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('DOMINGOS COML LTDA')).out('Is_Located')" +
                       ".properties('Location.Address.Full_Address').value().next().toString()").get().toString();
-      assertEquals("RUA PESANHA 433 3 ACESSO MONTE GUADALUPE, JD JORDANA, JABOATÃO DOS GUARARAPES - PE, 54315085",
+      assertEquals("RUA PESANHA 433 3 ACESSO MONTE GUADALUPE, JD JORDANA, JABOATÃO DOS GUARARAPES - PE, 54315085, BRASIL",
               domingosOrgLocationAddress, "Localização da loja Domingos Coml LTDA");
 
       String docesJoinvilleContactPerson =
@@ -122,7 +122,7 @@ public class PVTotvsTest extends AppTest {
       String pabloLocationAddress =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('PABLO MATO ESCOBAR')).out('Is_Located')" +
                       ".properties('Location.Address.Full_Address').value().next().toString()").get().toString();
-      assertEquals("RUA MOREIRA DA SILVA SAURO , BROOKLYN, RIO DE JANEIRO - RIO DE JANEIRO, 86785908",
+      assertEquals("RUA MOREIRA DA SILVA SAURO , BROOKLYN, RIO DE JANEIRO - RIO DE JANEIRO, 86785908, BRASIL",
               pabloLocationAddress, "Pablo's Address");
 
       String getOrgNameById =
@@ -153,7 +153,7 @@ public class PVTotvsTest extends AppTest {
 
       String getNameByLocationAddress =
               App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
-                      "eq('RUA SAMPAIO CASA 3333 AP 33, PONTE, JAGUARÃO - RS, 333333')).in('Is_Located')" +
+                      "eq('RUA SAMPAIO CASA 3333 AP 33, PONTE, JAGUARÃO - RS, 333333, BRASIL')).in('Is_Located')" +
                       ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
       assertEquals("MARTA MARILIA MARCÔNDES", getNameByLocationAddress,
               "Nome da pessoa que mora no endereço especificado");
@@ -197,10 +197,10 @@ public class PVTotvsTest extends AppTest {
       String getCityParser =
               App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('DOMINGOS COML LTDA'))" +
                       ".out('Is_Located').properties('Location.Address.parser.city').value().next().toString()").get().toString();
-      assertEquals("jaboatão dos guararapes", getCityParser, "city of the company DOMINGOS COML LTDA");
+      assertEquals("[jaboataodosguararapes, jaboatão dos guararapes]", getCityParser, "city of the company DOMINGOS COML LTDA");
 
       String getPhoneNumberWithParser =
-              App.executor.eval("App.g.V().has('Location.Address.parser.postcode', eq('90420040'))" +
+              App.executor.eval("App.g.V().has('Location.Address.parser.postcode', eq('[90420040]'))" +
                       ".in('Is_Located').out('Has_Phone').properties('Object.Phone_Number.Raw').value().next().toString()").get().toString();
       assertEquals("33316400", getPhoneNumberWithParser, "Phone number of the company URUGUAY AUTOMACAO INDL LTDA");
 

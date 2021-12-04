@@ -999,8 +999,8 @@ class Matcher {
 
       addr.tokens.each { key, val ->
 
-        val.each { it ->
-
+//        val.each { it ->
+          String it = val;
 
           binding.put(postProcessorVar ?: "it", it)
 
@@ -1031,7 +1031,7 @@ class Matcher {
               matchReqs.add(mreq)
 
             }
-          }
+//          }
         }
 
       }
