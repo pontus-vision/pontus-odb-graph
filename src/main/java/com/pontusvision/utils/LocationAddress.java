@@ -6,10 +6,7 @@ import com.pontusvision.jpostal.AddressExpander;
 import com.pontusvision.jpostal.AddressParser;
 import com.pontusvision.jpostal.ParsedComponent;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class LocationAddress {
   public static final String ADDRESS_PARSER_DIR = "/opt/pontus-graphdb/graphdb-current/datadir/libpostal";
@@ -19,7 +16,7 @@ public class LocationAddress {
   public static AddressParser parser = AddressParser.getInstanceDataDir(System.getProperty(ADDRESS_PARSER_DIR_OPT,ADDRESS_PARSER_DIR ));
   public static AddressExpander expander = AddressExpander.getInstanceDataDir(System.getProperty(ADDRESS_PARSER_DIR_OPT,ADDRESS_PARSER_DIR ));
 
-  private Map<String, Set<String>> tokens = new HashMap<>();
+  private Map<String, String> tokens = new HashMap<>();
 
   private LocationAddress() {
   }
@@ -37,7 +34,7 @@ public class LocationAddress {
       String label = it.getLabel();
       String value = it.getValue();
 
-      Set<String> vals = retVal.tokens.computeIfAbsent(label,  k -> new HashSet<>() );
+      Set<String> vals = new HashSet<>();//retVal.tokens.computeIfAbsent(label,  k -> new HashSet<>() );
 
       // sb?.append("\n$label = $value")
 
@@ -60,7 +57,8 @@ public class LocationAddress {
         }
 
       }
-
+      TreeSet<String> sortedVals = new TreeSet<>(vals);
+      retVal.tokens.put(label,sortedVals.toString());
     }
     return retVal;
 
@@ -68,27 +66,28 @@ public class LocationAddress {
 
 
   public GraphTraversal addPropsToGraphTraverser(GraphTraversal g, String propPrefix) {
-    Set<Map.Entry<String, Set<String>>> tokensEntrySet = tokens.entrySet();
+    Set<Map.Entry<String, String>> tokensEntrySet = tokens.entrySet();
 
     GraphTraversal retVal = g;
-    for (Map.Entry<String, Set<String>> tokenEntry: tokensEntrySet)
+    for (Map.Entry<String, String> tokenEntry: tokensEntrySet)
     {
       StringBuffer propName = new StringBuffer(propPrefix).append(tokenEntry.getKey());
-      for (String val:tokenEntry.getValue())
-      {
-        retVal = retVal.property(propName, val);
-
-      }
+      retVal = retVal.property(propName, tokenEntry.getValue());
+//      for (String val:tokenEntry.getValue())
+//      {
+//        retVal = retVal.property(propName, val);
+//
+//      }
     }
 
     return retVal;
   }
 
 
-  public  Map<String, Set<String>> getTokens() {
+  public  Map<String, String> getTokens() {
     return tokens;//.asImmutable()
   }
-  public Set<String> getVals(String key) {
+  public String getVals(String key) {
     return tokens.get(key);
   }
 

@@ -132,13 +132,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}",
+            "val": "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}, BRASIL",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}",
+            "val": "${A1_END?.toUpperCase()}, ${A1_BAIRRO?.toUpperCase()}, ${A1_MUN?.toUpperCase()} - ${A1_ESTADO?.toUpperCase()}, ${A1_CEP}, BRASIL",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },

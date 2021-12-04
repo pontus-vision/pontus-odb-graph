@@ -32,9 +32,9 @@
       "StreetAddressLine2": null,
       "Neighborhood": "BAIRRO 1",
       "ZipCode": "67098-456",
-      "CityId": "CATUBOTU",
-      "StateId": "RJ",
-      "CountryId": null,
+      "CityId": 243,
+      "StateId": 19,
+      "CountryId": 76,
       "CurrencyId": null,
       "EmailMarketing": null,
       "CNAECode": null,
@@ -61,7 +61,31 @@
       "Key": null,
       "LastDocumentId": null,
       "AvatarUrl": null,
-      "HasConsent": null
+      "HasConsent": null,
+      "City": {
+        "Id": 243,
+        "Name": "ANGRA DOS REIS",
+        "CountryId": 76,
+        "StateId": 19,
+        "IBGECode": 3300100,
+        "LastUpdateDate": "2014-09-17T19:27:14.81-03:00",
+        "Editable": false,
+        "Latitude": "-23.0276",
+        "Longitude": "-44.3322"
+      },
+      "State": {
+        "Id": 19,
+        "Short": "RJ",
+        "Name": "RIO DE JANEIRO",
+        "CountryId": 76
+      },
+      "Country": {
+        "Id": 76,
+        "Short": "BRA",
+        "Short2": "BR",
+        "Name": "BRASIL",
+        "PhoneMask": "(99) 9999?9-9999"
+      }
     },
     {
       "Id": 13181011,
@@ -94,9 +118,9 @@
       "StreetAddressLine2": null,
       "Neighborhood": "BAIRRO 2",
       "ZipCode": "66666-666",
-      "CityId": "BOTUCATU",
-      "StateId": "SP",
-      "CountryId": "BR",
+      "CityId": 733,
+      "StateId": 25,
+      "CountryId": 76,
       "CurrencyId": null,
       "EmailMarketing": null,
       "CNAECode": null,
@@ -123,7 +147,31 @@
       "Key": null,
       "LastDocumentId": null,
       "AvatarUrl": null,
-      "HasConsent": null
+      "HasConsent": null,
+      "City": {
+        "Id": 733,
+        "Name": "BOTUCATU",
+        "CountryId": 76,
+        "StateId": 25,
+        "IBGECode": 3507506,
+        "LastUpdateDate": "2014-09-17T19:27:14.81-03:00",
+        "Editable": false,
+        "Latitude": "-22.8777",
+        "Longitude": "-48.5179"
+      },
+      "State": {
+        "Id": 25,
+        "Short": "SP",
+        "Name": "SÃO PAULO",
+        "CountryId": 76
+      },
+      "Country": {
+        "Id": 76,
+        "Short": "BRA",
+        "Short2": "BR",
+        "Name": "BRASIL",
+        "PhoneMask": "(99) 9999?9-9999"
+      }
     },
     {
       "Id": 13181012,
