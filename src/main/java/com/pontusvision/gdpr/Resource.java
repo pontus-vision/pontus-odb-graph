@@ -726,7 +726,7 @@ public class Resource {
   @Path("param")
   @Produces(MediaType.TEXT_PLAIN)
   public String paramMethod(@QueryParam("name") String name,
-                            @HeaderParam("AUTHORIZATION") String auth) {
+                            @HeaderParam("X-PV-NAME") String auth) {
     return "Hello, " + name + " AUTHORIZATION" + auth;
   }
 

@@ -228,7 +228,7 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
   public void filter(ContainerRequestContext requestContext) throws IOException {
     String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-    if (!jwtAuthEnabled){
+    if (authorizationHeader == null && !jwtAuthEnabled){
       requestContext.setProperty("pvDecodedJWT", createDummyDecodedJWT());
       return;
     }
@@ -259,7 +259,8 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
 
     } catch (Exception e) {
-//      logger.severe("#### invalid token : " + token);
+      logger.severe("#### invalid token : " + token);
+      logger.severe(e.getMessage());
       requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
     }
   }
