@@ -9,7 +9,7 @@ package com.pontusvision.gdpr;
 
     }
  */
-public class RecordReply
+public class RecordReply extends BaseReply
 {
   Long from;
   Long to;
@@ -59,11 +59,16 @@ public class RecordReply
   // must have this default constructor to get this class serialized as a reply!!!
   public RecordReply()
   {
+    super();
 
+  }
+  public RecordReply(Status status, String err){
+    super(status,err);
   }
 
   public RecordReply(Long from, Long to, Long totalAvailable, String[] records)
   {
+    super();
     this.from = from;
     this.to = to;
     this.totalAvailable = totalAvailable;

@@ -3,13 +3,16 @@ package com.pontusvision.gdpr;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.pontusvision.ingestion.Ingestion;
+import com.pontusvision.security.JWTTokenNeededFilter;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.glassfish.jersey.internal.MapPropertiesDelegate;
+import org.glassfish.jersey.internal.PropertiesDelegate;
+import org.glassfish.jersey.server.ContainerRequest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
@@ -17,12 +20,14 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,7 +54,13 @@ public class PVBasicTest extends AppTest {
   /**
    * @return the suite of test0000s being test0000ed
    */
+  public PVBasicTest() throws URISyntaxException {
+    super();
+    fakeContainerReqContext = new ContainerRequest(new URI("http://localhost:18443"),
+        new URI("http://localhost:18443"),"POST",null,new MapPropertiesDelegate(),null);
 
+    fakeContainerReqContext.setProperty("pvDecodedJWT", JWTTokenNeededFilter.createDummyDecodedJWT());
+  }
 
   @Test
   public void test00001Phase1CSVIngestion() throws InterruptedException {
@@ -437,7 +448,7 @@ public class PVBasicTest extends AppTest {
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
           "App.g.V().has('Person.Natural.Full_Name',eq('JONAS LEO BATISTA')).next().id().toString()");
-      JsonObject obj = JsonParser.parseString(res.gremlinQuery(gson.toJson(gremlinReq))).getAsJsonObject();
+      JsonObject obj = JsonParser.parseString(res.gremlinQuery(fakeContainerReqContext,gson.toJson(gremlinReq))).getAsJsonObject();
       String stringifiedOutput = gson.toJson(obj);
       String res2;
       try {
@@ -530,7 +541,8 @@ public class PVBasicTest extends AppTest {
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
           "App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
-      JsonObject obj = JsonParser.parseString(res.gremlinQuery(gson.toJson(gremlinReq))).getAsJsonObject();
+      JsonObject obj = JsonParser.parseString(res.gremlinQuery(fakeContainerReqContext,
+          gson.toJson(gremlinReq))).getAsJsonObject();
 //      Gson gson = new Gson();
       String stringifiedOutput = gson.toJson(obj);
       String res2;
@@ -781,7 +793,10 @@ public class PVBasicTest extends AppTest {
     }
   }
 
- @Test
+  ContainerRequest fakeContainerReqContext ;
+
+
+  @Test
   public void test00016FilesNLP() throws InterruptedException {
 
     csvTestUtil("phase1.csv", "phase1_csv");
@@ -852,7 +867,7 @@ public class PVBasicTest extends AppTest {
       md2Request.query.reqId = 4736473678L;
 
 
-      Md2Reply md2Reply = res.md2Search(md2Request);
+      Md2Reply md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
 
       assertEquals(1, md2Reply.total);
       assertEquals(md2Request.query.reqId, md2Reply.reqId);
@@ -890,14 +905,14 @@ public class PVBasicTest extends AppTest {
       md2Request.query.email = "MADROSE@bol.com.br";
       md2Request.query.docCpf = "22028544953";
 
-      Md2Reply md2Reply = res.md2Search(md2Request);
+      Md2Reply md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
 
       assertEquals(4, md2Reply.total);
       assertEquals(2, md2Reply.track.length);
 
       md2Request.settings.start = 2L;
 
-      md2Reply = res.md2Search(md2Request);
+      md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
 
       assertEquals(4, md2Reply.total);
       assertEquals(2, md2Reply.track.length);
@@ -906,7 +921,7 @@ public class PVBasicTest extends AppTest {
       md2Request.query.name = "NAME THAT DOES NOT EXIST";
 
 
-      md2Reply = res.md2Search(md2Request);
+      md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
 
       assertEquals(404, md2Reply.getStatus());
 
@@ -916,7 +931,7 @@ public class PVBasicTest extends AppTest {
       md2Request.settings.limit=1000L;
       md2Request.settings.start=0L;
 
-      md2Reply = res.md2Search(md2Request);
+      md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
       assertEquals(200, md2Reply.getStatus());
       assertEquals(0L,md2Reply.total);
 
@@ -926,7 +941,7 @@ public class PVBasicTest extends AppTest {
       md2Request.settings.limit=1000L;
       md2Request.settings.start=0L;
 
-      md2Reply = res.md2Search(md2Request);
+      md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
       assertEquals(200, md2Reply.getStatus());
       assertEquals(1L,md2Reply.total);
 
@@ -936,13 +951,13 @@ public class PVBasicTest extends AppTest {
       md2Request.settings.limit=1000L;
       md2Request.settings.start=0L;
 
-      md2Reply = res.md2Search(md2Request);
+      md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
       assertEquals(409, md2Reply.getStatus(),"Found more than one person with the same name");
 
       md2Request.query.name="HUGO SANCHEZ CORREIA";
       md2Request.query.docCpf="219.594.684-99";
       md2Request.query.email=null;
-      md2Reply = res.md2Search(md2Request);
+      md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
 
       assertEquals(200, md2Reply.getStatus(),"Found three masked CPF");
       assertEquals(3L,md2Reply.total);
@@ -950,7 +965,7 @@ public class PVBasicTest extends AppTest {
       md2Request.query.name="HUGO SANCHEZ CORREIA";
       md2Request.query.docCpf="21959468499";
       md2Request.query.email=null;
-      md2Reply = res.md2Search(md2Request);
+      md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
       assertEquals(200, md2Reply.getStatus(),"Found three unmasked CPF");
       assertEquals(3L,md2Reply.total);
 
@@ -960,7 +975,7 @@ public class PVBasicTest extends AppTest {
       md2Request.query.email = null;
       md2Request.query.docCpf = "05596491004";
 
-      md2Reply = res.md2Search(md2Request);
+      md2Reply = res.md2Search(fakeContainerReqContext,md2Request);
       assertEquals(200, md2Reply.getStatus(),"Found two masked CPF entries in a PDF file (email + fs)");
       assertEquals(2L,md2Reply.total, "Found two masked CPF entries in a PDF file (email + fs)");
 

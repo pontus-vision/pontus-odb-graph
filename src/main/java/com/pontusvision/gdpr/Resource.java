@@ -17,6 +17,9 @@ import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
 import com.pontusvision.graphutils.PText;
 import com.pontusvision.graphutils.PontusJ2ReportingFunctions;
 import com.pontusvision.graphutils.gdpr;
+import com.pontusvision.security.JWTTokenNeeded;
+import com.pontusvision.security.PVDecodedJWT;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseMessage;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseStatusCode;
@@ -34,12 +37,18 @@ import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.structure.io.IoRegistry;
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper;
 import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
+import org.glassfish.jersey.process.internal.RequestScoped;
 import org.glassfish.jersey.server.ContainerRequest;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.http.HTTPException;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -59,11 +68,14 @@ import static org.apache.tinkerpop.gremlin.process.traversal.P.neq;
 //import org.json.JSONArray;
 //import org.json.JSONObject;
 
+@RequestScoped
+@JWTTokenNeeded
 @Path("home")
 public class Resource {
 
   //  @Inject
   //  KeycloakSecurityContext keycloakSecurityContext;
+
 
   Gson gson = new Gson();
   GsonBuilder gsonBuilder = new GsonBuilder();
@@ -81,19 +93,44 @@ public class Resource {
   }
 
   //addRandomDataInit(App.graph,App.g)
+  @GET
+  @Path("silent_keycloak_sso_iframe")
+  @Produces(MediaType.TEXT_HTML)
+  public String silentKeycloakSSOIframe() {
+    return
+        "<html>\n" +
+        "<body>\n" +
+        "    <script>\n" +
+        "        parent.postMessage(location.href, location.origin)\n" +
+        "    </script>\n" +
+        "</body>\n" +
+        "</html>\n!";
+  }
+
+  public static boolean isAdminOrDPO(ContainerRequestContext request){
+    PVDecodedJWT pvDecodedJWT = (PVDecodedJWT) request.getProperty("pvDecodedJWT");
+    return (pvDecodedJWT != null && pvDecodedJWT.isAdmin() || pvDecodedJWT.isDPO());
+  }
 
   @POST
   @Path("clean_data")
   @Produces(MediaType.TEXT_PLAIN)
-  public String cleanData() {
-    return gdpr.cleanData(App.graph, App.g);
+  public BaseReply cleanData(@Context ContainerRequestContext req) {
+    if (!isAdminOrDPO(req)) {
+      return new BaseReply(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
+    }
+    return new BaseReply(Response.Status.OK, gdpr.cleanData(App.graph, App.g));
   }
 
   @POST
   @Path("random_init")
   @Produces(MediaType.TEXT_PLAIN)
-  public String randomInit() {
-    return gdpr.addRandomDataInit(App.graph, App.g);
+  public BaseReply randomInit(@Context ContainerRequestContext req) {
+    if (!isAdminOrDPO(req)) {
+      return new BaseReply(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
+    }
+    return new BaseReply(Response.Status.OK,
+        gdpr.addRandomDataInit(App.graph, App.g));
   }
 
   /*
@@ -104,20 +141,23 @@ public class Resource {
   @Path("md2_search")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Md2Reply md2Search(Md2Request req) throws HTTPException {
-    if (req.settings == null || req.query == null || req.query.name == null) {
+  public Md2Reply md2Search(@Context ContainerRequestContext req,Md2Request md2req) throws HTTPException {
+    if (!isAdminOrDPO(req)) {
+      return new Md2Reply(Response.Status.UNAUTHORIZED,
+          "Auth Token does not give rights to execute this");
 
-      Md2Reply reply = new Md2Reply(Response.Status.BAD_REQUEST);
-      reply.errorStr = "Invalid Request; missing the settings, query, or query.name fields";
-      return reply;
+    }
+    if (md2req.settings == null || md2req.query == null || md2req.query.name == null) {
+      return new Md2Reply(Response.Status.BAD_REQUEST,
+          "Invalid Request; missing the settings, query, or query.name fields");
     }
 
     GraphTraversal<Vertex, Vertex> gt =
         App.g.V().has("Person.Natural.Full_Name",
-            PText.textContains(req.query.name.trim().toUpperCase(Locale.ROOT)));
+            PText.textContains(md2req.query.name.trim().toUpperCase(Locale.ROOT)));
 
-    if (req.query.docCpf != null) {
-      gt = gt.has("Person.Natural.Customer_ID", eq(req.query.docCpf.replaceAll("[^0-9]", "")));
+    if (md2req.query.docCpf != null) {
+      gt = gt.has("Person.Natural.Customer_ID", eq(md2req.query.docCpf.replaceAll("[^0-9]", "")));
     }
     try {
       List<Object> ids = (gt.id().toList());
@@ -129,24 +169,24 @@ public class Resource {
       } else if (ids.size() > 1) {
         Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
 
-        reply.reqId = req.query.reqId;
-        reply.errorStr = "Found more than one person associated with " + req.query.name + " (docCpf=" +
-            req.query.docCpf + ")";
+        reply.reqId = md2req.query.reqId;
+        reply.errorStr = "Found more than one person associated with " + md2req.query.name + " (docCpf=" +
+            md2req.query.docCpf + ")";
 
         return reply;
 
       }
-      if (req.query.email != null) {
+      if (md2req.query.email != null) {
         if (!App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
-            eq(req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
-          System.out.println("Not found email " + req.query.email + " associated with " + ids.size() + " (" +
-              req.query.name + ")");
+            eq(md2req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
+          System.out.println("Not found email " + md2req.query.email + " associated with " + ids.size() + " (" +
+              md2req.query.name + ")");
 
           Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
 
-          reply.reqId = req.query.reqId;
-          reply.errorStr = "Not found email " + req.query.email + " associated with " + req.query.name + " (docCpf=" +
-              req.query.docCpf + ")";
+          reply.reqId = md2req.query.reqId;
+          reply.errorStr = "Not found email " + md2req.query.email + " associated with " + md2req.query.name + " (docCpf=" +
+              md2req.query.docCpf + ")";
 
           return reply;
 
@@ -156,10 +196,10 @@ public class Resource {
       Md2Reply reply = new Md2Reply(Response.Status.OK);
 
       reply.total = App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
-      reply.reqId = req.query.reqId;
+      reply.reqId = md2req.query.reqId;
 
       List<Map<String, Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
-          .in("Has_NLP_Events").dedup().range(req.settings.start, req.settings.start + req.settings.limit).as("EVENTS")
+          .in("Has_NLP_Events").dedup().range(md2req.settings.start, md2req.settings.start + md2req.settings.limit).as("EVENTS")
 //          .in()
           .match(
               __.as("EVENTS").id().as("ID"),
@@ -276,16 +316,21 @@ public class Resource {
   @Path("agrecords")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public RecordReply agrecords(RecordRequest req) {
-    if (req.cols != null && req.dataType != null) {
+  public RecordReply agrecords(@Context ContainerRequestContext req, RecordRequest recordRequest) {
+    if (!isAdminOrDPO(req)) {
+      return new RecordReply(Response.Status.UNAUTHORIZED,
+          "Auth Token does not give rights to execute this");
+    }
+
+    if (recordRequest.cols != null && recordRequest.dataType != null) {
 
       Set<String> valsSet = new HashSet<>();
       Set<String> reportButtonsSet = new HashSet<>();
-      for (int i = 0, ilen = req.cols.length; i < ilen; i++) {
-        if (!req.cols[i].id.startsWith("@")) {
-          valsSet.add(req.cols[i].id);
+      for (int i = 0, ilen = recordRequest.cols.length; i < ilen; i++) {
+        if (!recordRequest.cols[i].id.startsWith("@")) {
+          valsSet.add(recordRequest.cols[i].id);
         } else {
-          reportButtonsSet.add(req.cols[i].id);
+          reportButtonsSet.add(recordRequest.cols[i].id);
         }
 
       }
@@ -294,13 +339,13 @@ public class Resource {
 
       try {
 
-        String sqlQueryCount = req.getSQL(true);
+        String sqlQueryCount = recordRequest.getSQL(true);
 
-        String sqlQueryData = req.getSQL(false);
+        String sqlQueryData = recordRequest.getSQL(false);
 
-        String dataType = req.dataType; //req.search.extraSearch[0].value;
+        String dataType = recordRequest.dataType; //req.search.extraSearch[0].value;
 
-        boolean hasFilters = req.filters != null && req.filters.length > 0;
+        boolean hasFilters = recordRequest.filters != null && recordRequest.filters.length > 0;
 
         OGremlinResultSet resultSet = App.graph.executeSql(sqlQueryCount, Collections.EMPTY_MAP);
         Long count = resultSet.iterator().next().getRawResult().getProperty("COUNT(*)");
@@ -346,13 +391,13 @@ public class Resource {
 
             recs[i] = objMapper.writeValueAsString(rec);
           }
-          RecordReply reply = new RecordReply(req.from, req.to, count, recs);
+          RecordReply reply = new RecordReply(recordRequest.from, recordRequest.to, count, recs);
 
           return reply;
 
         }
 
-        RecordReply reply = new RecordReply(req.from, req.to, count, new String[0]);
+        RecordReply reply = new RecordReply(recordRequest.from, recordRequest.to, count, new String[0]);
 
         return reply;
 
@@ -362,7 +407,7 @@ public class Resource {
 
     }
 
-    return new RecordReply(req.from, req.to, 0L, new String[0]);
+    return new RecordReply(recordRequest.from, recordRequest.to, 0L, new String[0]);
 
   }
 
@@ -370,7 +415,11 @@ public class Resource {
   @Path("graph")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public GraphReply graph(GraphRequest greq) {
+  public GraphReply graph(@Context ContainerRequestContext req, GraphRequest greq) {
+    if (!isAdminOrDPO(req)) {
+      return new GraphReply(Response.Status.UNAUTHORIZED,
+          "Auth Token does not give rights to execute this");
+    }
 
     Set<Vertex> outNodes = App.g.V((greq.graphId)).to(Direction.OUT).toSet();
     Set<Vertex> inNodes = App.g.V((greq.graphId)).to(Direction.IN).toSet();
@@ -388,11 +437,16 @@ public class Resource {
   @Path("vertex_prop_values")
   @Produces(MediaType.APPLICATION_JSON)
   public FormioSelectResults getVertexPropertyValues(
+      @Context ContainerRequestContext req,
       @QueryParam("search") String search
       , @QueryParam("limit") Long limit
       , @QueryParam("skip") Long skip
 
   ) {
+    if (!isAdminOrDPO(req)) {
+      return new FormioSelectResults(Response.Status.UNAUTHORIZED,
+          "Auth Token does not give rights to execute this");
+    }
     //    final  String bizCtx = "BizCtx";
     //
     //    final AtomicBoolean matches = new AtomicBoolean(false);
@@ -452,8 +506,12 @@ public class Resource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
 
-  public VertexLabelsReply vertexLabels(String str) {
+  public VertexLabelsReply vertexLabels(@Context ContainerRequestContext req, String str) {
     try {
+      if (!isAdminOrDPO(req)) {
+        return new VertexLabelsReply(Response.Status.UNAUTHORIZED,
+            "Auth Token does not give rights to execute this");
+      }
 
       VertexLabelsReply reply = new VertexLabelsReply(
           App.graph.getRawDatabase().getMetadata().getSchema().getClasses());
@@ -569,9 +627,15 @@ public class Resource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
 
-  public NodePropertyNamesReply nodeProperties(VertexLabelsReply req) {
+  public NodePropertyNamesReply nodeProperties(
+      @Context ContainerRequestContext req,
+      VertexLabelsReply vlabReq) {
+    if (!isAdminOrDPO(req)) {
+      return new NodePropertyNamesReply(Response.Status.UNAUTHORIZED,
+          "Auth Token does not give rights to execute this");
+    }
 
-    if (req == null || req.labels == null || req.labels.length == 0 || req.labels[0].value == null) {
+    if (vlabReq == null || vlabReq.labels == null || vlabReq.labels.length == 0 || vlabReq.labels[0].value == null) {
       return new NodePropertyNamesReply(Response.Status.BAD_REQUEST, "Missing request labels");
     }
     try {
@@ -588,7 +652,7 @@ public class Resource {
       //        }
 
       Set<String> props = new HashSet<>();
-      final String label = req.labels[0].value;
+      final String label = vlabReq.labels[0].value;
 
       OClass oClass = App.graph.getRawDatabase().getMetadata().getSchema().getClass(label);
 
@@ -626,7 +690,7 @@ public class Resource {
               "Object.Notification_Templates.Id")
           .toList();
 
-      boolean useNewMode = req.version != null && req.version.startsWith("v2.");
+      boolean useNewMode = vlabReq.version != null && vlabReq.version.startsWith("v2.");
       notificationTemplates.forEach(map -> {
         props.add("@" + map.get("Object.Notification_Templates.Label") + "@" +
             (useNewMode?
@@ -685,9 +749,13 @@ status: "success", message: "Data source is working", title: "Success"
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
 
-  public String[] grafanaBackendSearch(ContainerRequest request) {
+  public String grafanaBackendSearch(ContainerRequest request) throws IOException {
 
-    return new String[]{};
+    String reqStr = IOUtils.toString(request.getEntityStream());
+
+    System.out.println(reqStr);
+
+    return "{\"status\": \"OK\"}";
 
   }
 
@@ -757,29 +825,42 @@ status: "success", message: "Data source is working", title: "Success"
   @Path("grafana_backend/query")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
+  public String grafanaBackendQuery(ContainerRequest request) throws IOException {
+    String reqStr = IOUtils.toString(request.getEntityStream());
 
-  public GrafanaQueryResponse[] grafanaBackendQuery(GrafanaQueryRequest request) {
-
-    GrafanaTarget[] targets = request.getTargets();
-    List<GrafanaQueryResponse> retVal = new LinkedList<>();
-
-    for (int i = 0; i < targets.length; i++) {
-      GrafanaQueryResponse reply = new GrafanaQueryResponse(
-          targets[i].getTarget(), new long[][]{}
-      );
-
-      retVal.add(reply);
-    }
-
-    return retVal.toArray(new GrafanaQueryResponse[0]);
+    System.out.println(reqStr);
+    return "{\"status\": \"OK\"}";
 
   }
+
+//  public GrafanaQueryResponse[] grafanaBackendQuery(GrafanaQueryRequest request) {
+
+//    GrafanaTarget[] targets = request.getTargets();
+//    List<GrafanaQueryResponse> retVal = new LinkedList<>();
+//
+//    for (int i = 0; i < targets.length; i++) {
+//      GrafanaQueryResponse reply = new GrafanaQueryResponse(
+//          targets[i].getTarget(), new long[][]{}
+//      );
+//
+//      retVal.add(reply);
+//    }
+//
+//    return retVal.toArray(new GrafanaQueryResponse[0]);
+
+//  }
 
   @POST
   @Path("gremlin")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public String gremlinQuery(String requestStr) {
+  public String gremlinQuery(@Context ContainerRequestContext req,
+                             String requestStr) {
+
+    if (!isAdminOrDPO(req)) {
+      return "{\"status\": \"unauthorized\"}";
+    }
+
     GremlinRequest request = gson.fromJson(requestStr, GremlinRequest.class);
     final UUID uuid = request.requestId == null ? UUID.randomUUID() :
         UUID.fromString(request.requestId);

@@ -25,7 +25,11 @@ public class BaseReply extends Response implements  Serializable   {
     localResp = Response.status(this.status).entity(this).build();
 
   }
+  public BaseReply(Status status, String msg) {
+    this.status = status;
+    localResp = Response.status(this.status).entity(msg).build();
 
+  }
   public String getErrorStr() {
     return errorStr;
   }

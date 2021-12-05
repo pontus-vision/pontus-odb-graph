@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" style="width: 100%; height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Pontus Vision</title>
+</head>
+<body style="width: 100%; height: 100%; margin: 0px">
+<iframe id="pvIframe" style="width: 100%; height: 100%; margin: 0px" src="/grafana/"></iframe>
+<script src="/auth/js/keycloak.js"></script>
+<script>
+  window.pvLoad = async () => {
+    const kcConf = {
+      url: `/auth`,
+      clientId: 'test',
+      realm: 'pontus',
+
+    };
+
+    const kc = Keycloak(kcConf);
+    let authenticated = await kc.init({
+      adapter: 'default',
+      onLoad: 'login-required',
+      // edard',
+
+      // responseMode: 'code id_token token'
+    });
+
+    if (authenticated){
+      window.top.keycloakInstance = kc;
+      // const getSrc = async() => {
+      //   const res = await fetch("/grafana", {
+      //     method: 'GET',
+      //     headers: {
+      //       // Here you can set any headers you want
+      //       // Authorization: `Bearer ${window.keycloakInstance.idToken}`
+      //     }
+      //   });
+      //   const blob = await res.blob();
+      //   const urlObject = URL.createObjectURL(blob);
+      //   document.querySelector('#pvIframe').setAttribute("src", urlObject)
+      // }
+      //
+      // await getSrc()
+
+    }
+
+  }
+
+  window.pvLoad();
+</script>
+
+</body>
+</html>

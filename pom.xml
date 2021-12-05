@@ -48,6 +48,7 @@
             1.0.0
         </apache.directory-api-version>-->
 
+        <java-jwt.version>3.18.2</java-jwt.version>
     </properties>
 <!--    <dependencyManagement>-->
 <!--        <dependencies>-->
@@ -67,6 +68,18 @@
         <!--            <artifactId>commons-csv</artifactId>-->
         <!--            <version>${apache-commons-csv.version}</version>-->
         <!--        </dependency>-->
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java-jwt.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>com.amazonaws.serverless</groupId>
             <artifactId>aws-serverless-java-container-jersey</artifactId>

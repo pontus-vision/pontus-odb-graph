@@ -11,7 +11,7 @@ import java.util.List;
 
     }
  */
-public class FormioSelectResults
+public class FormioSelectResults extends BaseReply
 {
 
   ReactSelectOptions[] labels;
@@ -20,11 +20,17 @@ public class FormioSelectResults
 
   public FormioSelectResults()
   {
+    super();
 
   }
 
+  public FormioSelectResults(Status status, String err)
+  {
+    super(status,err);
+  }
   public FormioSelectResults(List<ReactSelectOptions> selectOptions)
   {
+    super();
     this.labels = selectOptions.toArray(new ReactSelectOptions[0]);
   }
 

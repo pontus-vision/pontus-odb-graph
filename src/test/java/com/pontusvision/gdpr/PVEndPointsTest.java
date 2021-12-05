@@ -4,6 +4,7 @@ import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
 import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
 import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -94,7 +95,7 @@ public class PVEndPointsTest extends AppTest {
 
       String res = IOUtils.toString(client.execute(getRequest).getEntity().getContent());
       assertEquals("{\"message\":\"Data source is working\",\"status\":\"success\",\"title\":\"success\"}", res,
-              "json message from ~/home/grafana_backend endpoint");
+          "json message from ~/home/grafana_backend endpoint");
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -111,7 +112,7 @@ public class PVEndPointsTest extends AppTest {
 
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-              "App.g.V().has('Person.Organisation.Short_Name',eq('Pessoa Nova5')).next().id().toString()");
+          "App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
       String query1, query2, query3;
 
       HttpClient client = HttpClients.createMinimal();
@@ -128,7 +129,7 @@ public class PVEndPointsTest extends AppTest {
 //      String value = json.getJSONObject("@value").toString();
 //      System.out.println(value);
 
-      gremlinReq.setGremlin("App.g.V().has('Person.Natural.Full_Name',eq('Pessoa Nova5')).next().id().toString()");
+      gremlinReq.setGremlin("App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
       data = new StringEntity(gson.toJson(gremlinReq));
       request.setEntity(data);
       query2 = IOUtils.toString(client.execute(request).getEntity().getContent());
@@ -157,7 +158,7 @@ public class PVEndPointsTest extends AppTest {
   public void test00005TemplateRender() throws InterruptedException {
 
     jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
-            "sharepoint_data_sources");
+        "sharepoint_data_sources");
 
     try {
 
@@ -167,15 +168,15 @@ public class PVEndPointsTest extends AppTest {
       req.setTemplateName("TEST");
       req.setTemplatePOLEType("Object.Data_Sources");
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(" {% set var1=1 %} {{ var1 }} {{ context.Object_Data_Source_Name }}"
-                      .getBytes()));
+          Base64.getEncoder().encodeToString(" {% set var1=1 %} {{ var1 }} {{ context.Object_Data_Source_Name }}"
+              .getBytes()));
 
       ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
 
       String templateId = reply.getTemplateId();
 
       String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
-              .id().next().toString();
+          .id().next().toString();
 
       ReportTemplateRenderRequest reportReq = new ReportTemplateRenderRequest();
       reportReq.setTemplateId(null);
@@ -190,7 +191,7 @@ public class PVEndPointsTest extends AppTest {
 
       String output = IOUtils.toString(client.execute(request).getEntity().getContent());
       assertEquals("{\"type\":\"reportTemplateRenderResponse\",\"errorStr\":\"Missing ReportId\"}",
-              output, "Error because TemplateId is NULL");
+          output, "Error because TemplateId is NULL");
 
       reportReq.setTemplateId(contextId);
       reportReq.setRefEntryId(null);
@@ -200,13 +201,39 @@ public class PVEndPointsTest extends AppTest {
 
       output = IOUtils.toString(client.execute(request).getEntity().getContent());
       assertEquals("{\"type\":\"reportTemplateRenderResponse\",\"errorStr\":\"Missing RefId\"}",
-              output, "Error because RefEntryId is NULL");
+          output, "Error because RefEntryId is NULL");
 
     } catch (IOException e) {
       e.printStackTrace();
     }
 
   }
+
+
+  @Test
+  public void test00006WebStatic() throws InterruptedException {
+
+
+    try {
+
+
+      HttpClient client = HttpClients.createMinimal();
+      HttpGet request = new HttpGet(URI.create("http://localhost:3001/pv"));
+      request.setHeader("Accept", "*/*");
+
+      HttpResponse resp = client.execute(request);
+
+      String output = IOUtils.toString(resp.getEntity().getContent());
+      assertEquals(200,
+          resp.getStatusLine().getStatusCode(), "200 status code");
+
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
+
 
 //  TODO: Work on KPIs Endpoints Tests
 //  @Test
