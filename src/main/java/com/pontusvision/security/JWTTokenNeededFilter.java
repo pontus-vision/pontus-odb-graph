@@ -142,9 +142,9 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
       @Override
       public String getPayload() {
-        return "{\n" +
+        return Base64.getEncoder().encodeToString( "{\n" +
             "  \"bizctx\": \"/pontus/data_protection_officer,/pontus/admin\"\n" +
-            "}";
+            "}".getBytes());
       }
 
       @Override
@@ -259,8 +259,8 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
 
     } catch (Exception e) {
-      logger.severe("#### invalid token : " + token);
-      logger.severe(e.getMessage());
+      System.err.println("#### invalid token : " + token);
+      System.err.println(e.getMessage());
       requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
     }
   }
