@@ -30,12 +30,6 @@ public class PVTotvsTest extends AppTest {
 
     try {
 
-      String OrganisationUruguayEdgeCount =
-              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('URUGUAY AUTOMACAO INDL LTDA'))" +
-                      ".bothE().count().next().toString()").get().toString();
-      assertEquals("5", OrganisationUruguayEdgeCount, "1 Has_Ingestion_Event + 1 Uses_Email + 1 Is_Located " +
-              "+ 1 Has_Phone + 1 Has_Id_Card");
-
       String orgIdCard =
               App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('DOMINGOS COML LTDA')).out('Has_Id_Card')" +
                       ".properties('Object.Identity_Card.Id_Value').value().next().toString()").get().toString();
@@ -99,20 +93,10 @@ public class PVTotvsTest extends AppTest {
 
     try {
 
-      String personNaturalEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
-                      ".bothE('Is_Located').count().next().toString()").get().toString();
-      assertEquals("1", personNaturalEdgesCount, "1 Is_Located");
-
       String orgIdCard =
               App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('ARMS MANUTENCAO E R')).out('Has_Id_Card')" +
                       ".properties('Object.Identity_Card.Id_Value').value().next().toString()").get().toString();
       assertEquals("01243568000156", orgIdCard, "CNPJ da empresa Arms Manutenção e R(eparos)");
-
-      String personOrgEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
-                      ".bothE('Has_Phone').count().next().toString()").get().toString();
-      assertEquals("1", personOrgEdgesCount, "1 Has_Phone");
 
       String yaraPhoneNumber =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('YARA SAMANTHA')).out('Has_Phone')" +
