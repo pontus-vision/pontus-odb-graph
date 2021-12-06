@@ -760,7 +760,7 @@ class PontusJ2ReportingFunctions {
 
   static String getRiskMitigationsForRiskAsHTMLTable(String riskId, String style) {
     List<Map<String, String>> riskMigitations = getRiskMitigationsForRisk(riskId)
-    StringBuilder sb = new StringBuilder("<table style='${style?:''}'>");
+    StringBuilder sb = new StringBuilder("<table style='${style?:'border=1px;'}'>");
     for (Map<String,String> riskMitigation : riskMigitations){
 //      sb.append("<tr><td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Mitigation_Id')}</td>")
       sb.append("<tr><td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Description')}</td></tr>")

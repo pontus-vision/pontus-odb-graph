@@ -142,9 +142,8 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
       @Override
       public String getPayload() {
-        return Base64.getEncoder().encodeToString( "{\n" +
-            "  \"bizctx\": \"/pontus/data_protection_officer,/pontus/admin\"\n" +
-            "}".getBytes());
+        final String payload = "{\"bizctx\": \"/pontus/data_protection_officer,/pontus/admin\"}";
+        return Base64.getEncoder().encodeToString( payload.getBytes());
       }
 
       @Override
