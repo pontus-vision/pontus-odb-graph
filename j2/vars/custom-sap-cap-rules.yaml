@@ -771,7 +771,7 @@ rules:
           Id: "${Campaign_ID}"
           Status: "${Status}"
           Type:
-            val: "SAP/C@P Complaint Contract"
+            val: "SAP/C@P Complaint Complaint"
             excludeFromSearch: true
 
       - label: Object.Email_Address
@@ -1108,7 +1108,7 @@ rules:
           Id: "${Recall_campaign_ID?.trim()}"
 #          Status: "${}"
           Type:
-            val: "SAP/C@P Workshop Campaigns and Recalls Contract"
+            val: "SAP/C@P Workshop Campaigns and Recalls Campaign"
             excludeFromSearch: true
 
       - label: Object.Email_Address

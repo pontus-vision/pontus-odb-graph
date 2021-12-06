@@ -85,7 +85,7 @@ updatereq:
           val: ${Recall_campaign_ID?.trim()}
           mandatoryInSearch: True
         - name: Object.Campaign.Type
-          val: SAP/C@P Workshop Campaigns and Recalls Contract
+          val: SAP/C@P Workshop Campaigns and Recalls Campaign
           mandatoryInSearch: False
           excludeFromSearch: True
     
