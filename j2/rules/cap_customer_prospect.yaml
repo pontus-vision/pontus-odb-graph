@@ -40,6 +40,12 @@ updatereq:
         - name: Person.Organisation.Name
           val: ${Company_Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person.Organisation.Id
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person.Organisation.Registration_Number
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
     
     - label: Object.Phone_Number
       name: telephone

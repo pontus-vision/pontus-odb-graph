@@ -6,9 +6,9 @@ rules:
         name: titular
         props:
           Full_Name: "${Nome?.trim()?.toUpperCase()}"
-          Type:
-            val: "colaborador"
-            excludeFromSearch: true
+#          Type:
+#            val: "colaborador"
+#            excludeFromSearch: true
           Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
           Date_Of_Birth:
             val: "${Data_de_Nascimento_Idade?.trim()}"
@@ -91,9 +91,9 @@ rules:
       - label: Location.Address
         props:
           Full_Address: "${Tipo___Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}"
-          Type:
-            val: "${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}"
-            excludeFromSearch: true
+#          Type:
+#            val: "${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         condition: "${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}"
@@ -101,9 +101,9 @@ rules:
           Raw:
             val: "${Telefone}"
             mandatoryInSearch: false
-          Type:
-            val: "Telefone"
-            excludeFromSearch: true
+#          Type:
+#            val: "Telefone"
+#            excludeFromSearch: true
           Numbers_Only:
             val: "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true

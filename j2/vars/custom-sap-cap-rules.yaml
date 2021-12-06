@@ -199,6 +199,8 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+          Id: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Registration_Number: "${Tax_Number?.replaceAll('[^0-9]','')}"
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -1558,6 +1560,8 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+          Id: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Registration_Number: "${Tax_Number?.replaceAll('[^0-9]','')}"
 #          Type:
 #            val: "Data Quality"
 #            excludeFromSearch: true

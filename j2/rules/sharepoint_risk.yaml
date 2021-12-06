@@ -8,12 +8,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: SHAREPOINT/RISK
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: sharepoint/risk
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Data Source Risk
-          mandatoryInSearch: True
     
     - label: Object.Data_Source
       name: attached_data_sources

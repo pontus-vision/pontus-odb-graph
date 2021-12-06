@@ -9,16 +9,6 @@
             "name": "Object.Data_Source.Name",
             "val": "SHAREPOINT/MAPEAMENTO-DE-PROCESSOS",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sharepoint/mapeamento-de-processos",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Mapeamento de Processo LGPD",
-            "mandatoryInSearch": true
           }
         ]
       },

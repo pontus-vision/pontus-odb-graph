@@ -8,12 +8,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: SHAREPOINT/MAPEAMENTO-DE-PROCESSOS
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: sharepoint/mapeamento-de-processos
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Mapeamento de Processo LGPD
-          mandatoryInSearch: True
     
     - label: Object.Data_Source
       name: attached_data_sources

@@ -6,8 +6,8 @@ rules:
         name: sharepoint
         props:
           Name: SHAREPOINT/DATA-SOURCES
-          Type: sharepoint/data-sources
-          Description: Data Sources
+#          Type: sharepoint/data-sources
+#          Description: Data Sources
 
       - label: Object.Data_Source
         condition: "${field_Descri_x0020__x0020_o?.trim()?.length() > 0}"
@@ -46,9 +46,9 @@ rules:
           Retention_Period:
             val: "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}"
             mandatoryInSearch: true
-          Type:
-            val: "${Title}"
-            mandatoryInSearch: true
+#          Type:
+#            val: "${Title}"
+#            mandatoryInSearch: true
 
 #      - label: Object.Sensitive_Data
 #        props:
@@ -127,8 +127,8 @@ rules:
         name: sharepoint
         props:
           Name: SHAREPOINT/FONTES-DE-DADOS
-          Type: sharepoint/fontes-de-dados
-          Description: Registros das Fontes de Dados LGPD
+#          Type: sharepoint/fontes-de-dados
+#          Description: Registros das Fontes de Dados LGPD
 
       - label: Object.Data_Source
         condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}"
@@ -174,9 +174,9 @@ rules:
           Retention_Period:
             val: "${Pol_x00ed_tica_x0020_de_x0020_Re}"
             mandatoryInSearch: true
-          Type:
-            val: "${Title}"
-            mandatoryInSearch: true
+#          Type:
+#            val: "${Title}"
+#            mandatoryInSearch: true
 
       - label: Event.Ingestion
         props:
@@ -308,8 +308,8 @@ rules:
       - label: Object.Data_Source
         props:
           Name: SHAREPOINT/TREINAMENTOS
-          Type: sharepoint/treinamentos
-          Description: Registros de Treinamentos LGPD Colaboradores
+#          Type: sharepoint/treinamentos
+#          Description: Registros de Treinamentos LGPD Colaboradores
 
     edges:
       - label: "Course_Training"
@@ -338,8 +338,8 @@ rules:
         name: sharepoint
         props:
           Name: SHAREPOINT/MAPEAMENTO-DE-PROCESSOS
-          Type: sharepoint/mapeamento-de-processos
-          Description: Mapeamento de Processo LGPD
+#          Type: sharepoint/mapeamento-de-processos
+#          Description: Mapeamento de Processo LGPD
 
       - label: Object.Data_Source
         name: attached_data_sources
@@ -483,8 +483,8 @@ rules:
         name: sharepoint
         props:
           Name: SHAREPOINT/ROPA
-          Type: sharepoint/ropa
-          Description: Reg of Procs and Activ
+#          Type: sharepoint/ropa
+#          Description: Reg of Procs and Activ
 
       - label: Object.Data_Source
         name: attached_data_sources
@@ -628,8 +628,8 @@ rules:
         name: sharepoint
         props:
           Name: SHAREPOINT/RISK
-          Type: sharepoint/risk
-          Description:  Data Source Risk
+#          Type: sharepoint/risk
+#          Description:  Data Source Risk
 
       - label: Object.Data_Source
         name: attached_data_sources
@@ -745,8 +745,8 @@ rules:
         name: sharepoint
         props:
           Name: SHAREPOINT/RISK-MITIGATIONS
-          Type: sharepoint/risk-mitigations
-          Description:  Risk Mitigations
+#          Type: sharepoint/risk-mitigations
+#          Description:  Risk Mitigations
 
 
       - label: Object.Risk_Mitigation_Data_Source

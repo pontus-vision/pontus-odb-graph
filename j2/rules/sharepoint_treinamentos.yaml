@@ -77,12 +77,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: SHAREPOINT/TREINAMENTOS
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: sharepoint/treinamentos
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros de Treinamentos LGPD Colaboradores
-          mandatoryInSearch: True
 
   edges:
   - label: Course_Training
