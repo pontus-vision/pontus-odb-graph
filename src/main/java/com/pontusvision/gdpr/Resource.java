@@ -93,19 +93,7 @@ public class Resource {
   }
 
   //addRandomDataInit(App.graph,App.g)
-  @GET
-  @Path("silent_keycloak_sso_iframe")
-  @Produces(MediaType.TEXT_HTML)
-  public String silentKeycloakSSOIframe() {
-    return
-        "<html>\n" +
-        "<body>\n" +
-        "    <script>\n" +
-        "        parent.postMessage(location.href, location.origin)\n" +
-        "    </script>\n" +
-        "</body>\n" +
-        "</html>\n!";
-  }
+
 
   public static boolean isAdminOrDPO(ContainerRequestContext request){
     PVDecodedJWT pvDecodedJWT = (PVDecodedJWT) request.getProperty("pvDecodedJWT");
@@ -726,8 +714,8 @@ public class Resource {
   @Path("param")
   @Produces(MediaType.TEXT_PLAIN)
   public String paramMethod(@QueryParam("name") String name,
-                            @HeaderParam("AUTHORIZATION") String auth) {
-    return "Hello, " + name + " AUTHORIZATION" + auth;
+                            @HeaderParam("X-PV-NAME") String auth) {
+    return "Hello, " + name + " X-PV-NAME" + auth;
   }
 
   @GET
@@ -1024,74 +1012,5 @@ status: "success", message: "Data source is working", title: "Success"
 
   }
 
-  @GET
-  @Path("kpi/calculatePOLECounts")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String calculatePOLECounts() {
-    return gdpr.calculatePOLECounts().toString();
-  }
-
-  @GET
-  @Path("kpi/getScoresJson")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getScoresJson() {
-    return gdpr.getScoresJson().toString();
-  }
-
-  @GET
-  @Path("kpi/getDSARStatsPerOrganisation")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getDSARStatsPerOrganisation() {
-    return gdpr.getDSARStatsPerOrganisation().toString();
-  }
-
-  @GET
-  @Path("kpi/getNaturalPersonPerDataProcedures")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getNaturalPersonPerDataProcedures() {
-    return gdpr.getNaturalPersonPerDataProcedures().toString();
-  }
-
-  @GET
-  @Path("kpi/getDataProceduresPerDataSource")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getDataProceduresPerDataSource() {
-    return gdpr.getDataProceduresPerDataSource().toString();
-  }
-
-  @GET
-  @Path("kpi/getConsentPerNaturalPersonType")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getConsentPerNaturalPersonType() {
-    return gdpr.getConsentPerNaturalPersonType().toString();
-  }
-
-  @GET
-  @Path("kpi/getNumNaturalPersonPerOrganisation")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getNumNaturalPersonPerOrganisation() {
-    return gdpr.getNumNaturalPersonPerOrganisation().toString();
-  }
-
-  @GET
-  @Path("kpi/getNumSensitiveDataPerDataSource")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getNumSensitiveDataPerDataSource() {
-    return gdpr.getNumSensitiveDataPerDataSource().toString();
-  }
-
-  @GET
-  @Path("kpi/getNumNaturalPersonPerDataSource")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getNumNaturalPersonPerDataSource() {
-    return gdpr.getNumNaturalPersonPerDataSource().toString();
-  }
-
-  @GET
-  @Path("kpi/getNumEventsPerDataSource")
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getNumEventsPerDataSource() {
-    return gdpr.getNumEventsPerDataSource().toString();
-  }
 
 }

@@ -2893,8 +2893,10 @@ color:blue'><o:p>&nbsp;</o:p></span></b></p>
   {% set trsVal="font-size:10.0pt;font-family:Calibri,sans-serif;border:solid black 1.0pt;border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt;color:white;padding:0cm 5.4pt 0cm 5.4pt" %}
   {% for risk in risks %}
 
-    {% if risk.Object_Risk_Data_Source_Residual_Risk_Level_Num < risk.Object_Risk_Data_Source_Risk_Level_Num %}
+    {% if (risk.Object_Risk_Data_Source_Residual_Risk_Level_Num|int) < (risk.Object_Risk_Data_Source_Risk_Level_Num|int) %}
       {% set riskMitImpact='Reduziu' %}
+    {% elif (risk.Object_Risk_Data_Source_Residual_Risk_Level_Num|int) == (risk.Object_Risk_Data_Source_Risk_Level_Num|int) %}
+      {% set riskMitImpact='Igual' %}
     {% else %}
       {% set riskMitImpact='Aumentou' %}
     {% endif %}

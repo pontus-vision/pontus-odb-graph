@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import org.glassfish.jersey.process.internal.RequestScoped;
 
 import javax.ws.rs.ext.Provider;
+import java.util.Base64;
 
 @RequestScoped
 @Provider
@@ -20,7 +21,8 @@ public class PVDecodedJWT {
 
   public void setJwt(DecodedJWT jwt) {
     this.jwt = jwt;
-    this.payload = gson.fromJson(jwt.getPayload(), PVJWTPayload.class);
+    byte[] bytes = Base64.getDecoder().decode(jwt.getPayload());
+    this.payload = gson.fromJson(new String(bytes), PVJWTPayload.class);
   }
 
   public PVJWTPayload getPayload() {

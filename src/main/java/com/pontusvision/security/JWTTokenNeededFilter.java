@@ -142,9 +142,8 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
       @Override
       public String getPayload() {
-        return "{\n" +
-            "  \"bizctx\": \"/pontus/data_protection_officer,/pontus/admin\"\n" +
-            "}";
+        final String payload = "{\"bizctx\": \"/pontus/data_protection_officer,/pontus/admin\"}";
+        return Base64.getEncoder().encodeToString( payload.getBytes());
       }
 
       @Override
@@ -228,7 +227,7 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
   public void filter(ContainerRequestContext requestContext) throws IOException {
     String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-    if (!jwtAuthEnabled){
+    if (authorizationHeader == null && !jwtAuthEnabled){
       requestContext.setProperty("pvDecodedJWT", createDummyDecodedJWT());
       return;
     }
@@ -259,7 +258,8 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
 
     } catch (Exception e) {
-//      logger.severe("#### invalid token : " + token);
+      System.err.println("#### invalid token : " + token);
+      System.err.println(e.getMessage());
       requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
     }
   }
