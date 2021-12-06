@@ -277,6 +277,7 @@
   <properties>
     <junit.pioneer.version>1.5.0</junit.pioneer.version>
     <orientdb-version>3.1.12</orientdb-version>
+    <java-jwt.version>3.18.2</java-jwt.version>
     <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     <aws-lambda-version>1.6</aws-lambda-version>
