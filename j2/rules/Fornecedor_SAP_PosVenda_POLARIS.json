@@ -68,12 +68,6 @@
             "name": "Person.Natural.Customer_ID",
             "val": "${Vendor}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Type",
-            "val": "Fornecedores Sem Tax",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },

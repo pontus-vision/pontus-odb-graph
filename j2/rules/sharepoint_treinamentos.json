@@ -116,16 +116,6 @@
             "name": "Object.Data_Source.Name",
             "val": "SHAREPOINT/TREINAMENTOS",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sharepoint/treinamentos",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros de Treinamentos LGPD Colaboradores",
-            "mandatoryInSearch": true
           }
         ]
       }

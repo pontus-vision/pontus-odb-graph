@@ -30,12 +30,6 @@ public class PVTotvsTest extends AppTest {
 
     try {
 
-      String OrganisationUruguayEdgeCount =
-              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('URUGUAY AUTOMACAO INDL LTDA'))" +
-                      ".bothE().count().next().toString()").get().toString();
-      assertEquals("5", OrganisationUruguayEdgeCount, "1 Has_Ingestion_Event + 1 Uses_Email + 1 Is_Located " +
-              "+ 1 Has_Phone + 1 Has_Id_Card");
-
       String orgIdCard =
               App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('DOMINGOS COML LTDA')).out('Has_Id_Card')" +
                       ".properties('Object.Identity_Card.Id_Value').value().next().toString()").get().toString();
@@ -99,11 +93,6 @@ public class PVTotvsTest extends AppTest {
 
     try {
 
-      String personNaturalEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
-                      ".bothE('Is_Located').count().next().toString()").get().toString();
-      assertEquals("1", personNaturalEdgesCount, "1 Is_Located");
-
       String orgIdCard =
               App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('ARMS MANUTENCAO E R')).out('Has_Id_Card')" +
                       ".properties('Object.Identity_Card.Id_Value').value().next().toString()").get().toString();
@@ -124,6 +113,11 @@ public class PVTotvsTest extends AppTest {
                       ".properties('Location.Address.Full_Address').value().next().toString()").get().toString();
       assertEquals("RUA MOREIRA DA SILVA SAURO , BROOKLYN, RIO DE JANEIRO - RIO DE JANEIRO, 86785908, BRASIL",
               pabloLocationAddress, "Pablo's Address");
+
+      String personNaturalEdgesCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
+                      ".bothE('Is_Located').count().next().toString()").get().toString();
+      assertEquals("1", personNaturalEdgesCount, "1 Is_Located");
 
       String getOrgNameById =
               App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('37648576000198')).in('Has_Id_Card')" +

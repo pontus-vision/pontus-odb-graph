@@ -81,7 +81,7 @@ updatereq:
           val: ${Status}
           mandatoryInSearch: True
         - name: Event.Complaint.Type
-          val: SAP/C@P Complaint Contract
+          val: SAP/C@P Complaint
           mandatoryInSearch: False
           excludeFromSearch: True
     

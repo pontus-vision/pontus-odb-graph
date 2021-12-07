@@ -8,12 +8,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: SHAREPOINT/FONTES-DE-DADOS
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: sharepoint/fontes-de-dados
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Registros das Fontes de Dados LGPD
-          mandatoryInSearch: True
     
     - label: Object.Data_Source
       name: fontes_de_dados
@@ -67,9 +61,6 @@ updatereq:
           mandatoryInSearch: True
         - name: Object.Data_Policy.Retention_Period
           val: ${Pol_x00ed_tica_x0020_de_x0020_Re}
-          mandatoryInSearch: True
-        - name: Object.Data_Policy.Type
-          val: ${Title}
           mandatoryInSearch: True
     
     - label: Event.Ingestion

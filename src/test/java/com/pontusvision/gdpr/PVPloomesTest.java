@@ -33,13 +33,11 @@ public class PVPloomesTest extends AppTest {
       String getCityParser =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 1'))" +
                       ".out('Is_Located').properties('Location.Address.parser.city').value().next().toString()").get().toString();
-//    TODO: parser.city returns a string with no spaces ... Angra dos Reis => angradosreis
       assertEquals("[angra dos reis, angradosreis]", getCityParser, "A cidade de COMIDAS 1 é Angra dos Reis");
 
       String getStateParser =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 2'))" +
                       ".out('Is_Located').properties('Location.Address.parser.state').value().next().toString()").get().toString();
-//    TODO: parser.state for StateId SP returned string with no space or punctuations ... São Paulo => saopaulo
       assertEquals("[laspezia, santopadre, saopaulo, sp, stradaprovinciale]", getStateParser, "O estado de COMIDAS 2 é São Paulo");
 
 //      String getNullAddress =
@@ -58,7 +56,7 @@ public class PVPloomesTest extends AppTest {
   }
 
   @Test
-  public void test00001PloomesMergedExpanded() throws InterruptedException {
+  public void test00002PloomesMergedExpanded() throws InterruptedException {
 
     jsonTestUtil("ploomes1-merge-totvs1-real.json", "$.value", "ploomes_clientes");
 
@@ -74,7 +72,6 @@ public class PVPloomesTest extends AppTest {
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MATHEUS ROCHA'))" +
                       ".out('Is_Located').properties('Location.Address.parser.suburb').value().next().toString()").get().toString();
       assertEquals("[jardimlaranjeiras, jd laranjeiras]", getAddressParserSubUrb, "Matheus Rocha's neighborhood");
-//    TODO: parser.suburb returned a string with space as the original neighborhood
 
       String locationAddressPostCode =
               App.executor.eval("App.g.V().has('Object.Email_Address.Email', eq('primeiro@mail.com.br;segundo@mail.com.br'))" +

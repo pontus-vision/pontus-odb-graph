@@ -1,7 +1,5 @@
 rules:
 
-  # TODO: 2 IDs @ Person.Organisation (Id & Registration_Number)
-
   ploomes_clientes:
     vertices:
       - label: Person.Natural
@@ -56,13 +54,13 @@ rules:
 #        condition: "${StreetAddress != null}"
         props:
           Full_Address:
-            val: "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}, ${Country?.Name?.toUpperCase()?:'BRASIL'}"
+            val: "${StreetAddress?.trim()?.toUpperCase()}, ${Neighborhood?.trim()?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}, ${Country?.Name?.toUpperCase()?:'BRASIL'}"
             excludeFromSearch: true
 #          Type:
 #            val: "Business"
 #            excludeFromSearch: true
           parser:
-            val: "${StreetAddress?.toUpperCase()}, ${Neighborhood?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}, ${Country?.Name?.toUpperCase()?:'BRASIL'}"
+            val: "${StreetAddress?.trim()?.toUpperCase()}, ${Neighborhood?.trim()?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}, ${Country?.Name?.toUpperCase()?:'BRASIL'}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(ZipCode)}"
 

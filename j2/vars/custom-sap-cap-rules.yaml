@@ -199,6 +199,8 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+          Id: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Registration_Number: "${Tax_Number?.replaceAll('[^0-9]','')}"
 
       - label: Object.Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -445,7 +447,6 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-#          Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
 #          Type:
 #            val: "My Porsche Change Report"
 #            excludeFromSearch: true
@@ -768,7 +769,7 @@ rules:
           Id: "${Campaign_ID}"
           Status: "${Status}"
           Type:
-            val: "SAP/C@P Complaint Contract"
+            val: "SAP/C@P Complaint"
             excludeFromSearch: true
 
       - label: Object.Email_Address
@@ -1105,7 +1106,7 @@ rules:
           Id: "${Recall_campaign_ID?.trim()}"
 #          Status: "${}"
           Type:
-            val: "SAP/C@P Workshop Campaigns and Recalls Contract"
+            val: "SAP/C@P Workshop Campaigns and Recalls Campaign"
             excludeFromSearch: true
 
       - label: Object.Email_Address
@@ -1558,6 +1559,8 @@ rules:
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+          Id: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Registration_Number: "${Tax_Number?.replaceAll('[^0-9]','')}"
 #          Type:
 #            val: "Data Quality"
 #            excludeFromSearch: true

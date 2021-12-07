@@ -9,16 +9,6 @@
             "name": "Object.Data_Source.Name",
             "val": "SHAREPOINT/DATA-SOURCES",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sharepoint/data-sources",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Data Sources",
-            "mandatoryInSearch": true
           }
         ]
       },
@@ -88,11 +78,6 @@
           {
             "name": "Object.Data_Policy.Retention_Period",
             "val": "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Policy.Type",
-            "val": "${Title}",
             "mandatoryInSearch": true
           }
         ]

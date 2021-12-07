@@ -8,12 +8,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: SHAREPOINT/ROPA
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: sharepoint/ropa
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Reg of Procs and Activ
-          mandatoryInSearch: True
     
     - label: Object.Data_Source
       name: attached_data_sources

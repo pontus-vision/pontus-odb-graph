@@ -8,12 +8,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: SHAREPOINT/RISK-MITIGATIONS
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: sharepoint/risk-mitigations
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Risk Mitigations
-          mandatoryInSearch: True
     
     - label: Object.Risk_Mitigation_Data_Source
       props:

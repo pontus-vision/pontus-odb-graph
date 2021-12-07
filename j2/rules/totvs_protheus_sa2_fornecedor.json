@@ -40,13 +40,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}, BRASIL",
+            "val": "${A2_END?.trim()?.toUpperCase()} ${A2_ENDCOMP?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUNICIP?.trim()?.toUpperCase()} - ${A2_ESTADO?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${A2_END?.toUpperCase()} ${A2_ENDCOMP?.toUpperCase()}, ${A2_BAIRRO?.toUpperCase()}, ${A2_MUNICIP?.toUpperCase()} - ${A2_ESTADO?.toUpperCase()}, ${A2_CEP}, BRASIL",
+            "val": "${A2_END?.trim()?.toUpperCase()} ${A2_ENDCOMP?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUNICIP?.trim()?.toUpperCase()} - ${A2_ESTADO?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },

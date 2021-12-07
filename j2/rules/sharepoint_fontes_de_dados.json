@@ -9,16 +9,6 @@
             "name": "Object.Data_Source.Name",
             "val": "SHAREPOINT/FONTES-DE-DADOS",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "sharepoint/fontes-de-dados",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "Registros das Fontes de Dados LGPD",
-            "mandatoryInSearch": true
           }
         ]
       },
@@ -100,11 +90,6 @@
           {
             "name": "Object.Data_Policy.Retention_Period",
             "val": "${Pol_x00ed_tica_x0020_de_x0020_Re}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Policy.Type",
-            "val": "${Title}",
             "mandatoryInSearch": true
           }
         ]

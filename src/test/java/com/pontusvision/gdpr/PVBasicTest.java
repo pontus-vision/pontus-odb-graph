@@ -103,23 +103,13 @@ public class PVBasicTest extends AppTest {
       String pintoConnectionsQuery = "App.g.V(\"" + userId0 + "\").bothE('Has_Phone').count().next().toString()";
       String pintoConnections = App.executor.eval(pintoConnectionsQuery)
           .get().toString();
-      assertEquals("2", pintoConnections, "2 Has_Phone"); // 2 phone numbers + 1 identity card + 1 location + 1 ingestion event
+      assertEquals("2", pintoConnections, "2 Has_Phone");
 
 //    Testing for Person.Natural withOUT Tax_Number
-      String munirConnections =
+      String munirLocationEdgesCount =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MUNIR HANDAUS'))\n" +
               ".bothE('Is_Located').count().next().toString()").get().toString();
-//      String munirConnectionsQuery = "App.g.V(\"" + userId1 +"\").bothE().count().next().toString()";
-//      String munirConnections = App.executor.eval(munirConnectionsQuery).get().toString();
-      assertEquals("1", munirConnections, "1 Is_Located"); // 1 phone number + 0 identity card (sem tax) + 1 location + 1 ingestion event
-
-      String personNaturalTypes =
-          App.executor.eval("App.g.V().has('Person.Natural.Type', eq('Clientes Sem Tax'))" +
-              ".count().next().toString()").get().toString();
-      assertEquals("5", personNaturalTypes);
-
-      System.out.println("*******************************************************\n" + personNaturalTypes);
-
+      assertEquals("1", munirLocationEdgesCount, "1 Is_Located");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -146,47 +136,25 @@ public class PVBasicTest extends AppTest {
       assertEquals(pedroConnections, "1");
 
 //    test0000 for MARCELA Person.Employee NODE
-      String userId1 =
+      String marcelaTraining =
           App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('MARCELA ALVES'))\n" +
-              ".next().id().toString()").get().toString();
-
-//    test0000 for JOSE Person.Employee NODE
-      String userId2 =
-          App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('JOSE CARLOS MONSANTO'))\n" +
-              ".next().id().toString()").get().toString();
-
-//    test0000 for Object.Data_Source.Name
-      String sharepointDataSourceId =
-          App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('SHAREPOINT/TREINAMENTOS'))" +
-              ".next().id().toString()").get().toString();
-//      assertEquals(userId3,"#82:0"); -- Id can change!!
-      String rootConnectionsQuery = "App.g.V(\"" + sharepointDataSourceId + "\").bothE().count().next().toString()";
-      String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
-      assertEquals("1", rootConnections);
+              ".in('Completed_By').out('Course_Training').properties('Object.Awareness_Campaign.Description')" +
+                  ".value().next().toString()").get().toString();
+      assertEquals("1º CURSO - LGPD - LEI GERAL DE PROTEÇÃO DE DADOS", marcelaTraining, "Treinamento cursado por Marcela Alves");
 
 //    test0000 for Object.Awareness_Campaign.Description
-      String userId4 =
-          App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
-              "eq('1º CURSO - LGPD - LEI GERAL DE PROTEÇÃO DE DADOS')).next().id().toString()").get().toString();
-      String curso1ConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
-      String curso1Connections = App.executor.eval(curso1ConnectionsQuery).get().toString();
-      assertEquals("1", curso1Connections);
-
-//    test0000 for Object.Awareness_Campaign.Description 2
-      String curso2Connections =
-          App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
-              "eq('BASES LEGAIS LGPD')).bothE().count().next().toString()").get().toString();
-//      String curso2ConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
-//      String curso2Connections = App.executor.eval(curso2ConnectionsQuery).get().toString();
-      assertEquals("2", curso2Connections);
+      String getEmployeeNameByTraining =
+              App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
+                      "eq('COMO CUIDAR DOS SEUS DADOS PESSOAIS DIGITAIS/VIRTUAIS')).in('Course_Training')" +
+                      ".out('Completed_By').properties('Person.Employee.Full_Name').value().next().toString()").get().toString();
+      assertEquals("LEILA BRAGANÇA",getEmployeeNameByTraining, "O curso em questão foi feito por Leila Bragança");
 
 //    test0000 for Object.Awareness_Campaign.Description 3
-      String userId6 =
-          App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
-              "eq('LGPD - MULTAS E SANÇÕES')).next().id().toString()").get().toString();
-      String curso3ConnectionsQuery = "App.g.V(\"" + userId6 + "\").bothE().count().next().toString()";
-      String curso3Connections = App.executor.eval(curso3ConnectionsQuery).get().toString();
-      assertEquals("1", curso3Connections);
+      String caioTrainingStatus =
+              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('CAIO DA SILVA SAURO'))\n" +
+                      ".in('Completed_By').properties('Event.Training.Status')" +
+                      ".value().next().toString()").get().toString();
+      assertEquals("Passed", caioTrainingStatus, "Caio has PASSED the Training");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -271,22 +239,6 @@ public class PVBasicTest extends AppTest {
 
       }
 
-//      String userId =
-//              App.executor.eval("App.g.V().has('Object.Sensitive_Data.Description', eq('TELEFONE'))\n" +
-//                      ".next().id().toString()").get().toString();
-//      String sensitiveDataConnectionsQuery = "App.g.V(\"" + userId + "\").bothE().count().next().toString()";
-//      String sensitiveDataConnections = App.executor.eval(sensitiveDataConnectionsQuery).get().toString();
-//      assertEquals("1", sensitiveDataConnections);
-//
-//      String userId1 =
-//              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('CRM-Contatos'))\n" +
-//                      ".next().id().toString()").get().toString();
-//
-//      String userId2 =
-//              App.executor.eval("App.g.V().has('Object.Data_Source.Domain', eq('Users'))\n" +
-//                      ".next().id().toString()").get().toString();
-
-
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -296,6 +248,8 @@ public class PVBasicTest extends AppTest {
 
   }
 
+
+//A new version of this Test can be found @ PVTotvsTest.java > test00004TotvsProtheusPlusPloomes
   @Test
   public void test00005TotvsPloomes() throws InterruptedException {
     try {
@@ -303,23 +257,12 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
       jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
 
-//    test0000 for COMIDAS 1 as Person.Natural
-      String userId0 =
-          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 1'))\n" +
-              ".next().id().toString()").get().toString();
-
-//      test0000 for COMIDAS 1 as Person.Organisation
-//      String userId1 =
-//              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('COMIDAS 1'))\n" +
-//                      ".next().id().toString()").get().toString();
-
-//    test0000 for Object.Data_Source.Name
+//    t'est0000 for Object.Data_Source.Name
       String userId2 =
           App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
               ".next().id().toString()").get().toString();
       String rootConnectionsQuery = "App.g.V(\"" + userId2 + "\").bothE().count().next().toString()";
       String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
-//      assertEquals(rootConnections,"5"); -- vertices podem variar dependendo do timing!
 
 //    test0000 COUNT(Edges) for COMIDAS 2
       String userId3 =
@@ -432,6 +375,8 @@ public class PVBasicTest extends AppTest {
     }
   }
 
+
+// A new version of this Test can be found @ PVTotvsTest.java
   @Test
   public void test00009TotvsProtheusSa1Clientes() throws InterruptedException {
     jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
@@ -502,14 +447,6 @@ public class PVBasicTest extends AppTest {
       String report = App.executor.eval("renderReportInBase64(pg_id,pg_templateText)", bindings).get().toString();
       System.out.println(report);
 
-      String countEdges =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 2'))" +
-                              ".both().dedup().count().next().toString()").get().toString();
-      assertEquals("5", countEdges, "2 Has_Ingestion_Event " +
-          "+ 1 Has_Id_Card (cpf) " +
-          "+ 1 email" +
-          "+ 1 Location");
-
       String getPhoneNumber =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).out('Has_Phone')" +
                               ".properties('Object.Phone_Number.Raw').value().next().toString()").get().toString();
@@ -526,6 +463,8 @@ public class PVBasicTest extends AppTest {
 
   }
 
+
+// A new version of this test can be found @ PVTotvsTest.java
   @Test
   public void test00010PloomesClientes() throws InterruptedException {
 
@@ -643,11 +582,11 @@ public class PVBasicTest extends AppTest {
       csvTestUtil("ADP-real.csv", "ADP");
 
 
-      String countPersonNaturalEdges =
+      String mariaBDay =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
-              ".bothE().count().next().toString()").get().toString();
-      assertEquals("11", countPersonNaturalEdges, "3 Has_Id_Card + 2 Uses_Email" +
-              " + 2 Has_Parent_Or_Guardian + 1 Is_Located + 1 Has_Ingestion_Event + 1 Is_Alias + 1 Has_Phone");
+              ".properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
+      mariaBDay = mariaBDay.replaceAll("... 1980", "GMT 1980");
+      assertEquals("Mon Dec 08 01:01:01 GMT 1980", mariaBDay, "MAria`s Birthday");
 
       String getBossId =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
@@ -676,11 +615,11 @@ public class PVBasicTest extends AppTest {
 
       jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa2_fornecedor");
 
-      String personNaturalEdgesCount =
-          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
-              ".bothE().count().next().toString()").get().toString();
-      assertEquals("8", personNaturalEdgesCount, "2 Has_Id_Card + 2 Uses_Email " +
-          "+ 2 Has_Phone + 1 Is_Located + 1 Has_Ingestion_Event");
+      String pabloStreetName =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
+                      ".out('Is_Located').properties('Location.Address.parser.road').value().next().toString()").get().toString();
+      assertEquals("[rua moreira da silva sauro, ruamoreiradasilvasauro, ruamoreiradonasilvasauro]",
+              pabloStreetName, "Pablo's street name");
 
 
       String orgCleusaId =
@@ -689,11 +628,10 @@ public class PVBasicTest extends AppTest {
       assertEquals("01243568000156", orgCleusaId, "Id/CNPJ do Empreendimento de Cleusa");
 
 
-      String personOrgEdgesCount =
-          App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
-              ".bothE().count().next().toString()").get().toString();
-      assertEquals("5", personOrgEdgesCount, "1 Has_Id_Card + 1 Is_Located + 1 Has_Ingestion_Event " +
-              "+ 1 Uses_Email + 1 Has_Phone");
+      String orgHQ =
+              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
+                      ".out('Is_Located').properties('Location.Address.parser.state').value().next().toString()").get().toString();
+      assertEquals("[parana, paraná]", orgHQ, "Company's State HQ");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -763,6 +701,8 @@ public class PVBasicTest extends AppTest {
     }
   }
 
+
+// A new version of this Test can be found @ PVTotvsTest.java
   @Test
   public void test00015TotvsProtheusRaFuncionarios() throws InterruptedException {
 

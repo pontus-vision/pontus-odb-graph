@@ -128,7 +128,7 @@
           },
           {
             "name": "Object.Campaign.Type",
-            "val": "SAP/C@P Workshop Campaigns and Recalls Contract",
+            "val": "SAP/C@P Workshop Campaigns and Recalls Campaign",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

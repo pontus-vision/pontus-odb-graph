@@ -8,12 +8,6 @@ updatereq:
         - name: Object.Data_Source.Name
           val: SHAREPOINT/DATA-SOURCES
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
-          val: sharepoint/data-sources
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: Data Sources
-          mandatoryInSearch: True
     
     - label: Object.Data_Source
       name: data_sources
@@ -59,9 +53,6 @@ updatereq:
           excludeFromSearch: True
         - name: Object.Data_Policy.Retention_Period
           val: ${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}
-          mandatoryInSearch: True
-        - name: Object.Data_Policy.Type
-          val: ${Title}
           mandatoryInSearch: True
     
     - label: Event.Ingestion

@@ -41,9 +41,9 @@ rules:
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
           Customer_ID: "${Customer}"
-          Type:
-            val: "Clientes Sem Tax"
-            excludeFromSearch: true
+#          Type:
+#            val: "Clientes Sem Tax"
+#            excludeFromSearch: true
 
       - label: Object.Phone_Number
         name: phone
@@ -224,9 +224,9 @@ rules:
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
           Customer_ID: "${Vendor}"
-          Type:
-            val: "Fornecedores Sem Tax"
-            excludeFromSearch: true
+#          Type:
+#            val: "Fornecedores Sem Tax"
+#            excludeFromSearch: true
 
       #         Ethnicity:
       #         Nationality:
