@@ -147,22 +147,22 @@ public class PVSapCapTest extends AppTest {
   }
 
   @Test
-  public void test00004SapCapMyPChangeReport() throws InterruptedException {
+  public void test00003SapCapMyPChangeReport() throws InterruptedException {
 
     try {
 
       csvTestUtil("sap-cap/my-p-change-report.csv", "cap_my_p_change_report");
 
-      String felipeCustomerId =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('FELIPE MAGNOLI'))" +
-                      ".properties('Person.Natural.Customer_ID').value().next().toString()").get().toString();
-      assertEquals("65746", felipeCustomerId, "P ID for Felipe Magnoli");
+      String ingestionOperationType =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('FELIPE MAGNOLI')).out('Has_Ingestion_Event')" +
+                      ".properties('Event.Ingestion.Operation').value().next().toString()").get().toString();
+      assertEquals("Structured Data Insertion", ingestionOperationType, "Type of operation for Felipe's data");
 
-
-      String monicaCustomerId =
-              App.executor.eval("App.g.V().has('Person.Natural.Customer_ID',eq('43344'))" +
-                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
-      assertEquals("MÔNICA COELHO", monicaCustomerId, "Person.Natural.Full_Name = Mônica Coelho");
+      String DataSourceName =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MÔNICA COELHO'))" +
+                      ".out('Has_Ingestion_Event').in('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+                      ".properties('Object.Data_Source.Name').value().next().toString()").get().toString();
+      assertEquals("SAP/C@P MY PORSCHE CHANGE REPORT", DataSourceName, "The source for Mônica's data");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -171,7 +171,7 @@ public class PVSapCapTest extends AppTest {
   }
 
   @Test
-  public void test00005SapCapPConnectMandatoryFields() throws InterruptedException {
+  public void test00004SapCapPConnectMandatoryFields() throws InterruptedException {
 
     try {
 
@@ -195,7 +195,7 @@ public class PVSapCapTest extends AppTest {
   }
 
   @Test
-  public void test00006SapCapOwnershipChange() throws InterruptedException {
+  public void test00005SapCapOwnershipChange() throws InterruptedException {
 
     try {
 
@@ -219,7 +219,7 @@ public class PVSapCapTest extends AppTest {
   }
 
   @Test
-  public void test00007SapCapComplaint() throws InterruptedException {
+  public void test00006SapCapComplaint() throws InterruptedException {
 
     try {
 
@@ -249,7 +249,7 @@ public class PVSapCapTest extends AppTest {
   }
 
   @Test
-  public void test00008SapCapActivity() throws InterruptedException {
+  public void test00007SapCapActivity() throws InterruptedException {
 
     try {
 
@@ -278,7 +278,7 @@ public class PVSapCapTest extends AppTest {
   }
 
   @Test
-  public void test00009SapCapWorkshopCampaignsAndRecalls() throws InterruptedException {
+  public void test00008SapCapWorkshopCampaignsAndRecalls() throws InterruptedException {
 
     try {
 
@@ -302,7 +302,7 @@ public class PVSapCapTest extends AppTest {
   }
 
   @Test
-  public void test00010SapCapCompetitorVehicles() throws InterruptedException {
+  public void test00009SapCapCompetitorVehicles() throws InterruptedException {
 
     try {
 
@@ -331,7 +331,7 @@ public class PVSapCapTest extends AppTest {
   }
 
   @Test
-  public void test00011SapCapVehicle() throws InterruptedException {
+  public void test00010SapCapVehicle() throws InterruptedException {
 
     try {
 
@@ -359,7 +359,7 @@ public class PVSapCapTest extends AppTest {
   }
 
   @Test
-  public void test00012SapCapDataQuality() throws InterruptedException {
+  public void test00011SapCapDataQuality() throws InterruptedException {
 
     try {
 

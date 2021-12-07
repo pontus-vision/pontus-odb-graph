@@ -8,11 +8,6 @@
             "name": "Person.Natural.Full_Name",
             "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person.Natural.Customer_ID",
-            "val": "${Porsche_ID?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
           }
         ]
       },

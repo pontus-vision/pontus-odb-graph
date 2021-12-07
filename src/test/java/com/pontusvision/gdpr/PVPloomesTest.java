@@ -56,7 +56,7 @@ public class PVPloomesTest extends AppTest {
   }
 
   @Test
-  public void test00001PloomesMergedExpanded() throws InterruptedException {
+  public void test00002PloomesMergedExpanded() throws InterruptedException {
 
     jsonTestUtil("ploomes1-merge-totvs1-real.json", "$.value", "ploomes_clientes");
 
