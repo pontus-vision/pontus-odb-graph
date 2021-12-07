@@ -1,7 +1,5 @@
 rules:
 
-  # TODO: 2 IDs @ Person.Organisation (Id & Registration_Number)
-
   ploomes_clientes:
     vertices:
       - label: Person.Natural

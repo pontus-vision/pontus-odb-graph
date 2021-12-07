@@ -98,6 +98,11 @@ public class PVTotvsTest extends AppTest {
                       ".properties('Object.Identity_Card.Id_Value').value().next().toString()").get().toString();
       assertEquals("01243568000156", orgIdCard, "CNPJ da empresa Arms Manutenção e R(eparos)");
 
+      String personOrgEdgesCount =
+              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
+                      ".bothE('Has_Phone').count().next().toString()").get().toString();
+      assertEquals("1", personOrgEdgesCount, "1 Has_Phone");
+
       String yaraPhoneNumber =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('YARA SAMANTHA')).out('Has_Phone')" +
                       ".properties('Object.Phone_Number.Raw').value().next().toString()").get().toString();
@@ -108,6 +113,11 @@ public class PVTotvsTest extends AppTest {
                       ".properties('Location.Address.Full_Address').value().next().toString()").get().toString();
       assertEquals("RUA MOREIRA DA SILVA SAURO , BROOKLYN, RIO DE JANEIRO - RIO DE JANEIRO, 86785908, BRASIL",
               pabloLocationAddress, "Pablo's Address");
+
+      String personNaturalEdgesCount =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
+                      ".bothE('Is_Located').count().next().toString()").get().toString();
+      assertEquals("1", personNaturalEdgesCount, "1 Is_Located");
 
       String getOrgNameById =
               App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('37648576000198')).in('Has_Id_Card')" +

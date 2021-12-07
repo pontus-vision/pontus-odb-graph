@@ -249,54 +249,54 @@ public class PVBasicTest extends AppTest {
   }
 
 
-// TODO: A new version of this Test can be found @ PVTotvsTest.java > test00004TotvsProtheusPlusPloomes
-//  @Test
-//  public void test00005TotvsPloomes() throws InterruptedException {
-//    try {
-//
-//      jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
-//      jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
-//
-////    test0000 for Object.Data_Source.Name
-//      String userId2 =
-//          App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
-//              ".next().id().toString()").get().toString();
-//      String rootConnectionsQuery = "App.g.V(\"" + userId2 + "\").bothE().count().next().toString()";
-//      String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
-//
-////    test0000 COUNT(Edges) for COMIDAS 2
-//      String userId3 =
-//          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 2'))" +
-//              ".next().id().toString()").get().toString();
-//      String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 + "\").bothE().count().next().toString()";
-//      String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
-//      assertEquals("4", comidas2Connections);
-//
-////    test0000 COUNT(Edges) for Object.Email_Address
-//      String userId4 =
-//          App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('jonas@comida1.com.br'))" +
-//              ".next().id().toString()").get().toString();
-//      String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
-//      String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
-//      assertEquals("1",emailConnections);
-//
-////    test0000 COUNT(Edges) for Object.Phone_Number
-//      String userId5 =
-//          App.executor.eval("App.g.V().has('Object.Phone_Number.Numbers_Only',eq('111111111'))" +
-//              ".next().id().toString()").get().toString();
-//      String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
-//      String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
-//      assertEquals("1",phoneConnections );
-//
-//
-//    } catch (ExecutionException e) {
-//      e.printStackTrace();
-//      assertNull(e);
-//
-//    }
-//
-//
-//  }
+//A new version of this Test can be found @ PVTotvsTest.java > test00004TotvsProtheusPlusPloomes
+  @Test
+  public void test00005TotvsPloomes() throws InterruptedException {
+    try {
+
+      jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
+      jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+
+//    t'est0000 for Object.Data_Source.Name
+      String userId2 =
+          App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
+              ".next().id().toString()").get().toString();
+      String rootConnectionsQuery = "App.g.V(\"" + userId2 + "\").bothE().count().next().toString()";
+      String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
+
+//    test0000 COUNT(Edges) for COMIDAS 2
+      String userId3 =
+          App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 2'))" +
+              ".next().id().toString()").get().toString();
+      String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 + "\").bothE().count().next().toString()";
+      String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
+      assertEquals("4", comidas2Connections);
+
+//    test0000 COUNT(Edges) for Object.Email_Address
+      String userId4 =
+          App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('jonas@comida1.com.br'))" +
+              ".next().id().toString()").get().toString();
+      String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
+      String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
+      assertEquals("1",emailConnections);
+
+//    test0000 COUNT(Edges) for Object.Phone_Number
+      String userId5 =
+          App.executor.eval("App.g.V().has('Object.Phone_Number.Numbers_Only',eq('111111111'))" +
+              ".next().id().toString()").get().toString();
+      String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
+      String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
+      assertEquals("1",phoneConnections );
+
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
   @Test
   public void test00006SQL() {
@@ -376,7 +376,7 @@ public class PVBasicTest extends AppTest {
   }
 
 
-// TODO: A new version of this Test can be found @ PVTotvsTest.java
+// A new version of this Test can be found @ PVTotvsTest.java
   @Test
   public void test00009TotvsProtheusSa1Clientes() throws InterruptedException {
     jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
@@ -464,7 +464,7 @@ public class PVBasicTest extends AppTest {
   }
 
 
-// TODO: A new version of this test can be found @ PVTotvsTest.java
+// A new version of this test can be found @ PVTotvsTest.java
   @Test
   public void test00010PloomesClientes() throws InterruptedException {
 
@@ -702,7 +702,7 @@ public class PVBasicTest extends AppTest {
   }
 
 
-// TODO: A new version of this Test can be found @ PVTotvsTest.java
+// A new version of this Test can be found @ PVTotvsTest.java
   @Test
   public void test00015TotvsProtheusRaFuncionarios() throws InterruptedException {
 

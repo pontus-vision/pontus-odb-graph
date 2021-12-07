@@ -153,7 +153,6 @@ public class PVEndPointsTest extends AppTest {
 
   }
 
-//  TODO: try to make a true reply from the Function, because till now, only error messages are being returned !!
   @Test
   public void test00005TemplateRender() throws InterruptedException {
 
@@ -189,19 +188,25 @@ public class PVEndPointsTest extends AppTest {
       StringEntity data = new StringEntity(gson.toJson(reportReq));
       request.setEntity(data);
 
-      String output = IOUtils.toString(client.execute(request).getEntity().getContent());
+      HttpResponse httpResponse = client.execute(request);
+      int statusCode = httpResponse.getStatusLine().getStatusCode();
+      String output = IOUtils.toString(httpResponse.getEntity().getContent());
       assertEquals("{\"type\":\"reportTemplateRenderResponse\",\"errorStr\":\"Missing ReportId\"}",
-          output, "Error because TemplateId is NULL");
+          output, "Error because ReportId is NULL");
+      assertEquals(400, statusCode, "Expected to return 400 because ReportId is NULL");
 
       reportReq.setTemplateId(contextId);
       reportReq.setRefEntryId(null);
 
       data = new StringEntity(gson.toJson(reportReq));
       request.setEntity(data);
+      httpResponse = client.execute(request);
+      statusCode = httpResponse.getStatusLine().getStatusCode();
 
       output = IOUtils.toString(client.execute(request).getEntity().getContent());
       assertEquals("{\"type\":\"reportTemplateRenderResponse\",\"errorStr\":\"Missing RefId\"}",
           output, "Error because RefEntryId is NULL");
+      assertEquals(400, statusCode, "Expected to return 400 because RefEntryId is NULL");
 
     } catch (IOException e) {
       e.printStackTrace();

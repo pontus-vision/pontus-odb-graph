@@ -447,7 +447,7 @@ rules:
       - label: Person.Natural
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
-# TODO: Since this table has very few data ... I found it important to keep the Customer_ID as ${'Porsche_ID'} to help with registry uniqueness
+# Since this table has very few data ... I found it important to keep the Customer_ID as ${'Porsche_ID'} to help with registry uniqueness
           Customer_ID: "${Porsche_ID?.replaceAll('[^0-9]', '')}"
 #          Type:
 #            val: "My Porsche Change Report"
