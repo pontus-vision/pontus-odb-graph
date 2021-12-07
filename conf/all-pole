@@ -226,6 +226,7 @@ Object.Data_Procedures.Update_Mechanism
 Object.Data_Procedures.Update_URL
 Object.Data_Procedures.Why_Is_It_Collected
 Object.Data_Procedures.Is_SubProcess
+Object.Data_Procedures.Interested_Parties_Consulted
 Object.Data_Source.Business_Rules
 Object.Data_Source.Create_Date
 Object.Data_Source.Credential_ApiKey
