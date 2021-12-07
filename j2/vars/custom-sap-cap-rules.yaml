@@ -769,7 +769,7 @@ rules:
           Id: "${Campaign_ID}"
           Status: "${Status}"
           Type:
-            val: "SAP/C@P Complaint Complaint"
+            val: "SAP/C@P Complaint"
             excludeFromSearch: true
 
       - label: Object.Email_Address
