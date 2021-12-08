@@ -108,6 +108,7 @@ schema:
         - name: Metadata_GUID
         - name: Operation
         - name: Type
+        - name: Id
 
     - name: "Event.Email_Msg_Group"
       partition: false
@@ -243,6 +244,8 @@ schema:
         - name: Metadata.Update_Date
           dataType: Date
         - name: Request_Type
+        - name: Request_Channel
+        - name: Id
         - name: Status
 
     - name: "Event.Training"
