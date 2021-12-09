@@ -96,6 +96,12 @@
             "val": "${Fluxo_x0020_interno_x0020_dos_x0}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Data_Procedures.Interested_Parties_Consulted",
+            "val": "${PartesInteressadasConsultadas}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },

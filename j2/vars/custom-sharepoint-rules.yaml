@@ -351,8 +351,6 @@ rules:
             mandatoryInSearch: true
             processAll: true
 
-
-
       - label: Object.Data_Policy
         props:
           Type:
@@ -388,6 +386,9 @@ rules:
             excludeFromSearch: true
           Description:
             val: "${Fluxo_x0020_interno_x0020_dos_x0}"
+            excludeFromSearch: true
+          Interested_Parties_Consulted:
+            val: "${PartesInteressadasConsultadas}"
             excludeFromSearch: true
 
       - label: Object.Sensitive_Data
@@ -495,8 +496,6 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
             mandatoryInSearch: true
             processAll: true
-
-
 
       - label: Object.Data_Policy
         props:

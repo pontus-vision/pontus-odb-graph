@@ -977,6 +977,9 @@ propertyKeys:
   - name: Object.Data_Procedures.Is_SubProcess
     dataType: Boolean
     cardinality: SINGLE
+  - name: Object.Data_Procedures.Interested_Parties_Consulted
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Data_Source
     dataType: String
     cardinality: SINGLE
@@ -3055,6 +3058,7 @@ vertexIndexes:
       - Object.Data_Procedures.Update_URL
       - Object.Data_Procedures.Why_Is_It_Collected
       - Object.Data_Procedures.Is_SubProcess
+      - Object.Data_Procedures.Interested_Parties_Consulted
     propertyKeysMappings:
     
       {}

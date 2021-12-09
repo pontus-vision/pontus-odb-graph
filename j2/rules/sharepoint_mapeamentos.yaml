@@ -65,6 +65,10 @@ updatereq:
           val: ${Fluxo_x0020_interno_x0020_dos_x0}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Object.Data_Procedures.Interested_Parties_Consulted
+          val: ${PartesInteressadasConsultadas}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object.Sensitive_Data
       props:

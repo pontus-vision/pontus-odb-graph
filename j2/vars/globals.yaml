@@ -489,6 +489,7 @@ schema:
         - name: Why_Is_It_Collected
         - name: Is_SubProcess
           dataType: Boolean
+        - name: Interested_Parties_Consulted
 
     - name: "Object.Data_Source"
       partition: false
