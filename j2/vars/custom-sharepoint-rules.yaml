@@ -328,8 +328,6 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
             processAll: true
 
-
-
       - label: Object.Data_Policy
         props:
           Type: "${Title}"
@@ -361,6 +359,9 @@ rules:
             excludeFromSearch: true
           Description:
             val: "${Fluxo_x0020_interno_x0020_dos_x0}"
+            excludeFromSearch: true
+          Interested_Parties_Consulted:
+            val: "${PartesInteressadasConsultadas}"
             excludeFromSearch: true
 
       - label: Object.Sensitive_Data
@@ -458,8 +459,6 @@ rules:
             type: "[Lcom.pontusvision.utils.SharepointRef;"
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
             processAll: true
-
-
 
       - label: Object.Data_Policy
         props:
