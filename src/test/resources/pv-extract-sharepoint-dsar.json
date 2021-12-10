@@ -1,0 +1,228 @@
+{
+  "queryResp": [
+    {
+      "@odata.etag": "546456565-ac452367-de3456a-234563456d-1237",
+      "createdDateTime": "2021-07-10T20:59:14Z",
+      "eTag": "1546456565-ac452367-de3456a-234563456d-1237",
+      "id": "1",
+      "lastModifiedDateTime": "2019-01-22T15:33:56Z",
+      "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Controle%20de%20Registros/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "ac545d87b-0956de-23ad76c-23987d-ac657bce",
+          "displayName": "Ayyyyyy Mzzzzzz"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "quxxxxxxx.onedrive@Sxxxxxxxx.com.br",
+          "id": "985465ea-376bac-abcdd-1238dc-acc87b",
+          "displayName": "Qxxxxxx OneDrive"
+        }
+      },
+      "parentReference": {
+        "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,ffc546-a565eed2-30927-64765-bc54676acdd0,acdc23-aa33-112ac-b345-fdc746587122"
+      },
+      "contentType": {
+        "id": "addc65478839-ccbad576ee443888371-aa7873-2321",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%734765734-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('bbccc44-cccc-231233-1233-123321a')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "ddca34984-34234312-3213abb1-11a9843-1998",
+        "Title": "01",
+        "Modified": "2021-12-06T22:12:08Z",
+        "Created": "2021-12-03T07:22:44Z",
+        "Raz_x00e3_oSocial": "Palmitos SA",
+        "CustomerId": "88.212.098/0001-93",
+        "Solicita_x00e7__x00e3_o_x002d_Da": "18/05/2021 - 12:01",
+        "Solicita_x00e7__x00e3_o_x002d_Ca": "Via e-mail",
+        "Solicita_x00e7__x00e3_o_x002d_De": "Exclusão de e-mail",
+        "RequestType": "Delete",
+        "Abrang_x00ea_nciaeObserva_x00e7_": "Possuímos mais 22 e-mails de outros titulares da mesma empresa",
+        "BaseLegal_x002d_ArtigoeInciso": "Art. 18 - Inciso VI",
+        "Status": "Completed",
+        "Resposta_x002d_DataeHor_x00e1_ri": "20/05/2021 - 09:11",
+        "Resposta_x002d_Canal": "Via e-mail",
+        "Resposta_x002d_Dias_x00da_teis": "2 dias",
+        "RoPA": [
+          {
+            "LookupId": 1,
+            "LookupValue": "1"
+          }
+        ],
+        "Author": "Oxxxxxx@pontusvision.com",
+        "Editor": "Oxxxxxx@pontusvision.com"
+      }
+    },
+    {
+      "@odata.etag": "546456565-ac452367-de3456a-234563456d-1237",
+      "createdDateTime": "2021-07-10T20:59:14Z",
+      "eTag": "1546456565-ac452367-de3456a-234563456d-1237",
+      "id": "2",
+      "lastModifiedDateTime": "2019-01-22T15:33:56Z",
+      "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Controle%20de%20Registros/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "ac545d87b-0956de-23ad76c-23987d-ac657bce",
+          "displayName": "Ayyyyyy Mzzzzzz"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "quxxxxxxx.onedrive@Sxxxxxxxx.com.br",
+          "id": "985465ea-376bac-abcdd-1238dc-acc87b",
+          "displayName": "Qxxxxxx OneDrive"
+        }
+      },
+      "parentReference": {
+        "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,ffc546-a565eed2-30927-64765-bc54676acdd0,acdc23-aa33-112ac-b345-fdc746587122"
+      },
+      "contentType": {
+        "id": "addc65478839-ccbad576ee443888371-aa7873-2321",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%734765734-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('bbccc44-cccc-231233-1233-123321a')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "ddca34984-34234312-3213abb1-11a9843-1998",
+        "Title": "02",
+        "Modified": "2021-11-07T11:01:23Z",
+        "Created": "2021-10-11T07:22:02Z",
+        "Raz_x00e3_oSocial": "Margore Proxano",
+        "CustomerId": "675.467.984-98",
+        "Solicita_x00e7__x00e3_o_x002d_Da": "09/12/2021 - 14:11",
+        "Solicita_x00e7__x00e3_o_x002d_Ca": "Via SMS",
+        "Solicita_x00e7__x00e3_o_x002d_De": "Bloqueio de Conta",
+        "RequestType": "Bloqueio",
+        "Abrang_x00ea_nciaeObserva_x00e7_": "Todos os dados do titular serão bloqueados",
+        "BaseLegal_x002d_ArtigoeInciso": "Art. XX - Inciso XX",
+        "Status": "New",
+        "Resposta_x002d_DataeHor_x00e1_ri": "10/12/2021 - 16:45",
+        "Resposta_x002d_Canal": "Via SMS",
+        "Resposta_x002d_Dias_x00da_teis": "7 dias",
+        "RoPA": [
+          {
+            "LookupId": 1,
+            "LookupValue": "2"
+          }
+        ],
+        "Author": "Oxxxxxx@pontusvision.com",
+        "Editor": "Oxxxxxx@pontusvision.com"
+      }
+    },
+    {
+      "@odata.etag": "546456565-ac452367-de3456a-234563456d-1237",
+      "createdDateTime": "2021-07-10T20:59:14Z",
+      "eTag": "1546456565-ac452367-de3456a-234563456d-1237",
+      "id": "3",
+      "lastModifiedDateTime": "2019-01-22T15:33:56Z",
+      "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Controle%20de%20Registros/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "ac545d87b-0956de-23ad76c-23987d-ac657bce",
+          "displayName": "Ayyyyyy Mzzzzzz"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "quxxxxxxx.onedrive@Sxxxxxxxx.com.br",
+          "id": "985465ea-376bac-abcdd-1238dc-acc87b",
+          "displayName": "Qxxxxxx OneDrive"
+        }
+      },
+      "parentReference": {
+        "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,ffc546-a565eed2-30927-64765-bc54676acdd0,acdc23-aa33-112ac-b345-fdc746587122"
+      },
+      "contentType": {
+        "id": "addc65478839-ccbad576ee443888371-aa7873-2321",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%734765734-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('bbccc44-cccc-231233-1233-123321a')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "ddca34984-34234312-3213abb1-11a9843-1998",
+        "Title": "03",
+        "Modified": "2019-02-23T09:23:11Z",
+        "Created": "2019-01-02T12:20:12Z",
+        "Raz_x00e3_oSocial": "Angèle Bruxèle",
+        "CustomerId": "765.095.325-15",
+        "Solicita_x00e7__x00e3_o_x002d_Da": "09/12/2018 - 23:22",
+        "Solicita_x00e7__x00e3_o_x002d_Ca": "Via Portal",
+        "Solicita_x00e7__x00e3_o_x002d_De": "Atualização de Endereço",
+        "RequestType": "Update",
+        "Abrang_x00ea_nciaeObserva_x00e7_": "Titular se mudou para novo endereço",
+        "BaseLegal_x002d_ArtigoeInciso": "Art. 24 - Inciso MCM",
+        "Status": "Acknowledged",
+        "Resposta_x002d_DataeHor_x00e1_ri": "05/01/2019 - 07:43",
+        "Resposta_x002d_Canal": "Via e-mail",
+        "Resposta_x002d_Dias_x00da_teis": "30 dias",
+        "RoPA": [
+          {
+            "LookupId": 1,
+            "LookupValue": "1"
+          }
+        ],
+        "Author": "Oxxxxxx@pontusvision.com",
+        "Editor": "Oxxxxxx@pontusvision.com"
+      }
+    },
+    {
+      "@odata.etag": "546456565-ac452367-de3456a-234563456d-1237",
+      "createdDateTime": "2021-07-10T20:59:14Z",
+      "eTag": "1546456565-ac452367-de3456a-234563456d-1237",
+      "id": "4",
+      "lastModifiedDateTime": "2019-01-22T15:33:56Z",
+      "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Controle%20de%20Registros/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "ac545d87b-0956de-23ad76c-23987d-ac657bce",
+          "displayName": "Ayyyyyy Mzzzzzz"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "quxxxxxxx.onedrive@Sxxxxxxxx.com.br",
+          "id": "985465ea-376bac-abcdd-1238dc-acc87b",
+          "displayName": "Qxxxxxx OneDrive"
+        }
+      },
+      "parentReference": {
+        "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,ffc546-a565eed2-30927-64765-bc54676acdd0,acdc23-aa33-112ac-b345-fdc746587122"
+      },
+      "contentType": {
+        "id": "addc65478839-ccbad576ee443888371-aa7873-2321",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%734765734-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('bbccc44-cccc-231233-1233-123321a')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "ddca34984-34234312-3213abb1-11a9843-1998",
+        "Title": "04",
+        "Modified": "2010-04-19T21:03:33Z",
+        "Created": "2010-04-09T07:11:00Z",
+        "Raz_x00e3_oSocial": "Milton Sapataria",
+        "CustomerId": "45.232.190/0001-12",
+        "Solicita_x00e7__x00e3_o_x002d_Da": "18/04/2010 - 13:55",
+        "Solicita_x00e7__x00e3_o_x002d_Ca": "Via e-mail",
+        "Solicita_x00e7__x00e3_o_x002d_De": "Exclusão de Contrato",
+        "RequestType": "Read",
+        "Abrang_x00ea_nciaeObserva_x00e7_": "Não é possível terminar o Contrato, pois ainda está ativo.",
+        "BaseLegal_x002d_ArtigoeInciso": "Art. 12345 - Inciso LLCM",
+        "Status": "Denied",
+        "Resposta_x002d_DataeHor_x00e1_ri": "27/04/2010 - 09:23",
+        "Resposta_x002d_Canal": "Via e-mail",
+        "Resposta_x002d_Dias_x00da_teis": "15 dias",
+        "RoPA": [
+          {
+            "LookupId": 1,
+            "LookupValue": "1"
+          }
+        ],
+        "Author": "Oxxxxxx@pontusvision.com",
+        "Editor": "Oxxxxxx@pontusvision.com"
+      }
+    }
+  ]
+}

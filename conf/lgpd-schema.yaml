@@ -175,6 +175,9 @@ propertyKeys:
   - name: Event.Form_Ingestion.Type
     dataType: String
     cardinality: SINGLE
+  - name: Event.Form_Ingestion.Id
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Event.Email_Msg_Group
     dataType: String
     cardinality: SINGLE
@@ -422,6 +425,12 @@ propertyKeys:
     dataType: Date
     cardinality: SINGLE
   - name: Event.Subject_Access_Request.Request_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Request_Channel
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Id
     dataType: String
     cardinality: SINGLE
   - name: Event.Subject_Access_Request.Status
@@ -2553,6 +2562,7 @@ vertexIndexes:
       - Event.Form_Ingestion.Metadata_GUID
       - Event.Form_Ingestion.Operation
       - Event.Form_Ingestion.Type
+      - Event.Form_Ingestion.Id
     propertyKeysMappings:
     
       {}
@@ -2736,6 +2746,8 @@ vertexIndexes:
       - Event.Subject_Access_Request.Metadata.Create_Date
       - Event.Subject_Access_Request.Metadata.Update_Date
       - Event.Subject_Access_Request.Request_Type
+      - Event.Subject_Access_Request.Request_Channel
+      - Event.Subject_Access_Request.Id
       - Event.Subject_Access_Request.Status
     propertyKeysMappings:
     
