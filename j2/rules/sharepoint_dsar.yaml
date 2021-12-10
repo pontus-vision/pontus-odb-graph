@@ -1,0 +1,117 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Person.Organisation
+      condition: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}
+      props:
+        - name: Person.Organisation.Name
+          val: ${Raz_x00e3_oSocial?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Person.Organisation.Registration_Number
+          val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
+          mandatoryInSearch: True
+    
+    - label: Person.Natural
+      condition: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}
+      props:
+        - name: Person.Natural.Full_Name
+          val: ${Raz_x00e3_oSocial?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Person.Natural.Customer_ID
+          val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
+          mandatoryInSearch: True
+    
+    - label: Object.Data_Source
+      props:
+        - name: Object.Data_Source.Name
+          val: SHAREPOINT/DSAR
+          mandatoryInSearch: True
+    
+    - label: Event.Subject_Access_Request
+      props:
+        - name: Event.Subject_Access_Request.Id
+          val: ${Title}
+          mandatoryInSearch: True
+        - name: Event.Subject_Access_Request.Metadata.Update_Date
+          val: ${Resposta_x002d_DataeHor_x00e1_ri}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event.Subject_Access_Request.Metadata.Create_Date
+          val: ${Solicita_x00e7__x00e3_o_x002d_Da}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event.Subject_Access_Request.Request_Type
+          val: ${Solicita_x00e7__x00e3_o_x002d_De}
+          mandatoryInSearch: True
+        - name: Event.Subject_Access_Request.Request_Channel
+          val: ${Solicita_x00e7__x00e3_o_x002d_Ca}
+          mandatoryInSearch: True
+        - name: Event.Subject_Access_Request.Status
+          val: ${Status}
+          mandatoryInSearch: True
+    
+    - label: Event.Ingestion
+      props:
+        - name: Event.Ingestion.Type
+          val: Controle de Solicitações
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Ingestion.Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event.Group_Ingestion
+      props:
+        - name: Event.Group_Ingestion.Metadata_Start_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Type
+          val: sharepoint/dsar
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object.Data_Source
+    toVertexLabel: Event.Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.Group_Ingestion
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.Subject_Access_Request
+    toVertexLabel: Event.Ingestion
+  - label: Made_SAR_Request
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Event.Subject_Access_Request
+  - label: Made_SAR_Request
+    fromVertexLabel: Person.Organisation
+    toVertexLabel: Event.Subject_Access_Request
+

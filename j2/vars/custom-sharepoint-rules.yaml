@@ -162,21 +162,14 @@ rules:
           Description:
             val: "${new groovy.json.JsonBuilder(DadosPessoais)}"
             type: "[Ljava.lang.String;"
-            mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
       - label: Object.Data_Policy
         props:
-          Update_Frequency:
-            val: "${Frequ_x00ea_ncia_x0020_de_x0020_}"
-            mandatoryInSearch: true
-          Retention_Period:
-            val: "${Pol_x00ed_tica_x0020_de_x0020_Re}"
-            mandatoryInSearch: true
-#          Type:
-#            val: "${Title}"
-#            mandatoryInSearch: true
+          Update_Frequency: "${Frequ_x00ea_ncia_x0020_de_x0020_}"
+          Retention_Period: "${Pol_x00ed_tica_x0020_de_x0020_Re}"
+#          Type: "${Title}"
 
       - label: Event.Ingestion
         props:
@@ -202,22 +195,15 @@ rules:
         props:
           Metadata_Start_Date:
             val: "${new Date()}"
-#            mandatoryInSearch: false
             excludeFromSearch: true
             type: java.util.Date
           Metadata_End_Date:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: sharepoint/fontes-de-dados
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+          Type: sharepoint/fontes-de-dados
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -250,9 +236,7 @@ rules:
 
       - label: Object.Awareness_Campaign
         props:
-          Description:
-            val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
+          Description: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
           #          Form_Id: "${id}"
           Start_Date:
             val: "${Realizadoem}"
@@ -294,15 +278,9 @@ rules:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: sharepoint/treinamentos
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+          Type: sharepoint/treinamentos
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
 
       - label: Object.Data_Source
@@ -348,17 +326,12 @@ rules:
             val: "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-            mandatoryInSearch: true
             processAll: true
 
       - label: Object.Data_Policy
         props:
-          Type:
-            val: "${Title}"
-            mandatoryInSearch: true
-          Retention_Period:
-            val: "${Per_x00ed_odo_x0020_de_x0020_ret}"
-            mandatoryInSearch: true
+          Type: "${Title}"
+          Retention_Period: "${Per_x00ed_odo_x0020_de_x0020_ret}"
 
       - label: Object.Data_Procedures
         props:
@@ -396,7 +369,6 @@ rules:
           Description:
             val: "${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}"
             type: "[Ljava.lang.String;"
-            mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
@@ -405,7 +377,6 @@ rules:
           Description:
             val: "${new groovy.json.JsonBuilder(Base_x0020_legal)}"
             type: "[Ljava.lang.String;"
-            mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
@@ -439,15 +410,9 @@ rules:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: sharepoint/mapeamento-de-processo
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+          Type: sharepoint/mapeamento-de-processo
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
@@ -477,7 +442,6 @@ rules:
         fromVertexLabel: "Object.Data_Procedures"
         toVertexName: "attached_data_sources"
 
-
   sharepoint_ropa:
     vertices:
       - label: Object.Data_Source
@@ -494,17 +458,12 @@ rules:
             val: "${new groovy.json.JsonBuilder(Data_x0020_Source)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-            mandatoryInSearch: true
             processAll: true
 
       - label: Object.Data_Policy
         props:
-          Type:
-            val: "${Title}"
-            mandatoryInSearch: true
-          Retention_Period:
-            val: "${field_retention_x0020_period}"
-            mandatoryInSearch: true
+          Type: "${Title}"
+          Retention_Period: "${field_retention_x0020_period}"
 
       - label: Object.Data_Procedures
         props:
@@ -539,7 +498,6 @@ rules:
           Description:
             val: "${new groovy.json.JsonBuilder(field_Personal_x0020_data_x0020_used)}"
             type: "[Ljava.lang.String;"
-            mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
@@ -548,7 +506,6 @@ rules:
           Description:
             val: "${new groovy.json.JsonBuilder(field_Lawful_x0020_basis)}"
             type: "[Ljava.lang.String;"
-            mandatoryInSearch: true
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
@@ -582,15 +539,9 @@ rules:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: sharepoint/ropa
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+          Type: sharepoint/ropa
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
@@ -620,7 +571,6 @@ rules:
         fromVertexLabel: "Object.Data_Procedures"
         toVertexName: "attached_data_sources"
 
-
   sharepoint_risk:
     vertices:
       - label: Object.Data_Source
@@ -637,7 +587,6 @@ rules:
             val: "${new groovy.json.JsonBuilder(Data_x0020_Sources)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
             processAll: true
 
       - label: Object.Risk_Data_Source
@@ -670,7 +619,6 @@ rules:
             val: "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
-            mandatoryInSearch: true
             processAll: true
 
 
@@ -705,15 +653,9 @@ rules:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: sharepoint/risk
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+          Type: sharepoint/risk
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
@@ -734,9 +676,6 @@ rules:
       - label: "Mitigates_Risk"
         fromVertexLabel: "Object.Risk_Mitigation_Data_Source"
         toVertexLabel: "Object.Risk_Data_Source"
-
-
-
 
   sharepoint_risk_mitigation:
     vertices:
@@ -785,15 +724,9 @@ rules:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type:
-            val: sharepoint/risk-mitigations
-            mandatoryInSearch: true
-          Operation:
-            val: Structured Data Insertion
-            mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
+          Type: sharepoint/risk-mitigations
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
@@ -807,3 +740,110 @@ rules:
         fromVertexLabel: "Event.Ingestion"
         toVertexLabel: "Object.Risk_Mitigation_Data_Source"
 
+  sharepoint_dsar:
+    vertices:
+
+      - label: Person.Organisation
+        condition: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}"
+        props:
+          Name:
+            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+          Registration_Number:
+            val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+
+      - label: Person.Natural
+        condition: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
+        props:
+          Full_Name:
+            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+          Customer_ID:
+            val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+
+#        TODO: coluna link RoPA
+#      - label: Object.Data_Procedures
+#        props:
+#          ID: "${Title?.replaceAll('[^0-9]', '')}"
+#          Info_Collected: "${??????}"
+#          Description: "${Solicita_x00e7__x00e3_o_x002d_De}"
+#          Type: "${RequestType}"
+
+      - label: Object.Data_Source
+        props:
+          Name: "SHAREPOINT/DSAR"
+
+      - label: Event.Subject_Access_Request
+        props:
+          Id: "${Title}"
+          Metadata.Update_Date:
+            val: "${Resposta_x002d_DataeHor_x00e1_ri}"
+            type: java.util.Date
+          Metadata.Create_Date:
+            val: "${Solicita_x00e7__x00e3_o_x002d_Da}"
+            type: java.util.Date
+          Request_Type: "${Solicita_x00e7__x00e3_o_x002d_De}"
+          Request_Channel: "${Solicita_x00e7__x00e3_o_x002d_Ca}"
+          Status: "${Status}"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "Controle de Solicitações"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type: "sharepoint/dsar"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Subject_Access_Request"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Made_SAR_Request
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Subject_Access_Request"
+
+      - label: Made_SAR_Request
+        fromVertexLabel: "Person.Organisation"
+        toVertexLabel: "Event.Subject_Access_Request"

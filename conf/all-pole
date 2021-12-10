@@ -24,6 +24,7 @@ Event.Form_Ingestion.Metadata_Create_Date
 Event.Form_Ingestion.Metadata_GUID
 Event.Form_Ingestion.Operation
 Event.Form_Ingestion.Type
+Event.Form_Ingestion.Id
 Event.Email_Msg_Group.Ingestion_Date
 Event.Email_To_Group.Ingestion_Date
 Event.Email_To_Group.Email
@@ -79,6 +80,8 @@ Event.Ingestion.Type
 Event.Subject_Access_Request.Metadata.Create_Date
 Event.Subject_Access_Request.Metadata.Update_Date
 Event.Subject_Access_Request.Request_Type
+Event.Subject_Access_Request.Request_Channel
+Event.Subject_Access_Request.Id
 Event.Subject_Access_Request.Status
 Event.Training.Status
 Event.Transaction.Currency
