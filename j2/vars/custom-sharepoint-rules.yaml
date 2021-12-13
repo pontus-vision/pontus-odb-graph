@@ -14,7 +14,7 @@ rules:
         name: data_sources
         props:
           Name:
-            val: "${Title}?.toUpperCase()?.trim()"
+            val: "${Title?.toUpperCase()?.trim()}"
             mandatoryInSearch: true
           Description:
             val: "${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}"
@@ -37,6 +37,18 @@ rules:
           URI_Read:
             val: "${field_URL_x0020_Prefixo_x0020_Read}"
             excludeFromSearch: true
+
+      - label: Object.System
+        props:
+          Name: "${field_Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object.Subsystem
+        props:
+          Name: "${field_Tipo_x0020_Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object.Module
+        props:
+          Name: "${field_Tabela?.trim()?.toLowerCase()}"
 
       - label: Object.Data_Policy
         props:
@@ -121,6 +133,18 @@ rules:
         fromVertexName: "data_sources"
         toVertexLabel: "Object.Data_Policy"
 
+      - label: "Has_Module"
+        fromVertexName: "data_sources"
+        toVertexLabel: "Object.Module"
+
+      - label: "Has_Subsystem"
+        fromVertexLabel: "Object.Module"
+        toVertexLabel: "Object.Subsystem"
+
+      - label: "Has_System"
+        fromVertexLabel: "Object.Subsystem"
+        toVertexLabel: "Object.System"
+
   sharepoint_fontes_de_dados:
     vertices:
       - label: Object.Data_Source
@@ -156,6 +180,18 @@ rules:
           URI_Read:
             val: "${URL_x0020_Prefixo_x0020_Read}"
             excludeFromSearch: true
+
+      - label: Object.System
+        props:
+          Name: "${Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object.Subsystem
+        props:
+          Name: "${Tipo_x0020_Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object.Module
+        props:
+          Name: "${Tabela?.trim()?.toLowerCase()}"
 
       - label: Object.Sensitive_Data
         props:
@@ -225,6 +261,18 @@ rules:
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
         toVertexLabel: "Object.Sensitive_Data"
+
+      - label: "Has_Module"
+        fromVertexName: "data_sources"
+        toVertexLabel: "Object.Module"
+
+      - label: "Has_Subsystem"
+        fromVertexLabel: "Object.Module"
+        toVertexLabel: "Object.Subsystem"
+
+      - label: "Has_System"
+        fromVertexLabel: "Object.Subsystem"
+        toVertexLabel: "Object.System"
 
   sharepoint_treinamentos:
     vertices:
@@ -847,3 +895,103 @@ rules:
       - label: Made_SAR_Request
         fromVertexLabel: "Person.Organisation"
         toVertexLabel: "Event.Subject_Access_Request"
+
+  sharepoint_incidentes_de_seguranca:
+    vertices:
+
+# TODO: add Created_By (Author) and Modified_By (Editor) !!
+
+      - label: Object.Data_Source
+        name: data_sources
+        props:
+          Name:
+            val: "${new groovy.json.JsonBuilder(data_sources)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            processAll: true
+            excludeFromUpdate: true
+
+      - label: Event.Data_Breach
+        props:
+          Id: "${Title?.trim()?.toUpperCase()}"
+          Description:
+            val: "${description?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Impact:
+            val: "${impact}"
+            excludeFromSearch: true
+          Metadata.Create_Date:
+            val: "${Created}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Metadata.Update_Date:
+            val: "${Modified}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Source:
+            val: "${source?.toUpperCase()}"
+            excludeFromSearch: true
+          Status:
+            val: "${status}"
+            excludeFromSearch: true
+
+      - label: Object.Data_Source
+        name: sharepoint
+        props:
+          Name: "SHAREPOINT/INCIDENTES-DE-SEGURANÇA-REPORTADOS"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "Incidentes de Segurança Reportados"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type: "sharepoint/incidentes-de-segurança-reportados"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Subject_Access_Request"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "Event.Data_Breach"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Impacted_By_Data_Breach # OR Data_Impacted_By_Data_Breach
+        fromVertexName: "Event.Data_Breach"
+        toVertexName: "data_sources"

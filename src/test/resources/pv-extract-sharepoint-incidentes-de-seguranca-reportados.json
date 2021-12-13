@@ -1,0 +1,268 @@
+{
+  "queryResp": [
+    {
+      "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+      "createdDateTime": "2021-08-12T15:17:48Z",
+      "eTag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+      "id": "1",
+      "lastModifiedDateTime": "2021-08-17T18:19:43Z",
+      "webUrl": "https://sxxxxxxcombr.sharepoint.com/sites/Sxxxxxx_LGPD/Lists/Treinamento/2_.000",
+      "createdBy": {
+        "user": {
+          "email": "msilva@yyyyyyy.com",
+          "id": "ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff",
+          "displayName": "Maria Silva"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "msilva@yyyyyyy.com",
+          "id": "ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff",
+          "displayName": "Maria Silva"
+        }
+      },
+      "parentReference": {
+        "siteId": "sxxxxxxcombr.sharepoint.com,ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff,ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff"
+      },
+      "contentType": {
+        "id": "0x0100D41838544584DC428F0FE4A3A4362506002ADC4F21C6BF8A4C818312AD3212376E",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxcombr.sharepoint.com%2Cffffffffffffff-dddd-eeee-aaaa-dddddbeeefff%2Cffffffffffffff-dddd-eeee-aaaa-dddddbeeefff')/lists('ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff')/items('2')/fields/$entity",
+      "fields": {
+        "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+        "Title": "abc",
+        "id": "1",
+        "description": "Vazamento de E-mails de Clientes",
+        "impact": "Customer Data Stolen (External)",
+        "data_sources": [
+          {
+            "LookupId": 1,
+            "LookupValue": "E-mail"
+          }
+        ],
+        "status": "Open",
+        "source": "Outlook, Gmail, Yahoo Mail",
+        "ContentType": "Item",
+        "Modified": "2021-08-17T18:19:43Z",
+        "Created": "2021-08-12T15:17:48Z",
+        "Author": "Matheus Santos",
+        "AuthorLookupId": "11",
+        "EditorLookupId": "11",
+        "Editor": "Matheus Santos",
+        "_UIVersionString": "11.0",
+        "LinkTitleNoMenu": "1",
+        "LinkTitle": "1",
+        "ItemChildCount": "0",
+        "FolderChildCount": "0",
+        "_ComplianceFlags": "",
+        "_ComplianceTag": "",
+        "_ComplianceTagWrittenTime": "",
+        "_ComplianceTagUserId": ""
+      }
+    },
+    {
+      "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+      "createdDateTime": "2021-08-12T15:17:48Z",
+      "eTag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+      "id": "2",
+      "lastModifiedDateTime": "2021-08-17T18:19:43Z",
+      "webUrl": "https://sxxxxxxcombr.sharepoint.com/sites/Sxxxxxx_LGPD/Lists/Treinamento/2_.000",
+      "createdBy": {
+        "user": {
+          "email": "msilva@yyyyyyy.com",
+          "id": "ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff",
+          "displayName": "Maria Silva"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "msilva@yyyyyyy.com",
+          "id": "ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff",
+          "displayName": "Maria Silva"
+        }
+      },
+      "parentReference": {
+        "siteId": "sxxxxxxcombr.sharepoint.com,ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff,ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff"
+      },
+      "contentType": {
+        "id": "0x0100D41838544584DC428F0FE4A3A4362506002ADC4F21C6BF8A4C818312AD3212376E",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxcombr.sharepoint.com%2Cffffffffffffff-dddd-eeee-aaaa-dddddbeeefff%2Cffffffffffffff-dddd-eeee-aaaa-dddddbeeefff')/lists('ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff')/items('2')/fields/$entity",
+      "fields": {
+        "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+        "Title": "def",
+        "id": "2",
+        "description": "Documentos de Fornecedores vazados",
+        "impact": "Customer Data Stolen (Internal)",
+        "data_sources": [
+          {
+            "LookupId": 1,
+            "LookupValue": "CNPJ"
+          },
+          {
+            "LookupId": 2,
+            "LookupValue": "CPF"
+          }
+        ],
+        "status": "New",
+        "source": "Recursos Humanos",
+        "ContentType": "Item",
+        "Modified": "2021-10-23T23:11:20Z",
+        "Created": "2021-10-22T12:09:07Z",
+        "Author": "Joana Darca",
+        "AuthorLookupId": "32",
+        "EditorLookupId": "11",
+        "Editor": "Matheus Santos",
+        "_UIVersionString": "11.0",
+        "LinkTitleNoMenu": "1",
+        "LinkTitle": "1",
+        "ItemChildCount": "0",
+        "FolderChildCount": "0",
+        "_ComplianceFlags": "",
+        "_ComplianceTag": "",
+        "_ComplianceTagWrittenTime": "",
+        "_ComplianceTagUserId": ""
+      }
+    },
+    {
+      "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+      "createdDateTime": "2021-08-12T15:17:48Z",
+      "eTag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+      "id": "3",
+      "lastModifiedDateTime": "2021-08-17T18:19:43Z",
+      "webUrl": "https://sxxxxxxcombr.sharepoint.com/sites/Sxxxxxx_LGPD/Lists/Treinamento/2_.000",
+      "createdBy": {
+        "user": {
+          "email": "msilva@yyyyyyy.com",
+          "id": "ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff",
+          "displayName": "Maria Silva"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "msilva@yyyyyyy.com",
+          "id": "ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff",
+          "displayName": "Maria Silva"
+        }
+      },
+      "parentReference": {
+        "siteId": "sxxxxxxcombr.sharepoint.com,ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff,ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff"
+      },
+      "contentType": {
+        "id": "0x0100D41838544584DC428F0FE4A3A4362506002ADC4F21C6BF8A4C818312AD3212376E",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxcombr.sharepoint.com%2Cffffffffffffff-dddd-eeee-aaaa-dddddbeeefff%2Cffffffffffffff-dddd-eeee-aaaa-dddddbeeefff')/lists('ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff')/items('2')/fields/$entity",
+      "fields": {
+        "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+        "Title": "ghi",
+        "id": "3",
+        "description": "Vazamento do histórico de navegação dos colaboradores",
+        "impact": "False Alert",
+        "data_sources": [
+          {
+            "LookupId": 1,
+            "LookupValue": "Histórico navegador Google Chrome"
+          },
+          {
+            "LookupId": 2,
+            "LookupValue": "Histórico navegador Mozilla Firefox"
+          },
+          {
+            "LookupId": 3,
+            "LookupValue": "Histórico navegador Microsoft Edge"
+          },
+          {
+            "LookupId": 4,
+            "LookupValue": "Histórico navegador Apple Safari"
+          }
+        ],
+        "status": "Resolved",
+        "source": "Google Chrome, Mozilla Firefox, Microfost Edge, Apple Safari",
+        "ContentType": "Item",
+        "Modified": "2021-11-14T08:23:46Z",
+        "Created": "2021-11-12T09:12:00Z",
+        "Author": "Alice Fonseca",
+        "AuthorLookupId": "19",
+        "EditorLookupId": "19",
+        "Editor": "Alice Fonseca",
+        "_UIVersionString": "11.0",
+        "LinkTitleNoMenu": "1",
+        "LinkTitle": "1",
+        "ItemChildCount": "0",
+        "FolderChildCount": "0",
+        "_ComplianceFlags": "",
+        "_ComplianceTag": "",
+        "_ComplianceTagWrittenTime": "",
+        "_ComplianceTagUserId": ""
+      }
+    },
+    {
+      "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+      "createdDateTime": "2021-08-12T15:17:48Z",
+      "eTag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+      "id": "4",
+      "lastModifiedDateTime": "2021-08-17T18:19:43Z",
+      "webUrl": "https://sxxxxxxcombr.sharepoint.com/sites/Sxxxxxx_LGPD/Lists/Treinamento/2_.000",
+      "createdBy": {
+        "user": {
+          "email": "msilva@yyyyyyy.com",
+          "id": "ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff",
+          "displayName": "Maria Silva"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "msilva@yyyyyyy.com",
+          "id": "ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff",
+          "displayName": "Maria Silva"
+        }
+      },
+      "parentReference": {
+        "siteId": "sxxxxxxcombr.sharepoint.com,ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff,ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff"
+      },
+      "contentType": {
+        "id": "0x0100D41838544584DC428F0FE4A3A4362506002ADC4F21C6BF8A4C818312AD3212376E",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxcombr.sharepoint.com%2Cffffffffffffff-dddd-eeee-aaaa-dddddbeeefff%2Cffffffffffffff-dddd-eeee-aaaa-dddddbeeefff')/lists('ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff')/items('2')/fields/$entity",
+      "fields": {
+        "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
+        "Title": "jkl",
+        "id": "4",
+        "description": "Exposição da opinião dos colaboradores quanto a comida da cantina",
+        "impact": "No Impact",
+        "data_sources": [
+          {
+            "LookupId": 1,
+            "LookupValue": "Formulário de opinião em papel"
+          },
+          {
+            "LookupId": 2,
+            "LookupValue": "Formulário de opinião digital"
+          }
+        ],
+        "status": "Suspect Internal Theft",
+        "source": "Sistema de Feedback",
+        "ContentType": "Item",
+        "Modified": "2021-12-10T14:56:33Z",
+        "Created": "2021-12-10T10:19:29Z",
+        "Author": "Felipe Portinari",
+        "AuthorLookupId": "24",
+        "EditorLookupId": "19",
+        "Editor": "Alice Fonseca",
+        "_UIVersionString": "11.0",
+        "LinkTitleNoMenu": "1",
+        "LinkTitle": "1",
+        "ItemChildCount": "0",
+        "FolderChildCount": "0",
+        "_ComplianceFlags": "",
+        "_ComplianceTag": "",
+        "_ComplianceTagWrittenTime": "",
+        "_ComplianceTagUserId": ""
+      }
+    }
+  ]
+}

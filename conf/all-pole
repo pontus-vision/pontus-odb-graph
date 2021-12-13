@@ -371,6 +371,7 @@ Object.Metadata_Source.Type
 Object.Metadata_Source.Domain
 Object.Metadata_Source.Domain_Frequency
 Object.Metadata_Source.Business_Rules
+Object.Module.Name
 Object.Notification_Templates.Id
 Object.Notification_Templates.Label
 Object.Notification_Templates.Text
@@ -462,6 +463,8 @@ Object.Sensitive_Data.Religion
 Object.Sensitive_Data.Sexual_Orientation
 Object.Sensitive_Data.Union_Membership
 Object.Sensitive_Data.Description
+Object.Subsystem.Name
+Object.System.Name
 Object.Vehicle.License_Plate
 Object.Vehicle.Model
 Object.Vehicle.Model_Year

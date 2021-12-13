@@ -3,123 +3,73 @@
     "vertices": [
       {
         "label": "Object.Data_Source",
-        "name": "sharepoint",
+        "name": "data_sources",
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "SHAREPOINT/FONTES-DE-DADOS",
+            "val": "${new groovy.json.JsonBuilder(data_sources)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Event.Data_Breach",
+        "props": [
+          {
+            "name": "Event.Data_Breach.Id",
+            "val": "${Title?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Description",
+            "val": "${description?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Impact",
+            "val": "${impact}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Metadata.Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Metadata.Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Source",
+            "val": "${source?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Status",
+            "val": "${status}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
       {
         "label": "Object.Data_Source",
-        "name": "fontes_de_dados",
-        "condition": "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}",
+        "name": "sharepoint",
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "${Title?.toUpperCase()?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Description",
-            "val": "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Engine",
-            "val": "${Sistema}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Type",
-            "val": "${Tipo_x0020_Sistema}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.Domain",
-            "val": "${Tabela}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.URI_Delete",
-            "val": "${URL_x0020_Prefixo_x0020_Delete}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.URI_Update",
-            "val": "${URL_x0020_Prefixo_x0020_Update}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Data_Source.URI_Read",
-            "val": "${URL_x0020_Prefixo_x0020_Read}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.System",
-        "props": [
-          {
-            "name": "Object.System.Name",
-            "val": "${Sistema?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Subsystem",
-        "props": [
-          {
-            "name": "Object.Subsystem.Name",
-            "val": "${Tipo_x0020_Sistema?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Module",
-        "props": [
-          {
-            "name": "Object.Module.Name",
-            "val": "${Tabela?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Sensitive_Data",
-        "props": [
-          {
-            "name": "Object.Sensitive_Data.Description",
-            "val": "${new groovy.json.JsonBuilder(DadosPessoais)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
-          }
-        ]
-      },
-      {
-        "label": "Object.Data_Policy",
-        "props": [
-          {
-            "name": "Object.Data_Policy.Update_Frequency",
-            "val": "${Frequ_x00ea_ncia_x0020_de_x0020_}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Data_Policy.Retention_Period",
-            "val": "${Pol_x00ed_tica_x0020_de_x0020_Re}",
+            "val": "SHAREPOINT/INCIDENTES-DE-SEGURANÇA-REPORTADOS",
             "mandatoryInSearch": true
           }
         ]
@@ -129,7 +79,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "sharepoint/fontes-de-dados",
+            "val": "Incidentes de Segurança Reportados",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -180,7 +130,7 @@
           },
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sharepoint/fontes-de-dados",
+            "val": "sharepoint/incidentes-de-segurança-reportados",
             "mandatoryInSearch": true
           },
           {
@@ -209,33 +159,18 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Ingestion",
-        "toVertexName": "fontes_de_dados"
+        "fromVertexLabel": "Event.Subject_Access_Request",
+        "toVertexLabel": "Event.Ingestion"
       },
       {
-        "label": "Has_Policy",
-        "fromVertexName": "fontes_de_dados",
-        "toVertexLabel": "Object.Data_Policy"
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "Event.Data_Breach",
+        "toVertexLabel": "Event.Ingestion"
       },
       {
-        "label": "Has_Sensitive_Data",
-        "fromVertexName": "fontes_de_dados",
-        "toVertexLabel": "Object.Sensitive_Data"
-      },
-      {
-        "label": "Has_Module",
-        "fromVertexName": "data_sources",
-        "toVertexLabel": "Object.Module"
-      },
-      {
-        "label": "Has_Subsystem",
-        "fromVertexLabel": "Object.Module",
-        "toVertexLabel": "Object.Subsystem"
-      },
-      {
-        "label": "Has_System",
-        "fromVertexLabel": "Object.Subsystem",
-        "toVertexLabel": "Object.System"
+        "label": "Impacted_By_Data_Breach",
+        "fromVertexName": "Event.Data_Breach",
+        "toVertexName": "data_sources"
       }
     ]
   }

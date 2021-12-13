@@ -3,80 +3,58 @@ updatereq:
   vertices:
     
     - label: Object.Data_Source
+      name: data_sources
+      props:
+        - name: Object.Data_Source.Name
+          val: ${new groovy.json.JsonBuilder(data_sources)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}
+    
+    - label: Event.Data_Breach
+      props:
+        - name: Event.Data_Breach.Id
+          val: ${Title?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Event.Data_Breach.Description
+          val: ${description?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Impact
+          val: ${impact}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Metadata.Create_Date
+          val: ${Created}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Metadata.Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Source
+          val: ${source?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Status
+          val: ${status}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object.Data_Source
       name: sharepoint
       props:
         - name: Object.Data_Source.Name
-          val: SHAREPOINT/DATA-SOURCES
-          mandatoryInSearch: True
-    
-    - label: Object.Data_Source
-      name: data_sources
-      condition: ${field_Descri_x0020__x0020_o?.trim()?.length() > 0}
-      props:
-        - name: Object.Data_Source.Name
-          val: ${Title?.toUpperCase()?.trim()}
-          mandatoryInSearch: True
-        - name: Object.Data_Source.Description
-          val: ${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Engine
-          val: ${field_Sistema}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Type
-          val: ${field_Tipo_x0020_Sistema}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.Domain
-          val: ${field_Tabela}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.URI_Delete
-          val: ${field_URL_x0020_Prefixo_x0020_Delete}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.URI_Update
-          val: ${field_URL_x0020_Prefixo_x0020_Update}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Source.URI_Read
-          val: ${field_URL_x0020_Prefixo_x0020_Read}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
-    - label: Object.System
-      props:
-        - name: Object.System.Name
-          val: ${field_Sistema?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    
-    - label: Object.Subsystem
-      props:
-        - name: Object.Subsystem.Name
-          val: ${field_Tipo_x0020_Sistema?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    
-    - label: Object.Module
-      props:
-        - name: Object.Module.Name
-          val: ${field_Tabela?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
-    
-    - label: Object.Data_Policy
-      props:
-        - name: Object.Data_Policy.Update_Frequency
-          val: ${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Data_Policy.Retention_Period
-          val: ${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}
+          val: SHAREPOINT/INCIDENTES-DE-SEGURANÇA-REPORTADOS
           mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sharepoint/data-sources
+          val: Incidentes de Segurança Reportados
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -111,16 +89,13 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Type
-          val: sharepoint/data-sources
+          val: sharepoint/incidentes-de-segurança-reportados
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-        - name: Event.Group_Ingestion.mandatoryInSearch
-          val: True
           mandatoryInSearch: True
 
   edges:
@@ -131,18 +106,12 @@ updatereq:
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Ingestion
+    fromVertexLabel: Event.Subject_Access_Request
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexName: Event.Data_Breach
+    toVertexLabel: Event.Ingestion
+  - label: Impacted_By_Data_Breach
+    fromVertexName: Event.Data_Breach
     toVertexName: data_sources
-  - label: Has_Policy
-    fromVertexName: data_sources
-    toVertexLabel: Object.Data_Policy
-  - label: Has_Module
-    fromVertexName: data_sources
-    toVertexLabel: Object.Module
-  - label: Has_Subsystem
-    fromVertexLabel: Object.Module
-    toVertexLabel: Object.Subsystem
-  - label: Has_System
-    fromVertexLabel: Object.Subsystem
-    toVertexLabel: Object.System
 

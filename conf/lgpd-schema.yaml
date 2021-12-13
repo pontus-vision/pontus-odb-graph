@@ -1496,6 +1496,16 @@ propertyKeys:
   - name: Object.Metadata_Source.Business_Rules
     dataType: String
     cardinality: SINGLE
+  - name: Metadata.Type.Object.Module
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Module.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Module.Name
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Notification_Templates
     dataType: String
     cardinality: SINGLE
@@ -1823,6 +1833,26 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object.Sensitive_Data.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Subsystem
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Subsystem.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Subsystem.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.System
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.System.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.System.Name
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Object.Vehicle
@@ -2188,6 +2218,9 @@ vertexLabels:
   - name: Object.Metadata_Source
     partition: False
     useStatic: False
+  - name: Object.Module
+    partition: False
+    useStatic: False
   - name: Object.Notification_Templates
     partition: False
     useStatic: False
@@ -2210,6 +2243,12 @@ vertexLabels:
     partition: False
     useStatic: False
   - name: Object.Sensitive_Data
+    partition: False
+    useStatic: False
+  - name: Object.Subsystem
+    partition: False
+    useStatic: False
+  - name: Object.System
     partition: False
     useStatic: False
   - name: Object.Vehicle
@@ -2349,19 +2388,19 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Mobile
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Module
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Parent_Or_Guardian
     multiplicity: MULTI
     unidirected: False
 
   - name: Has_Phone
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Has_Mobile
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Has_Vehicle
     multiplicity: MULTI
     unidirected: False
 
@@ -2405,11 +2444,23 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Subsystem
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_System
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Table
     multiplicity: MULTI
     unidirected: False
 
   - name: Has_Transaction
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Vehicle
     multiplicity: MULTI
     unidirected: False
 
@@ -3348,6 +3399,18 @@ vertexIndexes:
     
       {}
     
+  - name: "Object.Module.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Module
+      - Object.Module.Name
+    propertyKeysMappings:
+    
+      {}
+    
   - name: "Object.Notification_Templates.MixedIdx"
     composite: false
     unique: false
@@ -3522,6 +3585,30 @@ vertexIndexes:
       - Object.Sensitive_Data.Sexual_Orientation
       - Object.Sensitive_Data.Union_Membership
       - Object.Sensitive_Data.Description
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Subsystem.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Subsystem
+      - Object.Subsystem.Name
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.System.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.System
+      - Object.System.Name
     propertyKeysMappings:
     
       {}

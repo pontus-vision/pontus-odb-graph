@@ -2419,6 +2419,21 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Module",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Module.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Module.Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Object.Notification_Templates",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -2950,6 +2965,36 @@
     },
     {
       "name": "Object.Sensitive_Data.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Subsystem",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Subsystem.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Subsystem.Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.System",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.System.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.System.Name",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3551,6 +3596,11 @@
       "useStatic": false
     },
     {
+      "name": "Object.Module",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Object.Notification_Templates",
       "partition": false,
       "useStatic": false
@@ -3587,6 +3637,16 @@
     },
     {
       "name": "Object.Sensitive_Data",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Subsystem",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.System",
       "partition": false,
       "useStatic": false
     },
@@ -3768,22 +3828,22 @@
       "unidirected": false
     },
     {
+      "name": "Has_Mobile",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Module",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Parent_Or_Guardian",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
       "name": "Has_Phone",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Mobile",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Vehicle",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -3838,12 +3898,27 @@
       "unidirected": false
     },
     {
+      "name": "Has_Subsystem",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_System",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Table",
       "multiplicity": "MULTI",
       "unidirected": false
     },
     {
       "name": "Has_Transaction",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Vehicle",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -4809,6 +4884,18 @@
       "propertyKeysMappings": {}
     },
     {
+      "name": "Object.Module.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Module",
+        "Object.Module.Name"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
       "name": "Object.Notification_Templates.MixedIdx",
       "composite": false,
       "unique": false,
@@ -4983,6 +5070,30 @@
         "Object.Sensitive_Data.Sexual_Orientation",
         "Object.Sensitive_Data.Union_Membership",
         "Object.Sensitive_Data.Description"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Subsystem.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Subsystem",
+        "Object.Subsystem.Name"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.System.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.System",
+        "Object.System.Name"
       ],
       "propertyKeysMappings": {}
     },

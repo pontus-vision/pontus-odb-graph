@@ -45,6 +45,24 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
     
+    - label: Object.System
+      props:
+        - name: Object.System.Name
+          val: ${Sistema?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
+    - label: Object.Subsystem
+      props:
+        - name: Object.Subsystem.Name
+          val: ${Tipo_x0020_Sistema?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
+    - label: Object.Module
+      props:
+        - name: Object.Module.Name
+          val: ${Tabela?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+    
     - label: Object.Sensitive_Data
       props:
         - name: Object.Sensitive_Data.Description
@@ -126,4 +144,13 @@ updatereq:
   - label: Has_Sensitive_Data
     fromVertexName: fontes_de_dados
     toVertexLabel: Object.Sensitive_Data
+  - label: Has_Module
+    fromVertexName: data_sources
+    toVertexLabel: Object.Module
+  - label: Has_Subsystem
+    fromVertexLabel: Object.Module
+    toVertexLabel: Object.Subsystem
+  - label: Has_System
+    fromVertexLabel: Object.Subsystem
+    toVertexLabel: Object.System
 

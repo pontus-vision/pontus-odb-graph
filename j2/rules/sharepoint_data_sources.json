@@ -19,7 +19,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "${Title}?.toUpperCase()?.trim()",
+            "val": "${Title?.toUpperCase()?.trim()}",
             "mandatoryInSearch": true
           },
           {
@@ -63,6 +63,36 @@
             "val": "${field_URL_x0020_Prefixo_x0020_Read}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.System",
+        "props": [
+          {
+            "name": "Object.System.Name",
+            "val": "${field_Sistema?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Subsystem",
+        "props": [
+          {
+            "name": "Object.Subsystem.Name",
+            "val": "${field_Tipo_x0020_Sistema?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Module",
+        "props": [
+          {
+            "name": "Object.Module.Name",
+            "val": "${field_Tabela?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -179,6 +209,21 @@
         "label": "Has_Policy",
         "fromVertexName": "data_sources",
         "toVertexLabel": "Object.Data_Policy"
+      },
+      {
+        "label": "Has_Module",
+        "fromVertexName": "data_sources",
+        "toVertexLabel": "Object.Module"
+      },
+      {
+        "label": "Has_Subsystem",
+        "fromVertexLabel": "Object.Module",
+        "toVertexLabel": "Object.Subsystem"
+      },
+      {
+        "label": "Has_System",
+        "fromVertexLabel": "Object.Subsystem",
+        "toVertexLabel": "Object.System"
       }
     ]
   }
