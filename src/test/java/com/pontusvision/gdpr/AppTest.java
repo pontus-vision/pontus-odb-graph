@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -26,6 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @TestClassOrder(AnnotationTestsOrderer.class)
 
 public class AppTest {
+
+  public static java.text.SimpleDateFormat dtfmt =  new java.text.SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.UK);
 
   public static String jsonReq = "{\n" +
       "    \"search\": {\n" +

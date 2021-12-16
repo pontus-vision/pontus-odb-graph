@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -585,8 +586,8 @@ public class PVBasicTest extends AppTest {
       String mariaBDay =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
               ".properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
-      mariaBDay = mariaBDay.replaceAll("... 1980", "GMT 1980");
-      assertEquals("Mon Dec 08 01:01:01 GMT 1980", mariaBDay, "MAria`s Birthday");
+//      mariaBDay = mariaBDay.replaceAll("... 1980", "GMT 1980");
+      assertEquals(dtfmt.parse("Mon Dec 08 01:01:01 GMT 1980"), dtfmt.parse(mariaBDay), "MAria's Birthday");
 
       String getBossId =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
@@ -600,7 +601,7 @@ public class PVBasicTest extends AppTest {
       assertEquals("JOSÉ DORIVAL", getBossName, "Maria's Boss' Full Name");
 
 
-    } catch (ExecutionException e) {
+    } catch (ExecutionException | ParseException e) {
       e.printStackTrace();
       assertNull(e);
 
