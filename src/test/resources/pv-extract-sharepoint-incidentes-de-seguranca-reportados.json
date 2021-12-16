@@ -2,10 +2,10 @@
   "queryResp": [
     {
       "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
-      "createdDateTime": "2021-08-12T15:17:48Z",
+      "createdDateTime": "2021-08-12T15:17:48BRT",
       "eTag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
       "id": "1",
-      "lastModifiedDateTime": "2021-08-17T18:19:43Z",
+      "lastModifiedDateTime": "2021-08-17T18:19:43BRT",
       "webUrl": "https://sxxxxxxcombr.sharepoint.com/sites/Sxxxxxx_LGPD/Lists/Treinamento/2_.000",
       "createdBy": {
         "user": {
@@ -44,8 +44,8 @@
         "status": "Open",
         "source": "Outlook, Gmail, Yahoo Mail",
         "ContentType": "Item",
-        "Modified": "2021-08-17T18:19:43Z",
-        "Created": "2021-08-12T15:17:48Z",
+        "Modified": "2021-08-17T18:19:43BRT",
+        "Created": "2021-08-12T15:17:48BRT",
         "Author": "Matheus Santos",
         "AuthorLookupId": "11",
         "EditorLookupId": "11",
@@ -63,10 +63,10 @@
     },
     {
       "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
-      "createdDateTime": "2021-08-12T15:17:48Z",
+      "createdDateTime": "2021-08-12T15:17:48BRT",
       "eTag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
       "id": "2",
-      "lastModifiedDateTime": "2021-08-17T18:19:43Z",
+      "lastModifiedDateTime": "2021-08-17T18:19:43BRT",
       "webUrl": "https://sxxxxxxcombr.sharepoint.com/sites/Sxxxxxx_LGPD/Lists/Treinamento/2_.000",
       "createdBy": {
         "user": {
@@ -109,8 +109,8 @@
         "status": "New",
         "source": "Recursos Humanos",
         "ContentType": "Item",
-        "Modified": "2021-10-23T23:11:20Z",
-        "Created": "2021-10-22T12:09:07Z",
+        "Modified": "2021-10-23T23:11:20BRT",
+        "Created": "2021-10-22T12:09:07BRT",
         "Author": "Joana Darca",
         "AuthorLookupId": "32",
         "EditorLookupId": "11",
@@ -128,10 +128,10 @@
     },
     {
       "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
-      "createdDateTime": "2021-08-12T15:17:48Z",
+      "createdDateTime": "2021-08-12T15:17:48BRT",
       "eTag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
       "id": "3",
-      "lastModifiedDateTime": "2021-08-17T18:19:43Z",
+      "lastModifiedDateTime": "2021-08-17T18:19:43BRT",
       "webUrl": "https://sxxxxxxcombr.sharepoint.com/sites/Sxxxxxx_LGPD/Lists/Treinamento/2_.000",
       "createdBy": {
         "user": {
@@ -182,8 +182,8 @@
         "status": "Resolved",
         "source": "Google Chrome, Mozilla Firefox, Microfost Edge, Apple Safari",
         "ContentType": "Item",
-        "Modified": "2021-11-14T08:23:46Z",
-        "Created": "2021-11-12T09:12:00Z",
+        "Modified": "2021-11-14T08:23:46BRT",
+        "Created": "2021-11-12T09:12:00BRT",
         "Author": "Alice Fonseca",
         "AuthorLookupId": "19",
         "EditorLookupId": "19",
@@ -201,10 +201,10 @@
     },
     {
       "@odata.etag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
-      "createdDateTime": "2021-08-12T15:17:48Z",
+      "createdDateTime": "2021-08-12T15:17:48BRT",
       "eTag": "\"ffffffffffffff-dddd-eeee-aaaa-dddddbeeefff\"",
       "id": "4",
-      "lastModifiedDateTime": "2021-08-17T18:19:43Z",
+      "lastModifiedDateTime": "2021-08-17T18:19:43BRT",
       "webUrl": "https://sxxxxxxcombr.sharepoint.com/sites/Sxxxxxx_LGPD/Lists/Treinamento/2_.000",
       "createdBy": {
         "user": {
@@ -247,8 +247,8 @@
         "status": "Suspect Internal Theft",
         "source": "Sistema de Feedback",
         "ContentType": "Item",
-        "Modified": "2021-12-10T14:56:33Z",
-        "Created": "2021-12-10T10:19:29Z",
+        "Modified": "2021-12-10T14:56:33BRT",
+        "Created": "2021-12-10T10:19:29BRT",
         "Author": "Felipe Portinari",
         "AuthorLookupId": "24",
         "EditorLookupId": "19",
