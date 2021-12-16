@@ -168,8 +168,8 @@ public class PVBasicTest extends AppTest {
 
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
-      "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 7",
-      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 7"
+      "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 5",
+      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 5"
   })
   public void test00004SharepointDataSources(String jsonFile, String ruleName, String dataSourceName,
                                              String expectedDataPolicyCount) throws InterruptedException {
@@ -216,7 +216,7 @@ public class PVBasicTest extends AppTest {
           App.executor.eval(queryPrefix +
               ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
               ".out('Has_Policy')" +
-              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))" +
+              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy')).dedup()" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(expectedDataPolicyCount, countDataPolicy);

@@ -52,12 +52,8 @@ rules:
 
       - label: Object.Data_Policy
         props:
-          Update_Frequency:
-            val: "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}"
-            excludeFromSearch: true
-          Retention_Period:
-            val: "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}"
-            mandatoryInSearch: true
+          Update_Frequency: "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}"
+          Retention_Period: "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}"
 #          Type:
 #            val: "${Title}"
 #            mandatoryInSearch: true

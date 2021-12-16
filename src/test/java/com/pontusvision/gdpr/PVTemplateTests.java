@@ -293,7 +293,6 @@ public class PVTemplateTests extends AppTest {
                       ".properties('Event.Data_Breach.Status').value().next().toString()").get().toString();
       assertEquals("Open", dataBreachStatus, "Status for Vazamento de E-mails de Clientes");
 
-//    java.util.Date resets seconds to 00 (zeros)
       String dataBreachDate =
               App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('E-MAIL')).in('Impacted_By_Data_Breach')" +
               ".values('Event.Data_Breach.Metadata.Create_Date').next().toString()").get().toString();
@@ -317,7 +316,7 @@ public class PVTemplateTests extends AppTest {
       String dataSourceArray =
               App.executor.eval("App.g.V().has('Event.Data_Breach.Description', " +
                       "eq('VAZAMENTO DO HISTÓRICO DE NAVEGAÇÃO DOS COLABORADORES')).out('Impacted_By_Data_Breach')" +
-                      ".values('Object.Data_Source.Name').count().next().toString()").get().toString();
+                      ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source')).dedup().count().next().toString()").get().toString();
       assertEquals("4", dataSourceArray,"This Data_Breach event has 4 data_sources: " +
               "Histórico navegador Google Chrome / Mozilla Firefox / Microsoft Edge / Apple Safari");
 
