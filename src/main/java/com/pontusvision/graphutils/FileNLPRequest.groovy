@@ -283,6 +283,9 @@ class FileNLPRequest implements Serializable {
             [personOptions.toArray(new Traversal[0]), cpfOptions.toArray(new Traversal[0])]
             .flatten().toArray(new Traversal[0])
 
+    System.out.println("NLP searching for matches for ${personOptions?.size()?:0} names, ${cpfOptions?.size()?:0} cpfs, ${emailAddrs?.length?:0} emails in file ${req.name}")
+        
+
     def persons = personNameCpfOptions.length> 0?
             (App.g.V().or(personNameCpfOptions)):
             null
@@ -295,6 +298,8 @@ class FileNLPRequest implements Serializable {
       retVal = []
     }
 
+    System.out.println("NLP found ${retVal?.size()} graph person matches on cust id or name from file ${req.name}")
+
     if (emailOptions.size() > 0){
       def emails = App.g.V().or(emailOptions.toArray(new Traversal[0]) as Traversal<?, ?>[])
 
@@ -303,11 +308,11 @@ class FileNLPRequest implements Serializable {
         Set<ORID> emailSet = emails?.in('Uses_Email')?.id()?.toSet()
         if (emailSet && emailSet.size() > 0){
           retVal.addAll(emailSet);
-
+          System.out.println("NLP found ${emailSet?.size()} graph person matches on email from file ${req.name}")
         }
 
-//        retVal = persons?.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>:
-//                emails?.in('Uses_Email')?.id()?.toSet() as Set<ORID>
+//      retVal = persons?.hasId(P.within(emails.in('Uses_Email')?.id()?.toList()))?.id()?.toSet() as Set<ORID>:
+//               emails?.in('Uses_Email')?.id()?.toSet() as Set<ORID>
 
       } catch (Throwable t) {
         //ignore
@@ -345,7 +350,10 @@ class FileNLPRequest implements Serializable {
       }
     }
     if (retVal.size() == 0){
-      System.out.println("Failed to find any NLP people for event " + req.toString())
+      System.out.println("Failed to find any NLP events for file ${req.name}")
+    } 
+    else {
+      System.out.println("Finished processing ${retVal.size()} NLP events for file ${req.name}")
     }
     return retVal
   }
