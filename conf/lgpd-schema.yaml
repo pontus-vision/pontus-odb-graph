@@ -1583,6 +1583,22 @@ propertyKeys:
   - name: Object.Privacy_Impact_Assessment.Start_Date
     dataType: Date
     cardinality: SINGLE
+  - name: Metadata.Type.Object.Legitimate_Interests_Assessment
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Legitimate_Interests_Assessment.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Legitimate_Interests_Assessment.Personal_Data_Treatment
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Legitimate_Interests_Assessment.Lawful_Basis_Justification
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Legitimate_Interests_Assessment.Processing_Purpose
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Risk_Data_Source
     dataType: String
     cardinality: SINGLE
@@ -2197,6 +2213,9 @@ vertexLabels:
   - name: Object.Privacy_Impact_Assessment
     partition: False
     useStatic: False
+  - name: Object.Legitimate_Interests_Assessment
+    partition: False
+    useStatic: False
   - name: Object.Risk_Data_Source
     partition: False
     useStatic: False
@@ -2338,6 +2357,10 @@ edgeLabels:
     unidirected: False
 
   - name: Has_Lawful_Basis_On
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Legitimate_Interests_Assessment
     multiplicity: MULTI
     unidirected: False
 
@@ -3398,6 +3421,20 @@ vertexIndexes:
       - Object.Privacy_Impact_Assessment.Risk_To_Corporation
       - Object.Privacy_Impact_Assessment.Risk_To_Individuals
       - Object.Privacy_Impact_Assessment.Start_Date
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Legitimate_Interests_Assessment.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Legitimate_Interests_Assessment
+      - Object.Legitimate_Interests_Assessment.Personal_Data_Treatment
+      - Object.Legitimate_Interests_Assessment.Lawful_Basis_Justification
+      - Object.Legitimate_Interests_Assessment.Processing_Purpose
     propertyKeysMappings:
     
       {}

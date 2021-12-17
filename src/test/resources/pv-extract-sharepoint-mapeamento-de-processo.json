@@ -65,9 +65,9 @@
           "Base_x0020_legal": [
             "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
           ],
-          "Essetratamentodedadospessoais_x0": "",
-          "N_x00e3_oh_x00e1_outrabaselegalp": "",
-          "Esse_x0020_processamento_x0020_d": "",
+          "Essetratamentodedadospessoais_x0": "Sim, pois é importante",
+          "N_x00e3_oh_x00e1_outrabaselegalp": "Não pois esse registro é novo",
+          "Esse_x0020_processamento_x0020_d": "Sim, auxilia muito",
           "PartesInteressadasConsultadas": "Jurídico Sunnyvale",
           "LinkTitleNoMenu": "1",
           "LinkTitle": "1",
@@ -153,9 +153,9 @@
           "Base_x0020_legal": [
             "Legítimo Interesse do controlador"
           ],
-          "Essetratamentodedadospessoais_x0": "",
-          "N_x00e3_oh_x00e1_outrabaselegalp": "",
-          "Esse_x0020_processamento_x0020_d": "",
+          "Essetratamentodedadospessoais_x0": "Sim, é indispensável pois é Legítimo interesse",
+          "N_x00e3_oh_x00e1_outrabaselegalp": "Não foi possível identificar outra Base Legal",
+          "Esse_x0020_processamento_x0020_d": "Sim, pois são dados importantes para a empresa",
           "PartesInteressadasConsultadas": "Jurídico Sunnyvale",
           "LinkTitleNoMenu": "2",
           "LinkTitle": "2",
@@ -240,9 +240,9 @@
           "Base_x0020_legal": [
             "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
           ],
-          "Essetratamentodedadospessoais_x0": "",
-          "N_x00e3_oh_x00e1_outrabaselegalp": "",
-          "Esse_x0020_processamento_x0020_d": "",
+          "Essetratamentodedadospessoais_x0": "Sim",
+          "N_x00e3_oh_x00e1_outrabaselegalp": "Não",
+          "Esse_x0020_processamento_x0020_d": "Sim",
           "PartesInteressadasConsultadas": "Jurídico Sunnyvale",
           "LinkTitleNoMenu": "3",
           "LinkTitle": "3",
@@ -327,9 +327,9 @@
           "Base_x0020_legal": [
             "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
           ],
-          "Essetratamentodedadospessoais_x0": "",
-          "N_x00e3_oh_x00e1_outrabaselegalp": "",
-          "Esse_x0020_processamento_x0020_d": "",
+          "Essetratamentodedadospessoais_x0": "Sim, é indispensável",
+          "N_x00e3_oh_x00e1_outrabaselegalp": "Legitimo interesse",
+          "Esse_x0020_processamento_x0020_d": "Sim",
           "PartesInteressadasConsultadas": "EPG Advogados",
           "LinkTitleNoMenu": "4",
           "LinkTitle": "4",
@@ -421,9 +421,9 @@
           "Base_x0020_legal": [
             "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
           ],
-          "Essetratamentodedadospessoais_x0": "",
-          "N_x00e3_oh_x00e1_outrabaselegalp": "",
-          "Esse_x0020_processamento_x0020_d": "",
+          "Essetratamentodedadospessoais_x0": "Não",
+          "N_x00e3_oh_x00e1_outrabaselegalp": "N/A",
+          "Esse_x0020_processamento_x0020_d": "Não",
           "PartesInteressadasConsultadas": "Jurídico Sunnyvale",
           "LinkTitleNoMenu": "5",
           "LinkTitle": "5",
@@ -513,9 +513,9 @@
           "Base_x0020_legal": [
             "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
           ],
-          "Essetratamentodedadospessoais_x0": "",
-          "N_x00e3_oh_x00e1_outrabaselegalp": "",
-          "Esse_x0020_processamento_x0020_d": "",
+          "Essetratamentodedadospessoais_x0": "Sim",
+          "N_x00e3_oh_x00e1_outrabaselegalp": "Consentimento",
+          "Esse_x0020_processamento_x0020_d": "Sim",
           "PartesInteressadasConsultadas": "EPG Advogados",
           "LinkTitleNoMenu": "6",
           "LinkTitle": "6",
