@@ -19,6 +19,10 @@ Event.Data_Breach.Metadata.Create_Date
 Event.Data_Breach.Metadata.Update_Date
 Event.Data_Breach.Source
 Event.Data_Breach.Status
+Event.Data_Breach.Form_Id
+Event.Data_Breach.Form_Owner_Id
+Event.Data_Breach.Form_Submission_Id
+Event.Data_Breach.Form_Submission_Owner_Id
 Event.Form_Ingestion.Domain_b64
 Event.Form_Ingestion.Metadata_Create_Date
 Event.Form_Ingestion.Metadata_GUID
@@ -83,7 +87,15 @@ Event.Subject_Access_Request.Request_Type
 Event.Subject_Access_Request.Request_Channel
 Event.Subject_Access_Request.Id
 Event.Subject_Access_Request.Status
+Event.Subject_Access_Request.Form_Id
+Event.Subject_Access_Request.Form_Owner_Id
+Event.Subject_Access_Request.Form_Submission_Id
+Event.Subject_Access_Request.Form_Submission_Owner_Id
 Event.Training.Status
+Event.Training.Form_Id
+Event.Training.Form_Owner_Id
+Event.Training.Form_Submission_Id
+Event.Training.Form_Submission_Owner_Id
 Event.Transaction.Currency
 Event.Transaction.Date
 Event.Transaction.Description
@@ -230,6 +242,10 @@ Object.Data_Procedures.Update_URL
 Object.Data_Procedures.Why_Is_It_Collected
 Object.Data_Procedures.Is_SubProcess
 Object.Data_Procedures.Interested_Parties_Consulted
+Object.Data_Procedures.Form_Id
+Object.Data_Procedures.Form_Owner_Id
+Object.Data_Procedures.Form_Submission_Id
+Object.Data_Procedures.Form_Submission_Owner_Id
 Object.Data_Source.Business_Rules
 Object.Data_Source.Create_Date
 Object.Data_Source.Credential_ApiKey
@@ -371,6 +387,7 @@ Object.Metadata_Source.Type
 Object.Metadata_Source.Domain
 Object.Metadata_Source.Domain_Frequency
 Object.Metadata_Source.Business_Rules
+Object.Module.Name
 Object.Notification_Templates.Id
 Object.Notification_Templates.Label
 Object.Notification_Templates.Text
@@ -465,6 +482,8 @@ Object.Sensitive_Data.Religion
 Object.Sensitive_Data.Sexual_Orientation
 Object.Sensitive_Data.Union_Membership
 Object.Sensitive_Data.Description
+Object.Subsystem.Name
+Object.System.Name
 Object.Vehicle.License_Plate
 Object.Vehicle.Model
 Object.Vehicle.Model_Year

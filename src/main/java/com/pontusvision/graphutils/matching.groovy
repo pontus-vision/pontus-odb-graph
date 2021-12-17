@@ -29,6 +29,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSo
 import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.codehaus.groovy.runtime.StringGroovyMethods
 
+import java.time.ZoneId
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiPredicate
 import java.util.regex.Pattern
@@ -146,6 +147,7 @@ class PVConvMixin {
           if (isTimeInferred) {
             Calendar calendar = Calendar.getInstance()
             calendar.setTime(retVal)
+            calendar.setTimeZone(TimeZone.getTimeZone(ZoneId.of("GMT")))
             calendar.set(Calendar.HOUR_OF_DAY, 1)
             calendar.set(Calendar.MINUTE, 1)
             calendar.set(Calendar.SECOND, 1)

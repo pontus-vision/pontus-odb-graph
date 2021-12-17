@@ -13,9 +13,13 @@ updatereq:
       name: fontes_de_dados
       condition: ${Descri_x00e7__x00e3_o?.trim()?.length() > 0}
       props:
-        - name: Object.Data_Source.Name
-          val: ${Title?.toUpperCase()?.trim()}
+        - name: Object.Data_Source.Form_Id
+          val: ${id}
           mandatoryInSearch: True
+        - name: Object.Data_Source.Name
+          val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Data_Source.Description
           val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
           mandatoryInSearch: False
@@ -44,6 +48,24 @@ updatereq:
           val: ${URL_x0020_Prefixo_x0020_Read}
           mandatoryInSearch: False
           excludeFromSearch: True
+    
+    - label: Object.System
+      props:
+        - name: Object.System.Name
+          val: ${Sistema?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
+    - label: Object.Subsystem
+      props:
+        - name: Object.Subsystem.Name
+          val: ${Tipo_x0020_Sistema?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
+    - label: Object.Module
+      props:
+        - name: Object.Module.Name
+          val: ${Tabela?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
     
     - label: Object.Sensitive_Data
       props:
@@ -126,4 +148,13 @@ updatereq:
   - label: Has_Sensitive_Data
     fromVertexName: fontes_de_dados
     toVertexLabel: Object.Sensitive_Data
+  - label: Has_Module
+    fromVertexName: data_sources
+    toVertexLabel: Object.Module
+  - label: Has_Subsystem
+    fromVertexLabel: Object.Module
+    toVertexLabel: Object.Subsystem
+  - label: Has_System
+    fromVertexLabel: Object.Subsystem
+    toVertexLabel: Object.System
 

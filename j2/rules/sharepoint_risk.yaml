@@ -12,18 +12,22 @@ updatereq:
     - label: Object.Data_Source
       name: attached_data_sources
       props:
-        - name: Object.Data_Source.Name
+        - name: Object.Data_Source.Form_Id
           val: ${new groovy.json.JsonBuilder(Data_x0020_Sources)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
     
     - label: Object.Risk_Data_Source
       props:
+        - name: Object.Risk_Data_Source.Form_Id
+          val: ${id}
+          mandatoryInSearch: True
         - name: Object.Risk_Data_Source.Risk_Id
           val: ${Title?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Risk_Data_Source.Description
           val: ${field_Description}
           mandatoryInSearch: False
@@ -47,12 +51,12 @@ updatereq:
     
     - label: Object.Risk_Mitigation_Data_Source
       props:
-        - name: Object.Risk_Mitigation_Data_Source.Mitigation_Id
+        - name: Object.Risk_Mitigation_Data_Source.Form_Id
           val: ${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
     
     - label: Event.Ingestion
       props:

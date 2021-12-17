@@ -4,8 +4,11 @@ updatereq:
     
     - label: Event.Training
       props:
+        - name: Event.Training.Form_Id
+          val: ${id}
+          mandatoryInSearch: True
         - name: Event.Training.Status
-          val: Passed
+          val: ${status}
           mandatoryInSearch: False
           excludeFromSearch: True
     

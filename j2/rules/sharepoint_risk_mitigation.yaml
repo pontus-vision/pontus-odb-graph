@@ -11,9 +11,13 @@ updatereq:
     
     - label: Object.Risk_Mitigation_Data_Source
       props:
+        - name: Object.Risk_Mitigation_Data_Source.Form_Id
+          val: ${id}
+          mandatoryInSearch: True
         - name: Object.Risk_Mitigation_Data_Source.Mitigation_Id
           val: ${Title?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Risk_Mitigation_Data_Source.Description
           val: ${field_Description}
           mandatoryInSearch: False

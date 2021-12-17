@@ -220,7 +220,7 @@ rules:
 #      "RA_CTPCD": "11"
 #      "RA_DDDCELU": ""
 #      "RA_DDDFONE": "2"
-#      "RA_DEFIFIS": "BRUNO.SSSS@SUNNYVALE.COM.BR"
+#      "RA_DEFIFIS": "BRUNO.SSSS@SNOWYMOUNTAIN.COM.BR"
 #      "RA_DESCSIN": "BRUNO.SSSS@HOTMAIL.COM"
 #      "RA_EMAIL": "R. CONTINENTAL"
 #      "RA_EMAIL2": "SP"
@@ -375,7 +375,7 @@ rules:
         props:
           Email: "${RA_EMAIL.trim()?.toLowerCase()}"
 #          Type:
-#            val: "${(RA_EMAIL.trim()?.toLowerCase()?.contains('sunnyvale.com.br'))?'business':'personal'}"
+#            val: "${(RA_EMAIL.trim()?.toLowerCase()?.contains('snowymountain.com.br'))?'business':'personal'}"
 #            excludeFromSearch: true
 
       - label: Object.Email_Address
@@ -384,7 +384,7 @@ rules:
         props:
           Email: "${RA_EMAIL2?.trim()?.toLowerCase()}"
 #          Type:
-#            val: "${(RA_EMAIL2.trim()?.toLowerCase()?.contains('sunnyvale.com.br'))?'business':'personal'}"
+#            val: "${(RA_EMAIL2.trim()?.toLowerCase()?.contains('snowymountain.com.br'))?'business':'personal'}"
 #            excludeFromSearch: true
 
       - label: Event.Ingestion

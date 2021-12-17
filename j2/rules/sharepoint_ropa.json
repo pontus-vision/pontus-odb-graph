@@ -17,12 +17,12 @@
         "name": "attached_data_sources",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object.Data_Source.Form_Id",
             "val": "${new groovy.json.JsonBuilder(Data_x0020_Source)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
           }
         ]
       },
@@ -45,9 +45,15 @@
         "label": "Object.Data_Procedures",
         "props": [
           {
+            "name": "Object.Data_Procedures.Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Object.Data_Procedures.ID",
             "val": "${Title}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Procedures.Name",

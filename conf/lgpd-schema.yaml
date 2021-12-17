@@ -153,6 +153,18 @@ propertyKeys:
   - name: Event.Data_Breach.Status
     dataType: String
     cardinality: SINGLE
+  - name: Event.Data_Breach.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Event.Form_Ingestion
     dataType: String
     cardinality: SINGLE
@@ -436,6 +448,18 @@ propertyKeys:
   - name: Event.Subject_Access_Request.Status
     dataType: String
     cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Event.Training
     dataType: String
     cardinality: SINGLE
@@ -444,6 +468,18 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Event.Training.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Training.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Training.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Training.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Training.Form_Submission_Owner_Id
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Event.Transaction
@@ -989,6 +1025,18 @@ propertyKeys:
   - name: Object.Data_Procedures.Interested_Parties_Consulted
     dataType: String
     cardinality: SINGLE
+  - name: Object.Data_Procedures.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Data_Source
     dataType: String
     cardinality: SINGLE
@@ -1496,6 +1544,16 @@ propertyKeys:
   - name: Object.Metadata_Source.Business_Rules
     dataType: String
     cardinality: SINGLE
+  - name: Metadata.Type.Object.Module
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Module.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Module.Name
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Object.Notification_Templates
     dataType: String
     cardinality: SINGLE
@@ -1839,6 +1897,26 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object.Sensitive_Data.Description
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.Subsystem
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.Subsystem.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Subsystem.Name
+    dataType: String
+    cardinality: SINGLE
+  - name: Metadata.Type.Object.System
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object.System.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.System.Name
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Object.Vehicle
@@ -2204,6 +2282,9 @@ vertexLabels:
   - name: Object.Metadata_Source
     partition: False
     useStatic: False
+  - name: Object.Module
+    partition: False
+    useStatic: False
   - name: Object.Notification_Templates
     partition: False
     useStatic: False
@@ -2229,6 +2310,12 @@ vertexLabels:
     partition: False
     useStatic: False
   - name: Object.Sensitive_Data
+    partition: False
+    useStatic: False
+  - name: Object.Subsystem
+    partition: False
+    useStatic: False
+  - name: Object.System
     partition: False
     useStatic: False
   - name: Object.Vehicle
@@ -2372,19 +2459,19 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Mobile
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Module
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Parent_Or_Guardian
     multiplicity: MULTI
     unidirected: False
 
   - name: Has_Phone
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Has_Mobile
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Has_Vehicle
     multiplicity: MULTI
     unidirected: False
 
@@ -2428,11 +2515,23 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Subsystem
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_System
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Table
     multiplicity: MULTI
     unidirected: False
 
   - name: Has_Transaction
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Vehicle
     multiplicity: MULTI
     unidirected: False
 
@@ -2570,6 +2669,10 @@ vertexIndexes:
       - Event.Data_Breach.Metadata.Update_Date
       - Event.Data_Breach.Source
       - Event.Data_Breach.Status
+      - Event.Data_Breach.Form_Id
+      - Event.Data_Breach.Form_Owner_Id
+      - Event.Data_Breach.Form_Submission_Id
+      - Event.Data_Breach.Form_Submission_Owner_Id
     propertyKeysMappings:
     
       {}
@@ -2772,6 +2875,10 @@ vertexIndexes:
       - Event.Subject_Access_Request.Request_Channel
       - Event.Subject_Access_Request.Id
       - Event.Subject_Access_Request.Status
+      - Event.Subject_Access_Request.Form_Id
+      - Event.Subject_Access_Request.Form_Owner_Id
+      - Event.Subject_Access_Request.Form_Submission_Id
+      - Event.Subject_Access_Request.Form_Submission_Owner_Id
     propertyKeysMappings:
     
       {}
@@ -2784,6 +2891,10 @@ vertexIndexes:
     propertyKeys:
       - Metadata.Type.Event.Training
       - Event.Training.Status
+      - Event.Training.Form_Id
+      - Event.Training.Form_Owner_Id
+      - Event.Training.Form_Submission_Id
+      - Event.Training.Form_Submission_Owner_Id
     propertyKeysMappings:
     
       {}
@@ -3094,6 +3205,10 @@ vertexIndexes:
       - Object.Data_Procedures.Why_Is_It_Collected
       - Object.Data_Procedures.Is_SubProcess
       - Object.Data_Procedures.Interested_Parties_Consulted
+      - Object.Data_Procedures.Form_Id
+      - Object.Data_Procedures.Form_Owner_Id
+      - Object.Data_Procedures.Form_Submission_Id
+      - Object.Data_Procedures.Form_Submission_Owner_Id
     propertyKeysMappings:
     
       {}
@@ -3371,6 +3486,18 @@ vertexIndexes:
     
       {}
     
+  - name: "Object.Module.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Module
+      - Object.Module.Name
+    propertyKeysMappings:
+    
+      {}
+    
   - name: "Object.Notification_Templates.MixedIdx"
     composite: false
     unique: false
@@ -3559,6 +3686,30 @@ vertexIndexes:
       - Object.Sensitive_Data.Sexual_Orientation
       - Object.Sensitive_Data.Union_Membership
       - Object.Sensitive_Data.Description
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.Subsystem.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.Subsystem
+      - Object.Subsystem.Name
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Object.System.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Object.System
+      - Object.System.Name
     propertyKeysMappings:
     
       {}

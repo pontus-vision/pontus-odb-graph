@@ -703,10 +703,10 @@ class PontusJ2ReportingFunctions {
 
   static List<Map<String,String>> getRisksForDataProcess(String processId) {
     def ret = App.g.V(new ORecordId(processId))
-            .out('Has_Data_Source')
-            .out('Has_Risk')
-            .dedup()
-            .elementMap().toList().collect { item ->
+            ?.out('Has_Data_Source')
+            ?.out('Has_Risk')
+            ?.dedup()
+            ?.elementMap()?.toList()?.collect { item ->
       item.collectEntries { key, val ->
         [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
       }
@@ -744,11 +744,11 @@ class PontusJ2ReportingFunctions {
 
   static List<Map<String,String>> getRiskMitigationsForRisk(String riskId) {
     def ret = App.g.V(new ORecordId(riskId))
-            .in('Mitigates_Risk')
-            .dedup()
-            .elementMap().toList().collect { item ->
-      item.collectEntries { key, val ->
-        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+            ?.in('Mitigates_Risk')
+            ?.dedup()
+            ?.elementMap()?.toList()?.collect { item ->
+      item?.collectEntries { key, val ->
+        [key?.toString()?.replaceAll('[.]', '_'), val?.toString() - '[' - ']']
       }
     }
 

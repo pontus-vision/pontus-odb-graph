@@ -88,12 +88,14 @@ schema:
         - name: Impact
         - name: Metadata.Create_Date
           dataType: Date
-
         - name: Metadata.Update_Date
           dataType: Date
-
         - name: Source
         - name: Status
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
 
     - name: "Event.Form_Ingestion"
       partition: false
@@ -247,12 +249,20 @@ schema:
         - name: Request_Channel
         - name: Id
         - name: Status
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
 
     - name: "Event.Training"
       partition: false
       useStatic: false
       props:
         - name: Status
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
 
     - name: "Event.Transaction"
       partition: false
@@ -493,6 +503,10 @@ schema:
         - name: Is_SubProcess
           dataType: Boolean
         - name: Interested_Parties_Consulted
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
 
     - name: "Object.Data_Source"
       partition: false
@@ -679,6 +693,7 @@ schema:
         - name: Description
         - name: Id
         - name: Short_Description
+
     - name: "Object.Metadata_Source"
       partition: false
       useStatic: false
@@ -709,6 +724,12 @@ schema:
         - name: Domain
         - name: Domain_Frequency
         - name: Business_Rules
+
+    - name: "Object.Module"
+      partition: false
+      useStatic: false
+      props:
+        - name: Name
 
     - name: "Object.Notification_Templates"
       partition: false
@@ -863,6 +884,18 @@ schema:
         - name: Sexual_Orientation
         - name: Union_Membership
         - name: Description
+
+    - name: "Object.Subsystem"
+      partition: false
+      useStatic: false
+      props:
+        - name: Name
+
+    - name: "Object.System"
+      partition: false
+      useStatic: false
+      props:
+        - name: Name
 
     - name: "Object.Vehicle"
       partition: false
@@ -1078,11 +1111,10 @@ schema:
   - name: Has_Legitimate_Interests_Assessment
   - name: Has_Link
   - name: Has_NLP_Events
+  - name: Has_Mobile
+  - name: Has_Module
   - name: Has_Parent_Or_Guardian
   - name: Has_Phone
-#  - name: Has_Telephone
-  - name: Has_Mobile
-  - name: Has_Vehicle
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice
@@ -1095,8 +1127,11 @@ schema:
     multiplicity: MULTI
     unidirected: false
   - name: Has_Server
+  - name: Has_Subsystem
+  - name: Has_System
   - name: Has_Table
   - name: Has_Transaction
+  - name: Has_Vehicle
   - name: Impacted_By_Data_Breach
   - name: Is_Alias
   - name: Is_Data_Controller
@@ -1121,3 +1156,4 @@ schema:
   - name: Uses_Data_Source
   - name: Uses_Email
   - name: Works
+

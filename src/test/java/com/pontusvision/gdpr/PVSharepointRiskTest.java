@@ -82,7 +82,7 @@ public class PVSharepointRiskTest extends AppTest {
               ".count().next().toString()").get().toString();
 
 
-      assertEquals("5",numDataSourcesR02, "5 Data sources associated with R02");
+      assertEquals("2",numDataSourcesR02, "2 Data sources associated with R02");
 
       String descriptionR02 =
           App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02'))" +
