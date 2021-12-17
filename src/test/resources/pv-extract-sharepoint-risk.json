@@ -121,24 +121,12 @@
         "field_Approved_x0020_by_x0020_Security": "true",
         "Data_x0020_Sources": [
           {
-            "LookupId": 21,
-            "LookupValue": "Email-Grupo-Dis/Com"
+            "LookupId": 2,
+            "LookupValue": "CRM-Contatos"
           },
           {
-            "LookupId": 20,
-            "LookupValue": "Email-Grupo-Compras"
-          },
-          {
-            "LookupId": 19,
-            "LookupValue": "Email-Grupo-Comercial"
-          },
-          {
-            "LookupId": 18,
-            "LookupValue": "Email-Grupo-Armazenagem"
-          },
-          {
-            "LookupId": 17,
-            "LookupValue": "Email-Gestora-RH"
+            "LookupId": 1,
+            "LookupValue": "CRM-Leads"
           }
         ],
         "Risk_x0020_Mitigations": [
@@ -437,7 +425,11 @@
         "field_Approved_x0020_by_x0020_Security": "true",
         "Data_x0020_Sources": [
           {
-            "LookupId": 11222,
+            "LookupId": 2,
+            "LookupValue": "CRM-Contatos"
+          },
+          {
+            "LookupId": 1,
             "LookupValue": "CRM-Leads"
           }
         ],
@@ -505,12 +497,12 @@
         "field_Approved_x0020_by_x0020_Security": "true",
         "Data_x0020_Sources": [
           {
-            "LookupId": 16,
-            "LookupValue": "CRM-Clientes"
+            "LookupId": 2,
+            "LookupValue": "CRM-Contatos"
           },
           {
-            "LookupId": 22,
-            "LookupValue": "Email-Grupo-Fábrica"
+            "LookupId": 1,
+            "LookupValue": "CRM-Leads"
           }
         ],
         "Risk_x0020_Mitigations": [

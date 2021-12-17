@@ -38,7 +38,7 @@
         "data_sources": [
           {
             "LookupId": 1,
-            "LookupValue": "E-mail"
+            "LookupValue": "CRM-LEADS"
           }
         ],
         "status": "Open",
@@ -99,11 +99,11 @@
         "data_sources": [
           {
             "LookupId": 1,
-            "LookupValue": "CNPJ"
+            "LookupValue": "CRM-LEADS"
           },
           {
             "LookupId": 2,
-            "LookupValue": "CPF"
+            "LookupValue": "CRM-CONTATOS"
           }
         ],
         "status": "New",
@@ -232,12 +232,12 @@
         "impact": "No Impact",
         "data_sources": [
           {
-            "LookupId": 1,
-            "LookupValue": "Formulário de opinião em papel"
+            "LookupId": 104,
+            "LookupValue": "ERP-CLIENT"
           },
           {
-            "LookupId": 2,
-            "LookupValue": "Formulário de opinião digital"
+            "LookupId": 105,
+            "LookupValue": "ERP-HR"
           }
         ],
         "status": "Suspect Internal Theft",

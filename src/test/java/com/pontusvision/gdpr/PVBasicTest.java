@@ -696,7 +696,6 @@ public class PVBasicTest extends AppTest {
               ".out('Has_Data_Source')" +
               ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source')).dedup()" +
               ".count().next().toString()").get().toString();
-      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(numDataPolicies, countDataPolicy);
     } catch (ExecutionException e) {
       e.printStackTrace();
