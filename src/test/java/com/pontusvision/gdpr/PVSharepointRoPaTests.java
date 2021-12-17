@@ -80,10 +80,12 @@ public class PVSharepointRoPaTests extends AppTest {
       String LIAPersonalDataTreatment =
               App.executor.eval("App.g.V().has('Object.Data_Source.Name', " +
                       "eq('SHAREPOINT/MAPEAMENTO-DE-PROCESSOS')).out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".out('Has_Ingestion_Event').out('Has_Legitimate_Interests_Assessment')" +
+                      ".out('Has_Ingestion_Event').out('Has_Lawful_Basis_On').has('Object.Lawful_Basis.Description', " +
+                      "eq('EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR'))" +
+                      ".in('Has_Lawful_Basis_On').out('Has_Legitimate_Interests_Assessment')" +
                       ".properties('Object.Legitimate_Interests_Assessment.Personal_Data_Treatment')" +
                       ".value().next().toString()").get().toString();
-      assertEquals("Sim, é indispensável", LIAPersonalDataTreatment, "Personal Data Treatment for this LIA is => Sim, é indispensável");
+      assertEquals("Sim, é indispensável - processo 1", LIAPersonalDataTreatment, "Personal Data Treatment for this LIA is => Sim, é indispensável");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
