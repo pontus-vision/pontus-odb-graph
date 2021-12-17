@@ -23,7 +23,7 @@ public class PVSharepointDataBreachTests extends AppTest {
   public void test00001SharepointDataBreach() throws InterruptedException {
 
     jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
-            "$.queryResp[*].fields", "sharepoint_incidentes_de_seguranca");
+            "$.queryResp[*].fields", "sharepoint_data_breaches");
 
     try {
 
@@ -53,7 +53,7 @@ public class PVSharepointDataBreachTests extends AppTest {
               "Histórico navegador Google Chrome / Mozilla Firefox / Microsoft Edge / Apple Safari");
 
       String opinionsBreach =
-              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('SHAREPOINT/INCIDENTES-DE-SEGURANÇA-REPORTADOS'))" +
+              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('SHAREPOINT/DATA-BREACHES'))" +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
                       ".out('Impacted_By_Data_Breach').has('Object.Data_Source.Name', eq('ERP-HR'))" +
                       ".in('Impacted_By_Data_Breach').values('Event.Data_Breach.Impact').next().toString()").get().toString();

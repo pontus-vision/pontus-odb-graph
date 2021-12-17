@@ -75,7 +75,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "SHAREPOINT/INCIDENTES-DE-SEGURANÇA-REPORTADOS",
+            "val": "SHAREPOINT/DATA-BREACHES",
             "mandatoryInSearch": true
           }
         ]
@@ -85,7 +85,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "Incidentes de Segurança Reportados",
+            "val": "Data Breaches",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -136,7 +136,7 @@
           },
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sharepoint/incidentes-de-segurança-reportados",
+            "val": "sharepoint/data-breaches",
             "mandatoryInSearch": true
           },
           {

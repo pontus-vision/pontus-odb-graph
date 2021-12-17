@@ -928,7 +928,7 @@ rules:
         fromVertexLabel: "Person.Organisation"
         toVertexLabel: "Event.Subject_Access_Request"
 
-  sharepoint_incidentes_de_seguranca:
+  sharepoint_data_breaches:
     vertices:
 
 # TODO: add Created_By (Author) and Modified_By (Editor) !!
@@ -977,12 +977,12 @@ rules:
       - label: Object.Data_Source
         name: sharepoint
         props:
-          Name: "SHAREPOINT/INCIDENTES-DE-SEGURANÇA-REPORTADOS"
+          Name: "SHAREPOINT/DATA-BREACHES"
 
       - label: Event.Ingestion
         props:
           Type:
-            val: "Incidentes de Segurança Reportados"
+            val: "Data Breaches"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1009,7 +1009,7 @@ rules:
             val: "${new Date()}"
             excludeFromSearch: true
             type: java.util.Date
-          Type: "sharepoint/incidentes-de-segurança-reportados"
+          Type: "sharepoint/data-breaches"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
