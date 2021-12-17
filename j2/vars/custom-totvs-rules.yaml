@@ -390,7 +390,7 @@ rules:
       - label: Event.Ingestion
         props:
           Type:
-            val: "totvs/protheus/sra_funcionarios"
+            val: "totvs/protheus/ra_funcionario"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -410,7 +410,7 @@ rules:
       - label: Event.Group_Ingestion
         props:
           Type:
-            val: "totvs/protheus/sra_funcionarios"
+            val: "totvs/protheus/ra_funcionario"
           Operation:
             val: "Structured Data Insertion"
           Ingestion_Date:
@@ -426,9 +426,9 @@ rules:
 
       - label: Object.Data_Source
         props:
-          Name: "TOTVS/PROTHEUS/SRA_FUNCIONARIOS"
-#          Type: "totvs/protheus/sra_funcionarios"
-#          Description: "Registros de Funcionarios no protheus/Totvs"
+          Name: "TOTVS/PROTHEUS/RA_FUNCIONARIO"
+#          Type: "totvs/protheus/ra_funcionario"
+#          Description: "Registros de Funcionario no protheus/Totvs"
 
     edges:
       - label: Has_Ingestion_Event

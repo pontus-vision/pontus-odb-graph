@@ -87,7 +87,7 @@ public class PVTotvsTest extends AppTest {
   }
 
   @Test
-  public void test00002TotvsProtheusSa2Fornecedores() throws InterruptedException {
+  public void test00002TotvsProtheusSa2Fornecedor() throws InterruptedException {
 
     jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa2_fornecedor");
 
@@ -134,7 +134,7 @@ public class PVTotvsTest extends AppTest {
   }
 
   @Test
-  public void test00003TotvsProtheusRaFuncionarios() throws InterruptedException {
+  public void test00003TotvsProtheusRaFuncionario() throws InterruptedException {
 
     jsonTestUtil("totvs-ra.json", "$.objs", "totvs_protheus_ra_funcionario");
 
