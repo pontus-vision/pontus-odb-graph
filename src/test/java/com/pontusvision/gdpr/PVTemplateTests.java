@@ -289,12 +289,12 @@ public class PVTemplateTests extends AppTest {
     try {
 
       String dataBreachStatus =
-              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('E-MAIL')).in('Impacted_By_Data_Breach')" +
+              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
                       ".properties('Event.Data_Breach.Status').value().next().toString()").get().toString();
       assertEquals("Open", dataBreachStatus, "Status for Vazamento de E-mails de Clientes");
 
       String dataBreachDate =
-              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('E-MAIL')).in('Impacted_By_Data_Breach')" +
+              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
               ".values('Event.Data_Breach.Metadata.Create_Date').next().toString()").get().toString();
 
       Date dateObj = dtfmt.parse(dataBreachDate);

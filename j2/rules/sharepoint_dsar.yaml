@@ -30,9 +30,13 @@ updatereq:
     
     - label: Event.Subject_Access_Request
       props:
+        - name: Event.Subject_Access_Request.Form_Id
+          val: ${id}
+          mandatoryInSearch: True
         - name: Event.Subject_Access_Request.Id
           val: ${Title}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Event.Subject_Access_Request.Metadata.Update_Date
           val: ${Resposta_x002d_DataeHor_x00e1_ri}
           mandatoryInSearch: True

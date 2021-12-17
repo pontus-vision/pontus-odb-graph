@@ -88,12 +88,14 @@ schema:
         - name: Impact
         - name: Metadata.Create_Date
           dataType: Date
-
         - name: Metadata.Update_Date
           dataType: Date
-
         - name: Source
         - name: Status
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
 
     - name: "Event.Form_Ingestion"
       partition: false
@@ -247,12 +249,20 @@ schema:
         - name: Request_Channel
         - name: Id
         - name: Status
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
 
     - name: "Event.Training"
       partition: false
       useStatic: false
       props:
         - name: Status
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
 
     - name: "Event.Transaction"
       partition: false
@@ -493,6 +503,10 @@ schema:
         - name: Is_SubProcess
           dataType: Boolean
         - name: Interested_Parties_Consulted
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
 
     - name: "Object.Data_Source"
       partition: false

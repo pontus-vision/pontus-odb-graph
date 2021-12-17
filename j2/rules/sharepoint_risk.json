@@ -17,12 +17,12 @@
         "name": "attached_data_sources",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object.Data_Source.Form_Id",
             "val": "${new groovy.json.JsonBuilder(Data_x0020_Sources)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
           }
         ]
       },
@@ -30,9 +30,15 @@
         "label": "Object.Risk_Data_Source",
         "props": [
           {
+            "name": "Object.Risk_Data_Source.Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Object.Risk_Data_Source.Risk_Id",
             "val": "${Title?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Risk_Data_Source.Description",
@@ -70,12 +76,12 @@
         "label": "Object.Risk_Mitigation_Data_Source",
         "props": [
           {
-            "name": "Object.Risk_Mitigation_Data_Source.Mitigation_Id",
+            "name": "Object.Risk_Mitigation_Data_Source.Form_Id",
             "val": "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
           }
         ]
       },

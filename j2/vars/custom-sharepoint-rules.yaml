@@ -13,6 +13,7 @@ rules:
         condition: "${field_Descri_x0020__x0020_o?.trim()?.length() > 0}"
         name: data_sources
         props:
+          Form_Id: "${id}"
           Name:
             val: "${Title?.toUpperCase()?.trim()}"
             mandatoryInSearch: true
@@ -154,6 +155,7 @@ rules:
         condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}"
         name: fontes_de_dados
         props:
+          Form_Id: "${id}"
           Name: "${Title?.toUpperCase()?.trim()}"
           Description:
             val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
@@ -274,14 +276,14 @@ rules:
     vertices:
       - label: Event.Training
         props:
+          Form_Id: "${id}"
           Status:
-            val: "Passed"
+            val: "${status}"
             excludeFromSearch: true
 
       - label: Object.Awareness_Campaign
         props:
           Description: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
-          #          Form_Id: "${id}"
           Start_Date:
             val: "${Realizadoem}"
             type: java.util.Date
@@ -366,11 +368,16 @@ rules:
       - label: Object.Data_Source
         name: attached_data_sources
         props:
-          Name:
+          Form_Id:
             val: "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
+#          Name:
+#            val: "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+#            processAll: true
 
       - label: Object.Data_Policy
         props:
@@ -379,7 +386,10 @@ rules:
 
       - label: Object.Data_Procedures
         props:
-          ID: "${Title}"
+          Form_Id: "${id}"
+          ID:
+            val: "${Title}"
+            excludeFromSearch: true
           Name:
             val: "${Processo}"
             excludeFromSearch: true
@@ -498,11 +508,16 @@ rules:
       - label: Object.Data_Source
         name: attached_data_sources
         props:
-          Name:
+          Form_Id:
             val: "${new groovy.json.JsonBuilder(Data_x0020_Source)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
+#          Name:
+#            val: "${new groovy.json.JsonBuilder(Data_x0020_Source)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+#            processAll: true
 
       - label: Object.Data_Policy
         props:
@@ -511,7 +526,10 @@ rules:
 
       - label: Object.Data_Procedures
         props:
-          ID: "${Title}"
+          Form_Id: "${id}"
+          ID:
+            val: "${Title}"
+            excludeFromSearch: true
           Name:
             val: "${field_Process}"
             excludeFromSearch: true
@@ -627,31 +645,35 @@ rules:
       - label: Object.Data_Source
         name: attached_data_sources
         props:
-          Name:
+          Form_Id:
             val: "${new groovy.json.JsonBuilder(Data_x0020_Sources)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
+#          Name:
+#            val: "${new groovy.json.JsonBuilder(Data_x0020_Sources)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+#            processAll: true
 
       - label: Object.Risk_Data_Source
         props:
-          Risk_Id: "${Title?.trim()?.toUpperCase()}"
+          Form_Id: "${id}"
+          Risk_Id:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Description:
             val: "${field_Description}"
             excludeFromSearch: true
           Probability:
             val: "${field_Probability}"
             excludeFromSearch: true
-
           Impact:
             val: "${field_Impact}"
             excludeFromSearch: true
-
           Residual_Probability:
             val: "${field_Residual_x0020_Probability}"
             excludeFromSearch: true
-
-
           Residual_Impact:
             val: "${field_Residual_x0020_Impact}"
             excludeFromSearch: true
@@ -659,11 +681,16 @@ rules:
 
       - label: Object.Risk_Mitigation_Data_Source
         props:
-          Mitigation_Id:
+          Form_Id:
             val: "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
+#          Mitigation_Id:
+#            val: "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+#            processAll: true
 
 
 
@@ -733,7 +760,10 @@ rules:
 
       - label: Object.Risk_Mitigation_Data_Source
         props:
-          Mitigation_Id: "${Title?.trim()?.toUpperCase()}"
+          Form_Id: "${id}"
+          Mitigation_Id:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Description:
             val: "${field_Description}"
             excludeFromSearch: true
@@ -825,7 +855,10 @@ rules:
 
       - label: Event.Subject_Access_Request
         props:
-          Id: "${Title}"
+          Form_Id: "${id}"
+          Id:
+            val: "${Title}"
+            excludeFromSearch: true
           Metadata.Update_Date:
             val: "${Resposta_x002d_DataeHor_x00e1_ri}"
             type: java.util.Date
@@ -900,16 +933,23 @@ rules:
       - label: Object.Data_Source
         name: data_sources
         props:
-          Name:
+          Form_Id:
             val: "${new groovy.json.JsonBuilder(data_sources)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
-            excludeFromUpdate: true
+#          Name:
+#            val: "${new groovy.json.JsonBuilder(data_sources)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+#            processAll: true
 
       - label: Event.Data_Breach
         props:
-          Id: "${Title?.trim()?.toUpperCase()}"
+          Form_Id: "${id}"
+          Id:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Description:
             val: "${description?.trim()?.toUpperCase()}"
             excludeFromSearch: true

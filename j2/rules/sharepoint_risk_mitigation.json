@@ -16,9 +16,15 @@
         "label": "Object.Risk_Mitigation_Data_Source",
         "props": [
           {
+            "name": "Object.Risk_Mitigation_Data_Source.Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Object.Risk_Mitigation_Data_Source.Mitigation_Id",
             "val": "${Title?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Risk_Mitigation_Data_Source.Description",

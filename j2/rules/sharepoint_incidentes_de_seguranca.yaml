@@ -5,18 +5,22 @@ updatereq:
     - label: Object.Data_Source
       name: data_sources
       props:
-        - name: Object.Data_Source.Name
+        - name: Object.Data_Source.Form_Id
           val: ${new groovy.json.JsonBuilder(data_sources)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
     
     - label: Event.Data_Breach
       props:
+        - name: Event.Data_Breach.Form_Id
+          val: ${id}
+          mandatoryInSearch: True
         - name: Event.Data_Breach.Id
           val: ${Title?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Event.Data_Breach.Description
           val: ${description?.trim()?.toUpperCase()}
           mandatoryInSearch: False

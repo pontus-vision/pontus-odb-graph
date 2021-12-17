@@ -164,19 +164,15 @@
         "data_sources": [
           {
             "LookupId": 1,
-            "LookupValue": "Histórico navegador Google Chrome"
+            "LookupValue": "CRM-LEADS"
           },
           {
             "LookupId": 2,
-            "LookupValue": "Histórico navegador Mozilla Firefox"
+            "LookupValue": "CRM-CONTATOS"
           },
           {
             "LookupId": 3,
-            "LookupValue": "Histórico navegador Microsoft Edge"
-          },
-          {
-            "LookupId": 4,
-            "LookupValue": "Histórico navegador Apple Safari"
+            "LookupValue": "CRM-USERS"
           }
         ],
         "status": "Resolved",

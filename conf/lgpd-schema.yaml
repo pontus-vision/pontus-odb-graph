@@ -153,6 +153,18 @@ propertyKeys:
   - name: Event.Data_Breach.Status
     dataType: String
     cardinality: SINGLE
+  - name: Event.Data_Breach.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Data_Breach.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Event.Form_Ingestion
     dataType: String
     cardinality: SINGLE
@@ -436,6 +448,18 @@ propertyKeys:
   - name: Event.Subject_Access_Request.Status
     dataType: String
     cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Subject_Access_Request.Form_Submission_Owner_Id
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Event.Training
     dataType: String
     cardinality: SINGLE
@@ -444,6 +468,18 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Event.Training.Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Training.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Training.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Training.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Training.Form_Submission_Owner_Id
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Event.Transaction
@@ -987,6 +1023,18 @@ propertyKeys:
     dataType: Boolean
     cardinality: SINGLE
   - name: Object.Data_Procedures.Interested_Parties_Consulted
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Form_Owner_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Form_Submission_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object.Data_Procedures.Form_Submission_Owner_Id
     dataType: String
     cardinality: SINGLE
   - name: Metadata.Type.Object.Data_Source
@@ -2598,6 +2646,10 @@ vertexIndexes:
       - Event.Data_Breach.Metadata.Update_Date
       - Event.Data_Breach.Source
       - Event.Data_Breach.Status
+      - Event.Data_Breach.Form_Id
+      - Event.Data_Breach.Form_Owner_Id
+      - Event.Data_Breach.Form_Submission_Id
+      - Event.Data_Breach.Form_Submission_Owner_Id
     propertyKeysMappings:
     
       {}
@@ -2800,6 +2852,10 @@ vertexIndexes:
       - Event.Subject_Access_Request.Request_Channel
       - Event.Subject_Access_Request.Id
       - Event.Subject_Access_Request.Status
+      - Event.Subject_Access_Request.Form_Id
+      - Event.Subject_Access_Request.Form_Owner_Id
+      - Event.Subject_Access_Request.Form_Submission_Id
+      - Event.Subject_Access_Request.Form_Submission_Owner_Id
     propertyKeysMappings:
     
       {}
@@ -2812,6 +2868,10 @@ vertexIndexes:
     propertyKeys:
       - Metadata.Type.Event.Training
       - Event.Training.Status
+      - Event.Training.Form_Id
+      - Event.Training.Form_Owner_Id
+      - Event.Training.Form_Submission_Id
+      - Event.Training.Form_Submission_Owner_Id
     propertyKeysMappings:
     
       {}
@@ -3122,6 +3182,10 @@ vertexIndexes:
       - Object.Data_Procedures.Why_Is_It_Collected
       - Object.Data_Procedures.Is_SubProcess
       - Object.Data_Procedures.Interested_Parties_Consulted
+      - Object.Data_Procedures.Form_Id
+      - Object.Data_Procedures.Form_Owner_Id
+      - Object.Data_Procedures.Form_Submission_Id
+      - Object.Data_Procedures.Form_Submission_Owner_Id
     propertyKeysMappings:
     
       {}

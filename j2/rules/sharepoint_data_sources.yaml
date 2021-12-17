@@ -13,6 +13,9 @@ updatereq:
       name: data_sources
       condition: ${field_Descri_x0020__x0020_o?.trim()?.length() > 0}
       props:
+        - name: Object.Data_Source.Form_Id
+          val: ${id}
+          mandatoryInSearch: True
         - name: Object.Data_Source.Name
           val: ${Title?.toUpperCase()?.trim()}
           mandatoryInSearch: True

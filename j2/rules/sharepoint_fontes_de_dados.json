@@ -18,6 +18,11 @@
         "condition": "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}",
         "props": [
           {
+            "name": "Object.Data_Source.Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Object.Data_Source.Name",
             "val": "${Title?.toUpperCase()?.trim()}",
             "mandatoryInSearch": true

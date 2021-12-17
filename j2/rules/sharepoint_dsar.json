@@ -47,9 +47,15 @@
         "label": "Event.Subject_Access_Request",
         "props": [
           {
+            "name": "Event.Subject_Access_Request.Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Event.Subject_Access_Request.Id",
             "val": "${Title}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Subject_Access_Request.Metadata.Update_Date",
