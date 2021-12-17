@@ -231,6 +231,67 @@ public class PVTemplateTests extends AppTest {
 
   }
 
+  @Test
+//  @SetEnvironmentVariable(key = "ENV_VAR1", value = "VALUE FOR ENV_VAR1")
+//  @SetEnvironmentVariable(key = "ENV_VAR3", value = "VALNODEFAULT")
+  public void test00005TemplateLiaRender() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+          "sharepoint_fontes_de_dados");
+
+      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
+          "sharepoint_mapeamentos");
+
+      jsonTestUtil("pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
+          "sharepoint_risk_mitigation");
+
+      jsonTestUtil("pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+          "sharepoint_risk");
+
+      Resource res = new Resource();
+
+      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+      req.setTemplateName("TEST");
+      req.setTemplatePOLEType("Object.Data_Procedures");
+      req.setReportTextBase64(
+          Base64.getEncoder().encodeToString((
+              "{{ pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ).Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }}")
+
+              .getBytes()));
+
+      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+
+      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("1"))
+          .id().next().toString();
+
+//      MockedStatic<PontusJ2ReportingFunctions> mocked = mockStatic(PontusJ2ReportingFunctions.class);
+//
+//      mocked.when(() -> PontusJ2ReportingFunctions.getEnv(Mockito.eq("ENV_VAR1"))).thenReturn("VALUE FOR ENV_VAR1");
+//      mocked.when(() -> PontusJ2ReportingFunctions.getEnv(Mockito.eq("ENV_VAR3"))).thenReturn("VALNODEFAULT");
+//      mocked.when(() -> PontusJ2ReportingFunctions.getEnv(Mockito.anyString())).thenReturn(null);
+
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      assertEquals("Sim, é indispensável - processo 1", report);
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
 
 }
