@@ -56,12 +56,12 @@ public class PVSharepointRoPaTests extends AppTest {
       String juridicoInterest =
               App.executor.eval("App.g.V().has('Object.Lawful_Basis.Description', eq('LEGÍTIMO INTERESSE DO CONTROLADOR'))" +
                       ".in('Has_Lawful_Basis_On').properties('Object.Data_Procedures.Interested_Parties_Consulted').value().next().toString()").get().toString();
-      assertEquals("Jurídico Sunnyvale", juridicoInterest, "Jurídico Sunnyvale is a Party Interested in these Data Procedures");
+      assertEquals("Jurídico Snowymountain", juridicoInterest, "Jurídico Snowymountain is a Party Interested in these Data Procedures");
 
       String numJuridicoParties =
               App.executor.eval("App.g.V().has('Object.Data_Procedures.Interested_Parties_Consulted', " +
-                      "eq('Jurídico Sunnyvale')).count().next().toString()").get().toString();
-      assertEquals("4", numJuridicoParties, "4 registries have Jurídico Sunnyvale as an Interested Party");
+                      "eq('Jurídico Snowymountain')).count().next().toString()").get().toString();
+      assertEquals("4", numJuridicoParties, "4 registries have Jurídico Snowymountain as an Interested Party");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
