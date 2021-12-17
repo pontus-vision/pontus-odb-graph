@@ -63,6 +63,28 @@ public class PVSharepointRoPaTests extends AppTest {
                       "eq('Jurídico Snowymountain')).count().next().toString()").get().toString();
       assertEquals("4", numJuridicoParties, "4 registries have Jurídico Snowymountain as an Interested Party");
 
+      String LIALawfulBasis =
+              App.executor.eval("App.g.V().has('Object.Data_Procedures.Form_Id', eq('404'))" +
+                      ".out('Has_Legitimate_Interests_Assessment')" +
+                      ".properties('Object.Legitimate_Interests_Assessment" +
+                      ".Lawful_Basis_Justification').value().next().toString()").get().toString();
+      assertEquals("Legitimo interesse", LIALawfulBasis, "Lawful Basis Justification for this LIA is => Legitimo interesse");
+
+      String LIAProcessingPurpose =
+              App.executor.eval("App.g.V().has('Object.Data_Procedures.Form_Id', eq('406'))" +
+                      ".out('Has_Legitimate_Interests_Assessment')" +
+                      ".properties('Object.Legitimate_Interests_Assessment.Processing_Purpose').value()" +
+                      ".next().toString()").get().toString();
+      assertEquals("Sim", LIAProcessingPurpose, "Processing Purpose for this LIA is => SIM");
+
+      String LIAPersonalDataTreatment =
+              App.executor.eval("App.g.V().has('Object.Data_Source.Name', " +
+                      "eq('SHAREPOINT/MAPEAMENTO-DE-PROCESSOS')).out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+                      ".out('Has_Ingestion_Event').out('Has_Legitimate_Interests_Assessment')" +
+                      ".properties('Object.Legitimate_Interests_Assessment.Personal_Data_Treatment')" +
+                      ".value().next().toString()").get().toString();
+      assertEquals("Sim, é indispensável", LIAPersonalDataTreatment, "Personal Data Treatment for this LIA is => Sim, é indispensável");
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
