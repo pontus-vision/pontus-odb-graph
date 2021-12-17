@@ -25,7 +25,8 @@
           {
             "name": "Object.Data_Source.Name",
             "val": "${Title?.toUpperCase()?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",

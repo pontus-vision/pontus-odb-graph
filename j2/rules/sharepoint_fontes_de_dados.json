@@ -24,8 +24,9 @@
           },
           {
             "name": "Object.Data_Source.Name",
-            "val": "${Title?.toUpperCase()?.trim()}",
-            "mandatoryInSearch": true
+            "val": "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object.Data_Source.Description",

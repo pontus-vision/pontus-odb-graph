@@ -17,8 +17,9 @@ updatereq:
           val: ${id}
           mandatoryInSearch: True
         - name: Object.Data_Source.Name
-          val: ${Title?.toUpperCase()?.trim()}
-          mandatoryInSearch: True
+          val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Data_Source.Description
           val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
           mandatoryInSearch: False

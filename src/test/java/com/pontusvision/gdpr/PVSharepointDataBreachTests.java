@@ -44,7 +44,7 @@ public class PVSharepointDataBreachTests extends AppTest {
               App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
                       ".properties('Event.Data_Breach.Source').value().next().toString()").get().toString();
       assertEquals("OUTLOOK, GMAIL, YAHOO MAIL", dataBreachSource, "Source for the Data Breach on Documents");
-      
+
       String dataSourceArray =
               App.executor.eval("App.g.V().has('Event.Data_Breach.Description', " +
                       "eq('VAZAMENTO DO HISTÓRICO DE NAVEGAÇÃO DOS COLABORADORES')).out('Impacted_By_Data_Breach')" +

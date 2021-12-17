@@ -16,7 +16,7 @@ rules:
           Form_Id: "${id}"
           Name:
             val: "${Title?.toUpperCase()?.trim()}"
-            mandatoryInSearch: true
+            excludeFromSearch: true
           Description:
             val: "${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -156,7 +156,10 @@ rules:
         name: fontes_de_dados
         props:
           Form_Id: "${id}"
-          Name: "${Title?.toUpperCase()?.trim()}"
+          Name:
+            val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
           Description:
             val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
             excludeFromSearch: true
