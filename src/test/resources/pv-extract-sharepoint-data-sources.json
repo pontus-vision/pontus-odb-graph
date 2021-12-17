@@ -65,7 +65,7 @@
       "@odata.etag": "\"c8380e82-7214-43f2-b3af-2a6c87c8bd26,2\"",
       "createdDateTime": "2021-09-30T20:11:12Z",
       "eTag": "\"c8380e82-7214-43f2-b3af-2a6c87c8bd26,2\"",
-      "id": "2",
+      "id": "102",
       "lastModifiedDateTime": "2021-09-30T20:20:30Z",
       "webUrl": "https://somesitecom.sharepoint.com/sites/FormitiXPontusVision/Lists/datasources/2_.000",
       "createdBy": {
@@ -92,7 +92,7 @@
       "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('somesitecom.sharepoint.com%Deadfeefde-adbe-eefd-dead-beefdeadbdd%deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/lists('deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/items('2')/fields/$entity",
       "fields": {
         "@odata.etag": "\"c8380e82-7214-43f2-b3af-2a6c87c8bd26,2\"",
-        "id": "2",
+        "id": "102",
         "ContentType": "Item",
         "Title": "CRM-Contacts",
         "Modified": "2021-09-30T20:20:30Z",
@@ -187,7 +187,7 @@
       "@odata.etag": "\"500cd969-e54c-4217-addf-8fafbae85763,2\"",
       "createdDateTime": "2021-09-30T20:11:12Z",
       "eTag": "\"500cd969-e54c-4217-addf-8fafbae85763,2\"",
-      "id": "4",
+      "id": "104",
       "lastModifiedDateTime": "2021-09-30T20:20:16Z",
       "webUrl": "https://somesitecom.sharepoint.com/sites/FormitiXPontusVision/Lists/datasources/4_.000",
       "createdBy": {
@@ -214,7 +214,7 @@
       "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('somesitecom.sharepoint.com%Deadfeefde-adbe-eefd-dead-beefdeadbdd%deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/lists('deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/items('4')/fields/$entity",
       "fields": {
         "@odata.etag": "\"500cd969-e54c-4217-addf-8fafbae85763,2\"",
-        "id": "4",
+        "id": "104",
         "ContentType": "Item",
         "Title": "ERP-Client",
         "Modified": "2021-09-30T20:20:16Z",
@@ -248,20 +248,20 @@
       "@odata.etag": "\"deadbeef-dead-beef-dead-beeffeeedaad,2\"",
       "createdDateTime": "2021-09-30T20:11:12Z",
       "eTag": "\"deadbeef-dead-beef-dead-beeffeeedaad,2\"",
-      "id": "5",
+      "id": "105",
       "lastModifiedDateTime": "2021-09-30T20:20:10Z",
       "webUrl": "https://somesitecom.sharepoint.com/sites/FormitiXPontusVision/Lists/datasources/5_.000",
       "createdBy": {
         "user": {
           "email": "fidelgo@email.com",
-          "id": "deadbeef-dead-beef-dead-beefdeadbeef",
+          "id": "10deadbeef-dead-beef-dead-beefdeadbeef",
           "displayName": "Fildalgo Moreira"
         }
       },
       "lastModifiedBy": {
         "user": {
           "email": "fidelgo@email.com",
-          "id": "deadbeef-dead-beef-dead-beefdeadbeef",
+          "id": "10deadbeef-dead-beef-dead-beefdeadbeef",
           "displayName": "Fildalgo Moreira"
         }
       },
@@ -269,13 +269,13 @@
         "siteId": "siteid-goes-here"
       },
       "contentType": {
-        "id": "0x01DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFS",
+        "id": "100x01DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFS",
         "name": "Item"
       },
       "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('somesitecom.sharepoint.com%Deadfeefde-adbe-eefd-dead-beefdeadbdd%deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/lists('deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/items('5')/fields/$entity",
       "fields": {
         "@odata.etag": "\"deadbeef-dead-beef-dead-beeffeeedaad,2\"",
-        "id": "5",
+        "id": "105",
         "ContentType": "Item",
         "Title": "ERP-HR",
         "Modified": "2021-09-30T20:20:10Z",
@@ -309,20 +309,20 @@
       "@odata.etag": "\"b2497f8a-b8e8-4af4-a134-7a6bda3d947d,2\"",
       "createdDateTime": "2021-09-30T20:11:12Z",
       "eTag": "\"b2497f8a-b8e8-4af4-a134-7a6bda3d947d,2\"",
-      "id": "6",
+      "id": "106",
       "lastModifiedDateTime": "2021-09-30T20:20:01Z",
       "webUrl": "https://somesitecom.sharepoint.com/sites/FormitiXPontusVision/Lists/datasources/6_.000",
       "createdBy": {
         "user": {
           "email": "fidelgo@email.com",
-          "id": "deadbeef-dead-beef-dead-beefdeadbeef",
+          "id": "10deadbeef-dead-beef-dead-beefdeadbeef",
           "displayName": "Fildalgo Moreira"
         }
       },
       "lastModifiedBy": {
         "user": {
           "email": "fidelgo@email.com",
-          "id": "deadbeef-dead-beef-dead-beefdeadbeef",
+          "id": "10deadbeef-dead-beef-dead-beefdeadbeef",
           "displayName": "Fildalgo Moreira"
         }
       },
@@ -330,13 +330,13 @@
         "siteId": "siteid-goes-here"
       },
       "contentType": {
-        "id": "0x01DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFS",
+        "id": "100x01DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFS",
         "name": "Item"
       },
       "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('somesitecom.sharepoint.com%Deadfeefde-adbe-eefd-dead-beefdeadbdd%deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/lists('deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/items('6')/fields/$entity",
       "fields": {
         "@odata.etag": "\"b2497f8a-b8e8-4af4-a134-7a6bda3d947d,2\"",
-        "id": "6",
+        "id": "106",
         "ContentType": "Item",
         "Title": "ERP-Supplier",
         "Modified": "2021-09-30T20:20:01Z",
@@ -370,20 +370,20 @@
       "@odata.etag": "\"1d0b1bb1-53c6-4a1c-ba24-4c52e3e132bd,2\"",
       "createdDateTime": "2021-09-30T20:11:12Z",
       "eTag": "\"1d0b1bb1-53c6-4a1c-ba24-4c52e3e132bd,2\"",
-      "id": "7",
+      "id": "107",
       "lastModifiedDateTime": "2021-09-30T20:19:55Z",
       "webUrl": "https://somesitecom.sharepoint.com/sites/FormitiXPontusVision/Lists/datasources/7_.000",
       "createdBy": {
         "user": {
           "email": "fidelgo@email.com",
-          "id": "deadbeef-dead-beef-dead-beefdeadbeef",
+          "id": "10deadbeef-dead-beef-dead-beefdeadbeef",
           "displayName": "Fildalgo Moreira"
         }
       },
       "lastModifiedBy": {
         "user": {
           "email": "fidelgo@email.com",
-          "id": "deadbeef-dead-beef-dead-beefdeadbeef",
+          "id": "10deadbeef-dead-beef-dead-beefdeadbeef",
           "displayName": "Fildalgo Moreira"
         }
       },
@@ -391,13 +391,13 @@
         "siteId": "siteid-goes-here"
       },
       "contentType": {
-        "id": "0x01DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFS",
+        "id": "100x01DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEFS",
         "name": "Item"
       },
       "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('somesitecom.sharepoint.com%Deadfeefde-adbe-eefd-dead-beefdeadbdd%deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/lists('deaaaaaa-addd-beee-fffff-deadbbbeaeefa')/items('7')/fields/$entity",
       "fields": {
         "@odata.etag": "\"1d0b1bb1-53c6-4a1c-ba24-4c52e3e132bd,2\"",
-        "id": "7",
+        "id": "107",
         "ContentType": "Item",
         "Title": "ERP-Dependents",
         "Modified": "2021-09-30T20:19:55Z",

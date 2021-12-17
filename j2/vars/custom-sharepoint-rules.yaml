@@ -13,9 +13,10 @@ rules:
         condition: "${field_Descri_x0020__x0020_o?.trim()?.length() > 0}"
         name: data_sources
         props:
+          Form_Id: "${id}"
           Name:
-            val: "${Title}?.toUpperCase()?.trim()"
-            mandatoryInSearch: true
+            val: "${Title?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
           Description:
             val: "${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -38,14 +39,22 @@ rules:
             val: "${field_URL_x0020_Prefixo_x0020_Read}"
             excludeFromSearch: true
 
+      - label: Object.System
+        props:
+          Name: "${field_Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object.Subsystem
+        props:
+          Name: "${field_Tipo_x0020_Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object.Module
+        props:
+          Name: "${field_Tabela?.trim()?.toLowerCase()}"
+
       - label: Object.Data_Policy
         props:
-          Update_Frequency:
-            val: "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}"
-            excludeFromSearch: true
-          Retention_Period:
-            val: "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}"
-            mandatoryInSearch: true
+          Update_Frequency: "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}"
+          Retention_Period: "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}"
 #          Type:
 #            val: "${Title}"
 #            mandatoryInSearch: true
@@ -121,6 +130,18 @@ rules:
         fromVertexName: "data_sources"
         toVertexLabel: "Object.Data_Policy"
 
+      - label: "Has_Module"
+        fromVertexName: "data_sources"
+        toVertexLabel: "Object.Module"
+
+      - label: "Has_Subsystem"
+        fromVertexLabel: "Object.Module"
+        toVertexLabel: "Object.Subsystem"
+
+      - label: "Has_System"
+        fromVertexLabel: "Object.Subsystem"
+        toVertexLabel: "Object.System"
+
   sharepoint_fontes_de_dados:
     vertices:
       - label: Object.Data_Source
@@ -134,7 +155,11 @@ rules:
         condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}"
         name: fontes_de_dados
         props:
-          Name: "${Title?.toUpperCase()?.trim()}"
+          Form_Id: "${id}"
+          Name:
+            val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
           Description:
             val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -156,6 +181,18 @@ rules:
           URI_Read:
             val: "${URL_x0020_Prefixo_x0020_Read}"
             excludeFromSearch: true
+
+      - label: Object.System
+        props:
+          Name: "${Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object.Subsystem
+        props:
+          Name: "${Tipo_x0020_Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object.Module
+        props:
+          Name: "${Tabela?.trim()?.toLowerCase()}"
 
       - label: Object.Sensitive_Data
         props:
@@ -226,18 +263,30 @@ rules:
         fromVertexName: "fontes_de_dados"
         toVertexLabel: "Object.Sensitive_Data"
 
+      - label: "Has_Module"
+        fromVertexName: "data_sources"
+        toVertexLabel: "Object.Module"
+
+      - label: "Has_Subsystem"
+        fromVertexLabel: "Object.Module"
+        toVertexLabel: "Object.Subsystem"
+
+      - label: "Has_System"
+        fromVertexLabel: "Object.Subsystem"
+        toVertexLabel: "Object.System"
+
   sharepoint_treinamentos:
     vertices:
       - label: Event.Training
         props:
+          Form_Id: "${id}"
           Status:
-            val: "Passed"
+            val: "${status}"
             excludeFromSearch: true
 
       - label: Object.Awareness_Campaign
         props:
           Description: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
-          #          Form_Id: "${id}"
           Start_Date:
             val: "${Realizadoem}"
             type: java.util.Date
@@ -322,11 +371,16 @@ rules:
       - label: Object.Data_Source
         name: attached_data_sources
         props:
-          Name:
+          Form_Id:
             val: "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
+#          Name:
+#            val: "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+#            processAll: true
 
       - label: Object.Data_Policy
         props:
@@ -335,7 +389,10 @@ rules:
 
       - label: Object.Data_Procedures
         props:
-          ID: "${Title}"
+          Form_Id: "${id}"
+          ID:
+            val: "${Title}"
+            excludeFromSearch: true
           Name:
             val: "${Processo}"
             excludeFromSearch: true
@@ -454,11 +511,16 @@ rules:
       - label: Object.Data_Source
         name: attached_data_sources
         props:
-          Name:
+          Form_Id:
             val: "${new groovy.json.JsonBuilder(Data_x0020_Source)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
+#          Name:
+#            val: "${new groovy.json.JsonBuilder(Data_x0020_Source)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+#            processAll: true
 
       - label: Object.Data_Policy
         props:
@@ -467,7 +529,10 @@ rules:
 
       - label: Object.Data_Procedures
         props:
-          ID: "${Title}"
+          Form_Id: "${id}"
+          ID:
+            val: "${Title}"
+            excludeFromSearch: true
           Name:
             val: "${field_Process}"
             excludeFromSearch: true
@@ -583,31 +648,35 @@ rules:
       - label: Object.Data_Source
         name: attached_data_sources
         props:
-          Name:
+          Form_Id:
             val: "${new groovy.json.JsonBuilder(Data_x0020_Sources)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
+#          Name:
+#            val: "${new groovy.json.JsonBuilder(Data_x0020_Sources)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+#            processAll: true
 
       - label: Object.Risk_Data_Source
         props:
-          Risk_Id: "${Title?.trim()?.toUpperCase()}"
+          Form_Id: "${id}"
+          Risk_Id:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Description:
             val: "${field_Description}"
             excludeFromSearch: true
           Probability:
             val: "${field_Probability}"
             excludeFromSearch: true
-
           Impact:
             val: "${field_Impact}"
             excludeFromSearch: true
-
           Residual_Probability:
             val: "${field_Residual_x0020_Probability}"
             excludeFromSearch: true
-
-
           Residual_Impact:
             val: "${field_Residual_x0020_Impact}"
             excludeFromSearch: true
@@ -615,11 +684,16 @@ rules:
 
       - label: Object.Risk_Mitigation_Data_Source
         props:
-          Mitigation_Id:
+          Form_Id:
             val: "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}"
             type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
+#          Mitigation_Id:
+#            val: "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
+#            processAll: true
 
 
 
@@ -689,7 +763,10 @@ rules:
 
       - label: Object.Risk_Mitigation_Data_Source
         props:
-          Mitigation_Id: "${Title?.trim()?.toUpperCase()}"
+          Form_Id: "${id}"
+          Mitigation_Id:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Description:
             val: "${field_Description}"
             excludeFromSearch: true
@@ -781,7 +858,10 @@ rules:
 
       - label: Event.Subject_Access_Request
         props:
-          Id: "${Title}"
+          Form_Id: "${id}"
+          Id:
+            val: "${Title}"
+            excludeFromSearch: true
           Metadata.Update_Date:
             val: "${Resposta_x002d_DataeHor_x00e1_ri}"
             type: java.util.Date
@@ -847,3 +927,110 @@ rules:
       - label: Made_SAR_Request
         fromVertexLabel: "Person.Organisation"
         toVertexLabel: "Event.Subject_Access_Request"
+
+  sharepoint_data_breaches:
+    vertices:
+
+# TODO: add Created_By (Author) and Modified_By (Editor) !!
+
+      - label: Object.Data_Source
+        name: data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(data_sources)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+#          Name:
+#            val: "${new groovy.json.JsonBuilder(data_sources)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+#            processAll: true
+
+      - label: Event.Data_Breach
+        props:
+          Form_Id: "${id}"
+          Id:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Description:
+            val: "${description?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Impact:
+            val: "${impact}"
+            excludeFromSearch: true
+          Metadata.Create_Date:
+            val: "${Created}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Metadata.Update_Date:
+            val: "${Modified}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Source:
+            val: "${source?.toUpperCase()}"
+            excludeFromSearch: true
+          Status:
+            val: "${status}"
+            excludeFromSearch: true
+
+      - label: Object.Data_Source
+        name: sharepoint
+        props:
+          Name: "SHAREPOINT/DATA-BREACHES"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "Data Breaches"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type: "sharepoint/data-breaches"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Subject_Access_Request"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "Event.Data_Breach"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Impacted_By_Data_Breach # OR Data_Impacted_By_Data_Breach
+        fromVertexName: "Event.Data_Breach"
+        toVertexName: "data_sources"

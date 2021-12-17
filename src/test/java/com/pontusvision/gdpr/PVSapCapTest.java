@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -91,8 +92,8 @@ public class PVSapCapTest extends AppTest {
                       ".in('Is_Located').properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
       // replace the timezone with GMT; otherwise, if the test is run in Brazil, that appears as BRT 1975
       // ... in regex means any character, so ... 1976 will replace BRT 1976 with GMT 1975
-      natanBDay = natanBDay.replaceAll("... 1975", "GMT 1975");
-      assertEquals("Thu May 08 01:01:01 GMT 1975", natanBDay, "Data de nascimento de Natan Bolderi");
+//      natanBDay = natanBDay.replaceAll("... 1975", "GMT 1975");
+      assertEquals(dtfmt.parse("Thu May 08 01:01:01 GMT 1975"), dtfmt.parse(natanBDay), "Data de nascimento de Natan Bolderi");
 
       String eventConsentCreatedBy =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
@@ -125,8 +126,8 @@ public class PVSapCapTest extends AppTest {
       String lucciGucciBDay =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('LUCCI GUCCI'))" +
                       ".properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
-      lucciGucciBDay = lucciGucciBDay.replaceAll("... 1965", "GMT 1965");
-      assertEquals("Sat Jan 23 01:01:01 GMT 1965", lucciGucciBDay, "Lucci Gucci's Birthday");
+//      lucciGucciBDay = lucciGucciBDay.replaceAll("... 1965", "GMT 1965");
+      assertEquals(dtfmt.parse("Sat Jan 23 01:01:01 GMT 1965"), dtfmt.parse(lucciGucciBDay), "Lucci Gucci's Birthday");
 
       // testing for Virginia Mars
 
@@ -140,7 +141,7 @@ public class PVSapCapTest extends AppTest {
                       ".properties('Event.Consent.Customer_ID').value().next().toString()").get().toString();
       assertEquals("23453454354", virginiaMarsCustomerID, "Virginia Mars' Tax Number");
 
-    } catch (ExecutionException e) {
+    } catch (ExecutionException | ParseException e) {
       e.printStackTrace();
       assertNull(e);
     }

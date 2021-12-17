@@ -13,9 +13,13 @@ updatereq:
       name: data_sources
       condition: ${field_Descri_x0020__x0020_o?.trim()?.length() > 0}
       props:
-        - name: Object.Data_Source.Name
-          val: ${Title}?.toUpperCase()?.trim()
+        - name: Object.Data_Source.Form_Id
+          val: ${id}
           mandatoryInSearch: True
+        - name: Object.Data_Source.Name
+          val: ${Title?.toUpperCase()?.trim()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object.Data_Source.Description
           val: ${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}
           mandatoryInSearch: False
@@ -45,12 +49,29 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
     
+    - label: Object.System
+      props:
+        - name: Object.System.Name
+          val: ${field_Sistema?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
+    - label: Object.Subsystem
+      props:
+        - name: Object.Subsystem.Name
+          val: ${field_Tipo_x0020_Sistema?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
+    - label: Object.Module
+      props:
+        - name: Object.Module.Name
+          val: ${field_Tabela?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+    
     - label: Object.Data_Policy
       props:
         - name: Object.Data_Policy.Update_Frequency
           val: ${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
         - name: Object.Data_Policy.Retention_Period
           val: ${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}
           mandatoryInSearch: True
@@ -118,4 +139,13 @@ updatereq:
   - label: Has_Policy
     fromVertexName: data_sources
     toVertexLabel: Object.Data_Policy
+  - label: Has_Module
+    fromVertexName: data_sources
+    toVertexLabel: Object.Module
+  - label: Has_Subsystem
+    fromVertexLabel: Object.Module
+    toVertexLabel: Object.Subsystem
+  - label: Has_System
+    fromVertexLabel: Object.Subsystem
+    toVertexLabel: Object.System
 

@@ -2,63 +2,63 @@
 updatereq:
   vertices:
     
-    - label: Person.Organisation
-      condition: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}
-      props:
-        - name: Person.Organisation.Name
-          val: ${Raz_x00e3_oSocial?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person.Organisation.Registration_Number
-          val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
-          mandatoryInSearch: True
-    
-    - label: Person.Natural
-      condition: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}
-      props:
-        - name: Person.Natural.Full_Name
-          val: ${Raz_x00e3_oSocial?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person.Natural.Customer_ID
-          val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
-          mandatoryInSearch: True
-    
     - label: Object.Data_Source
+      name: data_sources
       props:
-        - name: Object.Data_Source.Name
-          val: SHAREPOINT/DSAR
+        - name: Object.Data_Source.Form_Id
+          val: ${new groovy.json.JsonBuilder(data_sources)}
           mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
     
-    - label: Event.Subject_Access_Request
+    - label: Event.Data_Breach
       props:
-        - name: Event.Subject_Access_Request.Form_Id
+        - name: Event.Data_Breach.Form_Id
           val: ${id}
           mandatoryInSearch: True
-        - name: Event.Subject_Access_Request.Id
-          val: ${Title}
+        - name: Event.Data_Breach.Id
+          val: ${Title?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event.Subject_Access_Request.Metadata.Update_Date
-          val: ${Resposta_x002d_DataeHor_x00e1_ri}
-          mandatoryInSearch: True
+        - name: Event.Data_Breach.Description
+          val: ${description?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Impact
+          val: ${impact}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Metadata.Create_Date
+          val: ${Created}
+          mandatoryInSearch: False
           type: "java.util.Date"
-        - name: Event.Subject_Access_Request.Metadata.Create_Date
-          val: ${Solicita_x00e7__x00e3_o_x002d_Da}
-          mandatoryInSearch: True
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Metadata.Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
           type: "java.util.Date"
-        - name: Event.Subject_Access_Request.Request_Type
-          val: ${Solicita_x00e7__x00e3_o_x002d_De}
-          mandatoryInSearch: True
-        - name: Event.Subject_Access_Request.Request_Channel
-          val: ${Solicita_x00e7__x00e3_o_x002d_Ca}
-          mandatoryInSearch: True
-        - name: Event.Subject_Access_Request.Status
-          val: ${Status}
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Source
+          val: ${source?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Data_Breach.Status
+          val: ${status}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object.Data_Source
+      name: sharepoint
+      props:
+        - name: Object.Data_Source.Name
+          val: SHAREPOINT/DATA-BREACHES
           mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: Controle de Solicitações
+          val: Data Breaches
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -93,7 +93,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Type
-          val: sharepoint/dsar
+          val: sharepoint/data-breaches
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
@@ -104,7 +104,7 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object.Data_Source
+    fromVertexName: sharepoint
     toVertexLabel: Event.Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
@@ -112,10 +112,10 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Subject_Access_Request
     toVertexLabel: Event.Ingestion
-  - label: Made_SAR_Request
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Event.Subject_Access_Request
-  - label: Made_SAR_Request
-    fromVertexLabel: Person.Organisation
-    toVertexLabel: Event.Subject_Access_Request
+  - label: Has_Ingestion_Event
+    fromVertexName: Event.Data_Breach
+    toVertexLabel: Event.Ingestion
+  - label: Impacted_By_Data_Breach
+    fromVertexName: Event.Data_Breach
+    toVertexName: data_sources
 

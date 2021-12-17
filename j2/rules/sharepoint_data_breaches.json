@@ -3,34 +3,80 @@
     "vertices": [
       {
         "label": "Object.Data_Source",
-        "name": "sharepoint",
+        "name": "data_sources",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
-            "val": "SHAREPOINT/RISK-MITIGATIONS",
-            "mandatoryInSearch": true
+            "name": "Object.Data_Source.Form_Id",
+            "val": "${new groovy.json.JsonBuilder(data_sources)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
           }
         ]
       },
       {
-        "label": "Object.Risk_Mitigation_Data_Source",
+        "label": "Event.Data_Breach",
         "props": [
           {
-            "name": "Object.Risk_Mitigation_Data_Source.Form_Id",
+            "name": "Event.Data_Breach.Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Risk_Mitigation_Data_Source.Mitigation_Id",
+            "name": "Event.Data_Breach.Id",
             "val": "${Title?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Risk_Mitigation_Data_Source.Description",
-            "val": "${field_Description}",
+            "name": "Event.Data_Breach.Description",
+            "val": "${description?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Impact",
+            "val": "${impact}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Metadata.Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Metadata.Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Source",
+            "val": "${source?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Status",
+            "val": "${status}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "name": "sharepoint",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "SHAREPOINT/DATA-BREACHES",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -39,7 +85,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "risk-mitigations",
+            "val": "Data Breaches",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -90,7 +136,7 @@
           },
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sharepoint/risk-mitigations",
+            "val": "sharepoint/data-breaches",
             "mandatoryInSearch": true
           },
           {
@@ -119,8 +165,18 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Ingestion",
-        "toVertexLabel": "Object.Risk_Mitigation_Data_Source"
+        "fromVertexLabel": "Event.Subject_Access_Request",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "Event.Data_Breach",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Impacted_By_Data_Breach",
+        "fromVertexName": "Event.Data_Breach",
+        "toVertexName": "data_sources"
       }
     ]
   }

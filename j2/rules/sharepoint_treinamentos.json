@@ -5,8 +5,13 @@
         "label": "Event.Training",
         "props": [
           {
+            "name": "Event.Training.Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Event.Training.Status",
-            "val": "Passed",
+            "val": "${status}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

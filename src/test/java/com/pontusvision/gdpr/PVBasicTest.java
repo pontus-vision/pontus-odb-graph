@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -167,8 +168,11 @@ public class PVBasicTest extends AppTest {
 
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
-      "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 7",
+      "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 5",
       "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 7"
+//   NOTE: WE expect 7, and not 5 entries in the second run, because the two JSON files have the same data source
+//   names (CRM-Leads and CRM-Users), which will end up with 2 data policies each (one from the first run, and one from
+//   the second).
   })
   public void test00004SharepointDataSources(String jsonFile, String ruleName, String dataSourceName,
                                              String expectedDataPolicyCount) throws InterruptedException {
@@ -215,7 +219,7 @@ public class PVBasicTest extends AppTest {
           App.executor.eval(queryPrefix +
               ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
               ".out('Has_Policy')" +
-              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))" +
+              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy')).dedup()" +
               ".count().next().toString()").get().toString();
       // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(expectedDataPolicyCount, countDataPolicy);
@@ -585,8 +589,8 @@ public class PVBasicTest extends AppTest {
       String mariaBDay =
           App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
               ".properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
-      mariaBDay = mariaBDay.replaceAll("... 1980", "GMT 1980");
-      assertEquals("Mon Dec 08 01:01:01 GMT 1980", mariaBDay, "MAria`s Birthday");
+//      mariaBDay = mariaBDay.replaceAll("... 1980", "GMT 1980");
+      assertEquals(dtfmt.parse("Mon Dec 08 01:01:01 GMT 1980"), dtfmt.parse(mariaBDay), "MAria's Birthday");
 
       String getBossId =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
@@ -600,7 +604,7 @@ public class PVBasicTest extends AppTest {
       assertEquals("JOSÉ DORIVAL", getBossName, "Maria's Boss' Full Name");
 
 
-    } catch (ExecutionException e) {
+    } catch (ExecutionException | ParseException e) {
       e.printStackTrace();
       assertNull(e);
 
@@ -692,7 +696,6 @@ public class PVBasicTest extends AppTest {
               ".out('Has_Data_Source')" +
               ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source')).dedup()" +
               ".count().next().toString()").get().toString();
-      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(numDataPolicies, countDataPolicy);
     } catch (ExecutionException e) {
       e.printStackTrace();
