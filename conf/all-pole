@@ -393,6 +393,13 @@ Object.Notification_Templates.Label
 Object.Notification_Templates.Text
 Object.Notification_Templates.Types
 Object.Notification_Templates.URL
+Object.Policies.Type
+Object.Policies.Text
+Object.Policies.URL
+Object.Policies.Form_Id
+Object.Policies.Form_Owner_Id
+Object.Policies.Form_Submission_Id
+Object.Policies.Form_Submission_Owner_Id
 Object.Phone_Number.Last_7_Digits
 Object.Phone_Number.Numbers_Only
 Object.Phone_Number.Raw

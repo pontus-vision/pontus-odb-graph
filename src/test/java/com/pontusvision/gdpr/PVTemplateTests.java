@@ -188,5 +188,49 @@ public class PVTemplateTests extends AppTest {
 
   }
 
+  @Test
+  public void test00003TemplateGetPoliciesText() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
+          "sharepoint_policies");
+
+      Resource res = new Resource();
+
+      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+      req.setTemplateName("TEST2");
+      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setReportTextBase64(
+          Base64.getEncoder().encodeToString("{{ pv:getPolicyText('abc') }}"
+              .getBytes()));
+
+      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+
+      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+          .id().next().toString();
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      String expectedReport = "Test ABC abc AbC";
+      assertEquals(expectedReport, report, "Test the abc policy text");
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+
 
 }

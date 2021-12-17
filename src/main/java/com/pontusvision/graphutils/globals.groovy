@@ -524,14 +524,9 @@ class PontusJ2ReportingFunctions {
   }
 
   static String getPolicyText(String policyType) {
-    def neighbours = App.g.V().has().elementMap().toList().collect { item ->
-      item.collectEntries { key, val ->
-        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
-      }
-    }
-
-    return neighbours
-
+    def text = App.g.V().has("Object.Policies.Type", P.eq(policyType))
+            .values("Object.Policies.Text").next().toString()
+    return text
   }
   static List<Map<String, String>> neighboursByType(String pg_id, String edgeType) {
     def neighbours = App.g.V(new ORecordId(pg_id)).both(edgeType).elementMap().toList().collect { item ->
@@ -1087,6 +1082,8 @@ class PontusJ2ReportingFunctions {
             PontusJ2ReportingFunctions.class, "neighbours", String.class))
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "neighboursByType",
             PontusJ2ReportingFunctions.class, "neighboursByType", String.class, String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getPolicyText",
+            PontusJ2ReportingFunctions.class, "getPolicyText", String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTableCustomHeader",
             PontusJ2ReportingFunctions.class, "htmlTableCustomHeader", Map.class, String.class, String.class))

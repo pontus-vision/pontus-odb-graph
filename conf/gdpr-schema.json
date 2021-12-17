@@ -2549,6 +2549,51 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Policies",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Text",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.URL",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Object.Phone_Number",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -3707,6 +3752,11 @@
     },
     {
       "name": "Object.Notification_Templates",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Policies",
       "partition": false,
       "useStatic": false
     },
@@ -5038,6 +5088,23 @@
         "Object.Notification_Templates.Label",
         "Object.Notification_Templates.Types",
         "Object.Notification_Templates.URL"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Policies.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Policies",
+        "Object.Policies.Type",
+        "Object.Policies.URL",
+        "Object.Policies.Form_Id",
+        "Object.Policies.Form_Owner_Id",
+        "Object.Policies.Form_Submission_Id",
+        "Object.Policies.Form_Submission_Owner_Id"
       ],
       "propertyKeysMappings": {}
     },
