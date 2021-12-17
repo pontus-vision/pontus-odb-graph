@@ -1045,3 +1045,69 @@ rules:
       - label: Impacted_By_Data_Breach # OR Data_Impacted_By_Data_Breach
         fromVertexName: "Event.Data_Breach"
         toVertexName: "data_sources"
+
+  sharepoint_policies:
+    vertices:
+
+      - label: Object.Policies
+        props:
+          Form_Id: "${id}"
+          Text:
+            val: "${text}"
+            excludeFromUpdate: true
+          Type:
+            val: "${Title}"
+            excludeFromUpdate: true
+
+      - label: Object.Data_Source
+        name: sharepoint
+        props:
+          Name: "SHAREPOINT/POLICIES"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "Policies"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type: "sharepoint/policies"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "Object.Policies"
+        toVertexLabel: "Event.Ingestion"

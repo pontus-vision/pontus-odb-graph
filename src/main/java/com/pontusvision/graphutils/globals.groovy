@@ -523,6 +523,16 @@ class PontusJ2ReportingFunctions {
 
   }
 
+  static String getPolicyText(String policyType) {
+    def neighbours = App.g.V().has().elementMap().toList().collect { item ->
+      item.collectEntries { key, val ->
+        [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+      }
+    }
+
+    return neighbours
+
+  }
   static List<Map<String, String>> neighboursByType(String pg_id, String edgeType) {
     def neighbours = App.g.V(new ORecordId(pg_id)).both(edgeType).elementMap().toList().collect { item ->
       item.collectEntries { key, val ->

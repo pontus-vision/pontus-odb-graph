@@ -742,6 +742,19 @@ schema:
         - name: Types
         - name: URL
 
+    - name: "Object.Policies"
+      partition: false
+      useStatic: false
+      props:
+        - name: Type
+        - name: Text
+          index: false
+        - name: URL
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+
     - name: "Object.Phone_Number"
       partition: false
       useStatic: false
