@@ -290,6 +290,55 @@ public class PVTemplateTests extends AppTest {
       assertEquals("Sim, é indispensável - processo 1", report);
 
 
+//    Testing for LIA's Lawful Basis
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString((
+                      "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
+                              "{% if lia %}" +
+
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification | " +
+                              "default('Favor Preencher o campo <b>Não há outra base legal possível de se utilizar " +
+                              "para alcançar o mesmo propósito?</b> no SharePoint') }}" +
+                              "{% endif %}")
+
+                      .getBytes()));
+
+      reply = res.reportTemplateUpsert(req);
+      templateId = reply.getTemplateId();
+      contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("6"))
+              .id().next().toString();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      assertEquals("Consentimento", report);
+
+
+//    Testing for LIA's Processing Purpose
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString((
+                      "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
+                              "{% if lia %}" +
+
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | " +
+                              "default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito " +
+                              "almejado?</b> no SharePoint') }}" +
+                              "{% endif %}")
+
+                      .getBytes()));
+
+      reply = res.reportTemplateUpsert(req);
+      templateId = reply.getTemplateId();
+      contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("4"))
+              .id().next().toString();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      assertEquals("Sim", report);
+
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);
