@@ -257,8 +257,12 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
           Base64.getEncoder().encodeToString((
               "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
+                  "{% if lia %}" +
+
                "{{ lia[0].Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | " +
-               "default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }}")
+               "default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> " +
+                  "no SharePoint') }}" +
+                  "{% endif %}")
 
               .getBytes()));
 
