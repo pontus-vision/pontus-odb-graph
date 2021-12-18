@@ -234,7 +234,7 @@ public class PVTemplateTests extends AppTest {
   @Test
 //  @SetEnvironmentVariable(key = "ENV_VAR1", value = "VALUE FOR ENV_VAR1")
 //  @SetEnvironmentVariable(key = "ENV_VAR3", value = "VALNODEFAULT")
-  public void test00005TemplateLiaRender() throws InterruptedException {
+  public void test00004TemplateLiaRender() throws InterruptedException {
     try {
 
       jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
@@ -256,7 +256,13 @@ public class PVTemplateTests extends AppTest {
       req.setTemplatePOLEType("Object.Data_Procedures");
       req.setReportTextBase64(
           Base64.getEncoder().encodeToString((
-              "{{ pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ).Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }}")
+              "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
+                  "{% if lia %}" +
+
+               "{{ lia[0].Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | " +
+               "default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> " +
+                  "no SharePoint') }}" +
+                  "{% endif %}")
 
               .getBytes()));
 

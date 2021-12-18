@@ -1981,9 +1981,9 @@ class VisJSGraph {
 
       gtrav
               .or(
-                      __.has('Metadata.Type.Object.AWS_VPC', P.eq('Object.AWS_VPC'))
-                      , __.has('Metadata.Type.Object.AWS_Security_Group', P.eq('Object.AWS_Security_Group'))
-                      , __.has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
+                      __.has('Metadata.Type.Object.System', P.eq('Object.System'))
+                      , __.has('Metadata.Type.Object.Subsystem', P.eq('Object.Subsystem'))
+                      , __.has('Metadata.Type.Object.Module', P.eq('Object.Module'))
               ).dedup()
               .each {
                 String groupStr = it.values('Metadata.Type').next()
@@ -2013,9 +2013,9 @@ class VisJSGraph {
 
       gtrav
               .or(
-                      __.has('Metadata.Type.Object.AWS_VPC', P.eq('Object.AWS_VPC'))
-                      , __.has('Metadata.Type.Object.AWS_Security_Group', P.eq('Object.AWS_Security_Group'))
-                      , __.has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
+                      __.has('Metadata.Type.Object.System', P.eq('Object.System'))
+                      , __.has('Metadata.Type.Object.Subsystem', P.eq('Object.Subsystem'))
+                      , __.has('Metadata.Type.Object.Module', P.eq('Object.Module'))
               )
               .bothE()
               .dedup().each {
@@ -2066,7 +2066,10 @@ class VisJSGraph {
             'Object Notification Templates',
             'Object AWS Instance',
             'Object AWS Security Group',
-            'Object AWS Network Interface'
+            'Object AWS Network Interface',
+            'Object System',
+            'Object Subsystem',
+            'Object Module'
     ]
     int index = levels.findIndexOf {
       (label.equals(it))
