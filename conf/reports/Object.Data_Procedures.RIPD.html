@@ -2427,7 +2427,7 @@ mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
-         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:neighboursByType(context.id,"Has_Legitimate_Interests_Assessment" ).Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }} </o:p></span></p>
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment')[0].Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }} </o:p></span></p>
 
  <br>
 
@@ -2440,7 +2440,7 @@ mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
-         lang=PT-BR style='font-size:11.0pt'><o:p> {{ context.Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification | default('Favor Preencher o campo <b>Não há outra base legal possível de se utilizar para alcançar o mesmo propósito?</b> no SharePoint') }} </o:p></span></p>
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment')[0].Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification | default('Favor Preencher o campo <b>Não há outra base legal possível de se utilizar para alcançar o mesmo propósito?</b> no SharePoint') }} </o:p></span></p>
 
  <br>
 
@@ -2453,7 +2453,7 @@ mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
-         lang=PT-BR style='font-size:11.0pt'><o:p> {{ context.Object_Legitimate_Interests_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }} </o:p></span></p>
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment')[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }} </o:p></span></p>
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
