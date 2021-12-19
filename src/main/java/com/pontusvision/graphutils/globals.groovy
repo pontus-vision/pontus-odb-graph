@@ -13,7 +13,9 @@ import com.orientechnologies.orient.core.record.impl.ODocument
 import com.pontusvision.gdpr.App
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
-import jnr.ffi.annotations.In
+
+
+
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
@@ -258,11 +260,11 @@ class PontusJ2ReportingFunctions {
     def gridData = App.g.V(pg_vid)
     gridData = (queryDir == '<-' ?
             gridData.inE(pg_edgeType).outV() :
-            gridData.outE(pg_edgeType).inV());
+            gridData.outE(pg_edgeType).inV())
 
     gridData = gridData
             .has('Metadata.Type.' + pg_type, P.eq(pg_type))
-            .order();
+            .order()
 
     gridData = (pg_orderCol == null ?
             gridData.by('id') :
@@ -528,6 +530,7 @@ class PontusJ2ReportingFunctions {
             .values("Object.Policies.Text").next().toString()
     return text
   }
+
   static List<Map<String, String>> neighboursByType(String pg_id, String edgeType) {
     def neighbours = App.g.V(new ORecordId(pg_id)).both(edgeType).elementMap().toList().collect { item ->
       item.collectEntries { key, val ->
@@ -538,6 +541,7 @@ class PontusJ2ReportingFunctions {
     return neighbours
 
   }
+
   static String htmlTableCustomHeader(Map<String, String> map, String tableHeader, String tableFooter) {
     StringBuilder htmlBuilder = new StringBuilder()
     htmlBuilder.append(tableHeader)
@@ -665,7 +669,7 @@ class PontusJ2ReportingFunctions {
 
 //  | Data Policy Type | Data Policy Frequency | Data Policy Retention Period|
 
-  static List<Map<String,String>> getDataPoliciesForDataProcess(String processId) {
+  static List<Map<String, String>> getDataPoliciesForDataProcess(String processId) {
     def ret = App.g.V(new com.orientechnologies.orient.core.id.ORecordId(processId))
             .out('Has_Data_Source') // Data Source
             .out('Has_Policy')  // Object.Data_Policy
@@ -679,34 +683,34 @@ class PontusJ2ReportingFunctions {
     return ret as List<Map<String, String>>
 
   }
-  static Integer getHiMedLowNumber (String hml){
+
+  static Integer getHiMedLowNumber(String hml) {
     String lcHML = hml.toLowerCase()
 
-    if (lcHML.startsWith("h")||lcHML.startsWith("a")) {
+    if (lcHML.startsWith("h") || lcHML.startsWith("a")) {
       return 15
-    }
-    else if (lcHML.startsWith("m")){
+    } else if (lcHML.startsWith("m")) {
       return 10
     }
     return 5
   }
 
-  static String getRiskLevelColour(String riskLevelNumStr){
+  static String getRiskLevelColour(String riskLevelNumStr) {
 
-    if (!riskLevelNumStr){
+    if (!riskLevelNumStr) {
       return 'blue'
     }
-    Integer riskLevelNum = Integer.parseInt(riskLevelNumStr);
-    if (riskLevelNum >= 150){
+    Integer riskLevelNum = Integer.parseInt(riskLevelNumStr)
+    if (riskLevelNum >= 150) {
       return 'red'
     }
-    if (riskLevelNum <= 50 ){
+    if (riskLevelNum <= 50) {
       return 'green'
     }
     return 'orange'
   }
 
-  static List<Map<String,String>> getRisksForDataProcess(String processId) {
+  static List<Map<String, String>> getRisksForDataProcess(String processId) {
     def ret = App.g.V(new ORecordId(processId))
             ?.out('Has_Data_Source')
             ?.out('Has_Risk')
@@ -718,22 +722,22 @@ class PontusJ2ReportingFunctions {
     }
 
 
-    for (Map<String, String> entry : ret as List<Map<String, String>> ){
+    for (Map<String, String> entry : ret as List<Map<String, String>>) {
       String prob = entry.get('Object_Risk_Data_Source_Probability')
-      String imp  = entry.get('Object_Risk_Data_Source_Impact')
-      if ( prob && imp){
-        Integer probNum = PontusJ2ReportingFunctions.getHiMedLowNumber(prob);
-        Integer impNum = PontusJ2ReportingFunctions.getHiMedLowNumber(imp);
+      String imp = entry.get('Object_Risk_Data_Source_Impact')
+      if (prob && imp) {
+        Integer probNum = PontusJ2ReportingFunctions.getHiMedLowNumber(prob)
+        Integer impNum = PontusJ2ReportingFunctions.getHiMedLowNumber(imp)
         Integer riskNum = probNum * impNum
         entry.put('Object_Risk_Data_Source_Probability_Num', probNum.toString())
         entry.put('Object_Risk_Data_Source_Impact_Num', impNum.toString())
         entry.put('Object_Risk_Data_Source_Risk_Level_Num', riskNum.toString())
       }
       String probRes = entry.get('Object_Risk_Data_Source_Residual_Probability')
-      String impRes  = entry.get('Object_Risk_Data_Source_Residual_Impact')
-      if ( probRes && impRes){
-        Integer probNum = PontusJ2ReportingFunctions.getHiMedLowNumber(probRes);
-        Integer impNum = PontusJ2ReportingFunctions.getHiMedLowNumber(impRes);
+      String impRes = entry.get('Object_Risk_Data_Source_Residual_Impact')
+      if (probRes && impRes) {
+        Integer probNum = PontusJ2ReportingFunctions.getHiMedLowNumber(probRes)
+        Integer impNum = PontusJ2ReportingFunctions.getHiMedLowNumber(impRes)
         Integer riskNum = probNum * impNum
         entry.put('Object_Risk_Data_Source_Residual_Probability_Num', probNum.toString())
         entry.put('Object_Risk_Data_Source_Residual_Impact_Num', impNum.toString())
@@ -747,7 +751,7 @@ class PontusJ2ReportingFunctions {
 
   }
 
-  static List<Map<String,String>> getRiskMitigationsForRisk(String riskId) {
+  static List<Map<String, String>> getRiskMitigationsForRisk(String riskId) {
     def ret = App.g.V(new ORecordId(riskId))
             ?.in('Mitigates_Risk')
             ?.dedup()
@@ -758,15 +762,14 @@ class PontusJ2ReportingFunctions {
     }
 
 
-
     return ret as List<Map<String, String>>
 
   }
 
   static String getRiskMitigationsForRiskAsHTMLTable(String riskId, String style) {
     List<Map<String, String>> riskMigitations = getRiskMitigationsForRisk(riskId)
-    StringBuilder sb = new StringBuilder("<table style='${style?:'border=1px;'}'>");
-    for (Map<String,String> riskMitigation : riskMigitations){
+    StringBuilder sb = new StringBuilder("<table style='${style ?: 'border=1px;'}'>")
+    for (Map<String, String> riskMitigation : riskMigitations) {
 //      sb.append("<tr><td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Mitigation_Id')}</td>")
       sb.append("<tr><td>${riskMitigation.get('Object_Risk_Mitigation_Data_Source_Description')}</td></tr>")
     }
@@ -777,19 +780,20 @@ class PontusJ2ReportingFunctions {
     return sb.toString()
 
   }
+
   static String getEnv(String envVar) {
-    return System.getenv(envVar);
+    return System.getenv(envVar)
   }
 
-  static String formatDateNow(String pattern){
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern ( pattern );
+  static String formatDateNow(String pattern) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern)
 
-    return  formatter.format ( LocalDate.now());
+    return formatter.format(LocalDate.now())
 
   }
 
   static String getEnvVarDefVal(String envVar, String defVal) {
-    return getEnv(envVar)?:defVal;
+    return getEnv(envVar) ?: defVal
   }
 
   static String getEnvVar(String envVar) {
@@ -1984,6 +1988,7 @@ class VisJSGraph {
                       __.has('Metadata.Type.Object.System', P.eq('Object.System'))
                       , __.has('Metadata.Type.Object.Subsystem', P.eq('Object.Subsystem'))
                       , __.has('Metadata.Type.Object.Module', P.eq('Object.Module'))
+                      , __.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
               ).dedup()
               .each {
                 String groupStr = it.values('Metadata.Type').next()
@@ -2016,6 +2021,7 @@ class VisJSGraph {
                       __.has('Metadata.Type.Object.System', P.eq('Object.System'))
                       , __.has('Metadata.Type.Object.Subsystem', P.eq('Object.Subsystem'))
                       , __.has('Metadata.Type.Object.Module', P.eq('Object.Module'))
+                      , __.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
               )
               .bothE()
               .dedup().each {
