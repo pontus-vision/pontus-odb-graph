@@ -252,7 +252,7 @@ public class PVTemplateTests extends AppTest {
       Resource res = new Resource();
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
-      req.setTemplateName("TEST");
+      req.setTemplateName("TEST1234");
       req.setTemplatePOLEType("Object.Data_Procedures");
       req.setReportTextBase64(
           Base64.getEncoder().encodeToString((
