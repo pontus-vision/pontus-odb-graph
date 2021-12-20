@@ -4142,7 +4142,7 @@ the end of the process.
     long numItems = App.g.V().has('Metadata.Type.Event.Data_Breach', eq('Event.Data_Breach'))
             .count().next()
 
-
+//  debugger breakpoint is blocked 🚫 .... don't know why ?!?!
     long numOpenDataBreachDataStolen =
             App.g.V()
                     .has('Event.Data_Breach.Status', eq('Open'))
@@ -4153,7 +4153,7 @@ the end of the process.
                             )
                     )
                     .count().next()
-
+//  debugger breakpoint is blocked 🚫 .... don't know why ?!?!
     long numOpenDataBreachDataLost =
             App.g.V()
                     .has('Event.Data_Breach.Status', eq('Open'))
