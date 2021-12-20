@@ -84,6 +84,9 @@ updatereq:
         - name: Object.Data_Policy.Retention_Period
           val: ${Pol_x00ed_tica_x0020_de_x0020_Re}
           mandatoryInSearch: True
+        - name: Object.Data_Policy.Type
+          val: ${Title}
+          mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
