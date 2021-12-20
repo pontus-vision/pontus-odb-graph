@@ -138,6 +138,27 @@
         ]
       },
       {
+        "label": "Object.Legitimate_Interests_Assessment",
+        "condition": "${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d}",
+        "props": [
+          {
+            "name": "Object.Legitimate_Interests_Assessment.Personal_Data_Treatment",
+            "val": "${Essetratamentodedadospessoais_x0}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Legitimate_Interests_Assessment.Lawful_Basis_Justification",
+            "val": "${N_x00e3_oh_x00e1_outrabaselegalp}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object.Legitimate_Interests_Assessment.Processing_Purpose",
+            "val": "${Esse_x0020_processamento_x0020_d}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
         "label": "Event.Ingestion",
         "props": [
           {
@@ -244,6 +265,11 @@
         "label": "Has_Data_Source",
         "fromVertexLabel": "Object.Data_Procedures",
         "toVertexName": "attached_data_sources"
+      },
+      {
+        "label": "Has_Legitimate_Interests_Assessment",
+        "fromVertexLabel": "Object.Data_Procedures",
+        "toVertexLabel": "Object.Legitimate_Interests_Assessment"
       }
     ]
   }

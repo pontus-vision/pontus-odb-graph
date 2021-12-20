@@ -613,7 +613,7 @@ public class PVBasicTest extends AppTest {
   }
 
   @Test
-  public void test00013TotvsProtheusSa2Fornecedores() throws InterruptedException {
+  public void test00013TotvsProtheusSa2Fornecedor() throws InterruptedException {
 
     try {
 
@@ -707,7 +707,7 @@ public class PVBasicTest extends AppTest {
 
 // A new version of this Test can be found @ PVTotvsTest.java
   @Test
-  public void test00015TotvsProtheusRaFuncionarios() throws InterruptedException {
+  public void test00015TotvsProtheusRaFuncionario() throws InterruptedException {
 
     try {
 

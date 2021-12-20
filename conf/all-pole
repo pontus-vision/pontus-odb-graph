@@ -393,6 +393,13 @@ Object.Notification_Templates.Label
 Object.Notification_Templates.Text
 Object.Notification_Templates.Types
 Object.Notification_Templates.URL
+Object.Policies.Type
+Object.Policies.Text
+Object.Policies.URL
+Object.Policies.Form_Id
+Object.Policies.Form_Owner_Id
+Object.Policies.Form_Submission_Id
+Object.Policies.Form_Submission_Owner_Id
 Object.Phone_Number.Last_7_Digits
 Object.Phone_Number.Numbers_Only
 Object.Phone_Number.Raw
@@ -410,6 +417,9 @@ Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage
 Object.Privacy_Impact_Assessment.Risk_To_Corporation
 Object.Privacy_Impact_Assessment.Risk_To_Individuals
 Object.Privacy_Impact_Assessment.Start_Date
+Object.Legitimate_Interests_Assessment.Personal_Data_Treatment
+Object.Legitimate_Interests_Assessment.Lawful_Basis_Justification
+Object.Legitimate_Interests_Assessment.Processing_Purpose
 Object.Risk_Data_Source.Risk_Id
 Object.Risk_Data_Source.Description
 Object.Risk_Data_Source.Probability

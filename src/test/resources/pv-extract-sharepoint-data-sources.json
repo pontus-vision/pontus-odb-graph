@@ -295,7 +295,7 @@
         "_ComplianceTagUserId": "",
         "field_Sistema": "ERPSYS1",
         "field_Tipo_x0020_Sistema": "Onprem",
-        "field_Tabela": "/sra_funcionario",
+        "field_Tabela": "/ra_funcionario",
         "field_Descri_x0020__x0020_o": "Sistema de ERP para cadastro dos colaboradores",
         "field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o": "1 hour",
         "field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o": "25 years",

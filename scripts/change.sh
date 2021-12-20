@@ -1,6 +1,10 @@
 #!/bin/bash
 
-cat file.txt | \
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+cd "$DIR"
+
+
+cat ../conf/reports/Object.Data_Procedures.RIPD.html | \
 sed -e 's/Ó/\&Oacute;/g' | \
 sed -e 's/Õ/\&Otilde;/g' | \
 sed -e 's/Ô/\&Ocirc;/g' | \
@@ -36,6 +40,6 @@ sed -e 's/ì/\&igrave;/g' | \
 sed -e 's/Ç/\&Ccedil;/g' | \
 sed -e 's/ç/\&ccedil;/g' | \
 sed -e 's/§/\&sect;/g' | \
-sed -e 's/º/\&ordm;/g' | > file2.txt
+sed -e 's/º/\&ordm;/g'  > file2.txt
    
    

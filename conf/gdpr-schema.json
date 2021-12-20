@@ -2549,6 +2549,51 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Policies",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Text",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.URL",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Form_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Form_Submission_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Policies.Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Object.Phone_Number",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -2651,6 +2696,31 @@
     {
       "name": "Object.Privacy_Impact_Assessment.Start_Date",
       "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Legitimate_Interests_Assessment",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Legitimate_Interests_Assessment.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Legitimate_Interests_Assessment.Personal_Data_Treatment",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Legitimate_Interests_Assessment.Lawful_Basis_Justification",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Legitimate_Interests_Assessment.Processing_Purpose",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -3686,12 +3756,22 @@
       "useStatic": false
     },
     {
+      "name": "Object.Policies",
+      "partition": false,
+      "useStatic": false
+    },
+    {
       "name": "Object.Phone_Number",
       "partition": false,
       "useStatic": false
     },
     {
       "name": "Object.Privacy_Impact_Assessment",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Legitimate_Interests_Assessment",
       "partition": false,
       "useStatic": false
     },
@@ -3894,6 +3974,11 @@
     },
     {
       "name": "Has_Lawful_Basis_On",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Has_Legitimate_Interests_Assessment",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -5007,6 +5092,23 @@
       "propertyKeysMappings": {}
     },
     {
+      "name": "Object.Policies.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Policies",
+        "Object.Policies.Type",
+        "Object.Policies.URL",
+        "Object.Policies.Form_Id",
+        "Object.Policies.Form_Owner_Id",
+        "Object.Policies.Form_Submission_Id",
+        "Object.Policies.Form_Submission_Owner_Id"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
       "name": "Object.Phone_Number.MixedIdx",
       "composite": false,
       "unique": false,
@@ -5042,6 +5144,20 @@
         "Object.Privacy_Impact_Assessment.Risk_To_Corporation",
         "Object.Privacy_Impact_Assessment.Risk_To_Individuals",
         "Object.Privacy_Impact_Assessment.Start_Date"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Legitimate_Interests_Assessment.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Legitimate_Interests_Assessment",
+        "Object.Legitimate_Interests_Assessment.Personal_Data_Treatment",
+        "Object.Legitimate_Interests_Assessment.Lawful_Basis_Justification",
+        "Object.Legitimate_Interests_Assessment.Processing_Purpose"
       ],
       "propertyKeysMappings": {}
     },

@@ -742,6 +742,19 @@ schema:
         - name: Types
         - name: URL
 
+    - name: "Object.Policies"
+      partition: false
+      useStatic: false
+      props:
+        - name: Type
+        - name: Text
+          index: false
+        - name: URL
+        - name: Form_Id
+        - name: Form_Owner_Id
+        - name: Form_Submission_Id
+        - name: Form_Submission_Owner_Id
+
     - name: "Object.Phone_Number"
       partition: false
       useStatic: false
@@ -772,6 +785,13 @@ schema:
         - name: Start_Date
           dataType: Date
 
+    - name: "Object.Legitimate_Interests_Assessment"
+      partition: false
+      useStatic: false
+      props:
+        - name: Personal_Data_Treatment
+        - name: Lawful_Basis_Justification
+        - name: Processing_Purpose
 
     - name: "Object.Risk_Data_Source"
       partition: false
@@ -1101,6 +1121,7 @@ schema:
   - name: Has_Ingestion_Event
   - name: Has_Ingress_Peering
   - name: Has_Lawful_Basis_On
+  - name: Has_Legitimate_Interests_Assessment
   - name: Has_Link
   - name: Has_NLP_Events
   - name: Has_Mobile
