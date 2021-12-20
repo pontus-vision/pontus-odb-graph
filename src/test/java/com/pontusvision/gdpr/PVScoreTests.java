@@ -83,7 +83,7 @@ public class PVScoreTests extends AppTest {
       long score = (long) gdpr.getDataBreachesScores(retVals);
 
 //    O valor retornado é 37L .... don't know why ?!?!
-      assertEquals(37L, score);
+      assertEquals(37L, score, "Expected to lose 63 points because there is one Customer Data Stolen (External)");
 
 
     } catch (Exception e) {
