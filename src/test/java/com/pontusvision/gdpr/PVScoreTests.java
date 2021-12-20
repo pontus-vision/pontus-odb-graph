@@ -70,4 +70,29 @@ public class PVScoreTests extends AppTest {
 
   }
 
+  @Test
+  public void test00002DataBreachesScores() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json", "$.queryResp[*].fields",
+              "sharepoint_data_breaches");
+
+
+      Map<String, Long> retVals = new HashMap<>();
+
+      long score = (long) gdpr.getDataBreachesScores(retVals);
+
+//    O valor retornado é 37L .... don't know why ?!?!
+      assertEquals(37L, score);
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+  
 }
