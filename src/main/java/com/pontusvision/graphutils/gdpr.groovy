@@ -3862,10 +3862,9 @@ the end of the process.
 
   }
 
-  static long oneYear = 24 * 3600000 * 365
-  static def getAwarenessScores(def scoresMap) {
+  static long oneYear = 24L * 3600000L * 365L
+  static long getAwarenessScores(def scoresMap) {
 
-    def retVal = ''
     long scoreValue
     long scoreValue2
     try {
@@ -3921,7 +3920,7 @@ the end of the process.
 
       scoreValue2 = 100L
 
-      if (delta > oneYear) {
+      if (delta > gdpr.oneYear) {
         scoreValue2 -= 50
       }
 
