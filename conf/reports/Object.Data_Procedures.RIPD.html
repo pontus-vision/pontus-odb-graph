@@ -1542,7 +1542,7 @@ Calibri,sans-serif;mso-bidi-font-family:Tahoma'><o:p>&nbsp;</o:p></span></p>
  <p class=Textbody align=center style='margin-top:6.0pt;text-align:center'><span
          lang=PT-BR style='font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;
 color:#5B9BD5'>
-{{  pv:getEnvVarDefVal('PV_RIPD_CITY', 'São Paulo')  }}
+{{  pv:getEnvVarDefVal('PV_RIPD_CITY', 'S&atilde;o Paulo')  }}
 </span><span lang=PT-BR style='font-family:Calibri,sans-serif;
 mso-bidi-font-family:Tahoma'>,<span style='color:#5B9BD5'>
 {{  pv:formatDateNow('dd')  }}{# Dia #}
@@ -2002,7 +2002,7 @@ Tahoma;color:#5B9BD5'>  Tratamento de dados que possa resultar em algum tipo de
 dano patrimonial, moral, individual ou coletivo aos titulares de dados, se
 houver vazamento (LGPD, art. 42);<o:p></o:p></span></p>
 
- {% if 'TRATAMENTO DE DADOS PELA ADMINISTRAÇÃO' in lawfulBasis.toString() %}
+ {% if 'TRATAMENTO DE DADOS PELA ADMINISTRA&Ccedil;&Atilde;O' in lawfulBasis.toString() %}
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt'><span
          lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:
@@ -2013,7 +2013,7 @@ atividades de investiga&ccedil;&atilde;o e repress&atilde;o de infra&ccedil;&oti
 
  {% endif %}
 
- {% if 'LEGÍTIMO INTERESSE' in lawfulBasis.toString() %}
+ {% if 'LEG&Iacute;TIMO INTERESSE' in lawfulBasis.toString() %}
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt'><span
@@ -2038,7 +2038,7 @@ margin-left:0cm;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85
 Tahoma;color:#5B9BD5'>  Reformas administrativas que implicam em nova estrutura
 organizacional resultante da incorpora&ccedil;&atilde;o, fus&atilde;o ou cis&atilde;o de &oacute;rg&atilde;os ou
 entidades.<o:p></o:p></span></p>
-{% endif %}
+ {% endif %}
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt'><span
          lang=PT-BR><o:p>&nbsp;</o:p></span></p>
@@ -2397,23 +2397,26 @@ margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5p
 Tahoma;color:#5B9BD5'>a&ccedil;&otilde;es e informa&ccedil;&otilde;es espec&iacute;ficas em rela&ccedil;&atilde;o ao tratamento
 realizado sobre os dados pessoais.&gt;</span></p>-->
 
- <!-- TODO: Finalizar a seção 5 com os tópicos restantes (abaixo)
-Como será garantida a qualidade [exatidão, clareza, relevância e atualização dos dados] e minimização dos dados.
+ <!-- TODO: Finalizar a se&ccedil;&atilde;o 5 com os t&oacute;picos restantes (abaixo)
+Como ser&aacute; garantida a qualidade [exatid&atilde;o, clareza, relev&acirc;ncia e atualiza&ccedil;&atilde;o dos dados] e minimiza&ccedil;&atilde;o dos dados.
 
-Quais medidas são adotadas a fim de assegurar que o operador (LGPD, art. 5º, VII) realize o tratamento de dados pessoais conforme a LGPD e respeite os critérios estabelecidos pela instituição que exerce o papel de controlador (LGPD, art. 5º, VI).
+Quais medidas s&atilde;o adotadas a fim de assegurar que o operador (LGPD, art. 5&ordm;, VII) realize o tratamento de dados pessoais conforme a LGPD e respeite os crit&eacute;rios estabelecidos pela institui&ccedil;&atilde;o que exerce o papel de controlador (LGPD, art. 5&ordm;, VI).
 
-Como estão implementadas as medidas que asseguram o direito do titular dos dados pessoais obter do controlador o previsto pelo art. 18 da LGPD.
+Como est&atilde;o implementadas as medidas que asseguram o direito do titular dos dados pessoais obter do controlador o previsto pelo art. 18 da LGPD.
 
-Como a instituição pretende fornecer informações de privacidade para os titulares dos dados pessoais.
+Como a institui&ccedil;&atilde;o pretende fornecer informa&ccedil;&otilde;es de privacidade para os titulares dos dados pessoais.
 
-Quais são as salvaguardas para as transferências internacionais de dados.> < O artigo 18 da LGPD é bem extenso e trata do direito que o titular tem de requisitar do controlador
-ações e informações específicas em relação ao tratamento realizado sobre os dados pessoais.>  -->
+Quais s&atilde;o as salvaguardas para as transfer&ecirc;ncias internacionais de dados.> < O artigo 18 da LGPD &eacute; bem extenso e trata do direito que o titular tem de requisitar do controlador
+a&ccedil;&otilde;es e informa&ccedil;&otilde;es espec&iacute;ficas em rela&ccedil;&atilde;o ao tratamento realizado sobre os dados pessoais.>  -->
+
+ {% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}
+ {% if lia %}
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:1.35pt;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt;
 background:white'><span lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
 mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
-  Fundamentação legal para o tratamento dos dados pessoais embasado no legítimo interesse do controlador (LGPD, art. 10), demonstramos/demonstra-se que:
+  Fundamenta&ccedil;&atilde;o legal para o tratamento dos dados pessoais embasado no leg&iacute;timo interesse do controlador (LGPD, art. 10), demonstramos/demonstra-se que:
  </span></p>
 
  <br>
@@ -2422,12 +2425,12 @@ mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
 margin-left:1.35pt;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt;
 background:white'><span lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
 mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
-  Esse tratamento de dados pessoais é indispensável:
+  Esse tratamento de dados pessoais &eacute; indispens&aacute;vel:
  </span></p>
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
-         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment')[0].Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }} </o:p></span></p>
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ lia[0].Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais &eacute; indispens&aacute;vel?</b> na Lista <b>Mapeamento de Processo</b> no SharePoint') }} </o:p></span></p>
 
  <br>
 
@@ -2435,12 +2438,12 @@ margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5p
 margin-left:1.35pt;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt;
 background:white'><span lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
 mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
-  Não há outra base legal possível de se utilizar para alcançar o mesmo propósito:
+  N&atilde;o h&aacute; outra base legal poss&iacute;vel de se utilizar para alcan&ccedil;ar o mesmo prop&oacute;sito:
  </span></p>
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
-         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment')[0].Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification | default('Favor Preencher o campo <b>Não há outra base legal possível de se utilizar para alcançar o mesmo propósito?</b> no SharePoint') }} </o:p></span></p>
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ lia[0].Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification | default('Favor Preencher o campo <b>N&atilde;o h&aacute; outra base legal poss&iacute;vel de se utilizar para alcan&ccedil;ar o mesmo prop&oacute;sito?</b> na Lista <b>Mapeamento de Processo</b> no SharePoint') }} </o:p></span></p>
 
  <br>
 
@@ -2448,20 +2451,79 @@ margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5p
 margin-left:1.35pt;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt;
 background:white'><span lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
 mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
-  Esse processamento de fato auxilia no propósito almejado:
+  Esse processamento de fato auxilia no prop&oacute;sito almejado:
  </span></p>
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
-         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment')[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }} </o:p></span></p>
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no prop&oacute;sito almejado?</b> na Lista <b>Mapeamento de Processo</b> no SharePoint') }} </o:p></span></p>
 
-<!--  Not sure where to add this part of RIPD "Políticas" so I just dropped it here !-->
+ {% endif %}
 
  <br>
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
+margin-left:1.35pt;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt;
+background:white'><span lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
+mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
+  A garantia da qualidade (exatid&atilde;o, clareza, relev&acirc;ncia e atualiza&ccedil;&atilde;o dos dados) ser&aacute; cumprida pela seguinte pol&iacute;tica:
+ </span></p>
+
+ <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
-         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:getPolicyText('policyType') }} </o:p></span></p>
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:getPolicyText('Qualidade') | default('Favor Preencher o campo <b>Qualidade</b> na Lista <b>Pol&iacute;ticas</b> no SharePoint') }} </o:p></span></p>
+
+ <br>
+
+ <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
+margin-left:1.35pt;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt;
+background:white'><span lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
+mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
+  As medidas adotadas a fim de assegurar que o operador (LGPD, art. 5&ordm;, VII) realize o tratamento de dados pessoais conforme a LGPD e respeite os crit&eacute;rios estabelecidos pela institui&ccedil;&atilde;o que exerce o papel de controlador (LGPD, art. 5&ordm;, VI) s&atilde;o:
+ </span></p>
+
+ <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
+margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:getPolicyText('Seguranca e Tratamento') | default('Favor Preencher o campo <b>Seguranca e Tratamento</b> na Lista <b>Pol&iacute;ticas</b> no SharePoint') }} </o:p></span></p>
+
+ <br>
+
+ <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
+margin-left:1.35pt;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt;
+background:white'><span lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
+mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
+  As medidas que asseguram o direito do titular dos dados pessoais obter do controlador o previsto pelo art. 18 da LGPD s&atilde;o:
+ </span></p>
+
+ <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
+margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:getPolicyText('Direitos do Titular') | default('Favor Preencher o campo <b>Direitos do Titular</b> na Lista <b>Pol&iacute;ticas</b> no SharePoint')}} </o:p></span></p>
+
+ <br>
+
+ <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
+margin-left:1.35pt;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt;
+background:white'><span lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
+mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
+  A institui&ccedil;&atilde;o pretende fornecer informa&ccedil;&otilde;es de privacidade para os titulares dos dados pessoais com a seguinte pol&iacute;tica:
+ </span></p>
+
+ <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
+margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:getPolicyText('Fornecimento de Informacoes ao Titular') | default('Favor Preencher o campo <b>Fornecimento de Informacoes ao Titular</b> na Lista <b>Pol&iacute;ticas</b> no SharePoint') }} </o:p></span></p>
+
+ <br>
+
+ <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
+margin-left:1.35pt;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85pt 99.6pt 112.35pt lined 368.15pt;
+background:white'><span lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
+mso-bidi-font-family:Tahoma;color:#5B9BD5;background:white'>
+  As salvaguardas para as transfer&ecirc;ncias internacionais de dados s&atilde;o:
+ </span></p>
+
+ <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
+margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
+         lang=PT-BR style='font-size:11.0pt'><o:p> {{ pv:getPolicyText('Transferencia Internacional de Dados') | default('Favor Preencher o campo <b>Transferencia Internacional de Dados</b> na Lista <b>Pol&iacute;ticas</b> no SharePoint') }} </o:p></span></p>
 
  <p class=Standard style='margin-top:2.85pt;margin-right:0cm;margin-bottom:2.85pt;
 margin-left:0cm;text-align:justify;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
@@ -2926,19 +2988,19 @@ color:blue'><o:p>&nbsp;</o:p></span></b></p>
   {% set trsVal="font-size:10.0pt;font-family:Calibri,sans-serif;border:solid black 1.0pt;border-top:none;mso-border-top-alt:solid black .5pt;mso-border-alt:solid black .5pt;color:white;padding:0cm 5.4pt 0cm 5.4pt" %}
   {% for risk in risks %}
 
-    {% if (risk.Object_Risk_Data_Source_Residual_Risk_Level_Num|int) < (risk.Object_Risk_Data_Source_Risk_Level_Num|int) %}
-      {% set riskMitImpact='Reduziu' %}
-    {% elif (risk.Object_Risk_Data_Source_Residual_Risk_Level_Num|int) == (risk.Object_Risk_Data_Source_Risk_Level_Num|int) %}
-      {% set riskMitImpact='Igual' %}
-    {% else %}
-      {% set riskMitImpact='Aumentou' %}
-    {% endif %}
+  {% if (risk.Object_Risk_Data_Source_Residual_Risk_Level_Num|int) < (risk.Object_Risk_Data_Source_Risk_Level_Num|int) %}
+  {% set riskMitImpact='Reduziu' %}
+  {% elif (risk.Object_Risk_Data_Source_Residual_Risk_Level_Num|int) == (risk.Object_Risk_Data_Source_Risk_Level_Num|int) %}
+  {% set riskMitImpact='Igual' %}
+  {% else %}
+  {% set riskMitImpact='Aumentou' %}
+  {% endif %}
 
   {{ "<tr style='%s'><td style='%s'>%s-%s</td><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s;background-color:%s;'>%s</td><td style='%s'>%s</td></tr>"| format(trs,trs,risk.Object_Risk_Data_Source_Risk_Id, risk.Object_Risk_Data_Source_Description, trs, pv:getRiskMitigationsForRiskAsHTMLTable(risk.id,''), trs, riskMitImpact, trs, risk.Object_Risk_Data_Source_Residual_Probability_Num, trs, risk.Object_Risk_Data_Source_Residual_Impact_Num, trsVal, pv:getRiskLevelColour(risk.Object_Risk_Data_Source_Residual_Risk_Level_Num), risk.Object_Risk_Data_Source_Residual_Risk_Level_Num, trs,'Sim' ) }}
 
   {% endfor %}
-  </table>
- 
+ </table>
+
 
 
 
@@ -3314,4 +3376,3 @@ mso-bidi-font-family:Tahoma'><o:p>&nbsp;</o:p></span></p>
 </body>
 
 </html>
-      
