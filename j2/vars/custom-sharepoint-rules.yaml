@@ -206,7 +206,7 @@ rules:
         props:
           Update_Frequency: "${Frequ_x00ea_ncia_x0020_de_x0020_}"
           Retention_Period: "${Pol_x00ed_tica_x0020_de_x0020_Re}"
-#          Type: "${Title}"
+          Type: "${Title}"
 
       - label: Event.Ingestion
         props:
