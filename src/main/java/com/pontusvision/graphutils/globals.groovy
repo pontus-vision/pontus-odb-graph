@@ -13,9 +13,7 @@ import com.orientechnologies.orient.core.record.impl.ODocument
 import com.pontusvision.gdpr.App
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
-
-
-
+import groovy.json.StringEscapeUtils
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
@@ -526,9 +524,14 @@ class PontusJ2ReportingFunctions {
   }
 
   static String getPolicyText(String policyType) {
-    def text = App.g.V().has("Object.Policies.Type", P.eq(policyType))
-            .values("Object.Policies.Text").next().toString()
-    return text
+    try {
+      def text = App.g.V().has("Object.Policies.Type", P.eq(policyType))
+              .values("Object.Policies.Text").next().toString()
+      return text;
+    } catch(Throwable t){
+      return null;
+    }
+
   }
 
   static List<Map<String, String>> neighboursByType(String pg_id, String edgeType) {
@@ -1977,7 +1980,7 @@ class VisJSGraph {
 
       GraphTraversal gtrav = (pg_vid == "-1") ?
               App.g.V() :
-              App.g.V(new ORecordId(pg_vid)).repeat(__.inE().subgraph('subGraph').outV())
+              App.g.V(new ORecordId(pg_vid)).repeat(__.outE().subgraph('subGraph').bothV())
                       .times(4).cap('subGraph').next().traversal().V()
 
 
@@ -1992,12 +1995,12 @@ class VisJSGraph {
               ).dedup()
               .each {
                 String groupStr = it.values('Metadata.Type').next()
-                String labelStr = it.values(groupStr + '.Id').next()
+                String labelStr = it.values(groupStr + '.Name').next()
                 ORID vid = (ORID) it.id()
                 sb.append(counter == 0 ? '{' : ',{')
                         .append('"id":"').append(vid)
                         .append('","group":"').append(groupStr)
-                        .append('","label":"').append(labelStr)
+                        .append('","label":"').append(StringEscapeUtils.escapeJavaScript(labelStr))
                         .append('","shape":"').append('image')
                         .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
                         .append('"}')
@@ -2012,7 +2015,7 @@ class VisJSGraph {
       counter = 0
       gtrav = (pg_vid == "-1") ?
               App.g.V() :
-              App.g.V(pg_vid).repeat(__.inE().subgraph('subGraph').outV())
+              App.g.V(pg_vid).repeat(__.outE().subgraph('subGraph').bothV())
                       .times(4).cap('subGraph').next().traversal().V()
 
 
@@ -2023,7 +2026,7 @@ class VisJSGraph {
                       , __.has('Metadata.Type.Object.Module', P.eq('Object.Module'))
                       , __.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
               )
-              .bothE()
+              .bothE('Has_Module', 'Has_Subsystem', 'Has_System')
               .dedup().each {
         sb.append(counter == 0 ? '{' : ',{')
                 .append('"from": "').append(it.inVertex().id())

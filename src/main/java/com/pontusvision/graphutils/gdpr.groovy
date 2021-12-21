@@ -3862,21 +3862,28 @@ the end of the process.
 
   }
 
+  static long oneYear = 24L * 3600000L * 365L
+  static long getAwarenessScores(def scoresMap) {
 
-  static def getAwarenessScores(def scoresMap) {
-
-    def retVal = ''
     long scoreValue
+    long scoreValue2
     try {
-      long numEvents = App.g.V().has('Metadata.Type.Object.Awareness_Campaign', eq('Object.Awareness_Campaign')).in().as('events').count().next()
+      def latestEntryId = App.g.V().has('Metadata.Type.Object.Awareness_Campaign', eq('Object.Awareness_Campaign'))
+              .order().by('Object.Awareness_Campaign.Start_Date',Order.desc).range(0,1).id().next()
 
-      def map = App.g.V().has('Metadata.Type.Object.Awareness_Campaign', eq('Object.Awareness_Campaign')).in().as('events').groupCount().by('Event.Training.Status').next()
+      if (!latestEntryId){
+        throw new Exception("Could not find campaign");
+      }
+
+      long numEvents = App.g.V(latestEntryId).in().as('events').count().next()
+
+      def map = App.g.V(latestEntryId).in().as('events').groupCount().by('Event.Training.Status').next()
 
 
       long failedCount = map.get('Failed') == null ? 0 : map.get('Failed')
+//    Status 'Second••Reminder' has 2 white spaces !!
       long secondReminder = map.get('Second  Reminder') == null ? 0 : map.get('Second  Reminder')
       long firstReminder = map.get('Reminder Sent') == null ? 0 : map.get('Reminder Sent')
-
 
       scoreValue = 100L
       if (numEvents > 0) {
@@ -3907,14 +3914,25 @@ the end of the process.
         scoreValue = 0L
       }
 
+      def date = App.g.V(latestEntryId).values('Object.Awareness_Campaign.Start_Date').next()
+      Date today = new Date()
+      long delta = today.getTime() - date.getTime()
+
+      scoreValue2 = 100L
+
+      if (delta > gdpr.oneYear) {
+        scoreValue2 -= 50
+      }
 
     }
     catch (Throwable t) {
       scoreValue = 0L
+      scoreValue2 = 0L
     }
-    scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness'), scoreValue)
+    long scoreRetVal  = (long)(scoreValue2 + scoreValue)/2L
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness'), scoreRetVal)
 
-    return scoreValue
+    return scoreRetVal
   }
 
 
@@ -4123,7 +4141,6 @@ the end of the process.
   static def getDataBreachesScores(def scoresMap) {
     long numItems = App.g.V().has('Metadata.Type.Event.Data_Breach', eq('Event.Data_Breach'))
             .count().next()
-
 
     long numOpenDataBreachDataStolen =
             App.g.V()

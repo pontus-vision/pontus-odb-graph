@@ -50,6 +50,7 @@ import javax.ws.rs.core.Response;
 import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -1002,7 +1003,15 @@ status: "success", message: "Data source is working", title: "Success"
 
     String templateTextBase64 = App.g.V().has("Object.Notification_Templates.Id", P.eq(templateId))
         .values("Object.Notification_Templates.Text").next().toString();
-    String resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateTextBase64, App.g);
+    String resolvedStr = "";
+
+    try {
+      resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateTextBase64, App.g);
+    } catch (Throwable t){
+
+      resolvedStr = Base64.getEncoder().encodeToString(
+          ("Error resolving template:  " + t.getMessage()).getBytes(StandardCharsets.UTF_8));
+    }
 
     ReportTemplateRenderResponse reply = new ReportTemplateRenderResponse();
     reply.setBase64Report(resolvedStr);
