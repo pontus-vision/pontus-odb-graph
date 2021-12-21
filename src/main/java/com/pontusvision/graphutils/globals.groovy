@@ -1981,7 +1981,7 @@ class VisJSGraph {
       GraphTraversal gtrav = (pg_vid == "-1") ?
               App.g.V() :
               App.g.V(new ORecordId(pg_vid)).repeat(__.outE().subgraph('subGraph').bothV())
-                      .times(3).cap('subGraph').next().traversal().V()
+                      .times(4).cap('subGraph').next().traversal().V()
 
 
       sb.append('{ "nodes":[')
@@ -2016,7 +2016,7 @@ class VisJSGraph {
       gtrav = (pg_vid == "-1") ?
               App.g.V() :
               App.g.V(pg_vid).repeat(__.outE().subgraph('subGraph').bothV())
-                      .times(3).cap('subGraph').next().traversal().V()
+                      .times(4).cap('subGraph').next().traversal().V()
 
 
       gtrav
