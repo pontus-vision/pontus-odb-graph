@@ -1035,15 +1035,11 @@ rules:
         toVertexLabel: "Event.Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Subject_Access_Request"
+        fromVertexLabel: "Event.Data_Breach"
         toVertexLabel: "Event.Ingestion"
 
-      - label: Has_Ingestion_Event
-        fromVertexName: "Event.Data_Breach"
-        toVertexLabel: "Event.Ingestion"
-
-      - label: Impacted_By_Data_Breach # OR Data_Impacted_By_Data_Breach
-        fromVertexName: "Event.Data_Breach"
+      - label: Impacted_By_Data_Breach
+        fromVertexLabel: "Event.Data_Breach"
         toVertexName: "data_sources"
 
   sharepoint_policies:
