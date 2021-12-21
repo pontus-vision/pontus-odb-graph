@@ -169,7 +169,7 @@ public class PVBasicTest extends AppTest {
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
       "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 5",
-      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 7"
+      "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 9"
 //   NOTE: WE expect 7, and not 5 entries in the second run, because the two JSON files have the same data source
 //   names (CRM-Leads and CRM-Users), which will end up with 2 data policies each (one from the first run, and one from
 //   the second).
