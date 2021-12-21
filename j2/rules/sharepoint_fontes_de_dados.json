@@ -235,7 +235,7 @@
       },
       {
         "label": "Has_Module",
-        "fromVertexName": "data_sources",
+        "fromVertexName": "fontes_de_dados",
         "toVertexLabel": "Object.Module"
       },
       {
