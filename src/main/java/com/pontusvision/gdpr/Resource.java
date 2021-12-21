@@ -1002,7 +1002,13 @@ status: "success", message: "Data source is working", title: "Success"
 
     String templateTextBase64 = App.g.V().has("Object.Notification_Templates.Id", P.eq(templateId))
         .values("Object.Notification_Templates.Text").next().toString();
-    String resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateTextBase64, App.g);
+    String resolvedStr = "";
+
+    try {
+      resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateTextBase64, App.g);
+    } catch (Throwable t){
+      resolvedStr = "Error resolving template:  " + t.getMessage();
+    }
 
     ReportTemplateRenderResponse reply = new ReportTemplateRenderResponse();
     reply.setBase64Report(resolvedStr);
