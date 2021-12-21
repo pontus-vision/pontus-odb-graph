@@ -526,9 +526,14 @@ class PontusJ2ReportingFunctions {
   }
 
   static String getPolicyText(String policyType) {
-    def text = App.g.V().has("Object.Policies.Type", P.eq(policyType))
-            .values("Object.Policies.Text").next().toString()
-    return text
+    try {
+      def text = App.g.V().has("Object.Policies.Type", P.eq(policyType))
+              .values("Object.Policies.Text").next().toString()
+      return text;
+    } catch(Throwable t){
+      return null;
+    }
+
   }
 
   static List<Map<String, String>> neighboursByType(String pg_id, String edgeType) {

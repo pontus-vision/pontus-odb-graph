@@ -339,6 +339,60 @@ public class PVTemplateTests extends AppTest {
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
       assertEquals("Sim", report);
 
+
+      // test a non-existent  LIA for entry number 5 with an empty reply (same template as before)
+      contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("5"))
+          .id().next().toString();
+
+      renderReq.setRefEntryId(contextId);
+      renderReply = res.reportTemplateRender(renderReq);
+
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      assertEquals("", report);
+
+
+      // test a non-existent  LIA for entry number 5 with a bad template without bounds checks
+      req.setReportTextBase64(
+          Base64.getEncoder().encodeToString((
+              "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
+                  "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | " +
+                  "default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito " +
+                  "almejado?</b> no SharePoint') }}")
+
+              .getBytes()));
+
+      reply = res.reportTemplateUpsert(req);
+      templateId = reply.getTemplateId();
+      renderReq.setTemplateId(templateId);
+      renderReq.setRefEntryId(contextId);
+      renderReply = res.reportTemplateRender(renderReq);
+
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      assertEquals("Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito " +
+          "almejado?</b> no SharePoint", report);
+
+
+      // try an out of bounds array
+      req.setReportTextBase64(
+          Base64.getEncoder().encodeToString((
+              "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
+                  "{{ lia[20].Object_Legitimate_Interests_Assessment_Processing_Purpose | " +
+                  "default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito " +
+                  "almejado?</b> no SharePoint') }}")
+
+              .getBytes()));
+
+      reply = res.reportTemplateUpsert(req);
+      templateId = reply.getTemplateId();
+      renderReq.setTemplateId(templateId);
+      renderReq.setRefEntryId(contextId);
+      renderReply = res.reportTemplateRender(renderReq);
+
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      assertEquals("Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito " +
+          "almejado?</b> no SharePoint", report);
+
+
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);
@@ -348,5 +402,90 @@ public class PVTemplateTests extends AppTest {
 
   }
 
+  @Test
+  public void test00005TemplateGetPoliciesTextInvalid() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
+          "sharepoint_policies");
+
+      Resource res = new Resource();
+
+      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+      req.setTemplateName("TEST2");
+      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setReportTextBase64(
+          Base64.getEncoder().encodeToString("{{ pv:getPolicyText('INVALID')|default ('BLAH') }}"
+              .getBytes()));
+
+      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+
+      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+          .id().next().toString();
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      String expectedReport = "BLAH";
+      assertEquals(expectedReport, report, "Ensure that an invalid test still works");
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+  @Test
+  public void test00006TemplateGetPoliciesTextInvalidTemplate() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
+          "sharepoint_policies");
+
+      Resource res = new Resource();
+
+      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+      req.setTemplateName("TEST2");
+      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setReportTextBase64(
+          Base64.getEncoder().encodeToString(("{{ pv:getPolicyText(null)|default ('BLAH') }}" +
+              "{{ pv:INVALIDFUNCTION() }}")
+              .getBytes()));
+
+      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+
+      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+          .id().next().toString();
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      String expectedReport = "Error resolving template:  Could not resolve function 'pv:INVALIDFUNCTION'";
+      assertEquals(expectedReport, report, "Ensure that an invalid template shows an error");
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
 }
