@@ -254,7 +254,7 @@ public class PVBasicTest extends AppTest {
       
       String numSubsystem = App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".out('Has_Subsystem').dedup()" +
+                      ".out('Has_Module').out('Has_Subsystem').dedup()" +
                       ".count().next().toString()"
               //".values('Object.Module.Name').toList()"
       ).get().toString();
@@ -263,7 +263,7 @@ public class PVBasicTest extends AppTest {
 
       String numSystem = App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".out('Has_Subsystem').dedup()" +
+                      ".out('Has_Module').out('Has_Subsystem').out('Has_System').dedup()" +
                       ".count().next().toString()"
               //".values('Object.Module.Name').toList()"
       ).get().toString();
