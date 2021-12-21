@@ -169,7 +169,7 @@ public class PVBasicTest extends AppTest {
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
           "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 5, 7, 2, 2",
-          "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 9, 8, 3, 3"
+          "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 9, 8, 2, 4"
 //   NOTE: WE expect 7, and not 5 entries in the second run, because the two JSON files have the same data source
 //   names (CRM-Leads and CRM-Users), which will end up with 2 data policies each (one from the first run, and one from
 //   the second).
@@ -268,7 +268,7 @@ public class PVBasicTest extends AppTest {
               //".values('Object.Module.Name').toList()"
       ).get().toString();
 
-      assertEquals(expectedSystemCount, numSystem, "Number of Object.Subsystem Vertices");
+      assertEquals(expectedSystemCount, numSystem, "Number of Object.System Vertices");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
