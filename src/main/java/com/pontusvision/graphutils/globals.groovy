@@ -1992,7 +1992,7 @@ class VisJSGraph {
               ).dedup()
               .each {
                 String groupStr = it.values('Metadata.Type').next()
-                String labelStr = it.values(groupStr + '.Id').next()
+                String labelStr = it.values(groupStr + '.Name').next()
                 ORID vid = (ORID) it.id()
                 sb.append(counter == 0 ? '{' : ',{')
                         .append('"id":"').append(vid)

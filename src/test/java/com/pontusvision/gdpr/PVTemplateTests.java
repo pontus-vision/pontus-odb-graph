@@ -52,7 +52,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST");
-      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setTemplatePOLEType("Object.Data_Source");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString(" {% set var1=1 %} {{ var1 }} {{ context.Object_Data_Source_Name }}"
                       .getBytes()));
