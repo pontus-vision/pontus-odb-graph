@@ -1980,8 +1980,8 @@ class VisJSGraph {
 
       GraphTraversal gtrav = (pg_vid == "-1") ?
               App.g.V() :
-              App.g.V(new ORecordId(pg_vid)).repeat(__.inE().subgraph('subGraph').outV())
-                      .times(4).cap('subGraph').next().traversal().V()
+              App.g.V(new ORecordId(pg_vid)).repeat(__.outE().subgraph('subGraph').bothV())
+                      .times(3).cap('subGraph').next().traversal().V()
 
 
       sb.append('{ "nodes":[')
@@ -2015,8 +2015,8 @@ class VisJSGraph {
       counter = 0
       gtrav = (pg_vid == "-1") ?
               App.g.V() :
-              App.g.V(pg_vid).repeat(__.inE().subgraph('subGraph').outV())
-                      .times(4).cap('subGraph').next().traversal().V()
+              App.g.V(pg_vid).repeat(__.outE().subgraph('subGraph').bothV())
+                      .times(3).cap('subGraph').next().traversal().V()
 
 
       gtrav
@@ -2026,7 +2026,7 @@ class VisJSGraph {
                       , __.has('Metadata.Type.Object.Module', P.eq('Object.Module'))
                       , __.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
               )
-              .bothE()
+              .bothE('Has_Module', 'Has_Subsystem', 'Has_System')
               .dedup().each {
         sb.append(counter == 0 ? '{' : ',{')
                 .append('"from": "').append(it.inVertex().id())
