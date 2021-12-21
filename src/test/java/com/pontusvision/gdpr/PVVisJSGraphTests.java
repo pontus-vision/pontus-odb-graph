@@ -1,7 +1,5 @@
 package com.pontusvision.gdpr;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.pontusvision.graphutils.VisJSGraph;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,10 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -109,16 +105,28 @@ public class PVVisJSGraphTests extends AppTest {
 //        }
 
       JSONObject obj = new JSONObject(infraGraphJson);
-      String resp = "| ";
+      Set<String> resp = new HashSet<>();
       JSONArray array = obj.getJSONArray("nodes");
 
       for(int i = 0 ; i < array.length() ; i++){
-        resp += array.getJSONObject(i).getString("group");
-        resp += " | ";
+        resp.add(array.getJSONObject(i).getString("group"));
       }
 
-      assertEquals("| Object.Module | Object.Data_Source | Object.System | Object.Subsystem |",
-              resp.trim(), "non-parsed string escaped json");
+      String vertices = resp.stream().sorted().collect(Collectors.toList()).toString();
+
+      assertEquals("[Object.Data_Source, Object.Module, Object.Subsystem, Object.System]",
+              vertices, "Vertices to be drawn on the Dashboard");
+
+      array = obj.getJSONArray("edges");
+      resp = new HashSet<>();
+      for(int i = 0 ; i < array.length() ; i++){
+        resp.add(array.getJSONObject(i).getString("label"));
+      }
+
+      String edges = resp.stream().sorted().collect(Collectors.toList()).toString();
+
+      assertEquals("[Has Module, Has Subsystem, Has System]",
+              edges, "Edges to be drawn on the Dashboard");
 
     } catch (Exception e) {
       e.printStackTrace();
