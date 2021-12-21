@@ -13,9 +13,7 @@ import com.orientechnologies.orient.core.record.impl.ODocument
 import com.pontusvision.gdpr.App
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
-
-
-
+import groovy.json.StringEscapeUtils
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
@@ -2002,7 +2000,7 @@ class VisJSGraph {
                 sb.append(counter == 0 ? '{' : ',{')
                         .append('"id":"').append(vid)
                         .append('","group":"').append(groupStr)
-                        .append('","label":"').append(labelStr)
+                        .append('","label":"').append(StringEscapeUtils.escapeJavaScript(labelStr))
                         .append('","shape":"').append('image')
                         .append('","image":"').append(getPropsNonMetadataAsHTMLTableRows(App.g, vid, labelStr).toString())
                         .append('"}')
