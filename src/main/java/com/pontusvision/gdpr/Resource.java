@@ -126,6 +126,22 @@ public class Resource {
    */
 
 
+  public static String getFirstStringItem (List<Object> list, String defaultVal){
+
+    if (list == null || list.size() != 1){
+      return defaultVal;
+    }
+    return list.get(0).toString();
+
+  }
+  public static Double getFirstDoubleItem (List<Object> list, Double defaultVal){
+
+    if (list == null || list.size() != 1){
+      return defaultVal;
+    }
+    return (Double)list.get(0);
+
+  }
   @POST
   @Path("md2_search")
   @Produces(MediaType.APPLICATION_JSON)
@@ -211,34 +227,29 @@ public class Resource {
         Object eventId = res.get(i).get("ID");
 
         if ("Event.File_Ingestion".equalsIgnoreCase(eventType)) {
-          reg.fileType = values.get("Event.File_Ingestion.File_Type").get(0).toString();
-          reg.sizeBytes = ((Double) values.get("Event.File_Ingestion.Size_Bytes").get(0)).longValue();
-          reg.name = values.get("Event.File_Ingestion.Name").get(0).toString();
-          reg.path = values.get("Event.File_Ingestion.Path").get(0).toString();
-          reg.created = values.get("Event.File_Ingestion.Created").get(0).toString();
-          reg.owner = values.get("Event.File_Ingestion.Owner") == null ? "" :
-              values.get("Event.File_Ingestion.Owner").get(0).toString();
-          reg.server = values.get("Event.File_Ingestion.Server").get(0).toString();
+          reg.fileType = getFirstStringItem(values.get("Event.File_Ingestion.File_Type"),"");
+          reg.sizeBytes = getFirstDoubleItem(values.get("Event.File_Ingestion.Size_Bytes"),0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Event.File_Ingestion.Name"),"");
+          reg.path = getFirstStringItem(values.get("Event.File_Ingestion.Path"),"");
+          reg.created =  getFirstStringItem(values.get("Event.File_Ingestion.Created"),"");
+          reg.owner = getFirstStringItem(values.get("Event.File_Ingestion.Owner"),"");
+          reg.server = getFirstStringItem(values.get("Event.File_Ingestion.Server"),"");
 
-          reg.lastAccess = values.get("Event.File_Ingestion.Last_Access") == null ? "":
-              values.get("Event.File_Ingestion.Last_Access").get(0).toString();
+          reg.lastAccess = getFirstStringItem(values.get("Event.File_Ingestion.Last_Access"),"");
         } else if ("Object.Email_Message_Attachment".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Attachment";
-          reg.sizeBytes = ((Double) values.get("Object.Email_Message_Attachment.Size_Bytes").get(0)).longValue();
-          reg.name = values.get("Object.Email_Message_Attachment.Attachment_Name").get(0).toString();
+          reg.sizeBytes = getFirstDoubleItem(values.get("Object.Email_Message_Attachment.Size_Bytes"),0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Object.Email_Message_Attachment.Attachment_Name"),"");
           StringBuilder sb = new StringBuilder();
           sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
-          sb.append(values.get("Object.Email_Message_Attachment.Attachment_Id").get(0));
+          sb.append(getFirstStringItem(values.get("Object.Email_Message_Attachment.Attachment_Id"),""));
           reg.path = sb.toString();
           List<Object> createdDateTime = values.get("Object.Email_Message_Attachment.Created_Date_Time");
 
-          reg.created = createdDateTime != null ?
-              values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString() :
-              "";
+          reg.created = getFirstStringItem(
+              values.get("Object.Email_Message_Attachment.Created_Date_Time"),
+              "");
 
-          reg.created = createdDateTime != null ?
-              values.get("Object.Email_Message_Attachment.Created_Date_Time").get(0).toString() :
-              "";
 
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Attachment")
               .out("Email_From").values("Event.Email_From_Group.Email");
@@ -246,15 +257,14 @@ public class Resource {
           reg.server = "office365/email";
         } else if ("Object.Email_Message_Body".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Body";
-          reg.sizeBytes = ((Double) values.get("Object.Email_Message_Body.Size_Bytes").get(0)).longValue();
-          reg.name = values.get("Object.Email_Message_Body.Email_Subject").get(0).toString();
+          reg.sizeBytes = getFirstDoubleItem(values.get("Object.Email_Message_Body.Size_Bytes"),0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Object.Email_Message_Body.Email_Subject"),"");
           StringBuffer sb = new StringBuffer();
           sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
-          String emailId = (values.get("Object.Email_Message_Body.Email_Id").get(0).toString());
+          String emailId = getFirstStringItem(values.get("Object.Email_Message_Body.Email_Id"),"");
           sb.append(URLEncoder.encode(emailId, "UTF-8"));
           reg.path = sb.toString();
-          reg.created = values.get("Object.Email_Message_Body.Created_Date_Time") == null ? "" :
-              values.get("Object.Email_Message_Body.Created_Date_Time").get(0).toString();
+          reg.created = getFirstStringItem(values.get("Object.Email_Message_Body.Created_Date_Time"), "" );
 
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Body")
               .out("Email_From").values("Event.Email_From_Group.Email");
@@ -296,7 +306,7 @@ public class Resource {
     } catch (Exception e) {
       System.err.println("Error processing data: " + e.getMessage());
       e.printStackTrace();
-      return new Md2Reply(Response.Status.INTERNAL_SERVER_ERROR);
+      return new Md2Reply(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
     }
   }
 
