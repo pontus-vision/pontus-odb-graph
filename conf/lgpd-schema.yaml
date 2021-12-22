@@ -395,6 +395,37 @@ propertyKeys:
   - name: Event.Group_Ingestion.Ingestion_Date
     dataType: String
     cardinality: SINGLE
+  - name: Metadata.Type.Event.Group_Subject_Access_Request
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Group_Subject_Access_Request.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Group_Subject_Access_Request.Has_Controller
+    dataType: Boolean
+    cardinality: SINGLE
+  - name: Event.Group_Subject_Access_Request.Has_Data_Owner
+    dataType: Boolean
+    cardinality: SINGLE
+  - name: Event.Group_Subject_Access_Request.Has_Processor
+    dataType: Boolean
+    cardinality: SINGLE
+  - name: Event.Group_Subject_Access_Request.Metadata_End_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Group_Subject_Access_Request.Metadata_Start_Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Group_Subject_Access_Request.Operation
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Group_Subject_Access_Request.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Group_Subject_Access_Request.Ingestion_Date
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Event.Ingestion
     dataType: String
     cardinality: SINGLE
@@ -2220,6 +2251,9 @@ vertexLabels:
   - name: Event.Group_Ingestion
     partition: False
     useStatic: False
+  - name: Event.Group_Subject_Access_Request
+    partition: False
+    useStatic: False
   - name: Event.Ingestion
     partition: False
     useStatic: False
@@ -2873,6 +2907,25 @@ vertexIndexes:
       - Event.Group_Ingestion.Operation
       - Event.Group_Ingestion.Type
       - Event.Group_Ingestion.Ingestion_Date
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.Group_Subject_Access_Request.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Group_Subject_Access_Request
+      - Event.Group_Subject_Access_Request.Has_Controller
+      - Event.Group_Subject_Access_Request.Has_Data_Owner
+      - Event.Group_Subject_Access_Request.Has_Processor
+      - Event.Group_Subject_Access_Request.Metadata_End_Date
+      - Event.Group_Subject_Access_Request.Metadata_Start_Date
+      - Event.Group_Subject_Access_Request.Operation
+      - Event.Group_Subject_Access_Request.Type
+      - Event.Group_Subject_Access_Request.Ingestion_Date
     propertyKeysMappings:
     
       {}

@@ -855,13 +855,13 @@ rules:
             excludeFromUpdate: true
             mandatoryInSearch: true
 
-#        TODO: coluna link RoPA
-#      - label: Object.Data_Procedures
-#        props:
-#          ID: "${Title?.replaceAll('[^0-9]', '')}"
-#          Info_Collected: "${??????}"
-#          Description: "${Solicita_x00e7__x00e3_o_x002d_De}"
-#          Type: "${RequestType}"
+      - label: Object.Data_Procedures
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(RoPA)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
 
       - label: Object.Data_Source
         props:
@@ -882,6 +882,20 @@ rules:
           Request_Type: "${Solicita_x00e7__x00e3_o_x002d_De}"
           Request_Channel: "${Solicita_x00e7__x00e3_o_x002d_Ca}"
           Status: "${Status}"
+
+      - label: Event.Group_Subject_Access_Request
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type: "sharepoint/dsar"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
       - label: Event.Ingestion
         props:
@@ -931,6 +945,10 @@ rules:
         fromVertexLabel: "Event.Subject_Access_Request"
         toVertexLabel: "Event.Ingestion"
 
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Subject_Access_Request"
+        toVertexLabel: "Event.Group_Subject_Access_Request"
+
       - label: Made_SAR_Request
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Event.Subject_Access_Request"
@@ -938,6 +956,10 @@ rules:
       - label: Made_SAR_Request
         fromVertexLabel: "Person.Organisation"
         toVertexLabel: "Event.Subject_Access_Request"
+
+      - label: Has_Data_Procedures
+        fromVertexLabel: "Event.Subject_Access_Request"
+        toVertexLabel: "Object.Data_Procedures"
 
   sharepoint_data_breaches:
     vertices:

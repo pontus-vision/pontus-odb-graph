@@ -34,6 +34,19 @@
         ]
       },
       {
+        "label": "Object.Data_Procedures",
+        "props": [
+          {
+            "name": "Object.Data_Procedures.Form_Id",
+            "val": "${new groovy.json.JsonBuilder(RoPA)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
         "label": "Object.Data_Source",
         "props": [
           {
@@ -82,6 +95,40 @@
           {
             "name": "Event.Subject_Access_Request.Status",
             "val": "${Status}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Subject_Access_Request",
+        "props": [
+          {
+            "name": "Event.Group_Subject_Access_Request.Metadata_Start_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Subject_Access_Request.Metadata_End_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Subject_Access_Request.Type",
+            "val": "sharepoint/dsar",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Subject_Access_Request.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Subject_Access_Request.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
           }
         ]
@@ -175,6 +222,11 @@
         "toVertexLabel": "Event.Ingestion"
       },
       {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Subject_Access_Request",
+        "toVertexLabel": "Event.Group_Subject_Access_Request"
+      },
+      {
         "label": "Made_SAR_Request",
         "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Event.Subject_Access_Request"
@@ -183,6 +235,11 @@
         "label": "Made_SAR_Request",
         "fromVertexLabel": "Person.Organisation",
         "toVertexLabel": "Event.Subject_Access_Request"
+      },
+      {
+        "label": "Has_Data_Procedures",
+        "fromVertexLabel": "Event.Subject_Access_Request",
+        "toVertexLabel": "Object.Data_Procedures"
       }
     ]
   }
