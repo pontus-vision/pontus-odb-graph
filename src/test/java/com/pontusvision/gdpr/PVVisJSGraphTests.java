@@ -104,12 +104,20 @@ public class PVVisJSGraphTests extends AppTest {
 //            ]
 //        }
 
+      // Object.Module--->Has Module--->Object.DataSource
+      // Object.Subsystem--->Has Subsystem--->Object.Module
+      // Object.System--->Has System--->Object.Subsystem
+
       JSONObject obj = new JSONObject(infraGraphJson);
       Set<String> resp = new HashSet<>();
       JSONArray array = obj.getJSONArray("nodes");
 
+      Map<String, String> vertMap = new HashMap<>();
       for(int i = 0 ; i < array.length() ; i++){
-        resp.add(array.getJSONObject(i).getString("group"));
+        JSONObject entry = array.getJSONObject(i);
+        String group = entry.getString("group");
+        resp.add(group);
+        vertMap.put(entry.getString("id"),group);
       }
 
       String vertices = resp.stream().sorted().collect(Collectors.toList()).toString();
@@ -118,14 +126,23 @@ public class PVVisJSGraphTests extends AppTest {
               vertices, "Vertices to be drawn on the Dashboard");
 
       array = obj.getJSONArray("edges");
-      resp = new HashSet<>();
+//      resp = new HashSet<>();
       for(int i = 0 ; i < array.length() ; i++){
-        resp.add(array.getJSONObject(i).getString("label"));
+        JSONObject edge = array.getJSONObject(i);
+        String label = edge.getString("label");
+//        resp.add(label);
+        StringBuilder sb  = new StringBuilder();
+        String from = edge.getString("from");
+        String to = edge.getString("to");
+        sb.append(from).append("--->").append(label).append("--->").append(to);
+        resp.add(sb.toString());
       }
 
       String edges = resp.stream().sorted().collect(Collectors.toList()).toString();
 
-      assertEquals("[Has Module, Has Subsystem, Has System]",
+      assertEquals("[Object.Module--->Has Module--->Object.DataSource, \n" +
+              "Object.Subsystem--->Has Subsystem--->Object.Module, \n" +
+              "Object.System--->Has System--->Object.Subsystem]",
               edges, "Edges to be drawn on the Dashboard");
 
     } catch (Exception e) {
