@@ -126,22 +126,24 @@ public class PVVisJSGraphTests extends AppTest {
               vertices, "Vertices to be drawn on the Dashboard");
 
       array = obj.getJSONArray("edges");
-//      resp = new HashSet<>();
+      resp = new HashSet<>();
       for(int i = 0 ; i < array.length() ; i++){
         JSONObject edge = array.getJSONObject(i);
         String label = edge.getString("label");
 //        resp.add(label);
         StringBuilder sb  = new StringBuilder();
-        String from = edge.getString("from");
-        String to = edge.getString("to");
+        String fromId = edge.getString("from");
+        String toId = edge.getString("to");
+        String from = vertMap.get(fromId);
+        String to = vertMap.get(toId);
         sb.append(from).append("--->").append(label).append("--->").append(to);
         resp.add(sb.toString());
       }
 
       String edges = resp.stream().sorted().collect(Collectors.toList()).toString();
 
-      assertEquals("[Object.Module--->Has Module--->Object.DataSource, \n" +
-              "Object.Subsystem--->Has Subsystem--->Object.Module, \n" +
+      assertEquals("[Object.Module--->Has Module--->Object.Data_Source, " +
+              "Object.Subsystem--->Has Subsystem--->Object.Module, " +
               "Object.System--->Has System--->Object.Subsystem]",
               edges, "Edges to be drawn on the Dashboard");
 
