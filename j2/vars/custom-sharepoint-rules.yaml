@@ -885,16 +885,6 @@ rules:
 
       - label: Event.Group_Subject_Access_Request
         props:
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Type: "sharepoint/dsar"
-          Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
       - label: Event.Ingestion

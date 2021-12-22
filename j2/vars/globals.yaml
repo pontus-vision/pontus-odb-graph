@@ -224,18 +224,6 @@ schema:
       partition: false
       useStatic: false
       props:
-        - name: Has_Controller
-          dataType: Boolean
-        - name: Has_Data_Owner
-          dataType: Boolean
-        - name: Has_Processor
-          dataType: Boolean
-        - name: Metadata_End_Date
-          dataType: Date
-        - name: Metadata_Start_Date
-          dataType: Date
-        - name: Operation
-        - name: Type
         - name: Ingestion_Date
 
     - name: "Event.Ingestion"

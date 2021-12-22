@@ -402,27 +402,6 @@ propertyKeys:
   - name: Event.Group_Subject_Access_Request.Type
     dataType: String
     cardinality: SINGLE
-  - name: Event.Group_Subject_Access_Request.Has_Controller
-    dataType: Boolean
-    cardinality: SINGLE
-  - name: Event.Group_Subject_Access_Request.Has_Data_Owner
-    dataType: Boolean
-    cardinality: SINGLE
-  - name: Event.Group_Subject_Access_Request.Has_Processor
-    dataType: Boolean
-    cardinality: SINGLE
-  - name: Event.Group_Subject_Access_Request.Metadata_End_Date
-    dataType: Date
-    cardinality: SINGLE
-  - name: Event.Group_Subject_Access_Request.Metadata_Start_Date
-    dataType: Date
-    cardinality: SINGLE
-  - name: Event.Group_Subject_Access_Request.Operation
-    dataType: String
-    cardinality: SINGLE
-  - name: Event.Group_Subject_Access_Request.Type
-    dataType: String
-    cardinality: SINGLE
   - name: Event.Group_Subject_Access_Request.Ingestion_Date
     dataType: String
     cardinality: SINGLE
@@ -2918,13 +2897,6 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata.Type.Event.Group_Subject_Access_Request
-      - Event.Group_Subject_Access_Request.Has_Controller
-      - Event.Group_Subject_Access_Request.Has_Data_Owner
-      - Event.Group_Subject_Access_Request.Has_Processor
-      - Event.Group_Subject_Access_Request.Metadata_End_Date
-      - Event.Group_Subject_Access_Request.Metadata_Start_Date
-      - Event.Group_Subject_Access_Request.Operation
-      - Event.Group_Subject_Access_Request.Type
       - Event.Group_Subject_Access_Request.Ingestion_Date
     propertyKeysMappings:
     

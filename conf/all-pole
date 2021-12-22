@@ -74,13 +74,6 @@ Event.Group_Ingestion.Metadata_Start_Date
 Event.Group_Ingestion.Operation
 Event.Group_Ingestion.Type
 Event.Group_Ingestion.Ingestion_Date
-Event.Group_Subject_Access_Request.Has_Controller
-Event.Group_Subject_Access_Request.Has_Data_Owner
-Event.Group_Subject_Access_Request.Has_Processor
-Event.Group_Subject_Access_Request.Metadata_End_Date
-Event.Group_Subject_Access_Request.Metadata_Start_Date
-Event.Group_Subject_Access_Request.Operation
-Event.Group_Subject_Access_Request.Type
 Event.Group_Subject_Access_Request.Ingestion_Date
 Event.Ingestion.Business_Rules
 Event.Ingestion.Domain_Unstructured_Data_b64

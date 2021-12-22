@@ -103,30 +103,6 @@
         "label": "Event.Group_Subject_Access_Request",
         "props": [
           {
-            "name": "Event.Group_Subject_Access_Request.Metadata_Start_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Subject_Access_Request.Metadata_End_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Subject_Access_Request.Type",
-            "val": "sharepoint/dsar",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event.Group_Subject_Access_Request.Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Event.Group_Subject_Access_Request.Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
