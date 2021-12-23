@@ -1121,6 +1121,7 @@ schema:
   - name: Has_Data_Procedures
   - name: Has_Data_Source
   - name: Has_Department
+  - name: Has_DSAR
   - name: Has_Egress_Peering
   - name: Has_Form_Ingestion_Event
   - name: Has_Id_Card

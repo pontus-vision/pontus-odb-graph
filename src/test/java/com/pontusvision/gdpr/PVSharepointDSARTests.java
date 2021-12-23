@@ -85,20 +85,20 @@ public class PVSharepointDSARTests extends AppTest {
 
       String fromDsarToRopa =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARGORE PROXANO'))" +
-                      ".out('Made_SAR_Request').out('Has_Data_Procedures')" +
-                      ".has('Object.Data_Procedures.Form_Id', eq('401')).properties('Object.Data_Procedures.Description')" +
-                      ".value().next().toString()").get().toString();
+                      ".out('Made_SAR_Request').as('DSAR').out('Has_DSAR').as('DSAR_Group').out('Has_DSAR')" +
+                      ".as('RoPA').has('Object.Data_Procedures.Form_Id', eq('401'))" +
+                      ".values('Object.Data_Procedures.Description')" +
+                      ".next().toString()").get().toString();
       assertEquals("Recebimento dos dados via e-mail e envio ao departamentos: Jxxxyyy e Fzzzzzzzzzz.",
               fromDsarToRopa, "RoPA's Data Procedures' Description");
 
       String fromDsarToRopa2 =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('ANGÈLE BRUXÈLE'))" +
-                      ".out('Made_SAR_Request').out('Has_Data_Procedures')" +
-                      ".has('Object.Data_Procedures.Form_Id', eq('402')).in('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').values('Object.Data_Source.Name')" +
-                      ".next().toString()").get().toString();
-      assertEquals("SHAREPOINT/MAPEAMENTO-DE-PROCESSOS", fromDsarToRopa2,
-              "sharepoint Data Source Name is MAPEAMENTO DE PROCESSOS");
+                              ".out('Made_SAR_Request').as('DSAR').out('Has_DSAR').as('DSAR_Group').out('Has_DSAR')" +
+                              ".as('RoPA').has('Object.Data_Procedures.Form_Id', eq('402'))" +
+                              ".values('Object.Data_Procedures.Interested_Parties_Consulted').next().toString()")
+                      .get().toString();
+      assertEquals("Jurídico Snowymountain", fromDsarToRopa2,"RoPA's Interested Parties");
 
     } catch (Exception e) {
       e.printStackTrace();

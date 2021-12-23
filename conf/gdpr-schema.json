@@ -3968,6 +3968,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_DSAR",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Egress_Peering",
       "multiplicity": "MULTI",
       "unidirected": false

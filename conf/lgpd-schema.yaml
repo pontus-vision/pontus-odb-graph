@@ -2467,6 +2467,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_DSAR
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Egress_Peering
     multiplicity: MULTI
     unidirected: False

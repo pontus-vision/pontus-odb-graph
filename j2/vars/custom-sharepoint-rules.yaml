@@ -935,7 +935,7 @@ rules:
         fromVertexLabel: "Event.Subject_Access_Request"
         toVertexLabel: "Event.Ingestion"
 
-      - label: Has_Ingestion_Event
+      - label: Has_DSAR
         fromVertexLabel: "Event.Subject_Access_Request"
         toVertexLabel: "Event.Group_Subject_Access_Request"
 
@@ -947,8 +947,8 @@ rules:
         fromVertexLabel: "Person.Organisation"
         toVertexLabel: "Event.Subject_Access_Request"
 
-      - label: Has_Data_Procedures
-        fromVertexLabel: "Event.Subject_Access_Request"
+      - label: Has_DSAR
+        fromVertexLabel: "Event.Group_Subject_Access_Request"
         toVertexLabel: "Object.Data_Procedures"
 
   sharepoint_data_breaches:
