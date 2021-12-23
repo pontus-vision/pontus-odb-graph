@@ -31,6 +31,9 @@ public class PVSharepointDSARTests extends AppTest {
   @Test
   public void test00001SharepointDSAR() throws InterruptedException {
 
+    jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+            "$.queryResp[*].fields", "sharepoint_mapeamentos");
+
     jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
 
     try {
@@ -80,6 +83,22 @@ public class PVSharepointDSARTests extends AppTest {
                       ".count().next().toString()").get().toString();
       assertEquals("4", DSARTotalCount, "Total count of DSARs: 4");
 
+      String fromDsarToRopa =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARGORE PROXANO'))" +
+                      ".out('Made_SAR_Request').as('DSAR').out('Has_DSAR').as('DSAR_Group').out('Has_DSAR')" +
+                      ".as('RoPA').has('Object.Data_Procedures.Form_Id', eq('401'))" +
+                      ".values('Object.Data_Procedures.Description')" +
+                      ".next().toString()").get().toString();
+      assertEquals("Recebimento dos dados via e-mail e envio ao departamentos: Jxxxyyy e Fzzzzzzzzzz.",
+              fromDsarToRopa, "RoPA's Data Procedures' Description");
+
+      String fromDsarToRopa2 =
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('ANGÈLE BRUXÈLE'))" +
+                              ".out('Made_SAR_Request').as('DSAR').out('Has_DSAR').as('DSAR_Group').out('Has_DSAR')" +
+                              ".as('RoPA').has('Object.Data_Procedures.Form_Id', eq('402'))" +
+                              ".values('Object.Data_Procedures.Interested_Parties_Consulted').next().toString()")
+                      .get().toString();
+      assertEquals("Jurídico Snowymountain", fromDsarToRopa2,"RoPA's Interested Parties");
 
     } catch (Exception e) {
       e.printStackTrace();

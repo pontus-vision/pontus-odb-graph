@@ -104,7 +104,7 @@
         "Resposta_x002d_Dias_x00da_teis": "7 dias",
         "RoPA": [
           {
-            "LookupId": 1,
+            "LookupId": 401,
             "LookupValue": "2"
           }
         ],
@@ -160,7 +160,7 @@
         "Resposta_x002d_Dias_x00da_teis": "30 dias",
         "RoPA": [
           {
-            "LookupId": 1,
+            "LookupId": 402,
             "LookupValue": "1"
           }
         ],

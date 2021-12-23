@@ -22,6 +22,15 @@ updatereq:
           val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
     
+    - label: Object.Data_Procedures
+      props:
+        - name: Object.Data_Procedures.Form_Id
+          val: ${new groovy.json.JsonBuilder(RoPA)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
+    
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
@@ -53,6 +62,12 @@ updatereq:
           mandatoryInSearch: True
         - name: Event.Subject_Access_Request.Status
           val: ${Status}
+          mandatoryInSearch: True
+    
+    - label: Event.Group_Subject_Access_Request
+      props:
+        - name: Event.Group_Subject_Access_Request.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
     
     - label: Event.Ingestion
@@ -112,10 +127,16 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Subject_Access_Request
     toVertexLabel: Event.Ingestion
+  - label: Has_DSAR
+    fromVertexLabel: Event.Subject_Access_Request
+    toVertexLabel: Event.Group_Subject_Access_Request
   - label: Made_SAR_Request
     fromVertexLabel: Person.Natural
     toVertexLabel: Event.Subject_Access_Request
   - label: Made_SAR_Request
     fromVertexLabel: Person.Organisation
     toVertexLabel: Event.Subject_Access_Request
+  - label: Has_DSAR
+    fromVertexLabel: Event.Group_Subject_Access_Request
+    toVertexLabel: Object.Data_Procedures
 
