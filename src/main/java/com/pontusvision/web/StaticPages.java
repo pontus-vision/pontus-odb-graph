@@ -44,7 +44,7 @@ public class StaticPages {
   public String staticPages(@QueryParam("iframe") String iframe) throws IOException {
 
     java.nio.file.Path resourceDirectory = Paths.get(".");
-    String pwdAbsolutePath = resourceDirectory.toFile().getAbsolutePath();
+    String pwdAbsolutePath = System.getProperty("ORIENTDB_HOME",resourceDirectory.toFile().getAbsolutePath());
     String idxHtmlPathStr = Paths.get(pwdAbsolutePath, "config", "index.html").toString();
 
     String idxHtmlStr = FileUtils.readFileToString(new File(idxHtmlPathStr), "UTF-8");
