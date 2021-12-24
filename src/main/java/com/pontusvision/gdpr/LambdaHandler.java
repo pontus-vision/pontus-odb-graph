@@ -53,6 +53,7 @@ public class LambdaHandler implements RequestHandler<AwsProxyRequest, AwsProxyRe
                 "true");
 //            file.lock
 
+//            System.setProperty("pv-lambda-base", "/orientdb");
             System.setProperty("orientdb.config.file","/orientdb/config/orientdb-server-config.xml" );
             System.setProperty("orientdb.www.path","/orientdb/www" );
             System.setProperty("orientdb.build.number",
@@ -70,7 +71,9 @@ public class LambdaHandler implements RequestHandler<AwsProxyRequest, AwsProxyRe
     }
 
     protected static final ResourceConfig jerseyApplication = new ResourceConfig()
-            .packages("com.pontusvision.gdpr", "com.pontusvision.ingestion", "com.pontusvision.security")
+            .packages("com.pontusvision.gdpr", "com.pontusvision.ingestion", "com.pontusvision.security",
+                "com.pontusvision.web",
+                "com.pontusvision.kpis")
             .register(JacksonFeature.class);
     protected static final JerseyLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler
             = JerseyLambdaContainerHandler
