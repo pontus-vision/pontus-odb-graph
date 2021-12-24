@@ -157,7 +157,7 @@ rules:
         props:
           Form_Id: "${id}"
           Name:
-            val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
+            val: "${Title?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
           Description:

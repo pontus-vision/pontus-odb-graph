@@ -533,6 +533,37 @@ class PontusJ2ReportingFunctions {
     }
 
   }
+  static List<Map<String, String>> getDsarRopaByLawfulBasis(String dsarId, String lawfulBasis) {
+
+    try {
+
+
+      def ropaList = App.g.V(dsarId).out('Has_DSAR')
+              .out('Has_DSAR').as('RoPA').out('Has_Lawful_Basis_On')
+              .has('Object.Lawful_Basis.Description', P.eq(lawfulBasis))
+              .select('RoPA').valueMap().toList().collect { item ->
+        item.collectEntries { key, val ->
+          [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
+        }
+      } as List<Map<String, String>>;
+
+
+      return ropaList
+    }catch (Throwable t){
+      return [];
+    }
+
+  }
+
+  static String removeSquareBrackets(String orig) {
+
+    try {
+      return orig- '[' - ']'
+    }catch (Throwable t){
+      return orig;
+    }
+
+  }
 
   static List<Map<String, String>> neighboursByType(String pg_id, String edgeType) {
     def neighbours = App.g.V(new ORecordId(pg_id)).both(edgeType).elementMap().toList().collect { item ->
@@ -1089,9 +1120,12 @@ class PontusJ2ReportingFunctions {
             PontusJ2ReportingFunctions.class, "neighbours", String.class))
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "neighboursByType",
             PontusJ2ReportingFunctions.class, "neighboursByType", String.class, String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "removeSquareBrackets",
+            PontusJ2ReportingFunctions.class, "removeSquareBrackets", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDsarRopaByLawfulBasis",
+            PontusJ2ReportingFunctions.class, "getDsarRopaByLawfulBasis", String.class, String.class))
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getPolicyText",
             PontusJ2ReportingFunctions.class, "getPolicyText", String.class))
-
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlTableCustomHeader",
             PontusJ2ReportingFunctions.class, "htmlTableCustomHeader", Map.class, String.class, String.class))
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "htmlRows",

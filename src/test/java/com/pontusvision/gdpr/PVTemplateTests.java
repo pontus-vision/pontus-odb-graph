@@ -444,6 +444,7 @@ public class PVTemplateTests extends AppTest {
 
 
   }
+
   @Test
   public void test00006TemplateGetPoliciesTextInvalidTemplate() throws InterruptedException {
     try {
@@ -477,6 +478,60 @@ public class PVTemplateTests extends AppTest {
 
       String expectedReport = "Error resolving template:  Could not resolve function 'pv:INVALIDFUNCTION'";
       assertEquals(expectedReport, report, "Ensure that an invalid template shows an error");
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+  @Test
+  public void test00007TemplateGetDsarRopaByLawfulBasis() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+              "$.queryResp[*].fields", "sharepoint_mapeamentos");
+
+      jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+
+//      def dsarId= App.executor.eval("App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).id().next()").get().toString()
+//
+//      def lawfulBasis  = "LEGÍTIMO INTERESSE DO CONTROLADOR"
+
+      Resource res = new Resource();
+
+      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+      req.setTemplateName("TEST2");
+      req.setTemplatePOLEType("Event.Subject_Access_Request");
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString(("{% set ropaLegitimoInteresse=" +
+                      "pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}" +
+                      "{% for ropa in ropaLegitimoInteresse %}" +
+                      "{{ ropa.Object_Data_Procedures_Name }}-" +
+                      "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
+                      "{% endfor %}")
+                      .getBytes()));
+
+      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+
+      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Event.Subject_Access_Request.Form_Id", P.eq("2"))
+              .id().next().toString();
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      String expectedReport = "Gestão de Rede de Distribuidores-Nome, CPF, RG, Endereço, E-mail, Ocupação";
+      assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
 
 
     } catch (Exception e) {
