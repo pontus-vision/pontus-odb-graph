@@ -424,7 +424,7 @@ rules:
       - label: Object.Sensitive_Data
         props:
           Description:
-            val: "${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}"
+              val: "${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}"
             type: "[Ljava.lang.String;"
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
