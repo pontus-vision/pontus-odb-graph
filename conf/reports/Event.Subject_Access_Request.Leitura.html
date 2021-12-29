@@ -16,16 +16,16 @@ href="Event.Subject_Access_Request.Leitura_files/filelist.xml">
   <o:Author>Omar Mohamad Abou Ghoche</o:Author>
   <o:Template>Normal</o:Template>
   <o:LastAuthor>Omar Mohamad Abou Ghoche</o:LastAuthor>
-  <o:Revision>185</o:Revision>
-  <o:TotalTime>5986</o:TotalTime>
+  <o:Revision>193</o:Revision>
+  <o:TotalTime>8689</o:TotalTime>
   <o:Created>2021-12-23T13:58:00Z</o:Created>
-  <o:LastSaved>2021-12-27T17:49:00Z</o:LastSaved>
-  <o:Pages>6</o:Pages>
-  <o:Words>1291</o:Words>
-  <o:Characters>6974</o:Characters>
-  <o:Lines>58</o:Lines>
-  <o:Paragraphs>16</o:Paragraphs>
-  <o:CharactersWithSpaces>8249</o:CharactersWithSpaces>
+  <o:LastSaved>2021-12-29T14:52:00Z</o:LastSaved>
+  <o:Pages>5</o:Pages>
+  <o:Words>1183</o:Words>
+  <o:Characters>6393</o:Characters>
+  <o:Lines>53</o:Lines>
+  <o:Paragraphs>15</o:Paragraphs>
+  <o:CharactersWithSpaces>7561</o:CharactersWithSpaces>
   <o:Version>16.00</o:Version>
  </o:DocumentProperties>
  <o:OfficeDocumentSettings>
@@ -42,6 +42,8 @@ href="Event.Subject_Access_Request.Leitura_files/colorschememapping.xml">
 <!--[if gte mso 9]><xml>
  <w:WordDocument>
   <w:View>Print</w:View>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
   <w:TrackMoves>false</w:TrackMoves>
   <w:TrackFormatting/>
   <w:HyphenationZone>21</w:HyphenationZone>
@@ -863,6 +865,12 @@ span.HTMLPreformattedChar
 	mso-fareast-font-family:"Times New Roman";
 	mso-fareast-theme-font:minor-fareast;
 	mso-hansi-font-family:Consolas;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	mso-default-props:yes;
@@ -1688,19 +1696,24 @@ text-decoration:none;text-underline:none'>Lei 13.709/2018</span></a> (<a
 href="/lei/LGPD/lei-geral-protecao-dados-pessoais"><span style='color:windowtext;
 text-decoration:none;text-underline:none'>LGPD</span></a>):</p>
 
-<p><span lang=EN-GB style='color:red;mso-ansi-language:EN-GB'>{% set typeOfNaturalPerson=pv:</span><span
+<p><span lang=EN-GB style='color:red;mso-ansi-language:EN-GB'>{% set <span
+class=SpellE>typeOfNaturalPerson</span>=<span class=SpellE><span class=GramE>pv:<span
+style='mso-fareast-font-family:"Times New Roman"'>getTypeOfNaturalPerson</span></span></span></span><span
 lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:red;
-mso-ansi-language:EN-GB'>getTypeOfNaturalPerson(context.id) <span
+mso-ansi-language:EN-GB'>(context.id) <span
 style='mso-spacerun:yes'>&nbsp;</span></span><span lang=EN-GB style='color:
 red;mso-ansi-language:EN-GB'>%}<o:p></o:p></span></p>
 
-<p><span lang=EN-GB style='color:#FF7D7D;mso-ansi-language:EN-GB'>{% set ropaList=pv:</span><span
+<p><span lang=EN-GB style='color:#FF7D7D;mso-ansi-language:EN-GB'>{% set <span
+class=SpellE>ropaList</span>=<span class=SpellE><span class=GramE>pv:<span
+style='mso-fareast-font-family:"Times New Roman"'>getRopaList</span></span></span></span><span
 lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#FF7D7D;
-mso-ansi-language:EN-GB'>getRopaList(context.id) <span
+mso-ansi-language:EN-GB'>(context.id) <span
 style='mso-spacerun:yes'>&nbsp;</span></span><span lang=EN-GB style='color:
 #FF7D7D;mso-ansi-language:EN-GB'>%}<o:p></o:p></span></p>
 
-<p><span lang=EN-GB style='color:#00B050;mso-ansi-language:EN-GB'>&quot;App.g.V().has('Metadata.Type.Event.Subject_Access_Request',
+<p><span lang=EN-GB style='color:#00B050;mso-ansi-language:EN-GB'>&quot;<span
+class=SpellE><span class=GramE>App.g.V</span></span>().has('<span class=SpellE>Metadata.Type.Event.Subject_Access_Request</span>',
 eq('Event.Subject_Access_Request')).out('Has_DSAR').out('Has_DSAR').values('Object.Data_Procedures.Type_Of_Natural_Person').next().toString()&quot;<o:p></o:p></span></p>
 
 <p><span style='color:red'>{% if typeOfNaturalPerson == &quot;COLABORADOR&quot;
@@ -1713,15 +1726,11 @@ FINALIDADE - Art. 9&ordm;, &sect; I e Art. 18 &sect; I<o:p></o:p></span></h2>
 tratamento de seus dados, exclusivamente pelo per&iacute;odo de v&iacute;nculo
 contratual firmado com o Sr. (a).</p>
 
-<p style='margin-left:35.4pt'><span style='color:red'>{% set ropaServicosContratados=pv:</span><span
-style='mso-fareast-font-family:"Times New Roman";color:red'>getRopaByLawfulBasis(context.id,
-'Execu&ccedil;&atilde;o de Contrato ou de procedimentos preliminares a
-contrato, a pedido do titular') <span style='mso-spacerun:yes'>&nbsp;</span></span><span
-style='color:red'>%}</span></p>
+{% set ropaServicosContratados=pv:getRopaByLawfulBasis(context.id, 'Execu??o de Contrato ou de procedimentos preliminares a contrato, a pedido do titular')  %}
+{% set trs='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;height:45.85pt' %}
 
-<p style='margin-left:35.4pt;text-indent:35.4pt'><span style='color:red'>{% if <span
-style='mso-spacerun:yes'>&nbsp;</span>ropaServicosContratados.size() &gt; 0 %}</span><span
-lang=EN-GB style='color:red;mso-ansi-language:EN-GB'><o:p></o:p></span></p>
+ {% if  ropaServicosContratados.size() > 0 %}
+
 
 <p><b>Dados para execu&ccedil;&atilde;o dos servi&ccedil;os contratados<o:p></o:p></b></p>
 
@@ -1732,174 +1741,55 @@ name=dados-para-execucao-dos-servicos-contrat></a><span style='mso-fareast-font-
 execu&ccedil;&atilde;o dos servi&ccedil;os contratados pelo Sr.(a), nos termos
 do Art. 7&ordm;, &sect; V da LGPD, quais sejam: <o:p></o:p></span></p>
 
-<p style='margin-left:70.8pt;text-indent:35.4pt'><span style='color:red'>{% for
-ropa in ropaServicosContratados %}<o:p></o:p></span></p>
-
-<p style='margin-left:141.6pt'><span style='color:red'>{% set nomeDoProcesso = </span><span
-lang=EN-GB style='color:red;mso-ansi-language:EN-GB'>ropa.Object_Data_Procedures_Name</span><span
-style='color:red'> %}<o:p></o:p></span></p>
-
-<p style='margin-left:141.6pt'><span style='color:red'>{% set descricao = ropa.Object_Data_Procedures_Description
-%}<o:p></o:p></span></p>
-
-<p style='margin-left:141.6pt'><b><i><span style='color:red'>{% set
-dadosColetados = </span></i></b><b><i><span lang=EN-GB style='color:red;
-mso-ansi-language:EN-GB'>ropa.Object_Data_Procedures_Info_Collected %}<o:p></o:p></span></i></b></p>
-
-<p style='margin-left:141.6pt'><b><i><span lang=EN-GB style='color:red;
-mso-ansi-language:EN-GB'>{% set dadosSensiveis = ropa.Object.Data_Procedures_Info_Collected
-%}<o:p></o:p></span></i></b></p>
-
-<p style='margin-left:141.6pt'><span style='color:red'>{{ pv:jsonToHtmlTable(&quot;[{\&quot;Nome
-do Processo\&quot;: {{ nomeDoProcesso }}, \&quot;Descri&ccedil;&atilde;o\&quot;:
-{{ descricao }}, \&quot;Dados Coletados\&quot;: {{ dadosColetados }}, \&quot;Dados
-Sens&iacute;veis\&quot;: {{ dadosSensiveis }} }]&quot;) }}<o:p></o:p></span></p>
-
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0 align=left
- width=743 style='border-collapse:collapse;mso-table-layout-alt:fixed;
+ width=642 style='border-collapse:collapse;mso-table-layout-alt:fixed;
  border:none;mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;
  mso-table-lspace:7.05pt;margin-left:4.8pt;mso-table-rspace:7.05pt;margin-right:
  4.8pt;mso-table-anchor-vertical:paragraph;mso-table-anchor-horizontal:margin;
  mso-table-left:center;mso-table-top:15.65pt;mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
- <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:2.8pt'>
-  <td width=104 style='width:77.75pt;border:solid windowtext 1.0pt;mso-border-alt:
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+  height:2.8pt'>
+  <td width=161 style='width:120.55pt;border:solid windowtext 1.0pt;mso-border-alt:
   solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:2.8pt'>
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
   mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Nome do Processo<o:p></o:p></span></p>
+  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Nome do <span
+  class=SpellE>Processo</span><o:p></o:p></span></p>
   </td>
-  <td width=120 style='width:90.3pt;border:solid windowtext 1.0pt;border-left:
+  <td width=170 style='width:127.3pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:2.8pt'>
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
-  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><b><i><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Descri&ccedil;&atilde;o<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=259 style='width:194.6pt;border:solid windowtext 1.0pt;border-left:
-  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:2.8pt'>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-  mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
-  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
-  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><b><i><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Dados Coletados<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=259 style='width:194.6pt;border:solid windowtext 1.0pt;border-left:
-  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:2.8pt'>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-  mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
-  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
-  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><b><i><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Dados Sens&iacute;veis<o:p></o:p></span></i></b></p>
-  </td>
- </tr>
- <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:45.85pt'>
-  <td width=104 style='width:77.75pt;border:solid windowtext 1.0pt;border-top:
-  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:45.85pt'>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-  margin-left:35.4pt;text-indent:35.4pt;mso-element:frame;mso-element-frame-hspace:
-  7.05pt;mso-element-wrap:around;mso-element-anchor-vertical:paragraph;
-  mso-element-anchor-horizontal:margin;mso-element-left:center;mso-element-top:
-  15.65pt;mso-height-rule:exactly'><span lang=EN-GB style='color:#0070C0;
-  mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-  mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
-  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
   mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>{{ ropa.Object_Data_Procedures_Name
-  }}<o:p></o:p></span></p>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-  mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
-  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
-  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>
-  </td>
-  <td width=120 style='width:90.3pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:45.85pt'>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-  mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
-  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
-  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
-  style='color:#0070C0'>{{ ropa.Object_Data_Procedures_Description }}</span><span
+  class=SpellE><span lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Descri&ccedil;&atilde;o</span></span><span
   lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'><o:p></o:p></span></p>
   </td>
-  <td width=259 style='width:194.6pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:45.85pt'>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-  mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
-  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
-  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><b><i><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>{{ ropa.Object_Data_Procedures_Info_Collected
-  }}<o:p></o:p></span></i></b></p>
-  </td>
-  <td width=259 style='width:194.6pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:45.85pt'>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><s><span
-  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>{% set sensitiveData=pv:neighboursByType( ropa.id,</span></s><b><s><span
-  lang=EN-GB style='font-size:11.5pt;font-family:"Helvetica",sans-serif;
-  color:#69BFFF;background:white;mso-ansi-language:EN-GB'> '</span></s></b><s><span
-  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>Has_Sensitive_Data') %}<o:p></o:p></span></s></p>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><s><span
-  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>{% for sData in sensitiveData %}<o:p></o:p></span></s></p>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><s><span
-  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>{{ sData.</span></s><s><span lang=EN-GB
-  style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:
-  "Times New Roman";color:#69BFFF;mso-ansi-language:EN-GB'> </span></s><s><span
-  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>Object_Sensitive_Data_Description }}<o:p></o:p></span></s></p>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><s><span
-  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>{% endfor %}<o:p></o:p></span></s></p>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-  mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
-  mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
-  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><b><i><span
-  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#0070C0;
-  mso-ansi-language:EN-GB'>{{ ropa.Object.Data_Procedures_Info_Collected }}</span></i></b><b><i><span
-  lang=EN-GB style='mso-ansi-language:EN-GB'><o:p></o:p></span></i></b></p>
+  <td width=312 style='width:233.85pt;border:solid windowtext 1.0pt;border-left:
+  none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:2.8pt'>
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
   mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
-  lang=EN-GB style='color:#69BFFF;mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>
+  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Dados <span
+  class=SpellE>Coletados</span><o:p></o:p></span></p>
   </td>
  </tr>
+  {% for ropa in ropaServicosContratados %}
+
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>"| format(trs,trs, ropa.Object_Data_Procedures_Name, trs, ropa.Object_Data_Procedures_Description, trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+  {% endfor %}
 </table>
-
-<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
-lang=EN-GB style='mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>
-
-<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-margin-left:70.8pt;text-indent:35.4pt'><span lang=EN-GB style='mso-fareast-font-family:
-"Times New Roman";color:red;mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>
-
-<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-margin-left:70.8pt;text-indent:35.4pt'><span lang=EN-GB style='mso-fareast-font-family:
-"Times New Roman";color:red;mso-ansi-language:EN-GB'>{% endfor %}<o:p></o:p></span></p>
-
-<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-margin-left:35.4pt;text-indent:35.4pt'><span lang=EN-GB style='mso-fareast-font-family:
-"Times New Roman";color:red;mso-ansi-language:EN-GB'>{% endif %} <o:p></o:p></span></p>
+{% endif %}
 
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
 text-indent:35.4pt'><s><span lang=EN-GB style='mso-fareast-font-family:"Times New Roman";
-color:#FF7D7D;mso-ansi-language:EN-GB'>{# {% getRopaByLawfulBasis(context.id,'????'
+color:#FF7D7D;mso-ansi-language:EN-GB'>{# {% <span class=SpellE><span
+class=GramE>getRopaByLawfulBasis</span></span><span class=GramE>(</span>context.id,'????'
 </span></s><s><span style='mso-fareast-font-family:"Times New Roman";
 color:#FF7D7D'>) <span style='mso-spacerun:yes'>&nbsp;</span>=&gt; RoPAList %}<o:p></o:p></span></s></p>
 
@@ -1999,10 +1889,12 @@ auto;margin-left:71.4pt;mso-add-space:auto;text-indent:34.8pt'><span
 lang=EN-GB style='color:red;mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>
 
 <p style='margin-left:141.6pt'><span lang=EN-GB style='color:red;mso-ansi-language:
-EN-GB'>{% set nomeDoProcesso = ropa.Object_Data_Procedures_Name %}<o:p></o:p></span></p>
+EN-GB'>{% set <span class=SpellE>nomeDoProcesso</span> = <span class=SpellE><span
+class=GramE>ropa.Object</span>_Data_Procedures_Name</span> %}<o:p></o:p></span></p>
 
 <p style='margin-left:141.6pt'><span lang=EN-GB style='color:red;mso-ansi-language:
-EN-GB'>{% set descricao = ropa.Object_Data_Procedures_Description %}<o:p></o:p></span></p>
+EN-GB'>{% set <span class=SpellE>descricao</span> = <span class=SpellE><span
+class=GramE>ropa.Object</span>_Data_Procedures_Description</span> %}<o:p></o:p></span></p>
 
 <p style='margin-left:141.6pt'><b><i><span style='color:red'>{% set
 dadosColetados = ropa.Object_Data_Procedures_Info_Collected %}<o:p></o:p></span></i></b></p>
@@ -2028,7 +1920,8 @@ do Processo\&quot;: \&quot;nomeDoProcesso\&quot;, \&quot;Descri&ccedil;&atilde;o
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
   mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Nome do Processo<o:p></o:p></span></p>
+  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Nome do <span
+  class=SpellE>Processo</span><o:p></o:p></span></p>
   </td>
   <td width=122 style='width:91.75pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
@@ -2037,7 +1930,8 @@ do Processo\&quot;: \&quot;nomeDoProcesso\&quot;, \&quot;Descri&ccedil;&atilde;o
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
   mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Descri&ccedil;&atilde;o<o:p></o:p></span></p>
+  class=SpellE><span lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Descri&ccedil;&atilde;o</span></span><span
+  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'><o:p></o:p></span></p>
   </td>
   <td width=259 style='width:194.6pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
@@ -2046,7 +1940,8 @@ do Processo\&quot;: \&quot;nomeDoProcesso\&quot;, \&quot;Descri&ccedil;&atilde;o
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
   mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><b><i><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Dados Coletados<o:p></o:p></span></i></b></p>
+  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Dados <span
+  class=SpellE>Coletados</span><o:p></o:p></span></i></b></p>
   </td>
   <td width=259 style='width:194.6pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
@@ -2055,7 +1950,8 @@ do Processo\&quot;: \&quot;nomeDoProcesso\&quot;, \&quot;Descri&ccedil;&atilde;o
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
   mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><b><i><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Dados Sens&iacute;veis<o:p></o:p></span></i></b></p>
+  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>Dados <span
+  class=SpellE>Sens&iacute;veis</span><o:p></o:p></span></i></b></p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes;height:45.85pt'>
@@ -2072,8 +1968,10 @@ do Processo\&quot;: \&quot;nomeDoProcesso\&quot;, \&quot;Descri&ccedil;&atilde;o
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
   mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>{{ ropa.Object_Data_Procedures_Name
-  }}<o:p></o:p></span></p>
+  class=GramE><span lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>{{
+  <span class=SpellE>ropa</span></span></span><span class=SpellE><span
+  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>.Object_Data_Procedures_Name</span></span><span
+  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'> }}<o:p></o:p></span></p>
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
@@ -2098,9 +1996,12 @@ do Processo\&quot;: \&quot;nomeDoProcesso\&quot;, \&quot;Descri&ccedil;&atilde;o
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
-  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><b><i><span
-  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'>{{ ropa.Object_Data_Procedures_Info_Collected
-  }}<o:p></o:p></span></i></b></p>
+  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
+  class=GramE><b><i><span lang=EN-GB style='color:#0070C0;mso-ansi-language:
+  EN-GB'>{{ <span class=SpellE>ropa</span></span></i></b></span><span
+  class=SpellE><b><i><span lang=EN-GB style='color:#0070C0;mso-ansi-language:
+  EN-GB'>.Object_Data_Procedures_Info_Collected</span></i></b></span><b><i><span
+  lang=EN-GB style='color:#0070C0;mso-ansi-language:EN-GB'> }}<o:p></o:p></span></i></b></p>
   </td>
   <td width=259 style='width:194.6pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -2108,30 +2009,44 @@ do Processo\&quot;: \&quot;nomeDoProcesso\&quot;, \&quot;Descri&ccedil;&atilde;o
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt;height:45.85pt'>
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><s><span
   lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>{% set sensitiveData=pv:neighboursByType( ropa.id,</span></s><b><s><span
+  mso-ansi-language:EN-GB'>{% set <span class=SpellE>sensitiveData</span>=<span
+  class=SpellE><span class=GramE>pv:neighboursByType</span></span>( ropa.id,</span></s><b><s><span
   lang=EN-GB style='font-size:11.5pt;font-family:"Helvetica",sans-serif;
-  color:#69BFFF;background:white;mso-ansi-language:EN-GB'> '</span></s></b><s><span
+  color:#69BFFF;background:white;mso-ansi-language:EN-GB'> '</span></s></b><span
+  class=SpellE><s><span lang=EN-GB style='mso-fareast-font-family:"Times New Roman";
+  color:#69BFFF;mso-ansi-language:EN-GB'>Has_Sensitive_Data</span></s></span><s><span
   lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>Has_Sensitive_Data') %}<o:p></o:p></span></s></p>
+  mso-ansi-language:EN-GB'>') %}<o:p></o:p></span></s></p>
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><s><span
   lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>{% for sData in sensitiveData %}<o:p></o:p></span></s></p>
+  mso-ansi-language:EN-GB'>{% for <span class=SpellE>sData</span> in <span
+  class=SpellE>sensitiveData</span> %}<o:p></o:p></span></s></p>
+  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
+  class=GramE><s><span lang=EN-GB style='mso-fareast-font-family:"Times New Roman";
+  color:#69BFFF;mso-ansi-language:EN-GB'>{{ <span class=SpellE>sData</span></span></s></span><s><span
+  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
+  mso-ansi-language:EN-GB'>.</span></s><s><span lang=EN-GB style='font-size:
+  10.0pt;font-family:"Courier New";mso-fareast-font-family:"Times New Roman";
+  color:#69BFFF;mso-ansi-language:EN-GB'> </span></s><span class=SpellE><s><span
+  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
+  mso-ansi-language:EN-GB'>Object_Sensitive_Data_<span class=GramE>Description</span></span></s></span><span
+  class=GramE><s><span lang=EN-GB style='mso-fareast-font-family:"Times New Roman";
+  color:#69BFFF;mso-ansi-language:EN-GB'> }</span></s></span><s><span
+  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
+  mso-ansi-language:EN-GB'>}<o:p></o:p></span></s></p>
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><s><span
   lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>{{ sData.</span></s><s><span lang=EN-GB
-  style='font-size:10.0pt;font-family:"Courier New";mso-fareast-font-family:
-  "Times New Roman";color:#69BFFF;mso-ansi-language:EN-GB'> </span></s><s><span
-  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>Object_Sensitive_Data_Description }}<o:p></o:p></span></s></p>
-  <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><s><span
-  lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#69BFFF;
-  mso-ansi-language:EN-GB'>{% endfor %}<o:p></o:p></span></s></p>
+  mso-ansi-language:EN-GB'>{% <span class=SpellE>endfor</span> %}<o:p></o:p></span></s></p>
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
   mso-element:frame;mso-element-frame-hspace:7.05pt;mso-element-wrap:around;
   mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:margin;
-  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><b><i><span
+  mso-element-left:center;mso-element-top:15.65pt;mso-height-rule:exactly'><span
+  class=GramE><b><i><span lang=EN-GB style='mso-fareast-font-family:"Times New Roman";
+  color:#0070C0;mso-ansi-language:EN-GB'>{{ <span class=SpellE>ropa</span></span></i></b></span><span
+  class=SpellE><b><i><span lang=EN-GB style='mso-fareast-font-family:"Times New Roman";
+  color:#0070C0;mso-ansi-language:EN-GB'>.Object.Data_Procedures_Info_Collected</span></i></b></span><b><i><span
   lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#0070C0;
-  mso-ansi-language:EN-GB'>{{ ropa.Object.Data_Procedures_Info_Collected }}<o:p></o:p></span></i></b></p>
+  mso-ansi-language:EN-GB'> }}<o:p></o:p></span></i></b></p>
   <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
   lang=EN-GB style='mso-fareast-font-family:"Times New Roman";color:#0070C0;
   mso-ansi-language:EN-GB'><o:p>&nbsp;</o:p></span></p>
@@ -2162,11 +2077,13 @@ finalidades<o:p></o:p></b></p>
 
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b><span
 style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></b><span
-lang=EN-GB style='color:red;mso-ansi-language:EN-GB'>{% for ropa in ropaList %}<o:p></o:p></span></p>
+lang=EN-GB style='color:red;mso-ansi-language:EN-GB'>{% for <span class=SpellE>ropa</span>
+in <span class=SpellE>ropaList</span> %}<o:p></o:p></span></p>
 
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
 margin-left:70.8pt'><span lang=EN-GB style='color:#00B050;mso-ansi-language:
-EN-GB'>&quot;App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).out('Has_DSAR').out('Has_DSAR').values('Object.Data_Procedures.Why_Is_It_Collected').next().toString()&quot;</span><span
+EN-GB'>&quot;<span class=SpellE><span class=GramE>App.g.V</span></span>().has('<span
+class=SpellE>Metadata.Type.Event.Subject_Access_Request</span>', eq('Event.Subject_Access_Request')).out('Has_DSAR').out('Has_DSAR').values('Object.Data_Procedures.Why_Is_It_Collected').next().toString()&quot;</span><span
 lang=EN-GB style='color:red;mso-ansi-language:EN-GB'><o:p></o:p></span></p>
 
 <ul style='margin-top:0cm' type=disc>
@@ -2197,7 +2114,8 @@ lang=EN-GB style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:Symbol;
 mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-ansi-language:
 EN-GB'><span style='mso-list:Ignore'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span></span><![endif]><span lang=EN-GB style='mso-fareast-font-family:
-"Times New Roman";color:#43FF98;mso-ansi-language:EN-GB'>&quot;App.g.V().has('Metadata.Type.Event.Subject_Access_Request',
+"Times New Roman";color:#43FF98;mso-ansi-language:EN-GB'>&quot;<span
+class=SpellE><span class=GramE>App.g.V</span></span>().has('<span class=SpellE>Metadata.Type.Event.Subject_Access_Request</span>',
 eq('Event.Subject_Access_Request')).out('Has_DSAR').out('Has_DSAR').values('Object.Data_Procedures.Country_Where_Stored').next().toString()&quot;</span><span
 lang=EN-GB style='mso-fareast-font-family:"Times New Roman";mso-ansi-language:
 EN-GB'><o:p></o:p></span></p>
@@ -2218,7 +2136,7 @@ color:red'>{% endfor %} <o:p></o:p></span></p>
 7&ordm;, &sect; I<o:p></o:p></span></h2>
 
 <p style='margin-left:18.0pt'><span lang=EN-GB style='color:#00B050;mso-ansi-language:
-EN-GB'>&quot;App.g.V().has('Metadata.Type.Event.Subject_Access_Request',
+EN-GB'>&quot;<span class=SpellE>App.g.V</span>().has('<span class=SpellE>Metadata.Type.Event.Subject_Access_Request</span>',
 eq('Event.Subject_Access_Request')).out('Has_DSAR').out('Has_DSAR').in('Has_Ingestion_Event').values('Event.Ingestion.Metadata_Create_Date').next().toString()&quot;<o:p></o:p></span></p>
 
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
