@@ -92,6 +92,7 @@ Event.Subject_Access_Request.Form_Id
 Event.Subject_Access_Request.Form_Owner_Id
 Event.Subject_Access_Request.Form_Submission_Id
 Event.Subject_Access_Request.Form_Submission_Owner_Id
+Event.Subject_Access_Request.Natural_Person_Type
 Event.Training.Status
 Event.Training.Form_Id
 Event.Training.Form_Owner_Id
