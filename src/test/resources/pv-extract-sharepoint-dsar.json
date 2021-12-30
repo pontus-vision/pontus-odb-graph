@@ -45,7 +45,7 @@
         "Status": "Completed",
         "Resposta_x002d_DataeHor_x00e1_ri": "20/05/2021 - 09:11",
         "Resposta_x002d_Canal": "Via e-mail",
-        "Resposta_x002d_Dias_x00da_teis": "2 dias",
+        "working_days": "2",
         "id": "1",
         "RoPA": [
           {
@@ -103,11 +103,14 @@
         "Status": "New",
         "Resposta_x002d_DataeHor_x00e1_ri": "10/12/2021 - 16:45",
         "Resposta_x002d_Canal": "Via SMS",
-        "Resposta_x002d_Dias_x00da_teis": "7 dias",
+        "working_days": "7",
         "id": "2",
         "RoPA": [
           {
             "LookupId": 401,
+            "LookupValue": "2"
+          },{
+            "LookupId": 402,
             "LookupValue": "2"
           }
         ],
@@ -161,7 +164,7 @@
         "Status": "Acknowledged",
         "Resposta_x002d_DataeHor_x00e1_ri": "05/01/2019 - 07:43",
         "Resposta_x002d_Canal": "Via e-mail",
-        "Resposta_x002d_Dias_x00da_teis": "30 dias",
+        "working_days": "30",
         "id": "3",
         "RoPA": [
           {
@@ -219,7 +222,7 @@
         "Status": "Denied",
         "Resposta_x002d_DataeHor_x00e1_ri": "27/04/2010 - 09:23",
         "Resposta_x002d_Canal": "Via e-mail",
-        "Resposta_x002d_Dias_x00da_teis": "15 dias",
+        "working_days": "15",
         "id": "4",
         "RoPA": [
           {

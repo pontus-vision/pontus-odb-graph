@@ -509,12 +509,22 @@ public class PVTemplateTests extends AppTest {
       req.setTemplateName("TEST2");
       req.setTemplatePOLEType("Event.Subject_Access_Request");
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("{% set ropaLegitimoInteresse=" +
-                      "pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}" +
+              Base64.getEncoder().encodeToString((
+                      "{% set ropaContrato = pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}" +
+                      "{% set ropaLegitimoInteresse = pv:getDsarRopaByLawfulBasis(context.id, 'LEGÍTIMO INTERESSE DO CONTROLADOR') %}" +
+                      "{% if (ropaLegitimoInteresse.size() + ropaContrato.size()) > 0 %}" +
+                      "{% for ropa in ropaContrato %}" +
+                      "{{ ropa.Object_Data_Procedures_Name }}-" +
+                      "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
+                      "\n" +
+                      "{% endfor %}" +
                       "{% for ropa in ropaLegitimoInteresse %}" +
                       "{{ ropa.Object_Data_Procedures_Name }}-" +
                       "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
-                      "{% endfor %}")
+                      "\n" +
+                      "{% endfor %}" +
+                      "{% endif %}" +
+                      "")
                       .getBytes()));
 
       ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
@@ -531,7 +541,8 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      String expectedReport = "Gestão de Rede de Distribuidores-Nome, CPF, RG, Endereço, E-mail, Ocupação";
+      String expectedReport = "Gestão de Rede de Distribuidores-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
+              "Gestão de ferramenta gerencial (PowerBI)-Nome, CPF, RG, Endereço, E-mail, Ocupação\n";
       assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
 
 
@@ -544,97 +555,7 @@ public class PVTemplateTests extends AppTest {
 
   }
 
-  @Test
-  public void test00008SimpleJsonToHtmlTable() throws InterruptedException {
-    try {
-
-//      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
-//              "sharepoint_fontes_de_dados");
-
-      String jsonString = "{\"Nome do Processo\": \"nomeDoProcesso\", \"Descrição\": \"descricao\", \"Dados Coletados\": \"dadosColetados\", \"Dados Sensíveis\": \"dadosSensiveis\"}";
-      String htmlTable = PontusJ2ReportingFunctions.jsonToHtmlTable(jsonString);
-      assertEquals("<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;" +
-              "padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Name</th>" +
-              "<th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Value</th></tr>" +
-              "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;" +
-              "text-align: left;padding: 8px;'>Nome do Processo</td><td style='border: 1px solid #dddddd;" +
-              "text-align: left;padding: 8px;'>nomeDoProcesso</td></tr>\n" +
-              "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;" +
-              "text-align: left;padding: 8px;'>Descrição</td><td style='border: 1px solid #dddddd;text-align: left;" +
-              "padding: 8px;'>descricao</td></tr>\n" +
-              "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;" +
-              "text-align: left;padding: 8px;'>Dados Coletados</td><td style='border: 1px solid #dddddd;text-align: left;" +
-              "padding: 8px;'>dadosColetados</td></tr>\n" +
-              "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;" +
-              "text-align: left;padding: 8px;'>Dados Sensíveis</td><td style='border: 1px solid #dddddd;text-align: left;" +
-              "padding: 8px;'>dadosSensiveis</td></tr>\n" +
-              "</table>", htmlTable, "html table from json string");
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      assertNull(e);
-    }
-
-  }
-
-  @Test
-  public void test00009TemplateJsonToHtmlTable() throws InterruptedException {
-    try {
-
-      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
-              "sharepoint_fontes_de_dados");
-
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
-              "$.queryResp[*].fields", "sharepoint_mapeamentos");
-
-      jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
-
-      Resource res = new Resource();
-
-      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
-      req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Event.Subject_Access_Request");
-      req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("{% set ropaLegitimoInteresse=" +
-                      "pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}" +
-                      "{% for ropa in ropaLegitimoInteresse %}" +
-                      "{% set nomeDoProcesso=ropa.Object_Data_Procedures_Name %}" +
-                      "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Name) }}" +
-                      "{% set descricao=ropa.Object_Data_Procedures_Description %}" +
-                      "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Description) }}" +
-                      "{% set dadosColetados=ropa.Object_Data_Procedures_Info_Collected %}" +
-                      "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
-                      "{% set htmlTable=pv:jsonToHtmlTable('{\"Nome do Processo\": nomeDoProcesso, \"Descrição\": descricao, \"Dados Coletados\": dadosColetados}') %}" +
-                      "{{ htmlTable }}" +
-                      "{% endfor %}").getBytes()));
-
-//      String = "{\"Nome do Processo\": " + {{ nomeDoProcesso }} + ", \"Descrição\": " + {{ descricao }} + ", \"Dados Coletados\": " + {{ dadosColetados }} + "}";
-
-      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
-
-      String templateId = reply.getTemplateId();
-
-      String contextId = App.g.V().has("Event.Subject_Access_Request.Form_Id", P.eq("2"))
-              .id().next().toString();
-
-      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
-      renderReq.setRefEntryId(contextId);
-      renderReq.setTemplateId(templateId);
-      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
-
-      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-
-      String expectedReport = "Gestão de Rede de Distribuidores-Nome, CPF, RG, Endereço, E-mail, Ocupação";
-      assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
 
 
-    } catch (Exception e) {
-      e.printStackTrace();
-      assertNull(e);
-
-    }
-
-
-  }
 
 }
