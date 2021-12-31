@@ -20,7 +20,7 @@ FINALIDADE - Art. 9&ordm;, &sect; I e Art. 18 &sect; I</span></h2>
 tratamento de seus dados, exclusivamente pelo per&iacute;odo de v&iacute;nculo
 contratual firmado com o Sr. (a).</p>
 
-{% set ropaServicosContratados=pv:getRopaByLawfulBasis(context.id, 'Execução de Contrato ou de procedimentos preliminares a contrato, a pedido do titular') %}
+{% set ropaServicosContratados=pv:getDsarRopaByLawfulBasis(context.id, 'Execução de Contrato ou de procedimentos preliminares a contrato, a pedido do titular') %}
 <br><br>
 {% set trs='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;height:45.85pt' %}
 <br><br>
@@ -56,7 +56,7 @@ do Art. 7&ordm;, &sect; V da LGPD, quais sejam:</span></p>
 style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
 {% endif %}
 <br>
-{% set ropaProtecaoDoCredito=pv:getRopaByLawfulBasis(context.id,'Proteção ao Crédito') %}
+{% set ropaProtecaoDoCredito=pv:getDsarRopaByLawfulBasis(context.id,'Proteção ao Crédito') %}
 <br>
 {% if ropaProtecaoDoCredito.size() > 0 %}
 
@@ -91,11 +91,11 @@ do cr&eacute;dito</b></p>
 <br>
 {% endif %}
 
-{% set ropaObrigacaoLegal=pv:getRopaByLawfulBasis(context.id,'Obrigação Legal ou Regulatória') %}
-{% set ropaTutelaSaude=pv:getRopaByLawfulBasis(context.id,'Tutela da Saúde') %}
-{% set ropaConsentimento=pv:getRopaByLawfulBasis(context.id,'Consentimento') %}
-{% set ropaLegitimoInteresse=pv:getRopaByLawfulBasis(context.id,'Legítimo Interesse do Controlador') %}
-{% set ropaJudicial=pv:getRopaByLawfulBasis(context.id,'Exercícios de Direitos em Processos Judiciais, Administrativos ou Arbitrais') %}
+{% set ropaObrigacaoLegal=pv:getDsarRopaByLawfulBasis(context.id,'Obrigação Legal ou Regulatória') %}
+{% set ropaTutelaSaude=pv:getDsarRopaByLawfulBasis(context.id,'Tutela da Saúde') %}
+{% set ropaConsentimento=pv:getDsarRopaByLawfulBasis(context.id,'Consentimento') %}
+{% set ropaLegitimoInteresse=pv:getDsarRopaByLawfulBasis(context.id,'Legítimo Interesse do Controlador') %}
+{% set ropaJudicial=pv:getDsarRopaByLawfulBasis(context.id,'Exercícios de Direitos em Processos Judiciais, Administrativos ou Arbitrais') %}
 
 {% if (ropaObrigacaoLegal.size() + ropaTutelaSaude.size() + ropaConsentimento.size() + ropaLegitimoInteresse.size() + ropaJudicial.size()) > 0 %}
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Outras
