@@ -20,10 +20,10 @@ FINALIDADE - Art. 9&ordm;, &sect; I e Art. 18 &sect; I</span></h2>
 tratamento de seus dados, exclusivamente pelo per&iacute;odo de v&iacute;nculo
 contratual firmado com o Sr. (a).</p>
 
-{% set ropaServicosContratados=pv:getDsarRopaByLawfulBasis(context.id, 'Execução de Contrato ou de procedimentos preliminares a contrato, a pedido do titular') %}
-<br><br>
-{% set trs='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;height:45.85pt' %}
-<br><br>
+{% set ropaServicosContratados=pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}
+
+{% set trs='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5' %}
+
 {% if ropaServicosContratados.size() > 0 %}
 
 <p><b>Dados para execu&ccedil;&atilde;o dos servi&ccedil;os contratados</b></p>
@@ -33,16 +33,16 @@ text-align:justify'><span style='mso-fareast-font-family:
 "Times New Roman"'>Esclarecemos que coletamos dados exclusivamente para a
 execu&ccedil;&atilde;o dos servi&ccedil;os contratados pelo Sr.(a), nos termos
 do Art. 7&ordm;, &sect; V da LGPD, quais sejam:</span></p>
-
+<br/>
 <table>
     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
+        <th style='{{ trs }}'>
         Processo
         </th>
-        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
+        <th style='{{ trs }}'>
             Descri&ccedil;&atilde;o
         </th>
-        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
+        <th style='{{ trs }}'>
             Dados Coletados
         </th>
     </tr>
@@ -54,32 +54,29 @@ do Art. 7&ordm;, &sect; V da LGPD, quais sejam:</span></p>
 
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
 style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+<br/>
+
 {% endif %}
-<br>
-{% set ropaProtecaoDoCredito=pv:getDsarRopaByLawfulBasis(context.id,'Proteção ao Crédito') %}
-<br>
+{% set ropaProtecaoDoCredito=pv:getDsarRopaByLawfulBasis(context.id,'PROTEÇÃO AO CRÉDITO') %}
 {% if ropaProtecaoDoCredito.size() > 0 %}
 
-<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Prote&ccedil;&atilde;o
-do cr&eacute;dito</b></p>
+<h3 class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Prote&ccedil;&atilde;o do cr&eacute;dito</b></h3>
 
-<ul>
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     text-align:justify;mso-list:l2 level1 lfo1;tab-stops:list 36.0pt'><span style='mso-fareast-font-family:"Times New Roman"'>Esclarecemos
+<p><span style='mso-fareast-font-family:"Times New Roman"'>Esclarecemos
      que coletamos dados exclusivamente para a prote&ccedil;&atilde;o ao
      cr&eacute;ditos, conforme autorizado pelo Art. 7&ordm;, &sect; V da LGPD,
-     quais sejam:</span></li>
-</ul>
+    quais sejam:</span>
+</p>
 
 <table>
     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
+        <th style='{{ trs }}'>
             Processo
         </th>
-        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
+        <th style='{{ trs }}'>
             Descri&ccedil;&atilde;o
         </th>
-        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
+        <th style='{{ trs }}'>
             Dados Coletados
         </th>
     </tr>
@@ -88,77 +85,72 @@ do cr&eacute;dito</b></p>
     {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description, trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
     {% endfor %}
 </table>
-<br>
+<br/>
 {% endif %}
 
-{% set ropaObrigacaoLegal=pv:getDsarRopaByLawfulBasis(context.id,'Obrigação Legal ou Regulatória') %}
-{% set ropaTutelaSaude=pv:getDsarRopaByLawfulBasis(context.id,'Tutela da Saúde') %}
-{% set ropaConsentimento=pv:getDsarRopaByLawfulBasis(context.id,'Consentimento') %}
-{% set ropaLegitimoInteresse=pv:getDsarRopaByLawfulBasis(context.id,'Legítimo Interesse do Controlador') %}
-{% set ropaJudicial=pv:getDsarRopaByLawfulBasis(context.id,'Exercícios de Direitos em Processos Judiciais, Administrativos ou Arbitrais') %}
+{% set ropaObrigacaoLegal=pv:getDsarRopaByLawfulBasis(context.id,'OBRIGAÇÃO LEGAL OU REGULATÓRIA') %}
+{% set ropaTutelaSaude=pv:getDsarRopaByLawfulBasis(context.id,'TUTELA DA SAÚDE') %}
+{% set ropaConsentimento=pv:getDsarRopaByLawfulBasis(context.id,'CONSENTIMENTO') %}
+{% set ropaLegitimoInteresse=pv:getDsarRopaByLawfulBasis(context.id,'LEGÍTIMO INTERESSE DO CONTROLADOR') %}
+{% set ropaJudicial=pv:getDsarRopaByLawfulBasis(context.id,'EXERCÍCIOS DE DIREITOS EM PROCESSOS JUDICIAIS, ADMINISTRATIVOS OU ARBITRAIS') %}
 
 {% if (ropaObrigacaoLegal.size() + ropaTutelaSaude.size() + ropaConsentimento.size() + ropaLegitimoInteresse.size() + ropaJudicial.size()) > 0 %}
-<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Outras
-    finalidades</b></p>
+<h3 class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'>Outras Finalidades</h3>
 
-<ul>
-    <li class=MsoNormal style='text-align:justify;mso-list:l4 level1 lfo2;
-     tab-stops:list 36.0pt'><span style='mso-fareast-font-family:"Times New Roman"'>Esclarecemos
+<p><span style='mso-fareast-font-family:"Times New Roman"'>Esclarecemos
         que coletamos as seguintes informa&ccedil;&otilde;es:</span>
-    </li>
-</ul>
-
+</p>
 
 <table>
     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
+        <th style='{{ trs }}'>
             Processo
         </th>
-        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
+        <th style='{{ trs }}'>
             Descri&ccedil;&atilde;o
         </th>
-        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
+        <th style='{{ trs }}'>
             Dados Coletados
         </th>
     </tr>
 
 
     {% for ropa in ropaJudicial %}
-    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description, trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
     {% endfor %}
 
     {% for ropa in ropaLegitimoInteresse %}
-    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description, trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
     {% endfor %}
 
     {% for ropa in ropaConsentimento %}
-    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description, trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
     {% endfor %}
 
     {% for ropa in ropaTutelaSaude %}
-    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description, trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
     {% endfor %}
 
     {% for ropa in ropaObrigacaoLegal %}
-    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description, trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
     {% endfor %}
 
 </table>
-
 {% endif %}
-<br><br>
-{# TODO: Here ... which RoPA  to use?! how to get the oldest  RoPA ... that has the earliest Metadata_Create_Date
 
+{# TODO: Here ... which RoPA  to use?! how to get the oldest  RoPA ... that has the earliest Metadata_Create_Date
+<!--
 {% if ropaConsentimento.size() > 0 %}
+<br/>
 
 <h2><span style='mso-fareast-font-family:"Times New Roman"'>DO CONSENTIMENTO - Art. 7&ordm;, &sect; I</span></h2>
 
 {% for ropa in ropaList %}
 
-<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Meio
-eletr&ocirc;nico - Termos de Uso</b><span style='color:red'></span></p>
+<h3 class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Meio
+eletr&ocirc;nico - Termos de Uso</b><span style='color:red'></span></h3>
 
-<ul>
+<ul style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      text-align:justify;mso-list:l5 level1 lfo3;tab-stops:list 36.0pt'><span
      style='mso-fareast-font-family:"Times New Roman"'>O seu consentimento foi
@@ -172,7 +164,7 @@ eletr&ocirc;nico - Termos de Uso</b><span style='color:red'></span></p>
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b><span
 style='mso-fareast-font-family:"Times New Roman"'>Contrato</span></b></p>
 
-<ul>
+<ul style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      text-align:justify;mso-list:l1 level1 lfo4;tab-stops:list 36.0pt'><span style='mso-fareast-font-family:"Times New Roman"'>O
      seu consentimento foi firmado pelo Sr.(a) em <span style='color:red'>{{
@@ -183,10 +175,11 @@ style='mso-fareast-font-family:"Times New Roman"'>Contrato</span></b></p>
 </ul>
 
 {% endfor %}
-<br><br>
 {% endif %}
-
+-->
 #}
+
+<br/>
 
 <h2><span style='mso-fareast-font-family:"Times New Roman"'>ENCARREGADO PELO
 TRATAMENTO DOS DADOS - Art. 9&ordm;, &sect; III e IV</span></h2>
@@ -196,22 +189,24 @@ pelo tratamento dos seus dados &eacute;: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_NAME
 'use env var PV_DSAR_DPO_NAME') }}, registro: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_CPF',
 'use env var PV_DSAR_DPO_CPF') || pv:getEnvVarDefVal('PV_DSAR_ORG_CNPJ', 'use
 env var PV_DSAR_ORG_CNPJ') }}. </p>
+<br/>
 
 <h2><span style='mso-fareast-font-family:"Times New Roman"'>COMUNICA&Ccedil;&Atilde;O
 COM O ENCARREGADO - Art. 9&ordm;, &sect; IV</span></h2>
 
 <p style='text-align:justify'>Voc&ecirc; pode entrar em contato direto com o
 Encarregado pelos dados atrav&eacute;s do e-mail: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_EMAIL',
-'use env var PV_DSAR_DPO_EMAIL') }}. <span contenteditable=false data-type=texto><span
-data-bot="" data-explain="" data-placeholder="e-mail do controlador" data-type=texto></p>
+'use env var PV_DSAR_DPO_EMAIL') }}. </p>
+
+<br/>
 
 {# TO-DO: Fix this later!
-
+<!--
 <h2>DO COMPRARTILHAMENTO DE DADOS - Art. 9&ordm;, &sect; V e 18 &sect;
 VII</h2>
 
 {% if NO_DATA_SHARED %}
-<br><br>
+
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b><span
 style='mso-fareast-font-family:"Times New Roman"'>Sem nenhum compartilhamento
 de dados</span></b></p>
@@ -228,9 +223,9 @@ de dados</span></b></p>
 </ul>
 
 {% endif %}
-<br><br>
+
 {% if COMPARTILHAMENTO_OBRIGACAO_LEGAL %}
-<br><br>
+
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b><span
 style='mso-fareast-font-family:"Times New Roman"'>Compartilhamento para
 cumprimento de obriga&ccedil;&atilde;o legal</span></b></p>
@@ -301,9 +296,9 @@ cumprimento de obriga&ccedil;&atilde;o legal</span></b></p>
 </ul>
 
 {% endif %}
-<br><br>
+
 {% if PAGAMENTO_COM_CARTAO %}
-<br><br>
+
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
 <ul>
@@ -330,11 +325,11 @@ cumprimento de obriga&ccedil;&atilde;o legal</span></b></p>
 </ul>
 
 {% endif %}
-<br><br>
+
 <p class=MsoNormal><span style='color:red'><o:p>&nbsp;</o:p></span></p>
 
 {% if EMISSAO_BOLETO %}
-<br><br>
+
 <p class=MsoNormal><o:p>&nbsp;</o:p></p>
 
 <ul>
@@ -361,9 +356,9 @@ cumprimento de obriga&ccedil;&atilde;o legal</span></b></p>
 </ul>
 
 {% endif %}
-<br><br>
+
 {% endif %}
-<br><br>
+
 {% if DATA_SHARED %}
 <br>
 <p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Compartilhamento
@@ -393,17 +388,16 @@ data-type=texto></span></p>
  </ol>
 </ul>
 
-{% endif %}
+{% endif %} -->
 #}
-<br>
+<br/>
+
 <p style='text-align:justify'>Caso o(a) Sr. (a) tenha qualquer d&uacute;vida ou
 solicita&ccedil;&atilde;o adicional, por favor n&atilde;o deixe de entrar em
 contato direto com o controlador de dados atrav&eacute;s do e-mail {{ pv:getEnvVarDefVal('PV_DSAR_DPO_EMAIL',
 'use env var PV_DSAR_DPO_EMAIL') }}.</p>
 
-</div>
-
-</div>
+<br/>
 
 </body>
 
