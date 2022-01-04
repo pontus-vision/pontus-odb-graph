@@ -569,6 +569,9 @@ public class PVTemplateTests extends AppTest {
 
       jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
 
+      jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+
+
       jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
               "$.queryResp[*].fields", "sharepoint_data_breaches");
 
@@ -603,7 +606,7 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      String expectedReport = "People: 2\n" +
+      String expectedReport = "People: 4\n" +
               "Data Sources: 2\n" +
               "Servers: 2\n";
       assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
