@@ -48,21 +48,30 @@ updatereq:
           excludeFromSearch: True
         - name: Event.Subject_Access_Request.Metadata.Update_Date
           val: ${Resposta_x002d_DataeHor_x00e1_ri}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "java.util.Date"
+          excludeFromSearch: True
         - name: Event.Subject_Access_Request.Metadata.Create_Date
           val: ${Solicita_x00e7__x00e3_o_x002d_Da}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "java.util.Date"
+          excludeFromSearch: True
         - name: Event.Subject_Access_Request.Request_Type
           val: ${Solicita_x00e7__x00e3_o_x002d_De}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Event.Subject_Access_Request.Request_Channel
           val: ${Solicita_x00e7__x00e3_o_x002d_Ca}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Event.Subject_Access_Request.Status
           val: ${Status}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Subject_Access_Request.Natural_Person_Type
+          val: ${naturalPersonType?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event.Group_Subject_Access_Request
       props:

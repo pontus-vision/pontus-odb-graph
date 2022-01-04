@@ -1980,7 +1980,7 @@ margin-left:0cm;text-align:justify;tab-stops:29.1pt 43.35pt 58.35pt 71.1pt 83.85
 Tahoma;color:#5B9BD5'>Uma tecnologia, servi&ccedil;o ou outra nova iniciativa em que
 dados pessoais e dados pessoais sens&iacute;veis sejam ou devam ser tratados;<o:p></o:p></span></p>
 
- "{% set lawfulBasis=pv:neighboursByType(context.id,'Has_Lawful_Basis_On') %}
+ {% set lawfulBasis=pv:neighboursByType(context.id,'Has_Lawful_Basis_On') %}
 
 
  {% if 'Ethnicity' in context.Object_Data_Procedures_Info_Collected %}
@@ -3130,7 +3130,7 @@ Tahoma;color:#5B9BD5'>&gt;</span><span lang=PT-BR style='font-size:11.0pt'><o:p>
   0cm;margin-bottom:2.85pt;margin-left:0cm;text-align:center;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
             lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
   mso-bidi-font-family:Tahoma;color:#5B9BD5'>
-     {{ 'SR MARCOS DPO' }}
+     {{ pv:getEnvVarDefVal('PV_RIPD_DPO_NAME', 'use env var PV_RIPD_DPO_NAME') }}
 
     </span></p>
     <p class=TableContents align=center style='margin-top:2.85pt;margin-right:
@@ -3143,13 +3143,13 @@ Tahoma;color:#5B9BD5'>&gt;</span><span lang=PT-BR style='font-size:11.0pt'><o:p>
     <p class=TableContents align=center style='margin-top:2.85pt;margin-right:
   0cm;margin-bottom:2.85pt;margin-left:0cm;text-align:center;tab-stops:27.75pt 42.0pt 57.0pt 69.75pt 82.5pt 98.25pt 111.0pt lined 366.8pt'><span
             lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
-  mso-bidi-font-family:Tahoma;color:#5B9BD5'>Rio de Janeiro - RJ</span><span
+  mso-bidi-font-family:Tahoma;color:#5B9BD5'>{{ pv:getEnvVarDefVal('PV_RIPD_CITY', 'São Paulo') }} {{ pv:getEnvVarDefVal('PV_RIPD_STATE', 'SP') }}</span><span
             lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
   mso-bidi-font-family:Tahoma;color:black;mso-color-alt:windowtext'>,</span><span
             lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
   mso-bidi-font-family:Tahoma;color:#FF3333'> </span><span lang=PT-BR
                                                            style='font-size:11.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:
-  Tahoma;color:#5B9BD5'>1</span><span lang=PT-BR style='font-size:
+  Tahoma;color:#5B9BD5'> {{ pv:formatDateNow('dd') }}</span><span lang=PT-BR style='font-size:
   11.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;
   color:#FF3333'> </span><span lang=PT-BR style='font-size:11.0pt;font-family:
   Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:black;mso-color-alt:
@@ -3158,7 +3158,7 @@ Tahoma;color:#5B9BD5'>&gt;</span><span lang=PT-BR style='font-size:11.0pt'><o:p>
             lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
   mso-bidi-font-family:Tahoma;color:#5B9BD5'>
 
-     {{ 'Fevereiro' | capitalize }}
+     {{ pv:formatDateNow('MMM') }}
 
     </span><span
             lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
@@ -3168,7 +3168,7 @@ Tahoma;color:#5B9BD5'>&gt;</span><span lang=PT-BR style='font-size:11.0pt'><o:p>
                                                               style='font-size:11.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:
   Tahoma;color:#FF3333'> </span><span lang=PT-BR style='font-size:11.0pt;
   font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
-     {{ '2020' }}
+     {{ pv:formatDateNow('yyyy') }}
 
     </span></p>
    </td>

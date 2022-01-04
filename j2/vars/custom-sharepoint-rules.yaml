@@ -157,7 +157,7 @@ rules:
         props:
           Form_Id: "${id}"
           Name:
-            val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
+            val: "${Title?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
           Description:
@@ -876,12 +876,23 @@ rules:
           Metadata.Update_Date:
             val: "${Resposta_x002d_DataeHor_x00e1_ri}"
             type: java.util.Date
+            excludeFromSearch: true
           Metadata.Create_Date:
             val: "${Solicita_x00e7__x00e3_o_x002d_Da}"
             type: java.util.Date
-          Request_Type: "${Solicita_x00e7__x00e3_o_x002d_De}"
-          Request_Channel: "${Solicita_x00e7__x00e3_o_x002d_Ca}"
-          Status: "${Status}"
+            excludeFromSearch: true
+          Request_Type:
+            val: "${Solicita_x00e7__x00e3_o_x002d_De}"
+            excludeFromSearch: true
+          Request_Channel:
+            val: "${Solicita_x00e7__x00e3_o_x002d_Ca}"
+            excludeFromSearch: true
+          Status:
+            val: "${Status}"
+            excludeFromSearch: true
+          Natural_Person_Type:
+            val: "${naturalPersonType?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 
       - label: Event.Group_Subject_Access_Request
         props:

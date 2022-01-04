@@ -1,10 +1,16 @@
 #!/bin/bash
 
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
-cd "$DIR"
+#cd "$DIR"
 
+if [[ -z "$1" || -z "$2" ]]; then
 
-cat ../conf/reports/Object.Data_Procedures.RIPD.html | \
+	printf "Usage:\n\n\t%s <file to be changed> <output file>\n\n\n" $0
+	exit -1	
+
+fi
+
+cat $1 | \
 sed -e 's/Ó/\&Oacute;/g' | \
 sed -e 's/Õ/\&Otilde;/g' | \
 sed -e 's/Ô/\&Ocirc;/g' | \
@@ -40,6 +46,6 @@ sed -e 's/ì/\&igrave;/g' | \
 sed -e 's/Ç/\&Ccedil;/g' | \
 sed -e 's/ç/\&ccedil;/g' | \
 sed -e 's/§/\&sect;/g' | \
-sed -e 's/º/\&ordm;/g'  > file2.txt
+sed -e 's/º/\&ordm;/g'  > $2
    
    

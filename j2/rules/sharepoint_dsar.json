@@ -73,29 +73,40 @@
           {
             "name": "Event.Subject_Access_Request.Metadata.Update_Date",
             "val": "${Resposta_x002d_DataeHor_x00e1_ri}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Subject_Access_Request.Metadata.Create_Date",
             "val": "${Solicita_x00e7__x00e3_o_x002d_Da}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Subject_Access_Request.Request_Type",
             "val": "${Solicita_x00e7__x00e3_o_x002d_De}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Subject_Access_Request.Request_Channel",
             "val": "${Solicita_x00e7__x00e3_o_x002d_Ca}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Subject_Access_Request.Status",
             "val": "${Status}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Subject_Access_Request.Natural_Person_Type",
+            "val": "${naturalPersonType?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
