@@ -1046,20 +1046,24 @@ class PontusJ2ReportingFunctions {
 
 
     if ('Event.Data_Breach' == vertType) {
-      def impactedServers = App.g.V(pg_id)
-              .both()
-              .has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
+      GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id).out('Impacted_By_Data_Breach').dedup()
+//              .both().has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
+//              .bothE('Runs_On').outV().dedup()
+
+      GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
+      GraphTraversal dsTravClone2 = impactedDataSourcesTrav.clone()
+
+
+      def impactedServers = dsTravClone2
+              .out('Has_Module')
+//              .has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
               .valueMap().toList().collect { item ->
         item.collectEntries { key, val ->
           [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
         }
       }
 
-      GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id)
-              .both().has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
-              .bothE('Runs_On').outV().dedup()
 
-      GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
 
       def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
         item.collectEntries { key, val ->

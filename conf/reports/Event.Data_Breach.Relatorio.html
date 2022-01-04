@@ -1,0 +1,55 @@
+<div style='padding: 10px; background: white; color: black;'>
+    <hr/>
+
+    <h1> Relat&oacute;rio de Viola&ccedil;&atilde;o de Dados </h1>
+    <hr/>
+    N&uacute;mero de Pessoas: {{ impacted_people | length }}<br/>
+    Fontes de Dados: {{ impacted_data_sources | length }}<br/>
+    M&oacute;dulos: {{ impacted_servers | length }}<br/>
+
+    <hr/>
+    <hr/>
+
+
+    {% if impacted_people[0] is defined %}
+    <h2> Lista de {{ impacted_people | length }} Titulares impactados </h2>
+    <table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Identifica&ccedil;&atilde;o</th></tr>
+
+        {% for mainkey in impacted_people %}
+        {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (mainkey['Person_Natural_Full_Name'] | default('n/a') , mainkey['Person_Natural_Customer_ID'] | default('n/a') )}}
+            {% endfor %}
+            {{ "</table>" }}
+
+    {% else %}
+    <h2> Nenhum Titular Impactado </h2>
+    {% endif %}
+
+
+    {% if impacted_data_sources[0] is defined %}
+    <h2> Lista de {{ impacted_data_sources | length }} Fontes de Dados </h2>
+    {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>" }}
+
+    {% for mainkey in impacted_data_sources %}
+    {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td></tr>" | format (mainkey['Object_Data_Source_Name'] | default('n/a') )}}
+        {% endfor %}
+        {{ "</table>" }}
+
+    {% else %}
+    <h2> Nenhuma Fonte de Dados Impactada </h2>
+    {% endif %}
+
+    {% if impacted_servers[0] is defined %}
+    <h2> Lista de {{ impacted_servers | length }} M&oacute;dulos </h2>
+
+    {% for mainkey in impacted_servers %}
+    <h3>{{ mainkey.Metadata_Type |replace('.',' ')|replace('_',' ') }}</h3>
+    {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>" }}
+    {% for key, value in mainkey.items() %}
+    {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td></tr>" | format (key , value )}}
+        {% endfor %}
+        {{ "</table>" }}
+    {% endfor %}
+    {% else %}
+    <h2> Nenhum M&oacute;dulo Impactado </h2>
+    {% endif %}
+</div>

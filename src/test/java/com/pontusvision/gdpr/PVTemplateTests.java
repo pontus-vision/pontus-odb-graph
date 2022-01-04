@@ -556,6 +556,68 @@ public class PVTemplateTests extends AppTest {
   }
 
 
+  @Test
+  public void test00008TemplateDataBreachReport() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+              "$.queryResp[*].fields", "sharepoint_mapeamentos");
+
+      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json",
+              "$.queryResp[*].fields",
+              "sharepoint_fontes_de_dados");
+
+      jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+
+      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
+              "$.queryResp[*].fields", "sharepoint_data_breaches");
+
+//      def dsarId= App.executor.eval("App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).id().next()").get().toString()
+//
+//      def lawfulBasis  = "LEGÍTIMO INTERESSE DO CONTROLADOR"
+
+      Resource res = new Resource();
+
+      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+      req.setTemplateName("TEST2");
+      req.setTemplatePOLEType("Event.Data_Breach");
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString((
+                              "People: {{ impacted_people | length }}\n" +
+                              "Data Sources: {{ impacted_data_sources | length }}\n" +
+                              "Servers: {{ impacted_servers | length }}\n"
+                              )
+                      .getBytes()));
+
+      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+
+      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5"))
+              .id().next().toString();
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      String expectedReport = "People: 2\n" +
+              "Data Sources: 2\n" +
+              "Servers: 2\n";
+      assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
 
 
 }
