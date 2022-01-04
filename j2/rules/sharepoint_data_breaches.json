@@ -30,6 +30,11 @@
             "excludeFromSearch": true
           },
           {
+            "name": "Event.Data_Breach.Authority_Notified",
+            "val": "${authority_notified?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Event.Data_Breach.Description",
             "val": "${description?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
@@ -54,6 +59,11 @@
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Data_Breach.Natural_Person_Notified",
+            "val": "${natural_person_notified?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Event.Data_Breach.Source",

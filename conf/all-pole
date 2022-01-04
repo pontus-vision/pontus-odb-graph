@@ -12,11 +12,13 @@ Event.Consent.Metadata.Update_Date
 Event.Consent.Status
 Event.Consent.Description
 Event.Consent.Customer_ID
+Event.Data_Breach.Authority_Notified
 Event.Data_Breach.Description
 Event.Data_Breach.Id
 Event.Data_Breach.Impact
 Event.Data_Breach.Metadata.Create_Date
 Event.Data_Breach.Metadata.Update_Date
+Event.Data_Breach.Natural_Person_Notified
 Event.Data_Breach.Source
 Event.Data_Breach.Status
 Event.Data_Breach.Form_Id

@@ -83,6 +83,7 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Authority_Notified
         - name: Description
         - name: Id
         - name: Impact
@@ -90,6 +91,7 @@ schema:
           dataType: Date
         - name: Metadata.Update_Date
           dataType: Date
+        - name: Natural_Person_Notified
         - name: Source
         - name: Status
         - name: Form_Id

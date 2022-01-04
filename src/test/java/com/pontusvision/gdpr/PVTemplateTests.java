@@ -511,20 +511,20 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set ropaContrato = pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}" +
-                      "{% set ropaLegitimoInteresse = pv:getDsarRopaByLawfulBasis(context.id, 'LEGÍTIMO INTERESSE DO CONTROLADOR') %}" +
-                      "{% if (ropaLegitimoInteresse.size() + ropaContrato.size()) > 0 %}" +
-                      "{% for ropa in ropaContrato %}" +
-                      "{{ ropa.Object_Data_Procedures_Name }}-" +
-                      "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
-                      "\n" +
-                      "{% endfor %}" +
-                      "{% for ropa in ropaLegitimoInteresse %}" +
-                      "{{ ropa.Object_Data_Procedures_Name }}-" +
-                      "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
-                      "\n" +
-                      "{% endfor %}" +
-                      "{% endif %}" +
-                      "")
+                              "{% set ropaLegitimoInteresse = pv:getDsarRopaByLawfulBasis(context.id, 'LEGÍTIMO INTERESSE DO CONTROLADOR') %}" +
+                              "{% if (ropaLegitimoInteresse.size() + ropaContrato.size()) > 0 %}" +
+                              "{% for ropa in ropaContrato %}" +
+                              "{{ ropa.Object_Data_Procedures_Name }}-" +
+                              "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
+                              "\n" +
+                              "{% endfor %}" +
+                              "{% for ropa in ropaLegitimoInteresse %}" +
+                              "{{ ropa.Object_Data_Procedures_Name }}-" +
+                              "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
+                              "\n" +
+                              "{% endfor %}" +
+                              "{% endif %}" +
+                              "")
                       .getBytes()));
 
       ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
@@ -571,7 +571,6 @@ public class PVTemplateTests extends AppTest {
 
       jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
 
-
       jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
               "$.queryResp[*].fields", "sharepoint_data_breaches");
 
@@ -586,10 +585,10 @@ public class PVTemplateTests extends AppTest {
       req.setTemplatePOLEType("Event.Data_Breach");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
-                              "People: {{ impacted_people | length }}\n" +
+                      "People: {{ impacted_people | length }}\n" +
                               "Data Sources: {{ impacted_data_sources | length }}\n" +
                               "Servers: {{ impacted_servers | length }}\n"
-                              )
+              )
                       .getBytes()));
 
       ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
@@ -609,8 +608,57 @@ public class PVTemplateTests extends AppTest {
       String expectedReport = "People: 4\n" +
               "Data Sources: 2\n" +
               "Servers: 2\n";
-      assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
+      assertEquals(expectedReport, report, "Data Breache's statistics/numbers");
 
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString(("{{ context.Event_Data_Breach_Description | " +
+                      "default('Favor Preencher o campo <b>Descri&ccedil;&atilde;o</b> na Lista " +
+                      "<b>Incidentes de Seguran&ccedil;a Reportados</b> no SharePoint') }}")
+                      .getBytes()));
+      reply = res.reportTemplateUpsert(req);
+      templateId = reply.getTemplateId();
+      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5")).id().next().toString();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      expectedReport = "EXPOSIÇÃO DA OPINIÃO DOS COLABORADORES QUANTO A COMIDA DA CANTINA";
+      assertEquals(expectedReport, report, "Data Breache's Description");
+
+
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString(("{% if context.Event_Data_Breach_Authority_Notified == 'Sim' %}" +
+                      "A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) j&aacute; foi notificada desse evento." +
+                      "{% else %}A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) ainda N&Atilde;O " +
+                      "foi notificada desse evento.{% endif %}")
+                      .getBytes()));
+      reply = res.reportTemplateUpsert(req);
+      templateId = reply.getTemplateId();
+      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5")).id().next().toString();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      expectedReport = "A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) ainda N&Atilde;O foi notificada desse evento.";
+      assertEquals(expectedReport, report, "Data Breache's Authority Notification Status");
+
+
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString(("{% if context.Event_Data_Breach_Natural_Person_Notified == 'Sim' %}" +
+                      "O Titular dos dados j&aacute; foi notificao desse evento." +
+                      "{% else %}" +
+                      "O Titular dos dados ainda N&Atilde;O foi notificado desse evento." +
+                      "{% endif %}")
+                      .getBytes()));
+      reply = res.reportTemplateUpsert(req);
+      templateId = reply.getTemplateId();
+      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("4")).id().next().toString();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      expectedReport = "O Titular dos dados ainda N&Atilde;O foi notificado desse evento.";
+      assertEquals(expectedReport, report, "Data Breache's Natural Person Notification Status");
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -620,7 +668,6 @@ public class PVTemplateTests extends AppTest {
 
 
   }
-
 
 
 }
