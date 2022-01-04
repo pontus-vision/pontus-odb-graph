@@ -30,7 +30,7 @@ import com.pontusvision.graphutils.PontusJ2ReportingFunctions;
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @TestClassOrder(AnnotationTestsOrderer.class)
-@TestClassesOrder(4)
+@TestClassesOrder(1000)
 //@RunWith(JUnitPlatform.class)
 public class PVTemplateTests extends AppTest {
   /**

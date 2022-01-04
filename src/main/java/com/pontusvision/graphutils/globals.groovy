@@ -1055,7 +1055,7 @@ class PontusJ2ReportingFunctions {
 
 
       def impactedServers = dsTravClone2
-              .out('Has_Module')
+              .out('Has_Module').dedup()
 //              .has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
               .valueMap().toList().collect { item ->
         item.collectEntries { key, val ->
