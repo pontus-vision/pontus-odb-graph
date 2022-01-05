@@ -21,7 +21,7 @@
 
     <h2>Notifica&ccedil;&otilde;es</h2>
     <p>
-    {% if context.Event_Data_Breach_Authority_Notified == 'Sim' %}
+    {% if context.Event_Data_Breach_Authority_Notified == 'SIM' %}
         A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) j&aacute; foi notificada desse evento.
     {% else %}
         A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) ainda N&Atilde;O foi notificada desse evento.
@@ -29,7 +29,7 @@
     </p>
 
     <p>
-    {% if context.Event_Data_Breach_Natural_Person_Notified == 'Sim' %}
+    {% if context.Event_Data_Breach_Natural_Person_Notified == 'SIM' %}
         O Titular dos dados j&aacute; foi notificao desse evento.
     {% else %}
         O Titular dos dados ainda N&Atilde;O foi notificado desse evento.

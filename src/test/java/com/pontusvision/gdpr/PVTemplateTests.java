@@ -627,7 +627,7 @@ public class PVTemplateTests extends AppTest {
 
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("{% if context.Event_Data_Breach_Authority_Notified == 'Sim' %}" +
+              Base64.getEncoder().encodeToString(("{% if context.Event_Data_Breach_Authority_Notified == 'SIM' %}" +
                       "A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) j&aacute; foi notificada desse evento." +
                       "{% else %}A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) ainda N&Atilde;O " +
                       "foi notificada desse evento.{% endif %}")
@@ -639,12 +639,12 @@ public class PVTemplateTests extends AppTest {
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      expectedReport = "A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) ainda N&Atilde;O foi notificada desse evento.";
+      expectedReport = "A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) j&aacute; foi notificada desse evento.";
       assertEquals(expectedReport, report, "Data Breache's Authority Notification Status");
 
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("{% if context.Event_Data_Breach_Natural_Person_Notified == 'Sim' %}" +
+              Base64.getEncoder().encodeToString(("{% if context.Event_Data_Breach_Natural_Person_Notified == 'SIM' %}" +
                       "O Titular dos dados j&aacute; foi notificao desse evento." +
                       "{% else %}" +
                       "O Titular dos dados ainda N&Atilde;O foi notificado desse evento." +
@@ -658,6 +658,7 @@ public class PVTemplateTests extends AppTest {
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
       expectedReport = "O Titular dos dados ainda N&Atilde;O foi notificado desse evento.";
+//    Event.Data_Breach id 4 has Natural_Person_Notified = "Não" ... therefore jinjava condition is always false !!
       assertEquals(expectedReport, report, "Data Breache's Natural Person Notification Status");
 
     } catch (Exception e) {
