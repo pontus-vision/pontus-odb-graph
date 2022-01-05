@@ -679,7 +679,7 @@ public class PVTemplateTests extends AppTest {
                       "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
                       "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\n" +
                       "        </tr>\n" +
-                      "        \" | format (value | default('n/a')) }}\n" +
+                      "        \" | format (key | default('n/a')) }}\n" +
                       "        {% endfor %}\n" +
                       "        {% endfor %}\n" +
                       "        {{ \"\n" +
