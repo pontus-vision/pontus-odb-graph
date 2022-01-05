@@ -15,74 +15,97 @@
     <hr/>
 
     <h2>Descri&ccedil;&atilde;o</h2>
-    <p> {{ context.Event_Data_Breach_Description | default('Favor Preencher o campo <b>Descri&ccedil;&atilde;o</b> na Lista <b>Incidentes de Seguran&ccedil;a Reportados</b> no SharePoint') }}</p>
+    <p> {{ context.Event_Data_Breach_Description | default('Favor Preencher o campo <b>Descri&ccedil;&atilde;o</b> na
+        Lista <b>Incidentes de Seguran&ccedil;a Reportados</b> no SharePoint') }}</p>
 
     <hr/>
 
     <h2>Notifica&ccedil;&otilde;es</h2>
     <p>
-    {% if context.Event_Data_Breach_Authority_Notified == 'SIM' %}
-        A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) j&aacute; foi notificada desse evento.
-    {% else %}
-        A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) ainda N&Atilde;O foi notificada desse evento.
-    {% endif %}
+        A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados)
+        {% if context.Event_Data_Breach_Authority_Notified == 'NÃO' %} N&Atilde;O {% endif %}
+        foi notificada desse evento.
     </p>
 
     <p>
-    {% if context.Event_Data_Breach_Natural_Person_Notified == 'SIM' %}
-        O Titular dos dados j&aacute; foi notificao desse evento.
-    {% else %}
-        O Titular dos dados ainda N&Atilde;O foi notificado desse evento.
-    {% endif %}
+        Titulares dos dados
+        {% if context.Event_Data_Breach_Natural_Person_Notified == 'NÃO' %} N&Atilde;O {% endif %}
+        foram notificados desse evento.
     </p>
 
     <hr/>
     <h2> Estat&iacute;sticas / Levantamento </h2>
-    N&uacute;mero de Pessoas: {{ impacted_people | length }}<br/>
+    N&uacute;mero de Titulares: {{ impacted_people | length }}<br/>
     Fontes de Dados: {{ impacted_data_sources | length }}<br/>
     M&oacute;dulos: {{ impacted_servers | length }}<br/><br/>
 
     <hr/>
 
     {% if impacted_people[0] is defined %}
-    <h2> Lista de {{ impacted_people | length }} Titulares impactados </h2>
-    <table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Identifica&ccedil;&atilde;o</th></tr>
+    <h2> Lista de Titulares impactados </h2>
+    {{ "
+    <table style='margin: 5px'>
+        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>
+        </tr>
+        " }}
 
         {% for mainkey in impacted_people %}
-        {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (mainkey['Person_Natural_Full_Name'] | default('n/a') , mainkey['Person_Natural_Customer_ID'] | default('n/a') )}}
-            {% endfor %}
-            {{ "</table>" }}
-
-    {% else %}
-    <h2> Nenhum Titular Impactado </h2>
+        {{ "
+        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>
+        </tr>
+        " | format (mainkey['Person_Natural_Full_Name'] | default('n/a')) }}
+        {% endfor %}
+        {{ "
+    </table>
+    " }}
     {% endif %}
 
     {% if impacted_data_sources[0] is defined %}
-    <h2> Lista de {{ impacted_data_sources | length }} Fontes de Dados </h2>
-    {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>" }}
+    <hr/>
+    <h2> Lista de Fontes de Dados </h2>
+    {{ "
+    <table style='margin: 5px'>
+        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>
+        </tr>
+        " }}
 
-    {% for mainkey in impacted_data_sources %}
-    {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td></tr>" | format (mainkey['Object_Data_Source_Name'] | default('n/a') )}}
+        {% for mainkey in impacted_data_sources %}
+        {{ "
+        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>
+        </tr>
+        " | format (mainkey['Object_Data_Source_Name'] | default('n/a') )}}
         {% endfor %}
-        {{ "</table>" }}
-
-    {% else %}
-    <h2> Nenhuma Fonte de Dados Impactada </h2>
+        {{ "
+    </table>
+    " }}
     {% endif %}
 
     {% if impacted_servers[0] is defined %}
-    <h2> Lista de {{ impacted_servers | length }} M&oacute;dulos </h2>
+    <hr/>
+    <h2> Lista de M&oacute;dulos </h2>
+    {{ "
+    <table style='margin: 5px'>
+        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>
+        </tr>
+        " }}
 
-    {% for mainkey in impacted_servers %}
-    <h3>{{ mainkey.Metadata_Type |replace('.',' ')|replace('_',' ') }}</h3>
-    {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>" }}
-    {% for key, value in mainkey.items() %}
-    {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td></tr>" | format (key , value )}}
+        {% for mainkey in impacted_servers %}
+        {% for key, value in mainkey.items() %}
+        {{ "
+        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>
+        </tr>
+        " | format (key | default('n/a')) }}
         {% endfor %}
-        {{ "</table>" }}
-    {% endfor %}
-    {% else %}
-    <h2> Nenhum M&oacute;dulo Impactado </h2>
+        {% endfor %}
+        {{ "
+    </table>
+    " }}
     {% endif %}
 
 </div>

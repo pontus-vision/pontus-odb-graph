@@ -661,6 +661,146 @@ public class PVTemplateTests extends AppTest {
 //    Event.Data_Breach id 4 has Natural_Person_Notified = "Não" ... therefore jinjava condition is always false !!
       assertEquals(expectedReport, report, "Data Breache's Natural Person Notification Status");
 
+
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString(("    {% if impacted_servers[0] is defined %}\n" +
+                      "    <hr/>\n" +
+                      "    <h2> Lista de M&oacute;dulos </h2>\n" +
+                      "    {{ \"\n" +
+                      "    <table style='margin: 5px'>\n" +
+                      "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+                      "            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>\n" +
+                      "        </tr>\n" +
+                      "        \" }}\n" +
+                      "\n" +
+                      "        {% for mainkey in impacted_servers %}\n" +
+                      "        {% for key, value in mainkey.items() %}\n" +
+                      "        {{ \"\n" +
+                      "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+                      "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\n" +
+                      "        </tr>\n" +
+                      "        \" | format (value | default('n/a')) }}\n" +
+                      "        {% endfor %}\n" +
+                      "        {% endfor %}\n" +
+                      "        {{ \"\n" +
+                      "    </table>\n" +
+                      "    \" }}\n" +
+                      "    {% endif %}")
+                      .getBytes()));
+      reply = res.reportTemplateUpsert(req);
+      templateId = reply.getTemplateId();
+      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("1")).id().next().toString();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      expectedReport = "    \n" +
+              "    <hr/>\n" +
+              "    <h2> Lista de M&oacute;dulos </h2>\n" +
+              "    \n" +
+              "    <table style='margin: 5px'>\n" +
+              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+              "            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>\n" +
+              "        </tr>\n" +
+              "        \n" +
+              "\n" +
+              "        \n" +
+              "        \n" +
+              "        \n" +
+              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Metadata_Type</td>\n" +
+              "        </tr>\n" +
+              "        \n" +
+              "        \n" +
+              "        \n" +
+              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Metadata_Type_Object_Module</td>\n" +
+              "        </tr>\n" +
+              "        \n" +
+              "        \n" +
+              "        \n" +
+              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Object_Module_Name</td>\n" +
+              "        </tr>\n" +
+              "        \n" +
+              "        \n" +
+              "        \n" +
+              "        \n" +
+              "    </table>\n" +
+              "    \n" +
+              "    ";
+      assertEquals(expectedReport, report, "Lista de Módulos' HTML Table");
+
+
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString(("{% if impacted_people[0] is defined %}\n" +
+                      "    <h2> Lista de Titulares impactados </h2>\n" +
+                      "    {{ \"\n" +
+                      "    <table style='margin: 5px'>\n" +
+                      "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+                      "            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>\n" +
+                      "        </tr>\n" +
+                      "        \" }}\n" +
+                      "\n" +
+                      "        {% for mainkey in impacted_people %}\n" +
+                      "        {{ \"\n" +
+                      "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+                      "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\n" +
+                      "        </tr>\n" +
+                      "        \" | format (mainkey['Person_Natural_Full_Name'] | default('n/a')) }}\n" +
+                      "        {% endfor %}\n" +
+                      "        {{ \"\n" +
+                      "    </table>\n" +
+                      "    \" }}\n" +
+                      "    {% endif %}")
+                      .getBytes()));
+      reply = res.reportTemplateUpsert(req);
+      templateId = reply.getTemplateId();
+      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5")).id().next().toString();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+      expectedReport = "\n" +
+              "    <h2> Lista de Titulares impactados </h2>\n" +
+              "    \n" +
+              "    <table style='margin: 5px'>\n" +
+              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+              "            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>\n" +
+              "        </tr>\n" +
+              "        \n" +
+              "\n" +
+              "        \n" +
+              "        \n" +
+              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MATHEUS ROCHA</td>\n" +
+              "        </tr>\n" +
+              "        \n" +
+              "        \n" +
+              "        \n" +
+              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>GLÓRIA KRACKOVSZI</td>\n" +
+              "        </tr>\n" +
+              "        \n" +
+              "        \n" +
+              "        \n" +
+              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>COMIDAS 1</td>\n" +
+              "        </tr>\n" +
+              "        \n" +
+              "        \n" +
+              "        \n" +
+              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
+              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>JONAS LEO BATISTA</td>\n" +
+              "        </tr>\n" +
+              "        \n" +
+              "        \n" +
+              "        \n" +
+              "    </table>\n" +
+              "    \n" +
+              "    ";
+      assertEquals(expectedReport, report, "Lista de Titulares Impactados' HTML Table");
+
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);
