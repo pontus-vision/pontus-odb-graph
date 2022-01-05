@@ -214,6 +214,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Event.Data_Breach.Authority_Notified",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Event.Data_Breach.Description",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -236,6 +241,11 @@
     {
       "name": "Event.Data_Breach.Metadata.Update_Date",
       "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Event.Data_Breach.Natural_Person_Notified",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
@@ -4271,11 +4281,13 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata.Type.Event.Data_Breach",
+        "Event.Data_Breach.Authority_Notified",
         "Event.Data_Breach.Description",
         "Event.Data_Breach.Id",
         "Event.Data_Breach.Impact",
         "Event.Data_Breach.Metadata.Create_Date",
         "Event.Data_Breach.Metadata.Update_Date",
+        "Event.Data_Breach.Natural_Person_Notified",
         "Event.Data_Breach.Source",
         "Event.Data_Breach.Status",
         "Event.Data_Breach.Form_Id",

@@ -10,15 +10,39 @@
 <div style='padding: 10px; background: white; color: black;'>
     <hr/>
 
-    <h1> Relat&oacute;rio de Viola&ccedil;&atilde;o de Dados </h1>
+    <h1 style="text-align: center"> Relat&oacute;rio de Viola&ccedil;&atilde;o de Dados </h1>
+
     <hr/>
+
+    <h2>Descri&ccedil;&atilde;o</h2>
+    <p> {{ context.Event_Data_Breach_Description | default('Favor Preencher o campo <b>Descri&ccedil;&atilde;o</b> na Lista <b>Incidentes de Seguran&ccedil;a Reportados</b> no SharePoint') }}</p>
+
+    <hr/>
+
+    <h2>Notifica&ccedil;&otilde;es</h2>
+    <p>
+    {% if context.Event_Data_Breach_Authority_Notified == 'SIM' %}
+        A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) j&aacute; foi notificada desse evento.
+    {% else %}
+        A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) ainda N&Atilde;O foi notificada desse evento.
+    {% endif %}
+    </p>
+
+    <p>
+    {% if context.Event_Data_Breach_Natural_Person_Notified == 'SIM' %}
+        O Titular dos dados j&aacute; foi notificao desse evento.
+    {% else %}
+        O Titular dos dados ainda N&Atilde;O foi notificado desse evento.
+    {% endif %}
+    </p>
+
+    <hr/>
+    <h2> Estat&iacute;sticas / Levantamento </h2>
     N&uacute;mero de Pessoas: {{ impacted_people | length }}<br/>
     Fontes de Dados: {{ impacted_data_sources | length }}<br/>
-    M&oacute;dulos: {{ impacted_servers | length }}<br/>
+    M&oacute;dulos: {{ impacted_servers | length }}<br/><br/>
 
     <hr/>
-    <hr/>
-
 
     {% if impacted_people[0] is defined %}
     <h2> Lista de {{ impacted_people | length }} Titulares impactados </h2>
@@ -32,7 +56,6 @@
     {% else %}
     <h2> Nenhum Titular Impactado </h2>
     {% endif %}
-
 
     {% if impacted_data_sources[0] is defined %}
     <h2> Lista de {{ impacted_data_sources | length }} Fontes de Dados </h2>
@@ -61,6 +84,9 @@
     {% else %}
     <h2> Nenhum M&oacute;dulo Impactado </h2>
     {% endif %}
+
 </div>
+
 </body>
+
 </html>
