@@ -59,7 +59,7 @@
     <h2> Lista de M&oacute;dulos </h2>
     <table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>
         {% for mainkey in impacted_servers %}
-        {{ "<tr><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td></tr>" | format (mainkey['Object_Module_Name'] | default('n/a')) }}
+        {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td></tr>" | format (mainkey['Object_Module_Name'] | default('n/a')) }}
         {% endfor %}
     </table>
     {% endif %}
