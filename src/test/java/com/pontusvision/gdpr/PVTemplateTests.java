@@ -260,9 +260,7 @@ public class PVTemplateTests extends AppTest {
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
                               "{% if lia %}" +
 
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | " +
-                              "default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> " +
-                              "no SharePoint') }}" +
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }}" +
                               "{% endif %}")
 
                       .getBytes()));
@@ -297,9 +295,7 @@ public class PVTemplateTests extends AppTest {
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
                               "{% if lia %}" +
 
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification | " +
-                              "default('Favor Preencher o campo <b>Não há outra base legal possível de se utilizar " +
-                              "para alcançar o mesmo propósito?</b> no SharePoint') }}" +
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification | default('Favor Preencher o campo <b>Não há outra base legal possível de se utilizar para alcançar o mesmo propósito?</b> no SharePoint') }}" +
                               "{% endif %}")
 
                       .getBytes()));
@@ -322,9 +318,7 @@ public class PVTemplateTests extends AppTest {
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
                               "{% if lia %}" +
 
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | " +
-                              "default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito " +
-                              "almejado?</b> no SharePoint') }}" +
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}" +
                               "{% endif %}")
 
                       .getBytes()));
@@ -356,9 +350,7 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | " +
-                              "default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito " +
-                              "almejado?</b> no SharePoint') }}")
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
 
                       .getBytes()));
 
@@ -377,9 +369,7 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
-                              "{{ lia[20].Object_Legitimate_Interests_Assessment_Processing_Purpose | " +
-                              "default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito " +
-                              "almejado?</b> no SharePoint') }}")
+                              "{{ lia[20].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
 
                       .getBytes()));
 
@@ -586,8 +576,8 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "People: {{ impacted_people | length }}\n" +
-                              "Data Sources: {{ impacted_data_sources | length }}\n" +
-                              "Servers: {{ impacted_servers | length }}\n"
+                      "Data Sources: {{ impacted_data_sources | length }}\n" +
+                      "Servers: {{ impacted_servers | length }}\n"
               )
                       .getBytes()));
 
@@ -605,15 +595,11 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      String expectedReport = "People: 4\n" +
-              "Data Sources: 2\n" +
-              "Servers: 2\n";
+      String expectedReport = "People: 4\nData Sources: 2\nServers: 2\n";
       assertEquals(expectedReport, report, "Data Breache's statistics/numbers");
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("{{ context.Event_Data_Breach_Description | " +
-                      "default('Favor Preencher o campo <b>Descri&ccedil;&atilde;o</b> na Lista " +
-                      "<b>Incidentes de Seguran&ccedil;a Reportados</b> no SharePoint') }}")
+              Base64.getEncoder().encodeToString(("{{ context.Event_Data_Breach_Description | default('Favor Preencher o campo <b>Descri&ccedil;&atilde;o</b> na Lista <b>Incidentes de Seguran&ccedil;a Reportados</b> no SharePoint') }}")
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
@@ -627,10 +613,7 @@ public class PVTemplateTests extends AppTest {
 
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("{% if context.Event_Data_Breach_Authority_Notified == 'SIM' %}" +
-                      "A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) j&aacute; foi notificada desse evento." +
-                      "{% else %}A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) ainda N&Atilde;O " +
-                      "foi notificada desse evento.{% endif %}")
+              Base64.getEncoder().encodeToString(("A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados){% if context.Event_Data_Breach_Authority_Notified == 'NÃO' %} N&Atilde;O{% endif %} foi notificada desse evento.")
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
@@ -639,16 +622,12 @@ public class PVTemplateTests extends AppTest {
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      expectedReport = "A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) j&aacute; foi notificada desse evento.";
+      expectedReport = "A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) foi notificada desse evento.";
       assertEquals(expectedReport, report, "Data Breache's Authority Notification Status");
 
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("{% if context.Event_Data_Breach_Natural_Person_Notified == 'SIM' %}" +
-                      "O Titular dos dados j&aacute; foi notificao desse evento." +
-                      "{% else %}" +
-                      "O Titular dos dados ainda N&Atilde;O foi notificado desse evento." +
-                      "{% endif %}")
+              Base64.getEncoder().encodeToString(("Titulares dos dados {% if context.Event_Data_Breach_Natural_Person_Notified == 'NÃO' %} N&Atilde;O{% endif %} foram notificados desse evento.")
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
@@ -657,35 +636,21 @@ public class PVTemplateTests extends AppTest {
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      expectedReport = "O Titular dos dados ainda N&Atilde;O foi notificado desse evento.";
+      expectedReport = "Titulares dos dados  N&Atilde;O foram notificados desse evento.";
 //    Event.Data_Breach id 4 has Natural_Person_Notified = "Não" ... therefore jinjava condition is always false !!
       assertEquals(expectedReport, report, "Data Breache's Natural Person Notification Status");
 
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("    {% if impacted_servers[0] is defined %}\n" +
-                      "    <hr/>\n" +
-                      "    <h2> Lista de M&oacute;dulos </h2>\n" +
-                      "    {{ \"\n" +
-                      "    <table style='margin: 5px'>\n" +
-                      "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-                      "            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>\n" +
-                      "        </tr>\n" +
-                      "        \" }}\n" +
-                      "\n" +
-                      "        {% for mainkey in impacted_servers %}\n" +
-                      "        {% for key, value in mainkey.items() %}\n" +
-                      "        {{ \"\n" +
-                      "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-                      "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\n" +
-                      "        </tr>\n" +
-                      "        \" | format (key | default('n/a')) }}\n" +
-                      "        {% endfor %}\n" +
-                      "        {% endfor %}\n" +
-                      "        {{ \"\n" +
-                      "    </table>\n" +
-                      "    \" }}\n" +
-                      "    {% endif %}")
+              Base64.getEncoder().encodeToString(("{% if impacted_servers[0] is defined %}\n" +
+                      "<hr/>\n" +
+                      "<h2> Lista de M&oacute;dulos </h2>\n" +
+                      "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
+                      "    {% for mainkey in impacted_servers %}\n" +
+                      "    {{ \"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td></tr>\" | format (mainkey['Object_Module_Name'] | default('n/a')) }}\n" +
+                      "    {% endfor %}\n" +
+                      "</table>\n" +
+                      "{% endif %}")
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
@@ -694,65 +659,26 @@ public class PVTemplateTests extends AppTest {
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      expectedReport = "    \n" +
-              "    <hr/>\n" +
-              "    <h2> Lista de M&oacute;dulos </h2>\n" +
+      expectedReport = "\n" +
+              "<hr/>\n" +
+              "<h2> Lista de M&oacute;dulos </h2>\n" +
+              "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
               "    \n" +
-              "    <table style='margin: 5px'>\n" +
-              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-              "            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>\n" +
-              "        </tr>\n" +
-              "        \n" +
-              "\n" +
-              "        \n" +
-              "        \n" +
-              "        \n" +
-              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Metadata_Type</td>\n" +
-              "        </tr>\n" +
-              "        \n" +
-              "        \n" +
-              "        \n" +
-              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Metadata_Type_Object_Module</td>\n" +
-              "        </tr>\n" +
-              "        \n" +
-              "        \n" +
-              "        \n" +
-              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Object_Module_Name</td>\n" +
-              "        </tr>\n" +
-              "        \n" +
-              "        \n" +
-              "        \n" +
-              "        \n" +
-              "    </table>\n" +
+              "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>lyyyy</td></tr>\n" +
               "    \n" +
-              "    ";
+              "</table>\n";
       assertEquals(expectedReport, report, "Lista de Módulos' HTML Table");
 
 
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString(("{% if impacted_people[0] is defined %}\n" +
-                      "    <h2> Lista de Titulares impactados </h2>\n" +
-                      "    {{ \"\n" +
-                      "    <table style='margin: 5px'>\n" +
-                      "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-                      "            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>\n" +
-                      "        </tr>\n" +
-                      "        \" }}\n" +
-                      "\n" +
-                      "        {% for mainkey in impacted_people %}\n" +
-                      "        {{ \"\n" +
-                      "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-                      "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>\n" +
-                      "        </tr>\n" +
-                      "        \" | format (mainkey['Person_Natural_Full_Name'] | default('n/a')) }}\n" +
-                      "        {% endfor %}\n" +
-                      "        {{ \"\n" +
-                      "    </table>\n" +
-                      "    \" }}\n" +
-                      "    {% endif %}")
+                      "<h2> Lista de Titulares impactados </h2>\n" +
+                      "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
+                      "    {% for mainkey in impacted_people %}\n" +
+                      "    {{ \"<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td></tr>\" | format (mainkey['Person_Natural_Full_Name'] | default('n/a')) }}\n" +
+                      "    {% endfor %}\n" +
+                      "</table>\n" +
+                      "{% endif %}")
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
@@ -762,43 +688,18 @@ public class PVTemplateTests extends AppTest {
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
       expectedReport = "\n" +
-              "    <h2> Lista de Titulares impactados </h2>\n" +
+              "<h2> Lista de Titulares impactados </h2>\n" +
+              "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
               "    \n" +
-              "    <table style='margin: 5px'>\n" +
-              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-              "            <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th>\n" +
-              "        </tr>\n" +
-              "        \n" +
-              "\n" +
-              "        \n" +
-              "        \n" +
-              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MATHEUS ROCHA</td>\n" +
-              "        </tr>\n" +
-              "        \n" +
-              "        \n" +
-              "        \n" +
-              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>GLÓRIA KRACKOVSZI</td>\n" +
-              "        </tr>\n" +
-              "        \n" +
-              "        \n" +
-              "        \n" +
-              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>COMIDAS 1</td>\n" +
-              "        </tr>\n" +
-              "        \n" +
-              "        \n" +
-              "        \n" +
-              "        <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>\n" +
-              "            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>JONAS LEO BATISTA</td>\n" +
-              "        </tr>\n" +
-              "        \n" +
-              "        \n" +
-              "        \n" +
-              "    </table>\n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MATHEUS ROCHA</td></tr>\n" +
               "    \n" +
-              "    ";
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>GLÓRIA KRACKOVSZI</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>COMIDAS 1</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>JONAS LEO BATISTA</td></tr>\n" +
+              "    \n" +
+              "</table>\n";
       assertEquals(expectedReport, report, "Lista de Titulares Impactados' HTML Table");
 
     } catch (Exception e) {
