@@ -553,6 +553,9 @@ public class PVTemplateTests extends AppTest {
       jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
               "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
+      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+              "sharepoint_data_sources");
+
       jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json",
               "$.queryResp[*].fields",
               "sharepoint_fontes_de_dados");
@@ -613,7 +616,7 @@ public class PVTemplateTests extends AppTest {
 
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados){% if context.Event_Data_Breach_Authority_Notified == 'NÃO' %} N&Atilde;O{% endif %} foi notificada desse evento.")
+              Base64.getEncoder().encodeToString(("A ANPD (Autoridade Nacional de Proteçãoo de Dados){% if context.Event_Data_Breach_Authority_Notified == 'NÃO' %} NÃO{% endif %} foi notificada desse evento.")
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
@@ -622,12 +625,12 @@ public class PVTemplateTests extends AppTest {
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      expectedReport = "A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) foi notificada desse evento.";
+      expectedReport = "A ANPD (Autoridade Nacional de Proteçãoo de Dados) foi notificada desse evento.";
       assertEquals(expectedReport, report, "Data Breache's Authority Notification Status");
 
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("Titulares dos dados {% if context.Event_Data_Breach_Natural_Person_Notified == 'NÃO' %} N&Atilde;O{% endif %} foram notificados desse evento.")
+              Base64.getEncoder().encodeToString(("Titulares dos dados{% if context.Event_Data_Breach_Natural_Person_Notified == 'NÃO' %} NÃO{% endif %} foram notificados desse evento.")
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
@@ -636,7 +639,7 @@ public class PVTemplateTests extends AppTest {
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      expectedReport = "Titulares dos dados  N&Atilde;O foram notificados desse evento.";
+      expectedReport = "Titulares dos dados NÃO foram notificados desse evento.";
 //    Event.Data_Breach id 4 has Natural_Person_Notified = "Não" ... therefore jinjava condition is always false !!
       assertEquals(expectedReport, report, "Data Breache's Natural Person Notification Status");
 
@@ -644,7 +647,7 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString(("{% if impacted_servers[0] is defined %}\n" +
                       "<hr/>\n" +
-                      "<h2> Lista de M&oacute;dulos </h2>\n" +
+                      "<h2> Lista de Módulos </h2>\n" +
                       "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
                       "    {% for mainkey in impacted_servers %}\n" +
                       "    {{ \"<td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td></tr>\" | format (mainkey['Object_Module_Name'] | default('n/a')) }}\n" +
@@ -661,8 +664,10 @@ public class PVTemplateTests extends AppTest {
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
       expectedReport = "\n" +
               "<hr/>\n" +
-              "<h2> Lista de M&oacute;dulos </h2>\n" +
+              "<h2> Lista de Módulos </h2>\n" +
               "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
+              "    \n" +
+              "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>leads</td></tr>\n" +
               "    \n" +
               "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>lyyyy</td></tr>\n" +
               "    \n" +
