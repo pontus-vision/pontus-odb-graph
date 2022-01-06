@@ -696,13 +696,13 @@ public class PVTemplateTests extends AppTest {
               "<h2> Lista de Titulares impactados </h2>\n" +
               "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
               "    \n" +
-              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MATHEUS ROCHA</td></tr>\n" +
-              "    \n" +
-              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>GLÓRIA KRACKOVSZI</td></tr>\n" +
-              "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>COMIDAS 1</td></tr>\n" +
               "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>JONAS LEO BATISTA</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MATHEUS ROCHA</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>GLÓRIA KRACKOVSZI</td></tr>\n" +
               "    \n" +
               "</table>\n";
       assertEquals(expectedReport, report, "Lista de Titulares Impactados' HTML Table");
