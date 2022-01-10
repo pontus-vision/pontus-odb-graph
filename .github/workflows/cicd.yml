@@ -16,6 +16,9 @@ jobs:
 #    container: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
 
     steps:
+    
+    - name: PWD
+      run: pwd
 
     - name: Build Docker Lib
       run: build-docker-lib.sh
