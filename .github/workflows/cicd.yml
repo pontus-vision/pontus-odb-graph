@@ -18,7 +18,7 @@ jobs:
     steps:
 
     - name: Build Docker Lib
-      run: ./build-docker-lib.sh
+      run: build-docker-lib.sh
       
     - name: Build Docker Conf
       run: build-docker-conf.sh
