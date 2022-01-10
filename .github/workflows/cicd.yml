@@ -16,15 +16,12 @@ jobs:
 #    container: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
 
     steps:
-    
-    - name: PWD
-      run: pwd
 
     - name: Build Docker Lib
-      run: build-docker-lib.sh
+      run: cd /home/runner/work/pontus-odb-graph/pontus-odb-graph && build-docker-lib.sh
       
     - name: Build Docker Conf
-      run: build-docker-conf.sh
+      run: cd /home/runner/work/pontus-odb-graph/pontus-odb-graph && build-docker-conf.sh
       
 #    - name: Docker Build & Push Action
 #      uses: mr-smithers-excellent/docker-build-push@v5.6
