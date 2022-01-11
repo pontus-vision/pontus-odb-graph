@@ -17,28 +17,21 @@ jobs:
 
     steps:
 
-    - name: echo PWD
-      run: pwd
+#    - name: echo PWD
+#      run: pwd
 
-    - name: echo GITHUB_WORKSPACE
-      run: echo "${GITHUB_WORKSPACE}"
+#    - name: echo GITHUB_WORKSPACE
+#      run: echo "${GITHUB_WORKSPACE}"
 
-    - name: echo github.workspace
-      run: echo "${github.workspace}"
+#    - name: echo github.workspace
+#      run: echo "${github.workspace}"
 
-#    - name: Build Docker Lib
-#      run: .github/build-docker-lib.sh
-      
-#      run: |
-#        echo "${github.workspace}" |
-#        echo "${GITHUB_WORKSPACE}"
-        # make file runnable, might not be necessary
-#        chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
-
-        # run script
-#        "${GITHUB_WORKSPACE}/.github/script.sh"
-        # or
-#        "${{ format('{0}/.github/script.sh', github.workspace) }}"
+    - name: Make file runnable && Build docker-lib
+#     echo "${github.workspace}" |
+#     echo "${GITHUB_WORKSPACE}"
+      run: |
+        chmod +x "${GITHUB_WORKSPACE}/.github/script.sh" |  # make sure file is runnable
+        ./"${GITHUB_WORKSPACE}/.github/script.sh" # run script
       
 #    - name: Build Docker Conf
 #      run: build-docker-conf.sh
