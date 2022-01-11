@@ -18,10 +18,21 @@ jobs:
     steps:
 
     - name: Build Docker Lib
-      run: build-docker-lib.sh
+#      run: .github/build-docker-lib.sh
       
-    - name: Build Docker Conf
-      run: build-docker-conf.sh
+      run: |
+        echo "${github.workspace}" |
+        echo "${GITHUB_WORKSPACE}"
+        # make file runnable, might not be necessary
+#        chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
+
+        # run script
+#        "${GITHUB_WORKSPACE}/.github/script.sh"
+        # or
+#        "${{ format('{0}/.github/script.sh', github.workspace) }}"
+      
+#    - name: Build Docker Conf
+#      run: build-docker-conf.sh
       
 #    - name: Docker Build & Push Action
 #      uses: mr-smithers-excellent/docker-build-push@v5.6
