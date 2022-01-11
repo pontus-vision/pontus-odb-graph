@@ -17,8 +17,17 @@ jobs:
 
     steps:
 
-    - name: Build Docker Lib
-      run: .github/build-docker-lib.sh
+    - name: echo PWD
+      run: pwd
+
+    - name: echo GITHUB_WORKSPACE
+      run: echo "${GITHUB_WORKSPACE}"
+
+    - name: echo github.workspace
+      run: echo "${github.workspace}"
+
+#    - name: Build Docker Lib
+#      run: .github/build-docker-lib.sh
       
 #      run: |
 #        echo "${github.workspace}" |
