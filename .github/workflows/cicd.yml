@@ -21,11 +21,10 @@ jobs:
 #      run: pwd
       
     - name: list dir
-      run: |
-        echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph" |
-        ls /home/runner/work/pontus-odb-graph/pontus-odb-graph |
-        echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph/.github" |
-        ls /home/runner/work/pontus-odb-graph/pontus-odb-graph/.github
+      run: ls /home/runner/work/pontus-odb-graph/pontus-odb-graph
+#       echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph" |
+#        echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph/.github" |
+#        ls /home/runner/work/pontus-odb-graph/pontus-odb-graph/.github
 
 #    - name: echo GITHUB_WORKSPACE
 #      run: echo "${GITHUB_WORKSPACE}"
