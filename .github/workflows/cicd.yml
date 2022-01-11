@@ -13,16 +13,16 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
+#    container: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
 
     steps:
 
     - name: Build Docker Lib
-#      run: .github/build-docker-lib.sh
+      run: .github/build-docker-lib.sh
       
-      run: |
-        echo "${github.workspace}" |
-        echo "${GITHUB_WORKSPACE}"
+#      run: |
+#        echo "${github.workspace}" |
+#        echo "${GITHUB_WORKSPACE}"
         # make file runnable, might not be necessary
 #        chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
 
