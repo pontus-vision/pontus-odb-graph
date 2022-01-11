@@ -21,7 +21,7 @@ jobs:
 #      run: pwd
       
     - name: list dir
-      run: ls /home/runner/work/pontus-odb-graph/pontus-odb-graph
+      run: ls /home/runner/work/pontus-odb-graph/pontus-odb-graph | cat
 #       echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph" |
 #        echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph/.github" |
 #        ls /home/runner/work/pontus-odb-graph/pontus-odb-graph/.github
