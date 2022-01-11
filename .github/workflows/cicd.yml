@@ -17,8 +17,8 @@ jobs:
 
     steps:
 
-#    - name: echo PWD
-#      run: pwd
+    - name: echo PWD
+      run: pwd
 
 #    - name: echo GITHUB_WORKSPACE
 #      run: echo "${GITHUB_WORKSPACE}"
