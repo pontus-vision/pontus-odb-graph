@@ -30,8 +30,8 @@ jobs:
 #     echo "${github.workspace}" |
 #     echo "${GITHUB_WORKSPACE}"
       run: |
-        chmod +x "${GITHUB_WORKSPACE}/.github/script.sh" |
-        "${GITHUB_WORKSPACE}/.github/script.sh"
+        chmod +x "${GITHUB_WORKSPACE}/.github/build-docker-lib.sh" |
+        "${GITHUB_WORKSPACE}/.github/build-docker-lib.sh"
       
 #    - name: Build Docker Conf
 #      run: build-docker-conf.sh
