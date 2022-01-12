@@ -616,7 +616,7 @@ public class PVTemplateTests extends AppTest {
 
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("A ANPD (Autoridade Nacional de Proteçãoo de Dados){% if context.Event_Data_Breach_Authority_Notified == 'NÃO' %} NÃO{% endif %} foi notificada desse evento.")
+              Base64.getEncoder().encodeToString(("A ANPD (Autoridade Nacional de Proteção de Dados){% if context.Event_Data_Breach_Authority_Notified == 'false' %} NÃO{% endif %} foi notificada desse evento.")
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
@@ -625,12 +625,12 @@ public class PVTemplateTests extends AppTest {
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      expectedReport = "A ANPD (Autoridade Nacional de Proteçãoo de Dados) foi notificada desse evento.";
+      expectedReport = "A ANPD (Autoridade Nacional de Proteção de Dados) foi notificada desse evento.";
       assertEquals(expectedReport, report, "Data Breache's Authority Notification Status");
 
 
       req.setReportTextBase64(
-              Base64.getEncoder().encodeToString(("Titulares dos dados{% if context.Event_Data_Breach_Natural_Person_Notified == 'NÃO' %} NÃO{% endif %} foram notificados desse evento.")
+              Base64.getEncoder().encodeToString(("Titulares dos dados{% if context.Event_Data_Breach_Natural_Person_Notified == 'false' %} NÃO{% endif %} foram notificados desse evento.")
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();

@@ -69,6 +69,18 @@
             "val": "${field_Residual_x0020_Impact}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Risk_Data_Source.Approved_By_DPO",
+            "val": "${field_Approved_x0020_by_x0020_DPO}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Risk_Data_Source.Approved_By_Security",
+            "val": "${field_Approved_x0020_by_x0020_Security}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },

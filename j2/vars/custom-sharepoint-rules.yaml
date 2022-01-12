@@ -691,6 +691,14 @@ rules:
           Residual_Impact:
             val: "${field_Residual_x0020_Impact}"
             excludeFromSearch: true
+          Approved_By_DPO:
+            val: "${field_Approved_x0020_by_x0020_DPO}"
+            excludeFromSearch: true
+          Approved_By_Security:
+            val: "${field_Approved_x0020_by_x0020_Security}"
+            excludeFromSearch: true
+
+#            TODO: testar os 2 campos novos
 
 
       - label: Object.Risk_Mitigation_Data_Source
@@ -987,7 +995,7 @@ rules:
           Id:
             val: "${Title?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-          Authority_Notified: "${authority_notified?.trim()?.toUpperCase()}"
+          Authority_Notified: "${authority_notified?.trim()}"
           Description:
             val: "${description?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -1002,7 +1010,7 @@ rules:
             val: "${Modified}"
             type: java.util.Date
             excludeFromSearch: true
-          Natural_Person_Notified: "${natural_person_notified?.trim()?.toUpperCase()}"
+          Natural_Person_Notified: "${natural_person_notified?.trim()}"
           Source:
             val: "${source?.toUpperCase()}"
             excludeFromSearch: true
