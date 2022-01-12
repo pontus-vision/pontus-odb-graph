@@ -24,6 +24,7 @@ import org.apache.tinkerpop.gremlin.structure.Edge
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONVersion
 
+import java.text.DateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.atomic.AtomicInteger
@@ -375,6 +376,13 @@ class PontusJ2ReportingFunctions {
     return "Failed to render data"
   }
 
+//  static String translateValue (def val){
+//    if (typeof (val) == Date.class){
+//      return DateLocaleFormat(val);
+//    }
+//    return val.toString() - '[' - ']'
+//  }
+
   static def renderReportInText(ORID pg_id, String reportType = 'SAR Read', GraphTraversalSource g = App.g) {
 
     if (new File("/orientdb/conf/i18n_pt_translation.json").exists()) {
@@ -388,7 +396,7 @@ class PontusJ2ReportingFunctions {
 
       // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
       def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
-        [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
+        [key.replaceAll('[.]', '_'), val.toString() - '[' - ']'] // translateValue
       }
 
       def neighbours = g.V(pg_id).both().valueMap().toList().collect { item ->
@@ -552,6 +560,15 @@ class PontusJ2ReportingFunctions {
     }catch (Throwable t){
       return [];
     }
+
+  }
+
+//  Formats string Date to local country/language
+  static String DateLocaleFormat(String date, String lang, String country) {
+
+    Date d = PVConvMixin.asType(date, Date.class) as Date
+    DateFormat dtf = DateFormat.getDateInstance(DateFormat.LONG, new Locale(lang, country))
+    return dtf.format(d) as String
 
   }
 
@@ -1148,7 +1165,8 @@ class PontusJ2ReportingFunctions {
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDeptForDataSources",
             PontusJ2ReportingFunctions.class, "getDeptForDataSources", String.class))
-
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "DateLocaleFormat",
+            PontusJ2ReportingFunctions.class, "DateLocaleFormat", String.class, String.class, String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForLawfulBasis",
             PontusJ2ReportingFunctions.class, "getNumNaturalPersonForLawfulBasis", String.class))

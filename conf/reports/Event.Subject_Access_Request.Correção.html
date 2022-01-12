@@ -32,10 +32,7 @@ COM O ENCARREGADO - Art. 9&ordm;, &sect; IV</span></h2>
 
     <br/>
     <h2>CORRE&Ccedil;&Atilde;O DOS DADOS - Art. 18 &sect; III</h2>
-    <p>Conforme solicitado no dia {{ context.Event_Subject_Access_Request_Metadata_Create_Date }} por modo de
-        {{ context.Event_Subject_Access_Request_Request_Channel }}, seus dados foram corrigidos no dia
-        {{ context.Event_Subject_Access_Request_Metadata_Update_Date }}.
-    </p>
+    <p>Conforme solicitado na data de {{ pv:DateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} pelo canal: ({{ context.Event_Subject_Access_Request_Request_Channel }}), seus dados foram corrigidos na data de {{ pv:DateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Update_Date, 'pt', 'BR') }}.</p>
     <br/>
 
     <p>Caso o(a) Sr. (a) tenha qualquer d&uacute;vida ou solicita&ccedil;&atilde;o adicional, por favor n&atilde;o deixe
