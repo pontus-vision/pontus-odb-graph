@@ -25,6 +25,7 @@ jobs:
 
       - name: Build & Test Docker after PullRequest
         run: |
+          echo $GITHUB_REF
           chmod +x ./build-docker-pr.sh
           ./build-docker-pr.sh
 
