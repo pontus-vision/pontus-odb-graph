@@ -16,12 +16,20 @@ jobs:
 #    container: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
 
     steps:
+    
+      - name: echo github.worspace
+        run: |
+          echo {{ github.workspace }}
+          echo ${{ github.workspace }}
+          echo "${GITHUB_WORKSPACE}"
+          pwd
+          ls -altr
 
 #    - name: echo PWD
 #      run: pwd
       
-    - name: list dir
-      run: ls /home/runner/work/pontus-odb-graph/pontus-odb-graph | cat
+#    - name: list dir
+#      run: ls /home/runner/work/pontus-odb-graph/pontus-odb-graph | cat
 #       echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph" |
 #        echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph/.github" |
 #        ls /home/runner/work/pontus-odb-graph/pontus-odb-graph/.github
