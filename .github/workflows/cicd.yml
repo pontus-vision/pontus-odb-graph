@@ -23,6 +23,7 @@ jobs:
           echo "${GITHUB_WORKSPACE}"
           pwd
           ls -altr
+          ./build-docker-lib.sh
 
 #    - name: echo PWD
 #      run: pwd
