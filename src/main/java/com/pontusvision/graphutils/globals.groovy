@@ -378,7 +378,7 @@ class PontusJ2ReportingFunctions {
 
 //  static String translateValue (def val){
 //    if (typeof (val) == Date.class){
-//      return DateLocaleFormat(val);
+//      return dateLocaleFormat(val);
 //    }
 //    return val.toString() - '[' - ']'
 //  }
@@ -564,7 +564,7 @@ class PontusJ2ReportingFunctions {
   }
 
 //  Formats string Date to local country/language
-  static String DateLocaleFormat(String date, String lang, String country) {
+  static String dateLocaleFormat(String date, String lang, String country) {
 
     Date d = PVConvMixin.asType(date, Date.class) as Date
     DateFormat dtf = DateFormat.getDateInstance(DateFormat.LONG, new Locale(lang, country))
@@ -1165,8 +1165,8 @@ class PontusJ2ReportingFunctions {
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getDeptForDataSources",
             PontusJ2ReportingFunctions.class, "getDeptForDataSources", String.class))
-    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "DateLocaleFormat",
-            PontusJ2ReportingFunctions.class, "DateLocaleFormat", String.class, String.class, String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "dateLocaleFormat",
+            PontusJ2ReportingFunctions.class, "dateLocaleFormat", String.class, String.class, String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getNumNaturalPersonForLawfulBasis",
             PontusJ2ReportingFunctions.class, "getNumNaturalPersonForLawfulBasis", String.class))

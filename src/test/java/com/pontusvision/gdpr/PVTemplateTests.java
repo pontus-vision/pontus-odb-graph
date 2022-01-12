@@ -727,7 +727,7 @@ public class PVTemplateTests extends AppTest {
 
 //      Object date = PVConvMixin.asType("Sat Jan 08 08:00:00 UTC 2022", Date.class);
 //
-//      String brazilianDate = PontusJ2ReportingFunctions.DateLocaleFormat("Sat Jan 08 08:00:00 UTC 2022", "pt", "BR");
+//      String brazilianDate = PontusJ2ReportingFunctions.dateLocaleFormat("Sat Jan 08 08:00:00 UTC 2022", "pt", "BR");
 //
 //      assertSame("class java.util.Date", date.getClass());
 //      assertSame("08 de Janeiro de 2022", brazilianDate);
@@ -739,9 +739,9 @@ public class PVTemplateTests extends AppTest {
       req.setTemplatePOLEType("Event.Subject_Access_Request");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
-                      "Conforme solicitado na data de {{ pv:DateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} " +
+                      "Conforme solicitado na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} " +
                       "pelo canal: ({{ context.Event_Subject_Access_Request_Request_Channel }}), seus dados foram corrigidos " +
-                      "na data de {{ pv:DateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Update_Date, 'pt', 'BR') }}.")
+                      "na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Update_Date, 'pt', 'BR') }}.")
                       .getBytes()));
 
       ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
