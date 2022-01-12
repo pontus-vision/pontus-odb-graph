@@ -25,7 +25,7 @@ jobs:
 
       - name: Build & Test Docker after PullRequest
         run: |
-          chmod +x ./build-docker-lib.sh
+          chmod +x ./build-docker-pr.sh
           ./build-docker-pr.sh
 
 #    - name: echo PWD
