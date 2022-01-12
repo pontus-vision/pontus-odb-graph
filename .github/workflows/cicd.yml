@@ -6,14 +6,20 @@ name: Pontus CI/CD
 on:
 #  push:
 #    branches: [ master ]
+#    branches-ignore:
+#      - '**'
+#    tags:
+#      - 'v*.*.*'
   pull_request:
     branches: [ master ]
 
 jobs:
-  build:
+  build-docker-lib:
 
     runs-on: ubuntu-latest
 #    container: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
+
+# STEP 1: RUN build-docker-conf.sh then build-docker-lib.sh everytime you CREATE a new PR
 
     steps:
       - uses: actions/checkout@v2
@@ -28,6 +34,38 @@ jobs:
           echo $GITHUB_REF
           chmod +x ./build-docker-pr.sh
           ./build-docker-pr.sh
+          
+# STEP 2: AFTER successful merge ++ version patch major.minor.patch semver (Semantic Versioning)
+
+  update-semver-patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: rickstaa/action-update-semver@v1
+        with:
+          move_patch_tag: true  # (optional, default is "false")
+
+
+# STEP 3: AFTER push it to DockerHub (gonna need Docker Credentials as GitHub secret)
+
+#    - name: Docker Build & Push Action
+#      uses: mr-smithers-excellent/docker-build-push@v5.6
+#      with:
+#        image: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
+#        tags: latest
+#        registry: docker.io
+#        dockerfile: Dockerfile.ci
+#        username: ${{ secrets.DOCKER_USERNAME }}
+#        password: ${{ secrets.DOCKER_PASSWORD }}
+#  publish:
+#    needs: build
+
+
+# STEP 4: FINALLY GitHub TAG MASTER branch with same value as DockerHub's semver
+
+# ?????
+
+# ---------------------------------------------------------------------------
 
 #    - name: echo PWD
 #      run: pwd
@@ -53,22 +91,9 @@ jobs:
       
 #    - name: Build Docker Conf
 #      run: build-docker-conf.sh
-      
-#    - name: Docker Build & Push Action
-#      uses: mr-smithers-excellent/docker-build-push@v5.6
-#      with:
-#        image: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
-#        tags: latest
-#        registry: docker.io
-#        dockerfile: Dockerfile.ci
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
 
-      
-#  publish:
-#    needs: build
 
-# --------------- original:
+# -------------------------------------------------------------------- original:
 
 #    - uses: actions/checkout@v2
 
