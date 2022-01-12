@@ -716,5 +716,57 @@ public class PVTemplateTests extends AppTest {
 
   }
 
+  @Test
+  public void test00009BrazilianDate() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+              "$.queryResp[*].fields", "sharepoint_mapeamentos");
+
+      jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+
+//      Object date = PVConvMixin.asType("Sat Jan 08 08:00:00 UTC 2022", Date.class);
+//
+//      String brazilianDate = PontusJ2ReportingFunctions.dateLocaleFormat("Sat Jan 08 08:00:00 UTC 2022", "pt", "BR");
+//
+//      assertSame("class java.util.Date", date.getClass());
+//      assertSame("08 de Janeiro de 2022", brazilianDate);
+
+      Resource res = new Resource();
+
+      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+      req.setTemplateName("TEST2");
+      req.setTemplatePOLEType("Event.Subject_Access_Request");
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString((
+                      "Conforme solicitado na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} " +
+                      "pelo canal: ({{ context.Event_Subject_Access_Request_Request_Channel }}), seus dados foram corrigidos " +
+                      "na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Update_Date, 'pt', 'BR') }}.")
+                      .getBytes()));
+
+      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+
+      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Event.Subject_Access_Request.Form_Id", P.eq("2"))
+              .id().next().toString();
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      String expectedReport = "Conforme solicitado na data de 9 de Dezembro de 2021 pelo canal: (Via SMS), seus dados foram corrigidos na data de 10 de Dezembro de 2021.";
+      assertEquals(expectedReport, report, "CORREÇÃO DOS DADOS message");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+  }
 
 }
