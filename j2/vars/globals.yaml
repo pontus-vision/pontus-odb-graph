@@ -806,6 +806,8 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Approved_By_DPO
+        - name: Approved_By_Security
         - name: Risk_Id
         - name: Description
         - name: Probability

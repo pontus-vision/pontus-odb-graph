@@ -48,6 +48,14 @@ updatereq:
           val: ${field_Residual_x0020_Impact}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Object.Risk_Data_Source.Approved_By_DPO
+          val: ${field_Approved_x0020_by_x0020_DPO}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Risk_Data_Source.Approved_By_Security
+          val: ${field_Approved_x0020_by_x0020_Security}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object.Risk_Mitigation_Data_Source
       props:
