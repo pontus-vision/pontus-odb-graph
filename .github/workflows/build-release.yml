@@ -3,7 +3,8 @@
 name: Build Release Patch
 
 on:
-  push:
+#  push:
+  pull_request:
     branches: [ master ]
 #    branches-ignore:
 #      - '**'
@@ -18,6 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
       - uses: rickstaa/action-update-semver@v1
         with:
           move_patch_tag: true
