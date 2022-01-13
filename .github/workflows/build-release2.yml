@@ -26,6 +26,11 @@ jobs:
           version: '1.13.2'
           version-level: '-p'
           
+      - name: Test ./increment_version.sh
+        uses: Benbentwo/increment-semver@1.0.4
+        with:
+          run: './increment_version.sh -p 1.13.2'
+        
       - name: Get the output version
         run: |
           echo "The new patch version was ${{ steps.increment-semver-patch.outputs.version }}"
