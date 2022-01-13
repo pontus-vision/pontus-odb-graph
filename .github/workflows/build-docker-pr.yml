@@ -12,7 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-# STEP 1: RUN build-docker-conf.sh then build-docker-lib.sh everytime you CREATE a new PR
+# STEP 1: RUN build-docker-conf.sh then build-docker-lib.sh everytime you CREATE a new PR 
 
     steps:
       - uses: actions/checkout@v2
