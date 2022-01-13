@@ -4,12 +4,6 @@
 name: Build Docker PR
 
 on:
-#  push:
-#    branches: [ master ]
-#    branches-ignore:
-#      - '**'
-#    tags:
-#      - 'v*.*.*'
   pull_request:
     branches: [ master ]
 
