@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Prepare
+      - name: Prepare Docker image
         id: prep
         run: |
           TAG=$(echo $GITHUB_SHA | head -c7)
@@ -40,13 +40,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-multi-buildx
 
-      - name: Build & Test Docker after PullRequest
+      - name: envsubst Dockerfile
         run: |
-          echo $GITHUB_REF
           export DOLLAR='$'
           cat ./docker-lib/Dockerfile.template | envsubst > ./docker-lib/Dockerfile
-#          chmod +x ./build-docker-pr.sh
-#          ./build-docker-pr.sh
 
       - name: Build production image
         uses: docker/build-push-action@v2
@@ -55,7 +52,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: ./docker-lib/Dockerfile
           # Set the desired build target here
-#          target: deploy
+          # target: deploy
           push: false
           tags: ${{ steps.prep.outputs.tagged_image }}
           cache-from: type=local,src=/tmp/.buildx-cache
