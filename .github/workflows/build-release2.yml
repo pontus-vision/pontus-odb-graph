@@ -23,6 +23,7 @@ jobs:
         uses: Benbentwo/increment-semver@1.0.4
         id: increment-semver-patch
         with:
+          version: '1.13.2'
           version-level: '-p'
           
       - name: Get the output version
