@@ -46,6 +46,7 @@ jobs:
       - name: Build & Test Docker after PullRequest
         run: |
           echo $GITHUB_REF
+          export DOLLAR='$'
           cat ./docker-lib/Dockerfile.template | envsubst > ./docker-lib/Dockerfile
 #          chmod +x ./build-docker-pr.sh
 #          ./build-docker-pr.sh
