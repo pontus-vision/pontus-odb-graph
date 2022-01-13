@@ -1,0 +1,24 @@
+# STEP 2: AFTER successful merge ++ version patch major.minor.patch semver (Semantic Versioning)
+
+name: Build Release Patch
+
+on:
+  push:
+    branches: [ master ]
+#    branches-ignore:
+#      - '**'
+    tags:
+      - 'v*.*.*'
+
+jobs:
+
+  update-semver-patch:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: rickstaa/action-update-semver@v1
+        with:
+          move_patch_tag: true
