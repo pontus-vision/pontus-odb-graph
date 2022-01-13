@@ -1,4 +1,4 @@
-# STEP 2: AFTER successful merge ++ version patch major.minor.patch semver (Semantic Versioning)
+# STEP 2: AFTER successful merge ++ version patch major.minor.PATCH semver (Semantic Versioning)
 
 name: Build Release Patch
 
@@ -11,15 +11,29 @@ on:
       - 'v*.*.*'
 
 jobs:
-
   update-semver-patch:
 
     runs-on: ubuntu-latest
 
     steps:
+
       - uses: actions/checkout@v2
-      
-      - uses: rickstaa/action-update-semver@v1
+
+      - name: Increment Semver
+        uses: Benbentwo/increment-semver@1.0.4
+        id: increment-semver-patch
         with:
-          tag: '1.13.2'
-          move_patch_tag: true
+          version-level: '-p'
+          
+      - name: Get the output version
+        run: |
+          echo "The new patch version was ${{ steps.increment-semver-patch.outputs.version }}"
+          echo "The new minor version was ${{ steps.increment-semver-minor.outputs.version }}"
+          echo "The new Major version was ${{ steps.increment-semver-major.outputs.version }}"
+
+#      - uses: actions/checkout@v2
+      
+#      - uses: rickstaa/action-update-semver@v1
+#        with:
+#          tag: '1.13.2'
+#          move_patch_tag: true
