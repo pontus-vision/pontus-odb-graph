@@ -42,7 +42,7 @@ jobs:
           export DOLLAR='$'
           cat ./docker-lib/Dockerfile.template | envsubst > ./docker-lib/Dockerfile
 
-      - name: Build production image
+      - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
