@@ -1,5 +1,4 @@
-#
-#
+# STEP 1: RUN build-docker-conf.sh then build-docker-lib.sh everytime you CREATE a new PR
 
 name: Build Docker PR
 
@@ -11,8 +10,6 @@ jobs:
   build-docker-pr:
 
     runs-on: ubuntu-latest
-
-# STEP 1: RUN build-docker-conf.sh then build-docker-lib.sh everytime you CREATE a new PR 
 
     steps:
       - uses: actions/checkout@v2
