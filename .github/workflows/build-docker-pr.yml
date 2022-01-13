@@ -1,5 +1,5 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+#
+#
 
 name: Build Docker PR
 
@@ -11,7 +11,6 @@ jobs:
   build-docker-pr:
 
     runs-on: ubuntu-latest
-#    container: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
 
 # STEP 1: RUN build-docker-conf.sh then build-docker-lib.sh everytime you CREATE a new PR
 
@@ -58,7 +57,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: ./docker-lib/Dockerfile
           # Set the desired build target here
-          target: deploy
+#          target: deploy
           push: false
           tags: ${{ steps.prep.outputs.tagged_image }}
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -71,73 +70,3 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-          
-# STEP 2: AFTER successful merge ++ version patch major.minor.patch semver (Semantic Versioning)
-
-  update-semver-patch:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: rickstaa/action-update-semver@v1
-        with:
-          move_patch_tag: true  # (optional, default is "false")
-
-
-# STEP 3: AFTER push it to DockerHub (gonna need Docker Credentials as GitHub secret)
-
-#    - name: Docker Build & Push Action
-#      uses: mr-smithers-excellent/docker-build-push@v5.6
-#      with:
-#        image: pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest
-#        tags: latest
-#        registry: docker.io
-#        dockerfile: Dockerfile.ci
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#  publish:
-#    needs: build
-
-
-# STEP 4: FINALLY GitHub TAG MASTER branch with same value as DockerHub's semver
-
-# ?????
-
-# ---------------------------------------------------------------------------
-
-#    - name: echo PWD
-#      run: pwd
-      
-#    - name: list dir
-#      run: ls /home/runner/work/pontus-odb-graph/pontus-odb-graph | cat
-#       echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph" |
-#        echo "/home/runner/work/pontus-odb-graph/pontus-odb-graph/.github" |
-#        ls /home/runner/work/pontus-odb-graph/pontus-odb-graph/.github
-
-#    - name: echo GITHUB_WORKSPACE
-#      run: echo "${GITHUB_WORKSPACE}"
-
-#    - name: echo github.workspace
-#      run: echo "${github.workspace}"
-
-#    - name: Make file runnable && Build docker-lib
-#     echo "${github.workspace}" |
-#     echo "${GITHUB_WORKSPACE}"
-#      run: |
-#        chmod +x "${GITHUB_WORKSPACE}/.github/build-docker-lib.sh" |
-#        "${GITHUB_WORKSPACE}/.github/build-docker-lib.sh"
-      
-#    - name: Build Docker Conf
-#      run: build-docker-conf.sh
-
-
-# -------------------------------------------------------------------- original:
-
-#    - uses: actions/checkout@v2
-
-#    - name: Set up JDK 1.8
-#      uses: actions/setup-java@v2
-#      with:
-#        java-version: '8'
-#        distribution: 'adopt'
-#        cache: maven
