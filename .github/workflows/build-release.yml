@@ -3,7 +3,8 @@
 name: Build Release Patch
 
 on:
-  push:
+#  push:
+  pull_request:
     branches: [ master ]
 #    branches-ignore:
 #      - '**'
