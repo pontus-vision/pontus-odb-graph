@@ -1,4 +1,4 @@
-# STEP 2: AFTER successful merge ++ version patch major.minor.patch semver (Semantic Versioning)
+# STEP 2: AFTER successful merge ++ version patch major.minor.PATCH semver (Semantic Versioning)
 
 name: Build Release Patch
 
@@ -21,4 +21,5 @@ jobs:
       
       - uses: rickstaa/action-update-semver@v1
         with:
+          tag: '1.13.2'
           move_patch_tag: true
