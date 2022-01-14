@@ -18,28 +18,37 @@ jobs:
     steps:
 
       - uses: actions/checkout@v2
-
-      - name: Increment Semver
-        uses: Benbentwo/increment-semver@1.0.4
-        id: increment-semver-patch
+      
+      - name: Semver tags
+        uses: SOLIDSoftworks/semver-tags@1.0.1
         with:
-          version: '1.13.2'
-          version-level: '-p'
-          
-      - name: Test ./increment_version.sh
-        uses: Benbentwo/increment-semver@1.0.4
-        with:
-          run: './increment_version.sh -p 1.13.2'
-        
-      - name: Get the output version
-        run: |
-          echo "The new patch version was ${{ steps.increment-semver-patch.outputs.version }}"
-          echo "The new minor version was ${{ steps.increment-semver-minor.outputs.version }}"
-          echo "The new Major version was ${{ steps.increment-semver-major.outputs.version }}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          tag-prefix: 'v'
+          default-version: '1.13.2'
+          prerelease: 'alpha'
 
-#      - uses: actions/checkout@v2
       
 #      - uses: rickstaa/action-update-semver@v1
 #        with:
 #          tag: '1.13.2'
 #          move_patch_tag: true
+
+#      - name: Increment Semver
+#        uses: Benbentwo/increment-semver@1.0.4
+#        id: increment-semver-patch
+#        with:
+#          version-level: '-p'
+          
+#      - name: Test ./increment_version.sh
+#        uses: Benbentwo/increment-semver@1.0.4
+#        with:
+#          run: './increment_version.sh -p 1.13.2'
+        
+#      - name: Get the output version
+#        run: |
+#          echo "The new patch version was ${{ steps.increment-semver-patch.outputs.version }}"
+#          echo "The new minor version was ${{ steps.increment-semver-minor.outputs.version }}"
+#          echo "The new Major version was ${{ steps.increment-semver-major.outputs.version }}"
+
+#      - uses: actions/checkout@v2
+
