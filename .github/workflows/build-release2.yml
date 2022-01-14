@@ -20,12 +20,13 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: semver-tags
+        id: semver-tags
         uses: SOLIDSoftworks/semver-tags@1.0.1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag-prefix: 'v'
           default-version: '1.13.2'
-          prerelease: 'alpha'
+#          prerelease: 'alpha'
 
       
 #      - uses: rickstaa/action-update-semver@v1
