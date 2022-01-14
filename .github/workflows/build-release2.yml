@@ -1,0 +1,55 @@
+# STEP 2: AFTER successful merge ++ version patch major.minor.PATCH semver (Semantic Versioning)
+
+name: Build Release Patch
+
+on:
+  push:
+    branches: [ master ]
+#    branches-ignore:
+#      - '**'
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  update-semver-patch:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+      
+      - name: semver-tags
+        id: semver-tags
+        uses: SOLIDSoftworks/semver-tags@1.0.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag-prefix: 'v'
+          default-version: '1.13.2'
+#          prerelease: 'alpha'
+
+      
+#      - uses: rickstaa/action-update-semver@v1
+#        with:
+#          tag: '1.13.2'
+#          move_patch_tag: true
+
+#      - name: Increment Semver
+#        uses: Benbentwo/increment-semver@1.0.4
+#        id: increment-semver-patch
+#        with:
+#          version-level: '-p'
+          
+#      - name: Test ./increment_version.sh
+#        uses: Benbentwo/increment-semver@1.0.4
+#        with:
+#          run: './increment_version.sh -p 1.13.2'
+        
+      - name: Get the output version
+        run: |
+          echo "The new version is ${{ steps.semver-tags.outputs.semantic-version }}"
+          echo "The previous version was ${{ steps.semver-tags.outputs.previous-version }}"
+          echo "The core version part is ${{ steps.semver-tags.outputs.core-version }}"
+
+#      - uses: actions/checkout@v2
+

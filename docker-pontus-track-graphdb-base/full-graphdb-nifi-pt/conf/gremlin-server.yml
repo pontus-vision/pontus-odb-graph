@@ -1,0 +1,99 @@
+
+host: 0.0.0.0
+port: 8182
+scriptEvaluationTimeout: 30000
+threadPoolWorker: 3
+gremlinPool: 3
+
+channelizer: org.apache.tinkerpop.gremlin.server.channel.WsAndHttpChannelizer
+#channelizer: com.pontusvision.gdpr.WsAndHttpJWTChannelizer
+graphs: {
+  graph: conf/janusgraph-embedded-cassandra-es.properties
+#  graph: /opt/pontus-graphdb/graphdb-current//conf/janusgraph-hbase-es.properties
+}
+scriptEngines: {
+  gremlin-groovy: {
+    plugins: { org.apache.tinkerpop.gremlin.server.jsr223.GremlinServerGremlinPlugin: {},
+               org.apache.tinkerpop.gremlin.tinkergraph.jsr223.TinkerGraphGremlinPlugin: {},
+               org.apache.tinkerpop.gremlin.jsr223.ImportGremlinPlugin: {classImports: [java.lang.Math, com.pontusvision.gdpr.CIDRUtils, com.joestelmach.natty.DateGroup, com.joestelmach.natty.Parser, com.pontusvision.jpostal.AddressParser ,com.pontusvision.jpostal.ParsedComponent, com.pontusvision.utils.PostCode], methodImports: [java.lang.Math#*]},
+               org.apache.tinkerpop.gremlin.jsr223.ScriptFileGremlinPlugin: {files: [/opt/pontus-graphdb/graphdb-current//conf/globals.groovy ,/opt/pontus-graphdb/graphdb-current//conf/gdpr-schema.groovy,/opt/pontus-graphdb/graphdb-current//conf/matching.groovy,/opt/pontus-graphdb/graphdb-current//conf/formio.groovy   ,  /opt/pontus-graphdb/graphdb-current//conf/gdpr.groovy, /opt/pontus-graphdb/graphdb-current//conf/bootstrap.groovy]}
+               }}}
+
+serializers:
+  - { className: org.apache.tinkerpop.gremlin.driver.ser.GryoMessageSerializerV1d0, config: { ioRegistries: [org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerIoRegistryV1d0, org.janusgraph.graphdb.tinkerpop.JanusGraphIoRegistry] ,  useMapperFromGraph: graph}}
+  - { className: org.apache.tinkerpop.gremlin.driver.ser.GryoMessageSerializerV1d0, config: { serializeResultToString: true, useMapperFromGraph: graph }}
+  - { className: org.apache.tinkerpop.gremlin.driver.ser.GryoMessageSerializerV3d0, config: { ioRegistries: [org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerIoRegistryV3d0, org.janusgraph.graphdb.tinkerpop.JanusGraphIoRegistry] , useMapperFromGraph: graph}}             # application/vnd.gremlin-v3.0+gryo
+  - { className: org.apache.tinkerpop.gremlin.driver.ser.GryoMessageSerializerV3d0, config: { serializeResultToString: true, useMapperFromGraph: graph }}                                                                       # application/vnd.gremlin-v3.0+gryo-stringd
+  - { className: org.apache.tinkerpop.gremlin.driver.ser.GraphSONMessageSerializerV3d0, config: { ioRegistries: [org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerIoRegistryV3d0, org.janusgraph.graphdb.tinkerpop.JanusGraphIoRegistry] }}         # application/json
+processors:
+  - { className: org.apache.tinkerpop.gremlin.server.op.standard.StandardOpProcessor, config: { maxParameters: 64 }}
+  - { className: org.apache.tinkerpop.gremlin.server.op.session.SessionOpProcessor, config: { maxParameters: 64 , sessionTimeout: 28800000 }}
+  - { className: org.apache.tinkerpop.gremlin.server.op.traversal.TraversalOpProcessor, config: { maxParameters: 64 , cacheExpirationTime: 0, cacheMaxSize: 0 }}
+metrics: {
+  consoleReporter: {enabled: false, interval: 180000},
+  csvReporter: {enabled: false, interval: 180000, fileName: /tmp/gremlin-server-metrics.csv},
+  jmxReporter: {enabled: false},
+  slf4jReporter: {enabled: false, interval: 180000}}
+strictTransactionManagement: false
+maxInitialLineLength: 4096
+maxHeaderSize: 8192
+maxChunkSize: 8192
+maxContentLength: 2000000
+maxAccumulationBufferComponents: 1024
+resultIterationBatchSize: 64
+writeBufferLowWaterMark: 32768
+writeBufferHighWaterMark: 65536
+ssl: {
+  enabled: false
+}
+
+authentication: {
+  authenticator: com.pontusvision.gdpr.JWTToKerberosAuthenticator,
+  className: com.pontusvision.gdpr.JWTToKerberosAuthenticator,
+  authenticationHandler: com.pontusvision.gdpr.WsAndHttpJWTAuthenticationHandler,
+  config: {
+    zookeeperConnStr: pontus-sandbox.pontusvision.com,
+    zookeeperPrincipal: hbase/pontus-sandbox.pontusvision.com@PONTUSVISION.COM,
+    zookeeperKeytab: /etc/security/keytabs/hbase.service.keytab,
+    jwtKeyStoreFile: /etc/pki/java/localhost.jks,
+    jwtKeyStorePassword: pa55word,
+    jwtKeyPassword: pa55word,
+    jwtKeyStoreType: jks,
+    jwtKeyAlias: localhost
+  }
+}
+
+
+#plugins:
+#  - janusgraph.imports
+#scriptEngines: {
+#  gremlin-groovy: {
+#    imports: [java.lang.Math],
+#    staticImports: [java.lang.Math.PI],
+#    scripts: [scripts/empty-sample.groovy]}}
+#serializers:
+#  - { className: org.apache.tinkerpop.gremlin.driver.ser.GryoMessageSerializerV1d0, config: { ioRegistries: [org.janusgraph.graphdb.tinkerpop.JanusGraphIoRegistry] }}
+#  - { className: org.apache.tinkerpop.gremlin.driver.ser.GryoLiteMessageSerializerV1d0, config: {ioRegistries: [org.janusgraph.graphdb.tinkerpop.JanusGraphIoRegistry] }}
+#  - { className: org.apache.tinkerpop.gremlin.driver.ser.GryoMessageSerializerV1d0, config: { serializeResultToString: true }}
+#  - { className: org.apache.tinkerpop.gremlin.driver.ser.GraphSONMessageSerializerGremlinV1d0, config: { ioRegistries: [org.janusgraph.graphdb.tinkerpop.JanusGraphIoRegistryV1d0] }}
+#  - { className: org.apache.tinkerpop.gremlin.driver.ser.GraphSONMessageSerializerGremlinV2d0, config: { ioRegistries: [org.janusgraph.graphdb.tinkerpop.JanusGraphIoRegistry] }}
+#  - { className: org.apache.tinkerpop.gremlin.driver.ser.GraphSONMessageSerializerV1d0, config: { ioRegistries: [org.janusgraph.graphdb.tinkerpop.JanusGraphIoRegistryV1d0] }}
+#processors:
+#  - { className: org.apache.tinkerpop.gremlin.server.op.session.SessionOpProcessor, config: { sessionTimeout: 28800000 }}
+#  - { className: org.apache.tinkerpop.gremlin.server.op.traversal.TraversalOpProcessor, config: { cacheExpirationTime: 600000, cacheMaxSize: 1000 }}
+#metrics: {
+#  consoleReporter: {enabled: true, interval: 180000},
+#  csvReporter: {enabled: true, interval: 180000, fileName: /tmp/gremlin-server-metrics.csv},
+#  jmxReporter: {enabled: true},
+#  slf4jReporter: {enabled: true, interval: 180000},
+#  gangliaReporter: {enabled: false, interval: 180000, addressingMode: MULTICAST},
+#  graphiteReporter: {enabled: false, interval: 180000}}
+#maxInitialLineLength: 4096
+#maxHeaderSize: 8192
+#maxChunkSize: 8192
+#maxContentLength: 65536
+#maxAccumulationBufferComponents: 1024
+#resultIterationBatchSize: 64
+#writeBufferLowWaterMark: 32768
+#writeBufferHighWaterMark: 65536
+
