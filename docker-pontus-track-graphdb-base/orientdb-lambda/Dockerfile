@@ -1,0 +1,113 @@
+############################################################
+# Dockerfile to run an OrientDB (Graph) Container
+############################################################
+
+FROM openjdk:8-jdk-slim-buster as BUILDER
+
+MAINTAINER Pontus Vision
+ 
+# Override the orientdb download location with e.g.:
+#   docker build -t mine --build-arg ORIENTDB_DOWNLOAD_SERVER=https://repo1.maven.org/maven2/com/orientechnologies/ .
+ARG ORIENTDB_DOWNLOAD_SERVER
+
+ENV ORIENTDB_VERSION 3.1.12
+ENV ORIENTDB_DOWNLOAD_MD5 269554b2eeebc0963c636a7f57f76e24
+ENV ORIENTDB_DOWNLOAD_SHA1 a9673917f22f5e71e0e1a89ddfdbf6a702828d89
+
+#ENV ORIENTDB_DOWNLOAD_URL ${ORIENTDB_DOWNLOAD_SERVER:-https://central.maven.org/maven2/com/orientechnologies/orientdb-tp3/$ORIENTDB_VERSION/orientdb-tp3-$ORIENTDB_VERSION.tar.gz}
+ENV ORIENTDB_DOWNLOAD_URL ${ORIENTDB_DOWNLOAD_SERVER:-https://repo1.maven.org/maven2/com/orientechnologies/orientdb-tp3/$ORIENTDB_VERSION/orientdb-tp3-$ORIENTDB_VERSION.tar.gz}
+
+RUN apt update -y && \
+    apt install -y tar curl bash wget && \
+    apt autoremove -y
+
+#download distribution tar, untar and DON'T delete databases (tp3 endopoint won't works if db isn't present)
+RUN mkdir /orientdb && \
+  wget  --no-check-certificate $ORIENTDB_DOWNLOAD_URL \
+  && echo "$ORIENTDB_DOWNLOAD_MD5 *orientdb-tp3-$ORIENTDB_VERSION.tar.gz" | md5sum -c - \
+  && echo "$ORIENTDB_DOWNLOAD_SHA1 *orientdb-tp3-$ORIENTDB_VERSION.tar.gz" | sha1sum -c - \
+  && tar -xvzf orientdb-tp3-$ORIENTDB_VERSION.tar.gz -C /orientdb --strip-components=1 \
+  && rm orientdb-tp3-$ORIENTDB_VERSION.tar.gz \
+  && rm -rf /orientdb/databases/* 
+
+#FROM openjdk:8-jdk-slim-buster
+FROM public.ecr.aws/lambda/java:8 as FINAL
+
+ARG LAMBDA_TASK_ROOT=/var/task
+ENV LAMBDA_TASK_ROOT=${LAMBDA_TASK_ROOT}
+
+# Copy function code and runtime dependencies from Gradle layout
+
+#COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-lib:1.13.2 /root/.m2/repository/pv-gdpr/pontus-odb-graph/2.0.0/pontus-odb-graph-2.0.0.jar  ${LAMBDA_TASK_ROOT}/lib/
+
+ENV ORIENTDB_HOME=/orientdb/
+
+COPY --chown=1000:1000 --from=BUILDER /orientdb/plugins/*  ${LAMBDA_TASK_ROOT}/lib/
+
+
+
+
+#RUN apt update -y && \
+    #apt install -y tar curl bash s3fs && \
+    #apt autoremove -y && \
+    #groupadd --system -g 1000 orientdb && \
+    #useradd -u 1000 -g orientdb orientdb -d /orientdb && \
+    #chown -R 1000:1000 /orientdb
+
+#    sed -i 's/#user_allow_other/user_allow_other/g' /etc/fuse.conf && \
+#    mkdir /orientdb /orientdb/bin /orientdb/lib /orientdb/log /orientdb/databases && \
+#    echo $AWS_ACCESS_KEY_ID:$AWS_SECRET_ACCESS_KEY | sed -e 's/ //g' > /orientdb/.passwd-s3fs && \
+#    chmod 400 /orientdb/.passwd-s3fs && \
+
+USER 1000
+
+COPY --chown=1000:1000   --from=BUILDER /orientdb/www/*     /orientdb/www/
+COPY --chown=1000:1000   --from=BUILDER /orientdb/bin/*     /orientdb/bin/
+COPY --chown=1000:1000   --from=BUILDER /orientdb/config/*     /orientdb/config/
+COPY --chown=1000:1000   --from=BUILDER /orientdb/plugins/*     /orientdb/plugins/
+
+
+USER root
+RUN mkdir /orientdb/backup && \
+    mkdir /orientdb/databases && \
+    mkdir -p /mnt/orientdb && \
+    chown 1000:1000 /orientdb/backup && \
+    chown 1000:1000 /orientdb/databases  && \
+    chown 1000:1000 /mnt/orientdb && \
+    ln -s /mnt/orientdb /orientdb/databases && \
+    chmod 777 /orientdb/databases  && \
+    chmod 777 /mnt/orientdb && \
+    chmod 777 /orientdb/backup
+
+VOLUME ["/mnt/orientdb"]
+
+USER 1000
+
+#overrides internal gremlin-server to set binding to 0.0.0.0 instead of localhost
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-jpostal-lib:1.13.2 /pontus-jpostal-datadir /opt/pontus-graphdb/graphdb-current/datadir
+
+COPY --chown=1000:1000 server.sh /orientdb/bin
+RUN chmod 755 /orientdb/bin/server.sh
+
+
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-lib:1.13.2 /root/.m2/repository/pv-gdpr/pontus-odb-graph/2.0.0/pontus-odb-graph-2.0.0.jar /orientdb/lib/
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-lib:1.13.2    /pontus-odb-graph/ ${LAMBDA_TASK_ROOT}/
+
+RUN ln -s /tmp/libpostal.so /tmp/libpostal.so.1 || true && \
+    ln -s /tmp/libjpostal_parser.so  /tmp/libjpostal_parser.so.1 || true
+
+ENV PATH /orientdb/bin:$PATH
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp
+
+
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-conf:1.13.2 /pontus-odb-graph/conf /orientdb/conf
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-conf:1.13.2 /pontus-odb-graph/config /orientdb/config
+COPY --chown=1000:1000  orientdb-server-config.xml /orientdb/config/orientdb-server-config.xml
+COPY --chown=1000:1000  demodb.properties gremlin-server.yaml security.json /orientdb/config/
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-conf:1.13.2 /pontus-odb-graph/j2 /orientdb/j2
+
+
+
+# Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
+CMD [ "com.pontusvision.gdpr.LambdaHandler::handleRequest" ]
+
