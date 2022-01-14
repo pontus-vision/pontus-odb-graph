@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/checkout@v2
       
-      - name: Semver tags
+      - name: semver-tags
         uses: SOLIDSoftworks/semver-tags@1.0.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
@@ -44,11 +44,11 @@ jobs:
 #        with:
 #          run: './increment_version.sh -p 1.13.2'
         
-#      - name: Get the output version
-#        run: |
-#          echo "The new patch version was ${{ steps.increment-semver-patch.outputs.version }}"
-#          echo "The new minor version was ${{ steps.increment-semver-minor.outputs.version }}"
-#          echo "The new Major version was ${{ steps.increment-semver-major.outputs.version }}"
+      - name: Get the output version
+        run: |
+          echo "The new version is ${{ steps.semver-tags.outputs.semantic-version }}"
+          echo "The previous version was ${{ steps.semver-tags.outputs.previous-version }}"
+          echo "The core version part is ${{ steps.semver-tags.outputs.core-version }}"
 
 #      - uses: actions/checkout@v2
 
