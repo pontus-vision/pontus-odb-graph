@@ -22,8 +22,8 @@ jobs:
               tags: latest
               registry: 'omarion111'
               dockerfile: 'docker-conf/Dockerfile'
-              username: ${{ secrets.DOCKER_USERNAME }}
-              password: ${{ secrets.DOCKER_PASSWORD }}
+              username: '${{ secrets.DOCKER_USERNAME }}'
+              password: '${{ secrets.DOCKER_PASSWORD }}'
 #      publish:
 #        needs: build
 
