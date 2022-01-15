@@ -18,7 +18,7 @@ jobs:
             id: docker-push
             uses: mr-smithers-excellent/docker-build-push@v5.6
             with:
-              image: 'pontusvisiongdpr/pontus-track-graphdb-odb-pt:latest'
+              image: 'pontusvisiongdpr/pontus-track-graphdb-odb-pt'
               tags: latest
               registry: 'docker.io'
 #              dockerfile: Dockerfile.ci
