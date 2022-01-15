@@ -1,0 +1,88 @@
+############################################################
+# Dockerfile to run an OrientDB (Graph) Container
+############################################################
+
+FROM openjdk:8-jdk-slim-buster as BUILDER
+
+MAINTAINER Pontus Vision
+ 
+# Override the orientdb download location with e.g.:
+#   docker build -t mine --build-arg ORIENTDB_DOWNLOAD_SERVER=https://repo1.maven.org/maven2/com/orientechnologies/ .
+ARG ORIENTDB_DOWNLOAD_SERVER
+
+ENV ORIENTDB_VERSION 3.1.12
+ENV ORIENTDB_DOWNLOAD_MD5 269554b2eeebc0963c636a7f57f76e24
+ENV ORIENTDB_DOWNLOAD_SHA1 a9673917f22f5e71e0e1a89ddfdbf6a702828d89
+
+#ENV ORIENTDB_DOWNLOAD_URL ${DOLLAR}{ORIENTDB_DOWNLOAD_SERVER:-https://central.maven.org/maven2/com/orientechnologies/orientdb-tp3/${DOLLAR}ORIENTDB_VERSION/orientdb-tp3-${DOLLAR}ORIENTDB_VERSION.tar.gz}
+ENV ORIENTDB_DOWNLOAD_URL ${DOLLAR}{ORIENTDB_DOWNLOAD_SERVER:-https://repo1.maven.org/maven2/com/orientechnologies/orientdb-tp3/${DOLLAR}ORIENTDB_VERSION/orientdb-tp3-${DOLLAR}ORIENTDB_VERSION.tar.gz}
+
+RUN apt update -y && \
+    apt install -y tar curl bash wget && \
+    apt autoremove -y
+
+#download distribution tar, untar and DON'T delete databases (tp3 endopoint won't works if db isn't present)
+RUN mkdir /orientdb && \
+  wget  --no-check-certificate ${DOLLAR}ORIENTDB_DOWNLOAD_URL \
+  && echo "${DOLLAR}ORIENTDB_DOWNLOAD_MD5 *orientdb-tp3-${DOLLAR}ORIENTDB_VERSION.tar.gz" | md5sum -c - \
+  && echo "${DOLLAR}ORIENTDB_DOWNLOAD_SHA1 *orientdb-tp3-${DOLLAR}ORIENTDB_VERSION.tar.gz" | sha1sum -c - \
+  && tar -xvzf orientdb-tp3-${DOLLAR}ORIENTDB_VERSION.tar.gz -C /orientdb --strip-components=1 \
+  && rm orientdb-tp3-${DOLLAR}ORIENTDB_VERSION.tar.gz \
+  && rm -rf /orientdb/databases/*
+
+FROM openjdk:8-jdk-slim-buster
+
+
+RUN apt update -y && \
+    apt install -y tar curl bash gettext-base && \
+    apt autoremove -y && \
+    groupadd --system -g 1000 orientdb && \
+    useradd -u 1000 -g orientdb orientdb -d /orientdb && \
+    mkdir /orientdb /orientdb/bin /orientdb/lib /orientdb/log /orientdb/databases && \
+    chown -R 1000:1000 /orientdb
+
+USER 1000
+
+COPY --chown=1000:1000   --from=BUILDER /orientdb/www/*     /orientdb/www/
+COPY --chown=1000:1000   --from=BUILDER /orientdb/bin/*     /orientdb/bin/
+COPY --chown=1000:1000   --from=BUILDER /orientdb/config/*     /orientdb/config/
+COPY --chown=1000:1000   --from=BUILDER /orientdb/plugins/*     /orientdb/plugins/
+
+#overrides internal gremlin-server to set binding to 0.0.0.0 instead of localhost
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-jpostal-lib:${TAG} /pontus-jpostal-datadir /opt/pontus-graphdb/graphdb-current/datadir
+
+COPY --chown=1000:1000 server.sh /orientdb/bin
+RUN chmod 755 /orientdb/bin/server.sh
+
+
+RUN ln -s /tmp/libpostal.so /tmp/libpostal.so.1 || true && \
+    ln -s /tmp/libjpostal_parser.so  /tmp/libjpostal_parser.so.1 || true
+
+ENV PATH /orientdb/bin:${DOLLAR}PATH
+ENV LD_LIBRARY_PATH=${DOLLAR}LD_LIBRARY_PATH:/tmp
+
+
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-lib:${TAG} /root/.m2/repository/pv-gdpr/pontus-odb-graph/2.0.0/pontus-odb-graph-2.0.0.jar /orientdb/lib/
+
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-conf:${TAG} /pontus-odb-graph/conf/ /orientdb/conf/
+COPY --chown=1000:1000  demodb.properties.template gremlin-server.yaml security.json /orientdb/config/
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-conf:${TAG} /pontus-odb-graph/config/* /orientdb/config/
+COPY --chown=1000:1000 --from=pontusvisiongdpr/pontus-graphdb-odb-conf:${TAG} /pontus-odb-graph/j2 /orientdb/j2
+VOLUME ["/orientdb/backup", "/orientdb/databases"]
+
+WORKDIR /orientdb
+
+#OrientDb binary
+EXPOSE 2424
+
+#OrientDb http
+EXPOSE 2480
+
+#Gremlin server
+EXPOSE 8182
+
+
+USER 1000
+# Default command start the server
+CMD ["/orientdb/bin/server.sh"]
+
