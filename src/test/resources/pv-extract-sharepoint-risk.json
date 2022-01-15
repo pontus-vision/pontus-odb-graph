@@ -54,7 +54,7 @@
         "field_Impact": "High",
         "field_Residual_x0020_Probability": "Low",
         "field_Residual_x0020_Impact": "Medium",
-        "field_Approved_x0020_by_x0020_DPO": "true",
+        "field_Approved_x0020_by_x0020_DPO": "false",
         "field_Approved_x0020_by_x0020_Security": "true",
         "Data_x0020_Sources": [],
         "Risk_x0020_Mitigations": [
@@ -118,7 +118,7 @@
         "field_Probability": "Medium",
         "field_Impact": "High",
         "field_Approved_x0020_by_x0020_DPO": "true",
-        "field_Approved_x0020_by_x0020_Security": "true",
+        "field_Approved_x0020_by_x0020_Security": "false",
         "Data_x0020_Sources": [
           {
             "LookupId": 2,
@@ -305,8 +305,8 @@
         "field_Description": "Remoção não autorizada.",
         "field_Probability": "Low",
         "field_Impact": "High",
-        "field_Approved_x0020_by_x0020_DPO": "true",
-        "field_Approved_x0020_by_x0020_Security": "true",
+        "field_Approved_x0020_by_x0020_DPO": "false",
+        "field_Approved_x0020_by_x0020_Security": "false",
         "Data_x0020_Sources": [],
         "Risk_x0020_Mitigations": []
       }
@@ -566,7 +566,7 @@
         "field_Probability": "Low",
         "field_Impact": "High",
         "field_Approved_x0020_by_x0020_DPO": "true",
-        "field_Approved_x0020_by_x0020_Security": "true",
+        "field_Approved_x0020_by_x0020_Security": "false",
         "Data_x0020_Sources": [],
         "Risk_x0020_Mitigations": []
       }
@@ -623,7 +623,7 @@
         "field_Description": "Compartilhar ou distribuir dados pessoais com terceiros sem o consentimento do titular dos dados pessoais.",
         "field_Probability": "Medium",
         "field_Impact": "High",
-        "field_Approved_x0020_by_x0020_DPO": "true",
+        "field_Approved_x0020_by_x0020_DPO": "false",
         "field_Approved_x0020_by_x0020_Security": "true",
         "Data_x0020_Sources": [],
         "Risk_x0020_Mitigations": []
@@ -798,7 +798,7 @@
         "field_Probability": "Low",
         "field_Impact": "High",
         "field_Approved_x0020_by_x0020_DPO": "true",
-        "field_Approved_x0020_by_x0020_Security": "true",
+        "field_Approved_x0020_by_x0020_Security": "false",
         "Data_x0020_Sources": [],
         "Risk_x0020_Mitigations": []
       }
@@ -855,7 +855,7 @@
         "field_Description": "Reidentificação de dados pseudonimizados.",
         "field_Probability": "Low",
         "field_Impact": "High",
-        "field_Approved_x0020_by_x0020_DPO": "true",
+        "field_Approved_x0020_by_x0020_DPO": "false",
         "field_Approved_x0020_by_x0020_Security": "true",
         "Data_x0020_Sources": [],
         "Risk_x0020_Mitigations": []
