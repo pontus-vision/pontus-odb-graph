@@ -100,28 +100,26 @@ public class PVSharepointRiskTest extends AppTest {
 
       assertEquals("1",numMitigationsR02, "1 Risk Mitigation associated with R02");
 
-      String mitigationsR02 =
-          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).in('Mitigates_Risk')\n" +
-              ".values('Object.Risk_Mitigation_Data_Source.Mitigation_Id').next().toString()").get().toString();
-
-
-      assertEquals("M-DATA-ENCR-FLIGHT",mitigationsR02, "1 Risk Mitigation associated with R02");
-
-      String mitigationsR02Description =
-          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).in('Mitigates_Risk')\n" +
-              ".values('Object.Risk_Mitigation_Data_Source.Description').next().toString()").get().toString();
-
-      assertEquals("CONTROLES CRIPTOGRÁFICOS QUANDO OS DADOS ESTÃO NA REDE",mitigationsR02Description, "Risk Mitigation description with R02");
-
 
       String mitigationsR03Count =
           App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R03')).in('Mitigates_Risk')\n" +
               ".count().next().toString()").get().toString();
 
-      assertEquals("0",mitigationsR03Count, "0 Risk Mitigations to R03");
+      assertEquals("0",mitigationsR03Count, "0 Risk Mitigations for R03");
 
 
+      String approvedBySecurity =
+              App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R05'))" +
+                      ".values('Object.Risk_Data_Source.Approved_By_Security').next().toString()").get().toString();
 
+      assertEquals("false",approvedBySecurity, "bool status for Approved_By_Security");
+
+
+      String approvedByDPO =
+              App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R11'))" +
+                      ".values('Object.Risk_Data_Source.Approved_By_DPO').next().toString()").get().toString();
+
+      assertEquals("true",approvedByDPO, "bool status for Approved_By_DPO");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
