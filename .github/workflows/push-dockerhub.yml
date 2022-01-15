@@ -21,7 +21,7 @@ jobs:
               image: 'pontusvisiongdpr/pontus-track-graphdb-odb-pt'
               tags: latest
               registry: 'docker.io'
-#              dockerfile: Dockerfile.ci
+              dockerfile: 'docker-conf/Dockerfile'
               username: ${{ secrets.DOCKER_USERNAME }}
               password: ${{ secrets.DOCKER_PASSWORD }}
 #      publish:
