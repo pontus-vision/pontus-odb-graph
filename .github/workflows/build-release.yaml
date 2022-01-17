@@ -3,21 +3,20 @@ name: Build Release Patch
 
 on:
   push:
-
     branches: [ master ]
 #    branches-ignore:
 #      - '**'
     tags:
       - 'v*.*.*'
+      
+env:
+  TEST_TAG: omarion111/github-actions:latest
 
 jobs:
-
   push-dockerhub:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - uses: actions/checkout@v2
     
 # STEP 1 --------------------------------------------------------------
@@ -74,6 +73,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
+      - name: Build and export to Docker
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          load: true
+          tags: ${{ env.TEST_TAG }}
 
       - name: Build and Push to DockerHub
         uses: docker/build-push-action@v2
@@ -81,14 +87,19 @@ jobs:
           context: .
           builder: ${{ steps.buildx.outputs.name }}
           file: ./docker-lib/Dockerfile
+          load: true
           # target: deploy
           push: true
 #           username: ${{ secrets.DOCKER_USERNAME }}
 #           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: omarion111/github-actions
+#           repository: omarion111/github-actions
           tags: ${{ steps.semver-tags.outputs.semantic-version }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+
+      - name: Test
+        run: |
+          docker run --rm ${{ env.TEST_TAG }}
 
       - name: Move cache
         run: |
