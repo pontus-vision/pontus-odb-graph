@@ -40,7 +40,6 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          Key is named differently to avoid collision
           key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-multi-buildx
