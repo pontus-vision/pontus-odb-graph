@@ -21,6 +21,7 @@ import com.orientechnologies.orient.core.metadata.schema.OType
 import com.pontusvision.gdpr.*
 import com.pontusvision.utils.LocationAddress
 import groovy.json.JsonSlurper
+import groovy.json.StringEscapeUtils
 import org.apache.commons.math3.distribution.EnumeratedDistribution
 import org.apache.commons.math3.util.Pair
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
@@ -4975,8 +4976,8 @@ the end of the process.
                   } else {
                     firstTime = false
                   }
-                  sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue," +
-                          " \"metrictype\": \"${PontusJ2ReportingFunctions.translate('Data Procedures Per Data Source')}\" }")
+                  sb.append(" { \"metricname\": \"${StringEscapeUtils.escapeJavaScript(PontusJ2ReportingFunctions.translate(metricname))}\", \"metricvalue\": $metricvalue," +
+                          " \"metrictype\": \"${StringEscapeUtils.escapeJavaScript(PontusJ2ReportingFunctions.translate('Data Procedures Per Data Source'))}\" }")
 
                 }
 
