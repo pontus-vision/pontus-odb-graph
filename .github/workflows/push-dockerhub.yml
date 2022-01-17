@@ -12,28 +12,44 @@ jobs:
         runs-on: ubuntu-latest
         
         steps:
-          - uses: actions/checkout@v2
-          
-          - name: echo secrets
+          - name: Checkout Code
+            uses: actions/checkout@v2
+            
+          - name: envsubst Dockerfile
             run: |
-              echo  ${{ secrets.DOCKER_USERNAME }}
-              echo ${{ secrets.DOCKER_PASSWORD }}
-
-          - name: Docker Push Action
-            id: docker-push
-            uses: mr-smithers-excellent/docker-build-push@v5.6
+              export DOLLAR='$'
+              cat ./docker-lib/Dockerfile.template | envsubst > ./docker-lib/Dockerfile
+            
+          - name: Publish to DockerHub
+            uses: docker/build-push-action@v1
             with:
-              image: 'pontusvisiongdpr/pontus-track-graphdb-odb-pt'
-              tags: latest
-              registry: 'omarion111'
-              dockerfile: 'docker-conf/Dockerfile'
               username: ${{ secrets.DOCKER_USERNAME }}
               password: ${{ secrets.DOCKER_PASSWORD }}
+              registry: omarion111/github-actions
+              tags: latest
+              dockerfile: /docker-lib/Dockerfile
+
+
+#          - name: echo secrets
+#            run: |
+#              echo  ${{ secrets.DOCKER_USERNAME }}
+#              echo ${{ secrets.DOCKER_PASSWORD }}
+
+#          - name: Docker Push Action
+#            id: docker-push
+#            uses: mr-smithers-excellent/docker-build-push@v5.6
+#            with:
+#              image: 'pontusvisiongdpr/pontus-track-graphdb-odb-pt'
+#              tags: latest
+#              registry: 'omarion111'
+#              dockerfile: 'docker-conf/Dockerfile'
+#              username: ${{ secrets.DOCKER_USERNAME }}
+#              password: ${{ secrets.DOCKER_PASSWORD }}
 #      publish:
 #        needs: build
 
-          - name: Get Outputs
-            run: |
-              echo "Full name of the Docker image with registry prefix: ${{ steps.docker-push.outputs.imageFullName }}"
-              echo "Name of the Docker image with owner prefix: ${{ steps.docker-push.outputs.imageName }}"
-              echo "Tags for the Docker image: ${{ steps.docker-push.outputs.tags }}"
+#          - name: Get Outputs
+#            run: |
+#              echo "Full name of the Docker image with registry prefix: ${{ steps.docker-push.outputs.imageFullName }}"
+#              echo "Name of the Docker image with owner prefix: ${{ steps.docker-push.outputs.imageName }}"
+#              echo "Tags for the Docker image: ${{ steps.docker-push.outputs.tags }}"
