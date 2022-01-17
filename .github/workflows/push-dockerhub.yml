@@ -12,8 +12,6 @@ jobs:
         runs-on: ubuntu-latest
         
         steps:
-          - name: Checkout Code
-            uses: actions/checkout@v2
 
 # STEP 1 --------------------------------------------------------------
             
@@ -99,3 +97,4 @@ jobs:
 #              echo "Full name of the Docker image with registry prefix: ${{ steps.docker-push.outputs.imageFullName }}"
 #              echo "Name of the Docker image with owner prefix: ${{ steps.docker-push.outputs.imageName }}"
 #              echo "Tags for the Docker image: ${{ steps.docker-push.outputs.tags }}"
+

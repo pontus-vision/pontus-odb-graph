@@ -2764,6 +2764,16 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object.Risk_Data_Source.Approved_By_DPO",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Risk_Data_Source.Approved_By_Security",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object.Risk_Data_Source.Risk_Id",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -5224,6 +5234,8 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata.Type.Object.Risk_Data_Source",
+        "Object.Risk_Data_Source.Approved_By_DPO",
+        "Object.Risk_Data_Source.Approved_By_Security",
         "Object.Risk_Data_Source.Risk_Id",
         "Object.Risk_Data_Source.Description",
         "Object.Risk_Data_Source.Probability",
