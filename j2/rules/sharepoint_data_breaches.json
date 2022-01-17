@@ -31,7 +31,7 @@
           },
           {
             "name": "Event.Data_Breach.Authority_Notified",
-            "val": "${authority_notified?.trim()?.toUpperCase()}",
+            "val": "${authority_notified?.trim()}",
             "mandatoryInSearch": true
           },
           {
@@ -62,7 +62,7 @@
           },
           {
             "name": "Event.Data_Breach.Natural_Person_Notified",
-            "val": "${natural_person_notified?.trim()?.toUpperCase()}",
+            "val": "${natural_person_notified?.trim()}",
             "mandatoryInSearch": true
           },
           {
