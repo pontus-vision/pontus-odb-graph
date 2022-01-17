@@ -1,0 +1,22 @@
+name: Test docker-build-push-action
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  test-docker-build-push-action:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+      - name: V1
+        uses: docker/build-push-action@v1
+        with:
+          x: true
+          
+      - name: V2
+        uses: docker/build-push-action@v2
+        with:
+          x: true
