@@ -1,0 +1,368 @@
+{
+  "queryResp": [
+      {
+        "@odata.etag": "cabd6-3a223df5-3985ggae-2ad-ac645bce3118",
+        "createdDateTime": "2022-01-05T19: 18: 05Z",
+        "eTag": "cabd6-3a223df5-3985ggae-2ad-ac645bce3118",
+        "id": "1",
+        "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+        "webUrl": "https: //xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Aviso%20de%20Privacidade",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,dca55478-faa546091-ccba4-aac99,cabgg31-abc8731-63cdd4511-dc419-4987a"
+        },
+        "contentType": {
+          "id": "0x0100GAB3445ACC1938749061GHHGCBFDE",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cdca55478-faa546091-ccba4-aac99%2Ccabgg31-abc8731-63cdd4511-dc419-4987a')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('1')/fields/$entity",
+        "fields": {
+          "@odata.etag": "cabd6-3a223df5-3985ggae-2ad-ac645bce3118",
+          "Title": "abc",
+          "privacy_notice": "O Titular foi avisado e concordou com os termos",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "1",
+          "ContentType": "Item",
+          "Created": "2022-01-05T19:18:05Z",
+          "AuthorLookupId": "14",
+          "Author": "Mister M",
+          "EditorLookupId": "14",
+          "Editor": "William Shakespeare",
+          "_UIVersionString": "4.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
+        "createdDateTime": "2022-01-05T19:18:05Z",
+        "eTag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
+        "id": "2",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Aviso%20de%20Privacidade",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,dca55478-faa546091-ccba4-aac99,cabgg31-abc8731-63cdd4511-dc419-4987a"
+        },
+        "contentType": {
+          "id": "0x0100GAB3445ACC1938749061GHHGCBFDE",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cdca55478-faa546091-ccba4-aac99%2Ccabgg31-abc8731-63cdd4511-dc419-4987a')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('2')/fields/$entity",
+        "fields": {
+          "@odata.etag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
+          "Title": "def",
+          "privacy_notice": "O Titular não concorda com os termos",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "2",
+          "ContentType": "Item",
+          "Created": "2022-01-05T19:18:05Z",
+          "AuthorLookupId": "14",
+          "Author": "Mister M",
+          "EditorLookupId": "14",
+          "Editor": "William Shakespeare",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
+        "createdDateTime": "2022-01-05T19:18:05Z",
+        "eTag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
+        "id": "3",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Aviso%20de%20Privacidade",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,dca55478-faa546091-ccba4-aac99,cabgg31-abc8731-63cdd4511-dc419-4987a"
+        },
+        "contentType": {
+          "id": "0x0100GAB3445ACC1938749061GHHGCBFDE",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cdca55478-faa546091-ccba4-aac99%2Ccabgg31-abc8731-63cdd4511-dc419-4987a')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('3')/fields/$entity",
+        "fields": {
+          "@odata.etag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
+          "Title": "ghi",
+          "privacy_notice": "TEST 123",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "3",
+          "ContentType": "Item",
+          "Created": "2022-01-05T19:18:05Z",
+          "AuthorLookupId": "14",
+          "Author": "Mister M",
+          "EditorLookupId": "14",
+          "Editor": "William Shakespeare",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
+        "createdDateTime": "2022-01-05T19:18:05Z",
+        "eTag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
+        "id": "4",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Aviso%20de%20Privacidade",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,dca55478-faa546091-ccba4-aac99,cabgg31-abc8731-63cdd4511-dc419-4987a"
+        },
+        "contentType": {
+          "id": "0x0100GAB3445ACC1938749061GHHGCBFDE",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cdca55478-faa546091-ccba4-aac99%2Ccabgg31-abc8731-63cdd4511-dc419-4987a')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('4')/fields/$entity",
+        "fields": {
+          "@odata.etag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
+          "Title": "jkl",
+          "privacy_notice": "texto com varias linhas",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "4",
+          "ContentType": "Item",
+          "Created": "2022-01-05T19:18:05Z",
+          "AuthorLookupId": "14",
+          "Author": "Mister M",
+          "EditorLookupId": "14",
+          "Editor": "William Shakespeare",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "acab78f1-cbbf-4962-8c9e-0c0576c4c56d,5",
+        "createdDateTime": "2022-01-05T19:18:05Z",
+        "eTag": "acab78f1-cbbf-4962-8c9e-0c0576c4c56d,5",
+        "id": "5",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Aviso%20de%20Privacidade",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac43568cbb-7638fa-526acd-ad24cc-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,dca55478-faa546091-ccba4-aac99,cabgg31-abc8731-63cdd4511-dc419-4987a"
+        },
+        "contentType": {
+          "id": "0x0100GAB3445ACC1938749061GHHGCBFDE",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cdca55478-faa546091-ccba4-aac99%2Ccabgg31-abc8731-63cdd4511-dc419-4987a')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('5')/fields/$entity",
+        "fields": {
+          "@odata.etag": "acab78f1-cbbf-4962-8c9e-0c0576c4c56d,5",
+          "Title": "mno",
+          "privacy_notice": "Sxxxxxxxe",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "5",
+          "ContentType": "Item",
+          "Created": "2022-01-05T19:18:05Z",
+          "AuthorLookupId": "14",
+          "Author": "Mister M",
+          "EditorLookupId": "14",
+          "Editor": "William Shakespeare",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "039c52f7-9e8f-45b6-95db-4aa0df51ff21,5",
+        "createdDateTime": "2022-01-05T19:18:05Z",
+        "eTag": "039c52f7-9e8f-45b6-95db-4aa0df51ff21,5",
+        "id": "6",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Aviso%20de%20Privacidade",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac4356-7638fa-526acd-ad24cc-5365a",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac4356-7638fa-526acd-ad24cc-5365a",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,dca55478-faa546091-ccba4-aac99,cabgg31-abc8731-63cdd4511-dc419-4987a"
+        },
+        "contentType": {
+          "id": "0x0100GAB3445ACC1938749061GHHGCBFDE",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cdca55478-faa546091-ccba4-aac99%2Ccabgg31-abc8731-63cdd4511-dc419-4987a')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('6')/fields/$entity",
+        "fields": {
+          "@odata.etag": "039c52f7-9e8f-45b6-95db-4aa0df51ff21,5",
+          "Title": "pqr",
+          "privacy_notice": "XYZ",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "6",
+          "ContentType": "Item",
+          "Created": "2022-01-05T19:18:05Z",
+          "AuthorLookupId": "14",
+          "Author": "Mister M",
+          "EditorLookupId": "14",
+          "Editor": "William Shakespeare",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "0a626c29-f1a6-4888-a267-a197b5caad00,5",
+        "createdDateTime": "2022-01-05T19:18:05Z",
+        "eTag": "0a626c29-f1a6-4888-a267-a197b5caad00,5",
+        "id": "7",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Aviso%20de%20Privacidade",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac4356-7638fa-526acd-ad24cc-5365a",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ac4356-7638fa-526acd-ad24cc-5365a",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,dca55478-faa546091-ccba4-aac99,cabgg31-abc8731-63cdd4511-dc419-4987a"
+        },
+        "contentType": {
+          "id": "0x0100GAB3445ACC1938749061GHHGCBFDE",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cdca55478-faa546091-ccba4-aac99%2Ccabgg31-abc8731-63cdd4511-dc419-4987a')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('7')/fields/$entity",
+        "fields": {
+          "@odata.etag": "0a626c29-f1a6-4888-a267-a197b5caad00,5",
+          "Title": "stuvw",
+          "privacy_notice": "n/a",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "7",
+          "ContentType": "Item",
+          "Created": "2022-01-05T19:18:05Z",
+          "AuthorLookupId": "14",
+          "Author": "Mister M",
+          "EditorLookupId": "14",
+          "Editor": "William Shakespeare",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      }
+    ]
+}

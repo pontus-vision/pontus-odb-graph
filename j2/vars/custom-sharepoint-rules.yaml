@@ -1140,3 +1140,81 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexName: "Object.Policies"
         toVertexLabel: "Event.Ingestion"
+
+  sharepoint_privacy_notice:
+
+    vertices:
+      - label: Object.Privacy_Notice
+        props:
+          Form_Id: "${Title}"
+          Description: "${privacy_notice}"
+          Metadata.Create_Date:
+            val: "${Created}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Who_Is_Collecting:
+            val: "Sxxxxxxxe"
+            excludeFromSearch: true
+          Country_Where_Stored:
+            val: "Brazil" # OR Brasil
+            excludeFromSearch: true
+#          Text:
+#          Id:
+#          Info_Collected:
+#          How_Is_It_Collected:
+#          How_Will_It_Be_Used:
+#          Why_Is_It_Collected:
+
+
+      - label: Object.Data_Source
+        props:
+          Name: "SHAREPOINT/PRIVACY-NOTICE"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "Privacy Notice"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type: "sharepoint/privacy-notice"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object.Privacy_Notice"
+        toVertexLabel: "Event.Ingestion"
+

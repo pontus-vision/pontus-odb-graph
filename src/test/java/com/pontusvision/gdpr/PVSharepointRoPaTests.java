@@ -94,5 +94,31 @@ public class PVSharepointRoPaTests extends AppTest {
 
   }
 
+  @Test
+  public void test00002SharepointPrivacyNotice() throws InterruptedException {
+    try {
+      jsonTestUtil("non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+              "$.queryResp[*].fields", "sharepoint_privacy_notice");
+
+      String getPrivacyNoticeDescription =
+              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('abc'))" +
+                      ".properties('Object.Privacy_Notice.Description').value()" +
+                      ".next().toString()").get().toString();
+      assertEquals("O Titular foi avisado e concordou com os termos", getPrivacyNoticeDescription,
+              "Privacy Notice Description for Title 'abc'");
+
+      String getDate =
+              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('mno'))" +
+                      ".properties('Object.Privacy_Notice.Metadata.Create_Date').value()" +
+                      ".next().toString()").get().toString();
+      assertEquals("??? 2022-01-05T19:18:05Z ???", getDate,
+              "Privacy Notice creation date");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
 
 }
