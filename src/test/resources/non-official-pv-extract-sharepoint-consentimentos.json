@@ -32,8 +32,19 @@
         "fields": {
           "@odata.etag": "cabd6-3a223df5-3985ggae-2ad-ac645bce3118",
           "Title": "abc",
-          "privacy_notice": "O Titular foi avisado e concordou com os termos",
-          "start_date": "2022-01-09",
+          "identity": "123",
+          "name": "Karla Giulia",
+          "date": "2021-12-09",
+          "privacy_notice": [
+            {
+              "LookupId": 1,
+              "LookupValue": "abc"
+            },
+            {
+              "LookupId": 2,
+              "LookupValue": "def"
+            }
+          ],
           "Modified": "2021-09-17T18:33:03Z",
           "id": "1",
           "ContentType": "Item",
@@ -85,8 +96,19 @@
         "fields": {
           "@odata.etag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
           "Title": "def",
-          "privacy_notice": "O Titular não concorda com os termos",
-          "start_date": "2022-01-13",
+          "identity": "456",
+          "name": "Bob Nakamura",
+          "date": "2021-10-15",
+          "privacy_notice": [
+            {
+              "LookupId": 3,
+              "LookupValue": "ghi"
+            },
+            {
+              "LookupId": 4,
+              "LookupValue": "jkl"
+            }
+          ],
           "Modified": "2021-09-17T18:33:03Z",
           "id": "2",
           "ContentType": "Item",
@@ -138,8 +160,15 @@
         "fields": {
           "@odata.etag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
           "Title": "ghi",
-          "privacy_notice": "TEST 123",
-          "start_date": "2019-10-04",
+          "identity": "789",
+          "name": "Ziad Silva",
+          "date": "2022-01-05",
+          "privacy_notice": [
+            {
+              "LookupId": 5,
+              "LookupValue": "mno"
+            }
+          ],
           "Modified": "2021-09-17T18:33:03Z",
           "id": "3",
           "ContentType": "Item",
@@ -191,8 +220,15 @@
         "fields": {
           "@odata.etag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
           "Title": "jkl",
-          "privacy_notice": "texto com varias linhas",
-          "start_date": "2021-03-17",
+          "identity": "101112",
+          "name": "Lara Croft",
+          "date": "2020-05-06",
+          "privacy_notice": [
+            {
+              "LookupId": 6,
+              "LookupValue": "pqr"
+            }
+          ],
           "Modified": "2021-09-17T18:33:03Z",
           "id": "4",
           "ContentType": "Item",
@@ -244,8 +280,19 @@
         "fields": {
           "@odata.etag": "acab78f1-cbbf-4962-8c9e-0c0576c4c56d,5",
           "Title": "mno",
-          "privacy_notice": "Sxxxxxxxe",
-          "start_date": "2020-07-24",
+          "identity": "131415",
+          "name": "Petrus Papastathopoulos",
+          "date": "2019-10-10",
+          "privacy_notice": [
+            {
+              "LookupId": 4,
+              "LookupValue": "jkl"
+            },
+            {
+              "LookupId": 7,
+              "LookupValue": "stuvw"
+            }
+          ],
           "Modified": "2021-09-17T18:33:03Z",
           "id": "5",
           "ContentType": "Item",
@@ -297,8 +344,19 @@
         "fields": {
           "@odata.etag": "039c52f7-9e8f-45b6-95db-4aa0df51ff21,5",
           "Title": "pqr",
-          "privacy_notice": "XYZ",
-          "start_date": "2021-12-12",
+          "identity": "161718",
+          "name": "Janos Gábor",
+          "date": "2021-01-13",
+          "privacy_notice": [
+            {
+              "LookupId": 1,
+              "LookupValue": "abc"
+            },
+            {
+              "LookupId": 5,
+              "LookupValue": "mno"
+            }
+          ],
           "Modified": "2021-09-17T18:33:03Z",
           "id": "6",
           "ContentType": "Item",
@@ -350,8 +408,10 @@
         "fields": {
           "@odata.etag": "0a626c29-f1a6-4888-a267-a197b5caad00,5",
           "Title": "stuvw",
-          "privacy_notice": "n/a",
-          "start_date": "2021-12-11",
+          "identity": "192021",
+          "name": "Lakshmi",
+          "date": "2021-09-01",
+          "privacy_notice": [],
           "Modified": "2021-09-17T18:33:03Z",
           "id": "7",
           "ContentType": "Item",

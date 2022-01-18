@@ -1146,18 +1146,35 @@ rules:
     vertices:
       - label: Object.Privacy_Notice
         props:
-          Form_Id: "${Title}"
-          Description: "${privacy_notice}"
+          Form_Id: "${id}"
+#          Id: "${Title}"
+          Description:
+            val: "${privacy_notice}"
+            excludeFromSearch: true
+            excludeFromUpdate: true
           Metadata.Create_Date:
             val: "${Created}"
             excludeFromSearch: true
+            excludeFromUpdate: true
+            type: java.util.Date
+          Metadata.Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            excludeFromUpdate: true
+            type: java.util.Date
+          Delivery_Date:
+            val: "${start_date}"
+            excludeFromSearch: true
+            excludeFromUpdate: true
             type: java.util.Date
           Who_Is_Collecting:
             val: "Sxxxxxxxe"
             excludeFromSearch: true
+            excludeFromUpdate: true
           Country_Where_Stored:
             val: "Brazil" # OR Brasil
             excludeFromSearch: true
+            excludeFromUpdate: true
 #          Text:
 #          Id:
 #          Info_Collected:
@@ -1217,4 +1234,105 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: "Object.Privacy_Notice"
         toVertexLabel: "Event.Ingestion"
+
+  sharepoint_consents:
+
+    vertices:
+      - label: Event.Consent
+        props:
+          Form_Id: "${id}"
+          Customer_ID:
+            val: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromSearch: true
+          Metadata.Create_Date:
+            val: "${date}"
+            excludeFromSearch: true
+            excludeFromUpdate: true
+            type: java.util.Date
+          Metadata.Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            excludeFromUpdate: true
+            type: java.util.Date
+#          Created_By: "${Author}"
+#          Changed_By: "${Editor}"
+#          Status:
+#          Description:
+
+      - label: Object.Privacy_Notice
+        condition: "${privacy_notice.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(privacy_notice)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+            excludeFromUpdate: true
+
+      - label: Person.Natural
+        props:
+          Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
+          Full_Name:
+            val: "${name?.trim()?.toUpperCase()}"
+            excludeFromUpdate: true
+
+      - label: Object.Data_Source
+        props:
+          Name: "SHAREPOINT/CONSENT"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "Consent"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type: "sharepoint/consent"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Consent
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Consent"
+
+      - label: Has_Privacy_Notice
+        fromVertexLabel: "Event.Consent"
+        toVertexLabel: "Object.Privacy_Notice"
 

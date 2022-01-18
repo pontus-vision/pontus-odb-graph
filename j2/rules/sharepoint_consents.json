@@ -2,51 +2,61 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object.Privacy_Notice",
+        "label": "Event.Consent",
         "props": [
           {
-            "name": "Object.Privacy_Notice.Form_Id",
+            "name": "Event.Consent.Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Privacy_Notice.Description",
-            "val": "${privacy_notice}",
+            "name": "Event.Consent.Customer_ID",
+            "val": "${identity?.replaceAll('[^0-9]', '')?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Privacy_Notice.Metadata.Create_Date",
-            "val": "${Created}",
+            "name": "Event.Consent.Metadata.Create_Date",
+            "val": "${date}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Privacy_Notice.Metadata.Update_Date",
+            "name": "Event.Consent.Metadata.Update_Date",
             "val": "${Modified}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Privacy_Notice",
+        "condition": "${privacy_notice.size() > 0}",
+        "props": [
+          {
+            "name": "Object.Privacy_Notice.Form_Id",
+            "val": "${new groovy.json.JsonBuilder(privacy_notice)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Person.Natural",
+        "props": [
+          {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${identity?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Object.Privacy_Notice.Delivery_Date",
-            "val": "${start_date}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Privacy_Notice.Who_Is_Collecting",
-            "val": "Sxxxxxxxe",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Privacy_Notice.Country_Where_Stored",
-            "val": "Brazil",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "name": "Person.Natural.Full_Name",
+            "val": "${name?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -55,7 +65,7 @@
         "props": [
           {
             "name": "Object.Data_Source.Name",
-            "val": "SHAREPOINT/PRIVACY-NOTICE",
+            "val": "SHAREPOINT/CONSENT",
             "mandatoryInSearch": true
           }
         ]
@@ -65,7 +75,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "Privacy Notice",
+            "val": "Consent",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -116,7 +126,7 @@
           },
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sharepoint/privacy-notice",
+            "val": "sharepoint/consent",
             "mandatoryInSearch": true
           },
           {
@@ -145,8 +155,18 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Privacy_Notice",
+        "fromVertexLabel": "Person.Natural",
         "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Consent",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event.Consent",
+        "toVertexLabel": "Object.Privacy_Notice"
       }
     ]
   }

@@ -2,49 +2,55 @@
 updatereq:
   vertices:
     
-    - label: Object.Privacy_Notice
+    - label: Event.Consent
       props:
-        - name: Object.Privacy_Notice.Form_Id
+        - name: Event.Consent.Form_Id
           val: ${id}
           mandatoryInSearch: True
-        - name: Object.Privacy_Notice.Description
-          val: ${privacy_notice}
+        - name: Event.Consent.Customer_ID
+          val: ${identity?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object.Privacy_Notice.Metadata.Create_Date
-          val: ${Created}
+        - name: Event.Consent.Metadata.Create_Date
+          val: ${date}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Object.Privacy_Notice.Metadata.Update_Date
+        - name: Event.Consent.Metadata.Update_Date
           val: ${Modified}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Object.Privacy_Notice.Delivery_Date
-          val: ${start_date}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Object.Privacy_Notice.Who_Is_Collecting
-          val: Sxxxxxxxe
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Privacy_Notice.Country_Where_Stored
-          val: Brazil
-          mandatoryInSearch: False
-          excludeFromSearch: True
+    
+    - label: Object.Privacy_Notice
+      condition: ${privacy_notice.size() > 0}
+      props:
+        - name: Object.Privacy_Notice.Form_Id
+          val: ${new groovy.json.JsonBuilder(privacy_notice)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
+    
+    - label: Person.Natural
+      props:
+        - name: Person.Natural.Customer_ID
+          val: ${identity?.replaceAll('[^0-9]', '')?.trim()}
+          mandatoryInSearch: True
+        - name: Person.Natural.Full_Name
+          val: ${name?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
     
     - label: Object.Data_Source
       props:
         - name: Object.Data_Source.Name
-          val: SHAREPOINT/PRIVACY-NOTICE
+          val: SHAREPOINT/CONSENT
           mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: Privacy Notice
+          val: Consent
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -79,7 +85,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event.Group_Ingestion.Type
-          val: sharepoint/privacy-notice
+          val: sharepoint/consent
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
@@ -96,6 +102,12 @@ updatereq:
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object.Privacy_Notice
+    fromVertexLabel: Person.Natural
     toVertexLabel: Event.Ingestion
+  - label: Consent
+    fromVertexLabel: Person.Natural
+    toVertexLabel: Event.Consent
+  - label: Has_Privacy_Notice
+    fromVertexLabel: Event.Consent
+    toVertexLabel: Object.Privacy_Notice
 

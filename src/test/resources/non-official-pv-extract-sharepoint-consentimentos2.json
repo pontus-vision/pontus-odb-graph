@@ -32,16 +32,27 @@
         "fields": {
           "@odata.etag": "cabd6-3a223df5-3985ggae-2ad-ac645bce3118",
           "Title": "abc",
-          "privacy_notice": "O Titular foi avisado e concordou com os termos",
-          "start_date": "2022-01-09",
-          "Modified": "2021-09-17T18:33:03Z",
+          "identity": "123",
+          "name": "MODIFIED",
+          "date": "1997-01-01",
+          "privacy_notice": [
+            {
+              "LookupId": 1,
+              "LookupValue": "abc"
+            },
+            {
+              "LookupId": 2,
+              "LookupValue": "def"
+            }
+          ],
+          "Modified": "1997-01-01",
           "id": "1",
           "ContentType": "Item",
-          "Created": "2022-01-05T19:18:05Z",
+          "Created": "1997-01-01",
           "AuthorLookupId": "14",
-          "Author": "Mister M",
+          "Author": "MODIFIED",
           "EditorLookupId": "14",
-          "Editor": "William Shakespeare",
+          "Editor": "MODIFIED",
           "_UIVersionString": "4.0",
           "Attachments": false,
           "Edit": "",
@@ -85,16 +96,27 @@
         "fields": {
           "@odata.etag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
           "Title": "def",
-          "privacy_notice": "O Titular não concorda com os termos",
-          "start_date": "2022-01-13",
-          "Modified": "2021-09-17T18:33:03Z",
+          "identity": "456",
+          "name": "MODIFIED",
+          "date": "1997-01-01",
+          "privacy_notice": [
+            {
+              "LookupId": 3,
+              "LookupValue": "ghi"
+            },
+            {
+              "LookupId": 4,
+              "LookupValue": "jkl"
+            }
+          ],
+          "Modified": "1997-01-01",
           "id": "2",
           "ContentType": "Item",
-          "Created": "2022-01-05T19:18:05Z",
+          "Created": "1997-01-01",
           "AuthorLookupId": "14",
-          "Author": "Mister M",
+          "Author": "MODIFIED",
           "EditorLookupId": "14",
-          "Editor": "William Shakespeare",
+          "Editor": "MODIFIED",
           "_UIVersionString": "5.0",
           "Attachments": false,
           "Edit": "",
@@ -138,16 +160,23 @@
         "fields": {
           "@odata.etag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
           "Title": "ghi",
-          "privacy_notice": "TEST 123",
-          "start_date": "2019-10-04",
-          "Modified": "2021-09-17T18:33:03Z",
+          "identity": "789",
+          "name": "MODIFIED",
+          "date": "1997-01-01",
+          "privacy_notice": [
+            {
+              "LookupId": 5,
+              "LookupValue": "mno"
+            }
+          ],
+          "Modified": "1997-01-01",
           "id": "3",
           "ContentType": "Item",
-          "Created": "2022-01-05T19:18:05Z",
+          "Created": "1997-01-01",
           "AuthorLookupId": "14",
-          "Author": "Mister M",
+          "Author": "MODIFIED",
           "EditorLookupId": "14",
-          "Editor": "William Shakespeare",
+          "Editor": "MODIFIED",
           "_UIVersionString": "5.0",
           "Attachments": false,
           "Edit": "",
@@ -191,16 +220,23 @@
         "fields": {
           "@odata.etag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
           "Title": "jkl",
-          "privacy_notice": "texto com varias linhas",
-          "start_date": "2021-03-17",
-          "Modified": "2021-09-17T18:33:03Z",
+          "identity": "101112",
+          "name": "MODIFIED",
+          "date": "1997-01-01",
+          "privacy_notice": [
+            {
+              "LookupId": 6,
+              "LookupValue": "pqr"
+            }
+          ],
+          "Modified": "1997-01-01",
           "id": "4",
           "ContentType": "Item",
-          "Created": "2022-01-05T19:18:05Z",
+          "Created": "1997-01-01",
           "AuthorLookupId": "14",
-          "Author": "Mister M",
+          "Author": "MODIFIED",
           "EditorLookupId": "14",
-          "Editor": "William Shakespeare",
+          "Editor": "MODIFIED",
           "_UIVersionString": "5.0",
           "Attachments": false,
           "Edit": "",
@@ -244,16 +280,27 @@
         "fields": {
           "@odata.etag": "acab78f1-cbbf-4962-8c9e-0c0576c4c56d,5",
           "Title": "mno",
-          "privacy_notice": "Sxxxxxxxe",
-          "start_date": "2020-07-24",
-          "Modified": "2021-09-17T18:33:03Z",
+          "identity": "131415",
+          "name": "MODIFIED",
+          "date": "1997-01-01",
+          "privacy_notice": [
+            {
+              "LookupId": 4,
+              "LookupValue": "jkl"
+            },
+            {
+              "LookupId": 7,
+              "LookupValue": "stuvw"
+            }
+          ],
+          "Modified": "1997-01-01",
           "id": "5",
           "ContentType": "Item",
-          "Created": "2022-01-05T19:18:05Z",
+          "Created": "1997-01-01",
           "AuthorLookupId": "14",
-          "Author": "Mister M",
+          "Author": "MODIFIED",
           "EditorLookupId": "14",
-          "Editor": "William Shakespeare",
+          "Editor": "MODIFIED",
           "_UIVersionString": "5.0",
           "Attachments": false,
           "Edit": "",
@@ -297,16 +344,27 @@
         "fields": {
           "@odata.etag": "039c52f7-9e8f-45b6-95db-4aa0df51ff21,5",
           "Title": "pqr",
-          "privacy_notice": "XYZ",
-          "start_date": "2021-12-12",
-          "Modified": "2021-09-17T18:33:03Z",
+          "identity": "161718",
+          "name": "MODIFIED",
+          "date": "1997-01-01",
+          "privacy_notice": [
+            {
+              "LookupId": 1,
+              "LookupValue": "abc"
+            },
+            {
+              "LookupId": 5,
+              "LookupValue": "mno"
+            }
+          ],
+          "Modified": "1997-01-01",
           "id": "6",
           "ContentType": "Item",
-          "Created": "2022-01-05T19:18:05Z",
+          "Created": "1997-01-01",
           "AuthorLookupId": "14",
-          "Author": "Mister M",
+          "Author": "MODIFIED",
           "EditorLookupId": "14",
-          "Editor": "William Shakespeare",
+          "Editor": "MODIFIED",
           "_UIVersionString": "5.0",
           "Attachments": false,
           "Edit": "",
@@ -350,16 +408,18 @@
         "fields": {
           "@odata.etag": "0a626c29-f1a6-4888-a267-a197b5caad00,5",
           "Title": "stuvw",
-          "privacy_notice": "n/a",
-          "start_date": "2021-12-11",
-          "Modified": "2021-09-17T18:33:03Z",
+          "identity": "192021",
+          "name": "MODIFIED",
+          "date": "1997-01-01",
+          "privacy_notice": [],
+          "Modified": "1997-01-01",
           "id": "7",
           "ContentType": "Item",
-          "Created": "2022-01-05T19:18:05Z",
+          "Created": "1997-01-01",
           "AuthorLookupId": "14",
-          "Author": "Mister M",
+          "Author": "MODIFIED",
           "EditorLookupId": "14",
-          "Editor": "William Shakespeare",
+          "Editor": "MODIFIED",
           "_UIVersionString": "5.0",
           "Attachments": false,
           "Edit": "",
