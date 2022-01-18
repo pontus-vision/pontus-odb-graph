@@ -995,7 +995,9 @@ rules:
           Id:
             val: "${Title?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-          Authority_Notified: "${authority_notified?.trim()}"
+          Authority_Notified:
+            val: "${authority_notified?.trim()}"
+            excludeFromSearch: true
           Description:
             val: "${description?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -1010,7 +1012,9 @@ rules:
             val: "${Modified}"
             type: java.util.Date
             excludeFromSearch: true
-          Natural_Person_Notified: "${natural_person_notified?.trim()}"
+          Natural_Person_Notified:
+            val: "${natural_person_notified?.trim()}"
+            excludeFromSearch: true
           Source:
             val: "${source?.toUpperCase()}"
             excludeFromSearch: true

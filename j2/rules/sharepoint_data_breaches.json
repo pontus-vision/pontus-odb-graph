@@ -32,7 +32,8 @@
           {
             "name": "Event.Data_Breach.Authority_Notified",
             "val": "${authority_notified?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Data_Breach.Description",
@@ -63,7 +64,8 @@
           {
             "name": "Event.Data_Breach.Natural_Person_Notified",
             "val": "${natural_person_notified?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Event.Data_Breach.Source",

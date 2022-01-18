@@ -23,7 +23,8 @@ updatereq:
           excludeFromSearch: True
         - name: Event.Data_Breach.Authority_Notified
           val: ${authority_notified?.trim()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Event.Data_Breach.Description
           val: ${description?.trim()?.toUpperCase()}
           mandatoryInSearch: False
@@ -44,7 +45,8 @@ updatereq:
           excludeFromSearch: True
         - name: Event.Data_Breach.Natural_Person_Notified
           val: ${natural_person_notified?.trim()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Event.Data_Breach.Source
           val: ${source?.toUpperCase()}
           mandatoryInSearch: False
