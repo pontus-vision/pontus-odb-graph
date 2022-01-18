@@ -105,14 +105,36 @@ public class PVSharepointRoPaTests extends AppTest {
                       ".properties('Object.Privacy_Notice.Description').value()" +
                       ".next().toString()").get().toString();
       assertEquals("O Titular foi avisado e concordou com os termos", getPrivacyNoticeDescription,
-              "Privacy Notice Description for Title 'abc'");
+              "Privacy Notice's Description for Title 'abc'");
 
-      String getDate =
+      String getPrivacyNoticeCreateDate =
               App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('mno'))" +
                       ".properties('Object.Privacy_Notice.Metadata.Create_Date').value()" +
                       ".next().toString()").get().toString();
-      assertEquals("??? 2022-01-05T19:18:05Z ???", getDate,
-              "Privacy Notice creation date");
+      getPrivacyNoticeCreateDate = getPrivacyNoticeCreateDate.replaceAll("... 2022", "GMT 2022");
+      assertEquals("Wed Jan 05 16:18:05 GMT 2022", getPrivacyNoticeCreateDate,
+              "Privacy Notice's creation date");
+
+      String getPrivacyNoticeCountryWhereStored =
+              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('def'))" +
+                      ".properties('Object.Privacy_Notice.Country_Where_Stored').value()" +
+                      ".next().toString()").get().toString();
+      assertEquals("Brazil", getPrivacyNoticeCountryWhereStored,
+              "Privacy Notice's Data's Country Storage");
+
+      String getPrivacyNoticeWhoIsCollecting =
+              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('jkl'))" +
+                      ".properties('Object.Privacy_Notice.Who_Is_Collecting').value()" +
+                      ".next().toString()").get().toString();
+      assertEquals("Sxxxxxxxe", getPrivacyNoticeWhoIsCollecting,
+              "Privacy Notice's Data's Company Collector");
+
+      String getObjectDataSourceName =
+              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('jkl')).out('Has_Ingestion_Event')" +
+                      ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').properties('Object.Data_Source.Name').value()" +
+                      ".next().toString()").get().toString();
+      assertEquals("SHAREPOINT/PRIVACY-NOTICE", getObjectDataSourceName,
+              "Privacy Notice's Data's Company Collector");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
