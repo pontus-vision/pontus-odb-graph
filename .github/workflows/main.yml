@@ -77,6 +77,7 @@ jobs:
       #     echo "The new version is ${{ steps.semver-tags.outputs.semantic-version }}"
       #     echo "The previous version was ${{ steps.semver-tags.outputs.previous-version }}"
       #     echo "The core version part is ${{ steps.semver-tags.outputs.core-version }}"
+
 # STEP 3 --------------------------------------------------------------
             
       - name: Publish to DockerHub
