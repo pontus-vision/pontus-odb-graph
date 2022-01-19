@@ -41,22 +41,23 @@ jobs:
           key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-multi-buildx
+
       - name: envsubst Dockerfile
         run: |
           export DOLLAR='$'
           cat ./docker-lib/Dockerfile.template | envsubst > ./docker-lib/Dockerfile
           
-      - name: Build Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          builder: ${{ steps.buildx.outputs.name }}
-          file: ./docker-lib/Dockerfile
-          # target: deploy
-          push: false
-          tags: ${{ steps.prep.outputs.tagged_image }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+      # - name: Build Docker image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: .
+      #     builder: ${{ steps.buildx.outputs.name }}
+      #     file: ./docker-lib/Dockerfile
+      #     # target: deploy
+      #     push: false
+      #     tags: ${{ steps.prep.outputs.tagged_image }}
+      #     cache-from: type=local,src=/tmp/.buildx-cache
+      #     cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
 
 # STEP 2: AFTER successful merge ++ version patch major.minor.PATCH semver (Semantic Versioning)
       
@@ -70,11 +71,11 @@ jobs:
           dry-run: false
 #          prerelease: 'alpha'
 
-      - name: Get the output version
-        run: |
-          echo "The new version is ${{ steps.semver-tags.outputs.semantic-version }}"
-          echo "The previous version was ${{ steps.semver-tags.outputs.previous-version }}"
-          echo "The core version part is ${{ steps.semver-tags.outputs.core-version }}"
+      # - name: Get the output version
+      #   run: |
+      #     echo "The new version is ${{ steps.semver-tags.outputs.semantic-version }}"
+      #     echo "The previous version was ${{ steps.semver-tags.outputs.previous-version }}"
+      #     echo "The core version part is ${{ steps.semver-tags.outputs.core-version }}"
 # STEP 3 --------------------------------------------------------------
             
       - name: Publish to DockerHub
