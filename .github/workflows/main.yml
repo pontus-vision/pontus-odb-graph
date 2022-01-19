@@ -34,13 +34,13 @@ jobs:
         with:
           install: true
 
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-multi-buildx
+      # - name: Cache Docker layers
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-multi-buildx
 
       - name: envsubst Dockerfile
         run: |
@@ -68,7 +68,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag-prefix: 'v'
           default-version: '1.13.2'
-          dry-run: false
+          # dry-run: false
 #          prerelease: 'alpha'
 
       # - name: Get the output version
@@ -85,9 +85,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: omarion111/github-actions
           tags: ${{ steps.semver-tags.outputs.semantic-version }}
-          dockerfile: docker-lib/Dockerfile
+          # dockerfile: docker-lib/Dockerfile
 
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      # - name: Move cache
+      #   run: |
+      #     rm -rf /tmp/.buildx-cache
+      #     mv /tmp/.buildx-cache-new /tmp/.buildx-cache
