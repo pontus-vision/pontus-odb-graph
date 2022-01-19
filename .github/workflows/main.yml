@@ -1,4 +1,4 @@
-name: Build Release Patch
+name: Patch n Push
 
 on:
   push:
