@@ -43,7 +43,7 @@ jobs:
           export DOLLAR='$'
           export TAG=${{ steps.semver-tags.outputs.semantic-version }}
           cat ./docker-lib/Dockerfile.template | envsubst > ./docker-lib/Dockerfile
-          cat ./docker-conf/Dockerfile.template | envsubst > ./docker-conf/Dockerfile
+#          cat ./docker-conf/Dockerfile.template | envsubst > ./docker-conf/Dockerfile
           cat ./docker-pontus-track-graphdb-base/base/Dockerfile.template | envsubst > ./docker-pontus-track-graphdb-base/base/Dockerfile
           cat ./docker-pontus-track-graphdb-base/orientdb/Dockerfile.template | envsubst > ./docker-pontus-track-graphdb-base/orientdb/Dockerfile
           cat ./docker-pontus-track-graphdb-base/orientdb-pt/Dockerfile.template | envsubst > ./docker-pontus-track-graphdb-base/orientdb-pt/Dockerfile
