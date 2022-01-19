@@ -39,7 +39,8 @@ updatereq:
           mandatoryInSearch: True
         - name: Person.Natural.Full_Name
           val: ${name?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object.Data_Source
       props:

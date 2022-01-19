@@ -56,7 +56,8 @@
           {
             "name": "Person.Natural.Full_Name",
             "val": "${name?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },

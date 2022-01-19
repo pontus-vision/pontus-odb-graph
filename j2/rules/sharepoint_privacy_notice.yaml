@@ -26,14 +26,6 @@ updatereq:
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Object.Privacy_Notice.Who_Is_Collecting
-          val: Sxxxxxxxe
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object.Privacy_Notice.Country_Where_Stored
-          val: Brazil
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Object.Data_Source
       props:

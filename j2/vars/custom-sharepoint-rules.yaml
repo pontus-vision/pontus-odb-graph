@@ -1155,30 +1155,24 @@ rules:
           Description:
             val: "${privacy_notice}"
             excludeFromSearch: true
-            excludeFromUpdate: true
           Metadata.Create_Date:
             val: "${Created}"
             excludeFromSearch: true
-            excludeFromUpdate: true
             type: java.util.Date
           Metadata.Update_Date:
             val: "${Modified}"
             excludeFromSearch: true
-            excludeFromUpdate: true
             type: java.util.Date
           Delivery_Date:
             val: "${start_date}"
             excludeFromSearch: true
-            excludeFromUpdate: true
             type: java.util.Date
-          Who_Is_Collecting:
-            val: "Sxxxxxxxe"
-            excludeFromSearch: true
-            excludeFromUpdate: true
-          Country_Where_Stored:
-            val: "Brazil" # OR Brasil
-            excludeFromSearch: true
-            excludeFromUpdate: true
+#          Who_Is_Collecting:
+#            val: "Sxxxxxxxe"
+#            excludeFromSearch: true
+#          Country_Where_Stored:
+#            val: "Brazil" # OR Brasil
+#            excludeFromSearch: true
 #          Text:
 #          Id:
 #          Info_Collected:
@@ -1251,12 +1245,10 @@ rules:
           Metadata.Create_Date:
             val: "${date}"
             excludeFromSearch: true
-            excludeFromUpdate: true
             type: java.util.Date
           Metadata.Update_Date:
             val: "${Modified}"
             excludeFromSearch: true
-            excludeFromUpdate: true
             type: java.util.Date
 #          Created_By: "${Author}"
 #          Changed_By: "${Editor}"
@@ -1271,14 +1263,13 @@ rules:
             type: "[Lcom.pontusvision.utils.SharepointRef;"
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
-            excludeFromUpdate: true
 
       - label: Person.Natural
         props:
           Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
           Full_Name:
             val: "${name?.trim()?.toUpperCase()}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
 
       - label: Object.Data_Source
         props:
