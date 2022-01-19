@@ -1,0 +1,52 @@
+name: Patch n Push
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  push-dockerhub:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Prepare Docker image
+        id: prep
+        run: |
+          TAG=$(echo $GITHUB_SHA | head -c7)
+          IMAGE="omarion111/github-actions"
+          echo ::set-output name=tagged_image::${IMAGE}:${TAG}
+          echo ::set-output name=tag::${TAG}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+        with:
+          install: true
+
+      - name: envsubst Dockerfile
+        run: |
+          export DOLLAR='$'
+          cat ./docker-lib/Dockerfile.template | envsubst > ./docker-lib/Dockerfile
+
+      - name: semver-tags
+        id: semver-tags
+        uses: SOLIDSoftworks/semver-tags@1.0.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag-prefix: 'v'
+          default-version: '1.13.2'
+
+      - name: Publish to DockerHub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: omarion111/github-actions
+          tags: ${{ steps.semver-tags.outputs.semantic-version }}
+          dockerfile: docker-lib/Dockerfile
+          cache_froms: omarion111/github-actions:latest
