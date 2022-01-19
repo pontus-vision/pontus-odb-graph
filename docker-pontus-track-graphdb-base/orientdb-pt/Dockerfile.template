@@ -4,7 +4,7 @@
 # ARG TAG=latest
 FROM pontusvisiongdpr/pontus-track-graphdb-odb:${TAG}
 
-LABEL key="MAINTAINER"="Pontus Vision LTD (info@pontusvision.com)"
+LABEL "MAINTAINER"="Pontus Vision LTD (info@pontusvision.com)"
 
 COPY --chown=1000:1000   --from=pontusvisiongdpr/pontus-i18n:latest /*.json  /orientdb/conf/
 
