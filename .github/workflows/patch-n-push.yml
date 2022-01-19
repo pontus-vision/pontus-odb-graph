@@ -68,7 +68,7 @@ jobs:
         with:
           context: .
           tags: pontusvisiongdpr/pontus-graphdb-odb-conf:${{ steps.semver-tags.outputs.semantic-version }}
-          file: ./docker-lib/Dockerfile
+          file: ./docker-conf/Dockerfile
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
           push: true
