@@ -28,6 +28,7 @@ jobs:
           IMAGE="omarion111/github-actions"
           echo ::set-output name=tagged_image::${IMAGE}:${TAG}
           echo ::set-output name=tag::${TAG}
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@master
@@ -86,6 +87,8 @@ jobs:
           repository: omarion111/github-actions
           tags: ${{ steps.semver-tags.outputs.semantic-version }}
           dockerfile: docker-lib/Dockerfile
+          cache_froms: omarion111/github-actions:latest
+          # always_pull: true
 
       # - name: Move cache
       #   run: |
