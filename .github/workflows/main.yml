@@ -85,7 +85,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: omarion111/github-actions
           tags: ${{ steps.semver-tags.outputs.semantic-version }}
-          # dockerfile: docker-lib/Dockerfile
+          dockerfile: docker-lib/Dockerfile
 
       # - name: Move cache
       #   run: |
