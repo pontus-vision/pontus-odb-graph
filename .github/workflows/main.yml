@@ -1,0 +1,92 @@
+name: Build Release Patch
+
+on:
+  push:
+
+    branches: [ master ]
+#    branches-ignore:
+#      - '**'
+    tags:
+      - 'v*.*.*'
+
+jobs:
+
+  push-dockerhub:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+    
+# STEP 1 --------------------------------------------------------------
+            
+      - name: Prepare Docker image
+        id: prep
+        run: |
+          TAG=$(echo $GITHUB_SHA | head -c7)
+          IMAGE="omarion111/github-actions"
+          echo ::set-output name=tagged_image::${IMAGE}:${TAG}
+          echo ::set-output name=tag::${TAG}
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+        with:
+          install: true
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-multi-buildx
+      - name: envsubst Dockerfile
+        run: |
+          export DOLLAR='$'
+          cat ./docker-lib/Dockerfile.template | envsubst > ./docker-lib/Dockerfile
+          
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          builder: ${{ steps.buildx.outputs.name }}
+          file: ./docker-lib/Dockerfile
+          # target: deploy
+          push: false
+          tags: ${{ steps.prep.outputs.tagged_image }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+
+# STEP 2: AFTER successful merge ++ version patch major.minor.PATCH semver (Semantic Versioning)
+      
+      - name: semver-tags
+        id: semver-tags
+        uses: SOLIDSoftworks/semver-tags@1.0.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag-prefix: 'v'
+          default-version: '1.13.2'
+          dry-run: false
+#          prerelease: 'alpha'
+
+      - name: Get the output version
+        run: |
+          echo "The new version is ${{ steps.semver-tags.outputs.semantic-version }}"
+          echo "The previous version was ${{ steps.semver-tags.outputs.previous-version }}"
+          echo "The core version part is ${{ steps.semver-tags.outputs.core-version }}"
+# STEP 3 --------------------------------------------------------------
+            
+      - name: Publish to DockerHub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: omarion111/github-actions
+          tags: ${{ steps.semver-tags.outputs.semantic-version }}
+          dockerfile: docker-lib/Dockerfile
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
