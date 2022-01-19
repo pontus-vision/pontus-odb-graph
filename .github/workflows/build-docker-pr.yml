@@ -1,10 +1,8 @@
-# STEP 1: RUN build-docker-conf.sh then build-docker-lib.sh everytime you CREATE a new PR
 
 name: Build Docker PR
 
 on:
-#  pull_request:
-  push:
+  pull_request:
     branches: [ master ]
 
 jobs:
@@ -33,7 +31,6 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          # Key is named differently to avoid collision
           key: ${{ runner.os }}-multi-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-multi-buildx
@@ -49,12 +46,9 @@ jobs:
           context: .
           builder: ${{ steps.buildx.outputs.name }}
           file: ./docker-lib/Dockerfile
-          # target: deploy
           push: false
           tags: ${{ steps.prep.outputs.tagged_image }}
           cache-from: type=local,src=/tmp/.buildx-cache
-          # More: https://github.com/moby/buildkit#--export-cache-options
-          # And: https://github.com/docker/buildx#--cache-tonametypetypekeyvalue
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
 
       - name: Move cache
