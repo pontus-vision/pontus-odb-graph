@@ -33,9 +33,9 @@
     N&uacute;mero de Titulares: {{ impacted_people | length }}<br/>
     Fontes de Dados: {{ impacted_data_sources | length }}<br/>
     M&oacute;dulos: {{ impacted_servers | length }}<br/><br/>
-    <hr/>
 
     {% if impacted_people[0] is defined %}
+    <hr/>
     <h2> Lista de Titulares impactados </h2>
     <table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>
         {% for mainkey in impacted_people %}
