@@ -135,11 +135,11 @@ public class PVSharepointRoPaTests extends AppTest {
                       ".next().toString()").get().toString();
       assertEquals("SHAREPOINT/PRIVACY-NOTICE", getObjectDataSourceName, "Data Source Name.");
 
-      String getPrivacyNoticeDeliveryDate =
-              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('7'))" +
-                      ".properties('Object.Privacy_Notice.Delivery_Date').value()" +
-                      ".next().toString()").get().toString();
-      assertEquals(dtfmt.parse("Fri Dec 10 01:01:01 GMT 2021"), dtfmt.parse(getPrivacyNoticeDeliveryDate), "Privacy Notice's delivery date for id 'stuvw'.");
+//      String getPrivacyNoticeDeliveryDate =
+//              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('7'))" +
+//                      ".properties('Object.Privacy_Notice.Delivery_Date').value()" +
+//                      ".next().toString()").get().toString();
+//      assertEquals(dtfmt.parse("Fri Dec 10 01:01:01 GMT 2021"), dtfmt.parse(getPrivacyNoticeDeliveryDate), "Privacy Notice's delivery date for id 'stuvw'.");
 
     } catch (ExecutionException | ParseException e) {
       e.printStackTrace();
