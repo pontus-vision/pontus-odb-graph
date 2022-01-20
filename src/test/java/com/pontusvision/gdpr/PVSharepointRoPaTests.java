@@ -112,7 +112,7 @@ public class PVSharepointRoPaTests extends AppTest {
                       ".properties('Object.Privacy_Notice.Metadata.Create_Date').value()" +
                       ".next().toString()").get().toString();
 //      getPrivacyNoticeCreateDate = getPrivacyNoticeCreateDate.replaceAll("... 2022", "GMT 2022");
-      assertEquals(dtfmt.parse("Wed Jan 05 16:18:05 BRT 2022"), dtfmt.parse(getPrivacyNoticeCreateDate),
+      assertEquals(dtfmt.parse("Wed Jan 05 19:18:05 GMT 2022"), dtfmt.parse(getPrivacyNoticeCreateDate),
               "Privacy Notice's creation date.");
 
       String getPrivacyNoticeCountryWhereStored =
@@ -139,7 +139,7 @@ public class PVSharepointRoPaTests extends AppTest {
               App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('7'))" +
                       ".properties('Object.Privacy_Notice.Delivery_Date').value()" +
                       ".next().toString()").get().toString();
-      assertEquals(dtfmt.parse("Fri Dec 10 22:01:01 BRT 2021"), dtfmt.parse(getPrivacyNoticeDeliveryDate), "Privacy Notice's delivery date for id 'stuvw'.");
+      assertEquals(dtfmt.parse("Fri Dec 10 01:01:01 GMT 2021"), dtfmt.parse(getPrivacyNoticeDeliveryDate), "Privacy Notice's delivery date for id 'stuvw'.");
 
     } catch (ExecutionException | ParseException e) {
       e.printStackTrace();

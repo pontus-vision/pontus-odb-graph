@@ -49,7 +49,7 @@ public class PVSharepointDSARTests extends AppTest {
                       ".out('Made_SAR_Request').properties('Event.Subject_Access_Request.Metadata.Create_Date')" +
                       ".value().next().toString()").get().toString();
 //      palmitosSARCreateDate = palmitosSARCreateDate.replaceAll("... 2021", "GMT 2021");
-      assertEquals(dtfmt.parse("Tue May 18 12:01:00 BRT 2021"), dtfmt.parse(palmitosSARCreateDate),
+      assertEquals(dtfmt.parse("Tue May 18 12:01:00 GMT 2021"), dtfmt.parse(palmitosSARCreateDate),
               "DSAR Request type made by Palmitos SA");
 
       String completedDSARCount =
