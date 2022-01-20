@@ -773,6 +773,7 @@ rules:
   sharepoint_risk_mitigation:
     vertices:
       - label: Object.Data_Source
+        name: sharepoint
         props:
           Name: SHAREPOINT/RISK-MITIGATIONS
 #          Type: sharepoint/risk-mitigations
@@ -824,7 +825,7 @@ rules:
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
     edges:
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Object.Data_Source"
+        fromVertexName: "sharepoint"
         toVertexLabel: "Event.Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
@@ -1022,6 +1023,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object.Data_Source
+        name: sharepoint
         props:
           Name: "SHAREPOINT/DATA-BREACHES"
 
@@ -1062,7 +1064,7 @@ rules:
     edges:
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
+        fromVertexName: "sharepoint"
         toVertexLabel: "Event.Group_Ingestion"
 
       - label: Has_Ingestion_Event
@@ -1091,6 +1093,7 @@ rules:
             excludeFromUpdate: true
 
       - label: Object.Data_Source
+        name: sharepoint
         props:
           Name: "SHAREPOINT/POLICIES"
 
@@ -1131,7 +1134,7 @@ rules:
     edges:
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
+        fromVertexName: "sharepoint"
         toVertexLabel: "Event.Group_Ingestion"
 
       - label: Has_Ingestion_Event
