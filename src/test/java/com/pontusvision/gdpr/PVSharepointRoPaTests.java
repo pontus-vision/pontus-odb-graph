@@ -115,19 +115,19 @@ public class PVSharepointRoPaTests extends AppTest {
       assertEquals(dtfmt.parse("Wed Jan 05 19:18:05 GMT 2022"), dtfmt.parse(getPrivacyNoticeCreateDate),
               "Privacy Notice's creation date.");
 
-      String getPrivacyNoticeCountryWhereStored =
-              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('2'))" +
-                      ".properties('Object.Privacy_Notice.Country_Where_Stored').value()" +
-                      ".next().toString()").get().toString();
-      assertEquals("Brazil", getPrivacyNoticeCountryWhereStored,
-              "Privacy Notice's Data's Country Storage.");
+//      String getPrivacyNoticeCountryWhereStored =
+//              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('2'))" +
+//                      ".properties('Object.Privacy_Notice.Country_Where_Stored').value()" +
+//                      ".next().toString()").get().toString();
+//      assertEquals("Brazil", getPrivacyNoticeCountryWhereStored,
+//              "Privacy Notice's Data's Country Storage.");
 
-      String getPrivacyNoticeWhoIsCollecting =
-              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('4'))" +
-                      ".properties('Object.Privacy_Notice.Who_Is_Collecting').value()" +
-                      ".next().toString()").get().toString();
-      assertEquals("Sxxxxxxxe", getPrivacyNoticeWhoIsCollecting,
-              "Privacy Notice's Data's Company Collector.");
+//      String getPrivacyNoticeWhoIsCollecting =
+//              App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('4'))" +
+//                      ".properties('Object.Privacy_Notice.Who_Is_Collecting').value()" +
+//                      ".next().toString()").get().toString();
+//      assertEquals("Sxxxxxxxe", getPrivacyNoticeWhoIsCollecting,
+//              "Privacy Notice's Data's Company Collector.");
 
       String getObjectDataSourceName =
               App.executor.eval("App.g.V().has('Object.Privacy_Notice.Form_Id', eq('4')).out('Has_Ingestion_Event')" +
