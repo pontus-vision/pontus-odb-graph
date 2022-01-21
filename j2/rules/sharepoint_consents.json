@@ -1,0 +1,174 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Event.Consent",
+        "props": [
+          {
+            "name": "Event.Consent.Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Consent.Customer_ID",
+            "val": "${identity?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Consent.Metadata.Create_Date",
+            "val": "${date}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Consent.Metadata.Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Privacy_Notice",
+        "condition": "${privacy_notice.size() > 0}",
+        "props": [
+          {
+            "name": "Object.Privacy_Notice.Form_Id",
+            "val": "${new groovy.json.JsonBuilder(privacy_notice)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Person.Natural",
+        "props": [
+          {
+            "name": "Person.Natural.Customer_ID",
+            "val": "${identity?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person.Natural.Full_Name",
+            "val": "${name?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "SHAREPOINT/CONSENT",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Ingestion",
+        "props": [
+          {
+            "name": "Event.Ingestion.Type",
+            "val": "Consent",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Ingestion.Metadata_Update_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event.Group_Ingestion",
+        "props": [
+          {
+            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Type",
+            "val": "sharepoint/consent",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object.Data_Source",
+        "toVertexLabel": "Event.Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event.Group_Ingestion",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Ingestion"
+      },
+      {
+        "label": "Consent",
+        "fromVertexLabel": "Person.Natural",
+        "toVertexLabel": "Event.Consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event.Consent",
+        "toVertexLabel": "Object.Privacy_Notice"
+      }
+    ]
+  }
+}
