@@ -93,7 +93,7 @@ public class Ingestion {
 //      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
 //      put("ruleName", request.ruleName);
 //    }};
-
+    System.out.println("in jsonObjArray() Received request for rule " + request.ruleName)
     if ("pv_email".equalsIgnoreCase(request.ruleName)){
       return com.pontusvision.graphutils.Matcher.ingestEmail(
           request.jsonString,
@@ -111,6 +111,8 @@ public class Ingestion {
         request.jsonString,
         request.jsonPath,
         request.ruleName);
+    
+    System.out.println("in jsonObjArray() processed request for rule " + request.ruleName)
 
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
