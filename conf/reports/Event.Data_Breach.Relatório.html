@@ -15,24 +15,24 @@
     <hr/>
 
     <h2>Descri&ccedil;&atilde;o</h2>
-    <p> {{ context.Event_Data_Breach_Description | default('Favor Preencher o campo <b>Descri&ccedil;&atilde;o</b> na Lista <b>Incidentes de Seguran&ccedil;a Reportados</b> no SharePoint') }}</p>
+    <p style='text-align:justify'> {{ context.Event_Data_Breach_Description | default('Favor Preencher o campo <b>Descri&ccedil;&atilde;o</b> na Lista <b>Incidentes de Seguran&ccedil;a Reportados</b> no SharePoint') }}</p>
 
     <hr/>
 
     <h2>Notifica&ccedil;&otilde;es</h2>
-    <p>
+    <p style='text-align:justify'>
         A ANPD (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados){% if context.Event_Data_Breach_Authority_Notified == 'false' %} N&Atilde;O{% endif %} foi notificada desse evento.
     </p>
 
-    <p>
+    <p style='text-align:justify'>
         Titulares dos dados {% if context.Event_Data_Breach_Natural_Person_Notified == 'false' %} N&Atilde;O{% endif %} foram notificados desse evento.
     </p>
 
     <hr/>
     <h2> Estat&iacute;sticas / Levantamento </h2>
-    N&uacute;mero de Titulares: {{ impacted_people | length }}<br/>
-    Fontes de Dados: {{ impacted_data_sources | length }}<br/>
-    M&oacute;dulos: {{ impacted_servers | length }}<br/><br/>
+    <p style='text-align:justify'>N&uacute;mero de Titulares: {{ impacted_people | length }}</p>
+    <p style='text-align:justify'>Fontes de Dados: {{ impacted_data_sources | length }}</p>
+    <p style='text-align:justify'>M&oacute;dulos: {{ impacted_servers | length }}</p><br/>
 
     {% if impacted_people[0] is defined %}
     <hr/>

@@ -6,40 +6,29 @@
 </head>
 
 <body lang=PT-BR>
-
-<div class="wysiwyg-editor" id="editor1" contenteditable="true" data-doczyblock-tap="nkhzjfwcc3fed"><p><br></p>
-    <p></p>
-    <p>Segue relat&oacute;rio resultante da sua solicita&ccedil;&atilde;o de informa&ccedil;&otilde;es e exclus&atilde;o
-        automatizada dos seus dados, conforme LGPD):</p>
+<p style='text-align:justify'>Segue relat&oacute;rio resultante da sua solicita&ccedil;&atilde;o de informa&ccedil;&otilde;es e exclus&atilde;o
+    automatizada dos seus dados, conforme LGPD):</p>
 
 
-    <h2><span style='mso-fareast-font-family:"Times New Roman"'>ENCARREGADO PELO
+<h2><span style='mso-fareast-font-family:"Times New Roman"'>ENCARREGADO PELO
 TRATAMENTO DOS DADOS - Art. 9&ordm;, &sect; III e IV</span></h2>
 
-    <p style='text-align:justify'>Informamos que o Encarregado respons&aacute;vel
-        pelo tratamento dos seus dados &eacute;: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_NAME',
-        'use env var PV_DSAR_DPO_NAME') }}, registro: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_CPF',
-        'use env var PV_DSAR_DPO_CPF') || pv:getEnvVarDefVal('PV_DSAR_ORG_CNPJ', 'use
-        env var PV_DSAR_ORG_CNPJ') }}. </p>
-    <br/>
+<p style='text-align:justify'>Informamos que o Encarregado respons&aacute;vel
+    pelo tratamento dos seus dados &eacute;: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_NAME', 'use env var PV_DSAR_DPO_NAME') }}, registro: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_CPF','use env var PV_DSAR_DPO_CPF') || pv:getEnvVarDefVal('PV_DSAR_ORG_CNPJ', 'use env var PV_DSAR_ORG_CNPJ') }}. </p>
+<br/>
 
-    <h2><span style='mso-fareast-font-family:"Times New Roman"'>COMUNICA&Ccedil;&Atilde;O
+<h2><span style='mso-fareast-font-family:"Times New Roman"'>COMUNICA&Ccedil;&Atilde;O
 COM O ENCARREGADO - Art. 9&ordm;, &sect; IV</span></h2>
 
-    <p style='text-align:justify'>Voc&ecirc; pode entrar em contato direto com o
-        Encarregado pelos dados atrav&eacute;s do e-mail: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_EMAIL',
-        'use env var PV_DSAR_DPO_EMAIL') }}. </p>
+<p style='text-align:justify'>Voc&ecirc; pode entrar em contato direto com o
+    Encarregado pelos dados atrav&eacute;s do e-mail: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_EMAIL','use env var PV_DSAR_DPO_EMAIL') }}. </p>
 
-    <br/>
-    <h2>CORRE&Ccedil;&Atilde;O DOS DADOS - Art. 18 &sect; III</h2>
-    <p>Conforme solicitado na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} pelo canal: ({{ context.Event_Subject_Access_Request_Request_Channel }}), seus dados foram corrigidos na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Update_Date, 'pt', 'BR') }}.</p>
-    <br/>
+<br/>
+<h2>CORRE&Ccedil;&Atilde;O DOS DADOS - Art. 18 &sect; III</h2>
+<p style='text-align:justify'>Conforme solicitado na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} pelo canal: ({{ context.Event_Subject_Access_Request_Request_Channel }}), seus dados foram corrigidos na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Update_Date, 'pt', 'BR') }}.</p>
+<br/>
 
-    <p>Caso o(a) Sr. (a) tenha qualquer d&uacute;vida ou solicita&ccedil;&atilde;o adicional, por favor n&atilde;o deixe
-        de entrar em contato direto com o controlador de dados atrav&eacute;s do e-mail <span class="doczyinput"
-                                                                                              contenteditable="false"
-                                                                                              data-type="texto"><span
-                class="doczyinput-x" data-bot="" data-explain="" data-placeholder="e-mail do controlador de dados"
-                data-type="texto"></span></span></p></div>
+<p style='text-align:justify'>Caso o(a) Sr. (a) tenha qualquer d&uacute;vida ou solicita&ccedil;&atilde;o adicional, por favor n&atilde;o deixe
+    de entrar em contato direto com o controlador de dados atrav&eacute;s do e-mail {{ pv:getEnvVarDefVal('PV_DSAR_DPO_EMAIL','use env var PV_DSAR_DPO_EMAIL') }}.</p>
 </body>
 </html>
