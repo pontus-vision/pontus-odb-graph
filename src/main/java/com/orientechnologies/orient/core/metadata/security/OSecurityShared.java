@@ -1428,7 +1428,11 @@ public class OSecurityShared implements OSecurityInternal {
     if (session.getUser() == null) {
       return Collections.emptySet();
     }
-    if (OSecurityPolicy.class.getSimpleName().equalsIgnoreCase(document.getClassName())) {
+    // LPPM - fixing perf bottleneck
+//    if (OSecurityPolicy.class.getSimpleName().equalsIgnoreCase(document.getClassName())) {
+//      return Collections.emptySet();
+//    }
+    if (simpleName.equalsIgnoreCase(document.getClassName())) {
       return Collections.emptySet();
     }
     if (document.getClassName() == null) {
