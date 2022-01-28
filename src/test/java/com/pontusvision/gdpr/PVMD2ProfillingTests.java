@@ -70,12 +70,12 @@ public class PVMD2ProfillingTests extends AppTest {
       String deliaMonteiro =
               App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('delia.monteiro@example.com')).in('Uses_Email')" +
                       ".values('Person.Natural.Full_Name').next().toString()").get().toString();
-      assertEquals("DÃ©LIA MONTEIRO", deliaMonteiro, "This CPF belongs to DÃ©lia Monteiro");
+      assertEquals("DÃ©LIA MONTEIRO", deliaMonteiro, "This email belongs to DÃ©lia Monteiro");
 
       String miriamDaLuz =
               App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('miriam.daluz@example.com')).in('Uses_Email')" +
                       ".values('Person.Natural.Full_Name').next().toString()").get().toString();
-      assertEquals("MIRIAM DA LUZ", miriamDaLuz, "This CPF belongs to Miriam da Luz");
+      assertEquals("MIRIAM DA LUZ", miriamDaLuz, "This email belongs to Miriam da Luz");
 
 //      { "status": "success", "successCount": 100 }
 //      Time elapsed for file md2/md2-profiling0.csv = 12 seconds
@@ -142,12 +142,12 @@ public class PVMD2ProfillingTests extends AppTest {
       String deliaMonteiro =
               App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('delia.monteiro@example.com')).in('Uses_Email')" +
                       ".values('Person.Natural.Full_Name').next().toString()").get().toString();
-      assertEquals("DÃ©LIA MONTEIRO", deliaMonteiro, "This CPF belongs to DÃ©lia Monteiro");
+      assertEquals("DÃ©LIA MONTEIRO", deliaMonteiro, "This email belongs to DÃ©lia Monteiro");
 
       String miriamDaLuz =
               App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('miriam.daluz@example.com')).in('Uses_Email')" +
                       ".values('Person.Natural.Full_Name').next().toString()").get().toString();
-      assertEquals("MIRIAM DA LUZ", miriamDaLuz, "This CPF belongs to Miriam da Luz");
+      assertEquals("MIRIAM DA LUZ", miriamDaLuz, "This email belongs to Miriam da Luz");
 
       String jordinaAraujo =
               App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('72714206140')).in('Has_Id_Card')" +
@@ -220,5 +220,55 @@ public class PVMD2ProfillingTests extends AppTest {
 //  TODO: Ingestion of 1000 records in JSON format in constant batches of 100
 
 //  TODO: Ingestion of 500 records in JSON format in variable batches
+
+  //  Ingestion of 20k records in CSV format in constant batches of 5k
+  @Test
+  public void test00003MD2Profiling() throws InterruptedException {
+    try {
+
+      String[] csvFiles = {"random-data-5k(1).csv", "random-data-5k(2).csv", "random-data-5k(3).csv", "random-data-5k(4).csv"};
+
+      for (String csvFile : csvFiles) {
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        csvTestUtil(csvFile, "pv_md2");
+
+        stopwatch.stop(); // optional
+        System.out.println("Time elapsed for file " + csvFile + " = " + stopwatch.elapsed(TimeUnit.SECONDS) + " seconds");
+      }
+
+      System.out.println("-----------------------------------------------------------------------------------------");
+
+      String alirioDaLuz =
+              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('21564809153')).in('Has_Id_Card')" +
+                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+      assertEquals("ALÍRIO DA LUZ", alirioDaLuz, "This CPF belongs to Alírio da Luz");
+
+      String guterreDaMata =
+              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('14519746043')).in('Has_Id_Card')" +
+                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+      assertEquals("GUTERRE DA MATA", guterreDaMata, "This CPF belongs to Guterre da Mata");
+
+      String joceniraJesus =
+              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('22875552007')).in('Has_Id_Card')" +
+                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+      assertEquals("JOCENIRA JESUS", joceniraJesus, "This CPF belongs to Jocenira Jesus");
+
+      String azizDaCunha =
+              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('64566862887')).in('Uses_Email')" +
+                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+      assertEquals("AZIZ DA CUNHA", azizDaCunha, "This CPF belongs to Aziz da Cunha");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
 }
