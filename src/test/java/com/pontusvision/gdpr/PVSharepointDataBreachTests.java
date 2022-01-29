@@ -118,7 +118,7 @@ public class PVSharepointDataBreachTests extends AppTest {
                       ".dedup().count().next().toString()").get().toString();
 
       jsonTestUtil("non-official-pv-extract-sharepoint-legal-actions2.json",
-              "$.queryResp[*].fields", "sharepoint_privacy_notice");
+              "$.queryResp[*].fields", "sharepoint_legal_actions");
 
       String countEventIngestionsAgain =
               App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('Legal Actions'))" +
