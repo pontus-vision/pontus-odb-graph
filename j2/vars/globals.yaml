@@ -866,6 +866,16 @@ schema:
         - name: Description
         - name: URL
 
+    - name: "Object.Legal_Actions"
+      partition: false
+      useStatic: false
+      props:
+        - name: Form_Id
+        - name: Date
+          dataType: Date
+        - name: Description
+        - name: Details
+
     - name: "Object.Privacy_Notice"
       partition: false
       useStatic: false

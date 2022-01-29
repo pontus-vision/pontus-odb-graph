@@ -1,0 +1,87 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Object.Legal_Actions
+      props:
+        - name: Object.Legal_Actions.Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Object.Legal_Actions.Description
+          val: ${description}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Legal_Actions.Date
+          val: ${date}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Object.Legal_Actions.Details
+          val: ${details}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object.Data_Source
+      props:
+        - name: Object.Data_Source.Name
+          val: SHAREPOINT/LEGAL-ACTIONS
+          mandatoryInSearch: True
+    
+    - label: Event.Ingestion
+      props:
+        - name: Event.Ingestion.Type
+          val: Legal Actions
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Ingestion.Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event.Group_Ingestion
+      props:
+        - name: Event.Group_Ingestion.Metadata_Start_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Type
+          val: sharepoint/legal-actions
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object.Data_Source
+    toVertexLabel: Event.Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.Group_Ingestion
+    toVertexLabel: Event.Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event.Ingestion
+    toVertexLabel: Object.Legal_Actions
+

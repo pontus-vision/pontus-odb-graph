@@ -1333,14 +1333,23 @@ rules:
 
   sharepoint_privacy_docs:
 
-  vertices:
+    vertices:
     - label: Object.Privacy_Docs
       props:
         Form_Id: "${id}"
-        URL: "${share}"
-        Description: "${description}"
-        Date: "${date}"
-        Title: "${title_x002d_communication}"
+        URL:
+          val: "${share}"
+          excludeFromSearch: true
+        Description:
+          val: "${description}"
+          excludeFromSearch: true
+        Date:
+          val: "${date}"
+          type: java.util.Date
+          excludeFromSearch: true
+        Title:
+          val: "${title_x002d_communication}"
+          excludeFromSearch: true
 
     - label: Object.Data_Source
       props:
@@ -1380,7 +1389,7 @@ rules:
         Operation: "Structured Data Insertion"
         Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
-  edges:
+    edges:
 
     - label: Has_Ingestion_Event
       fromVertexLabel: "Object.Data_Source"
@@ -1393,3 +1402,72 @@ rules:
     - label: Has_Ingestion_Event
       fromVertexLabel: "Event.Ingestion"
       toVertexLabel: "Object.Privacy_Docs"
+
+  sharepoint_legal_actions:
+
+    vertices:
+      - label: Object.Legal_Actions
+        props:
+          Form_Id: "${id}"
+          Description:
+            val: "${description}"
+            excludeFromSearch: true
+          Date:
+            val: "${date}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Details:
+            val: "${details}"
+            excludeFromSearch: true
+
+      - label: Object.Data_Source
+        props:
+          Name: "SHAREPOINT/LEGAL-ACTIONS"
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: "Legal Actions"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event.Group_Ingestion
+        props:
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type: "sharepoint/legal-actions"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Object.Legal_Actions"

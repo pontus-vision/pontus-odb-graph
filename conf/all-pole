@@ -462,6 +462,15 @@ Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Corporation
 Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Individuals
 Object.Risk_Mitigation_Data_Source.Start_Date
 Object.Risk_Mitigation_Data_Source.Update_Date
+Object.Privacy_Docs.Form_Id
+Object.Privacy_Docs.Title
+Object.Privacy_Docs.Date
+Object.Privacy_Docs.Description
+Object.Privacy_Docs.URL
+Object.Legal_Actions.Form_Id
+Object.Legal_Actions.Date
+Object.Legal_Actions.Description
+Object.Legal_Actions.Details
 Object.Privacy_Notice.Country_Where_Stored
 Object.Privacy_Notice.Delivery_Date
 Object.Privacy_Notice.Description

@@ -2964,6 +2964,71 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Metadata.Type.Object.Privacy_Docs",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Docs.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Docs.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Docs.Title",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Docs.Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Docs.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Privacy_Docs.URL",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Metadata.Type.Object.Legal_Actions",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Legal_Actions.Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Legal_Actions.Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Legal_Actions.Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Legal_Actions.Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object.Legal_Actions.Details",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata.Type.Object.Privacy_Notice",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -3827,6 +3892,16 @@
     },
     {
       "name": "Object.Risk_Mitigation_Data_Source",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Privacy_Docs",
+      "partition": false,
+      "useStatic": false
+    },
+    {
+      "name": "Object.Legal_Actions",
       "partition": false,
       "useStatic": false
     },
@@ -5283,6 +5358,37 @@
         "Object.Risk_Mitigation_Data_Source.Impact_Risk_To_Individuals",
         "Object.Risk_Mitigation_Data_Source.Start_Date",
         "Object.Risk_Mitigation_Data_Source.Update_Date"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Privacy_Docs.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Privacy_Docs",
+        "Object.Privacy_Docs.Form_Id",
+        "Object.Privacy_Docs.Title",
+        "Object.Privacy_Docs.Date",
+        "Object.Privacy_Docs.Description",
+        "Object.Privacy_Docs.URL"
+      ],
+      "propertyKeysMappings": {}
+    },
+    {
+      "name": "Object.Legal_Actions.MixedIdx",
+      "composite": false,
+      "unique": false,
+      "indexOnly": null,
+      "mixedIndex": "search",
+      "propertyKeys": [
+        "Metadata.Type.Object.Legal_Actions",
+        "Object.Legal_Actions.Form_Id",
+        "Object.Legal_Actions.Date",
+        "Object.Legal_Actions.Description",
+        "Object.Legal_Actions.Details"
       ],
       "propertyKeysMappings": {}
     },
