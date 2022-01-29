@@ -45,6 +45,12 @@
               "LookupValue": "def"
             }
           ],
+          "data_procedures": [
+            {
+              "LookupId": 1,
+              "LookupValue": "MODIFIED"
+            }
+          ],
           "Modified": "1997-01-01",
           "id": "1",
           "ContentType": "Item",
@@ -109,6 +115,12 @@
               "LookupValue": "jkl"
             }
           ],
+          "data_procedures": [
+            {
+              "LookupId": 1,
+              "LookupValue": "MODIFIED"
+            }
+          ],
           "Modified": "1997-01-01",
           "id": "2",
           "ContentType": "Item",
@@ -169,6 +181,12 @@
               "LookupValue": "mno"
             }
           ],
+          "data_procedures": [
+            {
+              "LookupId": 1,
+              "LookupValue": "MODIFIED"
+            }
+          ],
           "Modified": "1997-01-01",
           "id": "3",
           "ContentType": "Item",
@@ -227,6 +245,12 @@
             {
               "LookupId": 6,
               "LookupValue": "pqr"
+            }
+          ],
+          "data_procedures": [
+            {
+              "LookupId": 1,
+              "LookupValue": "MODIFIED"
             }
           ],
           "Modified": "1997-01-01",
@@ -293,6 +317,7 @@
               "LookupValue": "stuvw"
             }
           ],
+          "data_procedures": [],
           "Modified": "1997-01-01",
           "id": "5",
           "ContentType": "Item",
@@ -357,6 +382,12 @@
               "LookupValue": "mno"
             }
           ],
+          "data_procedures": [
+            {
+              "LookupId": 1,
+              "LookupValue": "MODIFIED"
+            }
+          ],
           "Modified": "1997-01-01",
           "id": "6",
           "ContentType": "Item",
@@ -412,6 +443,12 @@
           "name": "MODIFIED",
           "date": "1997-01-01",
           "privacy_notice": [],
+          "data_procedures": [
+            {
+              "LookupId": 1,
+              "LookupValue": "MODIFIED"
+            }
+          ],
           "Modified": "1997-01-01",
           "id": "7",
           "ContentType": "Item",

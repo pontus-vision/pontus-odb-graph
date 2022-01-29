@@ -1309,6 +1309,15 @@ rules:
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
+      - label: Object.Data_Procedures
+        condition: "${data_procedures.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(data_procedures)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
     edges:
 
       - label: Has_Ingestion_Event
@@ -1330,4 +1339,8 @@ rules:
       - label: Has_Privacy_Notice
         fromVertexLabel: "Event.Consent"
         toVertexLabel: "Object.Privacy_Notice"
+
+      - label: Consent #is it right? ... I am following instructions @ Trello SV card #262 ... or should it be Has_Data_Procedures
+        fromVertexLabel: "Event.Consent"
+        toVertexLabel: "Object.Data_Procedures"
 
