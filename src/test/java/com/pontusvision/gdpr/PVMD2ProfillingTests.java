@@ -234,7 +234,7 @@ public class PVMD2ProfillingTests extends AppTest {
 
         System.out.println("-----------------------------------------------------------------------------------------");
 
-        csvTestUtil(csvFile, "pv_md2_bulk");
+        csvTestUtil(csvFile, "pv_md2");
 
         stopwatch.stop(); // optional
         System.out.println("Time elapsed for file " + csvFile + " = " + stopwatch.elapsed(TimeUnit.SECONDS) + " seconds");
@@ -258,7 +258,7 @@ public class PVMD2ProfillingTests extends AppTest {
       assertEquals("JOCENIRA JESUS", joceniraJesus, "This CPF belongs to Jocenira Jesus");
 
       String azizDaCunha =
-              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('64566862887')).in('Uses_Email')" +
+              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('aziz.dacunha@example.com')).in('Uses_Email')" +
                       ".values('Person.Natural.Full_Name').next().toString()").get().toString();
       assertEquals("AZIZ DA CUNHA", azizDaCunha, "This CPF belongs to Aziz da Cunha");
 
