@@ -76,3 +76,86 @@ rules:
       - label: "Uses_Email"
         fromVertexLabel: "Person.Natural"
         toVertexLabel: "Object.Email_Address"
+  pv_md2_bulk:
+    vertices:
+      - label: Person.Natural
+        condition: "${name?.trim()?.length() > 0}"
+        props:
+          Full_Name:
+            val: "${name?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Customer_ID:
+            val: "${document?.replaceAll('[^0-9]', '')}"
+            excludeFromSearch: true
+
+      - label: Object.Identity_Card
+        condition: "${document?.replaceAll('[^0-9]','')?.length() > 0}"
+        props:
+          Id_Value:
+            val: "${document?.replaceAll('[^0-9]','')}"
+            excludeFromSearch: true
+
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
+
+      - label: Object.Email_Address
+        condition: "${email?.trim()?.length() > 0}"
+        props:
+          Email:
+            val: "${email?.trim()?.toLowerCase()}"
+            excludeFromSearch: true
+
+
+      - label: Event.Ingestion
+        props:
+          Type:
+            val: MD2
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object.Data_Source
+        props:
+          Name: MD2
+          Description: Dados RH Colaboradores MD2
+          Type: Structured
+
+      - label: Event.Group_Ingestion
+        props:
+          Type: MD2
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Metadata_Start_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_End_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event.Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Event.Ingestion"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Identity_Card"
+
+      - label: "Uses_Email"
+        fromVertexLabel: "Person.Natural"
+        toVertexLabel: "Object.Email_Address"

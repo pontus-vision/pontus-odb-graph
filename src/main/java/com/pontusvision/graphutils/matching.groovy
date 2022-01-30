@@ -27,8 +27,10 @@ import org.apache.tinkerpop.gremlin.process.traversal.Text
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.structure.Transaction
+import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.codehaus.groovy.runtime.StringGroovyMethods
 
+import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiPredicate
@@ -1002,37 +1004,37 @@ class Matcher {
       addr.tokens.each { key, val ->
 
 //        val.each { it ->
-          String it = val;
+        String it = val;
 
-          binding.put(postProcessorVar ?: "it", it)
+        binding.put(postProcessorVar ?: "it", it)
 
 
-          String processedVal = (postProcessor != null) ?
-                  PVValTemplate.getTemplate((String) postProcessor).make(binding) :
-                  it
+        String processedVal = (postProcessor != null) ?
+                PVValTemplate.getTemplate((String) postProcessor).make(binding) :
+                it
 
-          if (processedVal != null) {
+        if (processedVal != null) {
 
-            mreq = new MatchReq(
-                    (String) processedVal as String
-                    , nativeTypeAddrParts
-                    , (String) "${propName}.${key}" as String
-                    , (String) vertexName
-                    , (String) vertexLabel
-                    , (String) predicate
-                    , (boolean) excludeFromSearch
-                    , (boolean) excludeFromSubsequenceSearch
-                    , (boolean) excludeFromUpdate
-                    , (boolean) mandatoryInSearch
-                    , (boolean) processAll
-                    , (double) matchWeight
-                    , sb
-            )
+          mreq = new MatchReq(
+                  (String) processedVal as String
+                  , nativeTypeAddrParts
+                  , (String) "${propName}.${key}" as String
+                  , (String) vertexName
+                  , (String) vertexLabel
+                  , (String) predicate
+                  , (boolean) excludeFromSearch
+                  , (boolean) excludeFromSubsequenceSearch
+                  , (boolean) excludeFromUpdate
+                  , (boolean) mandatoryInSearch
+                  , (boolean) processAll
+                  , (double) matchWeight
+                  , sb
+          )
 
-            if (mreq?.attribNativeVal != null) {
-              matchReqs.add(mreq)
+          if (mreq?.attribNativeVal != null) {
+            matchReqs.add(mreq)
 
-            }
+          }
 //          }
         }
 
@@ -1094,6 +1096,187 @@ class Matcher {
 
   }
 
+  /*
+      - label: Event.Ingestion
+      props:
+        - name: Event.Ingestion.Type
+          val: MD2
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Ingestion.Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+
+   */
+
+  static Vertex addEventIngestion(String dataSourceName, Vertex groupIngestionVertex) {
+    Vertex eventIngestionVertex = App.g.addV('Event.Ingestion')
+            .property('Metadata.Type.Event.Ingestion', 'Event.Ingestion')
+            .property('Event.Ingestion.Type', dataSourceName)
+            .property('Event.Ingestion.Operation', 'Structured Data Insertion')
+            .property('Event.Ingestion.Metadata_Create_Date', new Date())
+            .next()
+
+    App.g.addE('Has_Ingestion_Event').from(groupIngestionVertex).to(eventIngestionVertex).iterate()
+
+    return eventIngestionVertex
+  }
+/*
+    - label: Object.Data_Source
+      props:
+        - name: Object.Data_Source.Name
+          val: MD2
+          mandatoryInSearch: True
+        - name: Object.Data_Source.Description
+          val: Dados RH Colaboradores MD2
+          mandatoryInSearch: True
+        - name: Object.Data_Source.Type
+          val: Structured
+          mandatoryInSearch: True
+
+ */
+
+  static Vertex getObjectDataSource(String dataSourceName) {
+    if (App.g.V().has('Object.Data_Source.Name', P.eq(dataSourceName)).hasNext()) {
+      return App.g.V().has('Object.Data_Source.Name', P.eq(dataSourceName)).next()
+    }
+    Vertex dataSourceVertex = App.g.addV('Object.Data_Source')
+            .property('Metadata.Type.Object.Data_Source', 'Object.Data_Source')
+            .property('Object.Data_Source.Name', dataSourceName)
+            .property('Object.Data_Source.Description', dataSourceName)
+            .property('Object.Data_Source.Type', 'Structured')
+            .next()
+
+    return dataSourceVertex
+
+  }
+
+  static Vertex getEventGroupIngestion(String dataSourceName) {
+    /*
+          - label: Event.Group_Ingestion
+      props:
+        - name: Event.Group_Ingestion.Type
+          val: MD2
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event.Group_Ingestion.Metadata_Start_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Group_Ingestion.Metadata_End_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+
+     */
+    String ingestionDate = "${new SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+    def groupIngestionVertex
+    if (App.g.V().has('Event.Group_Ingestion.Type', P.eq(dataSourceName))
+            .has('Event.Group_Ingestion.Ingestion_Date', P.eq(ingestionDate)).hasNext()) {
+      return App.g.V().has('Event.Group_Ingestion.Type', P.eq(dataSourceName))
+              .has('Event.Group_Ingestion.Ingestion_Date', P.eq(ingestionDate)).next()
+    }
+    groupIngestionVertex = App.g.addV('Event.Group_Ingestion')
+            .property('Metadata.Type.Event.Group_Ingestion', 'Event.Group_Ingestion')
+            .property('Event.Group_Ingestion.Type', dataSourceName)
+            .property('Event.Group_Ingestion.Ingestion_Date', ingestionDate)
+            .property('Event.Group_Ingestion.Operation', 'Structured Data Insertion')
+            .property('Event.Group_Ingestion.Metadata_Start_Date', new Date())
+            .property('Event.Group_Ingestion.Metadata_End_Date', new Date())
+            .next()
+
+    Vertex dataSource = getObjectDataSource(dataSourceName);
+
+    App.g.addE('Has_Ingestion_Event').from(dataSource).to(groupIngestionVertex)
+
+    return groupIngestionVertex
+
+  }
+
+  static Vertex addPersonVertex(String name, String document) {
+    return App.g.addV('Person.Natural')
+            .property('Metadata.Type.Person.Natural', 'Person.Natural')
+            .property('Person.Natural.Full_Name', name?.toUpperCase()?.trim())
+            .property('Person.Natural.Customer_ID', "${document?.replaceAll('[^0-9]', '')}")
+            .next()
+  }
+
+  static Vertex addIdentityVertex(String document) {
+    return App.g.addV('Object.Identity_Card')
+            .property('Metadata.Type.Object.Identity_Card', 'Object.Identity_Card')
+            .property('Object.Identity_Card.Type', 'CPF')
+            .property('Object.Identity_Card.Id_Value', "${document?.replaceAll('[^0-9]', '')}")
+            .next()
+  }
+
+  static Vertex addEmailAddressVertex(String email) {
+    return App.g.addV('Object.Email_Address')
+            .property('Metadata.Type.Object.Email_Address', 'Object.Email_Address')
+            .property('Object.Email_Address.Email', "${email?.trim()?.toLowerCase()}")
+            .next()
+  }
+
+
+  static String ingestMD2BulkData(String jsonString, String jsonPath, String ruleName) {
+
+    def recordList = JsonPath.read(jsonString, jsonPath)
+    Transaction trans = App.graph.tx()
+    long successCount = 0;
+
+    if (!trans.isOpen()) {
+      trans.open();
+    }
+    String dataSourceName = 'MD2';
+
+    Vertex groupIngestionVertex = getEventGroupIngestion(dataSourceName);
+
+
+    try {
+
+      for (def item in recordList) {
+        Vertex eventIngestionVertex = addEventIngestion(dataSourceName, groupIngestionVertex);
+        String name = item.name;
+        String email = item.email;
+        String document = item.document;
+        Vertex personNaturalVertex = addPersonVertex(name, document)
+        Vertex documentVertex = addIdentityVertex(document)
+        Vertex emailVertex = addEmailAddressVertex(email)
+
+        App.g.addE('Has_Ingestion').from(eventIngestionVertex).to(personNaturalVertex).iterate()
+        App.g.addE('Uses_Email').from(personNaturalVertex).to(emailVertex).iterate()
+        App.g.addE('Has_Id_Card').from(personNaturalVertex).to(documentVertex).iterate()
+
+        successCount++
+      }
+      trans.commit()
+    } catch (Throwable t) {
+      trans.rollback()
+      throw t
+    } finally {
+      trans.close()
+    }
+
+
+//    return sb?.toString()
+    return "{ \"status\": \"success\"," +
+            " \"successCount\": ${successCount} }"
+
+
+  }
+
   static String ingestRecordListUsingRules(String jsonString,
                                            String jsonPath,
                                            String ruleName) {
@@ -1125,8 +1308,6 @@ class Matcher {
 //                new TypeReference<List<Map<String, String>>>(){} as TypeReference<List<Map<String, String>>>);
 
 
-
-
     def rules = getRule(ruleName)
     //jsonSlurper.parseText(jsonRules) as com.pontusvision.com.pontusvision.graphutils.gdpr.mapping.Rules;
 
@@ -1137,7 +1318,6 @@ class Matcher {
     int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
 
 
-
     for (def item in recordList) {
       Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
 
@@ -1146,7 +1326,7 @@ class Matcher {
       Transaction trans = graph.tx()
       try {
         def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName,
-             Map<String, Double> percentageThresholdByVertexName) =
+        Map<String, Double> percentageThresholdByVertexName) =
         getMatchRequests(item as Map<String, String>, rules.updatereq, percentageThreshold, sb)
 
 
@@ -1161,7 +1341,7 @@ class Matcher {
                 sb)
 
         trans.commit()
-        successCount ++
+        successCount++
       } catch (Throwable t) {
         trans.rollback()
         sb?.append(t)
