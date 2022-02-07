@@ -58,16 +58,6 @@ updatereq:
     
     - label: Event.Group_Ingestion
       props:
-        - name: Event.Group_Ingestion.Metadata_Start_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Metadata_End_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
         - name: Event.Group_Ingestion.Type
           val: sharepoint/privacy-docs
           mandatoryInSearch: True
