@@ -94,6 +94,16 @@ updatereq:
         - name: Event.Group_Ingestion.Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
+    
+    - label: Object.Data_Procedures
+      condition: ${data_procedures.size() > 0}
+      props:
+        - name: Object.Data_Procedures.Form_Id
+          val: ${new groovy.json.JsonBuilder(data_procedures)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
 
   edges:
   - label: Has_Ingestion_Event
@@ -111,4 +121,7 @@ updatereq:
   - label: Has_Privacy_Notice
     fromVertexLabel: Event.Consent
     toVertexLabel: Object.Privacy_Notice
+  - label: Consent
+    fromVertexLabel: Event.Consent
+    toVertexLabel: Object.Data_Procedures
 
