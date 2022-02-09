@@ -89,7 +89,7 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00002TotvsProtheusSa2Fornecedor() throws InterruptedException {
 
-    jsonTestUtil("totvs2.json", "$.objs", "totvs_protheus_sa2_fornecedor");
+    jsonTestUtil("totvs2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
 
     try {
 
@@ -97,11 +97,6 @@ public class PVTotvsTest extends AppTest {
               App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('ARMS MANUTENCAO E R')).out('Has_Id_Card')" +
                       ".properties('Object.Identity_Card.Id_Value').value().next().toString()").get().toString();
       assertEquals("01243568000156", orgIdCard, "CNPJ da empresa Arms Manutenção e R(eparos)");
-
-      String personOrgEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
-                      ".bothE('Has_Phone').count().next().toString()").get().toString();
-      assertEquals("1", personOrgEdgesCount, "1 Has_Phone");
 
       String yaraPhoneNumber =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('YARA SAMANTHA')).out('Has_Phone')" +
@@ -111,7 +106,7 @@ public class PVTotvsTest extends AppTest {
       String pabloLocationAddress =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('PABLO MATO ESCOBAR')).out('Is_Located')" +
                       ".properties('Location.Address.Full_Address').value().next().toString()").get().toString();
-      assertEquals("RUA MOREIRA DA SILVA SAURO , BROOKLYN, RIO DE JANEIRO - RIO DE JANEIRO, 86785908, BRASIL",
+      assertEquals("RUA MOREIRA DA SILVA SAURO, BROOKLYN, RIO DE JANEIRO - RJ, 86785908, BRASIL",
               pabloLocationAddress, "Pablo's Address");
 
       String personNaturalEdgesCount =
@@ -136,7 +131,7 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00003TotvsProtheusRaFuncionario() throws InterruptedException {
 
-    jsonTestUtil("totvs-ra.json", "$.objs", "totvs_protheus_ra_funcionario");
+    jsonTestUtil("totvs-ra-real.json", "$.objs", "totvs_protheus_ra_funcionario");
 
     try {
 
@@ -147,7 +142,7 @@ public class PVTotvsTest extends AppTest {
 
       String getNameByLocationAddress =
               App.executor.eval("App.g.V().has('Location.Address.Full_Address'," +
-                      "eq('RUA SAMPAIO CASA 3333 AP 33, PONTE, JAGUARÃO - RS, 333333, BRASIL')).in('Is_Located')" +
+                      "eq('RUA SAMPAIO CASA, PONTE, JAGUARÃO - RS, 333333, BRASIL')).in('Is_Located')" +
                       ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
       assertEquals("MARTA MARILIA MARCÔNDES", getNameByLocationAddress,
               "Nome da pessoa que mora no endereço especificado");

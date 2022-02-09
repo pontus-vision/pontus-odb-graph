@@ -40,13 +40,13 @@
         "props": [
           {
             "name": "Location.Address.Full_Address",
-            "val": "${A2_END?.trim()?.toUpperCase()} ${A2_ENDCOMP?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUNICIP?.trim()?.toUpperCase()} - ${A2_ESTADO?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL",
+            "val": "${A2_END?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUN?.trim()?.toUpperCase()} - ${A2_EST?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location.Address.parser",
-            "val": "${A2_END?.trim()?.toUpperCase()} ${A2_ENDCOMP?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUNICIP?.trim()?.toUpperCase()} - ${A2_ESTADO?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL",
+            "val": "${A2_END?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUN?.trim()?.toUpperCase()} - ${A2_EST?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
@@ -54,24 +54,6 @@
             "name": "Location.Address.Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(A2_CEP)}",
             "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Identity_Card",
-        "name": "rg",
-        "condition": "${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}",
-        "props": [
-          {
-            "name": "Object.Identity_Card.Id_Value",
-            "val": "${A2_RG?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Identity_Card.Id_Type",
-            "val": "RG",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -113,32 +95,7 @@
       },
       {
         "label": "Object.Phone_Number",
-        "name": "rep_phone",
-        "condition": "${A2_REPRTEL?.replaceAll('[^0-9]','').length() > 0}",
-        "props": [
-          {
-            "name": "Object.Phone_Number.Raw",
-            "val": "${A2_REPRTEL}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Numbers_Only",
-            "val": "${(A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "type": "[Ljava.lang.String;",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Last_7_Digits",
-            "val": "${(((A2_REPRTEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
-          }
-        ]
-      },
-      {
-        "label": "Object.Phone_Number",
-        "name": "phone2",
+        "name": "phone",
         "condition": "${A2_TEL?.replaceAll('[^0-9]','')?.length() > 0}",
         "props": [
           {
@@ -162,45 +119,8 @@
         ]
       },
       {
-        "label": "Object.Phone_Number",
-        "name": "mobile",
-        "condition": "${A2_REPR_EN?.replaceAll('[^0-9]','')?.length() > 0}",
-        "props": [
-          {
-            "name": "Object.Phone_Number.Raw",
-            "val": "${A2_REPR_EN}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Numbers_Only",
-            "val": "${(A2_REPR_EN?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "type": "[Ljava.lang.String;",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object.Phone_Number.Last_7_Digits",
-            "val": "${(((A2_REPR_EN?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
-          }
-        ]
-      },
-      {
         "label": "Object.Email_Address",
-        "name": "email1",
-        "condition": "${A2_REPR_EM?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Object.Email_Address.Email",
-            "val": "${A2_REPR_EM?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Email_Address",
-        "name": "email2",
+        "name": "email",
         "condition": "${A2_EMAIL?.trim()?.length() > 0}",
         "props": [
           {
@@ -302,37 +222,17 @@
       {
         "label": "Has_Phone",
         "fromVertexName": "rep",
-        "toVertexName": "rep_phone"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "rep",
-        "toVertexName": "phone2"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "rep",
-        "toVertexName": "mobile"
+        "toVertexName": "phone"
       },
       {
         "label": "Uses_Email",
         "fromVertexName": "rep",
-        "toVertexName": "email1"
-      },
-      {
-        "label": "Uses_Email",
-        "fromVertexName": "rep",
-        "toVertexName": "email2"
+        "toVertexName": "email"
       },
       {
         "label": "Is_Located",
         "fromVertexName": "rep",
         "toVertexLabel": "Location.Address"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexName": "rep",
-        "toVertexName": "rg"
       },
       {
         "label": "Has_Id_Card",
@@ -347,27 +247,12 @@
       {
         "label": "Uses_Email",
         "fromVertexName": "fornecedor",
-        "toVertexName": "email1"
-      },
-      {
-        "label": "Uses_Email",
-        "fromVertexName": "fornecedor",
-        "toVertexName": "email2"
+        "toVertexName": "email"
       },
       {
         "label": "Has_Phone",
         "fromVertexName": "fornecedor",
-        "toVertexName": "rep_phone"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "fornecedor",
-        "toVertexName": "phone2"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "fornecedor",
-        "toVertexName": "mobile"
+        "toVertexName": "phone"
       },
       {
         "label": "Is_Located",
