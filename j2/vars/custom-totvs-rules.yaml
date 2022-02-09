@@ -129,16 +129,15 @@ rules:
         props:
           Type: "totvs/protheus/sa1_clientes"
           Operation: "Structured Data Insertion"
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+#          Metadata_Start_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+#          Metadata_End_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Object.Data_Source
         props:
@@ -413,16 +412,15 @@ rules:
             val: "totvs/protheus/ra_funcionario"
           Operation:
             val: "Structured Data Insertion"
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+#          Metadata_Start_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+#          Metadata_End_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Object.Data_Source
         props:
@@ -683,16 +681,15 @@ rules:
         props:
           Type: "totvs/protheus/sa2_fornecedor"
           Operation: "Structured Data Insertion"
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+#          Metadata_Start_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+#          Metadata_End_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Object.Data_Source
         props:

@@ -112,20 +112,6 @@
         "label": "Event.Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
             "name": "Event.Group_Ingestion.Type",
             "val": "sharepoint/consent",
             "mandatoryInSearch": true
@@ -139,6 +125,20 @@
             "name": "Event.Group_Ingestion.Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Procedures",
+        "condition": "${data_procedures.size() > 0}",
+        "props": [
+          {
+            "name": "Object.Data_Procedures.Form_Id",
+            "val": "${new groovy.json.JsonBuilder(data_procedures)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
           }
         ]
       }
@@ -168,6 +168,11 @@
         "label": "Has_Privacy_Notice",
         "fromVertexLabel": "Event.Consent",
         "toVertexLabel": "Object.Privacy_Notice"
+      },
+      {
+        "label": "Consent",
+        "fromVertexLabel": "Event.Consent",
+        "toVertexLabel": "Object.Data_Procedures"
       }
     ]
   }

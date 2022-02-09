@@ -89,14 +89,14 @@ rules:
           Type: "ploomes/clientes"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Metadata_Start_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+#          Metadata_End_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Object.Data_Source
         props:

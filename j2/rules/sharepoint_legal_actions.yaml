@@ -2,47 +2,35 @@
 updatereq:
   vertices:
     
-    - label: Person.Natural
+    - label: Object.Legal_Actions
       props:
-        - name: Person.Natural.Full_Name
-          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
+        - name: Object.Legal_Actions.Form_Id
+          val: ${id}
           mandatoryInSearch: True
-        - name: Person.Natural.Title
-          val: ${Title}
+        - name: Object.Legal_Actions.Description
+          val: ${description}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object.Legal_Actions.Date
+          val: ${date}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Object.Legal_Actions.Details
+          val: ${details}
           mandatoryInSearch: False
           excludeFromSearch: True
     
-    - label: Object.Phone_Number
-      name: mobile
-      condition: ${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}
+    - label: Object.Data_Source
       props:
-        - name: Object.Phone_Number.Raw
-          val: ${Mobile_Number}
-          mandatoryInSearch: True
-        - name: Object.Phone_Number.excludeFromSearch
-          val: True
-          mandatoryInSearch: True
-        - name: Object.Phone_Number.Numbers_Only
-          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
-          mandatoryInSearch: False
-          type: "[Ljava.lang.String;"
-          excludeFromSearch: True
-        - name: Object.Phone_Number.Last_7_Digits
-          val: ${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
-          mandatoryInSearch: True
-          type: "[Ljava.lang.String;"
-    
-    - label: Object.Email_Address
-      condition: ${E_Mail_Address?.trim()?.length() > 0}
-      props:
-        - name: Object.Email_Address.Email
-          val: ${E_Mail_Address?.trim()?.toLowerCase()}
+        - name: Object.Data_Source.Name
+          val: SHAREPOINT/LEGAL-ACTIONS
           mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sap/c@p Porsche Connect Mandatory Fields
+          val: Legal Actions
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -67,19 +55,13 @@ updatereq:
     - label: Event.Group_Ingestion
       props:
         - name: Event.Group_Ingestion.Type
-          val: sap/c@p Porsche Connect Mandatory Fields
+          val: sharepoint/legal-actions
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-    
-    - label: Object.Data_Source
-      props:
-        - name: Object.Data_Source.Name
-          val: SAP/C@P PORSCHE CONNECT MANDATORY FIELDS
           mandatoryInSearch: True
 
   edges:
@@ -90,12 +72,6 @@ updatereq:
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Event.Ingestion
-  - label: Has_Phone
-    fromVertexLabel: Person.Natural
-    toVertexName: mobile
-  - label: Uses_Email
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Email_Address
+    fromVertexLabel: Event.Ingestion
+    toVertexLabel: Object.Legal_Actions
 

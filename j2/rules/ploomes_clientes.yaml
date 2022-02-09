@@ -106,16 +106,6 @@ updatereq:
         - name: Event.Group_Ingestion.Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
-        - name: Event.Group_Ingestion.Metadata_Start_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event.Group_Ingestion.Metadata_End_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
     
     - label: Object.Data_Source
       props:

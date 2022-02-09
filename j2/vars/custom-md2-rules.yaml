@@ -48,14 +48,14 @@ rules:
           Type: MD2
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Metadata_Start_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+#          Metadata_End_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Object.Data_Source"
@@ -131,14 +131,14 @@ rules:
           Type: MD2
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Metadata_Start_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+#          Metadata_End_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Object.Data_Source"

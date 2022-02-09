@@ -6,9 +6,10 @@ import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test0000 for simple App.
@@ -60,6 +61,83 @@ public class PVSharepointDataBreachTests extends AppTest {
       assertEquals("No Impact", opinionsBreach,"Impact for breaching employees opinions");
 
     } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
+  @Test
+  public void test00002SharepointLegalActions() throws InterruptedException {
+
+    jsonTestUtil("non-official-pv-extract-sharepoint-legal-actions.json",
+            "$.queryResp[*].fields", "sharepoint_legal_actions");
+
+    try {
+
+      String legalAction1 =
+              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('SHAREPOINT/LEGAL-ACTIONS'))" +
+                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+                      ".has('Metadata.Type.Object.Legal_Actions',eq('Object.Legal_Actions'))" +
+                      ".values('Object.Legal_Actions.Details').next().toString()").get().toString();
+      assertEquals("Processo por vazamento de dados pessoais dos clientes.", legalAction1,
+              "Detalhes da Ação Legal 1.");
+
+      String legalAction2 =
+              App.executor.eval("App.g.V().has('Object.Legal_Actions.Form_Id',eq('2'))" +
+                      ".values('Object.Legal_Actions.Description').next().toString()").get().toString();
+      assertEquals("Ação judicial 768", legalAction2,"Descrição da Ação Legal 2.");
+
+      String legalAction3 =
+              App.executor.eval("App.g.V().has('Object.Legal_Actions.Description',eq('Ação judicial 333'))" +
+                      ".values('Object.Legal_Actions.Date').next().toString()").get().toString();
+      assertEquals(dtfmt.parse("Wed Jan 19 01:01:01 GMT 2022"), dtfmt.parse(legalAction3),
+              "Data da Ação Legal 3.");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
+  // Testing for upsert of two similar json data using sharepoint_legal_actions POLE
+  @Test
+  public void test00003UpsertSharepointLegalActions() throws InterruptedException {
+    try {
+      jsonTestUtil("non-official-pv-extract-sharepoint-legal-actions.json",
+              "$.queryResp[*].fields", "sharepoint_legal_actions");
+
+      String countEventIngestions =
+              App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('Legal Actions'))" +
+                      ".count().next().toString()").get().toString();
+
+      String countLegalActions =
+              App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('Legal Actions'))" +
+                      ".out('Has_Ingestion_Event').has('Metadata.Type.Object.Legal_Actions', eq('Object.Legal_Actions'))" +
+                      ".dedup().count().next().toString()").get().toString();
+
+      jsonTestUtil("non-official-pv-extract-sharepoint-legal-actions2.json",
+              "$.queryResp[*].fields", "sharepoint_legal_actions");
+
+      String countEventIngestionsAgain =
+              App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('Legal Actions'))" +
+                      ".count().next().toString()").get().toString();
+
+//      Test for duplicate data
+
+      String countLegalActionsAgain =
+              App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('Legal Actions'))" +
+                      ".out('Has_Ingestion_Event').has('Metadata.Type.Object.Legal_Actions', eq('Object.Legal_Actions'))" +
+                      ".dedup().count().next().toString()").get().toString();
+
+//    This proves that new insertions were made the Legal Actions Graph part
+      assertTrue(Integer.parseInt(countEventIngestionsAgain) > Integer.parseInt(countEventIngestions));
+
+//    This proves that data is still the same
+      assertTrue(Integer.parseInt(countLegalActions) == Integer.parseInt(countLegalActionsAgain));
+
+    } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
     }

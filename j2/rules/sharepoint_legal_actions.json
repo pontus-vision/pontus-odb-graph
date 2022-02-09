@@ -2,35 +2,41 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object.Data_Source",
-        "name": "sharepoint",
+        "label": "Object.Legal_Actions",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
-            "val": "SHAREPOINT/RISK-MITIGATIONS",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object.Risk_Mitigation_Data_Source",
-        "props": [
-          {
-            "name": "Object.Risk_Mitigation_Data_Source.Form_Id",
+            "name": "Object.Legal_Actions.Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Risk_Mitigation_Data_Source.Mitigation_Id",
-            "val": "${Title?.trim()?.toUpperCase()}",
+            "name": "Object.Legal_Actions.Description",
+            "val": "${description}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Risk_Mitigation_Data_Source.Description",
-            "val": "${field_Description}",
+            "name": "Object.Legal_Actions.Date",
+            "val": "${date}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object.Legal_Actions.Details",
+            "val": "${details}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object.Data_Source",
+        "props": [
+          {
+            "name": "Object.Data_Source.Name",
+            "val": "SHAREPOINT/LEGAL-ACTIONS",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -39,7 +45,7 @@
         "props": [
           {
             "name": "Event.Ingestion.Type",
-            "val": "risk-mitigations",
+            "val": "Legal Actions",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -76,7 +82,7 @@
         "props": [
           {
             "name": "Event.Group_Ingestion.Type",
-            "val": "sharepoint/risk-mitigations",
+            "val": "sharepoint/legal-actions",
             "mandatoryInSearch": true
           },
           {
@@ -95,7 +101,7 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "sharepoint",
+        "fromVertexLabel": "Object.Data_Source",
         "toVertexLabel": "Event.Group_Ingestion"
       },
       {
@@ -106,7 +112,7 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event.Ingestion",
-        "toVertexLabel": "Object.Risk_Mitigation_Data_Source"
+        "toVertexLabel": "Object.Legal_Actions"
       }
     ]
   }

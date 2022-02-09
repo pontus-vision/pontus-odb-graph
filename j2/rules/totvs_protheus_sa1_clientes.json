@@ -203,20 +203,6 @@
             "name": "Event.Group_Ingestion.Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
           }
         ]
       },
