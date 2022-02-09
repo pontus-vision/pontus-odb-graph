@@ -295,10 +295,10 @@ rules:
       - label: Location.Address
         props:
           Full_Address:
-            val: "${RA_ENDEREC?.trim()?.toUpperCase()} ${RA_COMPLEM?.trim()?.toUpperCase()} ${RA_CODMUN?.trim()?.toUpperCase()} ${RA_CODMUNE?.trim()?.toUpperCase()?:''}, ${RA_BAIRRO?.trim()?.toUpperCase()}, ${RA_MUNICIP?.trim()?.toUpperCase()} - ${RA_ESTADO?.trim()?.toUpperCase()}, ${RA_CEP}, ${RA_PAISEXT?.trim()?.toUpperCase()?:'BRASIL'}"
+            val: "${RA_ENDEREC?.trim()?.toUpperCase()} ${RA_COMPLEM?.trim()?.toUpperCase()}, ${RA_BAIRRO?.trim()?.toUpperCase()}, ${RA_MUNICIP?.trim()?.toUpperCase()} - ${RA_ESTADO?.trim()?.toUpperCase()}, ${RA_CEP}, ${RA_PAISEXT?.trim()?.toUpperCase()?:'BRASIL'}"
             excludeFromSearch: true
           parser:
-            val: "${RA_ENDEREC?.trim()?.toUpperCase()} ${RA_COMPLEM?.trim()?.toUpperCase()} ${RA_CODMUN?.trim()?.toUpperCase()} ${RA_CODMUNE?.trim()?.toUpperCase()?:''}, ${RA_BAIRRO?.trim()?.toUpperCase()}, ${RA_MUNICIP?.trim()?.toUpperCase()} - ${RA_ESTADO?.trim()?.toUpperCase()}, ${RA_CEP}, ${RA_PAISEXT?.trim()?.toUpperCase()?:'BRASIL'}"
+            val: "${RA_ENDEREC?.trim()?.toUpperCase()} ${RA_COMPLEM?.trim()?.toUpperCase()}, ${RA_BAIRRO?.trim()?.toUpperCase()}, ${RA_MUNICIP?.trim()?.toUpperCase()} - ${RA_ESTADO?.trim()?.toUpperCase()}, ${RA_CEP}, ${RA_PAISEXT?.trim()?.toUpperCase()?:'BRASIL'}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(RA_CEP)}"
 #          Description: "moradia principal"
@@ -560,24 +560,15 @@ rules:
         #        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Full_Address:
-            val: "${A2_END?.trim()?.toUpperCase()} ${A2_ENDCOMP?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUNICIP?.trim()?.toUpperCase()} - ${A2_ESTADO?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL"
+            val: "${A2_END?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUN?.trim()?.toUpperCase()} - ${A2_EST?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL"
             excludeFromSearch: true
           parser:
-            val: "${A2_END?.trim()?.toUpperCase()} ${A2_ENDCOMP?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUNICIP?.trim()?.toUpperCase()} - ${A2_ESTADO?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL"
+            val: "${A2_END?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUN?.trim()?.toUpperCase()} - ${A2_EST?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(A2_CEP)}"
       #          Description: "endereco fornecedor"
       #          Type:
       #            val: "business"
-
-      - label: Object.Identity_Card
-        condition: "${A2_RG?.replaceAll('[^0-9]', '')?.length() > 0}"
-        name: rg
-        props:
-          Id_Value: "${A2_RG?.replaceAll('[^0-9]','')}"
-          Id_Type:
-            val: "RG"
-            excludeFromSearch: true
 
       - label: Object.Identity_Card
         condition: "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}"
@@ -598,24 +589,8 @@ rules:
             excludeFromSearch: true
 
       - label: Object.Phone_Number
-        condition: "${A2_REPRTEL?.replaceAll('[^0-9]','').length() > 0}"
-        name: rep_phone
-        props:
-          Raw: "${A2_REPRTEL}"
-#          Type:
-#            val: "Telefone 1"
-#            excludeFromSubsequenceSearch: true
-          Numbers_Only:
-            val: "${(A2_REPRTEL?.replaceAll('[^0-9]', '')?:'00000000')}"
-            excludeFromSearch: true
-            type: "[Ljava.lang.String;"
-          Last_7_Digits:
-            val: "${(((A2_REPRTEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            type: "[Ljava.lang.String;"
-
-      - label: Object.Phone_Number
         condition: "${A2_TEL?.replaceAll('[^0-9]','')?.length() > 0}"
-        name: phone2
+        name: phone
         props:
           Raw: "${A2_TEL}"
 #          Type:
@@ -629,31 +604,9 @@ rules:
             val: "${(((A2_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
-      - label: Object.Phone_Number
-        condition: "${A2_REPR_EN?.replaceAll('[^0-9]','')?.length() > 0}"
-        name: mobile
-        props:
-          Raw: "${A2_REPR_EN}"
-#          Type:
-#            val: "Mobile"
-#            excludeFromSubsequenceSearch: true
-          Numbers_Only:
-            val: "${(A2_REPR_EN?.replaceAll('[^0-9]', '')?:'00000000')}"
-            excludeFromSearch: true
-            type: "[Ljava.lang.String;"
-          Last_7_Digits:
-            val: "${(((A2_REPR_EN?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            type: "[Ljava.lang.String;"
-
-      - label: Object.Email_Address
-        condition: "${A2_REPR_EM?.trim()?.length() > 0}"
-        name: email1
-        props:
-          Email: "${A2_REPR_EM?.trim()?.toLowerCase()}"
-
       - label: Object.Email_Address
         condition: "${A2_EMAIL?.trim()?.length() > 0}"
-        name: email2
+        name: email
         props:
           Email: "${A2_EMAIL?.trim()?.toLowerCase()}"
 
@@ -716,31 +669,15 @@ rules:
 
       - label: Has_Phone
         fromVertexName: "rep"
-        toVertexName: "rep_phone"
-
-      - label: Has_Phone
-        fromVertexName: "rep"
-        toVertexName: "phone2"
-
-      - label: Has_Phone
-        fromVertexName: "rep"
-        toVertexName: "mobile"
+        toVertexName: "phone"
 
       - label: Uses_Email
         fromVertexName: "rep"
-        toVertexName: "email1"
-
-      - label: Uses_Email
-        fromVertexName: "rep"
-        toVertexName: "email2"
+        toVertexName: "email"
 
       - label: Is_Located
         fromVertexName: "rep"
         toVertexLabel: "Location.Address"
-
-      - label: Has_Id_Card
-        fromVertexName: "rep"
-        toVertexName: "rg"
 
       - label: Has_Id_Card
         fromVertexName: "rep"
@@ -752,23 +689,11 @@ rules:
 
       - label: Uses_Email
         fromVertexName: "fornecedor"
-        toVertexName: "email1"
-
-      - label: Uses_Email
-        fromVertexName: "fornecedor"
-        toVertexName: "email2"
+        toVertexName: "email"
 
       - label: Has_Phone
         fromVertexName: "fornecedor"
-        toVertexName: "rep_phone"
-
-      - label: Has_Phone
-        fromVertexName: "fornecedor"
-        toVertexName: "phone2"
-
-      - label: Has_Phone
-        fromVertexName: "fornecedor"
-        toVertexName: "mobile"
+        toVertexName: "phone"
 
       - label: Is_Located
         fromVertexName: "fornecedor"
