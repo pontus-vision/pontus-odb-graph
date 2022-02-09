@@ -106,7 +106,7 @@ public class PVTotvsTest extends AppTest {
       String pabloLocationAddress =
               App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('PABLO MATO ESCOBAR')).out('Is_Located')" +
                       ".properties('Location.Address.Full_Address').value().next().toString()").get().toString();
-      assertEquals("RUA MOREIRA DA SILVA SAURO , BROOKLYN, RIO DE JANEIRO - RJ, 86785908, BRASIL",
+      assertEquals("RUA MOREIRA DA SILVA SAURO, BROOKLYN, RIO DE JANEIRO - RJ, 86785908, BRASIL",
               pabloLocationAddress, "Pablo's Address");
 
       String personNaturalEdgesCount =
