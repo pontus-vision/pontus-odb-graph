@@ -84,6 +84,11 @@ Event.Ingestion.Metadata_Create_Date
 Event.Ingestion.Metadata_GUID
 Event.Ingestion.Operation
 Event.Ingestion.Type
+Event.Meeting.Form_Id
+Event.Meeting.Title
+Event.Meeting.Date
+Event.Meeting.Discussed_Topics
+Event.Meeting.Participants
 Event.Subject_Access_Request.Metadata.Create_Date
 Event.Subject_Access_Request.Metadata.Update_Date
 Event.Subject_Access_Request.Request_Type

@@ -126,7 +126,7 @@ public class PVBasicTest extends AppTest {
 
 //    test0000 for PEDRO Person.Employee NODE
       String userId =
-              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('PEDRO ALVARO CABRAL'))\n" +
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PEDRO ALVARO CABRAL'))\n" +
                       ".next().id().toString()").get().toString();
       String pedroConnectionsQuery = "App.g.V(\"" + userId + "\").bothE().count().next().toString()";
       String pedroConnections = App.executor.eval(pedroConnectionsQuery).get().toString();
@@ -134,7 +134,7 @@ public class PVBasicTest extends AppTest {
 
 //    test0000 for MARCELA Person.Employee NODE
       String marcelaTraining =
-              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('MARCELA ALVES'))\n" +
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARCELA ALVES'))\n" +
                       ".in('Completed_By').out('Course_Training').properties('Object.Awareness_Campaign.Description')" +
                       ".value().next().toString()").get().toString();
       assertEquals("1º CURSO - LGPD - LEI GERAL DE PROTEÇÃO DE DADOS", marcelaTraining, "Treinamento cursado por Marcela Alves");
@@ -143,12 +143,12 @@ public class PVBasicTest extends AppTest {
       String getEmployeeNameByTraining =
               App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
                       "eq('COMO CUIDAR DOS SEUS DADOS PESSOAIS DIGITAIS/VIRTUAIS')).in('Course_Training')" +
-                      ".out('Completed_By').properties('Person.Employee.Full_Name').value().next().toString()").get().toString();
+                      ".out('Completed_By').properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
       assertEquals("LEILA BRAGANÇA", getEmployeeNameByTraining, "O curso em questão foi feito por Leila Bragança");
 
 //    test0000 for Object.Awareness_Campaign.Description 3
       String caioTrainingStatus =
-              App.executor.eval("App.g.V().has('Person.Employee.Full_Name', eq('CAIO DA SILVA SAURO'))\n" +
+              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CAIO DA SILVA SAURO'))\n" +
                       ".in('Completed_By').properties('Event.Training.Status')" +
                       ".value().next().toString()").get().toString();
       assertEquals("Passed", caioTrainingStatus, "Caio has PASSED the Training");
