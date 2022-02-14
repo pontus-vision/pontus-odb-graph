@@ -4048,94 +4048,117 @@ the end of the process.
   }
 
   static def getConsentScores(def scoresMap) {
-    long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L))
-    def dateThreshold = new java.util.Date(ageThresholdMs)
 
-
-    long numAdults = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+    long numProcedures = App.g.V().has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
             .where(
-                    __.and(
-                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
+                    __.out('Has_Lawful_Basis_On').has('Object.Lawful_Basis.Description',PText.textContainsPrefix('CONSENT')
                     )
-            )
-            .count().next()
+            ).count().next()
 
 
-    long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+    long numConsent = App.g.V().has('Metadata.Type.Event.Consent', eq('Event.Consent'))
             .where(
-                    __.and(
-                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
-                            , __.outE('Consent').count().is(P.eq(0) as P<Long>)
-                    )
-            )
-            .count().next()
+                    __.out('Consent').has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).dedup()
+                            .where(
+                                    __.out('Has_Lawful_Basis_On').has('Object.Lawful_Basis.Description',PText.textContainsPrefix('CONSENT')
+                                    )
+                            )
+            ).count().next()
 
+    long percentConsent = (long) ((double )numConsent / (double )numProcedures * 100.0)
 
-    long numNegativeConsent =
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Consent'), percentConsent)
 
-            App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
-                    .where(
-                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
-                    ).as('adults')
-                    .match(
-                            __.as('adults').outE('Consent').as('consentEdges')
-                            , __.as('consentEdges').count().as('consentEdgesCount')
-                            , __.as('consentEdges').inV().as('consentEvents')
-                            , __.as('consentEvents').has('Event.Consent.Status', eq('No Consent ')).count().as('negConsentCount')
+    return percentConsent
 
-                    )
-                    .select('consentEdgesCount', 'negConsentCount')
-                    .where('consentEdgesCount', eq('negConsentCount'))
-                    .where(__.as('consentEdgesCount').is(gt(0)))
+//    long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L))
+//    def dateThreshold = new java.util.Date(ageThresholdMs)
 
-                    .count().next()
+//
+//    long numAdults = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+//            .where(
+//                    __.and(
+//                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
+//                    )
+//            )
+//            .count().next()
+//
+//
+//    long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+//            .where(
+//                    __.and(
+//                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
+//                            , __.outE('Consent').count().is(P.eq(0) as P<Long>)
+//                    )
+//            )
+//            .count().next()
+//
+//
+//    long numNegativeConsent =
+//
+//            App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+//                    .where(
+//                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
+//                    ).as('adults')
+//                    .match(
+//                            __.as('adults').outE('Consent').as('consentEdges')
+//                            , __.as('consentEdges').count().as('consentEdgesCount')
+//                            , __.as('consentEdges').inV().as('consentEvents')
+//                            , __.as('consentEvents').has('Event.Consent.Status', eq('No Consent ')).count().as('negConsentCount')
+//
+//                    )
+//                    .select('consentEdgesCount', 'negConsentCount')
+//                    .where('consentEdgesCount', eq('negConsentCount'))
+//                    .where(__.as('consentEdgesCount').is(gt(0)))
+//
+//                    .count().next()
+//
+//
+//    long numPendingConsent =
+//
+//            App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+//                    .where(
+//                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
+//                    ).as('adults')
+//                    .match(
+//                            __.as('adults').outE('Consent').as('consentEdges')
+//                            , __.as('consentEdges').count().as('consentEdgesCount')
+//                            , __.as('consentEdges').inV().as('consentEvents')
+//                            , __.as('consentEvents').has('Event.Consent.Status', eq('Consent Pending')).count().as('pendingConsentCount')
+//
+//                    )
+//                    .select('consentEdgesCount', 'pendingConsentCount')
+//                    .where('consentEdgesCount', eq('pendingConsentCount'))
+//                    .where(__.as('consentEdgesCount').is(gt(0)))
+//
+//                    .count().next()
 
+//
+//    long scoreValue = 100L
+//    if (numAdults > 0) {
+//
+//      long pcntWithoutAnyConsent = (long) (100L * numWithoutAnyConsent / numAdults)
+//      if (pcntWithoutAnyConsent > 10) {
+//        scoreValue -= 45L
+//      } else if (numWithoutAnyConsent > 0) {
+//        scoreValue -= (25L + 2L * pcntWithoutAnyConsent)
+//      }
+//
+//
+//      long pcntWithNegativeConsent = (long) (100L * numNegativeConsent / numAdults)
+//      if (pcntWithNegativeConsent > 10) {
+//        scoreValue -= 45L
+//      } else if (numNegativeConsent > 0) {
+//        scoreValue -= (25L + 2L * pcntWithNegativeConsent)
+//      }
+//
+//      scoreValue -= (10L * numPendingConsent / numAdults)
+//
+//
+//    }
 
-    long numPendingConsent =
-
-            App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
-                    .where(
-                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
-                    ).as('adults')
-                    .match(
-                            __.as('adults').outE('Consent').as('consentEdges')
-                            , __.as('consentEdges').count().as('consentEdgesCount')
-                            , __.as('consentEdges').inV().as('consentEvents')
-                            , __.as('consentEvents').has('Event.Consent.Status', eq('Consent Pending')).count().as('pendingConsentCount')
-
-                    )
-                    .select('consentEdgesCount', 'pendingConsentCount')
-                    .where('consentEdgesCount', eq('pendingConsentCount'))
-                    .where(__.as('consentEdgesCount').is(gt(0)))
-
-                    .count().next()
-
-
-    long scoreValue = 100L
-    if (numAdults > 0) {
-
-      long pcntWithoutAnyConsent = (long) (100L * numWithoutAnyConsent / numAdults)
-      if (pcntWithoutAnyConsent > 10) {
-        scoreValue -= 45L
-      } else if (numWithoutAnyConsent > 0) {
-        scoreValue -= (25L + 2L * pcntWithoutAnyConsent)
-      }
-
-
-      long pcntWithNegativeConsent = (long) (100L * numNegativeConsent / numAdults)
-      if (pcntWithNegativeConsent > 10) {
-        scoreValue -= 45L
-      } else if (numNegativeConsent > 0) {
-        scoreValue -= (25L + 2L * pcntWithNegativeConsent)
-      }
-
-      scoreValue -= (10L * numPendingConsent / numAdults)
-
-
-    }
-
-    scoresMap.put(PontusJ2ReportingFunctions.translate('Consent'), scoreValue)
-    return scoreValue
+//    scoresMap.put(PontusJ2ReportingFunctions.translate('Consent'), scoreValue)
+//    return scoreValue
 
   }
 

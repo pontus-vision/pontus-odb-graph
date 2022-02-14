@@ -1,21 +1,12 @@
 package com.pontusvision.gdpr;
 
-import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
-import com.pontusvision.gdpr.report.ReportTemplateRenderResponse;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
 import com.pontusvision.graphutils.gdpr;
-import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,9 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @TestClassOrder(AnnotationTestsOrderer.class)
-@TestClassesOrder(11)
+@TestClassesOrder(18)
 //@RunWith(JUnitPlatform.class)
-public class PVScoreTests extends AppTest {
+public class PVScoreTestsConsent extends AppTest {
   /**
    * Create the test0000 case
    *
@@ -43,20 +34,20 @@ public class PVScoreTests extends AppTest {
    */
 
   @Test
-  public void test00001TemplateUpsert() throws InterruptedException {
+  public void test00001ConsentScore() throws InterruptedException {
     try {
 
-      // TODO: the file pv-extract-treinamentos.json has static dates; we need to update them
-      // periodically; otherwise, the tests will start failing.
+      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo2.json", "$.queryResp[*].fields",
+          "sharepoint_mapeamentos");
 
+      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos2.json", "$.queryResp[*].fields",
+          "sharepoint_consents");
 
-      jsonTestUtil("pv-extract-sharepoint-treinamentos2.json", "$.queryResp[*].fields",
-              "sharepoint_treinamentos");
 
 
       Map<String, Long> retVals = new HashMap<>();
 
-      long score =  gdpr.getAwarenessScores(retVals);
+      long score = (long) gdpr.getConsentScores(retVals);
 
       assertEquals(54L, score);
 
@@ -94,5 +85,28 @@ public class PVScoreTests extends AppTest {
 
   }
 
+  @Test
+  public void test00003DataBreachesScores() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json", "$.queryResp[*].fields",
+          "sharepoint_data_breaches");
+
+
+      Map<String, Long> retVals = new HashMap<>();
+
+      long score = (long) gdpr.getDataBreachesScores(retVals);
+
+      assertEquals(37L, score, "Expected to lose 63 points because there is one Customer Data Stolen (External)");
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
 }
