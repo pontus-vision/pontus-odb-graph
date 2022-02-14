@@ -4,15 +4,15 @@
 
 FROM openjdk:8-jdk-slim-buster as BUILDER
 
-MAINTAINER Pontus Vision
+LABEL "MAINTAINER"="Pontus Vision"
  
 # Override the orientdb download location with e.g.:
 #   docker build -t mine --build-arg ORIENTDB_DOWNLOAD_SERVER=https://repo1.maven.org/maven2/com/orientechnologies/ .
 ARG ORIENTDB_DOWNLOAD_SERVER
 
-ENV ORIENTDB_VERSION 3.1.12
-ENV ORIENTDB_DOWNLOAD_MD5 269554b2eeebc0963c636a7f57f76e24
-ENV ORIENTDB_DOWNLOAD_SHA1 a9673917f22f5e71e0e1a89ddfdbf6a702828d89
+ENV ORIENTDB_VERSION 3.2.4
+ENV ORIENTDB_DOWNLOAD_MD5 b6cdf23d79c8d3f78ea6d9587bb8167c
+ENV ORIENTDB_DOWNLOAD_SHA1 c1f8a2334fa58b8df9575f5705f2b135167f7ef1
 
 #ENV ORIENTDB_DOWNLOAD_URL ${ORIENTDB_DOWNLOAD_SERVER:-https://central.maven.org/maven2/com/orientechnologies/orientdb-tp3/$ORIENTDB_VERSION/orientdb-tp3-$ORIENTDB_VERSION.tar.gz}
 ENV ORIENTDB_DOWNLOAD_URL ${ORIENTDB_DOWNLOAD_SERVER:-https://repo1.maven.org/maven2/com/orientechnologies/orientdb-tp3/$ORIENTDB_VERSION/orientdb-tp3-$ORIENTDB_VERSION.tar.gz}
