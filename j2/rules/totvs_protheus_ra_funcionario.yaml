@@ -29,11 +29,11 @@ updatereq:
     - label: Location.Address
       props:
         - name: Location.Address.Full_Address
-          val: ${RA_ENDEREC?.trim()?.toUpperCase()} ${RA_COMPLEM?.trim()?.toUpperCase()} ${RA_CODMUN?.trim()?.toUpperCase()} ${RA_CODMUNE?.trim()?.toUpperCase()?:''}, ${RA_BAIRRO?.trim()?.toUpperCase()}, ${RA_MUNICIP?.trim()?.toUpperCase()} - ${RA_ESTADO?.trim()?.toUpperCase()}, ${RA_CEP}, ${RA_PAISEXT?.trim()?.toUpperCase()?:'BRASIL'}
+          val: ${RA_ENDEREC?.trim()?.toUpperCase()} ${RA_COMPLEM?.trim()?.toUpperCase()}, ${RA_BAIRRO?.trim()?.toUpperCase()}, ${RA_MUNICIP?.trim()?.toUpperCase()} - ${RA_ESTADO?.trim()?.toUpperCase()}, ${RA_CEP}, ${RA_PAISEXT?.trim()?.toUpperCase()?:'BRASIL'}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location.Address.parser
-          val: ${RA_ENDEREC?.trim()?.toUpperCase()} ${RA_COMPLEM?.trim()?.toUpperCase()} ${RA_CODMUN?.trim()?.toUpperCase()} ${RA_CODMUNE?.trim()?.toUpperCase()?:''}, ${RA_BAIRRO?.trim()?.toUpperCase()}, ${RA_MUNICIP?.trim()?.toUpperCase()} - ${RA_ESTADO?.trim()?.toUpperCase()}, ${RA_CEP}, ${RA_PAISEXT?.trim()?.toUpperCase()?:'BRASIL'}
+          val: ${RA_ENDEREC?.trim()?.toUpperCase()} ${RA_COMPLEM?.trim()?.toUpperCase()}, ${RA_BAIRRO?.trim()?.toUpperCase()}, ${RA_MUNICIP?.trim()?.toUpperCase()} - ${RA_ESTADO?.trim()?.toUpperCase()}, ${RA_CEP}, ${RA_PAISEXT?.trim()?.toUpperCase()?:'BRASIL'}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location.Address.Post_Code

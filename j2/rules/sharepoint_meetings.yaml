@@ -2,36 +2,39 @@
 updatereq:
   vertices:
     
-    - label: Event.Training
+    - label: Event.Meeting
       props:
-        - name: Event.Training.Form_Id
+        - name: Event.Meeting.Form_Id
           val: ${id}
           mandatoryInSearch: True
-        - name: Event.Training.Status
-          val: ${status}
+        - name: Event.Meeting.Title
+          val: ${subject?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Meeting.Date
+          val: ${date}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event.Meeting.Discussed_Topics
+          val: ${topics?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event.Meeting.Participants
+          val: ${person?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
-    - label: Object.Awareness_Campaign
+    - label: Object.Data_Source
       props:
-        - name: Object.Awareness_Campaign.Description
-          val: ${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Object.Awareness_Campaign.Start_Date
-          val: ${Realizadoem}
-          mandatoryInSearch: True
-          type: "java.util.Date"
-    
-    - label: Person.Natural
-      props:
-        - name: Person.Natural.Full_Name
-          val: ${Nome0?.trim()?.toUpperCase()}
+        - name: Object.Data_Source.Name
+          val: SHAREPOINT/P-AND-PD-COMMITTEE-MEETINGS
           mandatoryInSearch: True
     
     - label: Event.Ingestion
       props:
         - name: Event.Ingestion.Type
-          val: sharepoint/treinamentos
+          val: P & PD Committee Meetings
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event.Ingestion.Operation
@@ -56,7 +59,7 @@ updatereq:
     - label: Event.Group_Ingestion
       props:
         - name: Event.Group_Ingestion.Type
-          val: sharepoint/treinamentos
+          val: sharepoint/p-and-pd-committee-meetings
           mandatoryInSearch: True
         - name: Event.Group_Ingestion.Operation
           val: Structured Data Insertion
@@ -64,27 +67,15 @@ updatereq:
         - name: Event.Group_Ingestion.Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
-    
-    - label: Object.Data_Source
-      props:
-        - name: Object.Data_Source.Name
-          val: SHAREPOINT/TREINAMENTOS
-          mandatoryInSearch: True
 
   edges:
-  - label: Course_Training
-    fromVertexLabel: Event.Training
-    toVertexLabel: Object.Awareness_Campaign
-  - label: Completed_By
-    fromVertexLabel: Event.Training
-    toVertexLabel: Person.Natural
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Ingestion
-    toVertexLabel: Event.Training
+    fromVertexLabel: Object.Data_Source
+    toVertexLabel: Event.Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event.Group_Ingestion
     toVertexLabel: Event.Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object.Data_Source
-    toVertexLabel: Event.Group_Ingestion
+    fromVertexLabel: Event.Ingestion
+    toVertexLabel: Event.Meeting
 

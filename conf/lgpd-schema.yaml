@@ -439,6 +439,28 @@ propertyKeys:
   - name: Event.Ingestion.Type
     dataType: String
     cardinality: SINGLE
+  - name: Metadata.Type.Event.Meeting
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Event.Meeting.Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Meeting.Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Meeting.Title
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Meeting.Date
+    dataType: Date
+    cardinality: SINGLE
+  - name: Event.Meeting.Discussed_Topics
+    dataType: String
+    cardinality: SINGLE
+  - name: Event.Meeting.Participants
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata.Type.Event.Subject_Access_Request
     dataType: String
     cardinality: SINGLE
@@ -2292,6 +2314,9 @@ vertexLabels:
   - name: Event.Ingestion
     partition: False
     useStatic: False
+  - name: Event.Meeting
+    partition: False
+    useStatic: False
   - name: Event.Subject_Access_Request
     partition: False
     useStatic: False
@@ -2982,6 +3007,22 @@ vertexIndexes:
       - Event.Ingestion.Metadata_GUID
       - Event.Ingestion.Operation
       - Event.Ingestion.Type
+    propertyKeysMappings:
+    
+      {}
+    
+  - name: "Event.Meeting.MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata.Type.Event.Meeting
+      - Event.Meeting.Form_Id
+      - Event.Meeting.Title
+      - Event.Meeting.Date
+      - Event.Meeting.Discussed_Topics
+      - Event.Meeting.Participants
     propertyKeysMappings:
     
       {}
