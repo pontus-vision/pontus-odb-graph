@@ -34,10 +34,10 @@
         ]
       },
       {
-        "label": "Person.Employee",
+        "label": "Person.Natural",
         "props": [
           {
-            "name": "Person.Employee.Full_Name",
+            "name": "Person.Natural.Full_Name",
             "val": "${Nome0?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
@@ -120,7 +120,7 @@
       {
         "label": "Completed_By",
         "fromVertexLabel": "Event.Training",
-        "toVertexLabel": "Person.Employee"
+        "toVertexLabel": "Person.Natural"
       },
       {
         "label": "Has_Ingestion_Event",

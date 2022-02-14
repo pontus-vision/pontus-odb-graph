@@ -292,7 +292,7 @@ rules:
             type: java.util.Date
       #          URL: "${webUrl}"
 
-      - label: Person.Employee
+      - label: Person.Natural
         props:
           Full_Name: "${Nome0?.trim()?.toUpperCase()}"
       #          Role: "${Departamento0}"
@@ -345,7 +345,7 @@ rules:
 
       - label: "Completed_By"
         fromVertexLabel: "Event.Training"
-        toVertexLabel: "Person.Employee"
+        toVertexLabel: "Person.Natural"
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event.Ingestion"
@@ -1485,7 +1485,7 @@ rules:
         fromVertexLabel: "Event.Ingestion"
         toVertexLabel: "Object.Legal_Actions"
 
-  sharepoint_p_and_pd_committee_meetings:
+  sharepoint_meetings:
 
     vertices:
       - label: Event.Meeting

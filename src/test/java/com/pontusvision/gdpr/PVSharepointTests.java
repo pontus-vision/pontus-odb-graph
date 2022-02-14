@@ -28,7 +28,7 @@ public class PVSharepointTests extends AppTest {
     try {
 
       jsonTestUtil("non-official-pv-extract-sharepoint-p-and-pd-committee-meetings.json",
-              "$.queryResp[*].fields", "sharepoint_p_and_pd_committee_meetings");
+              "$.queryResp[*].fields", "sharepoint_meetings");
 
       String topicsDiscussedMeeting1 =
               App.executor.eval("App.g.V().has('Event.Meeting.Form_Id', eq('1'))" +
@@ -67,13 +67,13 @@ public class PVSharepointTests extends AppTest {
 
   }
 
-  // Testing for upsert of two similar json data using sharepoint_p_and_pd_committee_meetings POLE
+  // Testing for upsert of two similar json data using sharepoint_meetings POLE
   @Test
   public void test00002UpsertSharepointPAndPDCommitteeMeetings() throws InterruptedException {
     try {
 
       jsonTestUtil("non-official-pv-extract-sharepoint-p-and-pd-committee-meetings.json",
-              "$.queryResp[*].fields", "sharepoint_p_and_pd_committee_meetings");
+              "$.queryResp[*].fields", "sharepoint_meetings");
 
       String countEventIngestions =
               App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('P & PD Committee Meetings'))" +
@@ -85,7 +85,7 @@ public class PVSharepointTests extends AppTest {
                       ".dedup().count().next().toString()").get().toString();
 
       jsonTestUtil("non-official-pv-extract-sharepoint-p-and-pd-committee-meetings2.json",
-              "$.queryResp[*].fields", "sharepoint_p_and_pd_committee_meetings");
+              "$.queryResp[*].fields", "sharepoint_meetings");
 
       String countEventIngestionsAgain =
               App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('P & PD Committee Meetings'))" +
