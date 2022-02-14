@@ -38,6 +38,9 @@ class ODBSchemaManager {
     def dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     graph.executeSql('ALTER DATABASE DATETIMEFORMAT "' + dateFormat + '"', [:])
     graph.executeSql('ALTER DATABASE CONFLICTSTRATEGY "content" ', [:])
+//    graph.executeSql("ALTER DATABASE demodb plocal users ( admin identified by '${System.getenv('ORIENTDB_ROOT_PASSWORD')?:'admin'}' role admin)");
+
+
 
     Map<String, OProperty> propsMap = [:]
     for (f in files) {
