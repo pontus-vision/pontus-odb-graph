@@ -61,4 +61,32 @@ public class PVScoreTestsConsent extends AppTest {
 
   }
 
+  @Test
+  public void test00002ConsentScore100pcnt() throws InterruptedException {
+    try {
+
+      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo2.json", "$.queryResp[*].fields",
+          "sharepoint_mapeamentos");
+
+      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos3.json", "$.queryResp[*].fields",
+          "sharepoint_consents");
+
+
+
+      Map<String, Long> retVals = new HashMap<>();
+
+      long score = (long) gdpr.getConsentScores(retVals);
+
+      assertEquals(100L, score);
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
 }
