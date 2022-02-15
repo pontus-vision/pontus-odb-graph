@@ -4057,13 +4057,14 @@ the end of the process.
 
 
     long numConsent = App.g.V().has('Metadata.Type.Event.Consent', eq('Event.Consent'))
-            .where(
+//            .where(
                     __.out('Consent').has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).dedup()
                             .where(
                                     __.out('Has_Lawful_Basis_On').has('Object.Lawful_Basis.Description',PText.textContainsPrefix('CONSENT')
                                     )
                             )
-            ).count().next()
+//            )
+    .count().next()
 
     long percentConsent = (long) ((double )numConsent / (double )numProcedures * 100.0)
 
