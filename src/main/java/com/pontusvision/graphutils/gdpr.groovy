@@ -4058,7 +4058,7 @@ the end of the process.
 
     long numConsent = App.g.V().has('Metadata.Type.Event.Consent', eq('Event.Consent'))
 //            .where(
-                    __.out('Consent').has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).dedup()
+                    .out('Consent').has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).dedup()
                             .where(
                                     __.out('Has_Lawful_Basis_On').has('Object.Lawful_Basis.Description',PText.textContainsPrefix('CONSENT')
                                     )
@@ -4066,11 +4066,31 @@ the end of the process.
 //            )
     .count().next()
 
-    long percentConsent = (long) ((double )numConsent / (double )numProcedures * 100.0)
+    long percentConsent = numProcedures > 0 ? (long) ((double )numConsent / (double )numProcedures * 100.0):0
 
-    scoresMap.put(PontusJ2ReportingFunctions.translate('Consent'), percentConsent)
+    long numWithoutAnyConsent = numProcedures - numConsent;
+    long pcntWithoutAnyConsent = 100L - percentConsent;
 
-    return percentConsent
+    // percentConsent  - score
+    //        0        -  0
+    //       100       - 100
+    //        90       -  x
+    //        75       -  30
+    //        66       -
+    //        50       -  20
+    //        25       -  10
+    //  score = 0.4 * percentConsent
+
+    long scoreValue = 100L
+    if (numProcedures > 0 && percentConsent  < 100L) {
+
+      scoreValue = percentConsent * 0.4
+
+    }
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Consent'), scoreValue)
+
+
+    return scoreValue
 
 //    long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L))
 //    def dateThreshold = new java.util.Date(ageThresholdMs)
@@ -4140,7 +4160,7 @@ the end of the process.
 //
 //      long pcntWithoutAnyConsent = (long) (100L * numWithoutAnyConsent / numAdults)
 //      if (pcntWithoutAnyConsent > 10) {
-//        scoreValue -= 45L
+//        scoreValue -= `45L`
 //      } else if (numWithoutAnyConsent > 0) {
 //        scoreValue -= (25L + 2L * pcntWithoutAnyConsent)
 //      }

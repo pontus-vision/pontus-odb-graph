@@ -49,55 +49,7 @@ public class PVScoreTestsConsent extends AppTest {
 
       long score = (long) gdpr.getConsentScores(retVals);
 
-      assertEquals(54L, score);
-
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      assertNull(e);
-
-    }
-
-
-  }
-
-  @Test
-  public void test00002DataBreachesScores() throws InterruptedException {
-    try {
-
-      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json", "$.queryResp[*].fields",
-              "sharepoint_data_breaches");
-
-
-      Map<String, Long> retVals = new HashMap<>();
-
-      long score = (long) gdpr.getDataBreachesScores(retVals);
-
-      assertEquals(37L, score, "Expected to lose 63 points because there is one Customer Data Stolen (External)");
-
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      assertNull(e);
-
-    }
-
-
-  }
-
-  @Test
-  public void test00003DataBreachesScores() throws InterruptedException {
-    try {
-
-      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json", "$.queryResp[*].fields",
-          "sharepoint_data_breaches");
-
-
-      Map<String, Long> retVals = new HashMap<>();
-
-      long score = (long) gdpr.getDataBreachesScores(retVals);
-
-      assertEquals(37L, score, "Expected to lose 63 points because there is one Customer Data Stolen (External)");
+      assertEquals(26L, score);
 
 
     } catch (Exception e) {
