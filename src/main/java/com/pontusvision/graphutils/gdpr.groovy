@@ -4046,7 +4046,6 @@ the end of the process.
     return scoreValue
 
   }
-
   static def getConsentScores(def scoresMap) {
 
     long numProcedures = App.g.V().has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
@@ -4058,13 +4057,13 @@ the end of the process.
 
     long numConsent = App.g.V().has('Metadata.Type.Event.Consent', eq('Event.Consent'))
 //            .where(
-                    .out('Consent').has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).dedup()
-                            .where(
-                                    __.out('Has_Lawful_Basis_On').has('Object.Lawful_Basis.Description',PText.textContainsPrefix('CONSENT')
-                                    )
-                            )
+            .out('Consent').has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).dedup()
+            .where(
+                    __.out('Has_Lawful_Basis_On').has('Object.Lawful_Basis.Description',PText.textContainsPrefix('CONSENT')
+                    )
+            )
 //            )
-    .count().next()
+            .count().next()
 
     long percentConsent = numProcedures > 0 ? (long) ((double )numConsent / (double )numProcedures * 100.0):0
 
@@ -4180,6 +4179,111 @@ the end of the process.
 
 //    scoresMap.put(PontusJ2ReportingFunctions.translate('Consent'), scoreValue)
 //    return scoreValue
+
+  }
+
+  static def getLegalActionScores(def scoresMap) {
+
+    long lastSixMonths = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 0.5))
+    def dateThreshold = new java.util.Date(lastSixMonths)
+
+
+    long numLegalActions =
+            App.g.V().has('Object.Legal_Actions.Date'
+                    , gt(dateThreshold)
+            )
+                    .count().next()
+
+
+
+    // num Legal Actions  - score
+    //        0        -  100
+    //        1        -  50
+    //        >1       -  0
+
+
+    long scoreValue = 100L
+    if (numLegalActions == 1){
+      scoreValue -= 50L
+    }
+    else if (numLegalActions > 1){
+      scoreValue =0
+    }
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Legal Actions'), scoreValue)
+
+
+    return scoreValue
+
+
+  }
+
+  static def getPrivacyDocsScores(def scoresMap) {
+
+    long lastTwelveMonths = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L))
+    def dateThreshold = new java.util.Date(lastTwelveMonths)
+
+
+    long numPrivacyDocs =
+            App.g.V().has('Object.Privacy_Docs.Date'
+                    , gt(dateThreshold)
+            )
+                    .count().next()
+
+
+
+    // num Privacy Docs  - score
+    //        >=4        -  100
+    //         3         -  50
+    //        <3         -  0
+
+
+    long scoreValue = 100L
+    if (numPrivacyDocs == 3){
+      scoreValue -= 50L
+    }
+    else if (numPrivacyDocs< 3 ){
+      scoreValue =0
+    }
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Docs'), scoreValue)
+
+
+    return scoreValue
+
+
+  }
+
+  static def getMeetingsScores(def scoresMap) {
+
+    long lastTwelveMonths = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 0.5))
+    def dateThreshold = new java.util.Date(lastTwelveMonths)
+
+
+    long numPrivacyDocs =
+            App.g.V().has('Event.Meeting.Date'
+                    , gt(dateThreshold)
+            )
+                    .count().next()
+
+
+
+    // num Privacy Docs  - score
+    //        >=3        -  100
+    //         2         -  50
+    //        <2         -  0
+
+
+    long scoreValue = 100L
+    if (numPrivacyDocs == 2){
+      scoreValue -= 50L
+    }
+    else if (numPrivacyDocs< 2 ){
+      scoreValue =0
+    }
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Meetings'), scoreValue)
+
+
+    return scoreValue
+
 
   }
 
@@ -4598,8 +4702,12 @@ the end of the process.
                     1 * getLawfulBasisScores(scoresMap) +
                     6 * getPrivacyNoticesScores(scoresMap) +
                     6 * getPrivacyImpactAssessmentScores(scoresMap) +
-                    4 * getSubjectAccessRequestScores(scoresMap)
-    ) / 39
+                    4 * getSubjectAccessRequestScores(scoresMap) +
+                    getLegalActionScores(scoresMap) +
+                    getPrivacyDocsScores(scoresMap) +
+                    getMeetingsScores(scoresMap)
+    ) / 42
+
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Total Score'), totalScore)
 
