@@ -2,15 +2,15 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Event.Training",
+        "label": "Event_Training",
         "props": [
           {
-            "name": "Event.Training.Form_Id",
+            "name": "Event_Training_Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Training.Status",
+            "name": "Event_Training_Status",
             "val": "${status}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -18,15 +18,15 @@
         ]
       },
       {
-        "label": "Object.Awareness_Campaign",
+        "label": "Object_Awareness_Campaign",
         "props": [
           {
-            "name": "Object.Awareness_Campaign.Description",
+            "name": "Object_Awareness_Campaign_Description",
             "val": "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Awareness_Campaign.Start_Date",
+            "name": "Object_Awareness_Campaign_Start_Date",
             "val": "${Realizadoem}",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
@@ -34,45 +34,45 @@
         ]
       },
       {
-        "label": "Person.Natural",
+        "label": "Person_Natural",
         "props": [
           {
-            "name": "Person.Natural.Full_Name",
+            "name": "Person_Natural_Full_Name",
             "val": "${Nome0?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Event.Ingestion",
+        "label": "Event_Ingestion",
         "props": [
           {
-            "name": "Event.Ingestion.Type",
+            "name": "Event_Ingestion_Type",
             "val": "sharepoint/treinamentos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Operation",
+            "name": "Event_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Domain_b64",
+            "name": "Event_Ingestion_Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Create_Date",
+            "name": "Event_Ingestion_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Update_Date",
+            "name": "Event_Ingestion_Metadata_Update_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -81,30 +81,30 @@
         ]
       },
       {
-        "label": "Event.Group_Ingestion",
+        "label": "Event_Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Type",
+            "name": "Event_Group_Ingestion_Type",
             "val": "sharepoint/treinamentos",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Operation",
+            "name": "Event_Group_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source.Name",
             "val": "SHAREPOINT/TREINAMENTOS",
             "mandatoryInSearch": true
           }
@@ -114,28 +114,28 @@
     "edges": [
       {
         "label": "Course_Training",
-        "fromVertexLabel": "Event.Training",
-        "toVertexLabel": "Object.Awareness_Campaign"
+        "fromVertexLabel": "Event_Training",
+        "toVertexLabel": "Object_Awareness_Campaign"
       },
       {
         "label": "Completed_By",
-        "fromVertexLabel": "Event.Training",
-        "toVertexLabel": "Person.Natural"
+        "fromVertexLabel": "Event_Training",
+        "toVertexLabel": "Person_Natural"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Ingestion",
-        "toVertexLabel": "Event.Training"
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Event_Training"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
       }
     ]
   }

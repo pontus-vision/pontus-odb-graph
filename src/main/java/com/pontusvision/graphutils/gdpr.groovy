@@ -5,7 +5,7 @@ import com.orientechnologies.orient.core.metadata.schema.OClass
 import com.orientechnologies.orient.core.metadata.schema.OProperty
 
 // Long count = App.g.V()
-//   .has("Object.Contract.Description", eq("This is a Data Sharing Contract"))
+//   .has("Object_Contract_Description", eq("This is a Data Sharing Contract"))
 //   .count()
 //   .next()
 
@@ -68,97 +68,97 @@ class gdpr {
       }
 
 
-      def person = App.g.addV("Person.Natural").
-              property("Metadata.Controller", pg_metadataController).
-              property("Metadata.Processor", pg_metadataProcessor).
-              property("Metadata.Lineage", pg_metadataLineage).
-              property("Metadata.Redaction", pg_metadataRedaction).
+      def person = App.g.addV("Person_Natural").
+              property("Metadata_Controller", pg_metadataController).
+              property("Metadata_Processor", pg_metadataProcessor).
+              property("Metadata_Lineage", pg_metadataLineage).
+              property("Metadata_Redaction", pg_metadataRedaction).
               property("Metadata.Version", pg_metadataVersion).
-              property("Metadata.Create_Date", metadataCreateDate).
-              property("Metadata.Update_Date", metadataUpdateDate).
-              property("Metadata.Status", pg_metadataStatus).
-              property("Metadata.GDPR_Status", pg_metadataGDPRStatus).
-              property("Metadata.Lineage_Server_Tag", pg_metadataLineageServerTag).
-              property("Metadata.Lineage_Location_Tag", pg_metadataLineageLocationTag).
-              property("Metadata.Type", "Person.Natural").
-              property("Metadata.Type.Person.Natural", "Person.Natural").
-              property("Person.Natural.Full_Name", pg_name_first + " " + pg_name_last).
-              property("Person.Natural.Last_Name", pg_name_last).
-              property("Person.Natural.Gender", pg_gender).
-              property("Person.Natural.Nationality", pg_nat).
-              property("Person.Natural.Date_Of_Birth", dob).
-              property("Person.Natural.Title", pg_name_title).next()
+              property("Metadata_Create_Date", metadataCreateDate).
+              property("Metadata_Update_Date", metadataUpdateDate).
+              property("Metadata_Status", pg_metadataStatus).
+              property("Metadata_GDPR_Status", pg_metadataGDPRStatus).
+              property("Metadata_Lineage_Server_Tag", pg_metadataLineageServerTag).
+              property("Metadata_Lineage_Location_Tag", pg_metadataLineageLocationTag).
+              property("Metadata_Type", "Person_Natural").
+              property("Metadata_Type_Person_Natural", "Person_Natural").
+              property("Person_Natural_Full_Name", pg_name_first + " " + pg_name_last).
+              property("Person_Natural_Last_Name", pg_name_last).
+              property("Person_Natural_Gender", pg_gender).
+              property("Person_Natural_Nationality", pg_nat).
+              property("Person_Natural_Date_Of_Birth", dob).
+              property("Person_Natural_Title", pg_name_title).next()
 
-      def email = App.g.addV("Object.Email_Address").
-              property("Metadata.Controller", pg_metadataController).
-              property("Metadata.Processor", pg_metadataProcessor).
-              property("Metadata.Lineage", pg_metadataLineage).
-              property("Metadata.Redaction", pg_metadataRedaction).
+      def email = App.g.addV("Object_Email_Address").
+              property("Metadata_Controller", pg_metadataController).
+              property("Metadata_Processor", pg_metadataProcessor).
+              property("Metadata_Lineage", pg_metadataLineage).
+              property("Metadata_Redaction", pg_metadataRedaction).
               property("Metadata.Version", pg_metadataVersion).
-              property("Metadata.Create_Date", metadataCreateDate).
-              property("Metadata.Update_Date", metadataUpdateDate).
-              property("Metadata.Status", pg_metadataStatus).
-              property("Metadata.GDPR_Status", pg_metadataGDPRStatus).
-              property("Metadata.Lineage_Server_Tag", pg_metadataLineageServerTag).
-              property("Metadata.Lineage_Location_Tag", pg_metadataLineageLocationTag).
-              property("Metadata.Type", "Object.Email_Address").
-              property("Metadata.Type.Object.Email_Address", "Object.Email_Address").
-              property("Object.Email_Address.Email", pg_email).next()
+              property("Metadata_Create_Date", metadataCreateDate).
+              property("Metadata_Update_Date", metadataUpdateDate).
+              property("Metadata_Status", pg_metadataStatus).
+              property("Metadata_GDPR_Status", pg_metadataGDPRStatus).
+              property("Metadata_Lineage_Server_Tag", pg_metadataLineageServerTag).
+              property("Metadata_Lineage_Location_Tag", pg_metadataLineageLocationTag).
+              property("Metadata_Type", "Object_Email_Address").
+              property("Metadata_Type_Object_Email_Address", "Object_Email_Address").
+              property("Object_Email_Address_Email", pg_email).next()
 
 
-      def credential = App.g.addV("Object.Credential").
-              property("Metadata.Controller", pg_metadataController).
-              property("Metadata.Processor", pg_metadataProcessor).
-              property("Metadata.Lineage", pg_metadataLineage).
-              property("Metadata.Redaction", pg_metadataRedaction).
+      def credential = App.g.addV("Object_Credential").
+              property("Metadata_Controller", pg_metadataController).
+              property("Metadata_Processor", pg_metadataProcessor).
+              property("Metadata_Lineage", pg_metadataLineage).
+              property("Metadata_Redaction", pg_metadataRedaction).
               property("Metadata.Version", pg_metadataVersion).
-              property("Metadata.Create_Date", metadataCreateDate).
-              property("Metadata.Update_Date", metadataUpdateDate).
-              property("Metadata.Status", pg_metadataStatus).
-              property("Metadata.GDPR_Status", pg_metadataGDPRStatus).
-              property("Metadata.Lineage_Server_Tag", pg_metadataLineageServerTag).
-              property("Metadata.Lineage_Location_Tag", pg_metadataLineageLocationTag).
-              property("Metadata.Type", "Object.Credential").
-              property("Metadata.Type.Object.Credential", "Object.Credential").
-              property("Object.Credential.userId", pg_login_username).
-              property("Object.Credential.login.sha256", pg_login_sha256).next()
+              property("Metadata_Create_Date", metadataCreateDate).
+              property("Metadata_Update_Date", metadataUpdateDate).
+              property("Metadata_Status", pg_metadataStatus).
+              property("Metadata_GDPR_Status", pg_metadataGDPRStatus).
+              property("Metadata_Lineage_Server_Tag", pg_metadataLineageServerTag).
+              property("Metadata_Lineage_Location_Tag", pg_metadataLineageLocationTag).
+              property("Metadata_Type", "Object_Credential").
+              property("Metadata_Type_Object_Credential", "Object_Credential").
+              property("Object_Credential_userId", pg_login_username).
+              property("Object_Credential_login.sha256", pg_login_sha256).next()
 
-      def idCard = App.g.addV("Object.Identity_Card").
-              property("Metadata.Controller", pg_metadataController).
-              property("Metadata.Processor", pg_metadataProcessor).
-              property("Metadata.Lineage", pg_metadataLineage).
-              property("Metadata.Redaction", pg_metadataRedaction).
+      def idCard = App.g.addV("Object_Identity_Card").
+              property("Metadata_Controller", pg_metadataController).
+              property("Metadata_Processor", pg_metadataProcessor).
+              property("Metadata_Lineage", pg_metadataLineage).
+              property("Metadata_Redaction", pg_metadataRedaction).
               property("Metadata.Version", pg_metadataVersion).
-              property("Metadata.Create_Date", metadataCreateDate).
-              property("Metadata.Update_Date", metadataUpdateDate).
-              property("Metadata.Status", pg_metadataStatus).
-              property("Metadata.GDPR_Status", pg_metadataGDPRStatus).
-              property("Metadata.Lineage_Server_Tag", pg_metadataLineageServerTag).
-              property("Metadata.Lineage_Location_Tag", pg_metadataLineageLocationTag).
-              property("Metadata.Type", "Object.Identity_Card").
-              property("Metadata.Type.Object.Identity_Card", "Object.Identity_Card").
-              property("Object.Identity_Card.id_name", pg_id_name).
-              property("Object.Identity_Card.id_value", pg_id_value).next()
+              property("Metadata_Create_Date", metadataCreateDate).
+              property("Metadata_Update_Date", metadataUpdateDate).
+              property("Metadata_Status", pg_metadataStatus).
+              property("Metadata_GDPR_Status", pg_metadataGDPRStatus).
+              property("Metadata_Lineage_Server_Tag", pg_metadataLineageServerTag).
+              property("Metadata_Lineage_Location_Tag", pg_metadataLineageLocationTag).
+              property("Metadata_Type", "Object_Identity_Card").
+              property("Metadata_Type_Object_Identity_Card", "Object_Identity_Card").
+              property("Object_Identity_Card_id_name", pg_id_name).
+              property("Object_Identity_Card_id_value", pg_id_value).next()
 
 
-      def location = App.g.addV("Location.Address").
-              property("Metadata.Controller", pg_metadataController).
-              property("Metadata.Processor", pg_metadataProcessor).
-              property("Metadata.Lineage", pg_metadataLineage).
-              property("Metadata.Redaction", pg_metadataRedaction).
+      def location = App.g.addV("Location_Address").
+              property("Metadata_Controller", pg_metadataController).
+              property("Metadata_Processor", pg_metadataProcessor).
+              property("Metadata_Lineage", pg_metadataLineage).
+              property("Metadata_Redaction", pg_metadataRedaction).
               property("Metadata.Version", pg_metadataVersion).
-              property("Metadata.Create_Date", metadataCreateDate).
-              property("Metadata.Update_Date", metadataUpdateDate).
-              property("Metadata.Status", pg_metadataStatus).
-              property("Metadata.GDPR_Status", pg_metadataGDPRStatus).
-              property("Metadata.Lineage_Server_Tag", pg_metadataLineageServerTag).
-              property("Metadata.Lineage_Location_Tag", pg_metadataLineageLocationTag).
-              property("Metadata.Type", "Location.Address").
-              property("Metadata.Type.Location.Address", "Location.Address").
-              property("Location.Address.Street", pg_location_street).
-              property("Location.Address.City", pg_location_city).
-              property("Location.Address.State", pg_location_state).
-              property("Location.Address.Post_Code", pg_location_postcode).next()
+              property("Metadata_Create_Date", metadataCreateDate).
+              property("Metadata_Update_Date", metadataUpdateDate).
+              property("Metadata_Status", pg_metadataStatus).
+              property("Metadata_GDPR_Status", pg_metadataGDPRStatus).
+              property("Metadata_Lineage_Server_Tag", pg_metadataLineageServerTag).
+              property("Metadata_Lineage_Location_Tag", pg_metadataLineageLocationTag).
+              property("Metadata_Type", "Location_Address").
+              property("Metadata_Type_Location_Address", "Location_Address").
+              property("Location_Address_Street", pg_location_street).
+              property("Location_Address_City", pg_location_city).
+              property("Location_Address_State", pg_location_state).
+              property("Location_Address_Post_Code", pg_location_postcode).next()
 
 
       App.g.addE("Uses_Email").from(person).to(email).next()
@@ -213,29 +213,29 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 //    }
 
 
-      GraphTraversal awarenessCampaign = App.g.V().has("Metadata.Type.Object.Awareness_Campaign", eq("Object.Awareness_Campaign"))
+      GraphTraversal awarenessCampaign = App.g.V().has("Metadata_Type_Object_Awareness_Campaign", eq("Object_Awareness_Campaign"))
 
       if (awarenessCampaign.hasNext()) {
         awarenessCampaignId = awarenessCampaign.next().id()
       } else {
-        awarenessCampaignId = App.g.addV("Object.Awareness_Campaign").
-                property("Metadata.Controller", "Controller").
-                property("Metadata.Processor", "Processor").
-                property("Metadata.Lineage", "https://trainingcourses.com").
-                property("Metadata.Redaction", "/data/protection/officer").
+        awarenessCampaignId = App.g.addV("Object_Awareness_Campaign").
+                property("Metadata_Controller", "Controller").
+                property("Metadata_Processor", "Processor").
+                property("Metadata_Lineage", "https://trainingcourses.com").
+                property("Metadata_Redaction", "/data/protection/officer").
                 property("Metadata.Version", 1).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", "new").
-                property("Metadata.GDPR_Status", "n/a").
-                property("Metadata.Lineage_Server_Tag", "AWS_AAA").
-                property("Metadata.Lineage_Location_Tag", "GB").
-                property("Metadata.Type.Object.Awareness_Campaign", "Object.Awareness_Campaign").
-                property("Metadata.Type", "Object.Awareness_Campaign").
-                property("Object.Awareness_Campaign.Description", "GDPR Training Course Winter 2017").
-                property("Object.Awareness_Campaign.URL", "https://trainingcourses.com").
-                property("Object.Awareness_Campaign.Start_Date", metadataCreateDate).
-                property("Object.Awareness_Campaign.Stop_Date", metadataUpdateDate).
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", "new").
+                property("Metadata_GDPR_Status", "n/a").
+                property("Metadata_Lineage_Server_Tag", "AWS_AAA").
+                property("Metadata_Lineage_Location_Tag", "GB").
+                property("Metadata_Type_Object_Awareness_Campaign", "Object_Awareness_Campaign").
+                property("Metadata_Type", "Object_Awareness_Campaign").
+                property("Object_Awareness_Campaign_Description", "GDPR Training Course Winter 2017").
+                property("Object_Awareness_Campaign_URL", "https://trainingcourses.com").
+                property("Object_Awareness_Campaign_Start_Date", metadataCreateDate).
+                property("Object_Awareness_Campaign_Stop_Date", metadataUpdateDate).
                 next().id()
       }
 
@@ -304,44 +304,44 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         }
 
 
-        Vertex person = App.g.addV("Person.Employee").
-                property("Metadata.Type", "Person.Employee").
-                property("Metadata.Type.Person.Employee", "Person.Employee").
-                property("Person.Employee.Full_Name", item.get("pg_name_first") + " " + item.get("pg_name_last")).
-                property("Person.Employee.Last_Name", item.get("pg_name_last")).
-                property("Person.Employee.Gender", item.get("pg_gender")).
-                property("Person.Employee.Nationality", item.get("pg_nat")).
-                property("Person.Employee.Date_Of_Birth", dob).
-                property("Person.Employee.Role", role).
-                property("Person.Employee.Title", item.get("pg_name_title"))
+        Vertex person = App.g.addV("Person_Employee").
+                property("Metadata_Type", "Person_Employee").
+                property("Metadata_Type_Person_Employee", "Person_Employee").
+                property("Person_Employee_Full_Name", item.get("pg_name_first") + " " + item.get("pg_name_last")).
+                property("Person_Employee_Last_Name", item.get("pg_name_last")).
+                property("Person_Employee_Gender", item.get("pg_gender")).
+                property("Person_Employee_Nationality", item.get("pg_nat")).
+                property("Person_Employee_Date_Of_Birth", dob).
+                property("Person_Employee_Role", role).
+                property("Person_Employee_Title", item.get("pg_name_title"))
                 .next()
 
 
         def personId = person.id()
 
 
-        Vertex trainingEvent = App.g.addV("Event.Training").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        Vertex trainingEvent = App.g.addV("Event_Training").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Event.Training").
-                property("Metadata.Type.Event.Training", "Event.Training").
-                property("Event.Training.Status", distribution.sample()).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Event_Training").
+                property("Metadata_Type_Event_Training", "Event_Training").
+                property("Event_Training_Status", distribution.sample()).next()
 
 
         App.g.addE("Event_Training_Awareness_Campaign")
                 .from(trainingEvent)
                 .to(g.V(awarenessCampaignId).next())
-                .property("Metadata.Type", "Event_Training_Awareness_Campaign")
-                .property("Metadata.Create_Date", metadataCreateDate)
+                .property("Metadata_Type", "Event_Training_Awareness_Campaign")
+                .property("Metadata_Create_Date", metadataCreateDate)
                 .next()
 
 
@@ -350,8 +350,8 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         App.g.addE("Event_Training_Person")
                 .from(trainingEvent)
                 .to(person)
-        //        .property("Metadata.Type", "Event.Training.Awareness_Campaign")
-//        .property("Metadata.Create_Date", metadataCreateDate)
+        //        .property("Metadata_Type", "Event_Training_Awareness_Campaign")
+//        .property("Metadata_Create_Date", metadataCreateDate)
                 .next()
 
         if (counter > 1) {
@@ -359,7 +359,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
           try {
             Vertex boss = App.g.V()
-                    .has('Person.Employee.Role', eq(reportsTo))
+                    .has('Person_Employee_Role', eq(reportsTo))
                     .order()
                     .by(Order.shuffle)
                     .range(0, 1)
@@ -418,98 +418,98 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         }
 
 
-        def person = App.g.addV("Person.Natural").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def person = App.g.addV("Person_Natural").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Person.Natural").
-                property("Metadata.Type.Person.Natural", "Person.Natural").
-                property("Person.Natural.Full_Name", item.get("pg_name_first") + " " + item.get("pg_name_last")).
-                property("Person.Natural.Last_Name", item.get("pg_name_last")).
-                property("Person.Natural.Gender", item.get("pg_gender")).
-                property("Person.Natural.Nationality", item.get("pg_nat")).
-                property("Person.Natural.Date_Of_Birth", dob).
-                property("Person.Natural.Title", item.get("pg_name_title")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Person_Natural").
+                property("Metadata_Type_Person_Natural", "Person_Natural").
+                property("Person_Natural_Full_Name", item.get("pg_name_first") + " " + item.get("pg_name_last")).
+                property("Person_Natural_Last_Name", item.get("pg_name_last")).
+                property("Person_Natural_Gender", item.get("pg_gender")).
+                property("Person_Natural_Nationality", item.get("pg_nat")).
+                property("Person_Natural_Date_Of_Birth", dob).
+                property("Person_Natural_Title", item.get("pg_name_title")).next()
 
 
-        def email = App.g.addV("Object.Email_Address").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def email = App.g.addV("Object_Email_Address").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Object.Email_Address").
-                property("Metadata.Type.Object.Email_Address", "Object.Email_Address").
-                property("Object.Email_Address.Email", item.get("pg_email")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Object_Email_Address").
+                property("Metadata_Type_Object_Email_Address", "Object_Email_Address").
+                property("Object_Email_Address_Email", item.get("pg_email")).next()
 
 
-        def credential = App.g.addV("Object.Credential").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def credential = App.g.addV("Object_Credential").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Object.Credential").
-                property("Metadata.Type.Object.Credential", "Object.Credential").
-                property("Object.Credential.User_Id", item.get("pg_login_username")).
-                property("Object.Credential.Login_SHA256", item.get("pg_login_sha256")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Object_Credential").
+                property("Metadata_Type_Object_Credential", "Object_Credential").
+                property("Object_Credential_User_Id", item.get("pg_login_username")).
+                property("Object_Credential_Login_SHA256", item.get("pg_login_sha256")).next()
 
-        def idCard = App.g.addV("Object.Identity_Card").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def idCard = App.g.addV("Object_Identity_Card").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Object.Identity_Card").
-                property("Metadata.Type.Object.Identity_Card", "Object.Identity_Card").
-                property("Object.Identity_Card.Id_Name", item.get("pg_id_name")).
-                property("Object.Identity_Card.Id_Value", item.get("pg_id_value")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Object_Identity_Card").
+                property("Metadata_Type_Object_Identity_Card", "Object_Identity_Card").
+                property("Object_Identity_Card_Id_Name", item.get("pg_id_name")).
+                property("Object_Identity_Card_Id_Value", item.get("pg_id_value")).next()
 
 
-        def location = App.g.addV("Location.Address").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def location = App.g.addV("Location_Address").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Location.Address").
-                property("Metadata.Type.Location.Address", "Location.Address").
-                property("Location.Address.Street", item.get("pg_location_street")).
-                property("Location.Address.City", item.get("pg_location_city")).
-                property("Location.Address.State", item.get("pg_location_state")).
-                property("Location.Address.Post_Code", item.get("pg_location_postcode")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Location_Address").
+                property("Metadata_Type_Location_Address", "Location_Address").
+                property("Location_Address_Street", item.get("pg_location_street")).
+                property("Location_Address_City", item.get("pg_location_city")).
+                property("Location_Address_State", item.get("pg_location_state")).
+                property("Location_Address_Post_Code", item.get("pg_location_postcode")).next()
 
 
         App.g.addE("Uses_Email").from(person).to(email).next()
@@ -614,7 +614,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
         sb?.append("\n Looking for  existing person based on the $customerId ")
 
-        def personTrav = App.g.V().has("Person.Natural.Customer_ID", customerId)
+        def personTrav = App.g.V().has("Person_Natural_Customer_ID", customerId)
 
         def person = null
         if (personTrav.hasNext()) {
@@ -622,27 +622,27 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
           sb?.append("\n Found  existing person based on the $customerId ")
 
         } else {
-          person = App.g.addV("Person.Natural").
-                  property("Metadata.Controller", item.get("pg_metadataController")).
-                  property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                  property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                  property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+          person = App.g.addV("Person_Natural").
+                  property("Metadata_Controller", item.get("pg_metadataController")).
+                  property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                  property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                  property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                   property("Metadata.Version", item.get("pg_metadataVersion")).
-                  property("Metadata.Create_Date", metadataCreateDate).
-                  property("Metadata.Update_Date", metadataUpdateDate).
-                  property("Metadata.Status", item.get("pg_metadataStatus")).
-                  property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                  property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                  property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                  property("Metadata.Type", "Person.Natural").
-                  property("Metadata.Type.Person.Natural", "Person.Natural").
-                  property("Person.Natural.Full_Name", (item.get("pg_First_Name") + " " + item.get("pg_Last_Name"))?.toUpperCase()).
-                  property("Person.Natural.Last_Name", item.get("pg_Last_Name")?.toUpperCase()).
-                  property("Person.Natural.Gender", gender).
-                  property("Person.Natural.Nationality", nationality).
-                  property("Person.Natural.Date_Of_Birth", dob).
-                  property("Person.Natural.Customer_ID", customerId).
-                  property("Person.Natural.Title", title).next()
+                  property("Metadata_Create_Date", metadataCreateDate).
+                  property("Metadata_Update_Date", metadataUpdateDate).
+                  property("Metadata_Status", item.get("pg_metadataStatus")).
+                  property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                  property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                  property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                  property("Metadata_Type", "Person_Natural").
+                  property("Metadata_Type_Person_Natural", "Person_Natural").
+                  property("Person_Natural_Full_Name", (item.get("pg_First_Name") + " " + item.get("pg_Last_Name"))?.toUpperCase()).
+                  property("Person_Natural_Last_Name", item.get("pg_Last_Name")?.toUpperCase()).
+                  property("Person_Natural_Gender", gender).
+                  property("Person_Natural_Nationality", nationality).
+                  property("Person_Natural_Date_Of_Birth", dob).
+                  property("Person_Natural_Customer_ID", customerId).
+                  property("Person_Natural_Title", title).next()
 
         }
 
@@ -651,26 +651,26 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
         if (emailStr) {
 
-          def emailTrav = App.g.V().has("Object.Email_Address.Email")
+          def emailTrav = App.g.V().has("Object_Email_Address_Email")
 
           if (emailTrav.hasNext()) {
             email = emailTrav.next()
           } else {
-            email = App.g.addV("Object.Email_Address").
-                    property("Metadata.Controller", item.get("pg_metadataController")).
-                    property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                    property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                    property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+            email = App.g.addV("Object_Email_Address").
+                    property("Metadata_Controller", item.get("pg_metadataController")).
+                    property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                    property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                    property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                     property("Metadata.Version", item.get("pg_metadataVersion")).
-                    property("Metadata.Create_Date", metadataCreateDate).
-                    property("Metadata.Update_Date", metadataUpdateDate).
-                    property("Metadata.Status", item.get("pg_metadataStatus")).
-                    property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                    property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                    property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                    property("Metadata.Type", "Object.Email_Address").
-                    property("Metadata.Type.Object.Email_Address", "Object.Email_Address").
-                    property("Object.Email_Address.Email", emailStr).next()
+                    property("Metadata_Create_Date", metadataCreateDate).
+                    property("Metadata_Update_Date", metadataUpdateDate).
+                    property("Metadata_Status", item.get("pg_metadataStatus")).
+                    property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                    property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                    property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                    property("Metadata_Type", "Object_Email_Address").
+                    property("Metadata_Type_Object_Email_Address", "Object_Email_Address").
+                    property("Object_Email_Address_Email", emailStr).next()
           }
 
         }
@@ -686,7 +686,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         LocationAddress addr = LocationAddress.fromString(address)
 
 
-        def locationTrav = App.g.V().has("Location.Address.Post_Code", postCode).has("Location.Address.Full_Address", address)
+        def locationTrav = App.g.V().has("Location_Address_Post_Code", postCode).has("Location_Address_Full_Address", address)
 
 
         if (locationTrav.hasNext()) {
@@ -696,30 +696,30 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
           sb?.append("\n DID NOT FIND an existing location based on the $postCode and $address")
 
 
-          locationTrav = App.g.addV("Location.Address").
-                  property("Metadata.Controller", item.get("pg_metadataController")).
-                  property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                  property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                  property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+          locationTrav = App.g.addV("Location_Address").
+                  property("Metadata_Controller", item.get("pg_metadataController")).
+                  property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                  property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                  property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                   property("Metadata.Version", item.get("pg_metadataVersion")).
-                  property("Metadata.Create_Date", metadataCreateDate).
-                  property("Metadata.Update_Date", metadataUpdateDate).
-                  property("Metadata.Status", item.get("pg_metadataStatus")).
-                  property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                  property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                  property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                  property("Metadata.Type", "Location.Address").
-                  property("Metadata.Type.Location.Address", "Location.Address").
-                  property("Location.Address.Full_Address", address).
-                  property("Location.Address.Post_Code", item.get("pg_Post_Code"))
+                  property("Metadata_Create_Date", metadataCreateDate).
+                  property("Metadata_Update_Date", metadataUpdateDate).
+                  property("Metadata_Status", item.get("pg_metadataStatus")).
+                  property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                  property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                  property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                  property("Metadata_Type", "Location_Address").
+                  property("Metadata_Type_Location_Address", "Location_Address").
+                  property("Location_Address_Full_Address", address).
+                  property("Location_Address_Post_Code", item.get("pg_Post_Code"))
 
 
-          locationTrav = addr.addPropsToGraphTraverser(locationTrav, "Location.Address.parser.", sb)
+          locationTrav = addr.addPropsToGraphTraverser(locationTrav, "Location_Address_parser.", sb)
           location = locationTrav.next()
 
-          // property("Location.Address.Street", item.get("pg_location_street")).
-          // property("Location.Address.City", item.get("pg_location_city")).
-          // property("Location.Address.State", item.get("pg_location_state")).
+          // property("Location_Address_Street", item.get("pg_location_street")).
+          // property("Location_Address_City", item.get("pg_location_city")).
+          // property("Location_Address_State", item.get("pg_location_state")).
 
 
         }
@@ -764,19 +764,19 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
       for (int i = 0; i < name.length; i++) {
         Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-                App.g.V().has("Object.Data_Source.Name", eq(name[i])).tryNext()
+                App.g.V().has("Object_Data_Source.Name", eq(name[i])).tryNext()
         GraphTraversal<Vertex, Vertex> dataSource
         if (!dataSourceOption.isPresent()) {
-          dataSource = App.g.addV("Object.Data_Source")
+          dataSource = App.g.addV("Object_Data_Source")
         } else {
           dataSource = App.g.V(dataSourceOption.get().id())
         }
-        Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Data_Source").
-                property("Metadata.Type.Object.Data_Source", "Object.Data_Source").
-                property("Object.Data_Source.Name", name[i]).
-                property("Object.Data_Source.Create_Date", new Date()).
-                property("Object.Data_Source.Update_Date", new Date()).
-                property("Object.Data_Source.Description", description[i]).
+        Vertex vertexDataSource = dataSource.property("Metadata_Type", "Object_Data_Source").
+                property("Metadata_Type_Object_Data_Source", "Object_Data_Source").
+                property("Object_Data_Source.Name", name[i]).
+                property("Object_Data_Source.Create_Date", new Date()).
+                property("Object_Data_Source.Update_Date", new Date()).
+                property("Object_Data_Source.Description", description[i]).
                 next()
 
       }
@@ -817,19 +817,19 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
       def types = new String[6]
 
-      types[0] = "Person.Natural"
-      types[1] = "Object.Email_Address"
-      types[2] = "Object.Credential"
-      types[3] = "Object.Identity_Card"
-      types[4] = "Event.Consent"
-      types[5] = "Event.Subject_Access_Request"
+      types[0] = "Person_Natural"
+      types[1] = "Object_Email_Address"
+      types[2] = "Object_Credential"
+      types[3] = "Object_Identity_Card"
+      types[4] = "Event_Consent"
+      types[5] = "Event_Subject_Access_Request"
 
       def props
 
       for (def i = 0; i < types.length; i++) {
         def typeStr = types[i]
 
-        props = App.g.V().has('Metadata.Type' + "." + typeStr, eq(typeStr)).range(0, 1).properties().key().findAll {
+        props = App.g.V().has('Metadata_Type' + "." + typeStr, eq(typeStr)).range(0, 1).properties().key().findAll {
           (!it.startsWith('Metadata'))
         }
 
@@ -844,25 +844,25 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
           def metadataCreateDate = new Date((long) createMillis)
           def metadataUpdateDate = new Date((long) updateMillis)
 
-          def dp = App.g.addV("Object.Data_Procedures").
-                  property("Metadata.Redaction", "/dataprotectionofficer/aaa").
+          def dp = App.g.addV("Object_Data_Procedures").
+                  property("Metadata_Redaction", "/dataprotectionofficer/aaa").
                   property("Metadata.Version", "1").
-                  property("Metadata.Create_Date", metadataCreateDate).
-                  property("Metadata.Update_Date", metadataUpdateDate).
-                  property("Metadata.Lineage_Server_Tag", "AWS EUR1").
-                  property("Metadata.Lineage_Location_Tag", "GB").
-                  property("Metadata.Type", "Object.Data_Procedures").
-                  property("Metadata.Type.Object.Data_Procedures", "Object.Data_Procedures").
-                  property("Object.Data_Procedures.Type", typeStr.replaceAll('[_.]', ' ')).
-                  property("Object.Data_Procedures.Property", propStr.replaceAll('[_.]', ' ')).
-                  property("Object.Data_Procedures.Delete_URL", 'https://api-gateway/delete-' + propStr.toLowerCase()).
-                  property("Object.Data_Procedures.Delete_Mechanism", distributionRequestType.sample()).
-                  property("Object.Data_Procedures.Update_URL", 'https://api-gateway/update-' + propStr.toLowerCase()).
-                  property("Object.Data_Procedures.Update_Mechanism", distributionRequestType.sample()).
+                  property("Metadata_Create_Date", metadataCreateDate).
+                  property("Metadata_Update_Date", metadataUpdateDate).
+                  property("Metadata_Lineage_Server_Tag", "AWS EUR1").
+                  property("Metadata_Lineage_Location_Tag", "GB").
+                  property("Metadata_Type", "Object_Data_Procedures").
+                  property("Metadata_Type_Object_Data_Procedures", "Object_Data_Procedures").
+                  property("Object_Data_Procedures_Type", typeStr.replaceAll('[_.]', ' ')).
+                  property("Object_Data_Procedures_Property", propStr.replaceAll('[_.]', ' ')).
+                  property("Object_Data_Procedures_Delete_URL", 'https://api-gateway/delete-' + propStr.toLowerCase()).
+                  property("Object_Data_Procedures_Delete_Mechanism", distributionRequestType.sample()).
+                  property("Object_Data_Procedures_Update_URL", 'https://api-gateway/update-' + propStr.toLowerCase()).
+                  property("Object_Data_Procedures_Update_Mechanism", distributionRequestType.sample()).
                   next()
 
           for (int k = 0; k < randValK; k++) {
-            Vertex pia = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment')).order().by(Order.shuffle).range(0, 1).next()
+            Vertex pia = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment')).order().by(Order.shuffle).range(0, 1).next()
             App.g.addE("Has_Data_Procedures").from(pia).to(dp).next()
 
 
@@ -898,13 +898,13 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
       for (int i = 0; i < randVal1; i++) {
 
-        Vertex dataSource = App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+        Vertex dataSource = App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
                 .order().by(Order.shuffle).range(0, 1).next()
 
 
         def numServersImpacted = randVal.nextInt(10) + 5
 
-        App.g.V().has('Metadata.Type.Object.AWS_Instance', eq('Object.AWS_Instance'))
+        App.g.V().has('Metadata_Type_Object_AWS_Instance', eq('Object_AWS_Instance'))
                 .order().by(Order.shuffle).range(0, numServersImpacted).each { awsInstance ->
           App.g.addE("Runs_On").from(dataSource).to(awsInstance).next()
 
@@ -912,7 +912,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 //
 //      for (def j = 0; j < numServersImpacted; j++) {
 //
-//        Vertex awsInstance = App.g.V().has('Metadata.Type.Object.AWS_Instance', P.eq('Object.AWS_Instance'))
+//        Vertex awsInstance = App.g.V().has('Metadata_Type_Object_AWS_Instance', P.eq('Object_AWS_Instance'))
 //          .order().by(Order.shuffle).range(0, 1).next()
 //
 //        App.g.addE("Impacted_By_Data_Breach").from(awsInstance).to(dataSource).next()
@@ -950,14 +950,14 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
         int randVal2 = randVal.nextInt(2) + 1
 
-        Vertex dataSource = App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+        Vertex dataSource = App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
                 .order().by(Order.shuffle).range(0, 1).next()
 
 
-        Vertex pia = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
+        Vertex pia = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
                 .order().by(Order.shuffle).range(0, 1).next()
 
-        Vertex privacyNotice = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
+        Vertex privacyNotice = App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
                 .order().by(Order.shuffle).range(0, 1).next()
 
 
@@ -1037,20 +1037,20 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         def status = distributionStatus.sample()
         def source = distributionSource.sample()
         def impact = distributionImpact.sample()
-        App.g.addV("Event.Data_Breach").
-                property("Metadata.Lineage", "Random generator").
-                property("Metadata.Redaction", "/data/protection/officer").
+        App.g.addV("Event_Data_Breach").
+                property("Metadata_Lineage", "Random generator").
+                property("Metadata_Redaction", "/data/protection/officer").
                 property("Metadata.Version", "1").
-                property("Event.Data_Breach.Metadata.Create_Date", metadataCreateDate).
-                property("Event.Data_Breach.Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.GDPR_Status", "Data Breach").
-                property("Metadata.Type", "Event.Data_Breach").
-                property("Metadata.Type.Event.Data_Breach", "Event.Data_Breach").
-                property("Event.Data_Breach.Status", status).
-                property("Event.Data_Breach.Source", source).
-                property("Event.Data_Breach.Impact", impact).
-                property("Event.Data_Breach.Id", 'DBE ' + source + i).
-                property("Event.Data_Breach.Description", "Data Breach event reported from " + source).
+                property("Event_Data_Breach_Metadata_Create_Date", metadataCreateDate).
+                property("Event_Data_Breach_Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_GDPR_Status", "Data Breach").
+                property("Metadata_Type", "Event_Data_Breach").
+                property("Metadata_Type_Event_Data_Breach", "Event_Data_Breach").
+                property("Event_Data_Breach_Status", status).
+                property("Event_Data_Breach_Source", source).
+                property("Event_Data_Breach_Impact", impact).
+                property("Event_Data_Breach_Id", 'DBE ' + source + i).
+                property("Event_Data_Breach_Description", "Data Breach event reported from " + source).
                 next()
 
 
@@ -1107,29 +1107,29 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         def metadataUpdateDate = new Date((long) updateMillis)
 
         def stat = distributionStatus.sample()
-        Vertex sar = App.g.addV("Event.Subject_Access_Request").
-                property("Metadata.Controller", "ABC INC").
-                property("Metadata.Processor", "ABC INC").
-                property("Metadata.Lineage", "Random generator").
-                property("Metadata.Redaction", "/dataprotectionofficer/aaa").
+        Vertex sar = App.g.addV("Event_Subject_Access_Request").
+                property("Metadata_Controller", "ABC INC").
+                property("Metadata_Processor", "ABC INC").
+                property("Metadata_Lineage", "Random generator").
+                property("Metadata_Redaction", "/dataprotectionofficer/aaa").
                 property("Metadata.Version", "1").
-                property("Event.Subject_Access_Request.Metadata.Create_Date", metadataCreateDate).
-                property("Event.Subject_Access_Request.Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", stat).
-                property("Metadata.GDPR_Status", "SAR").
-                property("Metadata.Lineage_Server_Tag", "AWS EUR1").
-                property("Metadata.Lineage_Location_Tag", "GB").
-                property("Metadata.Type", "Event.Subject_Access_Request").
-                property("Metadata.Type.Event.Subject_Access_Request", "Event.Subject_Access_Request").
-                property("Event.Subject_Access_Request.Status", stat).
-                property("Event.Subject_Access_Request.Request_Type", distributionRequestType.sample()).
+                property("Event_Subject_Access_Request_Metadata_Create_Date", metadataCreateDate).
+                property("Event_Subject_Access_Request_Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", stat).
+                property("Metadata_GDPR_Status", "SAR").
+                property("Metadata_Lineage_Server_Tag", "AWS EUR1").
+                property("Metadata_Lineage_Location_Tag", "GB").
+                property("Metadata_Type", "Event_Subject_Access_Request").
+                property("Metadata_Type_Event_Subject_Access_Request", "Event_Subject_Access_Request").
+                property("Event_Subject_Access_Request_Status", stat).
+                property("Event_Subject_Access_Request_Request_Type", distributionRequestType.sample()).
                 next()
 
 
-        Optional<Vertex> employee = App.g.V().has('Metadata.Type.Person.Employee', eq('Person.Employee'))
+        Optional<Vertex> employee = App.g.V().has('Metadata_Type_Person_Employee', eq('Person_Employee'))
                 .order().by(Order.shuffle).range(0, 1).tryNext()
 
-        Optional<Vertex> person = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+        Optional<Vertex> person = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
                 .order().by(Order.shuffle).range(0, 1).tryNext()
 
 
@@ -1172,7 +1172,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
       for (int i = 0; i < randVal1; i++) {
 
-        Optional<GraphTraversal> trav = App.g.V().has('Metadata.Type.Event.Data_Breach', eq('Event.Data_Breach'))
+        Optional<GraphTraversal> trav = App.g.V().has('Metadata_Type_Event_Data_Breach', eq('Event_Data_Breach'))
                 .order().by(Order.shuffle).range(0, 1).tryNext()
 
         if (trav.isPresent()) {
@@ -1181,7 +1181,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
           def numServersImpacted = randVal.nextInt(10)
           for (def j = 0; j < numServersImpacted; j++) {
 
-            Vertex awsInstance = App.g.V().has('Metadata.Type.Object.AWS_Instance', eq('Object.AWS_Instance'))
+            Vertex awsInstance = App.g.V().has('Metadata_Type_Object_AWS_Instance', eq('Object_AWS_Instance'))
                     .order().by(Order.shuffle).range(0, 1).next()
 
             App.g.addE("Impacted_By_Data_Breach").from(awsInstance).to(dataSource).next()
@@ -1234,103 +1234,103 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         }
 
 
-        def person = App.g.addV("Person.Natural").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def person = App.g.addV("Person_Natural").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Person.Natural").
-                property("Metadata.Type.Person.Natural", "Person.Natural").
-                property("Person.Natural.Full_Name", item.get("pg_name_first") + " " + item.get("pg_name_last")).
-                property("Person.Natural.Last_Name", item.get("pg_name_last")).
-                property("Person.Natural.Gender", item.get("pg_gender")).
-                property("Person.Natural.Nationality", item.get("pg_nat")).
-                property("Person.Natural.Date_Of_Birth", dob).
-                property("Person.Natural.Title", item.get("pg_name_title")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Person_Natural").
+                property("Metadata_Type_Person_Natural", "Person_Natural").
+                property("Person_Natural_Full_Name", item.get("pg_name_first") + " " + item.get("pg_name_last")).
+                property("Person_Natural_Last_Name", item.get("pg_name_last")).
+                property("Person_Natural_Gender", item.get("pg_gender")).
+                property("Person_Natural_Nationality", item.get("pg_nat")).
+                property("Person_Natural_Date_Of_Birth", dob).
+                property("Person_Natural_Title", item.get("pg_name_title")).next()
 
 
-        def email = App.g.addV("Object.Email_Address").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def email = App.g.addV("Object_Email_Address").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Object.Email_Address").
-                property("Metadata.Type.Object.Email_Address", "Object.Email_Address").
-                property("Object.Email_Address.Email", item.get("pg_email")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Object_Email_Address").
+                property("Metadata_Type_Object_Email_Address", "Object_Email_Address").
+                property("Object_Email_Address_Email", item.get("pg_email")).next()
 
 
-        def credential = App.g.addV("Object.Credential").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def credential = App.g.addV("Object_Credential").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Object.Credential").
-                property("Metadata.Type.Object.Credential", "Object.Credential").
-                property("Object.Credential.User_Id", item.get("pg_login_username")).
-                property("Object.Credential.Login_SHA256", item.get("pg_login_sha256")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Object_Credential").
+                property("Metadata_Type_Object_Credential", "Object_Credential").
+                property("Object_Credential_User_Id", item.get("pg_login_username")).
+                property("Object_Credential_Login_SHA256", item.get("pg_login_sha256")).next()
 
-        def idCard = App.g.addV("Object.Identity_Card").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def idCard = App.g.addV("Object_Identity_Card").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Object.Identity_Card").
-                property("Metadata.Type.Object.Identity_Card", "Object.Identity_Card").
-                property("Object.Identity_Card.Id_Name", item.get("pg_id_name")).
-                property("Object.Identity_Card.Id_Value", item.get("pg_id_value")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Object_Identity_Card").
+                property("Metadata_Type_Object_Identity_Card", "Object_Identity_Card").
+                property("Object_Identity_Card_Id_Name", item.get("pg_id_name")).
+                property("Object_Identity_Card_Id_Value", item.get("pg_id_value")).next()
 
 
-        def location = App.g.addV("Location.Address").
-                property("Metadata.Controller", item.get("pg_metadataController")).
-                property("Metadata.Processor", item.get("pg_metadataProcessor")).
-                property("Metadata.Lineage", item.get("pg_metadataLineage")).
-                property("Metadata.Redaction", item.get("pg_metadataRedaction")).
+        def location = App.g.addV("Location_Address").
+                property("Metadata_Controller", item.get("pg_metadataController")).
+                property("Metadata_Processor", item.get("pg_metadataProcessor")).
+                property("Metadata_Lineage", item.get("pg_metadataLineage")).
+                property("Metadata_Redaction", item.get("pg_metadataRedaction")).
                 property("Metadata.Version", item.get("pg_metadataVersion")).
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Status", item.get("pg_metadataStatus")).
-                property("Metadata.GDPR_Status", item.get("pg_metadataGDPRStatus")).
-                property("Metadata.Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
-                property("Metadata.Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
-                property("Metadata.Type", "Location.Address").
-                property("Metadata.Type.Location.Address", "Location.Address").
-                property("Location.Address.Street", item.get("pg_location_street")).
-                property("Location.Address.City", item.get("pg_location_city")).
-                property("Location.Address.State", item.get("pg_location_state")).
-                property("Location.Address.Post_Code", item.get("pg_location_postcode")).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Status", item.get("pg_metadataStatus")).
+                property("Metadata_GDPR_Status", item.get("pg_metadataGDPRStatus")).
+                property("Metadata_Lineage_Server_Tag", item.get("pg_metadataLineageServerTag")).
+                property("Metadata_Lineage_Location_Tag", item.get("pg_metadataLineageLocationTag")).
+                property("Metadata_Type", "Location_Address").
+                property("Metadata_Type_Location_Address", "Location_Address").
+                property("Location_Address_Street", item.get("pg_location_street")).
+                property("Location_Address_City", item.get("pg_location_city")).
+                property("Location_Address_State", item.get("pg_location_state")).
+                property("Location_Address_Post_Code", item.get("pg_location_postcode")).next()
 
 
         def parentOrGuardian = App.g.V()
-                .has('Metadata.Type.Person.Natural', eq('Person.Natural'))
-                .where(__.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold)))
+                .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
+                .where(__.values('Person_Natural_Date_Of_Birth').is(lt(dateThreshold)))
                 .order().by(Order.shuffle).range(0, 1).next()
 
 
@@ -1408,35 +1408,35 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
       def metadataUpdateDate = new Date((long) updateMillis)
 
       /*
-        orgLabel = createVertexLabel(mgmt, "Event.Consent")
+        orgLabel = createVertexLabel(mgmt, "Event_Consent")
 
-eventConsentDate = createProp(mgmt, "Event.Consent.Date", Date.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
-eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
+eventConsentDate = createProp(mgmt, "Event_Consent_Date", Date.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
+eventConsentStatus = createProp(mgmt, "Event_Consent_Status", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
 
      */
 
 
       def stat = distributionStatus.sample()
-      def consent = App.g.addV("Event.Consent").
-              property("Metadata.Controller", "ABC INC").
-              property("Metadata.Processor", "ABC INC").
-              property("Metadata.Lineage", "Random generator").
-              property("Metadata.Redaction", "/dataprotectionofficer/aaa").
+      def consent = App.g.addV("Event_Consent").
+              property("Metadata_Controller", "ABC INC").
+              property("Metadata_Processor", "ABC INC").
+              property("Metadata_Lineage", "Random generator").
+              property("Metadata_Redaction", "/dataprotectionofficer/aaa").
               property("Metadata.Version", "1").
-              property("Event.Consent.Metadata.Create_Date", metadataCreateDate).
-              property("Event.Consent.Metadata.Update_Date", metadataUpdateDate).
-              property("Metadata.Status", stat).
-              property("Metadata.GDPR_Status", "SAR").
-              property("Metadata.Lineage_Server_Tag", "AWS EUR1").
-              property("Metadata.Lineage_Location_Tag", "GB").
-              property("Metadata.Type", "Event.Consent").
-              property("Event.Consent.Status", stat).
-              property("Event.Consent.Date", metadataUpdateDate).
+              property("Event_Consent_Metadata_Create_Date", metadataCreateDate).
+              property("Event_Consent_Metadata_Update_Date", metadataUpdateDate).
+              property("Metadata_Status", stat).
+              property("Metadata_GDPR_Status", "SAR").
+              property("Metadata_Lineage_Server_Tag", "AWS EUR1").
+              property("Metadata_Lineage_Location_Tag", "GB").
+              property("Metadata_Type", "Event_Consent").
+              property("Event_Consent_Status", stat).
+              property("Event_Consent_Date", metadataUpdateDate).
               next()
 
-//        def employee = App.g.V().has('Metadata.Type',eq('Person.Employee')).order().by(shuffle).range(0,1).next()
+//        def employee = App.g.V().has('Metadata_Type',eq('Person_Employee')).order().by(shuffle).range(0,1).next()
 
-      def person = App.g.V().has('Metadata.Type', eq('Person.Natural')).order().by(Order.shuffle).range(0, 1).next()
+      def person = App.g.V().has('Metadata_Type', eq('Person_Natural')).order().by(Order.shuffle).range(0, 1).next()
 
 
       App.g.addE("Consent").from(person).to(consent).next()
@@ -1445,7 +1445,7 @@ eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.
 
     }
 
-//    App.g.V().has("Metadata.Type", eq("Person.Natural")).as("people")
+//    App.g.V().has("Metadata_Type", eq("Person_Natural")).as("people")
 //            .addE("Consent").property("Consent.Date", new Date())
 //            .from("people").to(privNoticeVertex).next()
 
@@ -1469,25 +1469,25 @@ eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.
 
       for (int k = 0; k < numMoUs; k++) {
 
-        Vertex contract = App.g.addV("Object.Contract").
-                property("Object.Contract.Id", new Random().nextLong()).
-                property("Object.Contract.Description", "This is a Data Sharing Contract").
-                property("Object.Contract.Status", "Active").
-                property("Metadata.Type.Object.Contract", "Object.Contract").
-                property("Metadata.Type", "Object.Contract").
-                property("Object.Contract.Link", "https://www.abcinc.com/contract").next()
+        Vertex contract = App.g.addV("Object_Contract").
+                property("Object_Contract_Id", new Random().nextLong()).
+                property("Object_Contract_Description", "This is a Data Sharing Contract").
+                property("Object_Contract_Status", "Active").
+                property("Metadata_Type_Object_Contract", "Object_Contract").
+                property("Metadata_Type", "Object_Contract").
+                property("Object_Contract_Link", "https://www.abcinc.com/contract").next()
 
 
-        Vertex org = App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
+        Vertex org = App.g.V().has('Metadata_Type_Person_Organisation', eq('Person_Organisation'))
                 .order().by(Order.shuffle).range(0, 1).next()
 
-        Vertex org2 = App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
+        Vertex org2 = App.g.V().has('Metadata_Type_Person_Organisation', eq('Person_Organisation'))
                 .order().by(Order.shuffle).range(0, 1).next()
 
-        Vertex org3 = App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
+        Vertex org3 = App.g.V().has('Metadata_Type_Person_Organisation', eq('Person_Organisation'))
                 .order().by(Order.shuffle).range(0, 1).next()
 
-        Vertex dataSource = App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+        Vertex dataSource = App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
                 .order().by(Order.shuffle).range(0, 1).next()
 
         App.g.addE("Has_Contract").from(dataSource).to(contract).next()
@@ -1521,19 +1521,19 @@ eventConsentStatus = createProp(mgmt, "Event.Consent.Status", String.class, org.
 //    }
 
 
-      App.g.addV("Object.Privacy_Impact_Assessment").
-              property("Metadata.Create_Date", metadataCreateDate).
-              property("Metadata.Update_Date", metadataUpdateDate).
-              property("Metadata.Type", "Object.Privacy_Impact_Assessment").
-              property("Metadata.Type.Object.Privacy_Impact_Assessment", "Object.Privacy_Impact_Assessment").
-              property("Object.Privacy_Impact_Assessment.Description", "PIA for project xyz.").
-              property("Object.Privacy_Impact_Assessment.Start_Date", new Date()).
-              property("Object.Privacy_Impact_Assessment.Delivery_Date", new Date(System.currentTimeMillis() + 3600 * 24 * 365)).
-              property("Object.Privacy_Impact_Assessment.Risk_To_Individuals", "Low").
-              property("Object.Privacy_Impact_Assessment.Intrusion_On_Privacy", "Low").
-              property("Object.Privacy_Impact_Assessment.Risk_To_Corporation", "Low").
-              property("Object.Privacy_Impact_Assessment.Risk_Of_Reputational_Damage", "Low").
-              property("Object.Privacy_Impact_Assessment.Compliance_Check_Passed", "true").
+      App.g.addV("Object_Privacy_Impact_Assessment").
+              property("Metadata_Create_Date", metadataCreateDate).
+              property("Metadata_Update_Date", metadataUpdateDate).
+              property("Metadata_Type", "Object_Privacy_Impact_Assessment").
+              property("Metadata_Type_Object_Privacy_Impact_Assessment", "Object_Privacy_Impact_Assessment").
+              property("Object_Privacy_Impact_Assessment_Description", "PIA for project xyz.").
+              property("Object_Privacy_Impact_Assessment_Start_Date", new Date()).
+              property("Object_Privacy_Impact_Assessment_Delivery_Date", new Date(System.currentTimeMillis() + 3600 * 24 * 365)).
+              property("Object_Privacy_Impact_Assessment_Risk_To_Individuals", "Low").
+              property("Object_Privacy_Impact_Assessment_Intrusion_On_Privacy", "Low").
+              property("Object_Privacy_Impact_Assessment_Risk_To_Corporation", "Low").
+              property("Object_Privacy_Impact_Assessment_Risk_Of_Reputational_Damage", "Low").
+              property("Object_Privacy_Impact_Assessment_Compliance_Check_Passed", "true").
               next()
 
       /*
@@ -1729,24 +1729,24 @@ the end of the process.
       for (int i = 0; i < ilen; i++) {
 
 
-        GraphTraversal lawfulBasis1 = App.g.V().has("Object.Lawful_Basis.Description", eq(definitions[i]))
+        GraphTraversal lawfulBasis1 = App.g.V().has("Object_Lawful_Basis_Description", eq(definitions[i]))
 
         if (lawfulBasis1.hasNext()) {
           lawfulBasisVertices[i] = lawfulBasis1.next()
         } else {
-          lawfulBasisVertices[i] = App.g.addV("Object.Lawful_Basis").
-                  property("Metadata.Lineage", "https://gdpr-info.eu/art-6-gdpr/").
-                  property("Metadata.Redaction", "/data/protection/officer").
+          lawfulBasisVertices[i] = App.g.addV("Object_Lawful_Basis").
+                  property("Metadata_Lineage", "https://gdpr-info.eu/art-6-gdpr/").
+                  property("Metadata_Redaction", "/data/protection/officer").
                   property("Metadata.Version", 1).
-                  property("Metadata.Status", "new").
-                  property("Metadata.GDPR_Status", "n/a").
-                  property("Metadata.Lineage_Server_Tag", "AWS_AAA").
-                  property("Metadata.Lineage_Location_Tag", "GB").
-                  property("Metadata.Type", "Object.Lawful_Basis").
-                  property("Metadata.Type.Object.Lawful_Basis", "Object.Lawful_Basis").
-                  property("Object.Lawful_Basis.Id", i).
-                  property("Object.Lawful_Basis.Description", definitions[i]).
-                  property("Object.Lawful_Basis.Short_Description", shortDefinitions[i]).
+                  property("Metadata_Status", "new").
+                  property("Metadata_GDPR_Status", "n/a").
+                  property("Metadata_Lineage_Server_Tag", "AWS_AAA").
+                  property("Metadata_Lineage_Location_Tag", "GB").
+                  property("Metadata_Type", "Object_Lawful_Basis").
+                  property("Metadata_Type_Object_Lawful_Basis", "Object_Lawful_Basis").
+                  property("Object_Lawful_Basis_Id", i).
+                  property("Object_Lawful_Basis_Description", definitions[i]).
+                  property("Object_Lawful_Basis_Short_Description", shortDefinitions[i]).
                   next()
         }
 
@@ -1762,28 +1762,28 @@ the end of the process.
       for (int i = 0; i < ilen; i++) {
 
 
-        GraphTraversal privNotice = App.g.V().has("Object.Privacy_Notice.Description", eq(privNoticeDesc[i]))
+        GraphTraversal privNotice = App.g.V().has("Object_Privacy_Notice_Description", eq(privNoticeDesc[i]))
 
         if (privNotice.hasNext()) {
           privNotice.next()
         } else {
-          App.g.addV("Object.Privacy_Notice").
-                  property("Metadata.Type", "Object.Privacy_Notice").
-                  property("Metadata.Type.Object.Privacy_Notice", "Object.Privacy_Notice").
-                  property("Object.Privacy_Notice.Text", privNoticeText[i]).
-                  property("Object.Privacy_Notice.Description", privNoticeDesc[i]).
-                  property("Object.Privacy_Notice.Effect_On_Individuals", "baixo").
-                  property("Object.Privacy_Notice.Who_Is_Collecting", "ABG Inc").
-                  property("Object.Privacy_Notice.Info_Collected", "Emails").
-                  property("Object.Privacy_Notice.URL", "http://www.abg.com/data").
-                  property("Object.Privacy_Notice.Id", i).
-                  property("Object.Privacy_Notice.Why_Is_It_Collected", "Prospecção comercial").
-                  property("Object.Privacy_Notice.Expiry_Date", new Date()).
-                  property("Object.Privacy_Notice.How_Is_It_Collected", "Forma Eletronica").
-                  property("Object.Privacy_Notice.How_Will_It_Be_Used", "Pesquisa").
-                  property("Object.Privacy_Notice.Who_Will_It_Be_Shared", "GAB ltd").
-                  property("Object.Privacy_Notice.Likely_To_Complain", "nao").
-                  property("Object.Privacy_Notice.Delivery_Date", new Date()).
+          App.g.addV("Object_Privacy_Notice").
+                  property("Metadata_Type", "Object_Privacy_Notice").
+                  property("Metadata_Type_Object_Privacy_Notice", "Object_Privacy_Notice").
+                  property("Object_Privacy_Notice_Text", privNoticeText[i]).
+                  property("Object_Privacy_Notice_Description", privNoticeDesc[i]).
+                  property("Object_Privacy_Notice_Effect_On_Individuals", "baixo").
+                  property("Object_Privacy_Notice_Who_Is_Collecting", "ABG Inc").
+                  property("Object_Privacy_Notice_Info_Collected", "Emails").
+                  property("Object_Privacy_Notice_URL", "http://www.abg.com/data").
+                  property("Object_Privacy_Notice_Id", i).
+                  property("Object_Privacy_Notice_Why_Is_It_Collected", "Prospecção comercial").
+                  property("Object_Privacy_Notice_Expiry_Date", new Date()).
+                  property("Object_Privacy_Notice_How_Is_It_Collected", "Forma Eletronica").
+                  property("Object_Privacy_Notice_How_Will_It_Be_Used", "Pesquisa").
+                  property("Object_Privacy_Notice_Who_Will_It_Be_Shared", "GAB ltd").
+                  property("Object_Privacy_Notice_Likely_To_Complain", "nao").
+                  property("Object_Privacy_Notice_Delivery_Date", new Date()).
                   next()
         }
 
@@ -1807,7 +1807,7 @@ the end of the process.
     */
 
 
-      Vertex pn = App.g.V().has("Metadata.Type.Object.Privacy_Notice", eq("Object.Privacy_Notice"))
+      Vertex pn = App.g.V().has("Metadata_Type_Object_Privacy_Notice", eq("Object_Privacy_Notice"))
               .order().by(Order.shuffle).range(0, 1).next()
 
       int numLawfulBasis = lawfulBasisVertices.length
@@ -1871,23 +1871,23 @@ the end of the process.
       for (int i = 0; i < ilen; i++) {
 
 
-        GraphTraversal lawfulBasis1 = App.g.V().has("Object.Lawful_Basis.Description", eq(definitions[i]))
+        GraphTraversal lawfulBasis1 = App.g.V().has("Object_Lawful_Basis_Description", eq(definitions[i]))
 
         if (lawfulBasis1.hasNext()) {
           lawfulBasisVertices[i] = lawfulBasis1.next()
         } else {
-          lawfulBasisVertices[i] = App.g.addV("Object.Lawful_Basis").
-                  property("Metadata.Lineage", "https://gdpr-info.eu/art-6-gdpr/").
-                  property("Metadata.Redaction", "/data/protection/officer").
+          lawfulBasisVertices[i] = App.g.addV("Object_Lawful_Basis").
+                  property("Metadata_Lineage", "https://gdpr-info.eu/art-6-gdpr/").
+                  property("Metadata_Redaction", "/data/protection/officer").
                   property("Metadata.Version", 1).
-                  property("Metadata.Status", "new").
-                  property("Metadata.GDPR_Status", "n/a").
-                  property("Metadata.Lineage_Server_Tag", "AWS_AAA").
-                  property("Metadata.Lineage_Location_Tag", "GB").
-                  property("Metadata.Type", "Object.Lawful_Basis").
-                  property("Metadata.Type.Object.Lawful_Basis", "Object.Lawful_Basis").
-                  property("Object.Lawful_Basis.Id", i).
-                  property("Object.Lawful_Basis.Description", definitions[i]).
+                  property("Metadata_Status", "new").
+                  property("Metadata_GDPR_Status", "n/a").
+                  property("Metadata_Lineage_Server_Tag", "AWS_AAA").
+                  property("Metadata_Lineage_Location_Tag", "GB").
+                  property("Metadata_Type", "Object_Lawful_Basis").
+                  property("Metadata_Type_Object_Lawful_Basis", "Object_Lawful_Basis").
+                  property("Object_Lawful_Basis_Id", i).
+                  property("Object_Lawful_Basis_Description", definitions[i]).
                   next()
         }
 
@@ -1903,28 +1903,28 @@ the end of the process.
       for (int i = 0; i < ilen; i++) {
 
 
-        GraphTraversal privNotice = App.g.V().has("Object.Privacy_Notice.Description", eq(privNoticeDesc[i]))
+        GraphTraversal privNotice = App.g.V().has("Object_Privacy_Notice_Description", eq(privNoticeDesc[i]))
 
         if (privNotice.hasNext()) {
           privNotice.next()
         } else {
-          App.g.addV("Object.Privacy_Notice").
-                  property("Metadata.Type", "Object.Privacy_Notice").
-                  property("Metadata.Type.Object.Privacy_Notice", "Object.Privacy_Notice").
-                  property("Object.Privacy_Notice.Text", privNoticeText[i]).
-                  property("Object.Privacy_Notice.Description", privNoticeDesc[i]).
-                  property("Object.Privacy_Notice.Effect_On_Individuals", "low").
-                  property("Object.Privacy_Notice.Who_Is_Collecting", "ABG Inc").
-                  property("Object.Privacy_Notice.Info_Collected", "Emails").
-                  property("Object.Privacy_Notice.URL", "http://www.abg.com/data").
-                  property("Object.Privacy_Notice.Id", i).
-                  property("Object.Privacy_Notice.Why_Is_It_Collected", "required for BAU").
-                  property("Object.Privacy_Notice.Expiry_Date", new Date()).
-                  property("Object.Privacy_Notice.How_Is_It_Collected", "Electronic Form").
-                  property("Object.Privacy_Notice.How_Will_It_Be_Used", "Research and Development").
-                  property("Object.Privacy_Notice.Who_Will_It_Be_Shared", "GAB ltd").
-                  property("Object.Privacy_Notice.Likely_To_Complain", "no").
-                  property("Object.Privacy_Notice.Delivery_Date", new Date()).
+          App.g.addV("Object_Privacy_Notice").
+                  property("Metadata_Type", "Object_Privacy_Notice").
+                  property("Metadata_Type_Object_Privacy_Notice", "Object_Privacy_Notice").
+                  property("Object_Privacy_Notice_Text", privNoticeText[i]).
+                  property("Object_Privacy_Notice_Description", privNoticeDesc[i]).
+                  property("Object_Privacy_Notice_Effect_On_Individuals", "low").
+                  property("Object_Privacy_Notice_Who_Is_Collecting", "ABG Inc").
+                  property("Object_Privacy_Notice_Info_Collected", "Emails").
+                  property("Object_Privacy_Notice_URL", "http://www.abg.com/data").
+                  property("Object_Privacy_Notice_Id", i).
+                  property("Object_Privacy_Notice_Why_Is_It_Collected", "required for BAU").
+                  property("Object_Privacy_Notice_Expiry_Date", new Date()).
+                  property("Object_Privacy_Notice_How_Is_It_Collected", "Electronic Form").
+                  property("Object_Privacy_Notice_How_Will_It_Be_Used", "Research and Development").
+                  property("Object_Privacy_Notice_Who_Will_It_Be_Shared", "GAB ltd").
+                  property("Object_Privacy_Notice_Likely_To_Complain", "no").
+                  property("Object_Privacy_Notice_Delivery_Date", new Date()).
                   next()
         }
 
@@ -1948,7 +1948,7 @@ the end of the process.
     */
 
 
-      Vertex pn = App.g.V().has("Metadata.Type.Object.Privacy_Notice", eq("Object.Privacy_Notice"))
+      Vertex pn = App.g.V().has("Metadata_Type_Object_Privacy_Notice", eq("Object_Privacy_Notice"))
               .order().by(Order.shuffle).range(0, 1).next()
 
       int numLawfulBasis = lawfulBasisVertices.length
@@ -1980,14 +1980,14 @@ the end of the process.
 
   static def createForms() {
 
-//    objectFormLabel = createVertexLabel(mgmt, "Object.Form");
+//    objectFormLabel = createVertexLabel(mgmt, "Object_Form");
 //
-//    objectFormProp00 = createProp(mgmt, "Object.Form.Metadata_Owner", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
-//    objectFormProp01 = createProp(mgmt, "Object.Form.Metadata_Create_Date", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
-//    objectFormProp01 = createProp(mgmt, "Object.Form.Metadata_GUID", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
-//    objectFormProp02 = createProp(mgmt, "Object.Form.URL", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
-//    objectFormProp03 = createProp(mgmt, "Object.Form.Text", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
-//    objectFormProp04 = createProp(mgmt, "Object.Form.Vertex_Label", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp00 = createProp(mgmt, "Object_Form_Metadata_Owner", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp01 = createProp(mgmt, "Object_Form_Metadata_Create_Date", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp01 = createProp(mgmt, "Object_Form_Metadata_GUID", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp02 = createProp(mgmt, "Object_Form_URL", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp03 = createProp(mgmt, "Object_Form_Text", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
+//    objectFormProp04 = createProp(mgmt, "Object_Form_Vertex_Label", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE);
 //
 //    objectNotificationTemplatesIdx01 = createMixedIdx(mgmt, "objectFormIdx01", objectFormLabel, objectFormProp00,objectFormProp01,objectFormProp02,objectFormProp04);
 
@@ -1996,7 +1996,7 @@ the end of the process.
                     formOwner      : 'Leonardo',
                     formURL        : 'forms/gdpr/dsar_read',
                     formText       : "{'display': 'form'}",
-                    formVertexLabel: "Event.Subject_Access_Request"
+                    formVertexLabel: "Event_Subject_Access_Request"
             ]
             ,
 
@@ -2004,7 +2004,7 @@ the end of the process.
                     formOwner      : 'Leonardo',
                     formURL        : 'forms/gdpr/consent',
                     formText       : "{'display': 'form'}",
-                    formVertexLabel: "Event.Consent"
+                    formVertexLabel: "Event_Consent"
 
             ]
     ]
@@ -2024,14 +2024,14 @@ the end of the process.
         def metadataCreateDate = new Date((long) createMillis)
 
 
-        def form = App.g.addV("Object.Form").
-                property("Metadata.Type", "Object.Form").
-                property("Metadata.Type.Object.Form", "Object.Form").
-                property("Object.Form.Metadata_Owner", formDataObj.formOwner).
-                property("Object.Form.Metadata_Create_Date", metadataCreateDate).
-                property("Object.Form.URL", formDataObj.formURL).
-                property("Object.Form.Text", formDataObj.formText.bytes.encodeBase64().toString()).
-                property("Object.Form.Vertex_Label", formDataObj.formVertexLabel).next()
+        def form = App.g.addV("Object_Form").
+                property("Metadata_Type", "Object_Form").
+                property("Metadata_Type_Object_Form", "Object_Form").
+                property("Object_Form_Metadata_Owner", formDataObj.formOwner).
+                property("Object_Form_Metadata_Create_Date", metadataCreateDate).
+                property("Object_Form_URL", formDataObj.formURL).
+                property("Object_Form_Text", formDataObj.formText.bytes.encodeBase64().toString()).
+                property("Object_Form_Vertex_Label", formDataObj.formVertexLabel).next()
 
 
       }
@@ -2106,27 +2106,27 @@ the end of the process.
         def orgDataObj = orgData[i]
 
 
-        Vertex location = App.g.addV("Location.Address").
+        Vertex location = App.g.addV("Location_Address").
 
-                property("Metadata.Lineage_Location_Tag", orgDataObj.orgCountrySet).
-                property("Metadata.Type", "Location.Address").
-                property("Metadata.Type.Location.Address", "Location.Address").
-                property("Location.Address.Street", orgDataObj.locationAddrStreet).
-                property("Location.Address.City", orgDataObj.locationAddrCity).
-                property("Location.Address.Post_Code", orgDataObj.locationAddrCity).next()
+                property("Metadata_Lineage_Location_Tag", orgDataObj.orgCountrySet).
+                property("Metadata_Type", "Location_Address").
+                property("Metadata_Type_Location_Address", "Location_Address").
+                property("Location_Address_Street", orgDataObj.locationAddrStreet).
+                property("Location_Address_City", orgDataObj.locationAddrCity).
+                property("Location_Address_Post_Code", orgDataObj.locationAddrCity).next()
 
 
-        Vertex org = App.g.addV("Person.Organisation").
-                property("Metadata.Lineage_Location_Tag", orgDataObj.orgCountrySet).
-                property("Metadata.Type", "Person.Organisation").
-                property("Metadata.Type.Person.Organisation", "Person.Organisation").
-                property("Person.Organisation.Short_Name", orgDataObj.orgShortName).
-                property("Person.Organisation.Name", orgDataObj.orgName).
-                property("Person.Organisation.URL", orgDataObj.orgURL).
-                property("Person.Organisation.orgCountrySet", orgDataObj.orgCountrySet).
-                property("Person.Organisation.Phone", orgDataObj.orgPhone).
-                property("Person.Organisation.Email", orgDataObj.orgEmail).
-                property("Person.Organisation.Fax", orgDataObj.orgFax).
+        Vertex org = App.g.addV("Person_Organisation").
+                property("Metadata_Lineage_Location_Tag", orgDataObj.orgCountrySet).
+                property("Metadata_Type", "Person_Organisation").
+                property("Metadata_Type_Person_Organisation", "Person_Organisation").
+                property("Person_Organisation_Short_Name", orgDataObj.orgShortName).
+                property("Person_Organisation_Name", orgDataObj.orgName).
+                property("Person_Organisation_URL", orgDataObj.orgURL).
+                property("Person_Organisation_orgCountrySet", orgDataObj.orgCountrySet).
+                property("Person_Organisation_Phone", orgDataObj.orgPhone).
+                property("Person_Organisation_Email", orgDataObj.orgEmail).
+                property("Person_Organisation_Fax", orgDataObj.orgFax).
                 next()
 
         App.g.addE("Is_Located").from(org).to(location)
@@ -2549,12 +2549,12 @@ the end of the process.
 
       def types = new String[6]
 
-      types[0] = "Person.Natural"
-      types[1] = "Object.Email_Address"
-      types[2] = "Object.Credential"
-      types[3] = "Object.Identity_Card"
-      types[4] = "Event.Consent"
-      types[5] = "Event.Subject_Access_Request"
+      types[0] = "Person_Natural"
+      types[1] = "Object_Email_Address"
+      types[2] = "Object_Credential"
+      types[3] = "Object_Identity_Card"
+      types[4] = "Event_Consent"
+      types[5] = "Event_Subject_Access_Request"
 
 
       for (def i = 0; i < authData.size(); i++) {
@@ -2578,39 +2578,39 @@ the end of the process.
         def metadataUpdateDate = new Date((long) updateMillis)
 
 
-        Vertex location = App.g.addV("Location.Address").
-                property("Metadata.Lineage", "http://ec.europa.eu/justice/data-protection/article-29/structure/data-protection-authorities/index_en.htm").
+        Vertex location = App.g.addV("Location_Address").
+                property("Metadata_Lineage", "http://ec.europa.eu/justice/data-protection/article-29/structure/data-protection-authorities/index_en.htm").
 
-                property("Metadata.Redaction", "/dataprotectionofficer/aaa").
+                property("Metadata_Redaction", "/dataprotectionofficer/aaa").
                 property("Metadata.Version", "1").
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Lineage_Server_Tag", "AWS EUR1").
-                property("Metadata.Lineage_Location_Tag", "GB").
-                property("Metadata.Type", "Location.Address").
-                property("Metadata.Type.Location.Address", "Location.Address").
-                property("Location.Address.Street", authDataObj.locationAddrStreet).
-                property("Location.Address.City", authDataObj.locationAddrCity).
-                property("Location.Address.Post_Code", authDataObj.locationAddrCity).next()
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Lineage_Server_Tag", "AWS EUR1").
+                property("Metadata_Lineage_Location_Tag", "GB").
+                property("Metadata_Type", "Location_Address").
+                property("Metadata_Type_Location_Address", "Location_Address").
+                property("Location_Address_Street", authDataObj.locationAddrStreet).
+                property("Location_Address_City", authDataObj.locationAddrCity).
+                property("Location_Address_Post_Code", authDataObj.locationAddrCity).next()
 
 
-        Vertex org = App.g.addV("Person.Organisation").
-                property("Metadata.Lineage", "http://ec.europa.eu/justice/data-protection/article-29/structure/data-protection-authorities/index_en.htm").
-                property("Metadata.Redaction", "/dataprotectionofficer/aaa").
+        Vertex org = App.g.addV("Person_Organisation").
+                property("Metadata_Lineage", "http://ec.europa.eu/justice/data-protection/article-29/structure/data-protection-authorities/index_en.htm").
+                property("Metadata_Redaction", "/dataprotectionofficer/aaa").
                 property("Metadata.Version", "1").
-                property("Metadata.Create_Date", metadataCreateDate).
-                property("Metadata.Update_Date", metadataUpdateDate).
-                property("Metadata.Lineage_Server_Tag", "AWS EUR1").
-                property("Metadata.Lineage_Location_Tag", "GB").
-                property("Metadata.Type", "Person.Organisation").
-                property("Metadata.Type.Person.Organisation", "Person.Organisation").
-                property("Person.Organisation.Short_Name", authDataObj.orgShortName).
-                property("Person.Organisation.Name", authDataObj.orgName).
-                property("Person.Organisation.URL", authDataObj.orgURL).
-                property("Person.Organisation.orgCountrySet", authDataObj.orgCountrySet).
-                property("Person.Organisation.Phone", authDataObj.orgPhone).
-                property("Person.Organisation.Email", authDataObj.orgEmail).
-                property("Person.Organisation.Fax", authDataObj.orgFax).
+                property("Metadata_Create_Date", metadataCreateDate).
+                property("Metadata_Update_Date", metadataUpdateDate).
+                property("Metadata_Lineage_Server_Tag", "AWS EUR1").
+                property("Metadata_Lineage_Location_Tag", "GB").
+                property("Metadata_Type", "Person_Organisation").
+                property("Metadata_Type_Person_Organisation", "Person_Organisation").
+                property("Person_Organisation_Short_Name", authDataObj.orgShortName).
+                property("Person_Organisation_Name", authDataObj.orgName).
+                property("Person_Organisation_URL", authDataObj.orgURL).
+                property("Person_Organisation_orgCountrySet", authDataObj.orgCountrySet).
+                property("Person_Organisation_Phone", authDataObj.orgPhone).
+                property("Person_Organisation_Email", authDataObj.orgEmail).
+                property("Person_Organisation_Fax", authDataObj.orgFax).
                 next()
 
         App.g.V().addE('Is_Located').from(org).to(location).next()
@@ -2618,7 +2618,7 @@ the end of the process.
 
         if ((randValK % 5) == 0) {
 
-          Vertex pia = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
+          Vertex pia = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
                   .order().by(Order.shuffle).range(0, 1).next()
 
           App.g.addE("Has_Data_Procedures").from(pia).to(org).next()
@@ -2650,22 +2650,22 @@ the end of the process.
       }
 
       GraphTraversal<Vertex, Vertex> trav = App.g.V()
-              .has("Object.Notification_Templates.Id", P.eq(templateId))
-              .has("Object.Notification_Templates.Types", P.eq(templatePOLEType))
-              .has("Object.Notification_Templates.Label", P.eq(templateName)).id()
+              .has("Object_Notification_Templates_Id", P.eq(templateId))
+              .has("Object_Notification_Templates_Types", P.eq(templatePOLEType))
+              .has("Object_Notification_Templates_Label", P.eq(templateName)).id()
 
       if (trav.hasNext()) {
         String id = trav.next().toString()
         App.g.V(new ORecordId(id))
-                .property("Object.Notification_Templates.Text", reportTextBase64).next()
+                .property("Object_Notification_Templates_Text", reportTextBase64).next()
       } else {
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", templateId)
-                .property("Object.Notification_Templates.Text", reportTextBase64)
-                .property("Object.Notification_Templates.Types", templatePOLEType)
-                .property("Object.Notification_Templates.Label", templateName)
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", templateId)
+                .property("Object_Notification_Templates_Text", reportTextBase64)
+                .property("Object_Notification_Templates_Types", templatePOLEType)
+                .property("Object_Notification_Templates_Label", templateName)
                 .id().next().toString()
       }
       trans.commit()
@@ -2737,27 +2737,27 @@ the end of the process.
         return createNotificationTemplatesPt()
       }
 
-      Long count = App.g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next()
+      Long count = App.g.V().has("Metadata_Type_Object_Notification_Templates", eq("Object_Notification_Templates")).count().next()
 
 
       if (count == 0) {
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "INGESTION BUSINESS RULES")
-                .property("Object.Notification_Templates.Text", ("{{ pv:businessRulesTable(context.Event_Ingestion_Business_Rules) }}").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Event.Ingestion")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "Business Rules")
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "INGESTION BUSINESS RULES")
+                .property("Object_Notification_Templates_Text", ("{{ pv:businessRulesTable(context.Event_Ingestion_Business_Rules) }}").bytes.encodeBase64().toString())
+                .property("Object_Notification_Templates_Types", "Event_Ingestion")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "Business Rules")
                 .next()
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "MATCHES")
-                .property("Object.Notification_Templates.Text", ("\n" +
-                        "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0}') %}\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "MATCHES")
+                .property("Object_Notification_Templates_Text", ("\n" +
+                        "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object_Email_Address\": 10.5, \"Location_Address\": 10.1, \"Object_Phone_Number\": 1.0}') %}\n" +
                         "{% set numMatches = possibleMatches.size() %}\n" +
                         "{{ context.Person_Natural_Full_Name}} Potentially matches {{ numMatches }}\n" +
                         "\n" +
@@ -2771,18 +2771,18 @@ the end of the process.
                         "  {{ \"</table>\" }}\n" +
                         "\n" +
                         "{% endif %}").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Person.Natural")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "Matches")
+                .property("Object_Notification_Templates_Types", "Person_Natural")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "Matches")
                 .next()
 
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "MATCHES")
-                .property("Object.Notification_Templates.Text", ("\n" +
-                        "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Object.Identity_Card\": 90.5,  \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0}') %}\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "MATCHES")
+                .property("Object_Notification_Templates_Text", ("\n" +
+                        "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object_Email_Address\": 10.5, \"Object_Identity_Card\": 90.5,  \"Location_Address\": 10.1, \"Object_Phone_Number\": 1.0}') %}\n" +
                         "{% set numMatches = possibleMatches.size() %}\n" +
                         "{{ context.Person_Identity_Full_Name}} Potentially matches {{ numMatches }}\n" +
                         "\n" +
@@ -2797,17 +2797,17 @@ the end of the process.
                         "\n" +
                         "{% endif %}\n" +
                         "").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Person.Identity")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "Matches")
+                .property("Object_Notification_Templates_Types", "Person_Identity")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "Matches")
                 .next()
 
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "SAR READ TEMPLATE")
-                .property("Object.Notification_Templates.Text", ("<p>Dear {{ context.Person_Natural_Title | capitalize }} {{ context.Person_Natural_Last_Name |capitalize }}, </p>\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "SAR READ TEMPLATE")
+                .property("Object_Notification_Templates_Text", ("<p>Dear {{ context.Person_Natural_Title | capitalize }} {{ context.Person_Natural_Last_Name |capitalize }}, </p>\n" +
                         "\n" +
                         "  Please find below a summary of the data we HOLD about you:\n" +
                         "  \n" +
@@ -2829,16 +2829,16 @@ the end of the process.
                         "  {% endfor %}\n" +
                         "  {{ \"</table>\" }}\n" +
                         "  {% endfor %}").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Person.Natural")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "SAR Read")
+                .property("Object_Notification_Templates_Types", "Person_Natural")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "SAR Read")
                 .next()
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "SAR UPDATE TEMPLATE")
-                .property("Object.Notification_Templates.Text", ("<p>Dear {{ context.Person_Natural_Title | capitalize }} {{ context.Person_Natural_Last_Name |capitalize }}, </p>\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "SAR UPDATE TEMPLATE")
+                .property("Object_Notification_Templates_Text", ("<p>Dear {{ context.Person_Natural_Title | capitalize }} {{ context.Person_Natural_Last_Name |capitalize }}, </p>\n" +
                         "\n" +
                         "  Please find below a summary of your personal data that we can UPDATE:\n" +
                         "  \n" +
@@ -2860,16 +2860,16 @@ the end of the process.
                         "  {% endfor %}\n" +
                         "  {{ \"</table>\" }}\n" +
                         "  {% endfor %}").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Person.Natural")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_update")
-                .property("Object.Notification_Templates.Label", "SAR Update")
+                .property("Object_Notification_Templates_Types", "Person_Natural")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_update")
+                .property("Object_Notification_Templates_Label", "SAR Update")
                 .next()
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "SAR DELETE TEMPLATE")
-                .property("Object.Notification_Templates.Text", ("<p>Dear {{ context.Person_Natural_Title | capitalize }} {{ context.Person_Natural_Last_Name |capitalize }}, </p>\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "SAR DELETE TEMPLATE")
+                .property("Object_Notification_Templates_Text", ("<p>Dear {{ context.Person_Natural_Title | capitalize }} {{ context.Person_Natural_Last_Name |capitalize }}, </p>\n" +
                         "\n" +
                         "  Please find below a summary of your personal data we can delete:\n" +
                         "  \n" +
@@ -2891,17 +2891,17 @@ the end of the process.
                         "  {% endfor %}\n" +
                         "  {{ \"</table>\" }}\n" +
                         "  {% endfor %}").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Person.Natural")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_delete")
-                .property("Object.Notification_Templates.Label", "SAR Delete")
+                .property("Object_Notification_Templates_Types", "Person_Natural")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_delete")
+                .property("Object_Notification_Templates_Label", "SAR Delete")
                 .next()
 
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "DATA BREACH PERSON TEMPLATE")
-                .property("Object.Notification_Templates.Text", (
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "DATA BREACH PERSON TEMPLATE")
+                .property("Object_Notification_Templates_Text", (
                         "<div style='padding: 10px; background: white; color: black;'>\n" +
                                 "<hr/>\n" +
                                 "\n" +
@@ -2957,9 +2957,9 @@ the end of the process.
                                 "  <h2> No Servers impacted </h2>\n" +
                                 "{% endif %}    \n" +
                                 "</div>").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_data_breach_person_report")
-                .property("Object.Notification_Templates.Types", "Event.Data_Breach")
-                .property("Object.Notification_Templates.Label", "Data Breach")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_data_breach_person_report")
+                .property("Object_Notification_Templates_Types", "Event_Data_Breach")
+                .property("Object_Notification_Templates_Label", "Data Breach")
                 .next()
 
       }
@@ -2988,44 +2988,44 @@ the end of the process.
 //      App.g = g;
 //    }
 
-      Long count = App.g.V().has("Metadata.Type.Object.Notification_Templates", eq("Object.Notification_Templates")).count().next()
+      Long count = App.g.V().has("Metadata_Type_Object_Notification_Templates", eq("Object_Notification_Templates")).count().next()
 
 
       if (count == 0) {
 
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "PIA REPORT")
-                .property("Object.Notification_Templates.Types", "Object.Privacy_Impact_Assessment")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "Relatório")
-                .property("Object.Notification_Templates.Text", ("Esta avaliação de impacto na privacidade cobre " +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "PIA REPORT")
+                .property("Object_Notification_Templates_Types", "Object_Privacy_Impact_Assessment")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "Relatório")
+                .property("Object_Notification_Templates_Text", ("Esta avaliação de impacto na privacidade cobre " +
                         "{{ pv:getNumSensitiveInfoForPIA(context.id) }} dado(s) sensiveis e " +
                         "{{ pv:getNumNaturalPersonForPIA(context.id) }} titulares.").bytes.encodeBase64().toString())
                 .next()
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "Privacy Notice Report")
-                .property("Object.Notification_Templates.Types", "Object.Privacy_Notice")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "Relatório")
-                .property("Object.Notification_Templates.Text", ("Esta avaliação de impacto na privacidade cobre " +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "Privacy Notice Report")
+                .property("Object_Notification_Templates_Types", "Object_Privacy_Notice")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "Relatório")
+                .property("Object_Notification_Templates_Text", ("Esta avaliação de impacto na privacidade cobre " +
                         "{{ pv:getNumSensitiveInfoForPIA(context.id) }} dado(s) sensiveis e " +
                         "{{ pv:getNumNaturalPersonForPIA(context.id) }} titulares.").bytes.encodeBase64().toString())
                 .next()
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "Bases Legais")
-                .property("Object.Notification_Templates.Types", "Object.Lawful_Basis")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "Relatório")
-                .property("Object.Notification_Templates.Text", ("<h1>Relatorio para a base legal:</h1>\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "Bases Legais")
+                .property("Object_Notification_Templates_Types", "Object_Lawful_Basis")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "Relatório")
+                .property("Object_Notification_Templates_Text", ("<h1>Relatorio para a base legal:</h1>\n" +
                         "<hr/>\n" +
                         "\n" +
                         "<h4>{{ context.Object_Lawful_Basis_Description }}</h4>\n" +
@@ -3050,42 +3050,42 @@ the end of the process.
                         "{% endif %}").bytes.encodeBase64().toString())
                 .next()
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "Fontes de Dados")
-                .property("Object.Notification_Templates.Types", "Object.Data_Source")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/")
-                .property("Object.Notification_Templates.Label", "Relatório")
-                .property("Object.Notification_Templates.Text", ("").bytes.encodeBase64().toString())
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "Fontes de Dados")
+                .property("Object_Notification_Templates_Types", "Object_Data_Source")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/")
+                .property("Object_Notification_Templates_Label", "Relatório")
+                .property("Object_Notification_Templates_Text", ("").bytes.encodeBase64().toString())
                 .next()
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "Contratos")
-                .property("Object.Notification_Templates.Types", "Object.Contract")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/")
-                .property("Object.Notification_Templates.Label", "Relatório")
-                .property("Object.Notification_Templates.Text", ("").bytes.encodeBase64().toString())
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "Contratos")
+                .property("Object_Notification_Templates_Types", "Object_Contract")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/")
+                .property("Object_Notification_Templates_Label", "Relatório")
+                .property("Object_Notification_Templates_Text", ("").bytes.encodeBase64().toString())
                 .next()
 
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "Regras de Negócio")
-                .property("Object.Notification_Templates.Text", ("{{ pv:businessRulesTable(context.Event_Ingestion_Business_Rules) }}").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Event.Ingestion")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "Regras de Negócio")
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "Regras de Negócio")
+                .property("Object_Notification_Templates_Text", ("{{ pv:businessRulesTable(context.Event_Ingestion_Business_Rules) }}").bytes.encodeBase64().toString())
+                .property("Object_Notification_Templates_Types", "Event_Ingestion")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "Regras de Negócio")
                 .next()
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "Corresponde")
-                .property("Object.Notification_Templates.Text", ("{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Object.Identity_Card\": 90.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0, \"Object.Senstive_Data\": 10.0, \"Object.Health\": 1.0, \"Object.Biometric\": 50.0 , \"Object.Insurance_Policy\": 1.0}') %}\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "Corresponde")
+                .property("Object_Notification_Templates_Text", ("{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object_Email_Address\": 10.5, \"Object_Identity_Card\": 90.5, \"Location_Address\": 10.1, \"Object_Phone_Number\": 1.0, \"Object.Senstive_Data\": 10.0, \"Object_Health\": 1.0, \"Object_Biometric\": 50.0 , \"Object_Insurance_Policy\": 1.0}') %}\n" +
                         "{% set numMatches = possibleMatches.size() %}\n" +
                         "{% if numMatches == 0 %}\n" +
                         "{{ context.Person_Natural_Full_Name}} é o único registro no sistema.\n" +
@@ -3102,18 +3102,18 @@ the end of the process.
                         "  {{ \"</table>\" }}\n" +
                         "\n" +
                         "{% endif %}").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Person.Natural")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "Corresponde")
+                .property("Object_Notification_Templates_Types", "Person_Natural")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "Corresponde")
                 .next()
 
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "Corresponde")
-                .property("Object.Notification_Templates.Text", ("\n" +
-                        "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object.Email_Address\": 10.5, \"Location.Address\": 10.1, \"Object.Phone_Number\": 1.0, \"Object.Senstive_Data\": 10.0, \"Object.Health\": 1.0, \"Object.Biometric\": 50.0 , \"Object.Insurance_Policy\": 1.0}') %}\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "Corresponde")
+                .property("Object_Notification_Templates_Text", ("\n" +
+                        "{% set possibleMatches = pv:possibleMatches(context.id,'{\"Object_Email_Address\": 10.5, \"Location_Address\": 10.1, \"Object_Phone_Number\": 1.0, \"Object.Senstive_Data\": 10.0, \"Object_Health\": 1.0, \"Object_Biometric\": 50.0 , \"Object_Insurance_Policy\": 1.0}') %}\n" +
                         "{% set numMatches = possibleMatches.size() %}\n" +
                         "{{ context.Person_Identity_Full_Name}} Corresponde potencialmente a {{ numMatches }} registro{%- if numMatches != 1 -%}s{% endif %}.\n" +
                         "\n" +
@@ -3127,17 +3127,17 @@ the end of the process.
                         "  {{ \"</table>\" }}\n" +
                         "\n" +
                         "{% endif %}").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Person.Identity")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "Corresponde")
+                .property("Object_Notification_Templates_Types", "Person_Identity")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "Corresponde")
                 .next()
 
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "DSAR")
-                .property("Object.Notification_Templates.Text", ("<p>{{ context.Person_Natural_Title | capitalize }} {{ context.Person_Natural_Last_Name |capitalize }}, </p>\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "DSAR")
+                .property("Object_Notification_Templates_Text", ("<p>{{ context.Person_Natural_Title | capitalize }} {{ context.Person_Natural_Last_Name |capitalize }}, </p>\n" +
                         "\n" +
                         "\n" +
                         "  Segue abaixo um resumo dos dados que possuímos sobre você:\n" +
@@ -3160,17 +3160,17 @@ the end of the process.
                         "  {% endfor %}\n" +
                         "  {{ \"</table>\" }}\n" +
                         "  {% endfor %}").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.Types", "Person.Natural")
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_sar_read")
-                .property("Object.Notification_Templates.Label", "DSAR")
+                .property("Object_Notification_Templates_Types", "Person_Natural")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_sar_read")
+                .property("Object_Notification_Templates_Label", "DSAR")
                 .next()
 
 
-        App.g.addV("Object.Notification_Templates")
-                .property("Metadata.Type", "Object.Notification_Templates")
-                .property("Metadata.Type.Object.Notification_Templates", "Object.Notification_Templates")
-                .property("Object.Notification_Templates.Id", "VIOLAÇÃO DE DADOS")
-                .property("Object.Notification_Templates.Text", ("\"<div style='padding: 10px; background: black'>\n" +
+        App.g.addV("Object_Notification_Templates")
+                .property("Metadata_Type", "Object_Notification_Templates")
+                .property("Metadata_Type_Object_Notification_Templates", "Object_Notification_Templates")
+                .property("Object_Notification_Templates_Id", "VIOLAÇÃO DE DADOS")
+                .property("Object_Notification_Templates_Text", ("\"<div style='padding: 10px; background: black'>\n" +
                         "<hr/>\n" +
                         "\n" +
                         "<h1> Resumo da  VIOLAÇÃO DE DADOS </h1>\n" +
@@ -3225,9 +3225,9 @@ the end of the process.
                         "  <h2> Nenhum servidor afetado </h2>\n" +
                         "{% endif %}    \n" +
                         "</div>").bytes.encodeBase64().toString())
-                .property("Object.Notification_Templates.URL", "https://localhost:18443/get_data_breach_person_report")
-                .property("Object.Notification_Templates.Types", "Event.Data_Breach")
-                .property("Object.Notification_Templates.Label", "Relatório")
+                .property("Object_Notification_Templates_URL", "https://localhost:18443/get_data_breach_person_report")
+                .property("Object_Notification_Templates_Types", "Event_Data_Breach")
+                .property("Object_Notification_Templates_Label", "Relatório")
                 .next()
 
       }
@@ -3258,7 +3258,7 @@ the end of the process.
 
 
       if (uidPair.VpcId != null && uidPair.PeeringStatus == "active") {
-        def peerVpc = App.g.V().has('Object.AWS_VPC.Id', eq(uidPair.VpcId)).next()
+        def peerVpc = App.g.V().has('Object_AWS_VPC_Id', eq(uidPair.VpcId)).next()
 //  Transaction trans = graph.tx()
         try {
 //    if (!trans.isOpen()) {
@@ -3272,7 +3272,7 @@ the end of the process.
           App.g.addE(isEgress ? "Has_Egress_Peering" : "Has_Ingress_Peering")
                   .from(origVPC)
                   .to(peerVpc)
-                  .property('Metadata.Lineage', origGroupIdStr)
+                  .property('Metadata_Lineage', origGroupIdStr)
                   .next()
 
           sb.append('in __addVPCEdgesFromUserIdGroupPairs -')
@@ -3300,7 +3300,7 @@ the end of the process.
 
 
       if (uidPair.GroupId != null) {
-        def peerSecGroup = App.g.V().has('Object.AWS_Security_Group.Id', eq(uidPair.GroupId)).next()
+        def peerSecGroup = App.g.V().has('Object_AWS_Security_Group_Id', eq(uidPair.GroupId)).next()
         //  Transaction trans = graph.tx()
         try {
 //    if (!trans.isOpen()) {
@@ -3313,7 +3313,7 @@ the end of the process.
           App.g.addE(isEgress ? "Has_Egress_Peering" : "Has_Ingress_Peering")
                   .from(origSecGroup)
                   .to(peerSecGroup)
-                  .property('Metadata.Lineage', origGroupIdStr)
+                  .property('Metadata_Lineage', origGroupIdStr)
                   .next()
           sb.append('in __addSecGroupEdgesFromUserIdGroupPairs -')
                   .append('uidPair.Id = ').append(uidPair.GroupId).append('\n')
@@ -3346,7 +3346,7 @@ the end of the process.
 
       Long vpcVid = null
       try {
-        vpcVid = App.g.V().has('Object.AWS_VPC.Id', eq(sg.VpcId)).next().id()
+        vpcVid = App.g.V().has('Object_AWS_VPC_Id', eq(sg.VpcId)).next().id()
 
         // sb.append('in __addSecGroupEdges -')
         //   .append('vpcVid = ').append(vpcVid).append('\n')
@@ -3385,7 +3385,7 @@ the end of the process.
 
       Long sgVid = null
       try {
-        sgVid = App.g.V().has('Object.AWS_Security_Group.Id', eq(sg.GroupId)).next().id()
+        sgVid = App.g.V().has('Object_AWS_Security_Group_Id', eq(sg.GroupId)).next().id()
 
         sg.IpPermissionsEgress.each { egressIpPerm ->
           if (egressIpPerm.UserIdGroupPairs != null) {
@@ -3480,7 +3480,7 @@ the end of the process.
       sb.append("VPC looking for  - ").append(it.toString()).append('\n')
 
       try {
-        vpcId = App.g.V().has("Object.AWS_VPC.Id", eq(it.toString())).next().id()
+        vpcId = App.g.V().has("Object_AWS_VPC_Id", eq(it.toString())).next().id()
 
 
       } catch (Throwable t) {
@@ -3501,17 +3501,17 @@ the end of the process.
 //    }
 
 
-          vpcId = App.g.addV("Object.AWS_VPC").
-                  property("Metadata.Lineage", "aws ec2 describe-instance").
-                  property("Metadata.Redaction", "/data/protection/officer").
+          vpcId = App.g.addV("Object_AWS_VPC").
+                  property("Metadata_Lineage", "aws ec2 describe-instance").
+                  property("Metadata_Redaction", "/data/protection/officer").
                   property("Metadata.Version", 1).
-                  property("Metadata.Create_Date", metadataCreateDate).
-                  property("Metadata.Update_Date", metadataUpdateDate).
-                  property("Metadata.Status", "new").
-                  property("Metadata.Lineage_Location_Tag", "GB").
-                  property("Metadata.Type", "Object.AWS_VPC").
-                  property("Metadata.Type.Object.AWS_VPC", "Object.AWS_VPC").
-                  property("Object.AWS_VPC.Id", it.toString()).id().next()
+                  property("Metadata_Create_Date", metadataCreateDate).
+                  property("Metadata_Update_Date", metadataUpdateDate).
+                  property("Metadata_Status", "new").
+                  property("Metadata_Lineage_Location_Tag", "GB").
+                  property("Metadata_Type", "Object_AWS_VPC").
+                  property("Metadata_Type_Object_AWS_VPC", "Object_AWS_VPC").
+                  property("Object_AWS_VPC_Id", it.toString()).id().next()
 
 //    trans.commit()
         } catch (Throwable t) {
@@ -3535,7 +3535,7 @@ the end of the process.
 
         def awsiId = null
         try {
-          awsiId = App.g.V().has("Object.AWS_Instance.Id", eq(iidStr)).next().id()
+          awsiId = App.g.V().has("Object_AWS_Instance_Id", eq(iidStr)).next().id()
           sb.append("AWSI found id   - ").append(awsiId).append('\n')
 
 
@@ -3560,29 +3560,29 @@ the end of the process.
 //    }
 
 
-            awsiId = App.g.addV("Object.AWS_Instance").
-                    property("Metadata.Type", "Object.AWS_Instance").
-                    property("Metadata.Type.Object.AWS_Instance", "Object.AWS_Instance").
-                    property("Metadata.Lineage", "aws ec2 describe-instance").
-                    property("Metadata.Redaction", "/data/protection/officer").
+            awsiId = App.g.addV("Object_AWS_Instance").
+                    property("Metadata_Type", "Object_AWS_Instance").
+                    property("Metadata_Type_Object_AWS_Instance", "Object_AWS_Instance").
+                    property("Metadata_Lineage", "aws ec2 describe-instance").
+                    property("Metadata_Redaction", "/data/protection/officer").
                     property("Metadata.Version", 1).
-                    property("Metadata.Create_Date", metadataCreateDate).
-                    property("Metadata.Update_Date", metadataUpdateDate).
-                    property("Metadata.Status", "new").
-                    property("Metadata.Lineage_Location_Tag", "GB").
-                    property("Object.AWS_Instance.Id", iidStr).
-                    property("Object.AWS_Instance.Public_Dns_Name", iid.PublicDnsName).
-                    property("Object.AWS_Instance.EbsOptimized", iid.EbsOptimized).
-                    property("Object.AWS_Instance.LaunchTime", iid.LaunchTime).
-                    property("Object.AWS_Instance.PrivateIpAddress", iid.PrivateIpAddress).
-                    property("Object.AWS_Instance.ProductCodeTypes", iid.ProductCodeTypes).
-                    property("Object.AWS_Instance.ProductCodeIDs", iid.ProductCodeIDs).
-                    property("Object.AWS_Instance.ImageId", iid.ImageId).
-                    property("Object.AWS_Instance.PrivateDnsName", iid.PrivateDnsName).
-                    property("Object.AWS_Instance.KeyName", iid.KeyName).
-                    property("Object.AWS_Instance.InstanceType", iid.InstanceType).
-                    property("Object.AWS_Instance.EnaSupport", iid.EnaSupport).
-                    property("Object.AWS_Instance.LaunchTime", iid.LaunchTime).next().
+                    property("Metadata_Create_Date", metadataCreateDate).
+                    property("Metadata_Update_Date", metadataUpdateDate).
+                    property("Metadata_Status", "new").
+                    property("Metadata_Lineage_Location_Tag", "GB").
+                    property("Object_AWS_Instance_Id", iidStr).
+                    property("Object_AWS_Instance_Public_Dns_Name", iid.PublicDnsName).
+                    property("Object_AWS_Instance_EbsOptimized", iid.EbsOptimized).
+                    property("Object_AWS_Instance_LaunchTime", iid.LaunchTime).
+                    property("Object_AWS_Instance_PrivateIpAddress", iid.PrivateIpAddress).
+                    property("Object_AWS_Instance_ProductCodeTypes", iid.ProductCodeTypes).
+                    property("Object_AWS_Instance_ProductCodeIDs", iid.ProductCodeIDs).
+                    property("Object_AWS_Instance_ImageId", iid.ImageId).
+                    property("Object_AWS_Instance_PrivateDnsName", iid.PrivateDnsName).
+                    property("Object_AWS_Instance_KeyName", iid.KeyName).
+                    property("Object_AWS_Instance_InstanceType", iid.InstanceType).
+                    property("Object_AWS_Instance_EnaSupport", iid.EnaSupport).
+                    property("Object_AWS_Instance_LaunchTime", iid.LaunchTime).next().
                     id()
             sb.append("AWSI added - ").append(iidStr).append('id = ').append(awsiId).append('\n')
 //    trans.commit()
@@ -3600,17 +3600,17 @@ the end of the process.
           String sgStr = sg.GroupId
 
           /*
-            objectAWSProp00 = createProp(mgmt, "Object.AWS_Security_Group.GroupName", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
-      objectAWSProp01 = createProp(mgmt, "Object.AWS_Security_Group.GroupId", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
-      objectAWSProp02 = createProp(mgmt, "Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges", String.class, org.OrientStandardGraph.core.Cardinality.SET)
-      objectAWSProp03 = createProp(mgmt, "Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges", String.class, org.OrientStandardGraph.core.Cardinality.SET)
+            objectAWSProp00 = createProp(mgmt, "Object_AWS_Security_Group_GroupName", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
+      objectAWSProp01 = createProp(mgmt, "Object_AWS_Security_Group_GroupId", String.class, org.OrientStandardGraph.core.Cardinality.SINGLE)
+      objectAWSProp02 = createProp(mgmt, "Object_AWS_Security_Group_Ip_Perms_Ingress_IpRanges", String.class, org.OrientStandardGraph.core.Cardinality.SET)
+      objectAWSProp03 = createProp(mgmt, "Object_AWS_Security_Group_Ip_Perms_Egress_IpRanges", String.class, org.OrientStandardGraph.core.Cardinality.SET)
 
         */
           def sgvId = null
           sb.append("secGroup - looking for ").append(sgStr.toString()).append('\n')
 
           try {
-            sgvId = App.g.V().has("Object.AWS_Security_Group.Id", eq(sgStr)).next().id()
+            sgvId = App.g.V().has("Object_AWS_Security_Group_Id", eq(sgStr)).next().id()
             sb.append("secGroup - found id ").append(sgvId).append('\n')
 
 
@@ -3634,21 +3634,21 @@ the end of the process.
               def metadataCreateDate = new Date((long) createMillis)
               def metadataUpdateDate = new Date((long) updateMillis)
 
-              sgvId = App.g.addV("Object.AWS_Security_Group").
-                      property("Metadata.Type", "Object.AWS_Security_Group").
-                      property("Metadata.Type.Object.AWS_Security_Group", "Object.AWS_Security_Group").
-                      property("Metadata.Lineage", "aws ec2 describe-instance").
-                      property("Metadata.Redaction", "/data/protection/officer").
+              sgvId = App.g.addV("Object_AWS_Security_Group").
+                      property("Metadata_Type", "Object_AWS_Security_Group").
+                      property("Metadata_Type_Object_AWS_Security_Group", "Object_AWS_Security_Group").
+                      property("Metadata_Lineage", "aws ec2 describe-instance").
+                      property("Metadata_Redaction", "/data/protection/officer").
                       property("Metadata.Version", 1).
-                      property("Metadata.Create_Date", metadataCreateDate).
-                      property("Metadata.Update_Date", metadataUpdateDate).
-                      property("Metadata.Status", "new").
-                      property("Metadata.Lineage_Location_Tag", "GB").
-                      property("Object.AWS_Security_Group.Id", sgStr).
-                      property("Object.AWS_Security_Group.GroupName", sg.GroupName).
+                      property("Metadata_Create_Date", metadataCreateDate).
+                      property("Metadata_Update_Date", metadataUpdateDate).
+                      property("Metadata_Status", "new").
+                      property("Metadata_Lineage_Location_Tag", "GB").
+                      property("Object_AWS_Security_Group_Id", sgStr).
+                      property("Object_AWS_Security_Group_GroupName", sg.GroupName).
                       next().
-                      // property("Object.AWS_Security_Group.Ip_Perms_Ingress_IpRanges", sg.).
-                              // property("Object.AWS_Security_Group.Ip_Perms_Egress_IpRanges",   iid.LaunchTime).
+                      // property("Object_AWS_Security_Group_Ip_Perms_Ingress_IpRanges", sg.).
+                              // property("Object_AWS_Security_Group_Ip_Perms_Egress_IpRanges",   iid.LaunchTime).
                               id()
 
 //    trans.commit()
@@ -3719,45 +3719,45 @@ the end of the process.
       }
 
       def types = [
-              "Event.Consent",
-              "Event.Data_Breach",
-              "Event.Form_Ingestion",
-              "Event.Ingestion",
-              "Event.Group_Ingestion",
-              "Event.Subject_Access_Request",
-              "Event.Training",
-              "Location.Address",
-//"Object.AWS_Instance",
-// "Object.AWS_Network_Interface",
-// "Object.AWS_Security_Group",
-//"Object.AWS_VPC",
-              "Object.Awareness_Campaign",
-              "Object.Credential",
-              "Object.Data_Procedures",
-              "Object.Email_Address",
-              "Object.Data_Policy",
-              "Object.Phone_Number",
+              "Event_Consent",
+              "Event_Data_Breach",
+              "Event_Form_Ingestion",
+              "Event_Ingestion",
+              "Event_Group_Ingestion",
+              "Event_Subject_Access_Request",
+              "Event_Training",
+              "Location_Address",
+//"Object_AWS_Instance",
+// "Object_AWS_Network_Interface",
+// "Object_AWS_Security_Group",
+//"Object_AWS_VPC",
+              "Object_Awareness_Campaign",
+              "Object_Credential",
+              "Object_Data_Procedures",
+              "Object_Email_Address",
+              "Object_Data_Policy",
+              "Object_Phone_Number",
 
-//"Object.Form",
-// "Object.Identity_Card",
-              "Object.Insurance_Policy",
-              "Object.Lawful_Basis",
-              "Object.Contract",
-// "Object.Notification_Templates",
-//"Object.Privacy_Impact_Assessment",
-//"Object.Privacy_Notice",
-              "Object.Metadata_Source",
-              "Object.Data_Source",
+//"Object_Form",
+// "Object_Identity_Card",
+              "Object_Insurance_Policy",
+              "Object_Lawful_Basis",
+              "Object_Contract",
+// "Object_Notification_Templates",
+//"Object_Privacy_Impact_Assessment",
+//"Object_Privacy_Notice",
+              "Object_Metadata_Source",
+              "Object_Data_Source",
 
-              "Person.Employee",
-              "Person.Organisation",
-              "Person.Natural"
+              "Person_Employee",
+              "Person_Organisation",
+              "Person_Natural"
       ]
 
       types.each {
 
-        App.g.V().has("Metadata.Type.${it}", eq(it)).bothE().drop().iterate()
-        App.g.V().has("Metadata.Type.${it}", eq(it)).drop().iterate()
+        App.g.V().has("Metadata_Type_${it}", eq(it)).bothE().drop().iterate()
+        App.g.V().has("Metadata_Type_${it}", eq(it)).drop().iterate()
 
         sb.append("\nDeleted ${it} ")
       }
@@ -3869,8 +3869,8 @@ the end of the process.
     long scoreValue
     long scoreValue2
     try {
-      def latestEntryId = App.g.V().has('Metadata.Type.Object.Awareness_Campaign', eq('Object.Awareness_Campaign'))
-              .order().by('Object.Awareness_Campaign.Start_Date',Order.desc).range(0,1).id().next()
+      def latestEntryId = App.g.V().has('Metadata_Type_Object_Awareness_Campaign', eq('Object_Awareness_Campaign'))
+              .order().by('Object_Awareness_Campaign_Start_Date',Order.desc).range(0,1).id().next()
 
       if (!latestEntryId){
         throw new Exception("Could not find campaign");
@@ -3878,7 +3878,7 @@ the end of the process.
 
       long numEvents = App.g.V(latestEntryId).in().as('events').count().next()
 
-      def map = App.g.V(latestEntryId).in().as('events').groupCount().by('Event.Training.Status').next()
+      def map = App.g.V(latestEntryId).in().as('events').groupCount().by('Event_Training_Status').next()
 
 
       long failedCount = map.get('Failed') == null ? 0 : map.get('Failed')
@@ -3915,7 +3915,7 @@ the end of the process.
         scoreValue = 0L
       }
 
-      def date = App.g.V(latestEntryId).values('Object.Awareness_Campaign.Start_Date').next()
+      def date = App.g.V(latestEntryId).values('Object_Awareness_Campaign_Start_Date').next()
       Date today = new Date()
       long delta = today.getTime() - date.getTime()
 
@@ -3943,27 +3943,27 @@ the end of the process.
     def dateThreshold = new Date(ageThresholdMs)
 
 
-    long numChildren = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+    long numChildren = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
             .where(
                     __.and(
-                            __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
+                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
                     )
             )
             .count().next()
 
-    long numNoGuardian = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+    long numNoGuardian = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
             .where(
                     __.and(
-                            __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
+                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
                             , __.outE('Has_Parent_Or_Guardian').count().is(eq(0) as P<Long>)
                     )
             )
             .count().next()
 
-    long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+    long numWithoutAnyConsent = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
             .where(
                     __.and(
-                            __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
+                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
                             , __.outE('Consent').count().is(eq(0) as P<Long>)
                     )
             )
@@ -3972,15 +3972,15 @@ the end of the process.
 
     long numNegativeConsent =
 
-            App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
                     .where(
-                            __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
+                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
                     ).as('children')
                     .match(
                             __.as('children').outE('Consent').as('consentEdges')
                             , __.as('consentEdges').count().as('consentEdgesCount')
                             , __.as('consentEdges').inV().as('consentEvents')
-                            , __.as('consentEvents').has('Event.Consent.Status', eq('No Consent ')).count().as('negConsentCount')
+                            , __.as('consentEvents').has('Event_Consent_Status', eq('No Consent ')).count().as('negConsentCount')
                             , __.as('children').id().as('childId')
 
                     )
@@ -3993,15 +3993,15 @@ the end of the process.
 
     long numPendingConsent =
 
-            App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
                     .where(
-                            __.values('Person.Natural.Date_Of_Birth').is(gte(dateThreshold))
+                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
                     ).as('children')
                     .match(
                             __.as('children').outE('Consent').as('consentEdges')
                             , __.as('consentEdges').count().as('consentEdgesCount')
                             , __.as('consentEdges').inV().as('consentEvents')
-                            , __.as('consentEvents').has('Event.Consent.Status', eq('Consent Pending')).count().as('pendingConsentCount')
+                            , __.as('consentEvents').has('Event_Consent_Status', eq('Consent Pending')).count().as('pendingConsentCount')
                             , __.as('children').id().as('childId')
 
                     )
@@ -4048,18 +4048,18 @@ the end of the process.
   }
   static def getConsentScores(def scoresMap) {
 
-    long numProcedures = App.g.V().has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
+    long numProcedures = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .where(
-                    __.out('Has_Lawful_Basis_On').has('Object.Lawful_Basis.Description',PText.textContainsPrefix('CONSENT')
+                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description',PText.textContainsPrefix('CONSENT')
                     )
             ).count().next()
 
 
-    long numConsent = App.g.V().has('Metadata.Type.Event.Consent', eq('Event.Consent'))
+    long numConsent = App.g.V().has('Metadata_Type_Event_Consent', eq('Event_Consent'))
 //            .where(
-            .out('Consent').has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).dedup()
+            .out('Consent').has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).dedup()
             .where(
-                    __.out('Has_Lawful_Basis_On').has('Object.Lawful_Basis.Description',PText.textContainsPrefix('CONSENT')
+                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description',PText.textContainsPrefix('CONSENT')
                     )
             )
 //            )
@@ -4095,19 +4095,19 @@ the end of the process.
 //    def dateThreshold = new java.util.Date(ageThresholdMs)
 
 //
-//    long numAdults = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+//    long numAdults = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
 //            .where(
 //                    __.and(
-//                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
+//                            __.values('Person_Natural_Date_Of_Birth').is(lt(dateThreshold))
 //                    )
 //            )
 //            .count().next()
 //
 //
-//    long numWithoutAnyConsent = App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+//    long numWithoutAnyConsent = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
 //            .where(
 //                    __.and(
-//                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
+//                            __.values('Person_Natural_Date_Of_Birth').is(lt(dateThreshold))
 //                            , __.outE('Consent').count().is(P.eq(0) as P<Long>)
 //                    )
 //            )
@@ -4116,15 +4116,15 @@ the end of the process.
 //
 //    long numNegativeConsent =
 //
-//            App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+//            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
 //                    .where(
-//                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
+//                            __.values('Person_Natural_Date_Of_Birth').is(lt(dateThreshold))
 //                    ).as('adults')
 //                    .match(
 //                            __.as('adults').outE('Consent').as('consentEdges')
 //                            , __.as('consentEdges').count().as('consentEdgesCount')
 //                            , __.as('consentEdges').inV().as('consentEvents')
-//                            , __.as('consentEvents').has('Event.Consent.Status', eq('No Consent ')).count().as('negConsentCount')
+//                            , __.as('consentEvents').has('Event_Consent_Status', eq('No Consent ')).count().as('negConsentCount')
 //
 //                    )
 //                    .select('consentEdgesCount', 'negConsentCount')
@@ -4136,15 +4136,15 @@ the end of the process.
 //
 //    long numPendingConsent =
 //
-//            App.g.V().has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+//            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
 //                    .where(
-//                            __.values('Person.Natural.Date_Of_Birth').is(lt(dateThreshold))
+//                            __.values('Person_Natural_Date_Of_Birth').is(lt(dateThreshold))
 //                    ).as('adults')
 //                    .match(
 //                            __.as('adults').outE('Consent').as('consentEdges')
 //                            , __.as('consentEdges').count().as('consentEdgesCount')
 //                            , __.as('consentEdges').inV().as('consentEvents')
-//                            , __.as('consentEvents').has('Event.Consent.Status', eq('Consent Pending')).count().as('pendingConsentCount')
+//                            , __.as('consentEvents').has('Event_Consent_Status', eq('Consent Pending')).count().as('pendingConsentCount')
 //
 //                    )
 //                    .select('consentEdgesCount', 'pendingConsentCount')
@@ -4189,7 +4189,7 @@ the end of the process.
 
 
     long numLegalActions =
-            App.g.V().has('Object.Legal_Actions.Date'
+            App.g.V().has('Object_Legal_Actions_Date'
                     , gt(dateThreshold)
             )
                     .count().next()
@@ -4224,7 +4224,7 @@ the end of the process.
 
 
     long numPrivacyDocs =
-            App.g.V().has('Object.Privacy_Docs.Date'
+            App.g.V().has('Object_Privacy_Docs_Date'
                     , gt(dateThreshold)
             )
                     .count().next()
@@ -4259,7 +4259,7 @@ the end of the process.
 
 
     long numPrivacyDocs =
-            App.g.V().has('Event.Meeting.Date'
+            App.g.V().has('Event_Meeting_Date'
                     , gt(dateThreshold)
             )
                     .count().next()
@@ -4288,25 +4288,25 @@ the end of the process.
   }
 
   static def getDataBreachesScores(def scoresMap) {
-    long numItems = App.g.V().has('Metadata.Type.Event.Data_Breach', eq('Event.Data_Breach'))
+    long numItems = App.g.V().has('Metadata_Type_Event_Data_Breach', eq('Event_Data_Breach'))
             .count().next()
 
     long numOpenDataBreachDataStolen =
             App.g.V()
-                    .has('Event.Data_Breach.Status', eq('Open'))
+                    .has('Event_Data_Breach_Status', eq('Open'))
                     .where(
                             __.or(
-                                    __.has('Event.Data_Breach.Impact', eq('Customer Data Stolen (External)'))
-                                    , __.has('Event.Data_Breach.Impact', eq('Customer Data Stolen (Internal)'))
+                                    __.has('Event_Data_Breach_Impact', eq('Customer Data Stolen (External)'))
+                                    , __.has('Event_Data_Breach_Impact', eq('Customer Data Stolen (Internal)'))
                             )
                     )
                     .count().next()
 
     long numOpenDataBreachDataLost =
             App.g.V()
-                    .has('Event.Data_Breach.Status', eq('Open'))
+                    .has('Event_Data_Breach_Status', eq('Open'))
                     .where(
-                            __.has('Event.Data_Breach.Impact', eq('Data Lost'))
+                            __.has('Event_Data_Breach_Impact', eq('Data Lost'))
                     )
                     .count().next()
 
@@ -4338,31 +4338,31 @@ the end of the process.
 
   static def getDataProtnOfficerScores(def scoresMap) {
 
-    long numDPOs = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
+    long numDPOs = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer'))
             .count().next()
 
 
-    long numDPODirectReports = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer')).inE('Reports_To')
+    long numDPODirectReports = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer')).inE('Reports_To')
             .count().next()
 
 
-    long numDPOsFailed = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
-            .in().has('Event.Training.Status', eq('Failed'))
+    long numDPOsFailed = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer'))
+            .in().has('Event_Training_Status', eq('Failed'))
             .count().next()
 
 
-    long numDPODirectReportsFailed = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer')).inE('Reports_To')
-            .outV().in().has('Event.Training.Status', eq('Failed'))
+    long numDPODirectReportsFailed = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer')).inE('Reports_To')
+            .outV().in().has('Event_Training_Status', eq('Failed'))
             .count().next()
 
 
-    long numDPOsSecondReminder = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer'))
-            .in().has('Event.Training.Status', eq('Second  Reminder'))
+    long numDPOsSecondReminder = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer'))
+            .in().has('Event_Training_Status', eq('Second  Reminder'))
             .count().next()
 
 
-    long numDPODirectReportsSecondReminder = App.g.V().has('Person.Employee.Role', eq('Data Protection Officer')).inE('Reports_To')
-            .outV().in().has('Event.Training.Status', eq('Second  Reminder'))
+    long numDPODirectReportsSecondReminder = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer')).inE('Reports_To')
+            .outV().in().has('Event_Training_Status', eq('Second  Reminder'))
             .count().next()
 
 
@@ -4387,20 +4387,20 @@ the end of the process.
 
   static def getIndivRightsScores(def scoresMap) {
     long numItems = App.g.V()
-            .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
+            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .count()
             .next()
 
 
     long numDeleteURL = App.g.V()
-            .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
-            .values('Object.Data_Procedures.Delete_URL')
+            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+            .values('Object_Data_Procedures_Delete_URL')
             .count()
             .next()
 
     long numUpdateURL = App.g.V()
-            .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures'))
-            .values('Object.Data_Procedures.Delete_URL')
+            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+            .values('Object_Data_Procedures_Delete_URL')
             .count()
             .next()
 
@@ -4423,13 +4423,13 @@ the end of the process.
 
   static def getInfoYouHoldScores(def scoresMap) {
 
-    long numDataSources = App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source')).count().next()
+    long numDataSources = App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source')).count().next()
 
     long numRecordsWithoutDataProcedures =
             App.g.V()
-                    .has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+                    .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
                     .where(__.in('Has_Data_Source')
-                            .has('Metadata.Type.Object.Data_Procedures', eq('Object.Data_Procedures')).count().is(eq(0)))
+                            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).count().is(eq(0)))
                     .count().next()
 
 
@@ -4458,14 +4458,14 @@ the end of the process.
 
 
   static def getInternationalScores(def scoresMap) {
-    long numItems = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
+    long numItems = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
             .count().next()
 
 
     long numPrivNoticesWithoutRegulator =
             App.g.V()
-                    .has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
-                    .where(__.out().has('Metadata.Type.Person.Organisation', eq('Person.Organisation')).count().is(eq(0)))
+                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
+                    .where(__.out().has('Metadata_Type_Person_Organisation', eq('Person_Organisation')).count().is(eq(0)))
                     .count().next()
 
 
@@ -4486,11 +4486,11 @@ the end of the process.
 
   static def getLawfulBasisScores(def scoresMap) {
 
-    long numEvents = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
+    long numEvents = App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
             .count().next()
 
 
-    long numWithoutAnyLawfulBasis = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
+    long numWithoutAnyLawfulBasis = App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
             .where(
                     __.outE('Has_Lawful_Basis_On').count().is(eq(0))
             )
@@ -4511,23 +4511,23 @@ the end of the process.
 
 
   static def getPrivacyImpactAssessmentScores(def scoresMap) {
-    long numItems = App.g.V().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
+    long numItems = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
             .count().next()
 
 
     long numPIAWithoutPrivNotices =
             App.g.V()
-                    .has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
-                    .where(__.both().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).count().is(eq(0)))
+                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
+                    .where(__.both().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).count().is(eq(0)))
                     .count().next()
 
 
     long numPIAWithPrivNoticesAndDataWithoutConsent =
             App.g.V()
-                    .has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
+                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
                     .where(
-                            __.both().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
-                                    .both().has('Event.Consent.Status', eq('No Consent '))
+                            __.both().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
+                                    .both().has('Event_Consent_Status', eq('No Consent '))
                                     .count().is(gt(0))
                     )
                     .count().next()
@@ -4535,10 +4535,10 @@ the end of the process.
 
     long numPIAWithPrivNoticesAndDataWithPendingConsent =
             App.g.V()
-                    .has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment'))
+                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
                     .where(
-                            __.both().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice'))
-                                    .both().has('Event.Consent.Status', eq('Consent Pending'))
+                            __.both().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
+                                    .both().has('Event_Consent_Status', eq('Consent Pending'))
                                     .count().is(gt(0))
                     )
                     .count().next()
@@ -4566,12 +4566,12 @@ the end of the process.
 
 
   static def getPrivacyNoticesScores(def scoresMap) {
-    long numEvents = App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).count().next()
+    long numEvents = App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).count().next()
 
     long numRecordsNoConsent =
-            App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).as('privNotice')
+            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
                     .match(
-                            __.as('privNotice').both().has('Metadata.Type.Event.Consent', eq('Event.Consent')).count().as('consentCount')
+                            __.as('privNotice').both().has('Metadata_Type_Event_Consent', eq('Event_Consent')).count().as('consentCount')
 
                     )
                     .select('consentCount')
@@ -4579,9 +4579,9 @@ the end of the process.
                     .count().next()
 
     long numRecordsNoPIA =
-            App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).as('privNotice')
+            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
                     .match(
-                            __.as('privNotice').both().has('Metadata.Type.Object.Privacy_Impact_Assessment', eq('Object.Privacy_Impact_Assessment')).count().as('consentCount')
+                            __.as('privNotice').both().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment')).count().as('consentCount')
 
                     )
                     .select('consentCount')
@@ -4589,10 +4589,10 @@ the end of the process.
                     .count().next()
 
     long numRecordsLessThan50PcntPositiveConsent =
-            App.g.V().has('Metadata.Type.Object.Privacy_Notice', eq('Object.Privacy_Notice')).as('privNotice')
+            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
                     .match(
-                            __.as('privNotice').both().has('Metadata.Type.Event.Consent', eq('Event.Consent')).count().as('consentCount')
-                            , __.as('privNotice').both().has('Event.Consent.Status', eq('Consent')).count().math('_ * 2').as('posConsentCountDouble')
+                            __.as('privNotice').both().has('Metadata_Type_Event_Consent', eq('Event_Consent')).count().as('consentCount')
+                            , __.as('privNotice').both().has('Event_Consent_Status', eq('Consent')).count().math('_ * 2').as('posConsentCountDouble')
                     )
                     .select(
                             'consentCount'
@@ -4641,22 +4641,22 @@ the end of the process.
     long fiveDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 5L))
     def fiveDayThreshold = new java.util.Date(fiveDayThresholdMs)
 
-    long numEvents = App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).count().next()
+    long numEvents = App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).count().next()
 
     long numRecordsOlder15Days =
 
-            App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
+            App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).as('sar')
                     .where(
-                            __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(fifteenDayThreshold))
+                            __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(lte(fifteenDayThreshold))
                     )
 
                     .count().next()
 
     long numRecordsOlder5Days =
 
-            App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).as('sar')
+            App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).as('sar')
                     .where(
-                            __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(lte(fiveDayThreshold))
+                            __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(lte(fiveDayThreshold))
                     )
 
                     .count().next()
@@ -4750,37 +4750,37 @@ the end of the process.
     static String calculatePOLECounts() {
 
       List<String> vertexLabels = [
-              "Event.Consent"
-              , "Event.Data_Breach"
-              , "Event.Form_Ingestion"
-              , "Event.Ingestion"
-              , "Event.Subject_Access_Request"
-              , "Event.Training"
-              , "Location.Address"
-              , "Object.AWS_Instance"
-              , "Object.AWS_Network_Interface"
-              , "Object.AWS_Security_Group"
-              , "Object.AWS_VPC"
-              , "Object.Awareness_Campaign"
-              , "Object.Credential"
-              , "Object.Data_Procedures"
-              , "Object.Data_Source"
-              , "Object.Email_Address"
-              , "Object.Form"
-              , "Object.Identity_Card"
-              , "Object.Insurance_Policy"
-              , "Object.Lawful_Basis"
-              , "Object.Contract"
-              , "Object.Notification_Templates"
-              , "Object.Privacy_Impact_Assessment"
-              , "Object.Privacy_Notice"
-              , "Object.Sensitive_Data"
-              , "Object.Health"
-              , "Object.Biometric"
-              , "Object.Genetic"
-              , "Person.Natural"
-              , "Person.Employee"
-              , "Person.Organisation"
+              "Event_Consent"
+              , "Event_Data_Breach"
+              , "Event_Form_Ingestion"
+              , "Event_Ingestion"
+              , "Event_Subject_Access_Request"
+              , "Event_Training"
+              , "Location_Address"
+              , "Object_AWS_Instance"
+              , "Object_AWS_Network_Interface"
+              , "Object_AWS_Security_Group"
+              , "Object_AWS_VPC"
+              , "Object_Awareness_Campaign"
+              , "Object_Credential"
+              , "Object_Data_Procedures"
+              , "Object_Data_Source"
+              , "Object_Email_Address"
+              , "Object_Form"
+              , "Object_Identity_Card"
+              , "Object_Insurance_Policy"
+              , "Object_Lawful_Basis"
+              , "Object_Contract"
+              , "Object_Notification_Templates"
+              , "Object_Privacy_Impact_Assessment"
+              , "Object_Privacy_Notice"
+              , "Object_Sensitive_Data"
+              , "Object_Health"
+              , "Object_Biometric"
+              , "Object_Genetic"
+              , "Person_Natural"
+              , "Person_Employee"
+              , "Person_Organisation"
 
       ]
 
@@ -4801,41 +4801,41 @@ the end of the process.
         sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(dataType.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
       }
 
-//  String var = "v.\"Object.Data_Source.Type\": Structured"
-      String queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'Structured'"
+//  String var = "v.\"Object_Data_Source.Type\": Structured"
+      String queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'Structured'"
       Long numEntries = getCountQueryResults(queryStr)
 
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
       try {
-        numEntries = App.g.V().has('Object.Data_Source.Type', eq('Structured')).out().out().in().has('Metadata.Type.Person.Identity', eq('Person.Identity')).dedup().count().next()
+        numEntries = App.g.V().has('Object_Data_Source.Type', eq('Structured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
         sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
       } catch (e) {
 
       }
-      queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'DB_TABLE'"
+      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'DB_TABLE'"
       numEntries = getCountQueryResults(queryStr)
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Tables')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
-      queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'DB_COLUMN'"
+      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'DB_COLUMN'"
       numEntries = getCountQueryResults(queryStr)
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Columns')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-      queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'Unstructured'"
+      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'Unstructured'"
       numEntries = getCountQueryResults(queryStr)
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-      numEntries = App.g.V().has('Object.Data_Source.Type', eq('Unstructured')).out().out().in().has('Metadata.Type.Person.Identity', eq('Person.Identity')).dedup().count().next()
+      numEntries = App.g.V().has('Object_Data_Source.Type', eq('Unstructured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-      queryStr = "SELECT COUNT(*) FROM `Object.Data_Source` WHERE `Object.Data_Source.Type` = 'Mixed'"
+      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'Mixed'"
       numEntries = getCountQueryResults(queryStr)
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Mixed Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
@@ -4853,13 +4853,13 @@ the end of the process.
     boolean firstTime = true
 
 
-    App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+    App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
             .as('ingestion_event')
             .out("Has_Ingestion_Event")
             .out("Has_Ingestion_Event")
             .as('events')
             .match(
-                    __.as('ingestion_event').values('Object.Data_Source.Name').as('event_id')
+                    __.as('ingestion_event').values('Object_Data_Source.Name').as('event_id')
             )
             .select('event_id')
             .groupCount().each { metric ->
@@ -4883,17 +4883,17 @@ the end of the process.
     boolean firstTime = true
 
 
-    App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+    App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
             .as('ingestion_event')
             .out("Has_Ingestion_Event")
             .out("Has_Ingestion_Event")
             .in("Has_Ingestion_Event")
-            .has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+            .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
             .id()
             .dedup()
             .as('events')
             .match(
-                    __.as('ingestion_event').values('Object.Data_Source.Name').as('event_id')
+                    __.as('ingestion_event').values('Object_Data_Source.Name').as('event_id')
             )
             .select('event_id')
             .groupCount().each { metric ->
@@ -4920,12 +4920,12 @@ the end of the process.
     boolean firstTime = false
 
 
-    App.g.V().has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source'))
+    App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
             .as('ingestion_event')
             .out("Has_Ingestion_Event")
             .out("Has_Ingestion_Event")
             .out("Has_Sensitive_Data")
-            .has('Metadata.Type.Object.Sensitive_Data', eq('Object.Sensitive_Data'))
+            .has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))
     // .bothE("Has_Sensitive_Data")
     // .label()
     // .dedup().count()
@@ -4936,7 +4936,7 @@ the end of the process.
     // .dedup()
             .as('events')
             .match(
-                    __.as('ingestion_event').values('Object.Data_Source.Name').as('event_id')
+                    __.as('ingestion_event').values('Object_Data_Source.Name').as('event_id')
             )
             .select('event_id')
             .groupCount().each { metric ->
@@ -4970,19 +4970,19 @@ the end of the process.
 
 
     orgTypes.each { orgTypeLabel, orgTypeRel ->
-      App.g.V().has('Metadata.Type.Person.Organisation', P.eq('Person.Organisation'))
+      App.g.V().has('Metadata_Type_Person_Organisation', P.eq('Person_Organisation'))
               .as('organisation')
               .out(orgTypeRel)
               .in('Has_Contract')
               .out("Has_Ingestion_Event")
               .out("Has_Ingestion_Event")
               .in("Has_Ingestion_Event")
-              .has('Metadata.Type.Person.Natural', P.eq('Person.Natural'))
+              .has('Metadata_Type_Person_Natural', P.eq('Person_Natural'))
               .id()
               .dedup()
               .as('events')
               .match(
-                      __.as('organisation').values('Person.Organisation.Name').as('event_id')
+                      __.as('organisation').values('Person_Organisation_Name').as('event_id')
               )
               .select('event_id')
               .groupCount()
@@ -5014,18 +5014,18 @@ the end of the process.
       boolean firstTime = true
 
 
-      App.g.V().has('Metadata.Type.Event.Consent', P.eq('Event.Consent'))
+      App.g.V().has('Metadata_Type_Event_Consent', P.eq('Event_Consent'))
               .as('consent')
               .in('consent')
-              .has('Metadata.Type.Person.Natural', P.eq('Person.Natural'))
+              .has('Metadata_Type_Person_Natural', P.eq('Person_Natural'))
               .dedup()
               .as('person')
       // .id()
       // .dedup()
       // // .as('events')
               .match(
-                      __.as('person').values('Person.Natural.Type').as('person_type'),
-                      __.as('consent').values('Event.Consent.Status').as('consent_type')
+                      __.as('person').values('Person_Natural_Type').as('person_type'),
+                      __.as('consent').values('Event_Consent_Status').as('consent_type')
               )
               .select('person_type', 'consent_type')
               .groupCount()
@@ -5062,19 +5062,19 @@ the end of the process.
       boolean firstTime = true
 
 
-      App.g.V().has('Metadata.Type.Object.Data_Procedures', P.eq('Object.Data_Procedures'))
+      App.g.V().has('Metadata_Type_Object_Data_Procedures', P.eq('Object_Data_Procedures'))
               .as('data_procedures')
               .out('has_data_source')
       //     .in('Has_Contract')
               .out("Has_Ingestion_Event")
               .out("Has_Ingestion_Event")
               .in("Has_Ingestion_Event")
-              .has('Metadata.Type.Person.Natural', P.eq('Person.Natural'))
+              .has('Metadata_Type_Person_Natural', P.eq('Person_Natural'))
               .id()
               .dedup()
               .as('events')
               .match(
-                      __.as('data_procedures').values('Object.Data_Procedures.Type').as('event_id')
+                      __.as('data_procedures').values('Object_Data_Procedures_Type').as('event_id')
               )
               .select('event_id')
               .groupCount()
@@ -5109,15 +5109,15 @@ the end of the process.
       boolean firstTime = true
 
 
-      App.g.V().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
+      App.g.V().has('Metadata_Type_Object_Data_Source', P.eq('Object_Data_Source'))
               .as('data_source')
               .in('has_data_source')
-              .has('Metadata.Type.Object.Data_Procedures', P.eq('Object.Data_Procedures'))
+              .has('Metadata_Type_Object_Data_Procedures', P.eq('Object_Data_Procedures'))
               .id()
               .dedup()
               .as('events')
               .match(
-                      __.as('data_source').values('Object.Data_Source.Type').as('event_id')
+                      __.as('data_source').values('Object_Data_Source.Type').as('event_id')
               )
               .select('event_id')
               .groupCount()
@@ -5156,11 +5156,11 @@ the end of the process.
 
   static class DSARStats {
     static boolean getDSARStatsPerRequestType(Date gtDateThreshold, Date lteDateThreshold, boolean firstTime, String dateLabel, StringBuffer sb) {
-      return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime, dateLabel, 'Event.Subject_Access_Request.Request_Type', 'TOTAL_REQ_TYPE', sb)
+      return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime, dateLabel, 'Event_Subject_Access_Request_Request_Type', 'TOTAL_REQ_TYPE', sb)
     }
 
     static boolean getDSARStatsPerRequestStatus(Date gtDateThreshold, Date lteDateThreshold, boolean firstTime, String dateLabel, StringBuffer sb) {
-      return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime, dateLabel, 'Event.Subject_Access_Request.Status', 'TOTAL_STATUS', sb)
+      return getDSARStatsPer(gtDateThreshold, lteDateThreshold, firstTime, dateLabel, 'Event_Subject_Access_Request_Status', 'TOTAL_STATUS', sb)
 
     }
 
@@ -5169,9 +5169,9 @@ the end of the process.
       long count = 0
       try {
         App.g.V()
-                .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
+                .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
                 .where(
-                        __.values('Event.Subject_Access_Request.Metadata.Create_Date').is(P.between(gtDateThreshold, lteDateThreshold))
+                        __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(P.between(gtDateThreshold, lteDateThreshold))
                 )
 
                 .groupCount().by(groupByCount)
@@ -5260,7 +5260,7 @@ the end of the process.
               ]
 
       typeOrg.each { org ->
-        App.g.V().has('Metadata.Type.Person.Organisation', eq('Person.Organisation'))
+        App.g.V().has('Metadata_Type_Person_Organisation', eq('Person_Organisation'))
                 .as('organisation')
                 .outE(org)
                 .as('dsar_source_type')
@@ -5268,22 +5268,22 @@ the end of the process.
                 .out("Has_Ingestion_Event")
                 .out("Has_Ingestion_Event")
                 .in("Has_Ingestion_Event")
-                .has('Metadata.Type.Person.Natural', eq('Person.Natural'))
+                .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
                 .out("Made_SAR_Request")
                 .where(
                         __.or(
-                                __.values('Event.Subject_Access_Request.Metadata.Update_Date').is(gte(thirtyDayDateThreshold)),
-                                __.hasNot('Event.Subject_Access_Request.Metadata.Update_Date')
+                                __.values('Event_Subject_Access_Request_Metadata_Update_Date').is(gte(thirtyDayDateThreshold)),
+                                __.hasNot('Event_Subject_Access_Request_Metadata_Update_Date')
                         )
                 )
 
                 .dedup()
                 .as('events')
                 .match(
-                        __.as('organisation').values('Person.Organisation.Name').as('dsar_source_name')
-                        , __.as('events').values('Event.Subject_Access_Request.Status').as('dsar_status')
-                        , __.as('events').values('Event.Subject_Access_Request.Request_Type').as('dsar_type')
-                        , __.as('events').values('Event.Subject_Access_Request.Metadata.Create_Date').as('dsar_create_date')
+                        __.as('organisation').values('Person_Organisation_Name').as('dsar_source_name')
+                        , __.as('events').values('Event_Subject_Access_Request_Status').as('dsar_status')
+                        , __.as('events').values('Event_Subject_Access_Request_Request_Type').as('dsar_type')
+                        , __.as('events').values('Event_Subject_Access_Request_Metadata_Create_Date').as('dsar_create_date')
                         .coalesce(__.is(gt(fiveDayDateThreshold)).constant("Last 5 days"),
                                 __.is(between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
                                 __.is(between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
@@ -5313,8 +5313,8 @@ the end of the process.
 
       try {
         App.g.V()
-                .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
-                .groupCount().by('Event.Subject_Access_Request.Request_Type')
+                .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
+                .groupCount().by('Event_Subject_Access_Request_Request_Type')
                 .each {
                   it.each { it2 ->
                     if (!firstTime) {
@@ -5332,8 +5332,8 @@ the end of the process.
       }
 
       App.g.V()
-              .has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request'))
-              .groupCount().by('Event.Subject_Access_Request.Status')
+              .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
+              .groupCount().by('Event_Subject_Access_Request_Status')
               .each {
                 it.each { it2 ->
                   if (!firstTime) {
@@ -5370,14 +5370,14 @@ the end of the process.
   static class Discovery {
     static String domainTranslationStr = """
   {
-    "GENDER": "Person.Identity.Gender"
+    "GENDER": "Person_Identity_Gender"
    ,"FIRST_NAME":""
    ,"COMPANY":""
    ,"AIRPORT_CODE":""
    ,"AIRPORT":""
    ,"CA_PROVINCE_TERRITORY":""
    ,"CA_PROVINCE_TERRITORY_CODE":""
-   ,"CITY":"Location.Address.City"
+   ,"CITY":"Location_Address_City"
    ,"COUNTRY":""
    ,"COUNTRY_CODE_ISO2":""
    ,"COUNTRY_CODE_ISO3":""
@@ -5386,19 +5386,19 @@ the end of the process.
    ,"FR_COMMUNE":""
    ,"FR_REGION":""
    ,"FR_REGION_LEGACY":""
-   ,"HR_DEPARTMENT":"Person.Organisation.Department"
-   ,"JOB_TITLE":"Person.Employee.Title"
-   ,"LAST_NAME":"Person.Identity.Last_Name"
+   ,"HR_DEPARTMENT":"Person_Organisation_Department"
+   ,"JOB_TITLE":"Person_Employee_Title"
+   ,"LAST_NAME":"Person_Identity_Last_Name"
    ,"MONTH":""
-   ,"MX_ESTADO":"Location.Address.State"
-   ,"MX_ESTADO_CODE":"Location.Address.State"
-   ,"ORGANIZATION":"Person.Organisation.Name"
-   ,"STREET_TYPE":"Location.Address.Street"
+   ,"MX_ESTADO":"Location_Address_State"
+   ,"MX_ESTADO_CODE":"Location_Address_State"
+   ,"ORGANIZATION":"Person_Organisation_Name"
+   ,"STREET_TYPE":"Location_Address_Street"
    ,"US_COUNTY":""
-   ,"US_STATE":"Location.Address.State"
-   ,"US_STATE_CODE":"Location.Address.State"
-   ,"ADDRESS_LINE":"Location.Address.Full_Address"
-   ,"FULL_NAME":"Person.Identity.Full_Name"
+   ,"US_STATE":"Location_Address_State"
+   ,"US_STATE_CODE":"Location_Address_State"
+   ,"ADDRESS_LINE":"Location_Address_Full_Address"
+   ,"FULL_NAME":"Person_Identity_Full_Name"
 
   }
 
@@ -5411,16 +5411,16 @@ the end of the process.
     static addMetadataSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain, Double domainFrequency) {
 
 
-      GraphTraversal<Vertex, Vertex> dataSource = App.g.addV("Object.Metadata_Source")
-      Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Metadata_Source")
-              .property("Metadata.Type.Object.Metadata_Source", "Object.Metadata_Source")
-              .property("Object.Metadata_Source.Name", name)
-              .property("Object.Metadata_Source.Create_Date", new Date())
-              .property("Object.Metadata_Source.Update_Date", new Date())
-              .property("Object.Metadata_Source.Description", description)
-              .property("Object.Metadata_Source.Type", dataSourceType)
-              .property("Object.Metadata_Source.Domain", domainTranslation[domain] ?: domain)
-              .property("Object.Metadata_Source.Domain_Frequency", domainFrequency)
+      GraphTraversal<Vertex, Vertex> dataSource = App.g.addV("Object_Metadata_Source")
+      Vertex vertexDataSource = dataSource.property("Metadata_Type", "Object_Metadata_Source")
+              .property("Metadata_Type_Object_Metadata_Source", "Object_Metadata_Source")
+              .property("Object_Metadata_Source_Name", name)
+              .property("Object_Metadata_Source_Create_Date", new Date())
+              .property("Object_Metadata_Source_Update_Date", new Date())
+              .property("Object_Metadata_Source_Description", description)
+              .property("Object_Metadata_Source_Type", dataSourceType)
+              .property("Object_Metadata_Source_Domain", domainTranslation[domain] ?: domain)
+              .property("Object_Metadata_Source_Domain_Frequency", domainFrequency)
               .next()
 
 
@@ -5432,23 +5432,23 @@ the end of the process.
     static addDBColSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain, Double domainFrequency) {
 
       Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-              App.g.V().has("Object.Metadata_Source.Name", eq(name)).tryNext()
+              App.g.V().has("Object_Metadata_Source_Name", eq(name)).tryNext()
       GraphTraversal<Vertex, Vertex> dataSource
       if (!dataSourceOption.isPresent()) {
-        dataSource = App.g.addV("Object.Metadata_Source")
+        dataSource = App.g.addV("Object_Metadata_Source")
       } else {
         dataSource = App.g.V(dataSourceOption.get().id())
       }
 
-      Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Metadata_Source")
-              .property("Metadata.Type.Object.Metadata_Source", "Object.Metadata_Source")
-              .property("Object.Metadata_Source.Name", name)
-              .property("Object.Metadata_Source.Create_Date", new Date())
-              .property("Object.Metadata_Source.Update_Date", new Date())
-              .property("Object.Metadata_Source.Description", description)
-              .property("Object.Metadata_Source.Type", dataSourceType)
-              .property("Object.Metadata_Source.Domain", domainTranslation[domain] ?: domain)
-              .property("Object.Metadata_Source.Domain_Frequency", domainFrequency)
+      Vertex vertexDataSource = dataSource.property("Metadata_Type", "Object_Metadata_Source")
+              .property("Metadata_Type_Object_Metadata_Source", "Object_Metadata_Source")
+              .property("Object_Metadata_Source_Name", name)
+              .property("Object_Metadata_Source_Create_Date", new Date())
+              .property("Object_Metadata_Source_Update_Date", new Date())
+              .property("Object_Metadata_Source_Description", description)
+              .property("Object_Metadata_Source_Type", dataSourceType)
+              .property("Object_Metadata_Source_Domain", domainTranslation[domain] ?: domain)
+              .property("Object_Metadata_Source_Domain_Frequency", domainFrequency)
               .next()
 
 
@@ -5458,13 +5458,13 @@ the end of the process.
 
     static getDbCol(GraphTraversalSource g, String name) {
       Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-              App.g.V().has("Object.Metadata_Source.Name", eq(name)).tryNext()
+              App.g.V().has("Object_Metadata_Source_Name", eq(name)).tryNext()
       GraphTraversal<Vertex, Vertex> dataSource
       if (!dataSourceOption.isPresent()) {
-        dataSource = App.g.addV("Object.Metadata_Source")
-                .property("Metadata.Type", "Object.Metadata_Source")
-                .property("Metadata.Type.Object.Metadata_Source", "Object.Metadata_Source")
-                .property("Object.Metadata_Source.Name", name)
+        dataSource = App.g.addV("Object_Metadata_Source")
+                .property("Metadata_Type", "Object_Metadata_Source")
+                .property("Metadata_Type_Object_Metadata_Source", "Object_Metadata_Source")
+                .property("Object_Metadata_Source_Name", name)
       } else {
         dataSource = App.g.V(dataSourceOption.get().id())
       }
@@ -5477,21 +5477,21 @@ the end of the process.
     static addDataSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain) {
 
       Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-              App.g.V().has("Object.Data_Source.Name", eq(name)).tryNext()
+              App.g.V().has("Object_Data_Source.Name", eq(name)).tryNext()
       GraphTraversal<Vertex, Vertex> dataSource
       if (!dataSourceOption.isPresent()) {
-        dataSource = App.g.addV("Object.Data_Source")
+        dataSource = App.g.addV("Object_Data_Source")
       } else {
         dataSource = App.g.V(dataSourceOption.get().id())
       }
-      Vertex vertexDataSource = dataSource.property("Metadata.Type", "Object.Data_Source")
-              .property("Metadata.Type.Object.Data_Source", "Object.Data_Source")
-              .property("Object.Data_Source.Name", name)
-              .property("Object.Data_Source.Create_Date", new Date())
-              .property("Object.Data_Source.Update_Date", new Date())
-              .property("Object.Data_Source.Description", description)
-              .property("Object.Data_Source.Type", dataSourceType)
-              .property("Object.Data_Source.Domain", domain)
+      Vertex vertexDataSource = dataSource.property("Metadata_Type", "Object_Data_Source")
+              .property("Metadata_Type_Object_Data_Source", "Object_Data_Source")
+              .property("Object_Data_Source.Name", name)
+              .property("Object_Data_Source.Create_Date", new Date())
+              .property("Object_Data_Source.Update_Date", new Date())
+              .property("Object_Data_Source.Description", description)
+              .property("Object_Data_Source.Type", dataSourceType)
+              .property("Object_Data_Source.Domain", domain)
               .next()
 
       return vertexDataSource

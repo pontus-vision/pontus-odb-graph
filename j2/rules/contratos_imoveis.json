@@ -2,11 +2,11 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Person.Natural",
+        "label": "Person_Natural",
         "percentageThreshold": 10,
         "props": [
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
+            "name": "Person_Natural_Full_Name_fuzzy",
             "val": "${pg_nlp_res_person}",
             "predicate": "textContainsFuzzy",
             "mandatoryInSearch": true,
@@ -14,7 +14,7 @@
             "postProcessor": "${it?.toUpperCase()?.trim()}"
           },
           {
-            "name": "Person.Natural.Full_Name",
+            "name": "Person_Natural_Full_Name",
             "val": "${pg_nlp_res_person}",
             "predicate": "textContainsFuzzy",
             "mandatoryInSearch": true,
@@ -24,10 +24,10 @@
         ]
       },
       {
-        "label": "Location.Address",
+        "label": "Location_Address",
         "props": [
           {
-            "name": "Location.Address.parser.postcode",
+            "name": "Location_Address_parser.postcode",
             "val": "${pg_nlp_res_post_code}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
@@ -37,10 +37,10 @@
         ]
       },
       {
-        "label": "Object.Email_Address",
+        "label": "Object_Email_Address",
         "props": [
           {
-            "name": "Object.Email_Address.Email",
+            "name": "Object_Email_Address_Email",
             "val": "${pg_nlp_res_emailaddress?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
@@ -48,28 +48,28 @@
         ]
       },
       {
-        "label": "Event.Ingestion",
+        "label": "Event_Ingestion",
         "props": [
           {
-            "name": "Event.Ingestion.Type",
+            "name": "Event_Ingestion_Type",
             "val": "PDF Form Files",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Operation",
+            "name": "Event_Ingestion_Operation",
             "val": "Unstructured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Domain_b64",
+            "name": "Event_Ingestion_Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Create_Date",
+            "name": "Event_Ingestion_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -78,52 +78,52 @@
         ]
       },
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source.Name",
             "val": "CONTRATOS",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Data_Source.Description",
+            "name": "Object_Data_Source.Description",
             "val": "Contratos em AWS S3",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Data_Source.Type",
+            "name": "Object_Data_Source.Type",
             "val": "Structured",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Event.Group_Ingestion",
+        "label": "Event_Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Type",
+            "name": "Event_Group_Ingestion_Type",
             "val": "Contratos em AWS S3",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Operation",
+            "name": "Event_Group_Ingestion_Operation",
             "val": "Unstructured Data Insertion",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "name": "Event_Group_Ingestion_Metadata_Start_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "name": "Event_Group_Ingestion_Metadata_End_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -135,18 +135,18 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
       }
     ]
   }

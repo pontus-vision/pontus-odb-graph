@@ -2,20 +2,20 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Person.Natural",
+        "label": "Person_Natural",
         "props": [
           {
-            "name": "Person.Natural.Full_Name",
+            "name": "Person_Natural_Full_Name",
             "val": "${pg_NOME?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Full_Name_fuzzy",
+            "name": "Person_Natural_Full_Name_fuzzy",
             "val": "${pg_NOME?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Type",
+            "name": "Person_Natural_Type",
             "val": "leads",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -23,21 +23,21 @@
         ]
       },
       {
-        "label": "Object.Salary",
+        "label": "Object_Salary",
         "props": [
           {
-            "name": "Object.Salary.Value",
+            "name": "Object_Salary_Value",
             "val": "${pg_RENDA?.replaceAll('[^0-9\\\\.]','')}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Salary.Currency",
+            "name": "Object_Salary_Currency",
             "val": "BRL",
             "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
-            "name": "Object.Salary.Period",
+            "name": "Object_Salary_Period",
             "val": "Mensal",
             "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
@@ -45,21 +45,21 @@
         ]
       },
       {
-        "label": "Person.Organisation",
+        "label": "Person_Organisation",
         "name": "CORRETOR",
         "props": [
           {
-            "name": "Person.Organisation.Name",
+            "name": "Person_Organisation_Name",
             "val": "${pg_CORRETOR}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Organisation.Short_Name",
+            "name": "Person_Organisation_Short_Name",
             "val": "${pg_CORRETOR}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Organisation.Type",
+            "name": "Person_Organisation_Type",
             "val": "Corretora",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -67,28 +67,28 @@
         ]
       },
       {
-        "label": "Object.Phone_Number",
+        "label": "Object_Phone_Number",
         "props": [
           {
-            "name": "Object.Phone_Number.Raw",
+            "name": "Object_Phone_Number_Raw",
             "val": "${pg_TELEFONE}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Phone_Number.Type",
+            "name": "Object_Phone_Number_Type",
             "val": "Celular",
             "mandatoryInSearch": true,
             "excludeFromSubsequenceSearch": true
           },
           {
-            "name": "Object.Phone_Number.Numbers_Only",
+            "name": "Object_Phone_Number_Numbers_Only",
             "val": "${(pg_TELEFONE?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Phone_Number.Last_7_Digits",
+            "name": "Object_Phone_Number_Last_7_Digits",
             "val": "${(((pg_TELEFONE?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
@@ -96,24 +96,24 @@
         ]
       },
       {
-        "label": "Event.Consent",
+        "label": "Event_Consent",
         "props": [
           {
-            "name": "Event.Consent.Date",
+            "name": "Event_Consent_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Consent.Metadata.Create_Date",
+            "name": "Event_Consent_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Consent.Status",
+            "name": "Event_Consent_Status",
             "val": "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -121,31 +121,31 @@
         ]
       },
       {
-        "label": "Object.Email_Address",
+        "label": "Object_Email_Address",
         "props": [
           {
-            "name": "Object.Email_Address.Email",
+            "name": "Object_Email_Address_Email",
             "val": "${pg_EMAIL?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Location.Address",
+        "label": "Location_Address",
         "props": [
           {
-            "name": "Location.Address.Full_Address",
+            "name": "Location_Address_Full_Address",
             "val": "${pg_END__IMOVEL}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Location.Address.Type",
+            "name": "Location_Address_Type",
             "val": "Lead",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Location.Address.Code",
+            "name": "Location_Address_Code",
             "val": {
               "pg_IMOVEL_INTERESSE": null
             },
@@ -154,28 +154,28 @@
         ]
       },
       {
-        "label": "Event.Transaction",
+        "label": "Event_Transaction",
         "props": [
           {
-            "name": "Event.Transaction.Type",
+            "name": "Event_Transaction_Type",
             "val": "Interesse",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Transaction.Description",
+            "name": "Event_Transaction_Description",
             "val": "Compra da Propriedade",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Transaction.Currency",
+            "name": "Event_Transaction_Currency",
             "val": "BRL",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Transaction.Date",
+            "name": "Event_Transaction_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -184,52 +184,52 @@
         ]
       },
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source.Name",
             "val": "PLANILHAS - S3",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Data_Source.Type",
+            "name": "Object_Data_Source.Type",
             "val": "planilhas - S3",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Data_Source.Description",
+            "name": "Object_Data_Source.Description",
             "val": "planilhas guardadas na AWS S3",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Event.Group_Ingestion",
+        "label": "Event_Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Type",
+            "name": "Event_Group_Ingestion_Type",
             "val": "planilhas - S3",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Operation",
+            "name": "Event_Group_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
+            "name": "Event_Group_Ingestion_Metadata_Start_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
+            "name": "Event_Group_Ingestion_Metadata_End_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -238,28 +238,28 @@
         ]
       },
       {
-        "label": "Event.Ingestion",
+        "label": "Event_Ingestion",
         "props": [
           {
-            "name": "Event.Ingestion.Type",
+            "name": "Event_Ingestion_Type",
             "val": "planilhas - S3",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Operation",
+            "name": "Event_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Domain_b64",
+            "name": "Event_Ingestion_Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Create_Date",
+            "name": "Event_Ingestion_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -271,53 +271,53 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
       },
       {
         "label": "Uses_Email",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Email_Address"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Object_Email_Address"
       },
       {
         "label": "Consent",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Event.Consent"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Consent"
       },
       {
         "label": "Has_Salary",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Object.Salary"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Object_Salary"
       },
       {
         "label": "Is_Responsible",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Person.Organisation"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Person_Organisation"
       },
       {
         "label": "Has_Transaction",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Event.Transaction"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Transaction"
       },
       {
         "label": "Has_Transaction",
-        "fromVertexLabel": "Event.Transaction",
-        "toVertexLabel": "Location.Address"
+        "fromVertexLabel": "Event_Transaction",
+        "toVertexLabel": "Location_Address"
       },
       {
         "label": "Has_Transaction",
-        "fromVertexLabel": "Person.Organisation",
-        "toVertexLabel": "Location.Address"
+        "fromVertexLabel": "Person_Organisation",
+        "toVertexLabel": "Location_Address"
       }
     ]
   }

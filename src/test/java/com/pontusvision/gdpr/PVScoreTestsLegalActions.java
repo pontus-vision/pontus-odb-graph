@@ -52,14 +52,14 @@ public class PVScoreTestsLegalActions extends AppTest {
 
       assertEquals(100L, score);
 
-      List legalActions = App.g.V().has("Metadata.Type.Object.Legal_Actions",
-          P.eq("Object.Legal_Actions")).id().toList();
+      List legalActions = App.g.V().has("Metadata_Type_Object_Legal_Actions",
+          P.eq("Object_Legal_Actions")).id().toList();
 
       Transaction trans = App.graph.tx();
       if (!trans.isOpen()){
         trans.open();
       }
-      App.g.V(legalActions.get(0)).property("Object.Legal_Actions.Date", new Date()).iterate();
+      App.g.V(legalActions.get(0)).property("Object_Legal_Actions_Date", new Date()).iterate();
       trans.commit();
       trans.close();
 
@@ -72,7 +72,7 @@ public class PVScoreTestsLegalActions extends AppTest {
       if (!trans.isOpen()){
         trans.open();
       }
-      App.g.V(legalActions.get(1)).property("Object.Legal_Actions.Date", new Date()).iterate();
+      App.g.V(legalActions.get(1)).property("Object_Legal_Actions_Date", new Date()).iterate();
       trans.commit();
       trans.close();
 

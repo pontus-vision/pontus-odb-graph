@@ -2,45 +2,45 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Person.Natural",
+        "label": "Person_Natural",
         "props": [
           {
-            "name": "Person.Natural.Full_Name",
+            "name": "Person_Natural_Full_Name",
             "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Event.Ingestion",
+        "label": "Event_Ingestion",
         "props": [
           {
-            "name": "Event.Ingestion.Type",
+            "name": "Event_Ingestion_Type",
             "val": "sap/c@p My Porsche Change Report",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Operation",
+            "name": "Event_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Domain_b64",
+            "name": "Event_Ingestion_Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Create_Date",
+            "name": "Event_Ingestion_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Update_Date",
+            "name": "Event_Ingestion_Metadata_Update_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -49,30 +49,30 @@
         ]
       },
       {
-        "label": "Event.Group_Ingestion",
+        "label": "Event_Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Type",
+            "name": "Event_Group_Ingestion_Type",
             "val": "sap/c@p My Porsche Change Report",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Operation",
+            "name": "Event_Group_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source.Name",
             "val": "SAP/C@P MY PORSCHE CHANGE REPORT",
             "mandatoryInSearch": true
           }
@@ -82,18 +82,18 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person.Natural",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Ingestion"
       }
     ]
   }

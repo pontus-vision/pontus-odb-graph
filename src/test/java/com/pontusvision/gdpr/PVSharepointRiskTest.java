@@ -39,15 +39,15 @@ public class PVSharepointRiskTest extends AppTest {
       jsonTestUtil("pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
           "sharepoint_risk_mitigation");
 
-//    test0000 for PEDRO Person.Employee NODE
+//    test0000 for PEDRO Person_Employee NODE
       String numRiskMitigations =
-          App.executor.eval("App.g.V().has('Metadata.Type.Object.Risk_Mitigation_Data_Source', eq('Object.Risk_Mitigation_Data_Source')).count()\n" +
+          App.executor.eval("App.g.V().has('Metadata_Type_Object_Risk_Mitigation_Data_Source', eq('Object_Risk_Mitigation_Data_Source')).count()\n" +
               ".next().toString()").get().toString();
 
       assertEquals("9",numRiskMitigations, "9 Risk Mitigations");
 
       String mSystmPasswd =
-          App.executor.eval("App.g.V().has('Object.Risk_Mitigation_Data_Source.Mitigation_Id', eq('M-SYSTM-PASSWD')).count()\n" +
+          App.executor.eval("App.g.V().has('Object_Risk_Mitigation_Data_Source_Mitigation_Id', eq('M-SYSTM-PASSWD')).count()\n" +
               ".next().toString()").get().toString();
 
 
@@ -70,23 +70,23 @@ public class PVSharepointRiskTest extends AppTest {
       jsonTestUtil("pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
           "sharepoint_risk");
 
-//    test0000 for PEDRO Person.Employee NODE
+//    test0000 for PEDRO Person_Employee NODE
       String numRiskMitigations =
-          App.executor.eval("App.g.V().has('Metadata.Type.Object.Risk_Data_Source', eq('Object.Risk_Data_Source')).count()\n" +
+          App.executor.eval("App.g.V().has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source')).count()\n" +
               ".next().toString()").get().toString();
 
       assertEquals("14",numRiskMitigations, "14 Risks");
 
       String numDataSourcesR02 =
-          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).in('Has_Risk')\n" +
+          App.executor.eval("App.g.V().has('Object_Risk_Data_Source_Risk_Id', eq('R02')).in('Has_Risk')\n" +
               ".count().next().toString()").get().toString();
 
 
       assertEquals("2",numDataSourcesR02, "2 Data sources associated with R02");
 
       String descriptionR02 =
-          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02'))" +
-              ".values('Object.Risk_Data_Source.Description')\n" +
+          App.executor.eval("App.g.V().has('Object_Risk_Data_Source_Risk_Id', eq('R02'))" +
+              ".values('Object_Risk_Data_Source_Description')\n" +
               ".next().toString()").get().toString();
 
 
@@ -94,7 +94,7 @@ public class PVSharepointRiskTest extends AppTest {
 
 
       String numMitigationsR02 =
-          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R02')).in('Mitigates_Risk')\n" +
+          App.executor.eval("App.g.V().has('Object_Risk_Data_Source_Risk_Id', eq('R02')).in('Mitigates_Risk')\n" +
               ".count().next().toString()").get().toString();
 
 
@@ -102,22 +102,22 @@ public class PVSharepointRiskTest extends AppTest {
 
 
       String mitigationsR03Count =
-          App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R03')).in('Mitigates_Risk')\n" +
+          App.executor.eval("App.g.V().has('Object_Risk_Data_Source_Risk_Id', eq('R03')).in('Mitigates_Risk')\n" +
               ".count().next().toString()").get().toString();
 
       assertEquals("0",mitigationsR03Count, "0 Risk Mitigations for R03");
 
 
       String approvedBySecurity =
-              App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R05'))" +
-                      ".values('Object.Risk_Data_Source.Approved_By_Security').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Risk_Data_Source_Risk_Id', eq('R05'))" +
+                      ".values('Object_Risk_Data_Source_Approved_By_Security').next().toString()").get().toString();
 
       assertEquals("false",approvedBySecurity, "bool status for Approved_By_Security");
 
 
       String approvedByDPO =
-              App.executor.eval("App.g.V().has('Object.Risk_Data_Source.Risk_Id', eq('R11'))" +
-                      ".values('Object.Risk_Data_Source.Approved_By_DPO').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Risk_Data_Source_Risk_Id', eq('R11'))" +
+                      ".values('Object_Risk_Data_Source_Approved_By_DPO').next().toString()").get().toString();
 
       assertEquals("true",approvedByDPO, "bool status for Approved_By_DPO");
 

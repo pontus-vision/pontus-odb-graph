@@ -17,7 +17,7 @@ updatereq:
         {%- set vertProps = vertex.props %}
         {%- for prop in vertProps %}
           {%- set props = vertProps[prop] %}
-        - name: {{vertLabel}}.{{prop}}
+        - name: {{vertLabel}}_{{prop}}
           val: {{ props.val | default(props,true) }}
           {%- if props.predicate|default (false,true) %}
           predicate: {{props.predicate |default('eq', true)}}

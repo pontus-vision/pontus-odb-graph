@@ -158,11 +158,11 @@ public class Resource {
     }
 
     GraphTraversal<Vertex, Vertex> gt =
-        App.g.V().has("Person.Natural.Full_Name",
+        App.g.V().has("Person_Natural_Full_Name",
             PText.textContains(md2req.query.name.trim().toUpperCase(Locale.ROOT)));
 
     if (md2req.query.docCpf != null) {
-      gt = gt.has("Person.Natural.Customer_ID", eq(md2req.query.docCpf.replaceAll("[^0-9]", "")));
+      gt = gt.has("Person_Natural_Customer_ID", eq(md2req.query.docCpf.replaceAll("[^0-9]", "")));
     }
     try {
       List<Object> ids = (gt.id().toList());
@@ -182,7 +182,7 @@ public class Resource {
 
       }
       if (md2req.query.email != null) {
-        if (!App.g.V(ids.get(0)).out("Uses_Email").has("Object.Email_Address.Email",
+        if (!App.g.V(ids.get(0)).out("Uses_Email").has("Object_Email_Address_Email",
             eq(md2req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
           System.out.println("Not found email " + md2req.query.email + " associated with " + ids.size() + " (" +
               md2req.query.name + ")");
@@ -203,19 +203,19 @@ public class Resource {
       reply.total = App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
       reply.reqId = md2req.query.reqId;
 
-      List<Map<String, Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event.NLP_Group.Ingestion_Date", Order.asc)
+      List<Map<String, Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event_NLP_Group_Ingestion_Date", Order.asc)
           .in("Has_NLP_Events").dedup().range(md2req.settings.start, md2req.settings.start + md2req.settings.limit).as("EVENTS")
 //          .in()
           .match(
               __.as("EVENTS").id().as("ID"),
-//              __.as("EVENTS").has("Metadata.Type.Object.Email_Message_Body", P.eq("Object.Email_Message_Body")).valueMap().as("email_body"),
-//              __.as("EVENTS").has("Metadata.Type.Object.Email_Message_Attachment",P.eq ("Object.Email_Message_Attachment")).valueMap().as("email_attachment"),
+//              __.as("EVENTS").has("Metadata_Type_Object_Email_Message_Body", P.eq("Object_Email_Message_Body")).valueMap().as("email_body"),
+//              __.as("EVENTS").has("Metadata_Type_Object_Email_Message_Attachment",P.eq ("Object_Email_Message_Attachment")).valueMap().as("email_attachment"),
               __.as("EVENTS").label().as("eventType"),
               __.as("EVENTS").valueMap().as("values")
           )
 //          .select("id","email_body", "email_attachment", "file")
           .select("ID", "eventType", "values")
-//          .has("Metadata.Type.Event.File_Ingestion",P.eq ("Event.File_Ingestion")).valueMap().as("file")
+//          .has("Metadata_Type_Event_File_Ingestion",P.eq ("Event_File_Ingestion")).valueMap().as("file")
           .toList();
 
       reply.track = new Md2Reply.Register[res.size()];
@@ -226,56 +226,56 @@ public class Resource {
         Map<String, List<Object>> values = (Map<String, List<Object>>) res.get(i).get("values");
         Object eventId = res.get(i).get("ID");
 
-        if ("Event.File_Ingestion".equalsIgnoreCase(eventType)) {
-          reg.fileType = getFirstStringItem(values.get("Event.File_Ingestion.File_Type"),"");
-          reg.sizeBytes = getFirstDoubleItem(values.get("Event.File_Ingestion.Size_Bytes"),0.0).longValue();
-          reg.name = getFirstStringItem(values.get("Event.File_Ingestion.Name"),"");
-          reg.path = getFirstStringItem(values.get("Event.File_Ingestion.Path"),"");
-          reg.created =  getFirstStringItem(values.get("Event.File_Ingestion.Created"),"");
-          reg.owner = getFirstStringItem(values.get("Event.File_Ingestion.Owner"),"");
-          reg.server = getFirstStringItem(values.get("Event.File_Ingestion.Server"),"");
+        if ("Event_File_Ingestion".equalsIgnoreCase(eventType)) {
+          reg.fileType = getFirstStringItem(values.get("Event_File_Ingestion_File_Type"),"");
+          reg.sizeBytes = getFirstDoubleItem(values.get("Event_File_Ingestion_Size_Bytes"),0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Event_File_Ingestion_Name"),"");
+          reg.path = getFirstStringItem(values.get("Event_File_Ingestion_Path"),"");
+          reg.created =  getFirstStringItem(values.get("Event_File_Ingestion_Created"),"");
+          reg.owner = getFirstStringItem(values.get("Event_File_Ingestion_Owner"),"");
+          reg.server = getFirstStringItem(values.get("Event_File_Ingestion_Server"),"");
 
-          reg.lastAccess = getFirstStringItem(values.get("Event.File_Ingestion.Last_Access"),"");
-        } else if ("Object.Email_Message_Attachment".equalsIgnoreCase(eventType)) {
+          reg.lastAccess = getFirstStringItem(values.get("Event_File_Ingestion_Last_Access"),"");
+        } else if ("Object_Email_Message_Attachment".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Attachment";
-          reg.sizeBytes = getFirstDoubleItem(values.get("Object.Email_Message_Attachment.Size_Bytes"),0.0).longValue();
-          reg.name = getFirstStringItem(values.get("Object.Email_Message_Attachment.Attachment_Name"),"");
+          reg.sizeBytes = getFirstDoubleItem(values.get("Object_Email_Message_Attachment_Size_Bytes"),0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Object_Email_Message_Attachment_Attachment_Name"),"");
           StringBuilder sb = new StringBuilder();
           sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
-          sb.append(getFirstStringItem(values.get("Object.Email_Message_Attachment.Attachment_Id"),""));
+          sb.append(getFirstStringItem(values.get("Object_Email_Message_Attachment_Attachment_Id"),""));
           reg.path = sb.toString();
-          List<Object> createdDateTime = values.get("Object.Email_Message_Attachment.Created_Date_Time");
+          List<Object> createdDateTime = values.get("Object_Email_Message_Attachment_Created_Date_Time");
 
           reg.created = getFirstStringItem(
-              values.get("Object.Email_Message_Attachment.Created_Date_Time"),
+              values.get("Object_Email_Message_Attachment_Created_Date_Time"),
               "");
 
 
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Attachment")
-              .out("Email_From").values("Event.Email_From_Group.Email");
+              .out("Email_From").values("Event_Email_From_Group_Email");
           reg.owner = trav.hasNext() ? trav.next().toString() : "";
           reg.server = "office365/email";
-        } else if ("Object.Email_Message_Body".equalsIgnoreCase(eventType)) {
+        } else if ("Object_Email_Message_Body".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Body";
-          reg.sizeBytes = getFirstDoubleItem(values.get("Object.Email_Message_Body.Size_Bytes"),0.0).longValue();
-          reg.name = getFirstStringItem(values.get("Object.Email_Message_Body.Email_Subject"),"");
+          reg.sizeBytes = getFirstDoubleItem(values.get("Object_Email_Message_Body.Size_Bytes"),0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Object_Email_Message_Body.Email_Subject"),"");
           StringBuffer sb = new StringBuffer();
           sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
-          String emailId = getFirstStringItem(values.get("Object.Email_Message_Body.Email_Id"),"");
+          String emailId = getFirstStringItem(values.get("Object_Email_Message_Body.Email_Id"),"");
           sb.append(URLEncoder.encode(emailId, "UTF-8"));
           reg.path = sb.toString();
-          reg.created = getFirstStringItem(values.get("Object.Email_Message_Body.Created_Date_Time"), "" );
+          reg.created = getFirstStringItem(values.get("Object_Email_Message_Body.Created_Date_Time"), "" );
 
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Body")
-              .out("Email_From").values("Event.Email_From_Group.Email");
+              .out("Email_From").values("Event_Email_From_Group_Email");
           //.next().toString();
 
           String owner = trav.hasNext() ? trav.next().toString() : "";
 
-          reg.lastAccess = values.get("Object.Email_Message_Body.Received_Date_Time") != null ?
-              values.get("Object.Email_Message_Body.Received_Date_Time").get(0).toString():
-              (values.get("Object.Email_Message_Body.Sent_Date_Time") != null ?
-                  values.get("Object.Email_Message_Body.Sent_Date_Time").get(0).toString():
+          reg.lastAccess = values.get("Object_Email_Message_Body.Received_Date_Time") != null ?
+              values.get("Object_Email_Message_Body.Received_Date_Time").get(0).toString():
+              (values.get("Object_Email_Message_Body.Sent_Date_Time") != null ?
+                  values.get("Object_Email_Message_Body.Sent_Date_Time").get(0).toString():
                   "");
 
 
@@ -290,7 +290,7 @@ public class Resource {
       }
 
 
-//          .properties("Object.Email_Message_Body", "Object.Email_Message_Attachment");
+//          .properties("Object_Email_Message_Body", "Object_Email_Message_Attachment");
 
 //      reply.track.created;
 //      reply.track.fileType;
@@ -535,17 +535,17 @@ public class Resource {
 
       //      GraphTraversal g =
       try {
-        GraphTraversal resSet = App.g.V(); //.has("Metadata.Type", "Person.Natural");
+        GraphTraversal resSet = App.g.V(); //.has("Metadata_Type", "Person_Natural");
         //        Boolean searchExact = req.search.getSearchExact();
 
         CountryDataReply data = new CountryDataReply();
 
         List<Map<String, Long>> res =
             StringUtils.isNotEmpty(searchStr) ?
-                resSet.has("Person.Natural.FullName", P.eq(searchStr)).values("Person.Natural.Nationality")
+                resSet.has("Person_Natural_FullName", P.eq(searchStr)).values("Person_Natural_Nationality")
                     .groupCount()
                     .toList() :
-                resSet.has("Person.Natural.Nationality").values("Person.Natural.Nationality").groupCount().toList();
+                resSet.has("Person_Natural_Nationality").values("Person_Natural_Nationality").groupCount().toList();
 
         if (res.size() == 1) {
           data.countryData.putAll(res.get(0));
@@ -644,7 +644,7 @@ public class Resource {
       //        GraphTraversal g = App.g.V();
       //        for (int i = 0, ilen = req.labels.length; i < ilen; i++)
       //        {
-      //          g = g.has("Metadata.Type", req.labels[i].value).range(0, 1);
+      //          g = g.has("Metadata_Type", req.labels[i].value).range(0, 1);
       //
       //          //          labels[i] = (req.labels[i + 1].value);
       //
@@ -683,18 +683,18 @@ public class Resource {
       );
 
       List<Map<Object, Object>> notificationTemplates = App.g.V()
-          .has("Object.Notification_Templates.Types", eq(label))
-          .valueMap("Object.Notification_Templates.Label",
-              "Object.Notification_Templates.Text",
-              "Object.Notification_Templates.Id")
+          .has("Object_Notification_Templates_Types", eq(label))
+          .valueMap("Object_Notification_Templates_Label",
+              "Object_Notification_Templates_Text",
+              "Object_Notification_Templates_Id")
           .toList();
 
       boolean useNewMode = vlabReq.version != null && vlabReq.version.startsWith("v2.");
       notificationTemplates.forEach(map -> {
-        props.add("@" + map.get("Object.Notification_Templates.Label") + "@" +
+        props.add("@" + map.get("Object_Notification_Templates_Label") + "@" +
             (useNewMode?
-              map.get("Object.Notification_Templates.Id"):
-              map.get("Object.Notification_Templates.Text"))
+              map.get("Object_Notification_Templates_Id"):
+              map.get("Object_Notification_Templates_Text"))
         );
 
       });
@@ -949,7 +949,7 @@ status: "success", message: "Data source is working", title: "Success"
   @Consumes(MediaType.APPLICATION_JSON)
 
   public String mappingPost(MappingReq request) {
-    return App.g.V().addV("Object.Data_Src_Mapping_Rule")
+    return App.g.V().addV("Object_Data_Src_Mapping_Rule")
         .property("Name", "")
         .property("Create_Date", "")
         .property("Update_Date", "")
@@ -1000,7 +1000,7 @@ status: "success", message: "Data source is working", title: "Success"
 
     String templateId = request.getTemplateId();
 
-    GraphTraversal<Vertex, Vertex> trav = App.g.V().has("Object.Notification_Templates.Id", P.eq(templateId));
+    GraphTraversal<Vertex, Vertex> trav = App.g.V().has("Object_Notification_Templates_Id", P.eq(templateId));
 
     if (!trav.hasNext()) {
       return new ReportTemplateRenderResponse(Response.Status.NOT_FOUND, "Cannot find template id " +
@@ -1011,8 +1011,8 @@ status: "success", message: "Data source is working", title: "Success"
 
     ORecordId refId = new ORecordId(request.getRefEntryId());
 
-    String templateTextBase64 = App.g.V().has("Object.Notification_Templates.Id", P.eq(templateId))
-        .values("Object.Notification_Templates.Text").next().toString();
+    String templateTextBase64 = App.g.V().has("Object_Notification_Templates_Id", P.eq(templateId))
+        .values("Object_Notification_Templates_Text").next().toString();
     String resolvedStr = "";
 
     try {

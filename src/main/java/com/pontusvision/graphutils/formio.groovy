@@ -9,7 +9,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSo
 
 //
 //// describeSchema()
-//// g.V().has('Metadata.Type.Object.Credential','Object.Credential')
+//// g.V().has('Metadata_Type_Object_Credential','Object_Credential')
 //g.V()
 //
 //def jsonData = '{"request":{"data":{"Description":"This is a privacy impact assessment for app xyz","Start_Date":"12/01/2018","Delivery_Date":"11/03/2019","Risk_To_Individuals":"Med","Risk_Of_Reputational_Damage":"High","Intrusion_On_Privacy":"High","Risk_To_Corporation":"High","Compliance_Check_Passed":true,"submit":true},"owner":"5b0a74637a574e0832269bcb","access":[],"form":"5b1d3503e3acf26950581de3"},"submission":{"owner":"5b0a74637a574e0832269bcb","deleted":null,"roles":[],"_id":"5b713ef31e97e512e943d3a8","data":{"Description":"This is a privacy impact assessment for app xyz","Start_Date":"12/01/2018","Delivery_Date":"11/03/2019","Risk_To_Individuals":"Med","Risk_Of_Reputational_Damage":"High","Intrusion_On_Privacy":"High","Risk_To_Corporation":"High","Compliance_Check_Passed":true,"submit":true},"access":[],"form":"5b1d3503e3acf26950581de3","externalIds":[],"created":"2018-08-13T08:18:59.374Z","modified":"2018-08-13T08:18:59.375Z","__v":0},"params":{"formId":"5b1d3503e3acf26950581de3"}}'
@@ -19,8 +19,8 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSo
 ////
 ////
 ////
-////// def jsonStr = '{"reqs":[{"attribVal":"Leo","attribType":"String","propName":"Person.Natural.Full_Name","vertexName":"Person.Natural","predicateStr":"textPrefix"},{"attribVal":"Mardy","attribType":"String","propName":"Person.Natural.Full_Name","vertexName":"Person.Natural","predicateStr":"textFuzzy"},{"attribVal":"Martins","attribType":"String","propName":"Person.Natural.Last_Name","vertexName":"Person.Natural","predicateStr":"textFuzzy"},{"attribVal":"Zukker","attribType":"String","propName":"Person.Natural.Last_Name","vertexName":"Person.Natural","predicateStr":"textFuzzy"},{"attribVal":"Silva","attribType":"String","propName":"Person.Natural.Last_Name","vertexName":"Person.Natural","predicateStr":"textFuzzy"},{"attribVal":"SW1W 9QL","attribType":"String","propName":"Location.Address.Post_Code","vertexName":"Location.Address","predicateStr":"eq"},{"attribVal":"E14 4BB","attribType":"String","propName":"Location.Address.Post_Code","vertexName":"Location.Address","predicateStr":"eq"},{"attribVal":"SW1W 3LL","attribType":"String","propName":"Location.Address.Post_Code","vertexName":"Location.Address","predicateStr":"eq"}]}'
-////// def jsonStr = '{"reqs":[{"attribVal":"Leo","attribType":"String","propName":"Person.Natural.Full_Name","vertexName":"Person.Natural","predicateStr":"textPrefix"}]}'
+////// def jsonStr = '{"reqs":[{"attribVal":"Leo","attribType":"String","propName":"Person_Natural_Full_Name","vertexName":"Person_Natural","predicateStr":"textPrefix"},{"attribVal":"Mardy","attribType":"String","propName":"Person_Natural_Full_Name","vertexName":"Person_Natural","predicateStr":"textFuzzy"},{"attribVal":"Martins","attribType":"String","propName":"Person_Natural_Last_Name","vertexName":"Person_Natural","predicateStr":"textFuzzy"},{"attribVal":"Zukker","attribType":"String","propName":"Person_Natural_Last_Name","vertexName":"Person_Natural","predicateStr":"textFuzzy"},{"attribVal":"Silva","attribType":"String","propName":"Person_Natural_Last_Name","vertexName":"Person_Natural","predicateStr":"textFuzzy"},{"attribVal":"SW1W 9QL","attribType":"String","propName":"Location_Address_Post_Code","vertexName":"Location_Address","predicateStr":"eq"},{"attribVal":"E14 4BB","attribType":"String","propName":"Location_Address_Post_Code","vertexName":"Location_Address","predicateStr":"eq"},{"attribVal":"SW1W 3LL","attribType":"String","propName":"Location_Address_Post_Code","vertexName":"Location_Address","predicateStr":"eq"}]}'
+////// def jsonStr = '{"reqs":[{"attribVal":"Leo","attribType":"String","propName":"Person_Natural_Full_Name","vertexName":"Person_Natural","predicateStr":"textPrefix"}]}'
 ////
 ////
 ////
@@ -30,9 +30,9 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSo
 ////// sb.toString()
 ////// g.V()
 ////
-////// g.V().has('Person.Natural.Full_Name',org.janusgraph.core.attribute.Text.textPrefix('Leo')).id()
+////// g.V().has('Person_Natural_Full_Name',org.janusgraph.core.attribute.Text.textPrefix('Leo')).id()
 ////
-//updateFormData(g,jsonData,"Object.Privacy_Impact_Assessment",sb)
+//updateFormData(g,jsonData,"Object_Privacy_Impact_Assessment",sb)
 ////
 //sb.toString()
 // describeSchema()
@@ -57,7 +57,7 @@ class FormData {
 
     sb.append("\nin getOrCreateOwnerVid(); before checking for current entries")
 
-    def credential = localGtrav.V().has("Object.Credential.User_Id", submissionOwner)
+    def credential = localGtrav.V().has("Object_Credential_User_Id", submissionOwner)
     sb.append("\nin getOrCreateOwnerVid(); after  checking for current entries")
 
     def credentialVid = "" as Object
@@ -68,23 +68,23 @@ class FormData {
     } else {
       sb.append("\nin getOrCreateOwnerVid(); creating a new entry")
 
-      credentialVid = localGtrav2.addV("Object.Credential")
-      // property("Metadata.Controller", pg_metadataController).
-      // property("Metadata.Processor", pg_metadataProcessor).
-      // property("Metadata.Lineage", pg_metadataLineage).
-      // property("Metadata.Redaction", pg_metadataRedaction).
+      credentialVid = localGtrav2.addV("Object_Credential")
+      // property("Metadata_Controller", pg_metadataController).
+      // property("Metadata_Processor", pg_metadataProcessor).
+      // property("Metadata_Lineage", pg_metadataLineage).
+      // property("Metadata_Redaction", pg_metadataRedaction).
       // property("Metadata.Version", pg_metadataVersion).
-      // property("Metadata.Create_Date", metadataCreateDate).
-      // property("Metadata.Update_Date", metadataUpdateDate).
-      // property("Metadata.Status", pg_metadataStatus).
-      // property("Metadata.GDPR_Status", pg_metadataGDPRStatus).
-      // property("Metadata.Lineage_Server_Tag", pg_metadataLineageServerTag).
-      // property("Metadata.Lineage_Location_Tag", pg_metadataLineageLocationTag).
-        .property("Metadata.Type", "Object.Credential")
-        .property("Metadata.Type.Object.Credential", "Object.Credential")
-        .property("Object.Credential.User_Id", submissionOwner)
+      // property("Metadata_Create_Date", metadataCreateDate).
+      // property("Metadata_Update_Date", metadataUpdateDate).
+      // property("Metadata_Status", pg_metadataStatus).
+      // property("Metadata_GDPR_Status", pg_metadataGDPRStatus).
+      // property("Metadata_Lineage_Server_Tag", pg_metadataLineageServerTag).
+      // property("Metadata_Lineage_Location_Tag", pg_metadataLineageLocationTag).
+        .property("Metadata_Type", "Object_Credential")
+        .property("Metadata_Type_Object_Credential", "Object_Credential")
+        .property("Object_Credential_User_Id", submissionOwner)
         .next().id()
-      // property("Object.Credential.login.sha256", pg_login_sha256).next().id()
+      // property("Object_Credential_login.sha256", pg_login_sha256).next().id()
       sb.append("\nin getOrCreateOwnerVid(); after creating a new entry; id = ")
         .append(credentialVid)
 
@@ -110,7 +110,7 @@ class FormData {
     def Key_Form_Id = "${dataType}.Form_Id" as String
     def Key_Form_Submission_Id = "${dataType}.Form_Submission_Id" as String
     def Key_Form_Submission_Owner_Id = "${dataType}.Form_Submission_Owner_Id" as String
-    def Key_Metadata_Type = "Metadata.Type.${dataType}" as String
+    def Key_Metadata_Type = "Metadata_Type_${dataType}" as String
 
 
     Map<String, String> classFields = new HashMap<>()
@@ -120,13 +120,13 @@ class FormData {
     classFields.put(Key_Form_Submission_Id, submissionId)
     classFields.put(Key_Form_Submission_Owner_Id, submissionOwner)
     classFields.put(Key_Metadata_Type, dataType)
-    classFields.put("Metadata.Type", dataType)
+    classFields.put("Metadata_Type", dataType)
     classFields.putAll(data as Map)
 
 
     classFields.each { k, v ->
       if (k != 'submit') {
-        def key = ((k.startsWith(dataType) || k.startsWith("Metadata.Type")) ?
+        def key = ((k.startsWith(dataType) || k.startsWith("Metadata_Type")) ?
           k :
           "$dataType.$k") as String
 
@@ -161,7 +161,7 @@ class FormData {
       if (k != 'submit') {
 
 
-        def key = ((k.startsWith(dataType) || k.startsWith("Metadata.Type")) ?
+        def key = ((k.startsWith(dataType) || k.startsWith("Metadata_Type")) ?
           k :
           "$dataType.$k") as String
 
@@ -209,17 +209,17 @@ class FormData {
     def localgTrav = gtrans.clone()
     def localgTrav2 = gtrans.clone()
 
-    def ingestionEvent = gtrans.addV("Event.Form_Ingestion")
+    def ingestionEvent = gtrans.addV("Event_Form_Ingestion")
 
     sb.append("\nIn createIngestionEventId; added Event Ingestion; before setting props; ")
 
-    ingestionEvent.property("Event.Form_Ingestion.Metadata_Create_Date", now)
-      .property("Metadata.Type.Event.Form_Ingestion", "Event.Form_Ingestion")
-      .property("Metadata.Type", "Event.Form_Ingestion")
-      .property("Event.Form_Ingestion.Metadata_GUID", eventGUID)
-      .property("Event.Form_Ingestion.Type", eventType)
-      .property("Event.Form_Ingestion.Operation", operation.toString())
-      .property("Event.Form_Ingestion.Domain_b64", origDataClearNonB64.bytes.encodeBase64().toString())
+    ingestionEvent.property("Event_Form_Ingestion_Metadata_Create_Date", now)
+      .property("Metadata_Type_Event_Form_Ingestion", "Event_Form_Ingestion")
+      .property("Metadata_Type", "Event_Form_Ingestion")
+      .property("Event_Form_Ingestion_Metadata_GUID", eventGUID)
+      .property("Event_Form_Ingestion_Type", eventType)
+      .property("Event_Form_Ingestion_Operation", operation.toString())
+      .property("Event_Form_Ingestion_Domain_b64", origDataClearNonB64.bytes.encodeBase64().toString())
     // .iterate()
 
     sb.append("\nIn createIngestionEventId; added Event Ingestion; before getting id; ")

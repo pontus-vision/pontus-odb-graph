@@ -112,7 +112,7 @@ public class PVEndPointsTest extends AppTest {
 
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-          "App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
+          "App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()");
       String query1, query2, query3;
 
       HttpClient client = HttpClients.createMinimal();
@@ -129,7 +129,7 @@ public class PVEndPointsTest extends AppTest {
 //      String value = json.getJSONObject("@value").toString();
 //      System.out.println(value);
 
-      gremlinReq.setGremlin("App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
+      gremlinReq.setGremlin("App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()");
       data = new StringEntity(gson.toJson(gremlinReq));
       request.setEntity(data);
       query2 = IOUtils.toString(client.execute(request).getEntity().getContent());
@@ -165,7 +165,7 @@ public class PVEndPointsTest extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST");
-      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setTemplatePOLEType("Object_Data_Sources");
       req.setReportTextBase64(
           Base64.getEncoder().encodeToString(" {% set var1=1 %} {{ var1 }} {{ context.Object_Data_Source_Name }}"
               .getBytes()));
@@ -174,7 +174,7 @@ public class PVEndPointsTest extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
           .id().next().toString();
 
       ReportTemplateRenderRequest reportReq = new ReportTemplateRenderRequest();

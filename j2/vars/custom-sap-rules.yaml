@@ -3,7 +3,7 @@ rules:
 
   Cliente_SAP_PosVenda_POLARIS:
     vertices:
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}" #--for CPF
         #        condition: "${Title != 'Company'}"
         props:
@@ -16,7 +16,7 @@ rules:
 #            val: "Clientes"
 #            excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}"
         props:
           Id_Value:
@@ -27,7 +27,7 @@ rules:
             excludeFromSearch: true
 
 
-      - label: Person.Organisation
+      - label: Person_Organisation
         condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14}"
         props:
           Registration_Number: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}"
@@ -35,7 +35,7 @@ rules:
           Name: "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
 
       #  For Clientes Sem Tax
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${!(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14)}"
      # NOT needed; existem entradas c/ISENTO (Tax_Number_1?.trim()?.matches('.*[a-zA-Z]+.*') || Tax_Number_2?.trim()?.matches('.*[a-zA-Z]+.*'))}"
         props:
@@ -45,7 +45,7 @@ rules:
 #            val: "Clientes Sem Tax"
 #            excludeFromSearch: true
 
-      - label: Object.Phone_Number
+      - label: Object_Phone_Number
         name: phone
         condition: "${Telephone_1?.trim()?.length() > 0}"
         props:
@@ -65,7 +65,7 @@ rules:
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
-      - label: Object.Phone_Number
+      - label: Object_Phone_Number
         condition: "${Telephone_2?.trim()?.length() > 0}"
         name: phone2
         props:
@@ -85,7 +85,7 @@ rules:
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
-      - label: Location.Address
+      - label: Location_Address
         props:
           Full_Address:
             val: "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}"
@@ -100,7 +100,7 @@ rules:
 #            val: "${com.pontusvision.utils.PostCode.format(PostalCode)}"
 #            excludeFromSearch: true
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: sap/clientes
@@ -120,7 +120,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type: sap/clientes
           Operation: Structured Data Insertion
@@ -135,7 +135,7 @@ rules:
 #            excludeFromSearch: true
 #            type: java.util.Date
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: SAP/CLIENTES
 #          Type: sap/clientes
@@ -143,52 +143,52 @@ rules:
 
     edges:
       - label: "Is_Located"
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Location_Address"
 
       - label: "Is_Located"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Location_Address"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        toVertexLabel: "Event.Group_Ingestion"
-        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Organisation"
+        fromVertexLabel: "Person_Organisation"
         toVertexName: "phone"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Organisation"
+        fromVertexLabel: "Person_Organisation"
         toVertexName: "phone2"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Natural"
+        fromVertexLabel: "Person_Natural"
         toVertexName: "phone"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Natural"
+        fromVertexLabel: "Person_Natural"
         toVertexName: "phone2"
 
       - label: "Has_Identity_Card"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Identity_Card"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Identity_Card"
 
   Fornecedor_SAP_PosVenda_POLARIS:
     vertices:
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11)}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
@@ -197,7 +197,7 @@ rules:
 #            val: "Fornecedores"
 #            excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11}"
         props:
           Id_Value:
@@ -207,7 +207,7 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Person.Organisation
+      - label: Person_Organisation
         condition: "${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14}"
         props:
           Registration_Number: "${Tax_Number_1?.replaceAll('[^0-9]', '') || Tax_Number_2?.replaceAll('[^0-9]', '')}"
@@ -215,7 +215,7 @@ rules:
           Name: "${Name_1?.trim()?.toUpperCase()} ${Name_2?.trim()?.toUpperCase()}"
 
       #     For FOREIGN Persons
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${!(Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 11 || Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 14 || Tax_Number_2?.replaceAll('[^0-9]', '')?.length() == 14)}"
         props:
           Full_Name: "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}"
@@ -228,7 +228,7 @@ rules:
       #         Nationality:
 
 
-      - label: Object.Phone_Number
+      - label: Object_Phone_Number
         name: phone
         condition: "${Telephone_1?.trim()?.length() > 0}"
         props:
@@ -248,7 +248,7 @@ rules:
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
-      - label: Object.Phone_Number
+      - label: Object_Phone_Number
         condition: "${Telephone_2?.trim()?.length() > 0}"
         name: phone2
         props:
@@ -268,7 +268,7 @@ rules:
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
-      - label: Location.Address
+      - label: Location_Address
         props:
           Full_Address:
             val: "${ ((Street?:'')+ '\\\\n' + (City?:'') + '\\\\n' + (District?:'') + '\\\\n' + (Cty?:'')).replaceAll('\\\\n', ' ')}"
@@ -283,7 +283,7 @@ rules:
 #            val: "${com.pontusvision.utils.PostCode.format(PostalCode)}"
 #            excludeFromSearch: true
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: sap/fornecedores
@@ -303,7 +303,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type: sap/fornecedores
           Operation: "Structured Data Insertion"
@@ -319,7 +319,7 @@ rules:
 #            type: java.util.Date
 
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: SAP/FORNECEDORES
 #          Type: sap/fornecedores
@@ -327,47 +327,47 @@ rules:
 
     edges:
       - label: "Is_Located"
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Location_Address"
 
       - label: "Is_Located"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Location_Address"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        toVertexLabel: "Event.Group_Ingestion"
-        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Organisation"
+        fromVertexLabel: "Person_Organisation"
         toVertexName: "phone"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Organisation"
+        fromVertexLabel: "Person_Organisation"
         toVertexName: "phone2"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Natural"
+        fromVertexLabel: "Person_Natural"
         toVertexName: "phone"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Natural"
+        fromVertexLabel: "Person_Natural"
         toVertexName: "phone2"
 
       - label: "Has_Identity_Card"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Identity_Card"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Identity_Card"
 
 

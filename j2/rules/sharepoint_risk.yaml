@@ -2,121 +2,121 @@
 updatereq:
   vertices:
     
-    - label: Object.Data_Source
+    - label: Object_Data_Source
       name: sharepoint
       props:
-        - name: Object.Data_Source.Name
+        - name: Object_Data_Source.Name
           val: SHAREPOINT/RISK
           mandatoryInSearch: True
     
-    - label: Object.Data_Source
+    - label: Object_Data_Source
       name: attached_data_sources
       props:
-        - name: Object.Data_Source.Form_Id
+        - name: Object_Data_Source.Form_Id
           val: ${new groovy.json.JsonBuilder(Data_x0020_Sources)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointRef;"
           postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
     
-    - label: Object.Risk_Data_Source
+    - label: Object_Risk_Data_Source
       props:
-        - name: Object.Risk_Data_Source.Form_Id
+        - name: Object_Risk_Data_Source_Form_Id
           val: ${id}
           mandatoryInSearch: True
-        - name: Object.Risk_Data_Source.Risk_Id
+        - name: Object_Risk_Data_Source_Risk_Id
           val: ${Title?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object.Risk_Data_Source.Description
+        - name: Object_Risk_Data_Source_Description
           val: ${field_Description}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object.Risk_Data_Source.Probability
+        - name: Object_Risk_Data_Source_Probability
           val: ${field_Probability}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object.Risk_Data_Source.Impact
+        - name: Object_Risk_Data_Source_Impact
           val: ${field_Impact}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object.Risk_Data_Source.Residual_Probability
+        - name: Object_Risk_Data_Source_Residual_Probability
           val: ${field_Residual_x0020_Probability}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object.Risk_Data_Source.Residual_Impact
+        - name: Object_Risk_Data_Source_Residual_Impact
           val: ${field_Residual_x0020_Impact}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object.Risk_Data_Source.Approved_By_DPO
+        - name: Object_Risk_Data_Source_Approved_By_DPO
           val: ${field_Approved_x0020_by_x0020_DPO}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object.Risk_Data_Source.Approved_By_Security
+        - name: Object_Risk_Data_Source_Approved_By_Security
           val: ${field_Approved_x0020_by_x0020_Security}
           mandatoryInSearch: False
           excludeFromSearch: True
     
-    - label: Object.Risk_Mitigation_Data_Source
+    - label: Object_Risk_Mitigation_Data_Source
       props:
-        - name: Object.Risk_Mitigation_Data_Source.Form_Id
+        - name: Object_Risk_Mitigation_Data_Source_Form_Id
           val: ${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointRef;"
           postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
     
-    - label: Event.Ingestion
+    - label: Event_Ingestion
       props:
-        - name: Event.Ingestion.Type
+        - name: Event_Ingestion_Type
           val: sharepoint/risk
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event.Ingestion.Operation
+        - name: Event_Ingestion_Operation
           val: Structured Data Insertion
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event.Ingestion.Domain_b64
+        - name: Event_Ingestion_Domain_b64
           val: ${original_request?.bytes?.encodeBase64()?.toString()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event.Ingestion.Metadata_Create_Date
+        - name: Event_Ingestion_Metadata_Create_Date
           val: ${new Date()}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Event.Ingestion.Metadata_Update_Date
+        - name: Event_Ingestion_Metadata_Update_Date
           val: ${new Date()}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
-    - label: Event.Group_Ingestion
+    - label: Event_Group_Ingestion
       props:
-        - name: Event.Group_Ingestion.Type
+        - name: Event_Group_Ingestion_Type
           val: sharepoint/risk
           mandatoryInSearch: True
-        - name: Event.Group_Ingestion.Operation
+        - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
           mandatoryInSearch: True
-        - name: Event.Group_Ingestion.Ingestion_Date
+        - name: Event_Group_Ingestion_Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event
     fromVertexName: sharepoint
-    toVertexLabel: Event.Group_Ingestion
+    toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Group_Ingestion
-    toVertexLabel: Event.Ingestion
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Ingestion
-    toVertexLabel: Object.Risk_Data_Source
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Object_Risk_Data_Source
   - label: Has_Risk
     fromVertexName: attached_data_sources
-    toVertexLabel: Object.Risk_Data_Source
+    toVertexLabel: Object_Risk_Data_Source
   - label: Mitigates_Risk
-    fromVertexLabel: Object.Risk_Mitigation_Data_Source
-    toVertexLabel: Object.Risk_Data_Source
+    fromVertexLabel: Object_Risk_Mitigation_Data_Source
+    toVertexLabel: Object_Risk_Data_Source
 

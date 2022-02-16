@@ -35,27 +35,27 @@ public class PVSharepointPrivacyDocsTests extends AppTest {
     try {
 
       String privacyDoc1 =
-              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('SHAREPOINT/PRIVACY-DOCS'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq('SHAREPOINT/PRIVACY-DOCS'))" +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".has('Metadata.Type.Object.Privacy_Docs',eq('Object.Privacy_Docs'))" +
-                      ".values('Object.Privacy_Docs.Description').next().toString()").get().toString();
+                      ".has('Metadata_Type_Object_Privacy_Docs',eq('Object_Privacy_Docs'))" +
+                      ".values('Object_Privacy_Docs_Description').next().toString()").get().toString();
       assertEquals("o que muda com as novas leis de segurança dos dados pessoais dos brasileiros.", privacyDoc1,
               "Privacy Doc 1's Description.");
 
       String privacyDoc2 =
-              App.executor.eval("App.g.V().has('Object.Privacy_Docs.Form_Id',eq('2'))" +
-                      ".values('Object.Privacy_Docs.Title').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Privacy_Docs_Form_Id',eq('2'))" +
+                      ".values('Object_Privacy_Docs_Title').next().toString()").get().toString();
       assertEquals("Cartaz - cuide de sua identidade virtual!", privacyDoc2,"Privacy Doc 2's Title");
 
       String privacyDoc3 =
-              App.executor.eval("App.g.V().has('Object.Privacy_Docs.Description',eq('Introdção a LGPD'))" +
-                      ".values('Object.Privacy_Docs.Date').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Privacy_Docs_Description',eq('Introdção a LGPD'))" +
+                      ".values('Object_Privacy_Docs_Date').next().toString()").get().toString();
       assertEquals(dtfmt.parse("Mon Jan 10 01:01:01 GMT 2022"), dtfmt.parse(privacyDoc3),
               "Privacy Doc 3's Date");
 
       String privacyDoc4 =
-              App.executor.eval("App.g.V().has('Object.Privacy_Docs.Description',eq('Introdção a LGPD'))" +
-                      ".values('Object.Privacy_Docs.URL').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Privacy_Docs_Description',eq('Introdção a LGPD'))" +
+                      ".values('Object_Privacy_Docs_URL').next().toString()").get().toString();
       assertEquals("www.wikipedia.com.br",privacyDoc4,"Privacy Doc 4's URL");
 
     } catch (Exception e) {
@@ -73,26 +73,26 @@ public class PVSharepointPrivacyDocsTests extends AppTest {
               "$.queryResp[*].fields", "sharepoint_privacy_docs");
 
       String countEventIngestions =
-              App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('Privacy Docs'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('Privacy Docs'))" +
                       ".count().next().toString()").get().toString();
 
       String countPrivacyDocs =
-              App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('Privacy Docs'))" +
-                      ".out('Has_Ingestion_Event').has('Metadata.Type.Object.Privacy_Docs', eq('Object.Privacy_Docs'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('Privacy Docs'))" +
+                      ".out('Has_Ingestion_Event').has('Metadata_Type_Object_Privacy_Docs', eq('Object_Privacy_Docs'))" +
                       ".dedup().count().next().toString()").get().toString();
 
       jsonTestUtil("non-official-pv-extract-sharepoint-privacy-docs.json",
               "$.queryResp[*].fields", "sharepoint_privacy_docs");
 
       String countEventIngestionsAgain =
-              App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('Privacy Docs'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('Privacy Docs'))" +
                       ".count().next().toString()").get().toString();
 
 //      Test for duplicate data
 
       String countPrivacyDocsAgain =
-              App.executor.eval("App.g.V().has('Event.Ingestion.Type', eq('Privacy Docs'))" +
-                      ".out('Has_Ingestion_Event').has('Metadata.Type.Object.Privacy_Docs', eq('Object.Privacy_Docs'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('Privacy Docs'))" +
+                      ".out('Has_Ingestion_Event').has('Metadata_Type_Object_Privacy_Docs', eq('Object_Privacy_Docs'))" +
                       ".dedup().count().next().toString()").get().toString();
 
 //    This proves that new insertions were made the Privacy Docs Graph part

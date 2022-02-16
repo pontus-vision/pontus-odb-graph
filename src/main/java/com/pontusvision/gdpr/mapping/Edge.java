@@ -64,7 +64,7 @@ public class Edge {
   }
 
 
-  //  @ApiModelProperty(example = "Person.Natural", value = "POLE object name")
+  //  @ApiModelProperty(example = "Person_Natural", value = "POLE object name")
   @JsonProperty("fromVertexLabel")
 
   public String getFromVertexLabel() {
@@ -104,7 +104,7 @@ public class Edge {
   }
 
 
-  //  @ApiModelProperty(example = "Location.Address", value = "POLE object name")
+  //  @ApiModelProperty(example = "Location_Address", value = "POLE object name")
   @JsonProperty("toVertexLabel")
 
   public String getToVertexLabel() {

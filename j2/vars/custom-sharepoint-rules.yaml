@@ -2,14 +2,14 @@ rules:
 
   sharepoint_data_sources:
     vertices:
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: sharepoint
         props:
           Name: SHAREPOINT/DATA-SOURCES
 #          Type: sharepoint/data-sources
 #          Description: Data Sources
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         condition: "${field_Descri_x0020__x0020_o?.trim()?.length() > 0}"
         name: data_sources
         props:
@@ -39,19 +39,19 @@ rules:
             val: "${field_URL_x0020_Prefixo_x0020_Read}"
             excludeFromSearch: true
 
-      - label: Object.System
+      - label: Object_System
         props:
           Name: "${field_Sistema?.trim()?.toUpperCase()}"
 
-      - label: Object.Subsystem
+      - label: Object_Subsystem
         props:
           Name: "${field_Tipo_x0020_Sistema?.trim()?.toUpperCase()}"
 
-      - label: Object.Module
+      - label: Object_Module
         props:
           Name: "${field_Tabela?.trim()?.toLowerCase()}"
 
-      - label: Object.Data_Policy
+      - label: Object_Data_Policy
         props:
           Update_Frequency: "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}"
           Retention_Period: "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}"
@@ -59,7 +59,7 @@ rules:
 #            val: "${Title}"
 #            mandatoryInSearch: true
 
-#      - label: Object.Sensitive_Data
+#      - label: Object_Sensitive_Data
 #        props:
 #          Description:
 #            val: "${????????}"
@@ -67,7 +67,7 @@ rules:
 #            mandatoryInSearch: true
 #            postProcessor: "${it?.toUpperCase()?.trim()}"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: sharepoint/data-sources
@@ -88,7 +88,7 @@ rules:
             type: java.util.Date
 
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -112,46 +112,46 @@ rules:
     edges:
 #      - label: "Has_Sensitive_Data"
 #        fromVertexLabel: "data_sources"
-#        toVertexLabel: "Object.Sensitive_Data"
+#        toVertexLabel: "Object_Sensitive_Data"
 
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
-        toVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Ingestion"
         toVertexName: "data_sources"
 
       - label: "Has_Policy"
         fromVertexName: "data_sources"
-        toVertexLabel: "Object.Data_Policy"
+        toVertexLabel: "Object_Data_Policy"
 
       - label: "Has_Module"
         fromVertexName: "data_sources"
-        toVertexLabel: "Object.Module"
+        toVertexLabel: "Object_Module"
 
       - label: "Has_Subsystem"
-        fromVertexLabel: "Object.Module"
-        toVertexLabel: "Object.Subsystem"
+        fromVertexLabel: "Object_Module"
+        toVertexLabel: "Object_Subsystem"
 
       - label: "Has_System"
-        fromVertexLabel: "Object.Subsystem"
-        toVertexLabel: "Object.System"
+        fromVertexLabel: "Object_Subsystem"
+        toVertexLabel: "Object_System"
 
   sharepoint_fontes_de_dados:
     vertices:
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: sharepoint
         props:
           Name: SHAREPOINT/FONTES-DE-DADOS
 #          Type: sharepoint/fontes-de-dados
 #          Description: Registros das Fontes de Dados LGPD
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}"
         name: fontes_de_dados
         props:
@@ -182,19 +182,19 @@ rules:
             val: "${URL_x0020_Prefixo_x0020_Read}"
             excludeFromSearch: true
 
-      - label: Object.System
+      - label: Object_System
         props:
           Name: "${Sistema?.trim()?.toUpperCase()}"
 
-      - label: Object.Subsystem
+      - label: Object_Subsystem
         props:
           Name: "${Tipo_x0020_Sistema?.trim()?.toUpperCase()}"
 
-      - label: Object.Module
+      - label: Object_Module
         props:
           Name: "${Tabela?.trim()?.toLowerCase()}"
 
-      - label: Object.Sensitive_Data
+      - label: Object_Sensitive_Data
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(DadosPessoais)}"
@@ -202,13 +202,13 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-      - label: Object.Data_Policy
+      - label: Object_Data_Policy
         props:
           Update_Frequency: "${Frequ_x00ea_ncia_x0020_de_x0020_}"
           Retention_Period: "${Pol_x00ed_tica_x0020_de_x0020_Re}"
           Type: "${Title}"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: sharepoint/fontes-de-dados
@@ -228,7 +228,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -245,46 +245,46 @@ rules:
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
-        toVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Ingestion"
         toVertexName: "fontes_de_dados"
 
       - label: "Has_Policy"
         fromVertexName: "fontes_de_dados"
-        toVertexLabel: "Object.Data_Policy"
+        toVertexLabel: "Object_Data_Policy"
 
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
-        toVertexLabel: "Object.Sensitive_Data"
+        toVertexLabel: "Object_Sensitive_Data"
 
       - label: "Has_Module"
         fromVertexName: "fontes_de_dados"
-        toVertexLabel: "Object.Module"
+        toVertexLabel: "Object_Module"
 
       - label: "Has_Subsystem"
-        fromVertexLabel: "Object.Module"
-        toVertexLabel: "Object.Subsystem"
+        fromVertexLabel: "Object_Module"
+        toVertexLabel: "Object_Subsystem"
 
       - label: "Has_System"
-        fromVertexLabel: "Object.Subsystem"
-        toVertexLabel: "Object.System"
+        fromVertexLabel: "Object_Subsystem"
+        toVertexLabel: "Object_System"
 
   sharepoint_treinamentos:
     vertices:
-      - label: Event.Training
+      - label: Event_Training
         props:
           Form_Id: "${id}"
           Status:
             val: "${status}"
             excludeFromSearch: true
 
-      - label: Object.Awareness_Campaign
+      - label: Object_Awareness_Campaign
         props:
           Description: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
           Start_Date:
@@ -292,12 +292,12 @@ rules:
             type: java.util.Date
       #          URL: "${webUrl}"
 
-      - label: Person.Natural
+      - label: Person_Natural
         props:
           Full_Name: "${Nome0?.trim()?.toUpperCase()}"
       #          Role: "${Departamento0}"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: sharepoint/treinamentos
@@ -317,7 +317,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -332,7 +332,7 @@ rules:
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: SHAREPOINT/TREINAMENTOS
 #          Type: sharepoint/treinamentos
@@ -340,35 +340,35 @@ rules:
 
     edges:
       - label: "Course_Training"
-        fromVertexLabel: "Event.Training"
-        toVertexLabel: "Object.Awareness_Campaign"
+        fromVertexLabel: "Event_Training"
+        toVertexLabel: "Object_Awareness_Campaign"
 
       - label: "Completed_By"
-        fromVertexLabel: "Event.Training"
-        toVertexLabel: "Person.Natural"
+        fromVertexLabel: "Event_Training"
+        toVertexLabel: "Person_Natural"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
-        toVertexLabel: "Event.Training"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Training"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        toVertexLabel: "Event.Group_Ingestion"
-        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
 
   sharepoint_mapeamentos:
     vertices:
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: sharepoint
         props:
           Name: SHAREPOINT/MAPEAMENTO-DE-PROCESSOS
 #          Type: sharepoint/mapeamento-de-processos
 #          Description: Mapeamento de Processo LGPD
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: attached_data_sources
         props:
           Form_Id:
@@ -382,12 +382,12 @@ rules:
 #            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
 #            processAll: true
 
-      - label: Object.Data_Policy
+      - label: Object_Data_Policy
         props:
           Type: "${Title}"
           Retention_Period: "${Per_x00ed_odo_x0020_de_x0020_ret}"
 
-      - label: Object.Data_Procedures
+      - label: Object_Data_Procedures
         props:
           Form_Id: "${id}"
           ID:
@@ -421,7 +421,7 @@ rules:
             val: "${PartesInteressadasConsultadas}"
             excludeFromSearch: true
 
-      - label: Object.Sensitive_Data
+      - label: Object_Sensitive_Data
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Dados_x0020_pessoais_x0020_utili)}"
@@ -429,7 +429,7 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-      - label: Object.Lawful_Basis
+      - label: Object_Lawful_Basis
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Base_x0020_legal)}"
@@ -437,14 +437,14 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-      - label: Object.Legitimate_Interests_Assessment
+      - label: Object_Legitimate_Interests_Assessment
         condition: "${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d}"
         props:
           Personal_Data_Treatment: "${Essetratamentodedadospessoais_x0}"
           Lawful_Basis_Justification: "${N_x00e3_oh_x00e1_outrabaselegalp}"
           Processing_Purpose: "${Esse_x0020_processamento_x0020_d}"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: sharepoint/mapeamento-de-processo
@@ -464,7 +464,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -480,46 +480,46 @@ rules:
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
-        toVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
-        toVertexLabel: "Object.Data_Procedures"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Data_Procedures"
 
       - label: "Has_Sensitive_Data"
-        fromVertexLabel: "Object.Data_Procedures"
-        toVertexLabel: "Object.Sensitive_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Sensitive_Data"
 
       - label: "Has_Lawful_Basis_On"
-        fromVertexLabel: "Object.Data_Procedures"
-        toVertexLabel: "Object.Lawful_Basis"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Lawful_Basis"
 
       - label: "Has_Policy"
-        fromVertexLabel: "Object.Data_Procedures"
-        toVertexLabel: "Object.Data_Policy"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Data_Policy"
 
       - label: "Has_Data_Source"
-        fromVertexLabel: "Object.Data_Procedures"
+        fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "attached_data_sources"
 
       - label: "Has_Legitimate_Interests_Assessment"
-        fromVertexLabel: "Object.Data_Procedures"
-        toVertexLabel: "Object.Legitimate_Interests_Assessment"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Legitimate_Interests_Assessment"
 
   sharepoint_ropa:
     vertices:
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: sharepoint
         props:
           Name: SHAREPOINT/ROPA
 #          Type: sharepoint/ropa
 #          Description: Reg of Procs and Activ
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: attached_data_sources
         props:
           Form_Id:
@@ -533,12 +533,12 @@ rules:
 #            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
 #            processAll: true
 
-      - label: Object.Data_Policy
+      - label: Object_Data_Policy
         props:
           Type: "${Title}"
           Retention_Period: "${field_retention_x0020_period}"
 
-      - label: Object.Data_Procedures
+      - label: Object_Data_Procedures
         props:
           Form_Id: "${id}"
           ID:
@@ -569,7 +569,7 @@ rules:
             val: "${field_Personal_x0020_data_x0020_used}"
             excludeFromSearch: true
 
-      - label: Object.Sensitive_Data
+      - label: Object_Sensitive_Data
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(field_Personal_x0020_data_x0020_used)}"
@@ -577,7 +577,7 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-      - label: Object.Lawful_Basis
+      - label: Object_Lawful_Basis
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(field_Lawful_x0020_basis)}"
@@ -585,7 +585,7 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: sharepoint/ropa
@@ -605,7 +605,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -621,42 +621,42 @@ rules:
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
-        toVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
-        toVertexLabel: "Object.Data_Procedures"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Data_Procedures"
 
       - label: "Has_Sensitive_Data"
-        fromVertexLabel: "Object.Data_Procedures"
-        toVertexLabel: "Object.Sensitive_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Sensitive_Data"
 
       - label: "Has_Lawful_Basis_On"
-        fromVertexLabel: "Object.Data_Procedures"
-        toVertexLabel: "Object.Lawful_Basis"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Lawful_Basis"
 
       - label: "Has_Policy"
-        fromVertexLabel: "Object.Data_Procedures"
-        toVertexLabel: "Object.Data_Policy"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Data_Policy"
 
       - label: "Has_Data_Source"
-        fromVertexLabel: "Object.Data_Procedures"
+        fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "attached_data_sources"
 
   sharepoint_risk:
     vertices:
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: sharepoint
         props:
           Name: SHAREPOINT/RISK
 #          Type: sharepoint/risk
 #          Description:  Data Source Risk
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: attached_data_sources
         props:
           Form_Id:
@@ -670,7 +670,7 @@ rules:
 #            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.trim()?.toUpperCase()}"
 #            processAll: true
 
-      - label: Object.Risk_Data_Source
+      - label: Object_Risk_Data_Source
         props:
           Form_Id: "${id}"
           Risk_Id:
@@ -701,7 +701,7 @@ rules:
 #            TODO: testar os 2 campos novos
 
 
-      - label: Object.Risk_Mitigation_Data_Source
+      - label: Object_Risk_Mitigation_Data_Source
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}"
@@ -716,7 +716,7 @@ rules:
 
 
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: sharepoint/risk
@@ -736,7 +736,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -752,27 +752,27 @@ rules:
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
-        toVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
-        toVertexLabel: "Object.Risk_Data_Source"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Risk_Data_Source"
 
       - label: "Has_Risk"
         fromVertexName: "attached_data_sources"
-        toVertexLabel: "Object.Risk_Data_Source"
+        toVertexLabel: "Object_Risk_Data_Source"
 
       - label: "Mitigates_Risk"
-        fromVertexLabel: "Object.Risk_Mitigation_Data_Source"
-        toVertexLabel: "Object.Risk_Data_Source"
+        fromVertexLabel: "Object_Risk_Mitigation_Data_Source"
+        toVertexLabel: "Object_Risk_Data_Source"
 
   sharepoint_risk_mitigation:
     vertices:
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: sharepoint
         props:
           Name: SHAREPOINT/RISK-MITIGATIONS
@@ -780,7 +780,7 @@ rules:
 #          Description:  Risk Mitigations
 
 
-      - label: Object.Risk_Mitigation_Data_Source
+      - label: Object_Risk_Mitigation_Data_Source
         props:
           Form_Id: "${id}"
           Mitigation_Id:
@@ -790,7 +790,7 @@ rules:
             val: "${field_Description}"
             excludeFromSearch: true
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: risk-mitigations
@@ -810,7 +810,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -826,20 +826,20 @@ rules:
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
-        toVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Ingestion"
-        toVertexLabel: "Object.Risk_Mitigation_Data_Source"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Risk_Mitigation_Data_Source"
 
   sharepoint_dsar:
     vertices:
 
-      - label: Person.Organisation
+      - label: Person_Organisation
         condition: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}"
         props:
           Name:
@@ -851,7 +851,7 @@ rules:
             excludeFromUpdate: true
             mandatoryInSearch: true
 
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
         props:
           Full_Name:
@@ -863,7 +863,7 @@ rules:
             excludeFromUpdate: true
             mandatoryInSearch: true
 
-      - label: Object.Data_Procedures
+      - label: Object_Data_Procedures
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(RoPA)}"
@@ -871,21 +871,21 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "SHAREPOINT/DSAR"
 
-      - label: Event.Subject_Access_Request
+      - label: Event_Subject_Access_Request
         props:
           Form_Id: "${id}"
           Id:
             val: "${Title}"
             excludeFromSearch: true
-          Metadata.Update_Date:
+          Metadata_Update_Date:
             val: "${Resposta_x002d_DataeHor_x00e1_ri}"
             type: java.util.Date
             excludeFromSearch: true
-          Metadata.Create_Date:
+          Metadata_Create_Date:
             val: "${Solicita_x00e7__x00e3_o_x002d_Da}"
             type: java.util.Date
             excludeFromSearch: true
@@ -902,11 +902,11 @@ rules:
             val: "${naturalPersonType?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
-      - label: Event.Group_Subject_Access_Request
+      - label: Event_Group_Subject_Access_Request
         props:
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "Controle de Solicitações"
@@ -926,7 +926,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -943,39 +943,39 @@ rules:
     edges:
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Subject_Access_Request"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Subject_Access_Request"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_DSAR
-        fromVertexLabel: "Event.Subject_Access_Request"
-        toVertexLabel: "Event.Group_Subject_Access_Request"
+        fromVertexLabel: "Event_Subject_Access_Request"
+        toVertexLabel: "Event_Group_Subject_Access_Request"
 
       - label: Made_SAR_Request
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Subject_Access_Request"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Subject_Access_Request"
 
       - label: Made_SAR_Request
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Event.Subject_Access_Request"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Event_Subject_Access_Request"
 
       - label: Has_DSAR
-        fromVertexLabel: "Event.Group_Subject_Access_Request"
-        toVertexLabel: "Object.Data_Procedures"
+        fromVertexLabel: "Event_Group_Subject_Access_Request"
+        toVertexLabel: "Object_Data_Procedures"
 
   sharepoint_data_breaches:
     vertices:
 
 # TODO: add Created_By (Author) and Modified_By (Editor) !!
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: data_sources
         props:
           Form_Id:
@@ -989,7 +989,7 @@ rules:
 #            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
 #            processAll: true
 
-      - label: Event.Data_Breach
+      - label: Event_Data_Breach
         props:
           Form_Id: "${id}"
           Id:
@@ -1004,11 +1004,11 @@ rules:
           Impact:
             val: "${impact}"
             excludeFromSearch: true
-          Metadata.Create_Date:
+          Metadata_Create_Date:
             val: "${Created}"
             type: java.util.Date
             excludeFromSearch: true
-          Metadata.Update_Date:
+          Metadata_Update_Date:
             val: "${Modified}"
             type: java.util.Date
             excludeFromSearch: true
@@ -1022,12 +1022,12 @@ rules:
             val: "${status}"
             excludeFromSearch: true
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: sharepoint
         props:
           Name: "SHAREPOINT/DATA-BREACHES"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "Data Breaches"
@@ -1047,7 +1047,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -1065,24 +1065,24 @@ rules:
 
       - label: Has_Ingestion_Event
         fromVertexName: "sharepoint"
-        toVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Data_Breach"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Data_Breach"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Impacted_By_Data_Breach
-        fromVertexLabel: "Event.Data_Breach"
+        fromVertexLabel: "Event_Data_Breach"
         toVertexName: "data_sources"
 
   sharepoint_policies:
     vertices:
 
-      - label: Object.Policies
+      - label: Object_Policies
         props:
           Form_Id: "${id}"
           Text:
@@ -1092,12 +1092,12 @@ rules:
             val: "${Title}"
             excludeFromUpdate: true
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         name: sharepoint
         props:
           Name: "SHAREPOINT/POLICIES"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "Policies"
@@ -1117,7 +1117,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -1135,31 +1135,31 @@ rules:
 
       - label: Has_Ingestion_Event
         fromVertexName: "sharepoint"
-        toVertexLabel: "Event.Group_Ingestion"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexName: "Object.Policies"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexName: "Object_Policies"
+        toVertexLabel: "Event_Ingestion"
 
   sharepoint_privacy_notice:
 
     vertices:
-      - label: Object.Privacy_Notice
+      - label: Object_Privacy_Notice
         props:
           Form_Id: "${id}"
 #          Id: "${Title}"
           Description:
             val: "${privacy_notice}"
             excludeFromSearch: true
-          Metadata.Create_Date:
+          Metadata_Create_Date:
             val: "${Created}"
             excludeFromSearch: true
             type: java.util.Date
-          Metadata.Update_Date:
+          Metadata_Update_Date:
             val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
@@ -1181,11 +1181,11 @@ rules:
 #          Why_Is_It_Collected:
 
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "SHAREPOINT/PRIVACY-NOTICE"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "Privacy Notice"
@@ -1205,7 +1205,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -1222,31 +1222,31 @@ rules:
     edges:
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Privacy_Notice"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Object_Privacy_Notice"
+        toVertexLabel: "Event_Ingestion"
 
   sharepoint_consents:
 
     vertices:
-      - label: Event.Consent
+      - label: Event_Consent
         props:
           Form_Id: "${id}"
           Customer_ID:
             val: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromSearch: true
-          Metadata.Create_Date:
+          Metadata_Create_Date:
             val: "${date}"
             excludeFromSearch: true
             type: java.util.Date
-          Metadata.Update_Date:
+          Metadata_Update_Date:
             val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
@@ -1255,7 +1255,7 @@ rules:
 #          Status:
 #          Description:
 
-      - label: Object.Privacy_Notice
+      - label: Object_Privacy_Notice
         condition: "${privacy_notice.size() > 0}"
         props:
           Form_Id:
@@ -1264,18 +1264,18 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
 
-      - label: Person.Natural
+      - label: Person_Natural
         props:
           Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
           Full_Name:
             val: "${name?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "SHAREPOINT/CONSENT"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "Consent"
@@ -1295,7 +1295,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -1309,7 +1309,7 @@ rules:
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
-      - label: Object.Data_Procedures
+      - label: Object_Data_Procedures
         condition: "${data_procedures.size() > 0}"
         props:
           Form_Id:
@@ -1321,33 +1321,33 @@ rules:
     edges:
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Consent
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Consent"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Consent"
 
       - label: Has_Privacy_Notice
-        fromVertexLabel: "Event.Consent"
-        toVertexLabel: "Object.Privacy_Notice"
+        fromVertexLabel: "Event_Consent"
+        toVertexLabel: "Object_Privacy_Notice"
 
       - label: Consent #is it right? ... I am following instructions @ Trello SV card #262 ... or should it be Has_Data_Procedures
-        fromVertexLabel: "Event.Consent"
-        toVertexLabel: "Object.Data_Procedures"
+        fromVertexLabel: "Event_Consent"
+        toVertexLabel: "Object_Data_Procedures"
 
   sharepoint_privacy_docs:
 
     vertices:
-    - label: Object.Privacy_Docs
+    - label: Object_Privacy_Docs
       props:
         Form_Id: "${id}"
         URL:
@@ -1364,11 +1364,11 @@ rules:
           val: "${title_x002d_communication}"
           excludeFromSearch: true
 
-    - label: Object.Data_Source
+    - label: Object_Data_Source
       props:
         Name: "SHAREPOINT/PRIVACY-DOCS"
 
-    - label: Event.Ingestion
+    - label: Event_Ingestion
       props:
         Type:
           val: "Privacy Docs"
@@ -1388,7 +1388,7 @@ rules:
           excludeFromSearch: true
           type: java.util.Date
 
-    - label: Event.Group_Ingestion
+    - label: Event_Group_Ingestion
       props:
 #        Metadata_Start_Date:
 #          val: "${new Date()}"
@@ -1405,21 +1405,21 @@ rules:
     edges:
 
     - label: Has_Ingestion_Event
-      fromVertexLabel: "Object.Data_Source"
-      toVertexLabel: "Event.Group_Ingestion"
+      fromVertexLabel: "Object_Data_Source"
+      toVertexLabel: "Event_Group_Ingestion"
 
     - label: Has_Ingestion_Event
-      fromVertexLabel: "Event.Group_Ingestion"
-      toVertexLabel: "Event.Ingestion"
+      fromVertexLabel: "Event_Group_Ingestion"
+      toVertexLabel: "Event_Ingestion"
 
     - label: Has_Ingestion_Event
-      fromVertexLabel: "Event.Ingestion"
-      toVertexLabel: "Object.Privacy_Docs"
+      fromVertexLabel: "Event_Ingestion"
+      toVertexLabel: "Object_Privacy_Docs"
 
   sharepoint_legal_actions:
 
     vertices:
-      - label: Object.Legal_Actions
+      - label: Object_Legal_Actions
         props:
           Form_Id: "${id}"
           Description:
@@ -1433,11 +1433,11 @@ rules:
             val: "${details}"
             excludeFromSearch: true
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "SHAREPOINT/LEGAL-ACTIONS"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "Legal Actions"
@@ -1457,7 +1457,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
 #          Metadata_Start_Date:
 #            val: "${new Date()}"
@@ -1474,21 +1474,21 @@ rules:
     edges:
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Ingestion"
-        toVertexLabel: "Object.Legal_Actions"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Legal_Actions"
 
   sharepoint_meetings:
 
     vertices:
-      - label: Event.Meeting
+      - label: Event_Meeting
         props:
           Form_Id: "${id}"
           Title:
@@ -1505,11 +1505,11 @@ rules:
             val: "${person?.trim()?.toUpperCase()}"  # Should it be upperCase or not ?!
             excludeFromSearch: true
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "SHAREPOINT/P-AND-PD-COMMITTEE-MEETINGS"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "P & PD Committee Meetings"
@@ -1529,7 +1529,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type: "sharepoint/p-and-pd-committee-meetings"
           Operation: "Structured Data Insertion"
@@ -1538,13 +1538,13 @@ rules:
     edges:
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Ingestion"
-        toVertexLabel: "Event.Meeting"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Meeting"

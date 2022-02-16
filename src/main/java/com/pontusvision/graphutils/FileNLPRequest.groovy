@@ -87,7 +87,7 @@ class FileNLPRequest implements Serializable {
   }
 
   static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email') {
-    final String vtxLabel = 'Object.Data_Source'
+    final String vtxLabel = 'Object_Data_Source'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
     vtx.name = vtxLabel
@@ -164,7 +164,7 @@ class FileNLPRequest implements Serializable {
     Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
             percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
 
-    finalVertexIdByVertexName.get("Event.File_Ingestion").entrySet().forEach({
+    finalVertexIdByVertexName.get("Event_File_Ingestion").entrySet().forEach({
       createEventNLPGroups(req, it.key, req.email)
     })
 
@@ -209,9 +209,9 @@ class FileNLPRequest implements Serializable {
           newVertices.put(vId, new AtomicDouble(maxScore))
           finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
 
-          if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
+          if ('Event_Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
             String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
-            g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
+            g.V(vId).property('Event_Ingestion_Business_Rules', bizRule).next()
           }
         }
 
@@ -227,7 +227,7 @@ class FileNLPRequest implements Serializable {
   }
 
   static Vertex createEventGroupIngestionVtx(UpdateReq updateReq, String groupName,
-                                             final String vtxLabel = 'Event.File_Group_Ingestion') {
+                                             final String vtxLabel = 'Event_File_Group_Ingestion') {
 
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
@@ -254,7 +254,7 @@ class FileNLPRequest implements Serializable {
     if (req.person) {
       String[] person = req.person
       for (int i = 0; i < person.length; i++) {
-        personOptions.add( __.has('Person.Natural.Full_Name', P.eq(person[i]?.toUpperCase())))
+        personOptions.add( __.has('Person_Natural_Full_Name', P.eq(person[i]?.toUpperCase())))
       }
     }
 
@@ -268,14 +268,14 @@ class FileNLPRequest implements Serializable {
         if (cpf == null){
           continue;
         }
-        cpfOptions.push( __.has('Person.Natural.Customer_ID', P.eq(cpf)))
+        cpfOptions.push( __.has('Person_Natural_Customer_ID', P.eq(cpf)))
       }
     }
 
     List<Traversal> emailOptions = new LinkedList<>()
     if (emailAddrs) {
       for (int i = 0; i < emailAddrs.length; i++) {
-        emailOptions.push(__.has('Object.Email_Address.Email', P.eq(emailAddrs[i]?.toLowerCase())))
+        emailOptions.push(__.has('Object_Email_Address_Email', P.eq(emailAddrs[i]?.toLowerCase())))
       }
     }
 
@@ -328,19 +328,19 @@ class FileNLPRequest implements Serializable {
     int count = 0
     for (ORID orid : (retVal as Set<ORID>)) {
 
-      String custId = App.g.V(orid).values('Person.Natural.Customer_ID').next().toString()
+      String custId = App.g.V(orid).values('Person_Natural_Customer_ID').next().toString()
       def nlpGroupTrav =
-              App.g.V().has('Event.NLP_Group.Person_Id', custId)
-                      .has('Event.NLP_Group.Ingestion_Date', currDate)
+              App.g.V().has('Event_NLP_Group_Person_Id', custId)
+                      .has('Event_NLP_Group_Ingestion_Date', currDate)
                       .id()
 
       def nlpGroupVtxId
       if (nlpGroupTrav.hasNext()) {
         nlpGroupVtxId = nlpGroupTrav.next()
       } else {
-        nlpGroupVtxId = App.g.addV('Event.NLP_Group')
-                .property('Event.NLP_Group.Person_Id', custId)
-                .property('Event.NLP_Group.Ingestion_Date', currDate).id().next()
+        nlpGroupVtxId = App.g.addV('Event_NLP_Group')
+                .property('Event_NLP_Group_Person_Id', custId)
+                .property('Event_NLP_Group_Ingestion_Date', currDate).id().next()
       }
       upsertEdge (emailBodyOrAttachment,nlpGroupVtxId,'Has_NLP_Events')
       upsertEdge (nlpGroupVtxId,orid, 'Has_NLP_Events')
@@ -373,7 +373,7 @@ class FileNLPRequest implements Serializable {
   }
 
   static Vertex createEventFileIngestionVtx(FileNLPRequest req, UpdateReq updateReq) {
-    String fileIngestionVtxLabel = 'Event.File_Ingestion'
+    String fileIngestionVtxLabel = 'Event_File_Ingestion'
     Vertex fileIngestionVtx = new Vertex()
     fileIngestionVtx.props = []
 

@@ -54,7 +54,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST");
-      req.setTemplatePOLEType("Object.Data_Source");
+      req.setTemplatePOLEType("Object_Data_Source");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString(" {% set var1=1 %} {{ var1 }} {{ context.Object_Data_Source_Name }}"
                       .getBytes()));
@@ -63,7 +63,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -76,7 +76,7 @@ public class PVTemplateTests extends AppTest {
       String expectedStartOfReport = "  1 ";
       assertEquals(expectedStartOfReport, report.substring(0, expectedStartOfReport.length()));
 
-      String dataSourceName = App.g.V(contextId).values("Object.Data_Source.Name").next().toString();
+      String dataSourceName = App.g.V(contextId).values("Object_Data_Source.Name").next().toString();
 
       assertEquals(expectedStartOfReport + dataSourceName, report);
 
@@ -112,7 +112,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST");
-      req.setTemplatePOLEType("Object.Data_Procedures");
+      req.setTemplatePOLEType("Object_Data_Procedures");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set risks=pv:getRisksForDataProcess(context.id) %}" +
@@ -153,7 +153,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("1"))
+      String contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("1"))
               .id().next().toString();
 
 //      MockedStatic<PontusJ2ReportingFunctions> mocked = mockStatic(PontusJ2ReportingFunctions.class);
@@ -200,7 +200,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setTemplatePOLEType("Object_Data_Sources");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString("{{ pv:getPolicyText('abc') }}"
                       .getBytes()));
@@ -209,7 +209,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -254,7 +254,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST1234");
-      req.setTemplatePOLEType("Object.Data_Procedures");
+      req.setTemplatePOLEType("Object_Data_Procedures");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
@@ -269,7 +269,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("1"))
+      String contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("1"))
               .id().next().toString();
 
 //      MockedStatic<PontusJ2ReportingFunctions> mocked = mockStatic(PontusJ2ReportingFunctions.class);
@@ -302,7 +302,7 @@ public class PVTemplateTests extends AppTest {
 
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("6"))
+      contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("6"))
               .id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
@@ -325,7 +325,7 @@ public class PVTemplateTests extends AppTest {
 
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("4"))
+      contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
               .id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
@@ -336,7 +336,7 @@ public class PVTemplateTests extends AppTest {
 
 
       // test a non-existent  LIA for entry number 5 with an empty reply (same template as before)
-      contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("5"))
+      contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("5"))
               .id().next().toString();
 
       renderReq.setRefEntryId(contextId);
@@ -404,7 +404,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setTemplatePOLEType("Object_Data_Sources");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString("{{ pv:getPolicyText('INVALID')|default ('BLAH') }}"
                       .getBytes()));
@@ -413,7 +413,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -447,7 +447,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setTemplatePOLEType("Object_Data_Sources");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString(("{{ pv:getPolicyText(null)|default ('BLAH') }}" +
                       "{{ pv:INVALIDFUNCTION() }}")
@@ -457,7 +457,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -489,7 +489,7 @@ public class PVTemplateTests extends AppTest {
 
       jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
 
-//      def dsarId= App.executor.eval("App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).id().next()").get().toString()
+//      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
 //
 //      def lawfulBasis  = "LEGÍTIMO INTERESSE DO CONTROLADOR"
 
@@ -497,7 +497,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Event.Subject_Access_Request");
+      req.setTemplatePOLEType("Event_Subject_Access_Request");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set ropaContrato = pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}" +
@@ -521,7 +521,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Event.Subject_Access_Request.Form_Id", P.eq("2"))
+      String contextId = App.g.V().has("Event_Subject_Access_Request_Form_Id", P.eq("2"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -567,7 +567,7 @@ public class PVTemplateTests extends AppTest {
       jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
               "$.queryResp[*].fields", "sharepoint_data_breaches");
 
-//      def dsarId= App.executor.eval("App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).id().next()").get().toString()
+//      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
 //
 //      def lawfulBasis  = "LEGÍTIMO INTERESSE DO CONTROLADOR"
 
@@ -575,7 +575,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Event.Data_Breach");
+      req.setTemplatePOLEType("Event_Data_Breach");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "People: {{ impacted_people | length }}\n" +
@@ -588,7 +588,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5"))
+      String contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("5"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -606,7 +606,7 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("5")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
@@ -620,7 +620,7 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("5")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
@@ -634,13 +634,13 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("4")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("4")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
       expectedReport = "Titulares dos dados NÃO foram notificados desse evento.";
-//    Event.Data_Breach id 4 has Natural_Person_Notified = "Não" ... therefore jinjava condition is always false !!
+//    Event_Data_Breach id 4 has Natural_Person_Notified = "Não" ... therefore jinjava condition is always false !!
       assertEquals(expectedReport, report, "Data Breache's Natural Person Notification Status");
 
 
@@ -657,7 +657,7 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("1")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("1")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
@@ -687,7 +687,7 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("5")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
@@ -736,7 +736,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Event.Subject_Access_Request");
+      req.setTemplatePOLEType("Event_Subject_Access_Request");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "Conforme solicitado na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} " +
@@ -748,7 +748,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Event.Subject_Access_Request.Form_Id", P.eq("2"))
+      String contextId = App.g.V().has("Event_Subject_Access_Request_Form_Id", P.eq("2"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();

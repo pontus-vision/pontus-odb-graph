@@ -118,17 +118,17 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     String dataSourceName = "Office365/email"
 
     Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
-    Vertex eventEmailMessageGroupVtx = createEventGroupIngestionVtx(updateReq, dataSourceName, "Event.Email_Msg_Group")
+    Vertex eventEmailMessageGroupVtx = createEventGroupIngestionVtx(updateReq, dataSourceName, "Event_Email_Msg_Group")
 
     createEdge('Has_Ingestion_Event', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
 
     Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
     createEdge('Has_Ingestion_Event', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
 
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_To_Group', 'Email_To', req.toEmailAddresses)
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_From_Group', 'Email_From', req.toEmailAddresses)
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_CC_Group', 'Email_CC', req.toEmailAddresses)
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_BCC_Group', 'Email_BCC', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event_Email_To_Group', 'Email_To', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event_Email_From_Group', 'Email_From', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event_Email_CC_Group', 'Email_CC', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event_Email_BCC_Group', 'Email_BCC', req.toEmailAddresses)
 
     Vertex emailBodyOrAttachmentVtx = createObjectEmailMessageBodyOrAttachmentVtx(req, updateReq)
 
@@ -195,7 +195,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   }
 
   static Vertex createEmailAddressVertex(String email, String vtxName, UpdateReq req) {
-    String emailVtxLabel = 'Object.Email_Address'
+    String emailVtxLabel = 'Object_Email_Address'
     Vertex emailVtx = new Vertex()
     emailVtx.label = emailVtxLabel
     emailVtx.name = vtxName
@@ -213,7 +213,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   }
 
   static Vertex createEventEmailMessageVtx(EmailNLPRequest req, UpdateReq updateReq) {
-    String emailVtxLabel = 'Event.Email_Message'
+    String emailVtxLabel = 'Event_Email_Message'
     Vertex emailVtx = new Vertex()
     emailVtx.props = []
 
@@ -300,7 +300,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   }
 
   static String getObjectEmailBodyOrAttachmentVtxLabel(EmailNLPRequest req) {
-    return req.attachmentId ? 'Object.Email_Message_Attachment' : 'Object.Email_Message_Body'
+    return req.attachmentId ? 'Object_Email_Message_Attachment' : 'Object_Email_Message_Body'
   }
 
   static Vertex createObjectEmailMessageBodyOrAttachmentVtx(EmailNLPRequest req, UpdateReq updateReq) {
