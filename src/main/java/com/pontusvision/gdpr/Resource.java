@@ -257,14 +257,14 @@ public class Resource {
           reg.server = "office365/email";
         } else if ("Object_Email_Message_Body".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Body";
-          reg.sizeBytes = getFirstDoubleItem(values.get("Object_Email_Message_Body.Size_Bytes"),0.0).longValue();
-          reg.name = getFirstStringItem(values.get("Object_Email_Message_Body.Email_Subject"),"");
+          reg.sizeBytes = getFirstDoubleItem(values.get("Object_Email_Message_Body_Size_Bytes"),0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Object_Email_Message_Body_Email_Subject"),"");
           StringBuffer sb = new StringBuffer();
           sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
-          String emailId = getFirstStringItem(values.get("Object_Email_Message_Body.Email_Id"),"");
+          String emailId = getFirstStringItem(values.get("Object_Email_Message_Body_Email_Id"),"");
           sb.append(URLEncoder.encode(emailId, "UTF-8"));
           reg.path = sb.toString();
-          reg.created = getFirstStringItem(values.get("Object_Email_Message_Body.Created_Date_Time"), "" );
+          reg.created = getFirstStringItem(values.get("Object_Email_Message_Body_Created_Date_Time"), "" );
 
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Body")
               .out("Email_From").values("Event_Email_From_Group_Email");
@@ -272,10 +272,10 @@ public class Resource {
 
           String owner = trav.hasNext() ? trav.next().toString() : "";
 
-          reg.lastAccess = values.get("Object_Email_Message_Body.Received_Date_Time") != null ?
-              values.get("Object_Email_Message_Body.Received_Date_Time").get(0).toString():
-              (values.get("Object_Email_Message_Body.Sent_Date_Time") != null ?
-                  values.get("Object_Email_Message_Body.Sent_Date_Time").get(0).toString():
+          reg.lastAccess = values.get("Object_Email_Message_Body_Received_Date_Time") != null ?
+              values.get("Object_Email_Message_Body_Received_Date_Time").get(0).toString():
+              (values.get("Object_Email_Message_Body_Sent_Date_Time") != null ?
+                  values.get("Object_Email_Message_Body_Sent_Date_Time").get(0).toString():
                   "");
 
 

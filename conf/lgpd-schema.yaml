@@ -1296,82 +1296,82 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
 
-  - name: Object_Email_Message_Body.Type
+  - name: Object_Email_Message_Body_Type
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.Email_Id
+  - name: Object_Email_Message_Body_Email_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.Email_Subject
+  - name: Object_Email_Message_Body_Email_Subject
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.Created_Date_Time
+  - name: Object_Email_Message_Body_Created_Date_Time
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.MetadataController
+  - name: Object_Email_Message_Body_MetadataController
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.MetadataGDPRStatus
+  - name: Object_Email_Message_Body_MetadataGDPRStatus
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.MetadataLineage
+  - name: Object_Email_Message_Body_MetadataLineage
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Address
+  - name: Object_Email_Message_Body_NLP_Address
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Cred_card
+  - name: Object_Email_Message_Body_NLP_Cred_card
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Email
+  - name: Object_Email_Message_Body_NLP_Email
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Location
+  - name: Object_Email_Message_Body_NLP_Location
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Person
+  - name: Object_Email_Message_Body_NLP_Person
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Phone
+  - name: Object_Email_Message_Body_NLP_Phone
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Postcode
+  - name: Object_Email_Message_Body_NLP_Postcode
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Policy_number
+  - name: Object_Email_Message_Body_NLP_Policy_number
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Org
+  - name: Object_Email_Message_Body_NLP_Org
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Misc
+  - name: Object_Email_Message_Body_NLP_Misc
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Nationality
+  - name: Object_Email_Message_Body_NLP_Nationality
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Language
+  - name: Object_Email_Message_Body_NLP_Language
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Misc
+  - name: Object_Email_Message_Body_NLP_Misc
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Money
+  - name: Object_Email_Message_Body_NLP_Money
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Date
+  - name: Object_Email_Message_Body_NLP_Date
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_Time
+  - name: Object_Email_Message_Body_NLP_Time
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.NLP_CPF
+  - name: Object_Email_Message_Body_NLP_CPF
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.Sent_Date_Time
+  - name: Object_Email_Message_Body_Sent_Date_Time
     dataType: String
     cardinality: SINGLE
-  - name: Object_Email_Message_Body.Size_Bytes
+  - name: Object_Email_Message_Body_Size_Bytes
     dataType: Double
     cardinality: SINGLE
   - name: Metadata_Type_Object_Form
@@ -1419,19 +1419,19 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
 
-  - name: Object_Health.Type
+  - name: Object_Health_Type
     dataType: String
     cardinality: SINGLE
-  - name: Object_Health.Alergies
+  - name: Object_Health_Alergies
     dataType: String
     cardinality: SINGLE
-  - name: Object_Health.Blood_Type
+  - name: Object_Health_Blood_Type
     dataType: String
     cardinality: SINGLE
-  - name: Object_Health.Diseases
+  - name: Object_Health_Diseases
     dataType: String
     cardinality: SINGLE
-  - name: Object_Health.Organ_Donor
+  - name: Object_Health_Organ_Donor
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Identity_Card
@@ -3485,38 +3485,38 @@ vertexIndexes:
     
       {}
     
-  - name: "Object_Email_Message_Body.MixedIdx"
+  - name: "Object_Email_Message_Body_MixedIdx"
     composite: false
     unique: false
     indexOnly: null
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Email_Message_Body
-      - Object_Email_Message_Body.Email_Id
-      - Object_Email_Message_Body.Email_Subject
-      - Object_Email_Message_Body.Created_Date_Time
-      - Object_Email_Message_Body.MetadataController
-      - Object_Email_Message_Body.MetadataGDPRStatus
-      - Object_Email_Message_Body.MetadataLineage
-      - Object_Email_Message_Body.NLP_Address
-      - Object_Email_Message_Body.NLP_Cred_card
-      - Object_Email_Message_Body.NLP_Email
-      - Object_Email_Message_Body.NLP_Location
-      - Object_Email_Message_Body.NLP_Person
-      - Object_Email_Message_Body.NLP_Phone
-      - Object_Email_Message_Body.NLP_Postcode
-      - Object_Email_Message_Body.NLP_Policy_number
-      - Object_Email_Message_Body.NLP_Org
-      - Object_Email_Message_Body.NLP_Misc
-      - Object_Email_Message_Body.NLP_Nationality
-      - Object_Email_Message_Body.NLP_Language
-      - Object_Email_Message_Body.NLP_Misc
-      - Object_Email_Message_Body.NLP_Money
-      - Object_Email_Message_Body.NLP_Date
-      - Object_Email_Message_Body.NLP_Time
-      - Object_Email_Message_Body.NLP_CPF
-      - Object_Email_Message_Body.Sent_Date_Time
-      - Object_Email_Message_Body.Size_Bytes
+      - Object_Email_Message_Body_Email_Id
+      - Object_Email_Message_Body_Email_Subject
+      - Object_Email_Message_Body_Created_Date_Time
+      - Object_Email_Message_Body_MetadataController
+      - Object_Email_Message_Body_MetadataGDPRStatus
+      - Object_Email_Message_Body_MetadataLineage
+      - Object_Email_Message_Body_NLP_Address
+      - Object_Email_Message_Body_NLP_Cred_card
+      - Object_Email_Message_Body_NLP_Email
+      - Object_Email_Message_Body_NLP_Location
+      - Object_Email_Message_Body_NLP_Person
+      - Object_Email_Message_Body_NLP_Phone
+      - Object_Email_Message_Body_NLP_Postcode
+      - Object_Email_Message_Body_NLP_Policy_number
+      - Object_Email_Message_Body_NLP_Org
+      - Object_Email_Message_Body_NLP_Misc
+      - Object_Email_Message_Body_NLP_Nationality
+      - Object_Email_Message_Body_NLP_Language
+      - Object_Email_Message_Body_NLP_Misc
+      - Object_Email_Message_Body_NLP_Money
+      - Object_Email_Message_Body_NLP_Date
+      - Object_Email_Message_Body_NLP_Time
+      - Object_Email_Message_Body_NLP_CPF
+      - Object_Email_Message_Body_Sent_Date_Time
+      - Object_Email_Message_Body_Size_Bytes
     propertyKeysMappings:
     
       {}
@@ -3552,17 +3552,17 @@ vertexIndexes:
     
       {}
     
-  - name: "Object_Health.MixedIdx"
+  - name: "Object_Health_MixedIdx"
     composite: false
     unique: false
     indexOnly: null
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Health
-      - Object_Health.Alergies
-      - Object_Health.Blood_Type
-      - Object_Health.Diseases
-      - Object_Health.Organ_Donor
+      - Object_Health_Alergies
+      - Object_Health_Blood_Type
+      - Object_Health_Diseases
+      - Object_Health_Organ_Donor
     propertyKeysMappings:
     
       {}

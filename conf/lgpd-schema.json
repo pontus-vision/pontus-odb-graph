@@ -2089,7 +2089,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Metadata_Type_Object_Email_Message_Body_,
+      "name": "Metadata_Type_Object_Email_Message_Body",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -2289,7 +2289,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Metadata_Type_Object_Health_,
+      "name": "Metadata_Type_Object_Health",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3856,7 +3856,7 @@
       "useStatic": false
     },
     {
-      "name": "Object_Email_Message_Body_,
+      "name": "Object_Email_Message_Body",
       "partition": false,
       "useStatic": false
     },
@@ -3871,7 +3871,7 @@
       "useStatic": false
     },
     {
-      "name": "Object_Health_,
+      "name": "Object_Health",
       "partition": false,
       "useStatic": false
     },
@@ -5100,7 +5100,7 @@
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Metadata_Type_Object_Email_Message_Body_,
+        "Metadata_Type_Object_Email_Message_Body",
         "Object_Email_Message_Body_Email_Id",
         "Object_Email_Message_Body_Email_Subject",
         "Object_Email_Message_Body_Created_Date_Time",
@@ -5167,7 +5167,7 @@
       "indexOnly": null,
       "mixedIndex": "search",
       "propertyKeys": [
-        "Metadata_Type_Object_Health_,
+        "Metadata_Type_Object_Health",
         "Object_Health_Alergies",
         "Object_Health_Blood_Type",
         "Object_Health_Diseases",
