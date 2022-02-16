@@ -58,7 +58,7 @@ public class PVScoreTestsConsent extends AppTest {
 
       long score = (long) gdpr.getConsentScores(retVals);
 
-      assertEquals(8L, score);
+      assertEquals(32L, score);
 
 
       jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo3.json", "$.queryResp[*].fields",
