@@ -39,6 +39,10 @@
         "privacy_notice": [],
         "data_procedures": [
           {
+            "LookupId": 409,
+            "LookupValue": "409"
+          },
+          {
             "LookupId": 407,
             "LookupValue": "407"
           },
