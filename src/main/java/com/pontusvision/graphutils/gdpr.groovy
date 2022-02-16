@@ -829,7 +829,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
       for (def i = 0; i < types.length; i++) {
         def typeStr = types[i]
 
-        props = App.g.V().has('Metadata_Type' + "." + typeStr, eq(typeStr)).range(0, 1).properties().key().findAll {
+        props = App.g.V().has('Metadata_Type' + "_" + typeStr, eq(typeStr)).range(0, 1).properties().key().findAll {
           (!it.startsWith('Metadata'))
         }
 
@@ -2701,8 +2701,8 @@ the end of the process.
 
             String[] fileParts = fileName.split("\\.")
 
-            String templatePOLEType = fileParts[0] + '.' + fileParts[1]
-            String templateName = fileParts[2]
+            String templatePOLEType = fileParts[0]
+            String templateName = fileParts[1]
 
             System.out.println("\nLoading template ${templateName} for POLE Type ${templatePOLEType}")
 
