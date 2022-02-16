@@ -542,7 +542,7 @@ public class Resource {
 
         List<Map<String, Long>> res =
             StringUtils.isNotEmpty(searchStr) ?
-                resSet.has("Person_Natural_FullName", P.eq(searchStr)).values("Person_Natural_Nationality")
+                resSet.has("Person_Natural_Full_Name", P.eq(searchStr)).values("Person_Natural_Nationality")
                     .groupCount()
                     .toList() :
                 resSet.has("Person_Natural_Nationality").values("Person_Natural_Nationality").groupCount().toList();
