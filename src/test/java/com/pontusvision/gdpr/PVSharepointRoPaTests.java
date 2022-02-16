@@ -66,8 +66,8 @@ public class PVSharepointRoPaTests extends AppTest {
       String LIALawfulBasis =
               App.executor.eval("App.g.V().has('Object_Data_Procedures_Form_Id', eq('404'))" +
                       ".out('Has_Legitimate_Interests_Assessment')" +
-                      ".properties('Object_Legitimate_Interests_Assessment" +
-                      ".Lawful_Basis_Justification').value().next().toString()").get().toString();
+                      ".properties('Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification')" +
+                      ".value().next().toString()").get().toString();
       assertEquals("Legitimo interesse", LIALawfulBasis, "Lawful Basis Justification for this LIA is => Legitimo interesse");
 
       String LIAProcessingPurpose =

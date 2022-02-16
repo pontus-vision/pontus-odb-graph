@@ -37,8 +37,14 @@ public class PVScoreTestsConsent extends AppTest {
   public void test00001ConsentScore() throws InterruptedException {
     try {
 
+      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
+              "sharepoint_mapeamentos");
+
       jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo2.json", "$.queryResp[*].fields",
           "sharepoint_mapeamentos");
+
+      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos.json", "$.queryResp[*].fields",
+              "sharepoint_consents");
 
       jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos2.json", "$.queryResp[*].fields",
           "sharepoint_consents");
@@ -49,7 +55,7 @@ public class PVScoreTestsConsent extends AppTest {
 
       long score = (long) gdpr.getConsentScores(retVals);
 
-      assertEquals(26L, score);
+      assertEquals(8L, score);
 
 
     } catch (Exception e) {
@@ -65,7 +71,7 @@ public class PVScoreTestsConsent extends AppTest {
   public void test00002ConsentScore100pcnt() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo2.json", "$.queryResp[*].fields",
+      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo3.json", "$.queryResp[*].fields",
           "sharepoint_mapeamentos");
 
       jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos3.json", "$.queryResp[*].fields",
