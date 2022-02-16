@@ -194,7 +194,7 @@
         "label": "Object_Data_Source",
         "props": [
           {
-            "name": "Object_Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "SAP/C@P COMPETITOR VEHICLES",
             "mandatoryInSearch": true
           }

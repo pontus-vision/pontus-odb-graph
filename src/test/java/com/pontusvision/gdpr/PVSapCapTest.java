@@ -162,7 +162,7 @@ public class PVSapCapTest extends AppTest {
       String DataSourceName =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MÔNICA COELHO'))" +
                       ".out('Has_Ingestion_Event').in('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
-                      ".properties('Object_Data_Source.Name').value().next().toString()").get().toString();
+                      ".properties('Object_Data_Source_Name').value().next().toString()").get().toString();
       assertEquals("SAP/C@P MY PORSCHE CHANGE REPORT", DataSourceName, "The source for Mônica's data");
 
     } catch (ExecutionException e) {
@@ -378,7 +378,7 @@ public class PVSapCapTest extends AppTest {
 
       String jamesTaxNumber =
               App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('BONDINHO BONDES SA')).in('Works')" +
-                      ".out('Has_Id_Card').properties('Object_Identity_Card_Id_Value').value().next().toString()").get().toString();
+                      ".out('Has_Id_Card').has('Object_Identity_Card_Id_Type', eq('CPF')).properties('Object_Identity_Card_Id_Value').value().next().toString()").get().toString();
       assertEquals("98657487643", jamesTaxNumber, "Bondinho SA Tax Number");
 
       String onlyLastNameTest =

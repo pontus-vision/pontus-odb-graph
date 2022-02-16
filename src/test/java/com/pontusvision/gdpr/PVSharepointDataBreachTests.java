@@ -29,12 +29,12 @@ public class PVSharepointDataBreachTests extends AppTest {
     try {
 
       String dataBreachStatus =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
                       ".properties('Event_Data_Breach_Status').value().next().toString()").get().toString();
       assertEquals("Open", dataBreachStatus, "Status for Vazamento de E-mails de Clientes");
 
       String dataBreachDate =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
               ".values('Event_Data_Breach_Metadata_Create_Date').next().toString()").get().toString();
 
       Date dateObj = dtfmt.parse(dataBreachDate);
@@ -42,7 +42,7 @@ public class PVSharepointDataBreachTests extends AppTest {
       assertEquals(expDateObj, dateObj, "Time of the Data Breach");
 
       String dataBreachSource =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
                       ".properties('Event_Data_Breach_Source').value().next().toString()").get().toString();
       assertEquals("OUTLOOK, GMAIL, YAHOO MAIL", dataBreachSource, "Source for the Data Breach on Documents");
 
@@ -54,9 +54,9 @@ public class PVSharepointDataBreachTests extends AppTest {
               "Histórico navegador Google Chrome / Mozilla Firefox / Microsoft Edge / Apple Safari");
 
       String opinionsBreach =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq('SHAREPOINT/DATA-BREACHES'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SHAREPOINT/DATA-BREACHES'))" +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
-                      ".out('Impacted_By_Data_Breach').has('Object_Data_Source.Name', eq('ERP-HR'))" +
+                      ".out('Impacted_By_Data_Breach').has('Object_Data_Source_Name', eq('ERP-HR'))" +
                       ".in('Impacted_By_Data_Breach').values('Event_Data_Breach_Impact').next().toString()").get().toString();
       assertEquals("No Impact", opinionsBreach,"Impact for breaching employees opinions");
 
@@ -76,7 +76,7 @@ public class PVSharepointDataBreachTests extends AppTest {
     try {
 
       String legalAction1 =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq('SHAREPOINT/LEGAL-ACTIONS'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SHAREPOINT/LEGAL-ACTIONS'))" +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".has('Metadata_Type_Object_Legal_Actions',eq('Object_Legal_Actions'))" +
                       ".values('Object_Legal_Actions_Details').next().toString()").get().toString();

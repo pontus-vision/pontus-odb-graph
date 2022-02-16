@@ -137,7 +137,7 @@ updatereq:
     
     - label: Object_Data_Source
       props:
-        - name: Object_Data_Source.Name
+        - name: Object_Data_Source_Name
           val: TOTVS/PROTHEUS/SA1_CLIENTES
           mandatoryInSearch: True
 

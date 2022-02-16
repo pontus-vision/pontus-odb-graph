@@ -1130,27 +1130,27 @@ class Matcher {
 /*
     - label: Object_Data_Source
       props:
-        - name: Object_Data_Source.Name
+        - name: Object_Data_Source_Name
           val: MD2
           mandatoryInSearch: True
-        - name: Object_Data_Source.Description
+        - name: Object_Data_Source_Description
           val: Dados RH Colaboradores MD2
           mandatoryInSearch: True
-        - name: Object_Data_Source.Type
+        - name: Object_Data_Source_Type
           val: Structured
           mandatoryInSearch: True
 
  */
 
   static Vertex getObjectDataSource(String dataSourceName) {
-    if (App.g.V().has('Object_Data_Source.Name', P.eq(dataSourceName)).hasNext()) {
-      return App.g.V().has('Object_Data_Source.Name', P.eq(dataSourceName)).next()
+    if (App.g.V().has('Object_Data_Source_Name', P.eq(dataSourceName)).hasNext()) {
+      return App.g.V().has('Object_Data_Source_Name', P.eq(dataSourceName)).next()
     }
     Vertex dataSourceVertex = App.g.addV('Object_Data_Source')
             .property('Metadata_Type_Object_Data_Source', 'Object_Data_Source')
-            .property('Object_Data_Source.Name', dataSourceName)
-            .property('Object_Data_Source.Description', dataSourceName)
-            .property('Object_Data_Source.Type', 'Structured')
+            .property('Object_Data_Source_Name', dataSourceName)
+            .property('Object_Data_Source_Description', dataSourceName)
+            .property('Object_Data_Source_Type', 'Structured')
             .next()
 
     return dataSourceVertex

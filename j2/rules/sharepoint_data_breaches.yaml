@@ -5,7 +5,7 @@ updatereq:
     - label: Object_Data_Source
       name: data_sources
       props:
-        - name: Object_Data_Source.Form_Id
+        - name: Object_Data_Source_Form_Id
           val: ${new groovy.json.JsonBuilder(data_sources)}
           mandatoryInSearch: True
           processAll: True
@@ -59,7 +59,7 @@ updatereq:
     - label: Object_Data_Source
       name: sharepoint
       props:
-        - name: Object_Data_Source.Name
+        - name: Object_Data_Source_Name
           val: SHAREPOINT/DATA-BREACHES
           mandatoryInSearch: True
     

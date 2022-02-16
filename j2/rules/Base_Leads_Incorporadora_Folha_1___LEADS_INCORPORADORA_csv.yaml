@@ -120,13 +120,13 @@ updatereq:
     
     - label: Object_Data_Source
       props:
-        - name: Object_Data_Source.Name
+        - name: Object_Data_Source_Name
           val: PLANILHAS - S3
           mandatoryInSearch: True
-        - name: Object_Data_Source.Type
+        - name: Object_Data_Source_Type
           val: planilhas - S3
           mandatoryInSearch: True
-        - name: Object_Data_Source.Description
+        - name: Object_Data_Source_Description
           val: planilhas guardadas na AWS S3
           mandatoryInSearch: True
     

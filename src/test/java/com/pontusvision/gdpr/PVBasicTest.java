@@ -180,7 +180,7 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil(jsonFile, "$.queryResp[*].fields",
               ruleName);
 
-      String queryPrefix = "App.g.V().has('Object_Data_Source.Name', eq('" + dataSourceName + "'))\n";
+      String queryPrefix = "App.g.V().has('Object_Data_Source_Name', eq('" + dataSourceName + "'))\n";
 //    test0000 for COUNT(dataSources)
       String countDataSources =
               App.executor.eval(queryPrefix +
@@ -284,9 +284,9 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
       jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
 
-//    t'est0000 for Object_Data_Source.Name
+//    t'est0000 for Object_Data_Source_Name
       String userId2 =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
                       ".next().id().toString()").get().toString();
       String rootConnectionsQuery = "App.g.V(\"" + userId2 + "\").bothE().count().next().toString()";
       String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
@@ -580,7 +580,7 @@ public class PVBasicTest extends AppTest {
 
     try {
       String numDataSources =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name',eq('Office365/email')).count().next().toString()")
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name',eq('Office365/email')).count().next().toString()")
                       .get().toString();
 
       assertEquals("1", numDataSources, "Ensure that We only have one data source");
@@ -684,7 +684,7 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil(jsonFile, "$.queryResp[*].fields",
               ruleName);
 
-      String queryPrefix = "App.g.V().has('Object_Data_Source.Name', eq('" + dataSourceName + "'))\n";
+      String queryPrefix = "App.g.V().has('Object_Data_Source_Name', eq('" + dataSourceName + "'))\n";
 //    test0000 for COUNT(dataSources)
       String countDataSources =
               App.executor.eval(queryPrefix +
@@ -774,7 +774,7 @@ public class PVBasicTest extends AppTest {
 
     try {
       String numDataSources =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name',eq('file_server_srv1')).count().next().toString()")
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name',eq('file_server_srv1')).count().next().toString()")
                       .get().toString();
 
       assertEquals("1", numDataSources, "Ensure that We only have one data source");

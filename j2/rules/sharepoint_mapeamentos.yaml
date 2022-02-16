@@ -5,14 +5,14 @@ updatereq:
     - label: Object_Data_Source
       name: sharepoint
       props:
-        - name: Object_Data_Source.Name
+        - name: Object_Data_Source_Name
           val: SHAREPOINT/MAPEAMENTO-DE-PROCESSOS
           mandatoryInSearch: True
     
     - label: Object_Data_Source
       name: attached_data_sources
       props:
-        - name: Object_Data_Source.Form_Id
+        - name: Object_Data_Source_Form_Id
           val: ${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}
           mandatoryInSearch: True
           processAll: True

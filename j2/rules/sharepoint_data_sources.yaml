@@ -5,7 +5,7 @@ updatereq:
     - label: Object_Data_Source
       name: sharepoint
       props:
-        - name: Object_Data_Source.Name
+        - name: Object_Data_Source_Name
           val: SHAREPOINT/DATA-SOURCES
           mandatoryInSearch: True
     
@@ -13,38 +13,38 @@ updatereq:
       name: data_sources
       condition: ${field_Descri_x0020__x0020_o?.trim()?.length() > 0}
       props:
-        - name: Object_Data_Source.Form_Id
+        - name: Object_Data_Source_Form_Id
           val: ${id}
           mandatoryInSearch: True
-        - name: Object_Data_Source.Name
+        - name: Object_Data_Source_Name
           val: ${Title?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Source.Description
+        - name: Object_Data_Source_Description
           val: ${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Source.Engine
+        - name: Object_Data_Source_Engine
           val: ${field_Sistema}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Source.Type
+        - name: Object_Data_Source_Type
           val: ${field_Tipo_x0020_Sistema}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Source.Domain
+        - name: Object_Data_Source_Domain
           val: ${field_Tabela}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Source.URI_Delete
+        - name: Object_Data_Source_URI_Delete
           val: ${field_URL_x0020_Prefixo_x0020_Delete}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Source.URI_Update
+        - name: Object_Data_Source_URI_Update
           val: ${field_URL_x0020_Prefixo_x0020_Update}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Source.URI_Read
+        - name: Object_Data_Source_URI_Read
           val: ${field_URL_x0020_Prefixo_x0020_Read}
           mandatoryInSearch: False
           excludeFromSearch: True

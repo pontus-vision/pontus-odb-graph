@@ -64,7 +64,7 @@ public class PVSharepointPrivacyNoticeTests extends AppTest {
 
       String getObjectDataSourceName =
               App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('4')).out('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').properties('Object_Data_Source.Name').value()" +
+                      ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').properties('Object_Data_Source_Name').value()" +
                       ".next().toString()").get().toString();
       assertEquals("SHAREPOINT/PRIVACY-NOTICE", getObjectDataSourceName, "Data Source Name.");
 

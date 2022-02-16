@@ -6,7 +6,7 @@
         "name": "sharepoint",
         "props": [
           {
-            "name": "Object_Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "SHAREPOINT/MAPEAMENTO-DE-PROCESSOS",
             "mandatoryInSearch": true
           }
@@ -17,7 +17,7 @@
         "name": "attached_data_sources",
         "props": [
           {
-            "name": "Object_Data_Source.Form_Id",
+            "name": "Object_Data_Source_Form_Id",
             "val": "${new groovy.json.JsonBuilder(Local_x0020_de_x0020_Armazenamen)}",
             "mandatoryInSearch": true,
             "processAll": true,

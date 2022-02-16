@@ -76,7 +76,7 @@ public class PVTemplateTests extends AppTest {
       String expectedStartOfReport = "  1 ";
       assertEquals(expectedStartOfReport, report.substring(0, expectedStartOfReport.length()));
 
-      String dataSourceName = App.g.V(contextId).values("Object_Data_Source.Name").next().toString();
+      String dataSourceName = App.g.V(contextId).values("Object_Data_Source_Name").next().toString();
 
       assertEquals(expectedStartOfReport + dataSourceName, report);
 

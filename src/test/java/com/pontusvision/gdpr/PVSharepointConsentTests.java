@@ -61,7 +61,7 @@ public class PVSharepointConsentTests extends AppTest {
       String getObjectDataSourceName =
               App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
                       ".in('Consent').out('Has_Ingestion_Event').in('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
-                      ".properties('Object_Data_Source.Name').value().next().toString()").get().toString();
+                      ".properties('Object_Data_Source_Name').value().next().toString()").get().toString();
       assertEquals("SHAREPOINT/CONSENT", getObjectDataSourceName, "Data Source Name.");
 
       String getPersonNaturalCustomerID =
@@ -142,14 +142,14 @@ public class PVSharepointConsentTests extends AppTest {
       String consentDataSourceName = "SHAREPOINT/CONSENT";
 
       String privacyNoticeDataSourceName =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq(\"" + consentDataSourceName + "\"))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq(\"" + consentDataSourceName + "\"))" +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event').out('Consent')" +
                       ".out('Has_Privacy_Notice').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event').values('Object_Data_Source.Name').next().toString()").get().toString();
+                      ".in('Has_Ingestion_Event').values('Object_Data_Source_Name').next().toString()").get().toString();
       assertEquals("SHAREPOINT/PRIVACY-NOTICE", privacyNoticeDataSourceName, "Data Source Name for Privacy Notice POLE.");
 
       String getPersonNaturalByPrivacyNotice =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq(\"" + privacyNoticeDataSourceName + "\"))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq(\"" + privacyNoticeDataSourceName + "\"))" +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
                       ".has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
                       ".has('Event_Consent_Customer_ID', eq('456'))" +

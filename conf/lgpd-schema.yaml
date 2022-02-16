@@ -1082,79 +1082,79 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
 
-  - name: Object_Data_Source.Type
+  - name: Object_Data_Source_Type
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Business_Rules
+  - name: Object_Data_Source_Business_Rules
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Create_Date
+  - name: Object_Data_Source_Create_Date
     dataType: Date
     cardinality: SINGLE
-  - name: Object_Data_Source.Credential_ApiKey
+  - name: Object_Data_Source_Credential_ApiKey
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Credential_Principal
+  - name: Object_Data_Source_Credential_Principal
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Credential_Secret
+  - name: Object_Data_Source_Credential_Secret
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Description
+  - name: Object_Data_Source_Description
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Domain
+  - name: Object_Data_Source_Domain
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Domain_Frequency
+  - name: Object_Data_Source_Domain_Frequency
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Engine
+  - name: Object_Data_Source_Engine
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Form_Id
+  - name: Object_Data_Source_Form_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Form_Owner_Id
+  - name: Object_Data_Source_Form_Owner_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Form_Submission_Id
+  - name: Object_Data_Source_Form_Submission_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Form_Submission_Owner_Id
+  - name: Object_Data_Source_Form_Submission_Owner_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Name
+  - name: Object_Data_Source_Name
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Retention_Policy_JSON
+  - name: Object_Data_Source_Retention_Policy_JSON
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Type
+  - name: Object_Data_Source_Type
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.URI_Config
+  - name: Object_Data_Source_URI_Config
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.URI_Control
+  - name: Object_Data_Source_URI_Control
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.URI_Delete
+  - name: Object_Data_Source_URI_Delete
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.URI_Monitor
+  - name: Object_Data_Source_URI_Monitor
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.URI_Read
+  - name: Object_Data_Source_URI_Read
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.URI_Template
+  - name: Object_Data_Source_URI_Template
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.URI_Update
+  - name: Object_Data_Source_URI_Update
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Source.Update_Date
+  - name: Object_Data_Source_Update_Date
     dataType: Date
     cardinality: SINGLE
   - name: Metadata_Type_Object_Data_Src_Mapping_Rule
@@ -3379,37 +3379,37 @@ vertexIndexes:
     
       {}
     
-  - name: "Object_Data_Source.MixedIdx"
+  - name: "Object_Data_Source_MixedIdx"
     composite: false
     unique: false
     indexOnly: null
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Data_Source
-      - Object_Data_Source.Business_Rules
-      - Object_Data_Source.Create_Date
-      - Object_Data_Source.Credential_ApiKey
-      - Object_Data_Source.Credential_Principal
-      - Object_Data_Source.Credential_Secret
-      - Object_Data_Source.Description
-      - Object_Data_Source.Domain
-      - Object_Data_Source.Domain_Frequency
-      - Object_Data_Source.Engine
-      - Object_Data_Source.Form_Id
-      - Object_Data_Source.Form_Owner_Id
-      - Object_Data_Source.Form_Submission_Id
-      - Object_Data_Source.Form_Submission_Owner_Id
-      - Object_Data_Source.Name
-      - Object_Data_Source.Retention_Policy_JSON
-      - Object_Data_Source.Type
-      - Object_Data_Source.URI_Config
-      - Object_Data_Source.URI_Control
-      - Object_Data_Source.URI_Delete
-      - Object_Data_Source.URI_Monitor
-      - Object_Data_Source.URI_Read
-      - Object_Data_Source.URI_Template
-      - Object_Data_Source.URI_Update
-      - Object_Data_Source.Update_Date
+      - Object_Data_Source_Business_Rules
+      - Object_Data_Source_Create_Date
+      - Object_Data_Source_Credential_ApiKey
+      - Object_Data_Source_Credential_Principal
+      - Object_Data_Source_Credential_Secret
+      - Object_Data_Source_Description
+      - Object_Data_Source_Domain
+      - Object_Data_Source_Domain_Frequency
+      - Object_Data_Source_Engine
+      - Object_Data_Source_Form_Id
+      - Object_Data_Source_Form_Owner_Id
+      - Object_Data_Source_Form_Submission_Id
+      - Object_Data_Source_Form_Submission_Owner_Id
+      - Object_Data_Source_Name
+      - Object_Data_Source_Retention_Policy_JSON
+      - Object_Data_Source_Type
+      - Object_Data_Source_URI_Config
+      - Object_Data_Source_URI_Control
+      - Object_Data_Source_URI_Delete
+      - Object_Data_Source_URI_Monitor
+      - Object_Data_Source_URI_Read
+      - Object_Data_Source_URI_Template
+      - Object_Data_Source_URI_Update
+      - Object_Data_Source_Update_Date
     propertyKeysMappings:
     
       {}

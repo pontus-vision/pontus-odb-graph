@@ -35,7 +35,7 @@ public class PVSharepointPrivacyDocsTests extends AppTest {
     try {
 
       String privacyDoc1 =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq('SHAREPOINT/PRIVACY-DOCS'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SHAREPOINT/PRIVACY-DOCS'))" +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".has('Metadata_Type_Object_Privacy_Docs',eq('Object_Privacy_Docs'))" +
                       ".values('Object_Privacy_Docs_Description').next().toString()").get().toString();

@@ -764,7 +764,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
       for (int i = 0; i < name.length; i++) {
         Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-                App.g.V().has("Object_Data_Source.Name", eq(name[i])).tryNext()
+                App.g.V().has("Object_Data_Source_Name", eq(name[i])).tryNext()
         GraphTraversal<Vertex, Vertex> dataSource
         if (!dataSourceOption.isPresent()) {
           dataSource = App.g.addV("Object_Data_Source")
@@ -773,10 +773,10 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         }
         Vertex vertexDataSource = dataSource.property("Metadata_Type", "Object_Data_Source").
                 property("Metadata_Type_Object_Data_Source", "Object_Data_Source").
-                property("Object_Data_Source.Name", name[i]).
-                property("Object_Data_Source.Create_Date", new Date()).
-                property("Object_Data_Source.Update_Date", new Date()).
-                property("Object_Data_Source.Description", description[i]).
+                property("Object_Data_Source_Name", name[i]).
+                property("Object_Data_Source_Create_Date", new Date()).
+                property("Object_Data_Source_Update_Date", new Date()).
+                property("Object_Data_Source_Description", description[i]).
                 next()
 
       }
@@ -4801,41 +4801,41 @@ the end of the process.
         sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(dataType.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
       }
 
-//  String var = "v.\"Object_Data_Source.Type\": Structured"
-      String queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'Structured'"
+//  String var = "v.\"Object_Data_Source_Type\": Structured"
+      String queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'Structured'"
       Long numEntries = getCountQueryResults(queryStr)
 
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
       try {
-        numEntries = App.g.V().has('Object_Data_Source.Type', eq('Structured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
+        numEntries = App.g.V().has('Object_Data_Source_Type', eq('Structured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
         sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
       } catch (e) {
 
       }
-      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'DB_TABLE'"
+      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'DB_TABLE'"
       numEntries = getCountQueryResults(queryStr)
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Tables')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
-      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'DB_COLUMN'"
+      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'DB_COLUMN'"
       numEntries = getCountQueryResults(queryStr)
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('DB Columns')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'Unstructured'"
+      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'Unstructured'"
       numEntries = getCountQueryResults(queryStr)
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-      numEntries = App.g.V().has('Object_Data_Source.Type', eq('Unstructured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
+      numEntries = App.g.V().has('Object_Data_Source_Type', eq('Unstructured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source.Type` = 'Mixed'"
+      queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'Mixed'"
       numEntries = getCountQueryResults(queryStr)
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Mixed Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
@@ -4859,7 +4859,7 @@ the end of the process.
             .out("Has_Ingestion_Event")
             .as('events')
             .match(
-                    __.as('ingestion_event').values('Object_Data_Source.Name').as('event_id')
+                    __.as('ingestion_event').values('Object_Data_Source_Name').as('event_id')
             )
             .select('event_id')
             .groupCount().each { metric ->
@@ -4893,7 +4893,7 @@ the end of the process.
             .dedup()
             .as('events')
             .match(
-                    __.as('ingestion_event').values('Object_Data_Source.Name').as('event_id')
+                    __.as('ingestion_event').values('Object_Data_Source_Name').as('event_id')
             )
             .select('event_id')
             .groupCount().each { metric ->
@@ -4936,7 +4936,7 @@ the end of the process.
     // .dedup()
             .as('events')
             .match(
-                    __.as('ingestion_event').values('Object_Data_Source.Name').as('event_id')
+                    __.as('ingestion_event').values('Object_Data_Source_Name').as('event_id')
             )
             .select('event_id')
             .groupCount().each { metric ->
@@ -5117,7 +5117,7 @@ the end of the process.
               .dedup()
               .as('events')
               .match(
-                      __.as('data_source').values('Object_Data_Source.Type').as('event_id')
+                      __.as('data_source').values('Object_Data_Source_Type').as('event_id')
               )
               .select('event_id')
               .groupCount()
@@ -5477,7 +5477,7 @@ the end of the process.
     static addDataSource(GraphTraversalSource g, String name, String description, String dataSourceType, String domain) {
 
       Optional<GraphTraversal<Vertex, Vertex>> dataSourceOption =
-              App.g.V().has("Object_Data_Source.Name", eq(name)).tryNext()
+              App.g.V().has("Object_Data_Source_Name", eq(name)).tryNext()
       GraphTraversal<Vertex, Vertex> dataSource
       if (!dataSourceOption.isPresent()) {
         dataSource = App.g.addV("Object_Data_Source")
@@ -5486,12 +5486,12 @@ the end of the process.
       }
       Vertex vertexDataSource = dataSource.property("Metadata_Type", "Object_Data_Source")
               .property("Metadata_Type_Object_Data_Source", "Object_Data_Source")
-              .property("Object_Data_Source.Name", name)
-              .property("Object_Data_Source.Create_Date", new Date())
-              .property("Object_Data_Source.Update_Date", new Date())
-              .property("Object_Data_Source.Description", description)
-              .property("Object_Data_Source.Type", dataSourceType)
-              .property("Object_Data_Source.Domain", domain)
+              .property("Object_Data_Source_Name", name)
+              .property("Object_Data_Source_Create_Date", new Date())
+              .property("Object_Data_Source_Update_Date", new Date())
+              .property("Object_Data_Source_Description", description)
+              .property("Object_Data_Source_Type", dataSourceType)
+              .property("Object_Data_Source_Domain", domain)
               .next()
 
       return vertexDataSource

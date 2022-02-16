@@ -26,7 +26,7 @@
         "name": "sharepoint",
         "props": [
           {
-            "name": "Object_Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "SHAREPOINT/POLICIES",
             "mandatoryInSearch": true
           }

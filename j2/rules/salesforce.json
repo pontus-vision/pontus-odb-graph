@@ -143,17 +143,17 @@
         "label": "Object_Data_Source",
         "props": [
           {
-            "name": "Object_Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "salesforce.com",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object_Data_Source.Type",
+            "name": "Object_Data_Source_Type",
             "val": "salesforce.com",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object_Data_Source.Description",
+            "name": "Object_Data_Source_Description",
             "val": "Salesforce.com CRM system data",
             "mandatoryInSearch": true
           }

@@ -38,7 +38,7 @@ public class PVSharepointTests extends AppTest {
               "Topics discussed at this meeting");
 
       String eventMetingDate =
-              App.executor.eval("App.g.V().has('Object_Data_Source.Name', eq('SHAREPOINT/P-AND-PD-COMMITTEE-MEETINGS'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SHAREPOINT/P-AND-PD-COMMITTEE-MEETINGS'))" +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event').has('Event_Meeting_Form_Id', eq('2'))" +
                       ".values('Event_Meeting_Date').next().toString()").get().toString();
       assertEquals(dtfmt.parse("Tue Dec 07 01:01:01 GMT 2021"), dtfmt.parse(eventMetingDate),
@@ -46,7 +46,7 @@ public class PVSharepointTests extends AppTest {
 
       String getObjectDataSourceName =
               App.executor.eval("App.g.V().has('Event_Meeting_Form_Id', eq('3')).in('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').values('Object_Data_Source.Name')" +
+                      ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').values('Object_Data_Source_Name')" +
                       ".next().toString()").get().toString();
       assertEquals("SHAREPOINT/P-AND-PD-COMMITTEE-MEETINGS", getObjectDataSourceName, "Data Source Name.");
 
