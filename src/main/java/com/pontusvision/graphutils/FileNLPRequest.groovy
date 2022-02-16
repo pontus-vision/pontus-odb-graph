@@ -92,7 +92,7 @@ class FileNLPRequest implements Serializable {
     vtx.label = vtxLabel
     vtx.name = vtxLabel
     VertexProps vtxProps = new VertexProps()
-    vtxProps.name = "${vtxLabel}.Name"
+    vtxProps.name = "${vtxLabel}_Name"
     vtxProps.mandatoryInSearch = true
     vtxProps.val = dataSourceType
 
@@ -233,11 +233,11 @@ class FileNLPRequest implements Serializable {
     vtx.label = vtxLabel
     vtx.name = vtxLabel
     VertexProps vtxProps = new VertexProps()
-    vtxProps.name = "${vtxLabel}.Ingestion_Date"
+    vtxProps.name = "${vtxLabel}_Ingestion_Date"
     vtxProps.mandatoryInSearch = true
     vtxProps.val = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
     VertexProps vtxPropsGroupName = new VertexProps()
-    vtxPropsGroupName.name = "${vtxLabel}.Group_Name"
+    vtxPropsGroupName.name = "${vtxLabel}_Group_Name"
     vtxPropsGroupName.mandatoryInSearch = true
     vtxPropsGroupName.val = groupName
 
@@ -383,56 +383,56 @@ class FileNLPRequest implements Serializable {
 
     if (req.created) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Created"
+      props.name = "${fileIngestionVtxLabel}_Created"
       props.mandatoryInSearch = true
       props.val = req.created
       fileIngestionVtx.props.push(props)
     }
     if (req.fileType) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.File_Type"
+      props.name = "${fileIngestionVtxLabel}_File_Type"
       props.mandatoryInSearch = true
       props.val = req.fileType
       fileIngestionVtx.props.push(props)
     }
     if (req.lastAccess) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Last_Access"
+      props.name = "${fileIngestionVtxLabel}_Last_Access"
       props.mandatoryInSearch = true
       props.val = req.lastAccess
       fileIngestionVtx.props.push(props)
     }
     if (req.name) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Name"
+      props.name = "${fileIngestionVtxLabel}_Name"
       props.mandatoryInSearch = true
       props.val = req.name
       fileIngestionVtx.props.push(props)
     }
     if (req.owner) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Owner"
+      props.name = "${fileIngestionVtxLabel}_Owner"
       props.mandatoryInSearch = true
       props.val = req.owner
       fileIngestionVtx.props.push(props)
     }
     if (req.path) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Path"
+      props.name = "${fileIngestionVtxLabel}_Path"
       props.mandatoryInSearch = true
       props.val = req.path
       fileIngestionVtx.props.push(props)
     }
     if (req.server) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Server"
+      props.name = "${fileIngestionVtxLabel}_Server"
       props.mandatoryInSearch = true
       props.val = req.server
       fileIngestionVtx.props.push(props)
     }
     if (req.sizeBytes) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Size_Bytes"
+      props.name = "${fileIngestionVtxLabel}_Size_Bytes"
       props.mandatoryInSearch = true
       props.val = req.sizeBytes.toString()
       props.type = VertexProps.TypeEnum.JAVA_LANG_DOUBLE
