@@ -337,7 +337,7 @@ class PontusJ2ReportingFunctions {
       topCounter++
       sb.append('{ "id":"').append(it).append('"')
               .append(', "name":"')
-              .append(it.replace('Metadata.', '').replace(pg_type + '.', '')
+              .append(it.replace('Metadata_', '').replace(pg_type + '_', '')
                       .replaceAll('[_.]', ' '))
               .append('"')
               .append(', "field":"').append(it).append('"}')
