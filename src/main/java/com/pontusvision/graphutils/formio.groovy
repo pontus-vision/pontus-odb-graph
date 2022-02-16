@@ -73,7 +73,7 @@ class FormData {
       // property("Metadata_Processor", pg_metadataProcessor).
       // property("Metadata_Lineage", pg_metadataLineage).
       // property("Metadata_Redaction", pg_metadataRedaction).
-      // property("Metadata.Version", pg_metadataVersion).
+      // property("Metadata_Version", pg_metadataVersion).
       // property("Metadata_Create_Date", metadataCreateDate).
       // property("Metadata_Update_Date", metadataUpdateDate).
       // property("Metadata_Status", pg_metadataStatus).

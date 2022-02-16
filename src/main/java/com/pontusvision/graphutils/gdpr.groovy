@@ -73,7 +73,7 @@ class gdpr {
               property("Metadata_Processor", pg_metadataProcessor).
               property("Metadata_Lineage", pg_metadataLineage).
               property("Metadata_Redaction", pg_metadataRedaction).
-              property("Metadata.Version", pg_metadataVersion).
+              property("Metadata_Version", pg_metadataVersion).
               property("Metadata_Create_Date", metadataCreateDate).
               property("Metadata_Update_Date", metadataUpdateDate).
               property("Metadata_Status", pg_metadataStatus).
@@ -94,7 +94,7 @@ class gdpr {
               property("Metadata_Processor", pg_metadataProcessor).
               property("Metadata_Lineage", pg_metadataLineage).
               property("Metadata_Redaction", pg_metadataRedaction).
-              property("Metadata.Version", pg_metadataVersion).
+              property("Metadata_Version", pg_metadataVersion).
               property("Metadata_Create_Date", metadataCreateDate).
               property("Metadata_Update_Date", metadataUpdateDate).
               property("Metadata_Status", pg_metadataStatus).
@@ -111,7 +111,7 @@ class gdpr {
               property("Metadata_Processor", pg_metadataProcessor).
               property("Metadata_Lineage", pg_metadataLineage).
               property("Metadata_Redaction", pg_metadataRedaction).
-              property("Metadata.Version", pg_metadataVersion).
+              property("Metadata_Version", pg_metadataVersion).
               property("Metadata_Create_Date", metadataCreateDate).
               property("Metadata_Update_Date", metadataUpdateDate).
               property("Metadata_Status", pg_metadataStatus).
@@ -128,7 +128,7 @@ class gdpr {
               property("Metadata_Processor", pg_metadataProcessor).
               property("Metadata_Lineage", pg_metadataLineage).
               property("Metadata_Redaction", pg_metadataRedaction).
-              property("Metadata.Version", pg_metadataVersion).
+              property("Metadata_Version", pg_metadataVersion).
               property("Metadata_Create_Date", metadataCreateDate).
               property("Metadata_Update_Date", metadataUpdateDate).
               property("Metadata_Status", pg_metadataStatus).
@@ -146,7 +146,7 @@ class gdpr {
               property("Metadata_Processor", pg_metadataProcessor).
               property("Metadata_Lineage", pg_metadataLineage).
               property("Metadata_Redaction", pg_metadataRedaction).
-              property("Metadata.Version", pg_metadataVersion).
+              property("Metadata_Version", pg_metadataVersion).
               property("Metadata_Create_Date", metadataCreateDate).
               property("Metadata_Update_Date", metadataUpdateDate).
               property("Metadata_Status", pg_metadataStatus).
@@ -223,7 +223,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", "Processor").
                 property("Metadata_Lineage", "https://trainingcourses.com").
                 property("Metadata_Redaction", "/data/protection/officer").
-                property("Metadata.Version", 1).
+                property("Metadata_Version", 1).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", "new").
@@ -325,7 +325,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -423,7 +423,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -445,7 +445,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -462,7 +462,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -479,7 +479,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -497,7 +497,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -627,7 +627,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                   property("Metadata_Processor", item.get("pg_metadataProcessor")).
                   property("Metadata_Lineage", item.get("pg_metadataLineage")).
                   property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                  property("Metadata.Version", item.get("pg_metadataVersion")).
+                  property("Metadata_Version", item.get("pg_metadataVersion")).
                   property("Metadata_Create_Date", metadataCreateDate).
                   property("Metadata_Update_Date", metadataUpdateDate).
                   property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -661,7 +661,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                     property("Metadata_Processor", item.get("pg_metadataProcessor")).
                     property("Metadata_Lineage", item.get("pg_metadataLineage")).
                     property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                    property("Metadata.Version", item.get("pg_metadataVersion")).
+                    property("Metadata_Version", item.get("pg_metadataVersion")).
                     property("Metadata_Create_Date", metadataCreateDate).
                     property("Metadata_Update_Date", metadataUpdateDate).
                     property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -701,7 +701,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                   property("Metadata_Processor", item.get("pg_metadataProcessor")).
                   property("Metadata_Lineage", item.get("pg_metadataLineage")).
                   property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                  property("Metadata.Version", item.get("pg_metadataVersion")).
+                  property("Metadata_Version", item.get("pg_metadataVersion")).
                   property("Metadata_Create_Date", metadataCreateDate).
                   property("Metadata_Update_Date", metadataUpdateDate).
                   property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -846,7 +846,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
           def dp = App.g.addV("Object_Data_Procedures").
                   property("Metadata_Redaction", "/dataprotectionofficer/aaa").
-                  property("Metadata.Version", "1").
+                  property("Metadata_Version", "1").
                   property("Metadata_Create_Date", metadataCreateDate).
                   property("Metadata_Update_Date", metadataUpdateDate).
                   property("Metadata_Lineage_Server_Tag", "AWS EUR1").
@@ -1040,7 +1040,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         App.g.addV("Event_Data_Breach").
                 property("Metadata_Lineage", "Random generator").
                 property("Metadata_Redaction", "/data/protection/officer").
-                property("Metadata.Version", "1").
+                property("Metadata_Version", "1").
                 property("Event_Data_Breach_Metadata_Create_Date", metadataCreateDate).
                 property("Event_Data_Breach_Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_GDPR_Status", "Data Breach").
@@ -1112,7 +1112,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", "ABC INC").
                 property("Metadata_Lineage", "Random generator").
                 property("Metadata_Redaction", "/dataprotectionofficer/aaa").
-                property("Metadata.Version", "1").
+                property("Metadata_Version", "1").
                 property("Event_Subject_Access_Request_Metadata_Create_Date", metadataCreateDate).
                 property("Event_Subject_Access_Request_Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", stat).
@@ -1239,7 +1239,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -1261,7 +1261,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -1278,7 +1278,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -1295,7 +1295,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -1313,7 +1313,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 property("Metadata_Processor", item.get("pg_metadataProcessor")).
                 property("Metadata_Lineage", item.get("pg_metadataLineage")).
                 property("Metadata_Redaction", item.get("pg_metadataRedaction")).
-                property("Metadata.Version", item.get("pg_metadataVersion")).
+                property("Metadata_Version", item.get("pg_metadataVersion")).
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Status", item.get("pg_metadataStatus")).
@@ -1422,7 +1422,7 @@ eventConsentStatus = createProp(mgmt, "Event_Consent_Status", String.class, org.
               property("Metadata_Processor", "ABC INC").
               property("Metadata_Lineage", "Random generator").
               property("Metadata_Redaction", "/dataprotectionofficer/aaa").
-              property("Metadata.Version", "1").
+              property("Metadata_Version", "1").
               property("Event_Consent_Metadata_Create_Date", metadataCreateDate).
               property("Event_Consent_Metadata_Update_Date", metadataUpdateDate).
               property("Metadata_Status", stat).
@@ -1737,7 +1737,7 @@ the end of the process.
           lawfulBasisVertices[i] = App.g.addV("Object_Lawful_Basis").
                   property("Metadata_Lineage", "https://gdpr-info.eu/art-6-gdpr/").
                   property("Metadata_Redaction", "/data/protection/officer").
-                  property("Metadata.Version", 1).
+                  property("Metadata_Version", 1).
                   property("Metadata_Status", "new").
                   property("Metadata_GDPR_Status", "n/a").
                   property("Metadata_Lineage_Server_Tag", "AWS_AAA").
@@ -1879,7 +1879,7 @@ the end of the process.
           lawfulBasisVertices[i] = App.g.addV("Object_Lawful_Basis").
                   property("Metadata_Lineage", "https://gdpr-info.eu/art-6-gdpr/").
                   property("Metadata_Redaction", "/data/protection/officer").
-                  property("Metadata.Version", 1).
+                  property("Metadata_Version", 1).
                   property("Metadata_Status", "new").
                   property("Metadata_GDPR_Status", "n/a").
                   property("Metadata_Lineage_Server_Tag", "AWS_AAA").
@@ -2582,7 +2582,7 @@ the end of the process.
                 property("Metadata_Lineage", "http://ec.europa.eu/justice/data-protection/article-29/structure/data-protection-authorities/index_en.htm").
 
                 property("Metadata_Redaction", "/dataprotectionofficer/aaa").
-                property("Metadata.Version", "1").
+                property("Metadata_Version", "1").
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Lineage_Server_Tag", "AWS EUR1").
@@ -2597,7 +2597,7 @@ the end of the process.
         Vertex org = App.g.addV("Person_Organisation").
                 property("Metadata_Lineage", "http://ec.europa.eu/justice/data-protection/article-29/structure/data-protection-authorities/index_en.htm").
                 property("Metadata_Redaction", "/dataprotectionofficer/aaa").
-                property("Metadata.Version", "1").
+                property("Metadata_Version", "1").
                 property("Metadata_Create_Date", metadataCreateDate).
                 property("Metadata_Update_Date", metadataUpdateDate).
                 property("Metadata_Lineage_Server_Tag", "AWS EUR1").
@@ -3504,7 +3504,7 @@ the end of the process.
           vpcId = App.g.addV("Object_AWS_VPC").
                   property("Metadata_Lineage", "aws ec2 describe-instance").
                   property("Metadata_Redaction", "/data/protection/officer").
-                  property("Metadata.Version", 1).
+                  property("Metadata_Version", 1).
                   property("Metadata_Create_Date", metadataCreateDate).
                   property("Metadata_Update_Date", metadataUpdateDate).
                   property("Metadata_Status", "new").
@@ -3565,7 +3565,7 @@ the end of the process.
                     property("Metadata_Type_Object_AWS_Instance", "Object_AWS_Instance").
                     property("Metadata_Lineage", "aws ec2 describe-instance").
                     property("Metadata_Redaction", "/data/protection/officer").
-                    property("Metadata.Version", 1).
+                    property("Metadata_Version", 1).
                     property("Metadata_Create_Date", metadataCreateDate).
                     property("Metadata_Update_Date", metadataUpdateDate).
                     property("Metadata_Status", "new").
@@ -3639,7 +3639,7 @@ the end of the process.
                       property("Metadata_Type_Object_AWS_Security_Group", "Object_AWS_Security_Group").
                       property("Metadata_Lineage", "aws ec2 describe-instance").
                       property("Metadata_Redaction", "/data/protection/officer").
-                      property("Metadata.Version", 1).
+                      property("Metadata_Version", 1).
                       property("Metadata_Create_Date", metadataCreateDate).
                       property("Metadata_Update_Date", metadataUpdateDate).
                       property("Metadata_Status", "new").
