@@ -1806,32 +1806,71 @@ class VisJSGraph {
 
   static getMetadataTypes(int level) {
     def metadataTypes = [
-            'Event_Group_Ingestion'
-            , 'Event_Ingestion'
-            , 'Person_Natural'
-            , 'Object_Email_Address'
-            , 'Object_Credential'
-            , 'Event_Form_Ingestion'
-            , 'Object_Identity_Card'
-            , 'Location_Address'
-            , 'Object_Insurance_Policy'
-            , 'Event_Consent'
-            , 'Object_Privacy_Notice'
-            , 'Object_Privacy_Impact_Assessment'
-            , 'Object_Lawful_Basis'
-            , 'Event_Subject_Access_Request'
-            , 'Person_Employee'
-            , 'Object_Awareness_Campaign'
-            , 'Event_Training'
-            , 'Event_Data_Breach'
-            , 'Person_Organisation'
-            , 'Object_Data_Procedures'
-            , 'Object.MoU'
-            , 'Object_Form'
-            , 'Object_Notification_Templates'
-            , 'Object_AWS_Instance'
-            , 'Object_AWS_Security_Group'
-            , 'Object_AWS_Network_Interface'
+            'Event_Consent',
+            'Event_Data_Breach',
+            'Event_Form_Ingestion',
+            'Event_Email_Msg_Group',
+            'Event_Email_To_Group',
+            'Event_Email_From_Group',
+            'Event_Email_CC_Group',
+            'Event_Email_BCC_Group',
+            'Event_NLP_Group',
+            'Event_File_Group_Ingestion',
+            'Event_File_Ingestion',
+            'Event_Email_Message',
+            'Event_Group_Ingestion',
+            'Event_Group_Subject_Access_Request',
+            'Event_Ingestion',
+            'Event_Meeting',
+            'Event_Subject_Access_Request',
+            'Event_Training',
+            'Event_Transaction',
+            'Event_Complaint',
+            'Location_Address',
+            'Object_AWS_Instance',
+            'Object_AWS_Network_Interface',
+            'Object_AWS_Security_Group',
+            'Object_AWS_VPC',
+            'Object_Application',
+            'Object_Awareness_Campaign',
+            'Object_Biometric',
+            'Object_Contract',
+            'Object_Campaign',
+            'Object_Credential',
+            'Object_Data_Policy',
+            'Object_Data_Procedures',
+            'Object_Data_Source',
+            'Object_Data_Src_Mapping_Rule',
+            'Object_Email_Address',
+            'Object_Email_Message_Attachment',
+            'Object_Email_Message_Body',
+            'Object_Form',
+            'Object_Genetic',
+            'Object_Health',
+            'Object_Identity_Card',
+            'Object_Insurance_Policy',
+            'Object_Lawful_Basis',
+            'Object_Metadata_Source',
+            'Object_Module',
+            'Object_Notification_Templates',
+            'Object_Policies',
+            'Object_Phone_Number',
+            'Object_Privacy_Impact_Assessment',
+            'Object_Legitimate_Interests_Assessment',
+            'Object_Risk_Data_Source',
+            'Object_Risk_Mitigation_Data_Source',
+            'Object_Privacy_Docs',
+            'Object_Legal_Actions',
+            'Object_Privacy_Notice',
+            'Object_Salary',
+            'Object_Sensitive_Data',
+            'Object_Subsystem',
+            'Object_System',
+            'Object_Vehicle',
+            'Person_Employee',
+            'Person_Identity',
+            'Person_Natural',
+            'Person_Organisation'
     ]
     return metadataTypes.subList(0, level)
   }
@@ -2214,7 +2253,6 @@ Event_Data_Breach
 Person_Organisation
 
 Object_Data_Procedures
-Object.MoU
 Object_Form
 Object_Notification_Templates
 Object_AWS_Instance
