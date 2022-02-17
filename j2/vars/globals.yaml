@@ -185,6 +185,7 @@ schema:
       useStatic: false
       props:
         - name: Business_Rules
+          index: false
         - name: Domain_Unstructured_Data_b64
           index: false
         - name: Domain_b64
@@ -233,6 +234,8 @@ schema:
       useStatic: false
       props:
         - name: Business_Rules
+          index: false
+
         - name: Domain_Unstructured_Data_b64
           index: false
 
@@ -533,6 +536,7 @@ schema:
       useStatic: false
       props:
         - name: Business_Rules
+          index: false
         - name: Create_Date
           dataType: Date
         - name: Credential_ApiKey
@@ -565,6 +569,7 @@ schema:
       useStatic: false
       props:
         - name: Business_Rules_JSON
+          index: false
         - name: Create_Date
           dataType: Date
         - name: Form_Id
@@ -744,6 +749,7 @@ schema:
         - name: Domain
         - name: Domain_Frequency
         - name: Business_Rules
+          index: false
 
     - name: "Object_Module"
       partition: false
