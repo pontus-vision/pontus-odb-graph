@@ -20,6 +20,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -93,7 +94,7 @@ public class PVEndPointsTest extends AppTest {
 
       getRequest.setHeader("Accept", "*/*");
 
-      String res = IOUtils.toString(client.execute(getRequest).getEntity().getContent());
+      String res = IOUtils.toString(client.execute(getRequest).getEntity().getContent(), Charset.defaultCharset());
       assertEquals("{\"message\":\"Data source is working\",\"status\":\"success\",\"title\":\"success\"}", res,
           "json message from ~/home/grafana_backend endpoint");
 

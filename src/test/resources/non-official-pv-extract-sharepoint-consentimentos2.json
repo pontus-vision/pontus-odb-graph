@@ -384,8 +384,8 @@
           ],
           "data_procedures": [
             {
-              "LookupId": 121,
-              "LookupValue": "MODIFIED"
+              "LookupId": 87,
+              "LookupValue": "procedure zig"
             }
           ],
           "Modified": "1997-01-01",
