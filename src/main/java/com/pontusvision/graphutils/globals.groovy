@@ -208,7 +208,7 @@ class ODBSchemaManager {
       OClass oClass = graph.getRawDatabase().getClass(className)
 
 
-      createProp(oClass, "Metadata.Type." + labelName, String.class)
+      createProp(oClass, "Metadata_Type_" + labelName, String.class)
 
 
       return oClass
@@ -227,7 +227,7 @@ class ODBSchemaManager {
       String className = graph.createEdgeClass(labelName)
       OClass oClass = graph.getRawDatabase().getClass(className)
 
-      createProp(oClass, "Metadata.Type." + labelName, String.class)
+      createProp(oClass, "Metadata_Type_" + labelName, String.class)
 
       return oClass
 
@@ -265,7 +265,7 @@ class PontusJ2ReportingFunctions {
             gridData.outE(pg_edgeType).inV())
 
     gridData = gridData
-            .has('Metadata.Type.' + pg_type, P.eq(pg_type))
+            .has('Metadata_Type_' + pg_type, P.eq(pg_type))
             .order()
 
     gridData = (pg_orderCol == null ?
@@ -288,7 +288,7 @@ class PontusJ2ReportingFunctions {
               sb.append('{ "index":"').append(tmpId).append('"')
 
               it.get('valueMap').each { String key, val ->
-                if ("Event.Ingestion.Business_Rules" != key) {
+                if ("Event_Ingestion_Business_Rules" != key) {
                   sb.append(', "').append(key).append('":')
                   headers.add(key)
                   if (val.size() == 1) {
@@ -337,7 +337,7 @@ class PontusJ2ReportingFunctions {
       topCounter++
       sb.append('{ "id":"').append(it).append('"')
               .append(', "name":"')
-              .append(it.replace('Metadata.', '').replace(pg_type + '.', '')
+              .append(it.replace('Metadata_', '').replace(pg_type + '_', '')
                       .replaceAll('[_.]', ' '))
               .append('"')
               .append(', "field":"').append(it).append('"}')
@@ -352,12 +352,12 @@ class PontusJ2ReportingFunctions {
   }
 
   static def renderReportInTextPt(ORID pg_id, String reportType = 'DSAR', GraphTraversalSource g = App.g) {
-    def template = g.V().has('Object.Notification_Templates.Types', P.eq('Person.Natural'))
-            .has('Object.Notification_Templates.Label', P.eq(reportType))
-            .values('Object.Notification_Templates.Text').next() as String
+    def template = g.V().has('Object_Notification_Templates_Types', P.eq('Person_Natural'))
+            .has('Object_Notification_Templates_Label', P.eq(reportType))
+            .values('Object_Notification_Templates_Text').next() as String
     if (template) {
 
-      // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
+      // def template = g.V().has('Object_Notification_Templates_Types',eq(label)).next() as String
       def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
         [key.replaceAll('[.]', '_'), val.toString() - '[' - ']']
       }
@@ -392,12 +392,12 @@ class PontusJ2ReportingFunctions {
       return renderReportInTextPt(pg_id, reportType, g)
     }
 
-    def template = g.V().has('Object.Notification_Templates.Types', P.eq('Person.Natural'))
-            .has('Object.Notification_Templates.Label', P.eq(reportType))
-            .values('Object.Notification_Templates.Text').next() as String
+    def template = g.V().has('Object_Notification_Templates_Types', P.eq('Person_Natural'))
+            .has('Object_Notification_Templates_Label', P.eq(reportType))
+            .values('Object_Notification_Templates_Text').next() as String
     if (template) {
 
-      // def template = g.V().has('Object.Notification_Templates.Types',eq(label)).next() as String
+      // def template = g.V().has('Object_Notification_Templates_Types',eq(label)).next() as String
       def context = g.V(pg_id).valueMap()[0].collectEntries { key, val ->
         [key.replaceAll('[.]', '_'), val.toString() - '[' - ']'] // translateValue
       }
@@ -438,7 +438,7 @@ class PontusJ2ReportingFunctions {
     App.g.V(startVertexId)
             .both().bothE()
             .filter(bothV()
-                    .has("Metadata.Type.${vertType}", P.eq(vertType))
+                    .has("Metadata_Type_${vertType}", P.eq(vertType))
                     .id().not(__.is(startVertexId))).path()
             .each { path ->
 
@@ -536,8 +536,8 @@ class PontusJ2ReportingFunctions {
 
   static String getPolicyText(String policyType) {
     try {
-      def text = App.g.V().has("Object.Policies.Type", P.eq(policyType))
-              .values("Object.Policies.Text").next().toString()
+      def text = App.g.V().has("Object_Policies_Type", P.eq(policyType))
+              .values("Object_Policies_Text").next().toString()
       return text;
     } catch(Throwable t){
       return null;
@@ -551,7 +551,7 @@ class PontusJ2ReportingFunctions {
 
       def ropaList = App.g.V(dsarId).out('Has_DSAR')
               .out('Has_DSAR').as('RoPA').out('Has_Lawful_Basis_On')
-              .has('Object.Lawful_Basis.Description', P.eq(lawfulBasis))
+              .has('Object_Lawful_Basis_Description', P.eq(lawfulBasis))
               .select('RoPA').valueMap().toList().collect { item ->
         item.collectEntries { key, val ->
           [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
@@ -644,11 +644,11 @@ class PontusJ2ReportingFunctions {
   static List<Map<String, String>> getDeptForDataSources(String dataSourceId) {
     return App.g.V(new ORecordId(dataSourceId))
             .in('Has_Privacy_Impact_Assessment')
-            .filter(__.label().is('Object.Data_Source'))
+            .filter(__.label().is('Object_Data_Source'))
             .out('Has_Ingestion_Event')
             .out('Has_Ingestion_Event')
             .in('Has_Ingestion_Event')
-            .filter(__.label().is('Person.Natural'))
+            .filter(__.label().is('Person_Natural'))
             .valueMap(true)
             .toList().collect({ item ->
 //      .collect { item ->
@@ -662,9 +662,9 @@ class PontusJ2ReportingFunctions {
     def retVal = App.g.V(new ORecordId(lawfulBasisId))
             .in()
             .in()
-            .has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
+            .has('Metadata_Type_Object_Privacy_Impact_Assessment', P.eq('Object_Privacy_Impact_Assessment'))
             .in()
-            .has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
+            .has('Metadata_Type_Object_Data_Source', P.eq('Object_Data_Source'))
             .elementMap().toList().collect { item ->
       item.collectEntries { key, val ->
         [key.toString().replaceAll('[.]', '_'), val.toString() - '[' - ']']
@@ -680,11 +680,11 @@ class PontusJ2ReportingFunctions {
     return App.g.V(new ORecordId(lawfulBasisId))
             .in()
             .in()
-            .has('Metadata.Type.Object.Privacy_Impact_Assessment', P.eq('Object.Privacy_Impact_Assessment'))
+            .has('Metadata_Type_Object_Privacy_Impact_Assessment', P.eq('Object_Privacy_Impact_Assessment'))
             .both()
-            .has('Metadata.Type.Object.Privacy_Notice', P.eq('Object.Privacy_Notice'))
+            .has('Metadata_Type_Object_Privacy_Notice', P.eq('Object_Privacy_Notice'))
             .in()
-            .has('Metadata.Type.Event.Consent', P.eq('Event.Consent'))
+            .has('Metadata_Type_Event_Consent', P.eq('Event_Consent'))
             .in()
             .dedup()
             .count()
@@ -694,11 +694,11 @@ class PontusJ2ReportingFunctions {
   static Long getNumNaturalPersonForPIA(String piaId) {
     return App.g.V(new ORecordId(piaId))
             .in('Has_Privacy_Impact_Assessment')
-            .filter(__.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
+            .filter(__.has('Metadata_Type_Object_Data_Source', P.eq('Object_Data_Source')))
             .out('Has_Ingestion_Event')
             .out('Has_Ingestion_Event')
             .in('Has_Ingestion_Event')
-            .filter(__.has('Metadata.Type.Person.Natural', P.eq('Person.Natural')))
+            .filter(__.has('Metadata_Type_Person_Natural', P.eq('Person_Natural')))
             .count()
             .next()
 
@@ -712,7 +712,7 @@ class PontusJ2ReportingFunctions {
             .out('Has_Ingestion_Event')  // Event Group
             .out('Has_Ingestion_Event') // Event Ingestion
             .in('Has_Ingestion_Event')
-            .filter(__.has('Metadata.Type.Person.Natural', P.eq('Person.Natural')))
+            .filter(__.has('Metadata_Type_Person_Natural', P.eq('Person_Natural')))
             .dedup()
             .count()
             .next()
@@ -726,7 +726,7 @@ class PontusJ2ReportingFunctions {
   static List<Map<String, String>> getDataPoliciesForDataProcess(String processId) {
     def ret = App.g.V(new com.orientechnologies.orient.core.id.ORecordId(processId))
             .out('Has_Data_Source') // Data Source
-            .out('Has_Policy')  // Object.Data_Policy
+            .out('Has_Policy')  // Object_Data_Policy
             .dedup()
             .elementMap().toList().collect { item ->
       item.collectEntries { key, val ->
@@ -859,9 +859,9 @@ class PontusJ2ReportingFunctions {
 
             .out('Has_Ingestion_Event')
             .in('Has_Ingestion_Event')
-            .filter(__.has('Metadata.Type.Event.Group_Ingestion', P.eq('Event.Group_Ingestion')))
+            .filter(__.has('Metadata_Type_Event_Group_Ingestion', P.eq('Event_Group_Ingestion')))
             .in('Has_Ingestion_Event')
-            .filter(__.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')))
+            .filter(__.has('Metadata_Type_Object_Data_Source', P.eq('Object_Data_Source')))
             .in('Has_Data_Source')
             .dedup()
             .elementMap().toList().collect { item ->
@@ -876,11 +876,11 @@ class PontusJ2ReportingFunctions {
   static Long getNumSensitiveInfoForPIA(String piaId) {
     return App.g.V(new ORecordId(piaId))
             .in('Has_Privacy_Impact_Assessment')
-            .filter(__.label().is('Object.Data_Source'))
+            .filter(__.label().is('Object_Data_Source'))
             .out('Has_Ingestion_Event')
             .out('Has_Ingestion_Event')
             .both('Has_Ingestion_Event')
-            .filter(__.has('Metadata.Type.Object.Sensitive_Data', P.eq('Object.Sensitive_Data')))
+            .filter(__.has('Metadata_Type_Object_Sensitive_Data', P.eq('Object_Sensitive_Data')))
             .count()
             .next()
 
@@ -978,7 +978,7 @@ class PontusJ2ReportingFunctions {
   }
 
   static Long getNumDataSourcesForPIA(String id) {
-    return App.g.V(new ORecordId(id)).both().has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source')).count().next()
+    return App.g.V(new ORecordId(id)).both().has('Metadata_Type_Object_Data_Source', P.eq('Object_Data_Source')).count().next()
   }
 
 
@@ -1065,9 +1065,9 @@ class PontusJ2ReportingFunctions {
     allData.put('connected_data', neighbours)
 
 
-    if ('Event.Data_Breach' == vertType) {
+    if ('Event_Data_Breach' == vertType) {
       GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id).out('Impacted_By_Data_Breach').dedup()
-//              .both().has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
+//              .both().has("Metadata_Type_Object_AWS_Instance", P.eq('Object_AWS_Instance'))
 //              .bothE('Runs_On').outV().dedup()
 
       GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
@@ -1076,7 +1076,7 @@ class PontusJ2ReportingFunctions {
 
       def impactedServers = dsTravClone2
               .out('Has_Module').dedup()
-//              .has("Metadata.Type.Object.AWS_Instance", P.eq('Object.AWS_Instance'))
+//              .has("Metadata_Type_Object_AWS_Instance", P.eq('Object_AWS_Instance'))
               .valueMap().toList().collect { item ->
         item.collectEntries { key, val ->
           [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
@@ -1094,7 +1094,7 @@ class PontusJ2ReportingFunctions {
               .out("Has_Ingestion_Event")
               .out("Has_Ingestion_Event")
               .in("Has_Ingestion_Event")
-              .has("Metadata.Type.Person.Natural", P.eq('Person.Natural'))
+              .has("Metadata_Type_Person_Natural", P.eq('Person_Natural'))
               .dedup()
               .valueMap()
               .toList()
@@ -1455,18 +1455,18 @@ class VisJSGraph {
     sb.append(', "reportButtons": [')
     try {
       App.g.V()
-              .has('Object.Notification_Templates.Types'
-                      , eq(App.g.V(pg_vid).values('Metadata.Type').next()))
-              .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
+              .has('Object_Notification_Templates_Types'
+                      , eq(App.g.V(pg_vid).values('Metadata_Type').next()))
+              .valueMap('Object_Notification_Templates_Label', 'Object_Notification_Templates_Text')
               .each {
                 sb.append(counter > 0 ? ',{' : '{')
                 counter++
                 sb.append('"text":"')
-                if (it.get('Object.Notification_Templates.Text') != null)
-                  sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
+                if (it.get('Object_Notification_Templates_Text') != null)
+                  sb.append(it.get('Object_Notification_Templates_Text')[0].toString())
                 sb.append('","label":"')
-                if (it.get('Object.Notification_Templates.Label') != null)
-                  sb.append(it.get('Object.Notification_Templates.Label')[0])
+                if (it.get('Object_Notification_Templates_Label') != null)
+                  sb.append(it.get('Object_Notification_Templates_Label')[0])
                 sb.append('", "vid": "').append(pg_vid)
 
                 sb.append('"}')
@@ -1483,8 +1483,8 @@ class VisJSGraph {
     def types = getMetadataTypes(depth.intValue())
 
     types.each { type ->
-      App.g.V().has("Metadata.Type.${type}", P.eq("${type}")).each {
-        String groupStr = it.values('Metadata.Type').next()
+      App.g.V().has("Metadata_Type_${type}", P.eq("${type}")).each {
+        String groupStr = it.values('Metadata_Type').next()
         String labelStr = it.label().toString().replaceAll('[_.]', ' ')
         ORID vid = it.id() as ORID
         if (nodeIds.add(vid)) {
@@ -1664,7 +1664,7 @@ class VisJSGraph {
                 .both()
                 .dedup()
                 .each { it ->
-                  String groupStr = it.values('Metadata.Type').next()
+                  String groupStr = it.values('Metadata_Type').next()
                   String labelStr = it.label().toString().replaceAll('[_.]', ' ')
                   ORID vid = it.id()
                   sb.append(counter == 0 ? '{' : ',{')
@@ -1684,7 +1684,7 @@ class VisJSGraph {
                 }
         App.g.V(pg_vid)  // Also get the original node
                 .each {
-                  String groupStr = it.values('Metadata.Type').next()
+                  String groupStr = it.values('Metadata_Type').next()
                   String labelStr = it.label().toString().replaceAll('[_.]', ' ')
                   ORID vid = it.id()
                   sb.append(counter == 0 ? '{' : ',{')
@@ -1750,18 +1750,18 @@ class VisJSGraph {
     sb.append(', "reportButtons": [')
     try {
       App.g.V()
-              .has('Object.Notification_Templates.Types'
-                      , P.eq(App.g.V(pg_vid).values('Metadata.Type').next()))
-              .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
+              .has('Object_Notification_Templates_Types'
+                      , P.eq(App.g.V(pg_vid).values('Metadata_Type').next()))
+              .valueMap('Object_Notification_Templates_Label', 'Object_Notification_Templates_Text')
               .each {
                 sb.append(counter > 0 ? ',{' : '{')
                 counter++
                 sb.append('"text":"')
-                if (it.get('Object.Notification_Templates.Text') != null)
-                  sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
+                if (it.get('Object_Notification_Templates_Text') != null)
+                  sb.append(it.get('Object_Notification_Templates_Text')[0].toString())
                 sb.append('","label":"')
-                if (it.get('Object.Notification_Templates.Label') != null)
-                  sb.append(it.get('Object.Notification_Templates.Label')[0])
+                if (it.get('Object_Notification_Templates_Label') != null)
+                  sb.append(it.get('Object_Notification_Templates_Label')[0])
                 sb.append('", "vid": "').append(pg_vid)
 
                 sb.append('"}')
@@ -1806,32 +1806,71 @@ class VisJSGraph {
 
   static getMetadataTypes(int level) {
     def metadataTypes = [
-            'Event.Group_Ingestion'
-            , 'Event.Ingestion'
-            , 'Person.Natural'
-            , 'Object.Email_Address'
-            , 'Object.Credential'
-            , 'Event.Form_Ingestion'
-            , 'Object.Identity_Card'
-            , 'Location.Address'
-            , 'Object.Insurance_Policy'
-            , 'Event.Consent'
-            , 'Object.Privacy_Notice'
-            , 'Object.Privacy_Impact_Assessment'
-            , 'Object.Lawful_Basis'
-            , 'Event.Subject_Access_Request'
-            , 'Person.Employee'
-            , 'Object.Awareness_Campaign'
-            , 'Event.Training'
-            , 'Event.Data_Breach'
-            , 'Person.Organisation'
-            , 'Object.Data_Procedures'
-            , 'Object.MoU'
-            , 'Object.Form'
-            , 'Object.Notification_Templates'
-            , 'Object.AWS_Instance'
-            , 'Object.AWS_Security_Group'
-            , 'Object.AWS_Network_Interface'
+            'Event_Consent',
+            'Event_Data_Breach',
+            'Event_Form_Ingestion',
+            'Event_Email_Msg_Group',
+            'Event_Email_To_Group',
+            'Event_Email_From_Group',
+            'Event_Email_CC_Group',
+            'Event_Email_BCC_Group',
+            'Event_NLP_Group',
+            'Event_File_Group_Ingestion',
+            'Event_File_Ingestion',
+            'Event_Email_Message',
+            'Event_Group_Ingestion',
+            'Event_Group_Subject_Access_Request',
+            'Event_Ingestion',
+            'Event_Meeting',
+            'Event_Subject_Access_Request',
+            'Event_Training',
+            'Event_Transaction',
+            'Event_Complaint',
+            'Location_Address',
+            'Object_AWS_Instance',
+            'Object_AWS_Network_Interface',
+            'Object_AWS_Security_Group',
+            'Object_AWS_VPC',
+            'Object_Application',
+            'Object_Awareness_Campaign',
+            'Object_Biometric',
+            'Object_Contract',
+            'Object_Campaign',
+            'Object_Credential',
+            'Object_Data_Policy',
+            'Object_Data_Procedures',
+            'Object_Data_Source',
+            'Object_Data_Src_Mapping_Rule',
+            'Object_Email_Address',
+            'Object_Email_Message_Attachment',
+            'Object_Email_Message_Body',
+            'Object_Form',
+            'Object_Genetic',
+            'Object_Health',
+            'Object_Identity_Card',
+            'Object_Insurance_Policy',
+            'Object_Lawful_Basis',
+            'Object_Metadata_Source',
+            'Object_Module',
+            'Object_Notification_Templates',
+            'Object_Policies',
+            'Object_Phone_Number',
+            'Object_Privacy_Impact_Assessment',
+            'Object_Legitimate_Interests_Assessment',
+            'Object_Risk_Data_Source',
+            'Object_Risk_Mitigation_Data_Source',
+            'Object_Privacy_Docs',
+            'Object_Legal_Actions',
+            'Object_Privacy_Notice',
+            'Object_Salary',
+            'Object_Sensitive_Data',
+            'Object_Subsystem',
+            'Object_System',
+            'Object_Vehicle',
+            'Person_Employee',
+            'Person_Identity',
+            'Person_Natural',
+            'Person_Organisation'
     ]
     return metadataTypes.subList(0, level)
   }
@@ -2005,18 +2044,18 @@ class VisJSGraph {
     sb.append(', "reportButtons": [')
     try {
       App.g.V()
-              .has('Object.Notification_Templates.Types'
-                      , P.eq(App.g.V(pg_vid).values('Metadata.Type').next()))
-              .valueMap('Object.Notification_Templates.Label', 'Object.Notification_Templates.Text')
+              .has('Object_Notification_Templates_Types'
+                      , P.eq(App.g.V(pg_vid).values('Metadata_Type').next()))
+              .valueMap('Object_Notification_Templates_Label', 'Object_Notification_Templates_Text')
               .each {
                 sb.append(counter > 0 ? ',{' : '{')
                 counter++
                 sb.append('"text":"')
-                if (it.get('Object.Notification_Templates.Text') != null)
-                  sb.append(it.get('Object.Notification_Templates.Text')[0].toString())
+                if (it.get('Object_Notification_Templates_Text') != null)
+                  sb.append(it.get('Object_Notification_Templates_Text')[0].toString())
                 sb.append('","label":"')
-                if (it.get('Object.Notification_Templates.Label') != null)
-                  sb.append(it.get('Object.Notification_Templates.Label')[0])
+                if (it.get('Object_Notification_Templates_Label') != null)
+                  sb.append(it.get('Object_Notification_Templates_Label')[0])
                 sb.append('", "vid": "').append(pg_vid)
 
                 sb.append('"}')
@@ -2047,14 +2086,14 @@ class VisJSGraph {
 
       gtrav
               .or(
-                      __.has('Metadata.Type.Object.System', P.eq('Object.System'))
-                      , __.has('Metadata.Type.Object.Subsystem', P.eq('Object.Subsystem'))
-                      , __.has('Metadata.Type.Object.Module', P.eq('Object.Module'))
-                      , __.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
+                      __.has('Metadata_Type_Object_System', P.eq('Object_System'))
+                      , __.has('Metadata_Type_Object_Subsystem', P.eq('Object_Subsystem'))
+                      , __.has('Metadata_Type_Object_Module', P.eq('Object_Module'))
+                      , __.has('Metadata_Type_Object_Data_Source', P.eq('Object_Data_Source'))
               ).dedup()
               .each {
-                String groupStr = it.values('Metadata.Type').next()
-                String labelStr = it.values(groupStr + '.Name').next()
+                String groupStr = it.values('Metadata_Type').next()
+                String labelStr = it.values(groupStr + '_Name').next()
                 ORID vid = (ORID) it.id()
                 sb.append(counter == 0 ? '{' : ',{')
                         .append('"id":"').append(vid)
@@ -2080,10 +2119,10 @@ class VisJSGraph {
 
       gtrav
               .or(
-                      __.has('Metadata.Type.Object.System', P.eq('Object.System'))
-                      , __.has('Metadata.Type.Object.Subsystem', P.eq('Object.Subsystem'))
-                      , __.has('Metadata.Type.Object.Module', P.eq('Object.Module'))
-                      , __.has('Metadata.Type.Object.Data_Source', P.eq('Object.Data_Source'))
+                      __.has('Metadata_Type_Object_System', P.eq('Object_System'))
+                      , __.has('Metadata_Type_Object_Subsystem', P.eq('Object_Subsystem'))
+                      , __.has('Metadata_Type_Object_Module', P.eq('Object_Module'))
+                      , __.has('Metadata_Type_Object_Data_Source', P.eq('Object_Data_Source'))
               )
               .bothE('Has_Module', 'Has_Subsystem', 'Has_System')
               .dedup().each {
@@ -2184,42 +2223,41 @@ class VisJSGraph {
 }
 
 /*
-Event.Group_Ingestion
-Event.Ingestion
+Event_Group_Ingestion
+Event_Ingestion
 
 Person
 
-Object.Email_Address
-Object.Credential
-Event.Form_Ingestion
-Object.Identity_Card
-Location.Address
-Object.Insurance_Policy
+Object_Email_Address
+Object_Credential
+Event_Form_Ingestion
+Object_Identity_Card
+Location_Address
+Object_Insurance_Policy
 
 
-Event.Consent
-Object.Privacy_Notice
-Object.Privacy_Impact_Assessment
-Object.Lawful_Basis
+Event_Consent
+Object_Privacy_Notice
+Object_Privacy_Impact_Assessment
+Object_Lawful_Basis
 
 
 
 
-Event.Subject_Access_Request
-Person.Employee
-Object.Awareness_Campaign
-Event.Training
-Event.Data_Breach
+Event_Subject_Access_Request
+Person_Employee
+Object_Awareness_Campaign
+Event_Training
+Event_Data_Breach
 
-Person.Organisation
+Person_Organisation
 
-Object.Data_Procedures
-Object.MoU
-Object.Form
-Object.Notification_Templates
-Object.AWS_Instance
-Object.AWS_Security_Group
-Object.AWS_Network_Interface
+Object_Data_Procedures
+Object_Form
+Object_Notification_Templates
+Object_AWS_Instance
+Object_AWS_Security_Group
+Object_AWS_Network_Interface
 
  */
 

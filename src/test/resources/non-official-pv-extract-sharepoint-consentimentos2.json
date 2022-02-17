@@ -47,7 +47,7 @@
           ],
           "data_procedures": [
             {
-              "LookupId": 1,
+              "LookupId": 123,
               "LookupValue": "MODIFIED"
             }
           ],
@@ -117,7 +117,7 @@
           ],
           "data_procedures": [
             {
-              "LookupId": 1,
+              "LookupId": 89,
               "LookupValue": "MODIFIED"
             }
           ],
@@ -183,7 +183,7 @@
           ],
           "data_procedures": [
             {
-              "LookupId": 1,
+              "LookupId": 122,
               "LookupValue": "MODIFIED"
             }
           ],
@@ -249,7 +249,7 @@
           ],
           "data_procedures": [
             {
-              "LookupId": 1,
+              "LookupId": 123,
               "LookupValue": "MODIFIED"
             }
           ],
@@ -384,8 +384,8 @@
           ],
           "data_procedures": [
             {
-              "LookupId": 1,
-              "LookupValue": "MODIFIED"
+              "LookupId": 87,
+              "LookupValue": "procedure zig"
             }
           ],
           "Modified": "1997-01-01",
@@ -445,7 +445,7 @@
           "privacy_notice": [],
           "data_procedures": [
             {
-              "LookupId": 1,
+              "LookupId": 103,
               "LookupValue": "MODIFIED"
             }
           ],

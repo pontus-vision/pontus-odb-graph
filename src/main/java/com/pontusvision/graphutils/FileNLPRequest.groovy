@@ -87,12 +87,12 @@ class FileNLPRequest implements Serializable {
   }
 
   static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email') {
-    final String vtxLabel = 'Object.Data_Source'
+    final String vtxLabel = 'Object_Data_Source'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
     vtx.name = vtxLabel
     VertexProps vtxProps = new VertexProps()
-    vtxProps.name = "${vtxLabel}.Name"
+    vtxProps.name = "${vtxLabel}_Name"
     vtxProps.mandatoryInSearch = true
     vtxProps.val = dataSourceType
 
@@ -164,7 +164,7 @@ class FileNLPRequest implements Serializable {
     Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
             percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
 
-    finalVertexIdByVertexName.get("Event.File_Ingestion").entrySet().forEach({
+    finalVertexIdByVertexName.get("Event_File_Ingestion").entrySet().forEach({
       createEventNLPGroups(req, it.key, req.email)
     })
 
@@ -209,9 +209,9 @@ class FileNLPRequest implements Serializable {
           newVertices.put(vId, new AtomicDouble(maxScore))
           finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
 
-          if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
+          if ('Event_Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
             String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
-            g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
+            g.V(vId).property('Event_Ingestion_Business_Rules', bizRule).next()
           }
         }
 
@@ -227,17 +227,17 @@ class FileNLPRequest implements Serializable {
   }
 
   static Vertex createEventGroupIngestionVtx(UpdateReq updateReq, String groupName,
-                                             final String vtxLabel = 'Event.File_Group_Ingestion') {
+                                             final String vtxLabel = 'Event_File_Group_Ingestion') {
 
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
     vtx.name = vtxLabel
     VertexProps vtxProps = new VertexProps()
-    vtxProps.name = "${vtxLabel}.Ingestion_Date"
+    vtxProps.name = "${vtxLabel}_Ingestion_Date"
     vtxProps.mandatoryInSearch = true
     vtxProps.val = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
     VertexProps vtxPropsGroupName = new VertexProps()
-    vtxPropsGroupName.name = "${vtxLabel}.Group_Name"
+    vtxPropsGroupName.name = "${vtxLabel}_Group_Name"
     vtxPropsGroupName.mandatoryInSearch = true
     vtxPropsGroupName.val = groupName
 
@@ -254,7 +254,7 @@ class FileNLPRequest implements Serializable {
     if (req.person) {
       String[] person = req.person
       for (int i = 0; i < person.length; i++) {
-        personOptions.add( __.has('Person.Natural.Full_Name', P.eq(person[i]?.toUpperCase())))
+        personOptions.add( __.has('Person_Natural_Full_Name', P.eq(person[i]?.toUpperCase())))
       }
     }
 
@@ -268,14 +268,14 @@ class FileNLPRequest implements Serializable {
         if (cpf == null){
           continue;
         }
-        cpfOptions.push( __.has('Person.Natural.Customer_ID', P.eq(cpf)))
+        cpfOptions.push( __.has('Person_Natural_Customer_ID', P.eq(cpf)))
       }
     }
 
     List<Traversal> emailOptions = new LinkedList<>()
     if (emailAddrs) {
       for (int i = 0; i < emailAddrs.length; i++) {
-        emailOptions.push(__.has('Object.Email_Address.Email', P.eq(emailAddrs[i]?.toLowerCase())))
+        emailOptions.push(__.has('Object_Email_Address_Email', P.eq(emailAddrs[i]?.toLowerCase())))
       }
     }
 
@@ -328,19 +328,19 @@ class FileNLPRequest implements Serializable {
     int count = 0
     for (ORID orid : (retVal as Set<ORID>)) {
 
-      String custId = App.g.V(orid).values('Person.Natural.Customer_ID').next().toString()
+      String custId = App.g.V(orid).values('Person_Natural_Customer_ID').next().toString()
       def nlpGroupTrav =
-              App.g.V().has('Event.NLP_Group.Person_Id', custId)
-                      .has('Event.NLP_Group.Ingestion_Date', currDate)
+              App.g.V().has('Event_NLP_Group_Person_Id', custId)
+                      .has('Event_NLP_Group_Ingestion_Date', currDate)
                       .id()
 
       def nlpGroupVtxId
       if (nlpGroupTrav.hasNext()) {
         nlpGroupVtxId = nlpGroupTrav.next()
       } else {
-        nlpGroupVtxId = App.g.addV('Event.NLP_Group')
-                .property('Event.NLP_Group.Person_Id', custId)
-                .property('Event.NLP_Group.Ingestion_Date', currDate).id().next()
+        nlpGroupVtxId = App.g.addV('Event_NLP_Group')
+                .property('Event_NLP_Group_Person_Id', custId)
+                .property('Event_NLP_Group_Ingestion_Date', currDate).id().next()
       }
       upsertEdge (emailBodyOrAttachment,nlpGroupVtxId,'Has_NLP_Events')
       upsertEdge (nlpGroupVtxId,orid, 'Has_NLP_Events')
@@ -373,7 +373,7 @@ class FileNLPRequest implements Serializable {
   }
 
   static Vertex createEventFileIngestionVtx(FileNLPRequest req, UpdateReq updateReq) {
-    String fileIngestionVtxLabel = 'Event.File_Ingestion'
+    String fileIngestionVtxLabel = 'Event_File_Ingestion'
     Vertex fileIngestionVtx = new Vertex()
     fileIngestionVtx.props = []
 
@@ -383,56 +383,56 @@ class FileNLPRequest implements Serializable {
 
     if (req.created) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Created"
+      props.name = "${fileIngestionVtxLabel}_Created"
       props.mandatoryInSearch = true
       props.val = req.created
       fileIngestionVtx.props.push(props)
     }
     if (req.fileType) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.File_Type"
+      props.name = "${fileIngestionVtxLabel}_File_Type"
       props.mandatoryInSearch = true
       props.val = req.fileType
       fileIngestionVtx.props.push(props)
     }
     if (req.lastAccess) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Last_Access"
+      props.name = "${fileIngestionVtxLabel}_Last_Access"
       props.mandatoryInSearch = true
       props.val = req.lastAccess
       fileIngestionVtx.props.push(props)
     }
     if (req.name) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Name"
+      props.name = "${fileIngestionVtxLabel}_Name"
       props.mandatoryInSearch = true
       props.val = req.name
       fileIngestionVtx.props.push(props)
     }
     if (req.owner) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Owner"
+      props.name = "${fileIngestionVtxLabel}_Owner"
       props.mandatoryInSearch = true
       props.val = req.owner
       fileIngestionVtx.props.push(props)
     }
     if (req.path) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Path"
+      props.name = "${fileIngestionVtxLabel}_Path"
       props.mandatoryInSearch = true
       props.val = req.path
       fileIngestionVtx.props.push(props)
     }
     if (req.server) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Server"
+      props.name = "${fileIngestionVtxLabel}_Server"
       props.mandatoryInSearch = true
       props.val = req.server
       fileIngestionVtx.props.push(props)
     }
     if (req.sizeBytes) {
       VertexProps props = new VertexProps()
-      props.name = "${fileIngestionVtxLabel}.Size_Bytes"
+      props.name = "${fileIngestionVtxLabel}_Size_Bytes"
       props.mandatoryInSearch = true
       props.val = req.sizeBytes.toString()
       props.type = VertexProps.TypeEnum.JAVA_LANG_DOUBLE

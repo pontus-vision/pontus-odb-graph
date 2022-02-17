@@ -303,9 +303,9 @@ public class RecordRequest
           [
             { colId: "Object_Notification_Templates_Label", filterType: "text", type: "contains", filter: "adfasdf"},
             { colId: "Object_Notification_Templates_Types", filterType: "text", type: "contains", filter: "aaa"}
-            {"colId":"Person.Natural.Date_Of_Birth","dateTo":null,"dateFrom":"1960-08-16","type":"equals","filterType":"date"}
-            {"colId":"Person.Natural.Date_Of_Birth","dateTo":null,"dateFrom":"1932-09-02","type":"greaterThan","filterType":"date"}
-            {"colId":"Person.Natural.Date_Of_Birth","dateTo":"2020-06-22","dateFrom":"1960-08-16","type":"inRange","filterType":"date"}
+            {"colId":"Person_Natural_Date_Of_Birth","dateTo":null,"dateFrom":"1960-08-16","type":"equals","filterType":"date"}
+            {"colId":"Person_Natural_Date_Of_Birth","dateTo":null,"dateFrom":"1932-09-02","type":"greaterThan","filterType":"date"}
+            {"colId":"Person_Natural_Date_Of_Birth","dateTo":"2020-06-22","dateFrom":"1960-08-16","type":"inRange","filterType":"date"}
           ]
          */
 
@@ -331,14 +331,14 @@ public class RecordRequest
               operator: "AND"
             }
             {
-              "colId":"Person.Natural.Date_Of_Birth",
+              "colId":"Person_Natural_Date_Of_Birth",
               "filterType":"date",
               "operator":"OR",
               "condition1":{"dateTo":"2020-06-22","dateFrom":"1960-08-16","type":"inRange","filterType":"date"},
               "condition2":{"dateTo":null,"dateFrom":"1974-08-02","type":"equals","filterType":"date"}
             }
             {
-              "colId":"Person.Natural.Date_Of_Birth",
+              "colId":"Person_Natural_Date_Of_Birth",
               "filterType":"date",
               "operator":"OR",
               "condition1":{"dateTo":"2020-06-22","dateFrom":"1960-08-16","type":"inRange","filterType":"date"},
@@ -468,10 +468,10 @@ public class RecordRequest
         long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L));
         Date dateThreshold  = new java.util.Date(ageThresholdMs);
         sb.append (
-            " `Person.Natural.Date_Of_Birth` >= date('")
+            " `Person_Natural_Date_Of_Birth` >= date('")
           .append((dateFormat).format(dateThreshold))
           .append("')");
-//        resSet = resSet.where(__.values("Person.Natural.Date_Of_Birth").is(gte(dateThreshold)));
+//        resSet = resSet.where(__.values("Person_Natural_Date_Of_Birth").is(gte(dateThreshold)));
       }
       else if (customFilter.startsWith("hasNeighbourId:"))
       {

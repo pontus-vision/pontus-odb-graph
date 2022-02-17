@@ -1640,7 +1640,7 @@ Calibri,sans-serif;mso-bidi-font-family:Tahoma'><o:p>&nbsp;</o:p></span></p>
   color:#5B9BD5;mso-fareast-language:ZH-CN'>
 
   {{ 'Conclus&atilde;o da primeira vers&atilde;o do relat&oacute;rio' }}
-  {# evento historico - pegar do  Event.Ingestion.Description #}
+  {# evento historico - pegar do  Event_Ingestion_Description #}
 
   <o:p></o:p></span></p>
    </td>
@@ -2101,7 +2101,7 @@ pretende tratar ou trata o dado pessoal. Isso &eacute; representado pelas fontes
   </tr>
 
   {% for neighbour in connected_data %}
-  {% if 'Object.Data_Source' in neighbour.Metadata_Type %}
+  {% if 'Object_Data_Source' in neighbour.Metadata_Type %}
   {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>   <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>   <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>  </tr>  " | format (neighbour.Object_Data_Source_Type , neighbour.Object_Data_Source_Description )}}
   {% endif %}
   {% endfor %}

@@ -53,28 +53,28 @@ public class PVMD2ProfillingTests extends AppTest {
       System.out.println("-----------------------------------------------------------------------------------------");
 
       String aquinoRodrigues =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('9468285804')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('9468285804')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("AQUINO RODRIGUES", aquinoRodrigues, "This CPF belongs to Aquino Rodrigues");
 
       String alfordHiggins =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('96908039994')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('96908039994')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("ALFORD HIGGINS", alfordHiggins, "This CPF belongs to Alford Higgins");
 
       String lennyCooper =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('33666669352')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('33666669352')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("LENNY COOPER", lennyCooper, "This CPF belongs to Lenny Cooper");
 
       String deliaMonteiro =
-              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('delia.monteiro@example.com')).in('Uses_Email')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('delia.monteiro@example.com')).in('Uses_Email')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("DÃ©LIA MONTEIRO", deliaMonteiro, "This email belongs to DÃ©lia Monteiro");
 
       String miriamDaLuz =
-              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('miriam.daluz@example.com')).in('Uses_Email')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('miriam.daluz@example.com')).in('Uses_Email')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("MIRIAM DA LUZ", miriamDaLuz, "This email belongs to Miriam da Luz");
 
 //      { "status": "success", "successCount": 100 }
@@ -125,53 +125,53 @@ public class PVMD2ProfillingTests extends AppTest {
       System.out.println("-----------------------------------------------------------------------------------------");
 
       String aquinoRodrigues =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('9468285804')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('9468285804')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("AQUINO RODRIGUES", aquinoRodrigues, "This CPF belongs to Aquino Rodrigues");
 
       String alfordHiggins =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('96908039994')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('96908039994')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("ALFORD HIGGINS", alfordHiggins, "This CPF belongs to Alford Higgins");
 
       String lennyCooper =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('33666669352')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('33666669352')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("LENNY COOPER", lennyCooper, "This CPF belongs to Lenny Cooper");
 
       String deliaMonteiro =
-              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('delia.monteiro@example.com')).in('Uses_Email')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('delia.monteiro@example.com')).in('Uses_Email')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("DÃ©LIA MONTEIRO", deliaMonteiro, "This email belongs to DÃ©lia Monteiro");
 
       String miriamDaLuz =
-              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('miriam.daluz@example.com')).in('Uses_Email')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('miriam.daluz@example.com')).in('Uses_Email')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("MIRIAM DA LUZ", miriamDaLuz, "This email belongs to Miriam da Luz");
 
       String jordinaAraujo =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('72714206140')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('72714206140')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("JORDINA ARAÃºJO", jordinaAraujo, "This CPF belongs to Jordina AraÃºjo");
 
       String janeTeixeira =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('84478523770')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('84478523770')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("JÃ³NI TEIXEIRA", janeTeixeira, "This CPF belongs to JÃ³ni Teixeira");
 
       String guiliaRamones =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('01411383605')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('01411383605')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("GUILIA RAMONES", guiliaRamones, "This CPF belongs to Guilia Ramones");
 
       String safiraCosta =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('26491059847')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('26491059847')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("SAFIRA DA COSTA", safiraCosta, "This CPF belongs to Safira da Costa");
 
       String rodrigoRodrigues =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('90052103625')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('90052103625')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("RODRIGO RODRIGUES", rodrigoRodrigues, "This CPF belongs to Rodrigo Rodrigues");
 
 //      { "status": "success", "successCount": 100 }
@@ -243,23 +243,23 @@ public class PVMD2ProfillingTests extends AppTest {
       System.out.println("-----------------------------------------------------------------------------------------");
 
       String alirioDaLuz =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('21564809153')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('21564809153')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("ALÍRIO DA LUZ", alirioDaLuz, "This CPF belongs to Alírio da Luz");
 
       String guterreDaMata =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('14519746043')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('14519746043')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("GUTERRE DA MATA", guterreDaMata, "This CPF belongs to Guterre da Mata");
 
       String joceniraJesus =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('22875552007')).in('Has_Id_Card')" +
-                      ".values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('22875552007')).in('Has_Id_Card')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("JOCENIRA JESUS", joceniraJesus, "This CPF belongs to Jocenira Jesus");
 
       String azizDaCunha =
-              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('aziz.dacunha@example.com'))" +
-                      ".in('Uses_Email').values('Person.Natural.Full_Name').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('aziz.dacunha@example.com'))" +
+                      ".in('Uses_Email').values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("AZIZ DA CUNHA", azizDaCunha, "This CPF belongs to Aziz da Cunha");
 
     } catch (Exception e) {

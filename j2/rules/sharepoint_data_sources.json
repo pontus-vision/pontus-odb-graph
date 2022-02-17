@@ -2,70 +2,70 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "name": "sharepoint",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "SHAREPOINT/DATA-SOURCES",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "name": "data_sources",
         "condition": "${field_Descri_x0020__x0020_o?.trim()?.length() > 0}",
         "props": [
           {
-            "name": "Object.Data_Source.Form_Id",
+            "name": "Object_Data_Source_Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "${Title?.toUpperCase()?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Source.Description",
+            "name": "Object_Data_Source_Description",
             "val": "${field_Descri_x0020__x0020_o?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Source.Engine",
+            "name": "Object_Data_Source_Engine",
             "val": "${field_Sistema}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Source.Type",
+            "name": "Object_Data_Source_Type",
             "val": "${field_Tipo_x0020_Sistema}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Source.Domain",
+            "name": "Object_Data_Source_Domain",
             "val": "${field_Tabela}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Source.URI_Delete",
+            "name": "Object_Data_Source_URI_Delete",
             "val": "${field_URL_x0020_Prefixo_x0020_Delete}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Source.URI_Update",
+            "name": "Object_Data_Source_URI_Update",
             "val": "${field_URL_x0020_Prefixo_x0020_Update}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Source.URI_Read",
+            "name": "Object_Data_Source_URI_Read",
             "val": "${field_URL_x0020_Prefixo_x0020_Read}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -73,80 +73,80 @@
         ]
       },
       {
-        "label": "Object.System",
+        "label": "Object_System",
         "props": [
           {
-            "name": "Object.System.Name",
+            "name": "Object_System_Name",
             "val": "${field_Sistema?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Subsystem",
+        "label": "Object_Subsystem",
         "props": [
           {
-            "name": "Object.Subsystem.Name",
+            "name": "Object_Subsystem_Name",
             "val": "${field_Tipo_x0020_Sistema?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Module",
+        "label": "Object_Module",
         "props": [
           {
-            "name": "Object.Module.Name",
+            "name": "Object_Module_Name",
             "val": "${field_Tabela?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Data_Policy",
+        "label": "Object_Data_Policy",
         "props": [
           {
-            "name": "Object.Data_Policy.Update_Frequency",
+            "name": "Object_Data_Policy_Update_Frequency",
             "val": "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Data_Policy.Retention_Period",
+            "name": "Object_Data_Policy_Retention_Period",
             "val": "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Event.Ingestion",
+        "label": "Event_Ingestion",
         "props": [
           {
-            "name": "Event.Ingestion.Type",
+            "name": "Event_Ingestion_Type",
             "val": "sharepoint/data-sources",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Operation",
+            "name": "Event_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Domain_b64",
+            "name": "Event_Ingestion_Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Create_Date",
+            "name": "Event_Ingestion_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Update_Date",
+            "name": "Event_Ingestion_Metadata_Update_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -155,25 +155,25 @@
         ]
       },
       {
-        "label": "Event.Group_Ingestion",
+        "label": "Event_Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Type",
+            "name": "Event_Group_Ingestion_Type",
             "val": "sharepoint/data-sources",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Operation",
+            "name": "Event_Group_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.mandatoryInSearch",
+            "name": "Event_Group_Ingestion_mandatoryInSearch",
             "val": true,
             "mandatoryInSearch": true
           }
@@ -184,37 +184,37 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexName": "sharepoint",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "toVertexLabel": "Event_Group_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Ingestion",
+        "fromVertexLabel": "Event_Ingestion",
         "toVertexName": "data_sources"
       },
       {
         "label": "Has_Policy",
         "fromVertexName": "data_sources",
-        "toVertexLabel": "Object.Data_Policy"
+        "toVertexLabel": "Object_Data_Policy"
       },
       {
         "label": "Has_Module",
         "fromVertexName": "data_sources",
-        "toVertexLabel": "Object.Module"
+        "toVertexLabel": "Object_Module"
       },
       {
         "label": "Has_Subsystem",
-        "fromVertexLabel": "Object.Module",
-        "toVertexLabel": "Object.Subsystem"
+        "fromVertexLabel": "Object_Module",
+        "toVertexLabel": "Object_Subsystem"
       },
       {
         "label": "Has_System",
-        "fromVertexLabel": "Object.Subsystem",
-        "toVertexLabel": "Object.System"
+        "fromVertexLabel": "Object_Subsystem",
+        "toVertexLabel": "Object_System"
       }
     ]
   }

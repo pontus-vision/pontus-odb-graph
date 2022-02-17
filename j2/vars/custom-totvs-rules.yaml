@@ -22,7 +22,7 @@ rules:
 
   totvs_protheus_sa1_clientes:
     vertices:
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         props:
           Full_Name: "${A1_NOME?.trim()?.toUpperCase()}"
@@ -31,7 +31,7 @@ rules:
 #            excludeFromSearch: true
           Customer_ID: "${A1_CGC?.replaceAll('[^0-9]','')}"
 
-      - label: Person.Organisation
+      - label: Person_Organisation
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Name: "${A1_NOME?.trim()?.toUpperCase()}"
@@ -42,7 +42,7 @@ rules:
           Registration_Number: "${A1_CGC.replaceAll('[^0-9]','')}"
 #          Contact: "${A1_CONTATO?.trim()}"
 
-      - label: Object.Phone_Number
+      - label: Object_Phone_Number
         condition: "${A1_TEL?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
           Raw: "${A1_TEL}"
@@ -58,7 +58,7 @@ rules:
             type: "[Ljava.lang.String;"
 
       #RG
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${A1_RG?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: rg
         props:
@@ -67,7 +67,7 @@ rules:
             val: "RG"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: cpf
         props:
@@ -76,7 +76,7 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: cnpj
         props:
@@ -85,13 +85,13 @@ rules:
             val: "CNPJ"
             excludeFromSearch: true
       # EMAIL
-      - label: Object.Email_Address
+      - label: Object_Email_Address
         condition: "${A1_EMAIL?.trim()?.length() > 0}"
         props:
           Email: "${A1_EMAIL?.trim()?.toLowerCase()}"
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
-      - label: Location.Address
+      - label: Location_Address
 #        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Full_Address:
@@ -105,7 +105,7 @@ rules:
 #            val: "Business"
 #            excludeFromSearch: true
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "totvs/protheus/sa1_clientes"
@@ -125,7 +125,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type: "totvs/protheus/sa1_clientes"
           Operation: "Structured Data Insertion"
@@ -139,7 +139,7 @@ rules:
 #            excludeFromSearch: true
 #            type: java.util.Date
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "TOTVS/PROTHEUS/SA1_CLIENTES"
 #          Type: "totvs/protheus/sa1_clientes"
@@ -147,56 +147,56 @@ rules:
 
     edges:
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Uses_Email
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Email_Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Email_Address"
 
       - label: Uses_Email
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Object.Email_Address"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Object_Email_Address"
 
       - label: Has_Id_Card
-        fromVertexLabel: "Person.Natural"
+        fromVertexLabel: "Person_Natural"
         toVertexName: "rg"
 
       - label: Has_Id_Card
-        fromVertexLabel: "Person.Natural"
+        fromVertexLabel: "Person_Natural"
         toVertexName: "cpf"
 
       - label: Has_Id_Card
-        fromVertexLabel: "Person.Organisation"
+        fromVertexLabel: "Person_Organisation"
         toVertexName: "cnpj"
 
       - label: Is_Located
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Location_Address"
 
       - label: Is_Located
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Location_Address"
 
       - label: Has_Phone
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Phone_Number"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Phone_Number"
 
       - label: Has_Phone
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Object.Phone_Number"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Object_Phone_Number"
 
 #    {
 #      "id": "string"
@@ -269,7 +269,7 @@ rules:
 #    }
   totvs_protheus_ra_funcionario:
     vertices:
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: colaborador
         props:
@@ -282,7 +282,7 @@ rules:
 #            excludeFromSearch: true
           Customer_ID: "${RA_CIC?.replaceAll('[^0-9]','')}"
 
-      - label: Person.Organisation
+      - label: Person_Organisation
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Name: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
@@ -292,7 +292,7 @@ rules:
           Id: "${RA_CIC.replaceAll('[^0-9]','')}"
           Registration_Number: "${RA_CIC.replaceAll('[^0-9]','')}"
 
-      - label: Location.Address
+      - label: Location_Address
         props:
           Full_Address:
             val: "${RA_ENDEREC?.trim()?.toUpperCase()} ${RA_COMPLEM?.trim()?.toUpperCase()}, ${RA_BAIRRO?.trim()?.toUpperCase()}, ${RA_MUNICIP?.trim()?.toUpperCase()} - ${RA_ESTADO?.trim()?.toUpperCase()}, ${RA_CEP}, ${RA_PAISEXT?.trim()?.toUpperCase()?:'BRASIL'}"
@@ -306,7 +306,7 @@ rules:
 #            val: "home"
 #            excludeFromSearch: true
 
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${RA_MAE?.trim()?.length() > 0}"
         name: mae
         props:
@@ -316,7 +316,7 @@ rules:
 #            excludeFromSearch: false
 #          Gender: "F"
 
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${RA_PAI?.trim()?.length() > 0}"
         name: pai
         props:
@@ -326,7 +326,7 @@ rules:
 #            excludeFromSearch: false
 #          Gender: "M"
 
-      - label: Object.Phone_Number
+      - label: Object_Phone_Number
         condition: "${RA_TELEFON?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
           Raw: "${RA_TELEFON}"
@@ -341,7 +341,7 @@ rules:
             val: "${(((RA_TELEFON?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${RA_RG?.replaceAll('[^0-9]','')?.length() > 0}"
         name: rg
         props:
@@ -350,7 +350,7 @@ rules:
             val: "RG"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: cpf
         props:
@@ -359,7 +359,7 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: cnpj
         props:
@@ -368,7 +368,7 @@ rules:
             val: "CNPJ"
             excludeFromSearch: true
 
-      - label: Object.Email_Address
+      - label: Object_Email_Address
         condition: "${RA_EMAIL?.trim()?.length() > 0}"
         name: email1
         props:
@@ -377,7 +377,7 @@ rules:
 #            val: "${(RA_EMAIL.trim()?.toLowerCase()?.contains('snowymountain.com.br'))?'business':'personal'}"
 #            excludeFromSearch: true
 
-      - label: Object.Email_Address
+      - label: Object_Email_Address
         condition: "${RA_EMAIL2?.trim()?.length() > 0}"
         name: email2
         props:
@@ -386,7 +386,7 @@ rules:
 #            val: "${(RA_EMAIL2.trim()?.toLowerCase()?.contains('snowymountain.com.br'))?'business':'personal'}"
 #            excludeFromSearch: true
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "totvs/protheus/ra_funcionario"
@@ -406,7 +406,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type:
             val: "totvs/protheus/ra_funcionario"
@@ -422,7 +422,7 @@ rules:
 #            excludeFromSearch: true
 #            type: java.util.Date
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "TOTVS/PROTHEUS/RA_FUNCIONARIO"
 #          Type: "totvs/protheus/ra_funcionario"
@@ -430,20 +430,20 @@ rules:
 
     edges:
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
         fromVertexName: "colaborador"
-        toVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Is_Family
         fromVertexName: "mae"
@@ -455,18 +455,18 @@ rules:
 
       - label: Has_Phone
         fromVertexName: "colaborador"
-        toVertexLabel: "Object.Phone_Number"
+        toVertexLabel: "Object_Phone_Number"
 
       - label: Has_Phone
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Object.Phone_Number"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Object_Phone_Number"
 
       - label: Uses_Email
         fromVertexName: "colaborador"
         toVertexName: "email1"
 
       - label: Uses_Email
-        fromVertexLabel: "Person.Organisation"
+        fromVertexLabel: "Person_Organisation"
         toVertexName: "email1"
 
       - label: Uses_Email
@@ -474,7 +474,7 @@ rules:
         toVertexName: "email2"
 
       - label: Uses_Email
-        fromVertexLabel: "Person.Organisation"
+        fromVertexLabel: "Person_Organisation"
         toVertexName: "email2"
 
       - label: Has_Id_Card
@@ -486,16 +486,16 @@ rules:
         toVertexName: "cpf"
 
       - label: Has_Id_Card
-        fromVertexLabel: "Person.Organisation"
+        fromVertexLabel: "Person_Organisation"
         toVertexName: "cnpj"
 
       - label: Is_Located
         fromVertexName: "colaborador"
-        toVertexLabel: "Location.Address"
+        toVertexLabel: "Location_Address"
 
       - label: Is_Located
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Location_Address"
 
 #   {
 #      "id": "string"
@@ -534,7 +534,7 @@ rules:
 
   totvs_protheus_sa2_fornecedor:
     vertices:
-      - label: Person.Organisation
+      - label: Person_Organisation
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: fornecedor
         props:
@@ -546,7 +546,7 @@ rules:
           Registration_Number: "${A2_CGC.replaceAll('[^0-9]','')}"
 #          Contact: "${A2_CONTATO?.trim()}"
 
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: rep
         props:
@@ -556,7 +556,7 @@ rules:
           #            excludeFromSearch: false
           #            excludeFromSearch: true
 
-      - label: Location.Address
+      - label: Location_Address
         #        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Full_Address:
@@ -570,7 +570,7 @@ rules:
       #          Type:
       #            val: "business"
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}"
         name: cnpj
         props:
@@ -579,7 +579,7 @@ rules:
             val: "CNPJ"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: cpf
         props:
@@ -588,7 +588,7 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Object.Phone_Number
+      - label: Object_Phone_Number
         condition: "${A2_TEL?.replaceAll('[^0-9]','')?.length() > 0}"
         name: phone
         props:
@@ -604,13 +604,13 @@ rules:
             val: "${(((A2_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
-      - label: Object.Email_Address
+      - label: Object_Email_Address
         condition: "${A2_EMAIL?.trim()?.length() > 0}"
         name: email
         props:
           Email: "${A2_EMAIL?.trim()?.toLowerCase()}"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "totvs/protheus/sa2_fornecedor"
@@ -630,7 +630,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type: "totvs/protheus/sa2_fornecedor"
           Operation: "Structured Data Insertion"
@@ -644,7 +644,7 @@ rules:
 #            excludeFromSearch: true
 #            type: java.util.Date
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "TOTVS/PROTHEUS/SA2_FORNECEDOR"
 #          Type: "totvs/protheus/sa2_fornecedor"
@@ -653,19 +653,19 @@ rules:
     edges:
       - label: Has_Ingestion_Event
         fromVertexName: "fornecedor"
-        toVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
         fromVertexName: "rep"
-        toVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Phone
         fromVertexName: "rep"
@@ -677,7 +677,7 @@ rules:
 
       - label: Is_Located
         fromVertexName: "rep"
-        toVertexLabel: "Location.Address"
+        toVertexLabel: "Location_Address"
 
       - label: Has_Id_Card
         fromVertexName: "rep"
@@ -697,4 +697,4 @@ rules:
 
       - label: Is_Located
         fromVertexName: "fornecedor"
-        toVertexLabel: "Location.Address"
+        toVertexLabel: "Location_Address"

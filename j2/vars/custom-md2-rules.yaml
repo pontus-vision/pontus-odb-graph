@@ -2,7 +2,7 @@
 rules:
   pv_md2:
     vertices:
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${name?.trim()?.length() > 0}"
         props:
           Full_Name: "${name?.trim()?.toUpperCase()}"
@@ -11,7 +11,7 @@ rules:
 #            excludeFromSearch: true
           Customer_ID: "${document?.replaceAll('[^0-9]', '')}"
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${document?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
           Id_Value: "${document?.replaceAll('[^0-9]','')}"
@@ -19,12 +19,12 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Object.Email_Address
+      - label: Object_Email_Address
         condition: "${email?.trim()?.length() > 0}"
         props:
           Email: "${email?.trim()?.toLowerCase()}"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: MD2
@@ -37,13 +37,13 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: MD2
           Description: Dados RH Colaboradores MD2
           Type: Structured
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type: MD2
           Operation: Structured Data Insertion
@@ -58,27 +58,27 @@ rules:
 #            type: java.util.Date
     edges:
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Id_Card"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Identity_Card"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Identity_Card"
 
       - label: "Uses_Email"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Email_Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Email_Address"
   pv_md2_bulk:
     vertices:
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${name?.trim()?.length() > 0}"
         props:
           Full_Name:
@@ -88,7 +88,7 @@ rules:
             val: "${document?.replaceAll('[^0-9]', '')}"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${document?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
           Id_Value:
@@ -99,7 +99,7 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Object.Email_Address
+      - label: Object_Email_Address
         condition: "${email?.trim()?.length() > 0}"
         props:
           Email:
@@ -107,7 +107,7 @@ rules:
             excludeFromSearch: true
 
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: MD2
@@ -120,13 +120,13 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: MD2
           Description: Dados RH Colaboradores MD2
           Type: Structured
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type: MD2
           Operation: Structured Data Insertion
@@ -141,21 +141,21 @@ rules:
 #            type: java.util.Date
     edges:
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Id_Card"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Identity_Card"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Identity_Card"
 
       - label: "Uses_Email"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Email_Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Email_Address"

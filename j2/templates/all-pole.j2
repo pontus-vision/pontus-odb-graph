@@ -1,5 +1,5 @@
 {%- for vertex in schema.vertices %}
   {%- for prop in vertex.props %}
-{{ vertex.name }}.{{ prop.name }}
+{{ vertex.name }}_{{ prop.name }}
   {%- endfor %}
 {%- endfor %}

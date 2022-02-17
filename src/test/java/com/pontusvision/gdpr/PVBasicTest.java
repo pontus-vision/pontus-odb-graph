@@ -67,7 +67,7 @@ public class PVBasicTest extends AppTest {
 
 
       String userId =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('ROZELL COLEMAN')).next().id().toString()")
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('ROZELL COLEMAN')).next().id().toString()")
                       .get().toString();
 
       String rozellConnectionsQuery = "App.g.V(\"" + userId + "\").bothE().count().next().toString()";
@@ -93,18 +93,18 @@ public class PVBasicTest extends AppTest {
       csvTestUtil("sap-polaris-clientes.csv", "Cliente_SAP_PosVenda_POLARIS");
 
 
-//    Testing for Person.Natural WITH Tax_Number
+//    Testing for Person_Natural WITH Tax_Number
       String userId0 =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MATEUS SILVA PINTO'))\n" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MATEUS SILVA PINTO'))\n" +
                       ".next().id().toString()").get().toString();
       String pintoConnectionsQuery = "App.g.V(\"" + userId0 + "\").bothE('Has_Phone').count().next().toString()";
       String pintoConnections = App.executor.eval(pintoConnectionsQuery)
               .get().toString();
       assertEquals("2", pintoConnections, "2 Has_Phone");
 
-//    Testing for Person.Natural withOUT Tax_Number
+//    Testing for Person_Natural withOUT Tax_Number
       String munirLocationEdgesCount =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MUNIR HANDAUS'))\n" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MUNIR HANDAUS'))\n" +
                       ".bothE('Is_Located').count().next().toString()").get().toString();
       assertEquals("1", munirLocationEdgesCount, "1 Is_Located");
 
@@ -124,32 +124,32 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil("pv-extract-sharepoint-treinamentos.json", "$.queryResp[*].fields",
               "sharepoint_treinamentos");
 
-//    test0000 for PEDRO Person.Employee NODE
+//    test0000 for PEDRO Person_Employee NODE
       String userId =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PEDRO ALVARO CABRAL'))\n" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('PEDRO ALVARO CABRAL'))\n" +
                       ".next().id().toString()").get().toString();
       String pedroConnectionsQuery = "App.g.V(\"" + userId + "\").bothE().count().next().toString()";
       String pedroConnections = App.executor.eval(pedroConnectionsQuery).get().toString();
       assertEquals(pedroConnections, "1");
 
-//    test0000 for MARCELA Person.Employee NODE
+//    test0000 for MARCELA Person_Employee NODE
       String marcelaTraining =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARCELA ALVES'))\n" +
-                      ".in('Completed_By').out('Course_Training').properties('Object.Awareness_Campaign.Description')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MARCELA ALVES'))\n" +
+                      ".in('Completed_By').out('Course_Training').properties('Object_Awareness_Campaign_Description')" +
                       ".value().next().toString()").get().toString();
       assertEquals("1º CURSO - LGPD - LEI GERAL DE PROTEÇÃO DE DADOS", marcelaTraining, "Treinamento cursado por Marcela Alves");
 
-//    test0000 for Object.Awareness_Campaign.Description
+//    test0000 for Object_Awareness_Campaign_Description
       String getEmployeeNameByTraining =
-              App.executor.eval("App.g.V().has('Object.Awareness_Campaign.Description', " +
+              App.executor.eval("App.g.V().has('Object_Awareness_Campaign_Description', " +
                       "eq('COMO CUIDAR DOS SEUS DADOS PESSOAIS DIGITAIS/VIRTUAIS')).in('Course_Training')" +
-                      ".out('Completed_By').properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+                      ".out('Completed_By').properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
       assertEquals("LEILA BRAGANÇA", getEmployeeNameByTraining, "O curso em questão foi feito por Leila Bragança");
 
-//    test0000 for Object.Awareness_Campaign.Description 3
+//    test0000 for Object_Awareness_Campaign_Description 3
       String caioTrainingStatus =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CAIO DA SILVA SAURO'))\n" +
-                      ".in('Completed_By').properties('Event.Training.Status')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('CAIO DA SILVA SAURO'))\n" +
+                      ".in('Completed_By').properties('Event_Training_Status')" +
                       ".value().next().toString()").get().toString();
       assertEquals("Passed", caioTrainingStatus, "Caio has PASSED the Training");
 
@@ -180,7 +180,7 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil(jsonFile, "$.queryResp[*].fields",
               ruleName);
 
-      String queryPrefix = "App.g.V().has('Object.Data_Source.Name', eq('" + dataSourceName + "'))\n";
+      String queryPrefix = "App.g.V().has('Object_Data_Source_Name', eq('" + dataSourceName + "'))\n";
 //    test0000 for COUNT(dataSources)
       String countDataSources =
               App.executor.eval(queryPrefix +
@@ -192,14 +192,14 @@ public class PVBasicTest extends AppTest {
               App.executor.eval(queryPrefix +
                       ".both()\n" +
                       ".count().next().toString()").get().toString();
-      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      // expecting 1 less Event_Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals("1", countEventGroupIngestions);
 
       String countEventIngestions =
               App.executor.eval(queryPrefix +
                       ".out().out()\n" +
                       ".count().next().toString()").get().toString();
-      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      // expecting 1 less Event_Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals("7", countEventIngestions);
 
 
@@ -207,18 +207,18 @@ public class PVBasicTest extends AppTest {
               App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
 //              ".in('Has_Policy')" +
-//              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
+//              ".has('Metadata_Type_Object_Data_Policy', eq('Object_Data_Policy'))\n" +
                       ".count().next().toString()").get().toString();
-      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      // expecting 1 less Event_Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals("7", countObjectDataSourcesIngested);
 
       String countDataPolicy =
               App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".out('Has_Policy')" +
-                      ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy')).dedup()" +
+                      ".has('Metadata_Type_Object_Data_Policy', eq('Object_Data_Policy')).dedup()" +
                       ".count().next().toString()").get().toString();
-      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      // expecting 1 less Event_Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(expectedDataPolicyCount, countDataPolicy);
 
       if ("sharepoint_fontes_de_dados".equals(ruleName)) {
@@ -226,14 +226,14 @@ public class PVBasicTest extends AppTest {
         String numSensitiveData = App.executor.eval(queryPrefix +
                 ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                 ".out('Has_Sensitive_Data')" +
-                ".has('Metadata.Type.Object.Sensitive_Data', eq('Object.Sensitive_Data')).id().toSet()" +
+                ".has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data')).id().toSet()" +
                 ".size().toString()").get().toString();
         assertEquals("15", numSensitiveData);
 
-        String numTelefones = App.executor.eval("App.g.V().has('Object.Sensitive_Data.Description', eq('TELEFONE'))\n" +
+        String numTelefones = App.executor.eval("App.g.V().has('Object_Sensitive_Data_Description', eq('TELEFONE'))\n" +
                 ".bothE().count().next().toString()").get().toString();
         assertEquals("2", numTelefones);
-        String numNomes = App.executor.eval("App.g.V().has('Object.Sensitive_Data.Description', eq('NOME'))\n" +
+        String numNomes = App.executor.eval("App.g.V().has('Object_Sensitive_Data_Description', eq('NOME'))\n" +
                 ".bothE().count().next().toString()").get().toString();
         assertEquals("5", numNomes);
 
@@ -243,28 +243,28 @@ public class PVBasicTest extends AppTest {
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".out('Has_Module').dedup()" +
                       ".count().next().toString()"
-              //".values('Object.Module.Name').toList()"
+              //".values('Object_Module_Name').toList()"
       ).get().toString();
 
-      assertEquals(expectedModuleCount, numModules, "Number of Object.Module Vertices");
+      assertEquals(expectedModuleCount, numModules, "Number of Object_Module Vertices");
       
       String numSubsystem = App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".out('Has_Module').out('Has_Subsystem').dedup()" +
                       ".count().next().toString()"
-              //".values('Object.Module.Name').toList()"
+              //".values('Object_Module_Name').toList()"
       ).get().toString();
 
-      assertEquals(expectedSubsystemCount, numSubsystem, "Number of Object.Subsystem Vertices");
+      assertEquals(expectedSubsystemCount, numSubsystem, "Number of Object_Subsystem Vertices");
 
       String numSystem = App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".out('Has_Module').out('Has_Subsystem').out('Has_System').dedup()" +
                       ".count().next().toString()"
-              //".values('Object.Module.Name').toList()"
+              //".values('Object_Module_Name').toList()"
       ).get().toString();
 
-      assertEquals(expectedSystemCount, numSystem, "Number of Object.System Vertices");
+      assertEquals(expectedSystemCount, numSystem, "Number of Object_System Vertices");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -284,32 +284,32 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
       jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
 
-//    t'est0000 for Object.Data_Source.Name
+//    t'est0000 for Object_Data_Source_Name
       String userId2 =
-              App.executor.eval("App.g.V().has('Object.Data_Source.Name', eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
                       ".next().id().toString()").get().toString();
       String rootConnectionsQuery = "App.g.V(\"" + userId2 + "\").bothE().count().next().toString()";
       String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
 
 //    test0000 COUNT(Edges) for COMIDAS 2
       String userId3 =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('COMIDAS 2'))" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('COMIDAS 2'))" +
                       ".next().id().toString()").get().toString();
       String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 + "\").bothE().count().next().toString()";
       String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
       assertEquals("4", comidas2Connections);
 
-//    test0000 COUNT(Edges) for Object.Email_Address
+//    test0000 COUNT(Edges) for Object_Email_Address
       String userId4 =
-              App.executor.eval("App.g.V().has('Object.Email_Address.Email',eq('jonas@comida1.com.br'))" +
+              App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('jonas@comida1.com.br'))" +
                       ".next().id().toString()").get().toString();
       String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
       String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
       assertEquals("1", emailConnections);
 
-//    test0000 COUNT(Edges) for Object.Phone_Number
+//    test0000 COUNT(Edges) for Object_Phone_Number
       String userId5 =
-              App.executor.eval("App.g.V().has('Object.Phone_Number.Numbers_Only',eq('111111111'))" +
+              App.executor.eval("App.g.V().has('Object_Phone_Number_Numbers_Only',eq('111111111'))" +
                       ".next().id().toString()").get().toString();
       String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
       String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
@@ -341,7 +341,7 @@ public class PVBasicTest extends AppTest {
     assertEquals(expectedSqlCount, sqlCount);
 
     String sql = req.getSQL(false);
-    String expectedSql = "SELECT @rid as id,`Event.Data_Breach.Description`,`Event.Data_Breach.Impact`  FROM (SELECT EXPAND(OUT('has_server')) FROM #-1:-1  WHERE (( `Event.Data_Breach.Impact`  containsText  'OS' ) ) ) ORDER BY `Event.Data_Breach.Impact` DESC SKIP 0 LIMIT 100";
+    String expectedSql = "SELECT @rid as id,`Event_Data_Breach_Description`,`Event_Data_Breach_Impact`  FROM (SELECT EXPAND(OUT('has_server')) FROM #-1:-1  WHERE (( `Event_Data_Breach_Impact`  containsText  'OS' ) ) ) ORDER BY `Event_Data_Breach_Impact` DESC SKIP 0 LIMIT 100";
     assertEquals(expectedSql, sql);
 
     req.search.direction = "<-";
@@ -356,7 +356,7 @@ public class PVBasicTest extends AppTest {
     sqlCount = req.getSQL(true);
     expectedSqlCount = "SELECT COUNT(*)  FROM `" +
             req.dataType +
-            "`  WHERE (( `Event.Data_Breach.Impact`  containsText  'OS' ) ) ";
+            "`  WHERE (( `Event_Data_Breach_Impact`  containsText  'OS' ) ) ";
     assertEquals(expectedSqlCount, sqlCount);
 
 
@@ -389,7 +389,7 @@ public class PVBasicTest extends AppTest {
       csvTestUtil("phase1.csv", "phase1_csv");
       csvTestUtil("phase1.csv", "phase1_csv");
 
-      String numJohnSmiths = App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('JOHN SMITH')).id()" +
+      String numJohnSmiths = App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('JOHN SMITH')).id()" +
                       ".count().next().toString()")
               .get().toString();
 
@@ -413,13 +413,13 @@ public class PVBasicTest extends AppTest {
 
     try {
       String userId =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('JONAS LEO BATISTA')).next().id().toString()")
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('JONAS LEO BATISTA')).next().id().toString()")
                       .get().toString();
 
       Resource res = new Resource();
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-              "App.g.V().has('Person.Natural.Full_Name',eq('JONAS LEO BATISTA')).next().id().toString()");
+              "App.g.V().has('Person_Natural_Full_Name',eq('JONAS LEO BATISTA')).next().id().toString()");
       JsonObject obj = JsonParser.parseString(res.gremlinQuery(fakeContainerReqContext, gson.toJson(gremlinReq))).getAsJsonObject();
       String stringifiedOutput = gson.toJson(obj);
       String res2;
@@ -475,8 +475,8 @@ public class PVBasicTest extends AppTest {
       System.out.println(report);
 
       String getPhoneNumber =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('COMIDAS 1')).out('Has_Phone')" +
-                      ".properties('Object.Phone_Number.Raw').value().next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('COMIDAS 1')).out('Has_Phone')" +
+                      ".properties('Object_Phone_Number_Raw').value().next().toString()").get().toString();
       assertEquals("111111111", getPhoneNumber, "Número de telefone de Comidas 1");
 
 
@@ -499,13 +499,13 @@ public class PVBasicTest extends AppTest {
 
     try {
       String userId =
-              App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()")
+              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()")
                       .get().toString();
 
       Resource res = new Resource();
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-              "App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
+              "App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()");
       JsonObject obj = JsonParser.parseString(res.gremlinQuery(fakeContainerReqContext,
               gson.toJson(gremlinReq))).getAsJsonObject();
 //      Gson gson = new Gson();
@@ -580,14 +580,14 @@ public class PVBasicTest extends AppTest {
 
     try {
       String numDataSources =
-              App.executor.eval("App.g.V().has('Object.Data_Source.Name',eq('Office365/email')).count().next().toString()")
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name',eq('Office365/email')).count().next().toString()")
                       .get().toString();
 
       assertEquals("1", numDataSources, "Ensure that We only have one data source");
 
       String currDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
       String numDataEventEmailMessageGroups =
-              App.executor.eval("App.g.V().has('Event.Email_Msg_Group.Ingestion_Date',eq('" + currDate + "')).count().next().toString()")
+              App.executor.eval("App.g.V().has('Event_Email_Msg_Group_Ingestion_Date',eq('" + currDate + "')).count().next().toString()")
                       .get().toString();
 
       assertEquals("1", numDataEventEmailMessageGroups, "Ensure that We only have one Email Message Group");
@@ -609,20 +609,20 @@ public class PVBasicTest extends AppTest {
 
 
       String mariaBDay =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
-                      ".properties('Person.Natural.Date_Of_Birth').value().next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARIA DA SILVA SANTOS'))" +
+                      ".properties('Person_Natural_Date_Of_Birth').value().next().toString()").get().toString();
 //      mariaBDay = mariaBDay.replaceAll("... 1980", "GMT 1980");
       assertEquals(dtfmt.parse("Mon Dec 08 01:01:01 GMT 1980"), dtfmt.parse(mariaBDay), "MAria's Birthday");
 
       String getBossId =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name',eq('MARIA DA SILVA SANTOS'))" +
-                      ".out('Is_Alias').out('Is_Subordinate').properties('Person.Employee.ID').value().next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARIA DA SILVA SANTOS'))" +
+                      ".out('Is_Alias').out('Is_Subordinate').properties('Person_Employee_ID').value().next().toString()").get().toString();
       assertEquals("5", getBossId, "Maria's Boss (José Dorival) has an Id of 5");
 
       String getBossName =
-              App.executor.eval("App.g.V().has('Object.Identity_Card.Id_Value',eq('12345678901'))" +
+              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('12345678901'))" +
                       ".in('Has_Id_Card').out('Is_Alias').out('Is_Subordinate').in('Is_Alias')" +
-                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+                      ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
       assertEquals("JOSÉ DORIVAL", getBossName, "Maria's Boss' Full Name");
 
 
@@ -642,21 +642,21 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil("totvs2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
 
       String pabloStreetName =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('PABLO MATO ESCOBAR'))" +
-                      ".out('Is_Located').properties('Location.Address.parser.road').value().next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('PABLO MATO ESCOBAR'))" +
+                      ".out('Is_Located').properties('Location_Address_parser.road').value().next().toString()").get().toString();
       assertEquals("[rua moreira da silva sauro, ruamoreiradasilvasauro, ruamoreiradonasilvasauro]",
               pabloStreetName, "Pablo's street name");
 
 
       String orgCleusaId =
-              App.executor.eval("App.g.V().has('Person.Organisation.Name',eq('ARMS MANUTENCAO E R'))" +
-                      ".properties('Person.Organisation.Id').value().next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('ARMS MANUTENCAO E R'))" +
+                      ".properties('Person_Organisation_Id').value().next().toString()").get().toString();
       assertEquals("01243568000156", orgCleusaId, "Id/CNPJ do Empreendimento de Cleusa");
 
 
 //      String orgHQ =
-//              App.executor.eval("App.g.V().has('Person.Organisation.Name', eq('ARMS MANUTENCAO E R'))" +
-//                      ".out('Is_Located').properties('Location.Address.parser.state').value().next().toString()").get().toString();
+//              App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('ARMS MANUTENCAO E R'))" +
+//                      ".out('Is_Located').properties('Location_Address_parser.state').value().next().toString()").get().toString();
 //      assertEquals("[pr, parana, paraná]", orgHQ, "Company's State HQ");
 
 //      TODO: investigar melhor o location.parser
@@ -684,7 +684,7 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil(jsonFile, "$.queryResp[*].fields",
               ruleName);
 
-      String queryPrefix = "App.g.V().has('Object.Data_Source.Name', eq('" + dataSourceName + "'))\n";
+      String queryPrefix = "App.g.V().has('Object_Data_Source_Name', eq('" + dataSourceName + "'))\n";
 //    test0000 for COUNT(dataSources)
       String countDataSources =
               App.executor.eval(queryPrefix +
@@ -702,7 +702,7 @@ public class PVBasicTest extends AppTest {
               App.executor.eval(queryPrefix +
                       ".out().out()\n" +
                       ".count().next().toString()").get().toString();
-      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      // expecting 1 less Event_Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(numDataSrcs, countEventIngestions);
 
 
@@ -710,16 +710,16 @@ public class PVBasicTest extends AppTest {
               App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
 //              ".in('Has_Policy')" +
-//              ".has('Metadata.Type.Object.Data_Policy', eq('Object.Data_Policy'))\n" +
+//              ".has('Metadata_Type_Object_Data_Policy', eq('Object_Data_Policy'))\n" +
                       ".count().next().toString()").get().toString();
-      // expecting 1 less Event.Ingestion because "sharepoint" is the Data Source for the Data Sources
+      // expecting 1 less Event_Ingestion because "sharepoint" is the Data Source for the Data Sources
       assertEquals(numDataSrcs, countObjectDataProcessesIngested);
 
       String countDataPolicy =
               App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".out('Has_Data_Source')" +
-                      ".has('Metadata.Type.Object.Data_Source', eq('Object.Data_Source')).dedup()" +
+                      ".has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source')).dedup()" +
                       ".count().next().toString()").get().toString();
       assertEquals(numDataPolicies, countDataPolicy);
     } catch (ExecutionException e) {
@@ -739,20 +739,20 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil("totvs-ra-real.json", "$.objs", "totvs_protheus_ra_funcionario");
 
       String martaEmailsCount =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
                       ".bothE('Uses_Email').count().next().toString()").get().toString();
       assertEquals("2", martaEmailsCount, "2 Uses_Email");
 
 
       String locationAddressDescription =
-              App.executor.eval("App.g.V().has('Location.Address.Full_Address',eq('RUA SAMPAIO CASA, PONTE, JAGUARÃO - RS, 333333, BRASIL'))" +
-                      ".properties('Location.Address.parser.city', 'Location.Address.parser.postcode').value().toList()").get().toString();
+              App.executor.eval("App.g.V().has('Location_Address_Full_Address',eq('RUA SAMPAIO CASA, PONTE, JAGUARÃO - RS, 333333, BRASIL'))" +
+                      ".properties('Location_Address_parser.city', 'Location_Address_parser.postcode').value().toList()").get().toString();
       assertEquals("[[casa ponte jaguarão, casapontejaguarao], [333333]]", locationAddressDescription, "Address parser City and Post Code");
 
 
       String findingTheSonOfAMother =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('DONA SABRINA')).out('Is_Family')" +
-                      ".properties('Person.Natural.Full_Name').value().next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('DONA SABRINA')).out('Is_Family')" +
+                      ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
       assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta");
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -774,33 +774,33 @@ public class PVBasicTest extends AppTest {
 
     try {
       String numDataSources =
-              App.executor.eval("App.g.V().has('Object.Data_Source.Name',eq('file_server_srv1')).count().next().toString()")
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name',eq('file_server_srv1')).count().next().toString()")
                       .get().toString();
 
       assertEquals("1", numDataSources, "Ensure that We only have one data source");
 
       String currDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
       String numDataEventFileGroups =
-              App.executor.eval("App.g.V().has('Event.File_Group_Ingestion.Ingestion_Date',eq('" + currDate + "')).count().next().toString()")
+              App.executor.eval("App.g.V().has('Event_File_Group_Ingestion_Ingestion_Date',eq('" + currDate + "')).count().next().toString()")
                       .get().toString();
 
       assertEquals("1", numDataEventFileGroups, "Ensure that We only have one Group");
 
 
-      String numIngestionEvents = App.executor.eval("App.g.V().has('Event.File_Group_Ingestion.Ingestion_Date',eq('" + currDate + "'))" +
+      String numIngestionEvents = App.executor.eval("App.g.V().has('Event_File_Group_Ingestion_Ingestion_Date',eq('" + currDate + "'))" +
                       "out('Has_Ingestion_Event').count().next().toString()")
               .get().toString();
 
       assertEquals("3", numIngestionEvents, "Ensure that We only have 3 File events");
 
-      String numNLPEvents = App.executor.eval("App.g.V().has('Event.File_Group_Ingestion.Ingestion_Date',eq('" + currDate + "'))" +
+      String numNLPEvents = App.executor.eval("App.g.V().has('Event_File_Group_Ingestion_Ingestion_Date',eq('" + currDate + "'))" +
                       ".out('Has_Ingestion_Event').out('Has_NLP_Events').count().next().toString()")
               .get().toString();
 
       assertEquals("2", numNLPEvents,
               "Ensure that We only have 2 NLP events (for John Smith and Mickey Cristino)");
 
-      String numNLPEvents2 = App.executor.eval("App.g.V().has('Event.File_Ingestion.Name',eq('c.out'))" +
+      String numNLPEvents2 = App.executor.eval("App.g.V().has('Event_File_Ingestion_Name',eq('c.out'))" +
                       ".out('Has_NLP_Events').out('Has_NLP_Events').count().next().toString()")
               .get().toString();
 
@@ -808,16 +808,16 @@ public class PVBasicTest extends AppTest {
               "Ensure that We only have 2 NLP events (for John Smith and Mickey Cristino)");
 
 
-      String johnSmithMatchCount = App.executor.eval("App.g.V().has('Event.File_Ingestion.Name',eq('c.out'))" +
-                      ".out('Has_NLP_Events').out('Has_NLP_Events').has('Person.Natural.Full_Name', eq('JOHN SMITH'))" +
+      String johnSmithMatchCount = App.executor.eval("App.g.V().has('Event_File_Ingestion_Name',eq('c.out'))" +
+                      ".out('Has_NLP_Events').out('Has_NLP_Events').has('Person_Natural_Full_Name', eq('JOHN SMITH'))" +
                       ".count().next().toString()")
               .get().toString();
 
       assertEquals("1", johnSmithMatchCount,
               "Ensure that We only have 1 NLP match (for John Smith)");
 
-      String mickeyCristinoMatchCount = App.executor.eval("App.g.V().has('Event.File_Ingestion.Name',eq('c.out'))" +
-                      ".out('Has_NLP_Events').out('Has_NLP_Events').has('Person.Natural.Full_Name', eq('MICKEY CRISTINO'))" +
+      String mickeyCristinoMatchCount = App.executor.eval("App.g.V().has('Event_File_Ingestion_Name',eq('c.out'))" +
+                      ".out('Has_NLP_Events').out('Has_NLP_Events').has('Person_Natural_Full_Name', eq('MICKEY CRISTINO'))" +
                       ".count().next().toString()")
               .get().toString();
 
@@ -859,7 +859,7 @@ public class PVBasicTest extends AppTest {
       jsonTestUtil("pv-extract-o365-email-md2-pt2.json", "$.value", "pv_email");
 
       String getPersonNaturalFullName =
-              App.executor.eval("App.g.V().has('Person.Natural.Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +
                       ".count().next().toString()").get().toString();
       assertEquals("1", getPersonNaturalFullName, "um registro em nome de CARLOS MAURICIO DIRIZ");
 

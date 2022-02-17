@@ -79,8 +79,8 @@ public class GrafanaAnnotationRequest
       String table = this.annotation.query.toLowerCase();
       if (table.contains("ingest") )
       {
-        sb.append("SELECT `Event.Group_Ingestion.Operation` + ' ' +`Event.Group_Ingestion.Type` as description, `Event.Group_Ingestion.Metadata_Start_Date`.asLong() as event_time FROM `Event.Group_Ingestion`")
-          .append(" WHERE `Event.Group_Ingestion.Metadata_Start_Date` BETWEEN '")
+        sb.append("SELECT `Event_Group_Ingestion_Operation` + ' ' +`Event_Group_Ingestion_Type` as description, `Event_Group_Ingestion_Metadata_Start_Date`.asLong() as event_time FROM `Event_Group_Ingestion`")
+          .append(" WHERE `Event_Group_Ingestion_Metadata_Start_Date` BETWEEN '")
           .append(this.range.from)
           .append("' AND '")
           .append(this.range.to)
@@ -89,8 +89,8 @@ public class GrafanaAnnotationRequest
       }
       else if (table.contains("consent"))
       {
-        sb.append("SELECT 'Consent Event' + `Event.Consent.Status` as description,  `Event.Consent.Metadata.Update_Date`.asLong() as event_time  FROM `Event.Consent`")
-          .append(" WHERE `Event.Consent.Metadata.Update_Date` BETWEEN '")
+        sb.append("SELECT 'Consent Event' + `Event_Consent_Status` as description,  `Event_Consent_Metadata_Update_Date`.asLong() as event_time  FROM `Event_Consent`")
+          .append(" WHERE `Event_Consent_Metadata_Update_Date` BETWEEN '")
           .append(this.range.from)
           .append("' AND '")
           .append(this.range.to)
@@ -99,8 +99,8 @@ public class GrafanaAnnotationRequest
       }
       else if (table.contains("form"))
       {
-        sb.append("SELECT 'Form Ingestion' + `Event.Form_Ingestion.Operation` + ' ' + `Event.Form_Ingestion.Type` as description , `Event.Form_Ingestion.Metadata_Create_Date`.asLong() as event_time  FROM `Event.Form_Ingestion`")
-          .append(" WHERE `Event.Form_Ingestion.Metadata_Create_Date` BETWEEN '")
+        sb.append("SELECT 'Form Ingestion' + `Event_Form_Ingestion_Operation` + ' ' + `Event_Form_Ingestion_Type` as description , `Event_Form_Ingestion_Metadata_Create_Date`.asLong() as event_time  FROM `Event_Form_Ingestion`")
+          .append(" WHERE `Event_Form_Ingestion_Metadata_Create_Date` BETWEEN '")
           .append(this.range.from)
           .append("' AND '")
           .append(this.range.to)
@@ -108,8 +108,8 @@ public class GrafanaAnnotationRequest
       }
       else if (table.contains("dsar")|| table.contains("reque"))
       {
-        sb.append("SELECT  'Tipo: ' + `Event.Subject_Access_Request.Request_Type` + '; Estado: ' + `Event.Subject_Access_Request.Status` as description, `Event.Subject_Access_Request.Metadata.Update_Date`.asLong() as event_time  FROM `Event.Subject_Access_Request`")
-          .append(" WHERE `Event.Subject_Access_Request.Metadata.Update_Date` BETWEEN '")
+        sb.append("SELECT  'Tipo: ' + `Event_Subject_Access_Request_Request_Type` + '; Estado: ' + `Event_Subject_Access_Request_Status` as description, `Event_Subject_Access_Request_Metadata_Update_Date`.asLong() as event_time  FROM `Event_Subject_Access_Request`")
+          .append(" WHERE `Event_Subject_Access_Request_Metadata_Update_Date` BETWEEN '")
           .append(this.range.from)
           .append("' AND '")
           .append(this.range.to)

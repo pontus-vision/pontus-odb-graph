@@ -2,92 +2,92 @@
 updatereq:
   vertices:
     
-    - label: Person.Natural
+    - label: Person_Natural
       condition: ${name?.trim()?.length() > 0}
       props:
-        - name: Person.Natural.Full_Name
+        - name: Person_Natural_Full_Name
           val: ${name?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Person.Natural.Customer_ID
+        - name: Person_Natural_Customer_ID
           val: ${document?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: False
           excludeFromSearch: True
     
-    - label: Object.Identity_Card
+    - label: Object_Identity_Card
       condition: ${document?.replaceAll('[^0-9]','')?.length() > 0}
       props:
-        - name: Object.Identity_Card.Id_Value
+        - name: Object_Identity_Card_Id_Value
           val: ${document?.replaceAll('[^0-9]','')}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object.Identity_Card.Id_Type
+        - name: Object_Identity_Card_Id_Type
           val: CPF
           mandatoryInSearch: False
           excludeFromSearch: True
     
-    - label: Object.Email_Address
+    - label: Object_Email_Address
       condition: ${email?.trim()?.length() > 0}
       props:
-        - name: Object.Email_Address.Email
+        - name: Object_Email_Address_Email
           val: ${email?.trim()?.toLowerCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
-    - label: Event.Ingestion
+    - label: Event_Ingestion
       props:
-        - name: Event.Ingestion.Type
+        - name: Event_Ingestion_Type
           val: MD2
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event.Ingestion.Operation
+        - name: Event_Ingestion_Operation
           val: Structured Data Insertion
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event.Ingestion.Metadata_Create_Date
+        - name: Event_Ingestion_Metadata_Create_Date
           val: ${new Date()}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
     
-    - label: Object.Data_Source
+    - label: Object_Data_Source
       props:
-        - name: Object.Data_Source.Name
+        - name: Object_Data_Source_Name
           val: MD2
           mandatoryInSearch: True
-        - name: Object.Data_Source.Description
+        - name: Object_Data_Source_Description
           val: Dados RH Colaboradores MD2
           mandatoryInSearch: True
-        - name: Object.Data_Source.Type
+        - name: Object_Data_Source_Type
           val: Structured
           mandatoryInSearch: True
     
-    - label: Event.Group_Ingestion
+    - label: Event_Group_Ingestion
       props:
-        - name: Event.Group_Ingestion.Type
+        - name: Event_Group_Ingestion_Type
           val: MD2
           mandatoryInSearch: True
-        - name: Event.Group_Ingestion.Operation
+        - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
           mandatoryInSearch: True
-        - name: Event.Group_Ingestion.Ingestion_Date
+        - name: Event_Group_Ingestion_Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object.Data_Source
-    toVertexLabel: Event.Group_Ingestion
+    fromVertexLabel: Object_Data_Source
+    toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event.Group_Ingestion
-    toVertexLabel: Event.Ingestion
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Event.Ingestion
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Event_Ingestion
   - label: Has_Id_Card
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Identity_Card
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Object_Identity_Card
   - label: Uses_Email
-    fromVertexLabel: Person.Natural
-    toVertexLabel: Object.Email_Address
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Object_Email_Address
 

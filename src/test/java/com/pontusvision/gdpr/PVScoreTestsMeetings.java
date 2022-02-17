@@ -52,15 +52,15 @@ public class PVScoreTestsMeetings extends AppTest {
 
       assertEquals(0L, score);
 
-      List legalActions = App.g.V().has("Metadata.Type.Event.Meeting",
-          P.eq("Event.Meeting")).id().toList();
+      List legalActions = App.g.V().has("Metadata_Type_Event_Meeting",
+          P.eq("Event_Meeting")).id().toList();
 
       Transaction trans = App.graph.tx();
       if (!trans.isOpen()){
         trans.open();
       }
-      App.g.V(legalActions.get(0)).property("Event.Meeting.Date", new Date()).iterate();
-      App.g.V(legalActions.get(1)).property("Event.Meeting.Date", new Date()).iterate();
+      App.g.V(legalActions.get(0)).property("Event_Meeting_Date", new Date()).iterate();
+      App.g.V(legalActions.get(1)).property("Event_Meeting_Date", new Date()).iterate();
       trans.commit();
       trans.close();
 
@@ -73,7 +73,7 @@ public class PVScoreTestsMeetings extends AppTest {
       if (!trans.isOpen()){
         trans.open();
       }
-      App.g.V(legalActions.get(2)).property("Event.Meeting.Date", new Date()).iterate();
+      App.g.V(legalActions.get(2)).property("Event_Meeting_Date", new Date()).iterate();
       trans.commit();
       trans.close();
 

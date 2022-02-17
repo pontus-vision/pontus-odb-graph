@@ -2,22 +2,22 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "name": "sharepoint",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "SHAREPOINT/ROPA",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "name": "attached_data_sources",
         "props": [
           {
-            "name": "Object.Data_Source.Form_Id",
+            "name": "Object_Data_Source_Form_Id",
             "val": "${new groovy.json.JsonBuilder(Data_x0020_Source)}",
             "mandatoryInSearch": true,
             "processAll": true,
@@ -27,78 +27,78 @@
         ]
       },
       {
-        "label": "Object.Data_Policy",
+        "label": "Object_Data_Policy",
         "props": [
           {
-            "name": "Object.Data_Policy.Type",
+            "name": "Object_Data_Policy_Type",
             "val": "${Title}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Data_Policy.Retention_Period",
+            "name": "Object_Data_Policy_Retention_Period",
             "val": "${field_retention_x0020_period}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Data_Procedures",
+        "label": "Object_Data_Procedures",
         "props": [
           {
-            "name": "Object.Data_Procedures.Form_Id",
+            "name": "Object_Data_Procedures_Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Data_Procedures.ID",
+            "name": "Object_Data_Procedures_ID",
             "val": "${Title}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Procedures.Name",
+            "name": "Object_Data_Procedures_Name",
             "val": "${field_Process}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Procedures.Description",
+            "name": "Object_Data_Procedures_Description",
             "val": "${field_Purpose_x0020_of_x0020_the_x0020_process}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Procedures.Type",
+            "name": "Object_Data_Procedures_Type",
             "val": "${field_Access_x0020__x0020_Transfer_x0020_to_x0020_AND_x0020_OR_x0020_Receipt_x0020_of_x0020_third_x0020_parties}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Procedures.Type_Of_Natural_Person",
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
             "val": "${field_Data_x0020_subject_x0020_category}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Procedures.BusinessAreaResponsible",
+            "name": "Object_Data_Procedures_BusinessAreaResponsible",
             "val": "${field_Area} - ${field_Responsible}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Procedures.Country_Where_Stored",
+            "name": "Object_Data_Procedures_Country_Where_Stored",
             "val": "${field_Country_x0020_where_x0020_people_x0020_are_x0020_located}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Procedures.Why_Is_It_Collected",
+            "name": "Object_Data_Procedures_Why_Is_It_Collected",
             "val": "${field_Purpose_x0020_of_x0020_the_x0020_process}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Data_Procedures.Info_Collected",
+            "name": "Object_Data_Procedures_Info_Collected",
             "val": "${field_Personal_x0020_data_x0020_used}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -106,10 +106,10 @@
         ]
       },
       {
-        "label": "Object.Sensitive_Data",
+        "label": "Object_Sensitive_Data",
         "props": [
           {
-            "name": "Object.Sensitive_Data.Description",
+            "name": "Object_Sensitive_Data_Description",
             "val": "${new groovy.json.JsonBuilder(field_Personal_x0020_data_x0020_used)}",
             "mandatoryInSearch": true,
             "processAll": true,
@@ -119,10 +119,10 @@
         ]
       },
       {
-        "label": "Object.Lawful_Basis",
+        "label": "Object_Lawful_Basis",
         "props": [
           {
-            "name": "Object.Lawful_Basis.Description",
+            "name": "Object_Lawful_Basis_Description",
             "val": "${new groovy.json.JsonBuilder(field_Lawful_x0020_basis)}",
             "mandatoryInSearch": true,
             "processAll": true,
@@ -132,35 +132,35 @@
         ]
       },
       {
-        "label": "Event.Ingestion",
+        "label": "Event_Ingestion",
         "props": [
           {
-            "name": "Event.Ingestion.Type",
+            "name": "Event_Ingestion_Type",
             "val": "sharepoint/ropa",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Operation",
+            "name": "Event_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Domain_b64",
+            "name": "Event_Ingestion_Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Create_Date",
+            "name": "Event_Ingestion_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Update_Date",
+            "name": "Event_Ingestion_Metadata_Update_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -169,20 +169,20 @@
         ]
       },
       {
-        "label": "Event.Group_Ingestion",
+        "label": "Event_Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Type",
+            "name": "Event_Group_Ingestion_Type",
             "val": "sharepoint/ropa",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Operation",
+            "name": "Event_Group_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
           }
@@ -193,36 +193,36 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexName": "sharepoint",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "toVertexLabel": "Event_Group_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Ingestion",
-        "toVertexLabel": "Object.Data_Procedures"
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Object_Data_Procedures"
       },
       {
         "label": "Has_Sensitive_Data",
-        "fromVertexLabel": "Object.Data_Procedures",
-        "toVertexLabel": "Object.Sensitive_Data"
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Sensitive_Data"
       },
       {
         "label": "Has_Lawful_Basis_On",
-        "fromVertexLabel": "Object.Data_Procedures",
-        "toVertexLabel": "Object.Lawful_Basis"
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Lawful_Basis"
       },
       {
         "label": "Has_Policy",
-        "fromVertexLabel": "Object.Data_Procedures",
-        "toVertexLabel": "Object.Data_Policy"
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Data_Policy"
       },
       {
         "label": "Has_Data_Source",
-        "fromVertexLabel": "Object.Data_Procedures",
+        "fromVertexLabel": "Object_Data_Procedures",
         "toVertexName": "attached_data_sources"
       }
     ]

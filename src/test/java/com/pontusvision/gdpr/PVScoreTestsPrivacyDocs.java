@@ -52,16 +52,16 @@ public class PVScoreTestsPrivacyDocs extends AppTest {
 
       assertEquals(0L, score);
 
-      List legalActions = App.g.V().has("Metadata.Type.Object.Privacy_Docs",
-          P.eq("Object.Privacy_Docs")).id().toList();
+      List legalActions = App.g.V().has("Metadata_Type_Object_Privacy_Docs",
+          P.eq("Object_Privacy_Docs")).id().toList();
 
       Transaction trans = App.graph.tx();
       if (!trans.isOpen()){
         trans.open();
       }
-      App.g.V(legalActions.get(0)).property("Object.Privacy_Docs.Date", new Date()).iterate();
-      App.g.V(legalActions.get(1)).property("Object.Privacy_Docs.Date", new Date()).iterate();
-      App.g.V(legalActions.get(2)).property("Object.Privacy_Docs.Date", new Date()).iterate();
+      App.g.V(legalActions.get(0)).property("Object_Privacy_Docs_Date", new Date()).iterate();
+      App.g.V(legalActions.get(1)).property("Object_Privacy_Docs_Date", new Date()).iterate();
+      App.g.V(legalActions.get(2)).property("Object_Privacy_Docs_Date", new Date()).iterate();
       trans.commit();
       trans.close();
 
@@ -74,7 +74,7 @@ public class PVScoreTestsPrivacyDocs extends AppTest {
       if (!trans.isOpen()){
         trans.open();
       }
-      App.g.V(legalActions.get(3)).property("Object.Privacy_Docs.Date", new Date()).iterate();
+      App.g.V(legalActions.get(3)).property("Object_Privacy_Docs_Date", new Date()).iterate();
       trans.commit();
       trans.close();
 

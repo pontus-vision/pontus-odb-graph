@@ -39,16 +39,40 @@
         "privacy_notice": [],
         "data_procedures": [
           {
+            "LookupId": 409,
+            "LookupValue": "409"
+          },
+          {
             "LookupId": 407,
             "LookupValue": "407"
           },
           {
-            "LookupId": 408,
-            "LookupValue": "408"
+            "LookupId": 87,
+            "LookupValue": "87"
           },
           {
-            "LookupId": 409,
-            "LookupValue": "409"
+            "LookupId": 89,
+            "LookupValue": "89"
+          },
+          {
+            "LookupId": 103,
+            "LookupValue": "103"
+          },
+          {
+            "LookupId": 120,
+            "LookupValue": "120"
+          },
+          {
+            "LookupId": 121,
+            "LookupValue": "121"
+          },
+          {
+            "LookupId": 122,
+            "LookupValue": "122"
+          },
+          {
+            "LookupId": 123,
+            "LookupValue": "123"
           }
         ],
         "Modified": "1997-01-01",
