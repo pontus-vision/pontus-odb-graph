@@ -4556,7 +4556,6 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Email_Message",
-        "Event_Email_Message_Business_Rules",
         "Event_Email_Message_Metadata_Create_Date",
         "Event_Email_Message_Metadata_GUID",
         "Event_Email_Message_Operation",
@@ -4611,7 +4610,6 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Ingestion",
-        "Event_Ingestion_Business_Rules",
         "Event_Ingestion_Metadata_Create_Date",
         "Event_Ingestion_Metadata_GUID",
         "Event_Ingestion_Operation",
@@ -4995,7 +4993,6 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Data_Source",
-        "Object_Data_Source_Business_Rules",
         "Object_Data_Source_Create_Date",
         "Object_Data_Source_Credential_ApiKey",
         "Object_Data_Source_Credential_Principal",
@@ -5030,7 +5027,6 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Data_Src_Mapping_Rule",
-        "Object_Data_Src_Mapping_Rule_Business_Rules_JSON",
         "Object_Data_Src_Mapping_Rule_Create_Date",
         "Object_Data_Src_Mapping_Rule_Form_Id",
         "Object_Data_Src_Mapping_Rule_Form_Owner_Id",
@@ -5255,8 +5251,7 @@
         "Object_Metadata_Source_Engine",
         "Object_Metadata_Source_Type",
         "Object_Metadata_Source_Domain",
-        "Object_Metadata_Source_Domain_Frequency",
-        "Object_Metadata_Source_Business_Rules"
+        "Object_Metadata_Source_Domain_Frequency"
       ],
       "propertyKeysMappings": {}
     },
