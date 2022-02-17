@@ -15,6 +15,7 @@ import com.pontusvision.gdpr.mapping.Rules
 import com.pontusvision.gdpr.mapping.VertexProps
 import com.pontusvision.utils.LocationAddress
 import com.pontusvision.utils.PostCode
+import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.text.GStringTemplateEngine
@@ -703,6 +704,131 @@ class Matcher {
     return ans
   }
 
+  static String createSearchClassAttribs(List<MatchReq> mandatoryFields) {
+    StringBuilder sb = new StringBuilder()
+    long counter = 0
+    sb.append("(")
+    mandatoryFields.each { field ->
+      if (counter > 0) {
+        sb.append(" AND ")
+      }
+      sb.append(field.propName).append(':').append(field.attribNativeVal)
+    }
+    sb.append(")")
+
+    return sb.toString()
+  }
+
+  static createJsonMergeParam(List<MatchReq> updateFields) {
+    JsonBuilder jb = new JsonBuilder()
+
+    Map<String, Object> sqlParams = [:]
+    updateFields.each { field ->
+      jb.setProperty(field.propName, ":${field.propName}")
+      sqlParams.put(field.propName, field.attribNativeVal)
+    }
+
+    return [jb.toString(), sqlParams]
+  }
+
+  static matchVerticesNew(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs, int maxHitsPerType, StringBuffer sb = null) {
+
+
+    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName = new HashMap<>()
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName = new HashMap<>()
+
+    Map<String, List<MatchReq>> matchReqByVertexName = new HashMap<>()
+
+    matchReqs.each {
+      List<MatchReq> matchReqList = matchReqByVertexName.computeIfAbsent(it.vertexName, { k -> new ArrayList<>() })
+
+      // LPPM - 25 June 2019 - reduce the number of combinations below by pruning out any records that don't have
+      // any hits in the graph as early as possible.  The logic here is that if a match request does not have any matches
+      // on its own, what hope do we have to use it as a filter combined with other entries???  This is especially true
+      // when the NLP engines give us false positives (e.g. erroneous matches for names, dates, etc).
+//      if (it.hasGraphEntries(graph, gTravSource.V(), sb)) {
+      matchReqList.push(it)
+      vertexScoreMapByVertexName.computeIfAbsent(it.vertexName, { k -> new HashMap<>() })
+      matchReqListByOridByVertexName.computeIfAbsent(it.vertexName, { k -> new HashMap<>() })
+//      } else {
+//        sb?.append("\nremoved match Request $it from the list as it was not in the graph, and marked as searchable without updates\n")
+//
+//      }
+    }
+
+
+    matchReqByVertexName.each { vertexName, v ->
+
+
+      // LPPM - must do a deep copy here, because unique is a bit nasty and actually changes the
+      // original record.
+      List<MatchReq> vFiltered = []
+
+      vFiltered.addAll(v.findAll { it2 -> !(it2.excludeFromSearch) })
+      boolean processAll = vFiltered.size() > 0 && vFiltered.get(0).processAll
+
+      if (processAll) {
+        vFiltered.each { matchReq ->
+          GraphTraversal exists =
+                  gTravSource.V().has("Metadata_Type_" + matchReq.vertexLabel, P.eq(matchReq.vertexLabel))
+                          .has(matchReq.propName, matchReq.predicate(matchReq.attribNativeVal)).id()
+          ORID id
+          if (exists.hasNext()) {
+            id = exists.next() as ORID
+          } else {
+            id = gTravSource.addV(matchReq.vertexLabel)
+                    .property("Metadata_Type_" + matchReq.vertexLabel, matchReq.vertexLabel)
+                    .property("Metadata_Type", matchReq.vertexLabel)
+                    .property(matchReq.propName, matchReq.attribNativeVal)
+                    .id()
+                    .next() as ORID
+          }
+
+          vertexScoreMapByVertexName.get(matchReq.vertexName).put(id, new AtomicDouble(matchReq.matchWeight))
+          matchReqListByOridByVertexName.get(matchReq.vertexName).put(id, [matchReq])
+
+        }
+
+      } else {
+        List<MatchReq> vCopy2 = []
+        vCopy2.addAll(vFiltered)
+
+
+        List<MatchReq> uniqueProps = vCopy2.unique { a, b -> a.propName <=> b.propName }
+
+
+//        int maxExpectedSizeOfQueries = uniqueProps.size()
+
+
+        List<MatchReq> mandatoryFields = uniqueProps.findAll { it2 -> it2.mandatoryInSearch }
+        List<MatchReq> updateFields = uniqueProps.findAll { it2 -> !it2.excludeFromUpdate }
+
+        def (String jsonToMerge, Map<String, Object> sqlParams) = createJsonMergeParam(updateFields)
+
+
+        String searchClassAttribs = createSearchClassAttribs(mandatoryFields)
+
+        String sqlStr = "UPDATE `${vertexName}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER  WHERE SEARCH_CLASS (\"${searchClassAttribs}\") = true"
+        def retVals = App.graph.executeSql(sqlStr, sqlParams)
+        retVals.each { OGremlinResult result ->
+          result.getVertex().ifPresent({ res ->
+            Map<ORID, List<MatchReq>> mrl = matchReqListByOridByVertexName.get(vertexName)
+            mrl.computeIfAbsent(res.id(), { k -> uniqueProps })
+          })
+        }
+
+        sb?.append('\n')?.append(vertexScoreMapByVertexName)?.append(" ")
+      }
+
+
+    }
+
+
+    return [vertexScoreMapByVertexName, matchReqByVertexName, matchReqListByOridByVertexName]
+
+
+  }
+
 
   static matchVertices(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs, int maxHitsPerType, StringBuffer sb = null) {
 
@@ -1004,7 +1130,7 @@ class Matcher {
       addr.tokens.each { key, val ->
 
 //        val.each { it ->
-        String it = val;
+        String it = val
 
         binding.put(postProcessorVar ?: "it", it)
 
@@ -1198,7 +1324,7 @@ class Matcher {
             .property('Event_Group_Ingestion_Metadata_End_Date', new Date())
             .next()
 
-    Vertex dataSource = getObjectDataSource(dataSourceName);
+    Vertex dataSource = getObjectDataSource(dataSourceName)
 
     App.g.addE('Has_Ingestion_Event').from(dataSource).to(groupIngestionVertex)
 
@@ -1234,23 +1360,23 @@ class Matcher {
 
     def recordList = JsonPath.read(jsonString, jsonPath)
     Transaction trans = App.graph.tx()
-    long successCount = 0;
+    long successCount = 0
 
     if (!trans.isOpen()) {
-      trans.open();
+      trans.open()
     }
-    String dataSourceName = 'MD2';
+    String dataSourceName = 'MD2'
 
-    Vertex groupIngestionVertex = getEventGroupIngestion(dataSourceName);
+    Vertex groupIngestionVertex = getEventGroupIngestion(dataSourceName)
 
 
     try {
 
       for (def item in recordList) {
-        Vertex eventIngestionVertex = addEventIngestion(dataSourceName, groupIngestionVertex);
-        String name = item.name;
-        String email = item.email;
-        String document = item.document;
+        Vertex eventIngestionVertex = addEventIngestion(dataSourceName, groupIngestionVertex)
+        String name = item.name
+        String email = item.email
+        String document = item.document
         Vertex personNaturalVertex = addPersonVertex(name, document)
         Vertex documentVertex = addIdentityVertex(document)
         Vertex emailVertex = addEmailAddressVertex(email)
