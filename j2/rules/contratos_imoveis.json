@@ -27,7 +27,7 @@
         "label": "Location_Address",
         "props": [
           {
-            "name": "Location_Address_parser.postcode",
+            "name": "Location_Address_parser_postcode",
             "val": "${pg_nlp_res_post_code}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",

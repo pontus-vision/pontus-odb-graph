@@ -284,7 +284,7 @@ class FileNLPRequest implements Serializable {
             .flatten().toArray(new Traversal[0])
 
     System.out.println("NLP searching for matches for ${personOptions?.size()?:0} names, ${cpfOptions?.size()?:0} cpfs, ${emailAddrs?.length?:0} emails in file ${req.name}")
-        
+
 
     def persons = personNameCpfOptions.length> 0?
             (App.g.V().or(personNameCpfOptions)):
@@ -351,7 +351,7 @@ class FileNLPRequest implements Serializable {
     }
     if (retVal.size() == 0){
       System.out.println("Failed to find any NLP events for file ${req.name}")
-    } 
+    }
     else {
       System.out.println("Finished processing ${retVal.size()} NLP events for file ${req.name}")
     }

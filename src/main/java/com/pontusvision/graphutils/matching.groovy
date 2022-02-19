@@ -15,11 +15,12 @@ import com.pontusvision.gdpr.mapping.Rules
 import com.pontusvision.gdpr.mapping.VertexProps
 import com.pontusvision.utils.LocationAddress
 import com.pontusvision.utils.PostCode
-import groovy.json.JsonBuilder
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.text.GStringTemplateEngine
 import groovy.text.Template
+import org.apache.lucene.document.DateTools
+import org.apache.lucene.queryparser.classic.QueryParser
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResult
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet
@@ -709,124 +710,52 @@ class Matcher {
     long counter = 0
     sb.append("(")
     mandatoryFields.each { field ->
-      if (counter > 0) {
-        sb.append(" AND ")
+      if (field.attribNativeVal) {
+        if (counter > 0) {
+          sb.append(" AND ")
+        }
+        counter++
+        String attribVal = field.attribType == Date.class ?
+                "${DateTools.dateToString(field.attribNativeVal as Date, DateTools.Resolution.DAY)}" :
+                "\"${escapeLucene(field.attribNativeVal.toString())}\""
+
+        sb.append(field.propName).append(":").append(attribVal)
       }
-      sb.append(field.propName).append(':').append(field.attribNativeVal)
     }
     sb.append(")")
 
     return sb.toString()
   }
 
-  static createJsonMergeParam(List<MatchReq> updateFields) {
-    JsonBuilder jb = new JsonBuilder()
-
+  static createJsonMergeParam(List<MatchReq> updateFields, String vertexLabel) {
+//    JsonObject jb = new JsonObject()
+    StringBuilder sb = new StringBuilder()
+    sb.append("{")
+    long counter = 0;
     Map<String, Object> sqlParams = [:]
     updateFields.each { field ->
-      jb.setProperty(field.propName, ":${field.propName}")
-      sqlParams.put(field.propName, field.attribNativeVal)
-    }
-
-    return [jb.toString(), sqlParams]
-  }
-
-  static matchVerticesNew(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs, int maxHitsPerType, StringBuffer sb = null) {
-
-
-    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName = new HashMap<>()
-    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName = new HashMap<>()
-
-    Map<String, List<MatchReq>> matchReqByVertexName = new HashMap<>()
-
-    matchReqs.each {
-      List<MatchReq> matchReqList = matchReqByVertexName.computeIfAbsent(it.vertexName, { k -> new ArrayList<>() })
-
-      // LPPM - 25 June 2019 - reduce the number of combinations below by pruning out any records that don't have
-      // any hits in the graph as early as possible.  The logic here is that if a match request does not have any matches
-      // on its own, what hope do we have to use it as a filter combined with other entries???  This is especially true
-      // when the NLP engines give us false positives (e.g. erroneous matches for names, dates, etc).
-//      if (it.hasGraphEntries(graph, gTravSource.V(), sb)) {
-      matchReqList.push(it)
-      vertexScoreMapByVertexName.computeIfAbsent(it.vertexName, { k -> new HashMap<>() })
-      matchReqListByOridByVertexName.computeIfAbsent(it.vertexName, { k -> new HashMap<>() })
-//      } else {
-//        sb?.append("\nremoved match Request $it from the list as it was not in the graph, and marked as searchable without updates\n")
-//
-//      }
-    }
-
-
-    matchReqByVertexName.each { vertexName, v ->
-
-
-      // LPPM - must do a deep copy here, because unique is a bit nasty and actually changes the
-      // original record.
-      List<MatchReq> vFiltered = []
-
-      vFiltered.addAll(v.findAll { it2 -> !(it2.excludeFromSearch) })
-      boolean processAll = vFiltered.size() > 0 && vFiltered.get(0).processAll
-
-      if (processAll) {
-        vFiltered.each { matchReq ->
-          GraphTraversal exists =
-                  gTravSource.V().has("Metadata_Type_" + matchReq.vertexLabel, P.eq(matchReq.vertexLabel))
-                          .has(matchReq.propName, matchReq.predicate(matchReq.attribNativeVal)).id()
-          ORID id
-          if (exists.hasNext()) {
-            id = exists.next() as ORID
-          } else {
-            id = gTravSource.addV(matchReq.vertexLabel)
-                    .property("Metadata_Type_" + matchReq.vertexLabel, matchReq.vertexLabel)
-                    .property("Metadata_Type", matchReq.vertexLabel)
-                    .property(matchReq.propName, matchReq.attribNativeVal)
-                    .id()
-                    .next() as ORID
-          }
-
-          vertexScoreMapByVertexName.get(matchReq.vertexName).put(id, new AtomicDouble(matchReq.matchWeight))
-          matchReqListByOridByVertexName.get(matchReq.vertexName).put(id, [matchReq])
-
-        }
-
-      } else {
-        List<MatchReq> vCopy2 = []
-        vCopy2.addAll(vFiltered)
-
-
-        List<MatchReq> uniqueProps = vCopy2.unique { a, b -> a.propName <=> b.propName }
-
-
-//        int maxExpectedSizeOfQueries = uniqueProps.size()
-
-
-        List<MatchReq> mandatoryFields = uniqueProps.findAll { it2 -> it2.mandatoryInSearch }
-        List<MatchReq> updateFields = uniqueProps.findAll { it2 -> !it2.excludeFromUpdate }
-
-        def (String jsonToMerge, Map<String, Object> sqlParams) = createJsonMergeParam(updateFields)
-
-
-        String searchClassAttribs = createSearchClassAttribs(mandatoryFields)
-
-        String sqlStr = "UPDATE `${vertexName}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER  WHERE SEARCH_CLASS (\"${searchClassAttribs}\") = true"
-        def retVals = App.graph.executeSql(sqlStr, sqlParams)
-        retVals.each { OGremlinResult result ->
-          result.getVertex().ifPresent({ res ->
-            Map<ORID, List<MatchReq>> mrl = matchReqListByOridByVertexName.get(vertexName)
-            mrl.computeIfAbsent(res.id(), { k -> uniqueProps })
-          })
-        }
-
-        sb?.append('\n')?.append(vertexScoreMapByVertexName)?.append(" ")
+      if (counter > 0) {
+        sb.append(",")
       }
-
+      counter++
+      sb.append('"').append(field.propName).append('":').append(" :${field.propName} ")
+//      jb.addProperty(field.propName, ":${field.propName}")
+      sqlParams.put(field.propName, field.attribNativeVal)
 
     }
+    if (counter > 0){
+      String metadataTypeVertexLabel = "Metadata_Type_${vertexLabel}"
+      sb.append(',"').append(metadataTypeVertexLabel).append('":').append(" :${metadataTypeVertexLabel} ")
+      sqlParams.put(metadataTypeVertexLabel, vertexLabel)
+
+      sb.append(', "Metadata_Type": :Metadata_Type')
+      sqlParams.put("Metadata_Type", vertexLabel)
+
+    }
+    sb.append("}")
 
 
-    return [vertexScoreMapByVertexName, matchReqByVertexName, matchReqListByOridByVertexName]
-
-
+    return [sb.toString(), sqlParams]
   }
 
 
@@ -1144,7 +1073,7 @@ class Matcher {
           mreq = new MatchReq(
                   (String) processedVal as String
                   , nativeTypeAddrParts
-                  , (String) "${propName}.${key}" as String
+                  , (String) "${propName}_${key}" as String
                   , (String) vertexName
                   , (String) vertexLabel
                   , (String) predicate
@@ -1412,7 +1341,7 @@ class Matcher {
   static String ingestEmail(String jsonString, String jsonPath, String ruleName) {
     EmailNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
 
-    return EmailNLPRequest.upsertEmailNLPRequestArray(App.graph, App.g, recordList).toString()
+    return EmailNLPRequest.upsertEmailNLPRequestArray(App.graph, App.g, recordList, ruleName).toString()
   }
 
   static String ingestFile(String jsonString, String jsonPath, String ruleName) {
@@ -1455,16 +1384,22 @@ class Matcher {
         Map<String, Double> percentageThresholdByVertexName) =
         getMatchRequests(item as Map<String, String>, rules.updatereq, percentageThreshold, sb)
 
+        if (rules.useSlim) {
+          processMatchRequestsSlim(graph, g,
+                  matchReqs,
+                  edgeReqs)
+        } else {
+          processMatchRequests(graph, g,
+                  matchReqs,
+                  maxHitsPerType,
+                  percentageThresholdByVertexName,
+                  maxScoresByVertexName,
+                  finalVertexIdByVertexName,
+                  edgeReqsByVertexName,
+                  edgeReqs,
+                  sb)
+        }
 
-        processMatchRequests(graph, g,
-                matchReqs,
-                maxHitsPerType,
-                percentageThresholdByVertexName,
-                maxScoresByVertexName,
-                finalVertexIdByVertexName,
-                edgeReqsByVertexName,
-                edgeReqs,
-                sb)
 
         trans.commit()
         successCount++
@@ -1988,6 +1923,148 @@ class Matcher {
     return [edgeReqsByVertexName, edgeReqs]
   }
 
+  static createEdgesSlim(GraphTraversalSource gTrav, Set<EdgeRequest> edgeReqs, Map<String, Map<ORID, List<MatchReq>>> finalVertexIdByVertexName) {
+
+    edgeReqs.each { it ->
+
+      Map<ORID, List<MatchReq>> fromIds = finalVertexIdByVertexName?.get(it.fromVertexName)
+      Map<ORID, List<MatchReq>> toIds = finalVertexIdByVertexName?.get(it.toVertexName)
+
+      fromIds?.forEach { fromId, fromScore ->
+
+        toIds?.forEach { toId, toScore ->
+
+          if (fromId != null && toId != null) {
+
+            ORID[] foundIds = gTrav.V(toId)
+                    .both()
+                    .hasId(P.within(fromId)).id()
+                    .toSet() as ORID[]
+
+            if (foundIds.size() == 0) {
+
+              def fromV = gTrav.V(fromId)
+              def toV = gTrav.V(toId)
+
+              gTrav.addE(it.label)
+                      .from(fromV).to(toV)
+                      .next()
+
+
+            }
+          }
+        }
+
+      }
+
+
+    }
+  }
+  static String escapeLucene(String s) {
+//    return s;
+    StringBuilder sb = new StringBuilder();
+
+    for(int i = 0; i < s.length(); ++i) {
+      char c = s.charAt(i);
+      if (c == '\\' ||
+//              c == '+' || c == '-' ||
+              c == '!' || c == '(' ||
+//          c == ')' || c == ':' || c == '^' || c == '[' || c == ']' ||
+          c == '"'
+//          || c == '{' || c == '}' || c == '~' || c == '*' ||
+//          c == '?' || c == '|' || c == '&' || c == '/' || c == "'"
+      )
+      {
+        sb.append('\\');
+      }
+
+      sb.append(c);
+    }
+
+    return sb.toString();
+  }
+  static matchVerticesSlim(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs) {
+
+
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName = new HashMap<>()
+
+    Map<String, List<MatchReq>> matchReqByVertexName = new HashMap<>()
+
+    matchReqs.each {
+      List<MatchReq> matchReqList = matchReqByVertexName.computeIfAbsent(it.vertexName, { k -> new ArrayList<>() })
+
+      // LPPM - 25 June 2019 - reduce the number of combinations below by pruning out any records that don't have
+      // any hits in the graph as early as possible.  The logic here is that if a match request does not have any matches
+      // on its own, what hope do we have to use it as a filter combined with other entries???  This is especially true
+      // when the NLP engines give us false positives (e.g. erroneous matches for names, dates, etc).
+//      if (it.hasGraphEntries(graph, gTravSource.V(), sb)) {
+      matchReqList.push(it)
+      matchReqListByOridByVertexName.computeIfAbsent(it.vertexName, { k -> new HashMap<>() })
+//      } else {
+//        sb?.append("\nremoved match Request $it from the list as it was not in the graph, and marked as searchable without updates\n")
+//
+//      }
+    }
+
+
+    matchReqByVertexName.each { vertexName, v ->
+
+
+      // LPPM - must do a deep copy here, because unique is a bit nasty and actually changes the
+      // original record.
+      List<MatchReq> vFiltered = []
+
+      vFiltered.addAll(v.findAll { it2 -> !(it2.excludeFromSearch) })
+
+
+      List<MatchReq> vCopy2 = []
+      vCopy2.addAll(v)
+
+
+      List<MatchReq> uniqueProps = vCopy2.unique { a, b -> a.propName <=> b.propName }
+      String vertexLabel =  uniqueProps.size() > 0 ? uniqueProps.get(0).vertexLabel : vertexName
+
+//        int maxExpectedSizeOfQueries = uniqueProps.size()
+
+
+      List<MatchReq> mandatoryFields = uniqueProps.findAll { it2 -> it2.mandatoryInSearch }
+      List<MatchReq> updateFields = uniqueProps.findAll { it2 -> !it2.excludeFromUpdate }
+
+      def (String jsonToMerge, Map<String, Object> sqlParams) = createJsonMergeParam(updateFields, vertexLabel)
+
+
+      String searchClassAttribs = createSearchClassAttribs(mandatoryFields)
+
+      boolean isPureInsert = "()".equals(searchClassAttribs)
+      String whereClause = isPureInsert? "":
+              "WHERE SEARCH_CLASS ('${searchClassAttribs}') = true"
+
+      String sqlStr = "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} "
+      def retVals = App.graph.executeSql(sqlStr, sqlParams)
+      retVals.each { OGremlinResult result ->
+        result.getVertex().ifPresent({ res ->
+          Map<ORID, List<MatchReq>> mrl = matchReqListByOridByVertexName.get(vertexName)
+          mrl.computeIfAbsent(res.id(), { k -> uniqueProps })
+        })
+      }
+    }
+    return [matchReqByVertexName, matchReqListByOridByVertexName]
+  }
+
+
+  static processMatchRequestsSlim(OrientStandardGraph graph, GraphTraversalSource g,
+                                  List<MatchReq> matchReqs,
+                                  Set<EdgeRequest> edgeReqs) {
+
+    def (
+    Map<String, List<MatchReq>>            matchReqByVertexName,
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
+    ) = matchVerticesSlim(graph, g, matchReqs)
+
+    createEdgesSlim(g, (Set<EdgeRequest>) edgeReqs, matchReqListByOridByVertexName)
+
+  }
+
   static createEdges(GraphTraversalSource gTrav, Set<EdgeRequest> edgeReqs, Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName, Map<String, AtomicDouble> maxScoresByVertexName, StringBuffer sb = null) {
 
     edgeReqs.each { it ->
@@ -2329,7 +2406,7 @@ def rulesStr = '''
 	   ,"props":
 		[
 		  {
-			"name": "Location_Address_parser.postcode"
+			"name": "Location_Address_parser_postcode"
 		   ,"val": "${postcode}"
 		   ,"type":"[Ljava.lang.String;"
 		   ,"excludeFromUpdate": true

@@ -714,7 +714,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                   property("Location_Address_Post_Code", item.get("pg_Post_Code"))
 
 
-          locationTrav = addr.addPropsToGraphTraverser(locationTrav, "Location_Address_parser.", sb)
+          locationTrav = addr.addPropsToGraphTraverser(locationTrav, "Location_Address_parser_", sb)
           location = locationTrav.next()
 
           // property("Location_Address_Street", item.get("pg_location_street")).

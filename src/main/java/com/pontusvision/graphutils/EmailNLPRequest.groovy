@@ -85,7 +85,10 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   static void upsertEmailNLPRequestArray(
           OrientStandardGraph graph,
           GraphTraversalSource g,
-          EmailNLPRequest[] reqs) {
+          EmailNLPRequest[] reqs,
+          String ruleName) {
+    Boolean isSlim = ruleName?.toLowerCase()?.contains("slim");
+
     Transaction trans = App.graph.tx()
 
     for (EmailNLPRequest req : reqs) {
@@ -93,7 +96,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
         if (!trans.isOpen()) {
           trans.open()
         }
-        upsertEmailNLPRequest(graph, g, req)
+        upsertEmailNLPRequest(graph, g, req,isSlim)
         trans.commit()
       } catch (Throwable t) {
         trans.rollback()
@@ -105,12 +108,95 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
   }
 
+  static processUpsertNLPRequestSlim(OrientStandardGraph graph,
+                                 GraphTraversalSource g,
+                                 EmailNLPRequest req,
+                                 UpdateReq updateReq){
+
+//    StringBuffer sb = new StringBuffer()
+    Double pcntThreshold = 1.0
+    Map<String, String> item = getMapFromEmailNLPRequest(req)
+    def (
+    List<MatchReq>            matchReqs,
+    Map<String, AtomicDouble> maxScoresByVertexName,
+    Map<String, Double>       percentageThresholdByVertexName
+    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold)
+
+    def (
+    Map<String, List<MatchReq>>            matchReqByVertexName,
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
+
+    ) = Matcher.matchVerticesSlim(graph, g, matchReqs)
+
+
+    def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
+    Matcher.parseEdges(updateReq)
+
+    Matcher.createEdgesSlim(g, (Set<EdgeRequest>) edgeReqs, matchReqListByOridByVertexName)
+
+
+
+    String[] emailAddrs = [req.email?:[], req.toEmailAddresses?:[],
+                           req.fromEmailAddresses?:[], req.ccEmailAddresses?:[], req.bccEmailAddresses?:[]].flatten()
+
+    req.person = [ req.person?:[], req.fromEmailNames?:[],
+                   req.toEmailNames?:[], req.ccEmailNames?:[], req.bccEmailNames?:[]  ].flatten()
+
+    matchReqListByOridByVertexName.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
+      createEventNLPGroups(req, it.key, emailAddrs)
+    })
+
+  }
+
+  static processUpsertNLPRequest(OrientStandardGraph graph,
+                                 GraphTraversalSource g,
+                                 EmailNLPRequest req,
+                                 UpdateReq updateReq){
+
+//    StringBuffer sb = new StringBuffer()
+    Double pcntThreshold = 1.0
+
+    Map<String, String> item = getMapFromEmailNLPRequest(req)
+    def (
+    List<MatchReq>            matchReqs,
+    Map<String, AtomicDouble> maxScoresByVertexName,
+    Map<String, Double>       percentageThresholdByVertexName
+    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold)
+
+    def (
+    Map<String, Map<ORID, AtomicDouble>>   vertexScoreMapByVertexNameLocal,
+    Map<String, List<MatchReq>>            matchReqByVertexName,
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
+
+    ) = Matcher.matchVertices(graph, g, matchReqs, 100)
+
+    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
+
+    def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
+    Matcher.parseEdges(updateReq)
+
+    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
+            percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
+    String[] emailAddrs = [req.email?:[], req.toEmailAddresses?:[],
+                           req.fromEmailAddresses?:[], req.ccEmailAddresses?:[], req.bccEmailAddresses?:[]].flatten()
+
+    req.person = [ req.person?:[], req.fromEmailNames?:[],
+                   req.toEmailNames?:[], req.ccEmailNames?:[], req.bccEmailNames?:[]  ].flatten()
+
+    finalVertexIdByVertexName.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
+      createEventNLPGroups(req, it.key, emailAddrs)
+    })
+
+
+    return finalVertexIdByVertexName
+  }
+
 
   static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequest(
           OrientStandardGraph graph,
           GraphTraversalSource g,
-          EmailNLPRequest req) {
-    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName
+          EmailNLPRequest req,
+          Boolean useSlim) {
 
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
@@ -134,42 +220,17 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
     createEdge(req.attachmentId ? 'Email_Attachment' : 'Email_Body', eventEmailVtx.name, emailBodyOrAttachmentVtx.name, updateReq)
 
+    if (useSlim)
+    {
+      processUpsertNLPRequestSlim(graph,g,req, updateReq) as Map<String, Map<ORID, AtomicDouble>>
+    }
+    else
+    {
 
-    StringBuffer sb = new StringBuffer()
-    Double pcntThreshold = 1.0
-    Map<String, String> item = getMapFromEmailNLPRequest(req)
-    def (
-    List<MatchReq>            matchReqs,
-    Map<String, AtomicDouble> maxScoresByVertexName,
-    Map<String, Double>       percentageThresholdByVertexName
-    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
-
-    def (
-    Map<String, Map<ORID, AtomicDouble>>   vertexScoreMapByVertexNameLocal,
-    Map<String, List<MatchReq>>            matchReqByVertexName,
-    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
-
-    ) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
-
-    vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
-
-    def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
-    Matcher.parseEdges(updateReq)
-
-    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
-            percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
-    String[] emailAddrs = [req.email?:[], req.toEmailAddresses?:[],
-                           req.fromEmailAddresses?:[], req.ccEmailAddresses?:[], req.bccEmailAddresses?:[]].flatten()
-
-    req.person = [ req.person?:[], req.fromEmailNames?:[],
-                   req.toEmailNames?:[], req.ccEmailNames?:[], req.bccEmailNames?:[]  ].flatten()
-
-    finalVertexIdByVertexName.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
-      createEventNLPGroups(req, it.key, emailAddrs)
-    })
+      processUpsertNLPRequest(graph,g,req, updateReq)
+    }
 
 
-    return finalVertexIdByVertexName
   }
 
 

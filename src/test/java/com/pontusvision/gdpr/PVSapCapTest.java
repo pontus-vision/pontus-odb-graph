@@ -239,7 +239,7 @@ public class PVSapCapTest extends AppTest {
 
       String marcosCountry =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARCOS KELVIN')).out('Is_Located')" +
-                      ".properties('Location_Address_parser.country').value().next().toString()").get().toString();
+                      ".properties('Location_Address_parser_country').value().next().toString()").get().toString();
       assertEquals("[brasil]", marcosCountry, "Marcos is located in Brasil");
 
 
@@ -269,7 +269,7 @@ public class PVSapCapTest extends AppTest {
 
       String locationParser =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('QUASIMODO PARIS')).out('Is_Located')" +
-                      ".properties('Location_Address_parser.city').value().next().toString()").get().toString();
+                      ".properties('Location_Address_parser_city').value().next().toString()").get().toString();
       assertEquals("[fortaleza]", locationParser, "Quasimodo is located in Fortaleza - Brasil");
 
     } catch (ExecutionException e) {
@@ -373,7 +373,7 @@ public class PVSapCapTest extends AppTest {
 
       String locationAddress =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('JAMES BONDINHO'))" +
-                      ".out('Is_Located').properties('Location_Address_parser.city').value().next().toString()").get().toString();
+                      ".out('Is_Located').properties('Location_Address_parser_city').value().next().toString()").get().toString();
       assertEquals("[blumenau]", locationAddress, "James' city");
 
       String jamesTaxNumber =
@@ -388,7 +388,7 @@ public class PVSapCapTest extends AppTest {
 
       String schoemacherPostalCode =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('SCHOEMACHER')).out('Is_Located')" +
-                      ".properties('Location_Address_parser.postcode').value().next().toString()").get().toString();
+                      ".properties('Location_Address_parser_postcode').value().next().toString()").get().toString();
       assertEquals("[86787-954]", schoemacherPostalCode, "Schoemacher's post code");
 
     } catch (ExecutionException e) {
