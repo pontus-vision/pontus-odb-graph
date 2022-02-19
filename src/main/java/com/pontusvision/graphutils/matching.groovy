@@ -2024,6 +2024,7 @@ class Matcher {
       List<MatchReq> uniqueProps = vCopy2.unique { a, b -> a.propName <=> b.propName }
       String vertexLabel =  uniqueProps.size() > 0 ? uniqueProps.get(0).vertexLabel : vertexName
 
+
 //        int maxExpectedSizeOfQueries = uniqueProps.size()
 
 
@@ -2035,13 +2036,16 @@ class Matcher {
 
       String searchClassAttribs = createSearchClassAttribs(mandatoryFields)
 
-      boolean isPureInsert = "()".equals(searchClassAttribs)
-      String whereClause = isPureInsert? "":
+      final boolean isPureInsert = "()".equals(searchClassAttribs)
+      String whereClause =
               "WHERE SEARCH_CLASS ('${searchClassAttribs}') = true"
 
-      String sqlStr = "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} "
-      def retVals = App.graph.executeSql(sqlStr, sqlParams)
+      final String sqlStr = isPureInsert?
+              "INSERT INTO `${vertexLabel}` CONTENT ${jsonToMerge}":
+              "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} "
+      final def retVals = App.graph.executeSql(sqlStr, sqlParams)
       retVals.each { OGremlinResult result ->
+
         result.getVertex().ifPresent({ res ->
           Map<ORID, List<MatchReq>> mrl = matchReqListByOridByVertexName.get(vertexName)
           mrl.computeIfAbsent(res.id(), { k -> uniqueProps })
