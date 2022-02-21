@@ -12,7 +12,14 @@ public class PostCode
   {
     postCodeFormatted = format(postCodeRaw);
   }
+  public static java.lang.String format(Integer raw)
+  {
+    if (raw == null){
+      return null;
+    }
+    return format(Integer.toString(raw));
 
+  }
   public static java.lang.String format(java.lang.String raw)
   {
     if (raw == null){
