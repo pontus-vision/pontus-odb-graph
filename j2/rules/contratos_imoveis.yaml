@@ -20,7 +20,7 @@ updatereq:
     
     - label: Location_Address
       props:
-        - name: Location_Address_parser_postcode
+        - name: Location_Address_parser.postcode
           val: ${pg_nlp_res_post_code}
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"

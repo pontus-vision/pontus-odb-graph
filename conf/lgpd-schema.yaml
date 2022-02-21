@@ -622,64 +622,64 @@ propertyKeys:
   - name: Location_Address_Type
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_category
+  - name: Location_Address_parser.category
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_city
+  - name: Location_Address_parser.city
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_city_district
+  - name: Location_Address_parser.city_district
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_country
+  - name: Location_Address_parser.country
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_country_region
+  - name: Location_Address_parser.country_region
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_entrance
+  - name: Location_Address_parser.entrance
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_house
+  - name: Location_Address_parser.house
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_house_number
+  - name: Location_Address_parser.house_number
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_island
+  - name: Location_Address_parser.island
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_level
+  - name: Location_Address_parser.level
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_near
+  - name: Location_Address_parser.near
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_po_box
+  - name: Location_Address_parser.po_box
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_postcode
+  - name: Location_Address_parser.postcode
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_road
+  - name: Location_Address_parser.road
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_staircase
+  - name: Location_Address_parser.staircase
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_state
+  - name: Location_Address_parser.state
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_state_district
+  - name: Location_Address_parser.state_district
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_suburb
+  - name: Location_Address_parser.suburb
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_unit
+  - name: Location_Address_parser.unit
     dataType: String
     cardinality: SINGLE
-  - name: Location_Address_parser_world_region
+  - name: Location_Address_parser.world_region
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_AWS_Instance
@@ -3118,26 +3118,26 @@ vertexIndexes:
       - Location_Address_State
       - Location_Address_Street
       - Location_Address_Type
-      - Location_Address_parser_category
-      - Location_Address_parser_city
-      - Location_Address_parser_city_district
-      - Location_Address_parser_country
-      - Location_Address_parser_country_region
-      - Location_Address_parser_entrance
-      - Location_Address_parser_house
-      - Location_Address_parser_house_number
-      - Location_Address_parser_island
-      - Location_Address_parser_level
-      - Location_Address_parser_near
-      - Location_Address_parser_po_box
-      - Location_Address_parser_postcode
-      - Location_Address_parser_road
-      - Location_Address_parser_staircase
-      - Location_Address_parser_state
-      - Location_Address_parser_state_district
-      - Location_Address_parser_suburb
-      - Location_Address_parser_unit
-      - Location_Address_parser_world_region
+      - Location_Address_parser.category
+      - Location_Address_parser.city
+      - Location_Address_parser.city_district
+      - Location_Address_parser.country
+      - Location_Address_parser.country_region
+      - Location_Address_parser.entrance
+      - Location_Address_parser.house
+      - Location_Address_parser.house_number
+      - Location_Address_parser.island
+      - Location_Address_parser.level
+      - Location_Address_parser.near
+      - Location_Address_parser.po_box
+      - Location_Address_parser.postcode
+      - Location_Address_parser.road
+      - Location_Address_parser.staircase
+      - Location_Address_parser.state
+      - Location_Address_parser.state_district
+      - Location_Address_parser.suburb
+      - Location_Address_parser.unit
+      - Location_Address_parser.world_region
     propertyKeysMappings:
     
       {}
