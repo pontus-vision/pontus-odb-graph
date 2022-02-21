@@ -1966,11 +1966,12 @@ class Matcher {
 
     for(int i = 0; i < s.length(); ++i) {
       char c = s.charAt(i);
-      if (c == '\\' ||
+      if (c == '\\'
 //              c == '+' || c == '-' ||
-              c == '!' || c == '(' ||
+             || c == '!'
+//              || c == '('
 //          c == ')' || c == ':' || c == '^' || c == '[' || c == ']' ||
-          c == '"'
+          ||c == '"'
 //          || c == '{' || c == '}' || c == '~' || c == '*' ||
 //          c == '?' || c == '|' || c == '&' || c == '/' || c == "'"
       )
@@ -1978,7 +1979,12 @@ class Matcher {
         sb.append('\\');
       }
 
-      sb.append(c);
+      if (c != '\n' && c != '\''){
+        sb.append(c)
+      }
+      else {
+        sb.append (' ')
+      }
     }
 
     return sb.toString();
@@ -2042,7 +2048,7 @@ class Matcher {
 
       final String sqlStr = isPureInsert?
               "INSERT INTO `${vertexLabel}` CONTENT ${jsonToMerge}":
-              "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} "
+              "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} LOCK record LIMIT 1 "
       final def retVals = App.graph.executeSql(sqlStr, sqlParams)
       retVals.each { OGremlinResult result ->
 
