@@ -330,26 +330,26 @@ schema:
         - name: State
         - name: Street
         - name: Type
-        - name: parser.category
-        - name: parser.city
-        - name: parser.city_district
-        - name: parser.country
-        - name: parser.country_region
-        - name: parser.entrance
-        - name: parser.house
-        - name: parser.house_number
-        - name: parser.island
-        - name: parser.level
-        - name: parser.near
-        - name: parser.po_box
-        - name: parser.postcode
-        - name: parser.road
-        - name: parser.staircase
-        - name: parser.state
-        - name: parser.state_district
-        - name: parser.suburb
-        - name: parser.unit
-        - name: parser.world_region
+        - name: parser_category
+        - name: parser_city
+        - name: parser_city_district
+        - name: parser_country
+        - name: parser_country_region
+        - name: parser_entrance
+        - name: parser_house
+        - name: parser_house_number
+        - name: parser_island
+        - name: parser_level
+        - name: parser_near
+        - name: parser_po_box
+        - name: parser_postcode
+        - name: parser_road
+        - name: parser_staircase
+        - name: parser_state
+        - name: parser_state_district
+        - name: parser_suburb
+        - name: parser_unit
+        - name: parser_world_region
 
     - name: "Object_AWS_Instance"
       partition: false
