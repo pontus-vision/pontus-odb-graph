@@ -5,7 +5,7 @@ public class Rules {
   UpdateReq updatereq;
   Double percentageThreshold;
   Integer maxHitsPerType;
-  Boolean useSlim = false;
+  Boolean useSlim = true;
 
   public Boolean getUseSlim() {
     return this.useSlim;
