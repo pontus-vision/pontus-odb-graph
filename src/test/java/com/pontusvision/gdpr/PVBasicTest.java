@@ -736,7 +736,7 @@ public class PVBasicTest extends AppTest {
 
     try {
 
-      jsonTestUtil("totvs-ra-real.json", "$.objs", "totvs_protheus_ra_funcionario");
+      jsonTestUtil("totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
 
       String martaEmailsCount =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +

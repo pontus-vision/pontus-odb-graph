@@ -267,7 +267,7 @@ rules:
 #      "RA_TPDEFFI": ""
 #      "RA_ZONASEC": ""
 #    }
-  totvs_protheus_ra_funcionario:
+  totvs_protheus_sra_funcionario:
     vertices:
       - label: Person_Natural
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}"
@@ -389,7 +389,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "totvs/protheus/ra_funcionario"
+            val: "totvs/protheus/sra_funcionario"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -409,7 +409,7 @@ rules:
       - label: Event_Group_Ingestion
         props:
           Type:
-            val: "totvs/protheus/ra_funcionario"
+            val: "totvs/protheus/sra_funcionario"
           Operation:
             val: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
@@ -424,8 +424,8 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "TOTVS/PROTHEUS/RA_FUNCIONARIO"
-#          Type: "totvs/protheus/ra_funcionario"
+          Name: "TOTVS/PROTHEUS/SRA_FUNCIONARIO"
+#          Type: "totvs/protheus/sra_funcionario"
 #          Description: "Registros de Funcionario no protheus/Totvs"
 
     edges:

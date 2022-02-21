@@ -164,7 +164,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: TOTVS/PROTHEUS/UNCIONARIO
+          val: TOTVS/PROTHEUS/SRA_FUNCIONARIO
           mandatoryInSearch: True
 
   edges:
