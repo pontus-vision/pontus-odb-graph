@@ -643,7 +643,7 @@ public class PVBasicTest extends AppTest {
 
       String pabloStreetName =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('PABLO MATO ESCOBAR'))" +
-                      ".out('Is_Located').properties('Location_Address_parser.road').value().next().toString()").get().toString();
+                      ".out('Is_Located').properties('Location_Address_parser_road').value().next().toString()").get().toString();
       assertEquals("[rua moreira da silva sauro, ruamoreiradasilvasauro, ruamoreiradonasilvasauro]",
               pabloStreetName, "Pablo's street name");
 
@@ -656,7 +656,7 @@ public class PVBasicTest extends AppTest {
 
 //      String orgHQ =
 //              App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('ARMS MANUTENCAO E R'))" +
-//                      ".out('Is_Located').properties('Location_Address_parser.state').value().next().toString()").get().toString();
+//                      ".out('Is_Located').properties('Location_Address_parser_state').value().next().toString()").get().toString();
 //      assertEquals("[pr, parana, paraná]", orgHQ, "Company's State HQ");
 
 //      TODO: investigar melhor o location.parser
@@ -746,7 +746,7 @@ public class PVBasicTest extends AppTest {
 
       String locationAddressDescription =
               App.executor.eval("App.g.V().has('Location_Address_Full_Address',eq('RUA SAMPAIO CASA, PONTE, JAGUARÃO - RS, 333333, BRASIL'))" +
-                      ".properties('Location_Address_parser.city', 'Location_Address_parser.postcode').value().toList()").get().toString();
+                      ".properties('Location_Address_parser_city', 'Location_Address_parser_postcode').value().toList()").get().toString();
       assertEquals("[[casa ponte jaguarão, casapontejaguarao], [333333]]", locationAddressDescription, "Address parser City and Post Code");
 
 

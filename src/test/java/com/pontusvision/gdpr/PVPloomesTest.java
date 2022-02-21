@@ -32,12 +32,12 @@ public class PVPloomesTest extends AppTest {
 
       String getCityParser =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('COMIDAS 1'))" +
-                      ".out('Is_Located').properties('Location_Address_parser.city').value().next().toString()").get().toString();
+                      ".out('Is_Located').properties('Location_Address_parser_city').value().next().toString()").get().toString();
       assertEquals("[angra dos reis, angradosreis]", getCityParser, "A cidade de COMIDAS 1 é Angra dos Reis");
 
       String getStateParser =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('COMIDAS 2'))" +
-                      ".out('Is_Located').properties('Location_Address_parser.state').value().next().toString()").get().toString();
+                      ".out('Is_Located').properties('Location_Address_parser_state').value().next().toString()").get().toString();
       assertEquals("[laspezia, santopadre, saopaulo, sp, stradaprovinciale]", getStateParser, "O estado de COMIDAS 2 é São Paulo");
 
 //      String getNullAddress =
@@ -70,7 +70,7 @@ public class PVPloomesTest extends AppTest {
 
       String getAddressParserSubUrb =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MATHEUS ROCHA'))" +
-                      ".out('Is_Located').properties('Location_Address_parser.suburb').value().next().toString()").get().toString();
+                      ".out('Is_Located').properties('Location_Address_parser_suburb').value().next().toString()").get().toString();
       assertEquals("[jardimlaranjeiras, jd laranjeiras]", getAddressParserSubUrb, "Matheus Rocha's neighborhood");
 
       String locationAddressPostCode =
@@ -79,13 +79,13 @@ public class PVPloomesTest extends AppTest {
       assertEquals("54315085", locationAddressPostCode, "Post Code for Domingos Coml LTDA");
 
       String valueMapJoinville =
-              App.executor.eval("App.g.V().has('Location_Address_parser.city', eq('[joinville]'))" +
+              App.executor.eval("App.g.V().has('Location_Address_parser_city', eq('[joinville]'))" +
                       ".in('Is_Located').valueMap('Person_Organisation_Name').next().toString()").get().toString();
       assertEquals("[Person_Organisation_Name:[DOCES JOINVILLE LTDA]]", valueMapJoinville,
               "valueMap for Person.Org.Name for Doces Joinville LTDA @ city of Joinville");
 
       String roadToGloria =
-              App.executor.eval("App.g.V().has('Location_Address_parser.road', eq('[avenida das almondegas, avenidadasalmondegas]'))" +
+              App.executor.eval("App.g.V().has('Location_Address_parser_road', eq('[avenida das almondegas, avenidadasalmondegas]'))" +
                       ".in('Is_Located').properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
       assertEquals("GLÓRIA KRACKOVSZI", roadToGloria, "Avenida das Almondegas is where Glória Krackovszi lives");
 

@@ -185,11 +185,11 @@ public class PVTotvsTest extends AppTest {
 
       String getCityParser =
               App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('DOMINGOS COML LTDA'))" +
-                      ".out('Is_Located').properties('Location_Address_parser.city').value().next().toString()").get().toString();
+                      ".out('Is_Located').properties('Location_Address_parser_city').value().next().toString()").get().toString();
       assertEquals("[jaboataodosguararapes, jaboatão dos guararapes]", getCityParser, "city of the company DOMINGOS COML LTDA");
 
       String getPhoneNumberWithParser =
-              App.executor.eval("App.g.V().has('Location_Address_parser.postcode', eq('[90420040]'))" +
+              App.executor.eval("App.g.V().has('Location_Address_parser_postcode', eq('[90420040]'))" +
                       ".in('Is_Located').out('Has_Phone').properties('Object_Phone_Number_Raw').value().next().toString()").get().toString();
       assertEquals("33316400", getPhoneNumberWithParser, "Phone number of the company URUGUAY AUTOMACAO INDL LTDA");
 

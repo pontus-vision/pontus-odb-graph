@@ -5,6 +5,15 @@ public class Rules {
   UpdateReq updatereq;
   Double percentageThreshold;
   Integer maxHitsPerType;
+  Boolean useSlim = false;
+
+  public Boolean getUseSlim() {
+    return this.useSlim;
+  }
+
+  public void setUseSlim(Boolean useSlim) {
+    this.useSlim = useSlim;
+  }
 
   public Double getPercentageThreshold() {
     return percentageThreshold;
