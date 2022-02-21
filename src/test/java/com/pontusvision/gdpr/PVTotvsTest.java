@@ -131,7 +131,7 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00003TotvsProtheusRaFuncionario() throws InterruptedException {
 
-    jsonTestUtil("totvs-ra-real.json", "$.objs", "totvs_protheus_ra_funcionario");
+    jsonTestUtil("totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
 
     try {
 

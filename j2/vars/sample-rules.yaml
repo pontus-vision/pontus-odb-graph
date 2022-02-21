@@ -476,7 +476,7 @@ rules:
 
       - label: Location_Address
         props:
-          "parser.postcode":
+          "parser_postcode":
             val: "${pg_nlp_res_post_code}"
             type: "[Ljava.lang.String;"
             excludeFromUpdate: true

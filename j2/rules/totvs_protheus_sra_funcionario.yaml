@@ -127,7 +127,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: totvs/protheus/ra_funcionario
+          val: totvs/protheus/sra_funcionario
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -152,7 +152,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: totvs/protheus/ra_funcionario
+          val: totvs/protheus/sra_funcionario
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -164,7 +164,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: TOTVS/PROTHEUS/RA_FUNCIONARIO
+          val: TOTVS/PROTHEUS/SRA_FUNCIONARIO
           mandatoryInSearch: True
 
   edges:

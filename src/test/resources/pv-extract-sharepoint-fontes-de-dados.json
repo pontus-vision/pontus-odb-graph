@@ -301,7 +301,7 @@
           "Title": "ERP-Funcionário",
           "Sistema": "Porsche",
           "Tipo_x0020_Sistema": "Onprem",
-          "Tabela": "/ra_funcionario",
+          "Tabela": "/sra_funcionario",
           "Descri_x00e7__x00e3_o": "Sistema de ERP para cadastro dos colaboradores",
           "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
           "Pol_x00ed_tica_x0020_de_x0020_Re": "25 anos",
