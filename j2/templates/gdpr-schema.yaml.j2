@@ -63,6 +63,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: {{ vertex.indexType | default('UNIQUE') }}
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_{{ vertex.name }}

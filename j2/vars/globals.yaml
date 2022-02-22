@@ -61,6 +61,7 @@ schema:
     - name: "Event_Consent"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
       props:
         - name: Data_Origin
         - name: Created_By
@@ -232,6 +233,7 @@ schema:
     - name: "Event_Ingestion"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
       props:
         - name: Business_Rules
           index: false
@@ -584,6 +586,7 @@ schema:
     - name: "Object_Email_Address"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
       props:
         - name: Email
         - name: Host
@@ -688,6 +691,8 @@ schema:
     - name: "Object_Identity_Card"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
+
       props:
         - name: Id_Name
         - name: Id_Text
@@ -1014,6 +1019,8 @@ schema:
     - name: "Person_Natural"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
+
       props:
         - name: Customer_ID
         - name: Id

@@ -104,14 +104,17 @@ class FileNLPRequest implements Serializable {
   static void upsertFileNLPRequestArray(
           OrientStandardGraph graph,
           GraphTraversalSource g,
-          FileNLPRequest[] reqs) {
+          FileNLPRequest[] reqs,
+          String ruleName) {
+    Boolean isSlim = App.useSlim || ruleName?.toLowerCase()?.contains("slim");
+
     Transaction trans = App.graph.tx()
     try {
       if (!trans.isOpen()) {
         trans.open()
       }
       for (FileNLPRequest req : reqs) {
-        upsertFileNLPRequest(graph, g, req)
+        upsertFileNLPRequest(graph, g, req, isSlim)
       }
       trans.commit()
     } catch (Throwable t) {
@@ -126,7 +129,8 @@ class FileNLPRequest implements Serializable {
   static Map<String, Map<ORID, AtomicDouble>> upsertFileNLPRequest(
           OrientStandardGraph graph,
           GraphTraversalSource g,
-          FileNLPRequest req) {
+          FileNLPRequest req,
+          Boolean useSlim) {
     Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName
 
     UpdateReq updateReq = new UpdateReq()
@@ -141,6 +145,55 @@ class FileNLPRequest implements Serializable {
     Vertex eventFileVtx = createEventFileIngestionVtx(req, updateReq)
     createEdge('Has_Ingestion_Event', eventGroupFileIngestionVtx.name, eventFileVtx.name, updateReq)
 
+    if (useSlim){
+      processUpsertFileNLPRequestSlim(graph, g, req, updateReq)
+    }
+    else {
+      processUpsertFileNLPRequest(graph,g,req,updateReq)
+
+    }
+
+  }
+
+  static processUpsertFileNLPRequestSlim(OrientStandardGraph graph,
+                                     GraphTraversalSource g,
+                                     FileNLPRequest req,
+                                     UpdateReq updateReq){
+
+    StringBuffer sb = new StringBuffer()
+    Double pcntThreshold = 1.0
+    Map<String, String> item = getMapFromFileNLPRequest(req)
+    def (
+    List<MatchReq>            matchReqs,
+    Map<String, AtomicDouble> maxScoresByVertexName,
+    Map<String, Double>       percentageThresholdByVertexName
+    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
+
+    def (
+    Map<String, List<MatchReq>>            matchReqByVertexName,
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
+    ) = Matcher.matchVerticesSlim(graph, g, matchReqs)
+
+    def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
+    Matcher.parseEdges(updateReq)
+
+    Matcher.createEdgesSlim(g, (Set<EdgeRequest>) edgeReqs, matchReqListByOridByVertexName)
+
+
+//    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexNameLocal, matchReqByVertexName, maxScoresByVertexName,
+//            percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
+
+    matchReqListByOridByVertexName.get("Event_File_Ingestion").entrySet().forEach({
+      createEventNLPGroups(req, it.key, req.email)
+    })
+
+
+  }
+
+  static processUpsertFileNLPRequest(OrientStandardGraph graph,
+                                     GraphTraversalSource g,
+                                     FileNLPRequest req,
+                                     UpdateReq updateReq){
 
     StringBuffer sb = new StringBuffer()
     Double pcntThreshold = 1.0
@@ -156,12 +209,12 @@ class FileNLPRequest implements Serializable {
     Map<String, List<MatchReq>>          matchReqByVertexName
     ) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
 
-    vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
+//    vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
 
     def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
     Matcher.parseEdges(updateReq)
 
-    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexName, matchReqByVertexName, maxScoresByVertexName,
+    Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = processUpdateReq(g, vertexScoreMapByVertexNameLocal, matchReqByVertexName, maxScoresByVertexName,
             percentageThresholdByVertexName, edgeReqsByVertexName, edgeReqs)
 
     finalVertexIdByVertexName.get("Event_File_Ingestion").entrySet().forEach({
@@ -169,7 +222,6 @@ class FileNLPRequest implements Serializable {
     })
 
 
-    return finalVertexIdByVertexName
   }
 
   static Map<String, Map<ORID, AtomicDouble>> processUpdateReq(

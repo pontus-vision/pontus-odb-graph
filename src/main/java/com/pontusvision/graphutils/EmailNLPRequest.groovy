@@ -87,7 +87,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
           GraphTraversalSource g,
           EmailNLPRequest[] reqs,
           String ruleName) {
-    Boolean isSlim = ruleName?.toLowerCase()?.contains("slim");
+    Boolean isSlim = App.useSlim || ruleName?.toLowerCase()?.contains("slim");
 
     Transaction trans = App.graph.tx()
 

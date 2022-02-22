@@ -119,10 +119,22 @@ class ODBSchemaManager {
 
           }
           if (idx.mixedIndex == "search") {
+            ODocument metadata = new ODocument();
+            metadata.field("indexRadix", true);
+            metadata.field("stopWords", [""]);
+            metadata.field("separatorChars", " :;?!.,");
+            metadata.field("ignoreChars", "");
+            metadata.field("minWordLength", 1);
+
             if (!oClass.getClassIndex(idx.name)) {
-              oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
-                      null as ODocument,
-                      "LUCENE", idx.propertyKeys as String[])
+//              oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
+//                      metadata as ODocument,
+//                      "LUCENE", idx.propertyKeys as String[])
+              OClass.INDEX_TYPE idxType = Enum.valueOf(OClass.INDEX_TYPE.class,idx.indexType)
+              oClass.createIndex(idx.name as String, idxType.toString(), null as OProgressListener,
+                      metadata as ODocument,
+                      null, idx.propertyKeys as String[])
+
 
             } else {
               System.out.println("Index ${idx.name} already exists.")
