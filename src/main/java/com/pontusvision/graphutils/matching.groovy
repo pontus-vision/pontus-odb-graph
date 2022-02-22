@@ -20,7 +20,6 @@ import groovy.json.JsonSlurper
 import groovy.text.GStringTemplateEngine
 import groovy.text.Template
 import org.apache.lucene.document.DateTools
-import org.apache.lucene.queryparser.classic.QueryParser
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResult
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet
@@ -339,6 +338,9 @@ class MatchReq<T> {
   private Double percentageThreshold
   private String predicateStr
   private Closure predicate
+
+
+  private String sqlPredicateStr
   private Convert<T> conv
   private StringBuffer sb = null
 
@@ -347,6 +349,9 @@ class MatchReq<T> {
   private boolean excludeFromSubsequenceSearch
   private boolean excludeFromUpdate
 
+  String getSqlPredicateStr() {
+    return sqlPredicateStr
+  }
 
   static Closure convertPredicateFromStr(String predicateStr) {
     if ("eq".equals(predicateStr)) {
@@ -379,6 +384,38 @@ class MatchReq<T> {
 
   }
 
+  static String convertPredicateToSqlStr(String predicateStr) {
+    if ("eq".equals(predicateStr)) {
+      return "="
+    } else if ("neq".equals(predicateStr)) {
+      return "<>"
+    } else if ("gt".equals(predicateStr)) {
+      return ">"
+    } else if ("lt".equals(predicateStr)) {
+      return "<"
+    } else if ("gte".equals(predicateStr)) {
+      return ">="
+    } else if ("lte".equals(predicateStr)) {
+      return "<"
+    } else if ("textContains".equals(predicateStr)) {
+      return "CONTAINSTEXT"
+    } else if ("textContainsPrefix".equals(predicateStr)) {
+      return "CONTAINSTEXT"
+//    } else if ("textContainsRegex".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textContainsRegex
+//    } else if ("textContainsFuzzy".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textContainsFuzzy
+//    } else if ("textPrefix".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textPrefix
+//    } else if ("textRegex".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textRegex
+//    } else if ("textFuzzy".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textFuzzy
+    } else return "="
+
+  }
+
+
   MatchReq(String attribVals, Class<T> attribType, String propName, String vertexName, String vertexLabel, String predicateStr, boolean excludeFromSearch = false, boolean excludeFromSubsequenceSearch = false, boolean excludeFromUpdate = false, boolean mandatoryInSearch = false, boolean processAll = false, double matchWeight, StringBuffer sb = null) {
     this.attribVal = attribVals
     this.attribType = attribType
@@ -389,7 +426,7 @@ class MatchReq<T> {
     this.conv = new Convert<>(attribType)
     this.predicateStr = predicateStr
     this.predicate = convertPredicateFromStr(predicateStr)
-
+    this.sqlPredicateStr = convertPredicateToSqlStr(predicateStr)
     this.sb = sb
 
     this.excludeFromSearch = excludeFromSearch
@@ -705,6 +742,8 @@ class Matcher {
     return ans
   }
 
+  static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+
   static String createSearchClassAttribs(List<MatchReq> mandatoryFields) {
     StringBuilder sb = new StringBuilder()
     long counter = 0
@@ -716,10 +755,37 @@ class Matcher {
         }
         counter++
         String attribVal = field.attribType == Date.class ?
-                "${DateTools.dateToString(field.attribNativeVal as Date, DateTools.Resolution.DAY)}" :
+                "${DateTools.dateToString(field.attribNativeVal as Date, DateTools.Resolution.SECOND)}" :
                 "\"${escapeLucene(field.attribNativeVal.toString())}\""
 
         sb.append(field.propName).append(":").append(attribVal)
+      }
+    }
+    sb.append(")")
+
+    return sb.toString()
+  }
+
+  static String createWhereClauseAttribs(List<MatchReq> mandatoryFields) {
+    StringBuilder sb = new StringBuilder()
+    long counter = 0
+    sb.append("(")
+    mandatoryFields.each { field ->
+      if (field.attribNativeVal) {
+        if (counter > 0) {
+          sb.append(" AND ")
+        }
+        counter++
+        Object attribVal = " :${field.propName}"
+//                (field.attribType == String.class) ?
+//                " '${field.attribNativeVal}'" :
+//                   (field.attribType == Date.class)?
+//                   "'${sdf.format(field.attribNativeVal as Date)}'"
+//                           :
+//        " ${field.attribNativeVal}"
+
+        String predicate = field.sqlPredicateStr
+        sb.append(field.propName).append(predicate).append(attribVal)
       }
     }
     sb.append(")")
@@ -731,7 +797,7 @@ class Matcher {
 //    JsonObject jb = new JsonObject()
     StringBuilder sb = new StringBuilder()
     sb.append("{")
-    long counter = 0;
+    long counter = 0
     Map<String, Object> sqlParams = [:]
     updateFields.each { field ->
       if (counter > 0) {
@@ -743,7 +809,7 @@ class Matcher {
       sqlParams.put(field.propName, field.attribNativeVal)
 
     }
-    if (counter > 0){
+    if (counter > 0) {
       String metadataTypeVertexLabel = "Metadata_Type_${vertexLabel}"
       sb.append(',"').append(metadataTypeVertexLabel).append('":').append(" :${metadataTypeVertexLabel} ")
       sqlParams.put(metadataTypeVertexLabel, vertexLabel)
@@ -1262,53 +1328,130 @@ class Matcher {
   }
 
   static Vertex addPersonVertex(String name, String document) {
-    return App.g.addV('Person_Natural')
-            .property('Metadata_Type_Person_Natural', 'Person_Natural')
-            .property('Person_Natural_Full_Name', name?.toUpperCase()?.trim())
-            .property('Person_Natural_Customer_ID', "${document?.replaceAll('[^0-9]', '')}")
-            .next()
+    Vertex retVal = null
+//    Transaction trans = App.graph.tx()
+//    if (!trans.isOpen()) {
+//      trans.open()
+//    }
+//    try {
+    try {
+      retVal = App.g.addV('Person_Natural')
+              .property('Metadata_Type_Person_Natural', 'Person_Natural')
+              .property('Person_Natural_Full_Name', name?.toUpperCase()?.trim())
+              .property('Person_Natural_Customer_ID', "${document?.replaceAll('[^0-9]', '')}")
+              .next()
+    }
+    catch (Throwable t) {
+      retVal = App.g.V()
+              .has('Metadata_Type_Person_Natural', P.eq('Person_Natural'))
+              .has('Person_Natural_Full_Name', P.eq(name?.toUpperCase()?.trim()))
+              .has('Person_Natural_Customer_ID', P.eq("${document?.replaceAll('[^0-9]', '')}"))
+              .next()
+    }
+//      trans.commit()
+//    } catch (Throwable t) {
+//      trans.rollback()
+//    }
+//    finally {
+//      trans.close()
+//    }
+    return retVal
   }
 
   static Vertex addIdentityVertex(String document) {
-    return App.g.addV('Object_Identity_Card')
-            .property('Metadata_Type_Object_Identity_Card', 'Object_Identity_Card')
-            .property('Object_Identity_Card_Type', 'CPF')
-            .property('Object_Identity_Card_Id_Value', "${document?.replaceAll('[^0-9]', '')}")
-            .next()
+
+    Vertex retVal = null
+//    Transaction trans = App.graph.tx()
+//    if (!trans.isOpen()) {
+//      trans.open()
+//    }
+//    try {
+    try {
+      retVal = App.g.addV('Object_Identity_Card')
+              .property('Metadata_Type_Object_Identity_Card', 'Object_Identity_Card')
+              .property('Object_Identity_Card_Type', 'CPF')
+              .property('Object_Identity_Card_Id_Value', "${document?.replaceAll('[^0-9]', '')}")
+              .next()
+    }
+    catch (Throwable t) {
+      retVal = App.g.V()
+              .has('Metadata_Type_Object_Identity_Card', P.eq('Object_Identity_Card'))
+              .has('Object_Identity_Card_Type', P.eq('CPF'))
+              .has('Object_Identity_Card_Id_Value', P.eq("${document?.replaceAll('[^0-9]', '')}"))
+              .next()
+    }
+//
+//    trans.commit()
+//  }
+//
+//  catch (  Throwable t ) {
+//    trans.rollback()
+//  }
+//  finally {
+//    trans.close()
+//  }
+    return retVal
   }
 
   static Vertex addEmailAddressVertex(String email) {
-    return App.g.addV('Object_Email_Address')
-            .property('Metadata_Type_Object_Email_Address', 'Object_Email_Address')
-            .property('Object_Email_Address_Email', "${email?.trim()?.toLowerCase()}")
-            .next()
+//  Transaction trans = App.graph.tx()
+//  if (!trans.isOpen()) {
+//    trans.open()
+//  }
+//
+//  try {
+    try {
+      return App.g.addV('Object_Email_Address')
+              .property('Metadata_Type_Object_Email_Address', 'Object_Email_Address')
+              .property('Object_Email_Address_Email', "${email?.trim()?.toLowerCase()}")
+              .next()
+    } catch (Throwable t) {
+      return App.g.V()
+              .has('Metadata_Type_Object_Email_Address', P.eq('Object_Email_Address'))
+              .has('Object_Email_Address_Email', P.eq("${email?.trim()?.toLowerCase()}"))
+              .next()
+    }
+////  }
+////  trans.commit()
+//}
+//
+//catch (Throwable t ) {
+//  trans.rollback()
+//}
+//finally {
+//  trans.close()
+//}
+
   }
 
 
   static String ingestMD2BulkData(String jsonString, String jsonPath, String ruleName) {
 
     def recordList = JsonPath.read(jsonString, jsonPath)
+    String dataSourceName = 'MD2'
+
+
+    Vertex groupIngestionVertex = null
+
     Transaction trans = App.graph.tx()
     long successCount = 0
 
     if (!trans.isOpen()) {
       trans.open()
     }
-    String dataSourceName = 'MD2'
-
-    Vertex groupIngestionVertex = getEventGroupIngestion(dataSourceName)
-
-
     try {
+      groupIngestionVertex = getEventGroupIngestion(dataSourceName)
+
 
       for (def item in recordList) {
-        Vertex eventIngestionVertex = addEventIngestion(dataSourceName, groupIngestionVertex)
         String name = item.name
         String email = item.email
         String document = item.document
         Vertex personNaturalVertex = addPersonVertex(name, document)
         Vertex documentVertex = addIdentityVertex(document)
         Vertex emailVertex = addEmailAddressVertex(email)
+
+        Vertex eventIngestionVertex = addEventIngestion(dataSourceName, groupIngestionVertex)
 
         App.g.addE('Has_Ingestion').from(eventIngestionVertex).to(personNaturalVertex).iterate()
         App.g.addE('Uses_Email').from(personNaturalVertex).to(emailVertex).iterate()
@@ -1317,13 +1460,13 @@ class Matcher {
         successCount++
       }
       trans.commit()
+
     } catch (Throwable t) {
       trans.rollback()
       throw t
     } finally {
       trans.close()
     }
-
 
 //    return sb?.toString()
     return "{ \"status\": \"success\"," +
@@ -1960,35 +2103,68 @@ class Matcher {
 
     }
   }
+
   static String escapeLucene(String s) {
 //    return s;
-    StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder()
 
-    for(int i = 0; i < s.length(); ++i) {
-      char c = s.charAt(i);
+    for (int i = 0; i < s.length(); ++i) {
+      char c = s.charAt(i)
       if (c == '\\'
 //              c == '+' || c == '-' ||
-             || c == '!'
+              || c == '!'
 //              || c == '('
 //          c == ')' || c == ':' || c == '^' || c == '[' || c == ']' ||
-          ||c == '"'
+              || c == '"'
 //          || c == '{' || c == '}' || c == '~' || c == '*' ||
 //          c == '?' || c == '|' || c == '&' || c == '/' || c == "'"
-      )
-      {
-        sb.append('\\');
+      ) {
+        sb.append('\\')
       }
 
-      if (c != '\n' && c != '\''){
+      if (c != '\n' && c != '\'') {
         sb.append(c)
-      }
-      else {
-        sb.append (' ')
+      } else {
+        sb.append(' ')
       }
     }
 
-    return sb.toString();
+    return sb.toString()
   }
+
+  static processVerticesSlim(List<MatchReq> uniqueProps,
+                             String vertexLabel,
+                             String vertexName,
+                             Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName) {
+
+    List<MatchReq> mandatoryFields = uniqueProps.findAll { it2 -> it2.mandatoryInSearch }
+    List<MatchReq> updateFields = uniqueProps.findAll { it2 -> !it2.excludeFromUpdate }
+
+    def (String jsonToMerge, Map<String, Object> sqlParams) = createJsonMergeParam(updateFields, vertexLabel)
+
+
+    String searchClassAttribs = createSearchClassAttribs(mandatoryFields)
+    String whereClauseAttribs = createWhereClauseAttribs(mandatoryFields)
+
+
+    final boolean isPureInsert = "()".equals(searchClassAttribs)
+    String whereClause = "WHERE ${whereClauseAttribs}"
+//              "WHERE SEARCH_CLASS ('${searchClassAttribs}') = true"
+
+    final String sqlStr = isPureInsert ?
+            "INSERT INTO `${vertexLabel}` CONTENT ${jsonToMerge}" :
+            "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} LOCK record LIMIT 1 "
+    final def retVals = App.graph.executeSql(sqlStr, sqlParams)
+    retVals.each { OGremlinResult result ->
+
+      result.getVertex().ifPresent({ res ->
+        Map<ORID, List<MatchReq>> mrl = matchReqListByOridByVertexName.get(vertexName)
+        mrl.computeIfAbsent(res.id(), { k -> uniqueProps })
+      })
+
+    }
+  }
+
   static matchVerticesSlim(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs) {
 
 
@@ -2028,35 +2204,25 @@ class Matcher {
 
 
       List<MatchReq> uniqueProps = vCopy2.unique { a, b -> a.propName <=> b.propName }
-      String vertexLabel =  uniqueProps.size() > 0 ? uniqueProps.get(0).vertexLabel : vertexName
+      String vertexLabel = uniqueProps.size() > 0 ? uniqueProps.get(0).vertexLabel : vertexName
 
+      // This is used primarily for Sharepoint references, where we have a x to many relationship
+      if (uniqueProps.size() < vFiltered.size() && uniqueProps.size() > 0 && uniqueProps.get(0).processAll) {
+        int i = 0, ilen = vFiltered.size()
+        for (; i < ilen; i++) {
+          List<MatchReq> indivList = new ArrayList<>()
+          indivList.push(vFiltered.get(i))
+          processVerticesSlim(indivList, vertexLabel, vertexName, matchReqListByOridByVertexName)
+        }
+
+      } else {
+        processVerticesSlim(uniqueProps, vertexLabel, vertexName, matchReqListByOridByVertexName)
+
+      }
 
 //        int maxExpectedSizeOfQueries = uniqueProps.size()
 
 
-      List<MatchReq> mandatoryFields = uniqueProps.findAll { it2 -> it2.mandatoryInSearch }
-      List<MatchReq> updateFields = uniqueProps.findAll { it2 -> !it2.excludeFromUpdate }
-
-      def (String jsonToMerge, Map<String, Object> sqlParams) = createJsonMergeParam(updateFields, vertexLabel)
-
-
-      String searchClassAttribs = createSearchClassAttribs(mandatoryFields)
-
-      final boolean isPureInsert = "()".equals(searchClassAttribs)
-      String whereClause =
-              "WHERE SEARCH_CLASS ('${searchClassAttribs}') = true"
-
-      final String sqlStr = isPureInsert?
-              "INSERT INTO `${vertexLabel}` CONTENT ${jsonToMerge}":
-              "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} LOCK record LIMIT 1 "
-      final def retVals = App.graph.executeSql(sqlStr, sqlParams)
-      retVals.each { OGremlinResult result ->
-
-        result.getVertex().ifPresent({ res ->
-          Map<ORID, List<MatchReq>> mrl = matchReqListByOridByVertexName.get(vertexName)
-          mrl.computeIfAbsent(res.id(), { k -> uniqueProps })
-        })
-      }
     }
     return [matchReqByVertexName, matchReqListByOridByVertexName]
   }

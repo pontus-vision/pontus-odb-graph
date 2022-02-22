@@ -2770,6 +2770,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: NOTUNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Consent
@@ -2794,6 +2795,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Data_Breach
@@ -2818,6 +2820,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Form_Ingestion
@@ -2834,6 +2837,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Email_Msg_Group
@@ -2846,6 +2850,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Email_To_Group
@@ -2859,6 +2864,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Email_From_Group
@@ -2872,6 +2878,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Email_CC_Group
@@ -2885,6 +2892,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Email_BCC_Group
@@ -2898,6 +2906,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_NLP_Group
@@ -2911,6 +2920,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_File_Group_Ingestion
@@ -2924,6 +2934,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_File_Ingestion
@@ -2944,6 +2955,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Email_Message
@@ -2967,6 +2979,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Group_Ingestion
@@ -2986,6 +2999,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Group_Subject_Access_Request
@@ -2998,6 +3012,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: NOTUNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Ingestion
@@ -3013,6 +3028,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Meeting
@@ -3029,6 +3045,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Subject_Access_Request
@@ -3051,6 +3068,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Training
@@ -3067,6 +3085,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Transaction
@@ -3084,6 +3103,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Complaint
@@ -3106,6 +3126,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Location_Address
@@ -3146,6 +3167,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_AWS_Instance
@@ -3170,6 +3192,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_AWS_Network_Interface
@@ -3187,6 +3210,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_AWS_Security_Group
@@ -3202,6 +3226,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_AWS_VPC
@@ -3214,6 +3239,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Application
@@ -3234,6 +3260,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Awareness_Campaign
@@ -3253,6 +3280,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Biometric
@@ -3270,6 +3298,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Contract
@@ -3292,6 +3321,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Campaign
@@ -3314,6 +3344,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Credential
@@ -3326,6 +3357,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Data_Policy
@@ -3348,6 +3380,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Data_Procedures
@@ -3381,6 +3414,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Data_Source
@@ -3415,6 +3449,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Data_Src_Mapping_Rule
@@ -3433,6 +3468,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: NOTUNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Email_Address
@@ -3447,6 +3483,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Email_Message_Attachment
@@ -3485,6 +3522,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Email_Message_Body
@@ -3521,6 +3559,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Form
@@ -3538,6 +3577,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Genetic
@@ -3552,6 +3592,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Health
@@ -3567,6 +3608,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: NOTUNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Identity_Card
@@ -3582,6 +3624,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Insurance_Policy
@@ -3603,6 +3646,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Lawful_Basis
@@ -3617,6 +3661,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Metadata_Source
@@ -3651,6 +3696,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Module
@@ -3663,6 +3709,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Notification_Templates
@@ -3678,6 +3725,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Policies
@@ -3695,6 +3743,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Phone_Number
@@ -3710,6 +3759,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Privacy_Impact_Assessment
@@ -3734,6 +3784,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Legitimate_Interests_Assessment
@@ -3748,6 +3799,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Risk_Data_Source
@@ -3780,6 +3832,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Risk_Mitigation_Data_Source
@@ -3808,6 +3861,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Privacy_Docs
@@ -3824,6 +3878,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Legal_Actions
@@ -3839,6 +3894,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Privacy_Notice
@@ -3872,6 +3928,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Salary
@@ -3886,6 +3943,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Sensitive_Data
@@ -3905,6 +3963,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Subsystem
@@ -3917,6 +3976,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_System
@@ -3929,6 +3989,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Vehicle
@@ -3943,6 +4004,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Person_Employee
@@ -3969,6 +4031,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Person_Identity
@@ -3998,6 +4061,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: NOTUNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Person_Natural
@@ -4028,6 +4092,7 @@ vertexIndexes:
     composite: false
     unique: false
     indexOnly: null
+    indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Person_Organisation

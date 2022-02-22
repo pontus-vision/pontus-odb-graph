@@ -4379,6 +4379,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "NOTUNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Consent",
@@ -4403,6 +4404,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Data_Breach",
@@ -4427,6 +4429,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Form_Ingestion",
@@ -4443,6 +4446,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Email_Msg_Group",
@@ -4455,6 +4459,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Email_To_Group",
@@ -4468,6 +4473,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Email_From_Group",
@@ -4481,6 +4487,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Email_CC_Group",
@@ -4494,6 +4501,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Email_BCC_Group",
@@ -4507,6 +4515,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_NLP_Group",
@@ -4520,6 +4529,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_File_Group_Ingestion",
@@ -4533,6 +4543,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_File_Ingestion",
@@ -4553,6 +4564,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Email_Message",
@@ -4576,6 +4588,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Group_Ingestion",
@@ -4595,6 +4608,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Group_Subject_Access_Request",
@@ -4607,6 +4621,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "NOTUNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Ingestion",
@@ -4622,6 +4637,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Meeting",
@@ -4638,6 +4654,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Subject_Access_Request",
@@ -4660,6 +4677,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Training",
@@ -4676,6 +4694,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Transaction",
@@ -4693,6 +4712,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Complaint",
@@ -4715,6 +4735,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Location_Address",
@@ -4755,6 +4776,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_AWS_Instance",
@@ -4779,6 +4801,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_AWS_Network_Interface",
@@ -4796,6 +4819,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_AWS_Security_Group",
@@ -4811,6 +4835,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_AWS_VPC",
@@ -4823,6 +4848,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Application",
@@ -4843,6 +4869,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Awareness_Campaign",
@@ -4862,6 +4889,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Biometric",
@@ -4879,6 +4907,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Contract",
@@ -4901,6 +4930,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Campaign",
@@ -4923,6 +4953,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Credential",
@@ -4935,6 +4966,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Data_Policy",
@@ -4957,6 +4989,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Data_Procedures",
@@ -4990,6 +5023,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Data_Source",
@@ -5024,6 +5058,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Data_Src_Mapping_Rule",
@@ -5042,6 +5077,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "NOTUNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Email_Address",
@@ -5056,6 +5092,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Email_Message_Attachment",
@@ -5094,6 +5131,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Email_Message_Body",
@@ -5130,6 +5168,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Form",
@@ -5147,6 +5186,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Genetic",
@@ -5161,6 +5201,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Health",
@@ -5176,6 +5217,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "NOTUNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Identity_Card",
@@ -5191,6 +5233,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Insurance_Policy",
@@ -5212,6 +5255,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Lawful_Basis",
@@ -5226,6 +5270,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Metadata_Source",
@@ -5260,6 +5305,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Module",
@@ -5272,6 +5318,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Notification_Templates",
@@ -5287,6 +5334,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Policies",
@@ -5304,6 +5352,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Phone_Number",
@@ -5319,6 +5368,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Privacy_Impact_Assessment",
@@ -5343,6 +5393,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Legitimate_Interests_Assessment",
@@ -5357,6 +5408,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Risk_Data_Source",
@@ -5389,6 +5441,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Risk_Mitigation_Data_Source",
@@ -5417,6 +5470,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Privacy_Docs",
@@ -5433,6 +5487,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Legal_Actions",
@@ -5448,6 +5503,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Privacy_Notice",
@@ -5481,6 +5537,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Salary",
@@ -5495,6 +5552,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Sensitive_Data",
@@ -5514,6 +5572,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Subsystem",
@@ -5526,6 +5585,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_System",
@@ -5538,6 +5598,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Vehicle",
@@ -5552,6 +5613,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Person_Employee",
@@ -5578,6 +5640,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Person_Identity",
@@ -5612,6 +5675,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "NOTUNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Person_Natural",
@@ -5647,6 +5711,7 @@
       "composite": false,
       "unique": false,
       "indexOnly": null,
+      "indexType": "UNIQUE",
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Person_Organisation",
