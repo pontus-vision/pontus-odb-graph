@@ -106,7 +106,7 @@ class FileNLPRequest implements Serializable {
           GraphTraversalSource g,
           FileNLPRequest[] reqs,
           String ruleName) {
-    Boolean isSlim = true //ruleName?.toLowerCase()?.contains("slim");
+    Boolean isSlim = App.useSlim || ruleName?.toLowerCase()?.contains("slim");
 
     Transaction trans = App.graph.tx()
     try {
