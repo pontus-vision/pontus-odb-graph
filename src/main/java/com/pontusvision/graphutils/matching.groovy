@@ -1490,7 +1490,7 @@ class Matcher {
   static String ingestFile(String jsonString, String jsonPath, String ruleName) {
     FileNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
 
-    return FileNLPRequest.upsertFileNLPRequestArray(App.graph, App.g, recordList).toString()
+    return FileNLPRequest.upsertFileNLPRequestArray(App.graph, App.g, recordList, ruleName).toString()
   }
 
   static String ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g,
