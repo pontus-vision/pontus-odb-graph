@@ -1,21 +1,11 @@
 package com.pontusvision.gdpr;
 
-import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
-import com.pontusvision.gdpr.report.ReportTemplateRenderResponse;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
-import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +30,7 @@ public class PVSharepointRoPaTests extends AppTest {
   @Test
   public void test00001SharepointMapeamentoDeProcesso() throws InterruptedException {
     try {
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
               "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
       String EPGInterest =
@@ -97,7 +87,7 @@ public class PVSharepointRoPaTests extends AppTest {
   @Test
   public void test00002SharepointPrivacyNotice() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
               "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
       String getPrivacyNoticeDescription =
@@ -152,7 +142,7 @@ public class PVSharepointRoPaTests extends AppTest {
   @Test
   public void test00003UpsertSharepointPrivacyNotice() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
               "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
       String countEventIngestions =
@@ -164,7 +154,7 @@ public class PVSharepointRoPaTests extends AppTest {
                       ".in('Has_Ingestion_Event').has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))" +
                       ".dedup().count().next().toString()").get().toString();
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-aviso-de-privacidade2.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade2.json",
               "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
       String countEventIngestionsAgain =
@@ -194,7 +184,7 @@ public class PVSharepointRoPaTests extends AppTest {
   @Test
   public void test00004SharepointConsents() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
       String lakshmiPrivacyNotices =
@@ -244,7 +234,7 @@ public class PVSharepointRoPaTests extends AppTest {
   @Test
   public void test00005UpsertSharepointConsents() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
       String countEventIngestions =
@@ -263,7 +253,7 @@ public class PVSharepointRoPaTests extends AppTest {
 
 //    Test for duplicate data --------------------------------------------------------------------------------------
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos2.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos2.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
       String countEventIngestionsAgain =
@@ -297,10 +287,10 @@ public class PVSharepointRoPaTests extends AppTest {
   @Test
   public void test00006SharepointConsentPlusPrivacyNotice() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
               "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
       String consentDataSourceName = "SHAREPOINT/CONSENT";

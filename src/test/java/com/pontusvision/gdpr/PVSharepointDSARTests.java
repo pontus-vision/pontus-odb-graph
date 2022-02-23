@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.util.concurrent.ExecutionException;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,10 +28,10 @@ public class PVSharepointDSARTests extends AppTest {
   @Test
   public void test00001SharepointDSAR() throws InterruptedException {
 
-    jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
             "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
-    jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
 
     try {
 

@@ -12,6 +12,10 @@ updatereq:
         - name: Person_Natural_Customer_ID
           val: ${RA_CIC?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
+        - name: Person_Natural_Id
+          val: ${id?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Person_Organisation
       condition: ${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}

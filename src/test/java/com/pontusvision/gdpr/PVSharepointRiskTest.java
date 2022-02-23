@@ -1,6 +1,5 @@
 package com.pontusvision.gdpr;
 
-import com.pontusvision.ingestion.Ingestion;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
@@ -36,7 +35,7 @@ public class PVSharepointRiskTest extends AppTest {
   public void test00001RiskMitigation() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
           "sharepoint_risk_mitigation");
 
 //    test0000 for PEDRO Person_Employee NODE
@@ -67,7 +66,7 @@ public class PVSharepointRiskTest extends AppTest {
   public void test00002Risk() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
           "sharepoint_risk");
 
 //    test0000 for PEDRO Person_Employee NODE

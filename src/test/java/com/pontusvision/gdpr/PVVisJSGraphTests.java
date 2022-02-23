@@ -37,10 +37,10 @@ public class PVVisJSGraphTests extends AppTest {
   public void test00001InfraGraph() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
               "sharepoint_fontes_de_dados");
 
-      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
               "$.queryResp[*].fields", "sharepoint_data_breaches");
 
       String vId =

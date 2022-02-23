@@ -47,7 +47,7 @@ public class PVSapCapTest extends AppTest {
               cleanHdr,
               "check clean headers is OK");
 
-      csvTestUtil("sap-cap/lead.csv", "cap_lead");
+      csvTestUtil("SAP/sap-cap/lead.csv", "cap_lead");
 
       String marcelPhoneCount =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MARCEL MOLICA ARAÚJO'))" +
@@ -79,7 +79,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/customer-prospect.csv", "cap_customer_prospect");
+      csvTestUtil("SAP/sap-cap/customer-prospect.csv", "cap_customer_prospect");
 
       String gettingEmailAddress =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('NATAN BOLDERI')).out('Uses_Email')" +
@@ -152,7 +152,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/my-p-change-report.csv", "cap_my_p_change_report");
+      csvTestUtil("SAP/sap-cap/my-p-change-report.csv", "cap_my_p_change_report");
 
       String ingestionOperationType =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FELIPE MAGNOLI')).out('Has_Ingestion_Event')" +
@@ -176,7 +176,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/p-connect-mandatory-fields.csv", "cap_p_connect_mandatory_fields");
+      csvTestUtil("SAP/sap-cap/p-connect-mandatory-fields.csv", "cap_p_connect_mandatory_fields");
 
       String gandiEmail =
               App.executor.eval("App.g.V().has('Object_Email_Address_Email', eq('gandipunjabi@icloud.com')).in('Uses_Email')" +
@@ -200,7 +200,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/ownership-change.csv", "cap_ownership_change");
+      csvTestUtil("SAP/sap-cap/ownership-change.csv", "cap_ownership_change");
 
       String getResponsibleDealer =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('CAROL SANTANA')).in('Is_Responsible')" +
@@ -224,7 +224,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/complaint.csv", "cap_complaint");
+      csvTestUtil("SAP/sap-cap/complaint.csv", "cap_complaint");
 
       String getComplaintDescription =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('DORIA MARCONDES')).out('Has_Complaint')" +
@@ -254,7 +254,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/activity.csv", "cap_activity");
+      csvTestUtil("SAP/sap-cap/activity.csv", "cap_activity");
 
       String getQuasimodoMobile =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('QUASIMODO PARIS')).out('Has_Mobile')" +
@@ -283,7 +283,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/workshop-campaigns-and-recalls.csv", "cap_workshop_campaigns_and_recalls");
+      csvTestUtil("SAP/sap-cap/workshop-campaigns-and-recalls.csv", "cap_workshop_campaigns_and_recalls");
 
       String getRecallCampaignId =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('CAMILLA FLAVINA')).out('Has_Campaign')" +
@@ -307,7 +307,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/competitor-vehicles.csv", "cap_competitor_vehicles");
+      csvTestUtil("SAP/sap-cap/competitor-vehicles.csv", "cap_competitor_vehicles");
 
       String getVehicleLicensePlate =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FABIOLA NAKAMURA')).out('Has_Vehicle')" +
@@ -336,7 +336,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/vehicle.csv", "cap_vehicle");
+      csvTestUtil("SAP/sap-cap/vehicle.csv", "cap_vehicle");
 
       String getVehicleLicensePlate =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('HELGA BARBOSA')).out('Has_Vehicle')" +
@@ -364,7 +364,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("sap-cap/data-quality.csv", "cap_data_quality");
+      csvTestUtil("SAP/sap-cap/data-quality.csv", "cap_data_quality");
 
       String bondinhoCompany =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('JAMES BONDINHO'))" +

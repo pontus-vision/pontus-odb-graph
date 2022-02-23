@@ -27,7 +27,7 @@ public class PVSharepointTests extends AppTest {
   public void test00001SharepointPAndPDCommitteeMeetings() throws InterruptedException {
     try {
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-p-and-pd-committee-meetings.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-p-and-pd-committee-meetings.json",
               "$.queryResp[*].fields", "sharepoint_meetings");
 
       String topicsDiscussedMeeting1 =
@@ -72,7 +72,7 @@ public class PVSharepointTests extends AppTest {
   public void test00002UpsertSharepointPAndPDCommitteeMeetings() throws InterruptedException {
     try {
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-p-and-pd-committee-meetings.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-p-and-pd-committee-meetings.json",
               "$.queryResp[*].fields", "sharepoint_meetings");
 
       String countEventIngestions =
@@ -84,7 +84,7 @@ public class PVSharepointTests extends AppTest {
                       ".out('Has_Ingestion_Event').has('Metadata_Type_Event_Meeting', eq('Event_Meeting'))" +
                       ".dedup().count().next().toString()").get().toString();
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-p-and-pd-committee-meetings2.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-p-and-pd-committee-meetings2.json",
               "$.queryResp[*].fields", "sharepoint_meetings");
 
       String countEventIngestionsAgain =

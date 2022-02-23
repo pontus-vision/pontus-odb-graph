@@ -41,7 +41,7 @@ public class PVScoreTestsLegalActions extends AppTest {
   public void test00001LegalActionsScore() throws InterruptedException {
     try {
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-legal-actions2.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-legal-actions2.json", "$.queryResp[*].fields",
           "sharepoint_legal_actions");
 
 

@@ -26,7 +26,7 @@ public class PVPloomesTest extends AppTest {
   @Test
   public void test00001PloomesOneExpanded() throws InterruptedException {
 
-    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
+    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
 
     try {
 
@@ -58,7 +58,7 @@ public class PVPloomesTest extends AppTest {
   @Test
   public void test00002PloomesMergedExpanded() throws InterruptedException {
 
-    jsonTestUtil("ploomes1-merge-totvs1-real.json", "$.value", "ploomes_clientes");
+    jsonTestUtil("ploomes/ploomes1-merge-totvs1-real.json", "$.value", "ploomes_clientes");
 
     try {
 

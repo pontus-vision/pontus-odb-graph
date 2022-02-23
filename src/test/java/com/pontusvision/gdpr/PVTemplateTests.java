@@ -13,14 +13,10 @@ import org.junit.jupiter.api.TestMethodOrder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
-import com.pontusvision.graphutils.PontusJ2ReportingFunctions;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -47,7 +43,7 @@ public class PVTemplateTests extends AppTest {
   public void test00001TemplateUpsert() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
               "sharepoint_data_sources");
 
       Resource res = new Resource();
@@ -96,16 +92,16 @@ public class PVTemplateTests extends AppTest {
   public void test00002TemplateRisksRender() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
               "sharepoint_fontes_de_dados");
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
               "sharepoint_mapeamentos");
 
-      jsonTestUtil("pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
               "sharepoint_risk_mitigation");
 
-      jsonTestUtil("pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
               "sharepoint_risk");
 
       Resource res = new Resource();
@@ -193,7 +189,7 @@ public class PVTemplateTests extends AppTest {
   public void test00003TemplateGetPoliciesText() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
               "sharepoint_policies");
 
       Resource res = new Resource();
@@ -238,16 +234,16 @@ public class PVTemplateTests extends AppTest {
   public void test00004TemplateLiaRender() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
               "sharepoint_fontes_de_dados");
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
               "sharepoint_mapeamentos");
 
-      jsonTestUtil("pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
               "sharepoint_risk_mitigation");
 
-      jsonTestUtil("pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
               "sharepoint_risk");
 
       Resource res = new Resource();
@@ -397,7 +393,7 @@ public class PVTemplateTests extends AppTest {
   public void test00005TemplateGetPoliciesTextInvalid() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
               "sharepoint_policies");
 
       Resource res = new Resource();
@@ -440,7 +436,7 @@ public class PVTemplateTests extends AppTest {
   public void test00006TemplateGetPoliciesTextInvalidTemplate() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
               "sharepoint_policies");
 
       Resource res = new Resource();
@@ -484,10 +480,10 @@ public class PVTemplateTests extends AppTest {
   public void test00007TemplateGetDsarRopaByLawfulBasis() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
               "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
-      jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
 
 //      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
 //
@@ -550,21 +546,21 @@ public class PVTemplateTests extends AppTest {
   public void test00008TemplateDataBreachReport() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
               "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
-      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
               "sharepoint_data_sources");
 
-      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json",
               "$.queryResp[*].fields",
               "sharepoint_fontes_de_dados");
 
-      jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+      jsonTestUtil("totvs/totvs-sa1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
 
-      jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+      jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
 
-      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
               "$.queryResp[*].fields", "sharepoint_data_breaches");
 
 //      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
@@ -720,10 +716,10 @@ public class PVTemplateTests extends AppTest {
   public void test00009BrazilianDate() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
               "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
-      jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
 
 //      Object date = PVConvMixin.asType("Sat Jan 08 08:00:00 UTC 2022", Date.class);
 //

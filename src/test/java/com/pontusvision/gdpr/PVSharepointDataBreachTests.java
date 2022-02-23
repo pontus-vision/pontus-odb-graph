@@ -23,7 +23,7 @@ public class PVSharepointDataBreachTests extends AppTest {
   @Test
   public void test00001SharepointDataBreach() throws InterruptedException {
 
-    jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
             "$.queryResp[*].fields", "sharepoint_data_breaches");
 
     try {
@@ -70,7 +70,7 @@ public class PVSharepointDataBreachTests extends AppTest {
   @Test
   public void test00002SharepointLegalActions() throws InterruptedException {
 
-    jsonTestUtil("non-official-pv-extract-sharepoint-legal-actions.json",
+    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-legal-actions.json",
             "$.queryResp[*].fields", "sharepoint_legal_actions");
 
     try {
@@ -105,7 +105,7 @@ public class PVSharepointDataBreachTests extends AppTest {
   @Test
   public void test00003UpsertSharepointLegalActions() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-legal-actions.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-legal-actions.json",
               "$.queryResp[*].fields", "sharepoint_legal_actions");
 
       String countEventIngestions =
@@ -117,7 +117,7 @@ public class PVSharepointDataBreachTests extends AppTest {
                       ".out('Has_Ingestion_Event').has('Metadata_Type_Object_Legal_Actions', eq('Object_Legal_Actions'))" +
                       ".dedup().count().next().toString()").get().toString();
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-legal-actions2.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-legal-actions2.json",
               "$.queryResp[*].fields", "sharepoint_legal_actions");
 
       String countEventIngestionsAgain =

@@ -90,7 +90,7 @@ public class PVBasicTest extends AppTest {
   public void test00002CsvPolaris() throws InterruptedException {
     try {
 
-      csvTestUtil("sap-polaris-clientes.csv", "Cliente_SAP_PosVenda_POLARIS");
+      csvTestUtil("SAP/sap-polaris-clientes.csv", "Cliente_SAP_PosVenda_POLARIS");
 
 
 //    Testing for Person_Natural WITH Tax_Number
@@ -121,7 +121,7 @@ public class PVBasicTest extends AppTest {
   public void test00003SharepointTreinamentos() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-treinamentos.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-treinamentos.json", "$.queryResp[*].fields",
               "sharepoint_treinamentos");
 
 //    test0000 for PEDRO Person_Employee NODE
@@ -164,8 +164,8 @@ public class PVBasicTest extends AppTest {
 
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
-          "pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 5, 7, 2, 2",
-          "pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 9, 8, 2, 4"
+          "sharepoint/pv-extract-sharepoint-data-sources.json,   sharepoint_data_sources,   SHAREPOINT/DATA-SOURCES, 5, 7, 2, 2",
+          "sharepoint/pv-extract-sharepoint-fontes-de-dados.json,   sharepoint_fontes_de_dados,   SHAREPOINT/FONTES-DE-DADOS, 9, 8, 2, 4"
 //   NOTE: WE expect 7, and not 5 entries in the second run, because the two JSON files have the same data source
 //   names (CRM-Leads and CRM-Users), which will end up with 2 data policies each (one from the first run, and one from
 //   the second).
@@ -281,8 +281,8 @@ public class PVBasicTest extends AppTest {
   public void test00005TotvsPloomes() throws InterruptedException {
     try {
 
-      jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
-      jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+      jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
+      jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
 
 //    t'est0000 for Object_Data_Source_Name
       String userId2 =
@@ -406,10 +406,10 @@ public class PVBasicTest extends AppTest {
   // A new version of this Test can be found @ PVTotvsTest.java
   @Test
   public void test00009TotvsProtheusSa1Clientes() throws InterruptedException {
-    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
-    jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
-//    jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
-//    jsonTestUtil("totvs2-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
+    jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+//    jsonTestUtil("totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+//    jsonTestUtil("totvs-sa2-real.json", "$.objs", "totvs_protheus_sa1_clientes");
 
     try {
       String userId =
@@ -494,7 +494,7 @@ public class PVBasicTest extends AppTest {
   @Test
   public void test00010PloomesClientes() throws InterruptedException {
 
-    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
+    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
 //    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
 
     try {
@@ -576,7 +576,7 @@ public class PVBasicTest extends AppTest {
 
   @Test
   public void test00011EmailOffice365() throws InterruptedException {
-    jsonTestUtil("pv-extract-o365-email.json", "$.value", "pv_email");
+    jsonTestUtil("office365/pv-extract-o365-email.json", "$.value", "pv_email");
 
     try {
       String numDataSources =
@@ -639,7 +639,7 @@ public class PVBasicTest extends AppTest {
 
     try {
 
-      jsonTestUtil("totvs2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
+      jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
 
       String pabloStreetName =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('PABLO MATO ESCOBAR'))" +
@@ -673,8 +673,8 @@ public class PVBasicTest extends AppTest {
 
   @ParameterizedTest(name = "Sharepoint tests ({0}) rule Name {1}, expected Data Source Name = {2} ")
   @CsvSource({
-          "pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   SHAREPOINT/MAPEAMENTO-DE-PROCESSOS,  6,  2",
-          "pv-extract-sharepoint-ropa.json,   sharepoint_ropa,   SHAREPOINT/ROPA,    125, 19"
+          "sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json,   sharepoint_mapeamentos,   SHAREPOINT/MAPEAMENTO-DE-PROCESSOS,  6,  2",
+          "sharepoint/pv-extract-sharepoint-ropa.json,   sharepoint_ropa,   SHAREPOINT/ROPA,    125, 19"
   })
   public void test00014SharepointProcessMapping(String jsonFile, String ruleName, String dataSourceName, String numDataSrcs, String numDataPolicies) throws InterruptedException {
     try {
@@ -736,7 +736,7 @@ public class PVBasicTest extends AppTest {
 
     try {
 
-      jsonTestUtil("totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+      jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
 
       String martaEmailsCount =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MARTA MARILIA MARCÔNDES'))" +
@@ -852,11 +852,11 @@ public class PVBasicTest extends AppTest {
   public void test00017MD2() throws InterruptedException {
 
     try {
-      jsonTestUtil("md2.json", "$.person", "pv_md2");
+      jsonTestUtil("md2/md2.json", "$.person", "pv_md2");
 
       jsonTestUtil("pv-extract-file-ingest-md2.json", "$.value", "pv_file");
-      jsonTestUtil("pv-extract-o365-email-md2.json", "$.value", "pv_email");
-      jsonTestUtil("pv-extract-o365-email-md2-pt2.json", "$.value", "pv_email");
+      jsonTestUtil("office365/pv-extract-o365-email-md2.json", "$.value", "pv_email");
+      jsonTestUtil("office365/pv-extract-o365-email-md2-pt2.json", "$.value", "pv_email");
 
       String getPersonNaturalFullName =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('CARLOS MAURICIO DIRIZ'))" +
