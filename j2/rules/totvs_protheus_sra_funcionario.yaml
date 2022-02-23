@@ -13,7 +13,7 @@ updatereq:
           val: ${RA_CIC?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Person_Natural_Id
-          val: {'value': "${id?.replaceAll('[^0-9]','')}", 'excludeFromSearch': True}
+          val: ${id?.replaceAll('[^0-9]','')}
           mandatoryInSearch: False
           excludeFromSearch: True
     

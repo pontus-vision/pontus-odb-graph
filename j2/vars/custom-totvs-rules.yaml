@@ -282,7 +282,7 @@ rules:
 #            excludeFromSearch: true
           Customer_ID: "${RA_CIC?.replaceAll('[^0-9]','')}"
           Id:
-            value: "${id?.replaceAll('[^0-9]','')}"
+            val: "${id?.replaceAll('[^0-9]','')}"
             excludeFromSearch: true
 
       - label: Person_Organisation
@@ -513,7 +513,7 @@ rules:
         condition: "${id?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
           Id:
-            value: "${id?.replaceAll('[^0-9]','')}"
+            val: "${id?.replaceAll('[^0-9]','')}"
             excludeFromUpdate: true
 
       - label: Event_Ingestion
@@ -558,7 +558,7 @@ rules:
         toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexName: "colaborador"
+        fromVertexName: "dependente"
         toVertexLabel: "Event_Ingestion"
 
       - label: Is_Dependant

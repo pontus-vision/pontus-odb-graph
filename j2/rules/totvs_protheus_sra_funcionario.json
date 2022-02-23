@@ -18,10 +18,7 @@
           },
           {
             "name": "Person_Natural_Id",
-            "val": {
-              "value": "${id?.replaceAll('[^0-9]','')}",
-              "excludeFromSearch": true
-            },
+            "val": "${id?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

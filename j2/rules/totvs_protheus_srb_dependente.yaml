@@ -15,7 +15,7 @@ updatereq:
       condition: ${id?.replaceAll('[^0-9]','')?.length() > 0}
       props:
         - name: Person_Natural_Id
-          val: {'value': "${id?.replaceAll('[^0-9]','')}", 'excludeFromUpdate': True}
+          val: ${id?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
     
     - label: Event_Ingestion
@@ -69,7 +69,7 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexName: colaborador
+    fromVertexName: dependente
     toVertexLabel: Event_Ingestion
   - label: Is_Dependant
     fromVertexName: dependente

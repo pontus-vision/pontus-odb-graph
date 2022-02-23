@@ -20,10 +20,7 @@
         "props": [
           {
             "name": "Person_Natural_Id",
-            "val": {
-              "value": "${id?.replaceAll('[^0-9]','')}",
-              "excludeFromUpdate": true
-            },
+            "val": "${id?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           }
         ]
@@ -109,7 +106,7 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "colaborador",
+        "fromVertexName": "dependente",
         "toVertexLabel": "Event_Ingestion"
       },
       {

@@ -76,21 +76,22 @@ public class PVTotvsDependenteTests extends AppTest {
       String anneWithAnEId =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('totvs/protheus/srb_dependente'))" +
                       ".in('Has_Ingestion_Event').has('Person_Natural_Full_Name', eq('ANNE WITH AN E'))" +
-                      ".out('Is_Dependent').values('Person_Natural_Id').next().toString()").get().toString();
-      assertEquals("6490009832", anneWithAnEId, "Anne's Dependent Id");
+                      ".out('Is_Dependant').values('Person_Natural_Id').next().toString()").get().toString();
+      assertEquals("6490009832", anneWithAnEId, "Anne's Dependant Id");
 
       String xavierHasNoId =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('totvs/protheus/srb_dependente'))" +
                       ".in('Has_Ingestion_Event').has('Person_Natural_Full_Name', eq('XAVIER DO PORTO'))" +
-                      ".BothE().dedup().count().next().toString()").get().toString();
-      assertEquals("1", xavierHasNoId, "Anne's Dependent Id");
+                      ".bothE().dedup().count().next().toString()").get().toString();
+      assertEquals("0", xavierHasNoId, "No vertices were created for Xavier, because there is no Id");
 
 //    Testing the link between SRA and SRB
 
       String fromSRBtoSRA =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('totvs/protheus/srb_dependente'))" +
-                      ".in('Has_Ingestion_Event').out('Is_Dependent').in('Has_Ingestion_Event')" +
-                      ".values('Event_Ingestion_Type').next().toString()").get().toString();
+                      ".as('srb-ingestion').in('Has_Ingestion_Event').as('dependente').out('Is_Dependant')" +
+                      ".as('colaborador').out('Has_Ingestion_Event').as('sra-ingestion').values('Event_Ingestion_Type')" +
+                      ".next().toString()").get().toString();
       assertEquals("totvs/protheus/sra_funcionario", fromSRBtoSRA,
               "Going from srb_dependente and getting to sra_funcionario");
 
