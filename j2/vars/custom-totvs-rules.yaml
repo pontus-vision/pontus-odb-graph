@@ -281,6 +281,9 @@ rules:
 #            val: "${RA_SEXO}"
 #            excludeFromSearch: true
           Customer_ID: "${RA_CIC?.replaceAll('[^0-9]','')}"
+          Id:
+            value: "${id?.replaceAll('[^0-9]','')}"
+            excludeFromSearch: true
 
       - label: Person_Organisation
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
@@ -496,6 +499,72 @@ rules:
       - label: Is_Located
         fromVertexLabel: "Person_Organisation"
         toVertexLabel: "Location_Address"
+
+  totvs_protheus_srb_dependente:
+    vertices:
+      - label: Person_Natural
+        name: dependente
+        condition: "${id?.replaceAll('[^0-9]','')?.length() > 0}"
+        props:
+          Full_Name: "${RB_NOME?.trim()?.toUpperCase()}"
+
+      - label: Person_Natural
+        name: colaborador
+        condition: "${id?.replaceAll('[^0-9]','')?.length() > 0}"
+        props:
+          Id:
+            value: "${id?.replaceAll('[^0-9]','')}"
+            excludeFromUpdate: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "totvs/protheus/srb_dependente"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${firstUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type:
+            val: "totvs/protheus/srb_dependente"
+          Operation:
+            val: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+      - label: Object_Data_Source
+        props:
+          Name: "TOTVS/PROTHEUS/SRB_DEPENDENTE"
+
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "colaborador"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Is_Dependant
+        fromVertexName: "dependente"
+        toVertexName: "colaborador"
+
 
 #   {
 #      "id": "string"

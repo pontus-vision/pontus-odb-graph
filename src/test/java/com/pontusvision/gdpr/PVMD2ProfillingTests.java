@@ -226,7 +226,7 @@ public class PVMD2ProfillingTests extends AppTest {
   public void test00003MD2Profiling() throws InterruptedException {
     try {
 
-      String[] csvFiles = {"random-data-5k(1).csv", "random-data-5k(2).csv", "random-data-5k(3).csv", "random-data-5k(4).csv"};
+      String[] csvFiles = {"md2/random-data-5k(1).csv", "md2/random-data-5k(2).csv", "md2/random-data-5k(3).csv", "md2/random-data-5k(4).csv"};
 
       for (String csvFile : csvFiles) {
 

@@ -15,6 +15,15 @@
             "name": "Person_Natural_Customer_ID",
             "val": "${RA_CIC?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Id",
+            "val": {
+              "value": "${id?.replaceAll('[^0-9]','')}",
+              "excludeFromSearch": true
+            },
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },

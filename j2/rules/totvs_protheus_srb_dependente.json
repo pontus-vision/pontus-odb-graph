@@ -1,0 +1,122 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Natural",
+        "name": "dependente",
+        "condition": "${id?.replaceAll('[^0-9]','')?.length() > 0}",
+        "props": [
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${RB_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "name": "colaborador",
+        "condition": "${id?.replaceAll('[^0-9]','')?.length() > 0}",
+        "props": [
+          {
+            "name": "Person_Natural_Id",
+            "val": {
+              "value": "${id?.replaceAll('[^0-9]','')}",
+              "excludeFromUpdate": true
+            },
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "totvs/protheus/srb_dependente",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${firstUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "totvs/protheus/srb_dependente",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "TOTVS/PROTHEUS/SRB_DEPENDENTE",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "colaborador",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Is_Dependant",
+        "fromVertexName": "dependente",
+        "toVertexName": "colaborador"
+      }
+    ]
+  }
+}

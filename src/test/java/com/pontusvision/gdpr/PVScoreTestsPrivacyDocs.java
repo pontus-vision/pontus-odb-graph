@@ -41,7 +41,7 @@ public class PVScoreTestsPrivacyDocs extends AppTest {
   public void test00001PrivacyDocsScore() throws InterruptedException {
     try {
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-privacy-docs3.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-privacy-docs3.json", "$.queryResp[*].fields",
           "sharepoint_privacy_docs");
 
 

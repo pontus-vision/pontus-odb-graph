@@ -1,0 +1,55 @@
+{
+  "numEntries": 100,
+  "hasnext": false,
+  "nPage": 1,
+  "objs": [
+    {
+      "RB_NREGCAR": "",
+      "RB_NUMAT": "",
+      "firstUpdate": "2022-01-01T01:00:00",
+      "lastUpdate": "2022-01-01T01:00:00",
+      "RB_NUMFOLH": "",
+      "RB_NOME": "Gustavo Guanabara",
+      "RB_NUMLIVR": "",
+      "RB_CIC": "",
+      "id": "546785678",
+      "RB_INCT": ""
+    },
+    {
+      "RB_NREGCAR": "",
+      "RB_NUMAT": "",
+      "firstUpdate": "2022-01-01T01:00:00",
+      "lastUpdate": "2022-01-01T01:00:00",
+      "RB_NUMFOLH": "",
+      "RB_NOME": "Jorge Schimelpfeng",
+      "RB_NUMLIVR": "",
+      "RB_CIC": "",
+      "id": "84756758",
+      "RB_INCT": ""
+    },
+    {
+      "RB_NREGCAR": "",
+      "RB_NUMAT": "",
+      "firstUpdate": "2022-01-01T01:00:00",
+      "lastUpdate": "2022-01-01T01:00:00",
+      "RB_NUMFOLH": "",
+      "RB_NOME": "Anne with an E",
+      "RB_NUMLIVR": "",
+      "RB_CIC": "",
+      "id": "6490009832",
+      "RB_INCT": ""
+    },
+    {
+      "RB_NREGCAR": "",
+      "RB_NUMAT": "",
+      "firstUpdate": "2022-01-01T01:00:00",
+      "lastUpdate": "2022-01-01T01:00:00",
+      "RB_NUMFOLH": "",
+      "RB_NOME": "Xavier do Porto",
+      "RB_NUMLIVR": "",
+      "RB_CIC": "",
+      "id": "",
+      "RB_INCT": ""
+    }
+  ]
+}

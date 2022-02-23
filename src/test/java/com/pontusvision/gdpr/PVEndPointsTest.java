@@ -107,7 +107,7 @@ public class PVEndPointsTest extends AppTest {
   @Test
   public void test00004Gremlin() throws InterruptedException {
 
-    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
+    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
 
     try {
 
@@ -157,7 +157,7 @@ public class PVEndPointsTest extends AppTest {
   @Test
   public void test00005TemplateRender() throws InterruptedException {
 
-    jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
         "sharepoint_data_sources");
 
     try {

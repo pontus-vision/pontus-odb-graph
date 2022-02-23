@@ -26,7 +26,7 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00001TotvsProtheusSa1Clientes() throws InterruptedException {
 
-    jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+    jsonTestUtil("totvs/totvs-sa1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
 
     try {
 
@@ -89,7 +89,7 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00002TotvsProtheusSa2Fornecedor() throws InterruptedException {
 
-    jsonTestUtil("totvs2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
+    jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
 
     try {
 
@@ -131,7 +131,7 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00003TotvsProtheusRaFuncionario() throws InterruptedException {
 
-    jsonTestUtil("totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+    jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
 
     try {
 
@@ -168,8 +168,8 @@ public class PVTotvsTest extends AppTest {
   @Test
   public void test00004TotvsProtheusPlusPloomes() throws InterruptedException {
 
-    jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
-    jsonTestUtil("ploomes1-merge-totvs1-real.json", "$.value", "ploomes_clientes");
+    jsonTestUtil("totvs/totvs-sa1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+    jsonTestUtil("ploomes/ploomes1-merge-totvs1-real.json", "$.value", "ploomes_clientes");
 
     try {
 
