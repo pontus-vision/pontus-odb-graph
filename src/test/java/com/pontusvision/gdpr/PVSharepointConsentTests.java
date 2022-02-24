@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +29,7 @@ public class PVSharepointConsentTests extends AppTest {
   @Test
   public void test00001SharepointConsents() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
       String lakshmiPrivacyNotices =
@@ -82,7 +81,7 @@ public class PVSharepointConsentTests extends AppTest {
   @Test
   public void test00002UpsertSharepointConsents() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
       String countEventIngestions =
@@ -101,7 +100,7 @@ public class PVSharepointConsentTests extends AppTest {
 
 //    Test for duplicate data --------------------------------------------------------------------------------------
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos2.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos2.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
       String countEventIngestionsAgain =
@@ -135,10 +134,10 @@ public class PVSharepointConsentTests extends AppTest {
   @Test
   public void test00003SharepointConsentPlusPrivacyNotice() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
               "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-consentimentos.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
       String consentDataSourceName = "SHAREPOINT/CONSENT";

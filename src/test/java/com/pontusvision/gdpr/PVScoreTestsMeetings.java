@@ -41,7 +41,7 @@ public class PVScoreTestsMeetings extends AppTest {
   public void test00001MeetingsScore() throws InterruptedException {
     try {
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-p-and-pd-committee-meetings2.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-p-and-pd-committee-meetings2.json", "$.queryResp[*].fields",
           "sharepoint_meetings");
 
 

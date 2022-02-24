@@ -29,7 +29,7 @@ public class PVSharepointPrivacyDocsTests extends AppTest {
   @Test
   public void test00001SharepointPrivacyDocs() throws InterruptedException {
 
-    jsonTestUtil("non-official-pv-extract-sharepoint-privacy-docs.json", "$.queryResp[*].fields",
+    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-privacy-docs.json", "$.queryResp[*].fields",
             "sharepoint_privacy_docs");
 
     try {
@@ -69,7 +69,7 @@ public class PVSharepointPrivacyDocsTests extends AppTest {
   @Test
   public void test00002UpsertSharepointPrivacyDocs() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-privacy-docs.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-privacy-docs.json",
               "$.queryResp[*].fields", "sharepoint_privacy_docs");
 
       String countEventIngestions =
@@ -81,7 +81,7 @@ public class PVSharepointPrivacyDocsTests extends AppTest {
                       ".out('Has_Ingestion_Event').has('Metadata_Type_Object_Privacy_Docs', eq('Object_Privacy_Docs'))" +
                       ".dedup().count().next().toString()").get().toString();
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-privacy-docs.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-privacy-docs.json",
               "$.queryResp[*].fields", "sharepoint_privacy_docs");
 
       String countEventIngestionsAgain =

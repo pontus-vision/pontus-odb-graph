@@ -30,7 +30,7 @@ public class PVSharepointPrivacyNoticeTests extends AppTest {
   @Test
   public void test00001SharepointPrivacyNotice() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
               "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
       String getPrivacyNoticeDescription =
@@ -85,7 +85,7 @@ public class PVSharepointPrivacyNoticeTests extends AppTest {
   @Test
   public void test00002UpsertSharepointPrivacyNotice() throws InterruptedException {
     try {
-      jsonTestUtil("non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
               "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
       String countEventIngestions =
@@ -97,7 +97,7 @@ public class PVSharepointPrivacyNoticeTests extends AppTest {
                       ".in('Has_Ingestion_Event').has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))" +
                       ".dedup().count().next().toString()").get().toString();
 
-      jsonTestUtil("non-official-pv-extract-sharepoint-aviso-de-privacidade2.json",
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade2.json",
               "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
       String countEventIngestionsAgain =
