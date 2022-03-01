@@ -30,6 +30,7 @@ import java.time.format.DateTimeFormatter
 import java.util.concurrent.atomic.AtomicInteger
 
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.bothV
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.local
 
 class ODBSchemaManager {
   static def loadSchema(OrientStandardGraph graph, String... files) {
@@ -581,6 +582,11 @@ class PontusJ2ReportingFunctions {
 //  Formats string Date to local country/language
   static String dateLocaleFormat(String date, String lang, String country) {
 
+    //  If date is today, then it will be formatted to present
+    if (date == 'today'){
+      date = new Date().toString();
+    }
+
     Date d = PVConvMixin.asType(date, Date.class) as Date
     DateFormat dtf = DateFormat.getDateInstance(DateFormat.LONG, new Locale(lang, country))
     return dtf.format(d) as String
@@ -851,8 +857,10 @@ class PontusJ2ReportingFunctions {
     return System.getenv(envVar)
   }
 
-  static String formatDateNow(String pattern) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern)
+  static String formatDateNow(String pattern, String lang, String country) {
+
+    Locale locale = new Locale.Builder().setLanguage(lang).setRegion(country).build()
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern, locale)
 
     return formatter.format(LocalDate.now())
 
@@ -1196,7 +1204,7 @@ class PontusJ2ReportingFunctions {
             PontusJ2ReportingFunctions.class, "getEnvVarDefVal", String.class, String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "formatDateNow",
-            PontusJ2ReportingFunctions.class, "formatDateNow", String.class))
+            PontusJ2ReportingFunctions.class, "formatDateNow", String.class, String.class, String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getEnvVar",
             PontusJ2ReportingFunctions.class, "getEnvVar", String.class))

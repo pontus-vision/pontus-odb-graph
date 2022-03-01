@@ -119,8 +119,8 @@ public class PVTemplateTests extends AppTest {
                               "({{ pv:getRiskLevelColour(risks[0].blah) }})=" +
                               "{{ context.Object_Data_Procedures_ID }}-{{ riskMitigations[0].Object_Risk_Mitigation_Data_Source_Mitigation_Id }}->" +
                               "ENV_VAR1={{ pv:getEnvVar('ENV_VAR1') }};ENV_VAR2={{ pv:getEnvVarDefVal('ENV_VAR2','DEFVAL2') }};" +
-                              "ENV_VAR3={{ pv:getEnvVarDefVal('ENV_VAR3','DEFVAL3') }}###{{ pv:formatDateNow('MMM') }}##" +
-                              "{{ pv:formatDateNow('dd')}}##{{ pv:formatDateNow('yyyy') }}##{{ pv:formatDateNow('dd/MM/yyyy') }}##" +
+                              "ENV_VAR3={{ pv:getEnvVarDefVal('ENV_VAR3','DEFVAL3') }}###{{ pv:formatDateNow('MMM', 'pt', 'BR') }}##" +
+                              "{{ pv:formatDateNow('dd', 'pt', 'BR')}}##{{ pv:formatDateNow('yyyy', 'pt', 'BR') }}##{{ pv:formatDateNow('dd/MM/yyyy', 'pt', 'BR') }}##" +
                               "{{ lawfulBasis[0].Object_Lawful_Basis_Description }}{% if 'EXECUÇÃO DE CONTRATO' in lawfulBasis.toString() %}" +
                               "##TEM Execução{% endif %}" +
                               "{% if 'BLAH DE CONTRATO' in lawfulBasis.toString()  %}" +
@@ -130,7 +130,7 @@ public class PVTemplateTests extends AppTest {
 
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");
 
-      String month = formatter.format(LocalDate.now());
+//      String month = formatter.format(LocalDate.now());
       DateTimeFormatter formatterDay = DateTimeFormatter.ofPattern("dd");
 
       String day = formatterDay.format(LocalDate.now());
@@ -170,7 +170,7 @@ public class PVTemplateTests extends AppTest {
               toUpperCase(Locale.ROOT);
       String expectedReport = "R02-150(red)/(blue)=1-M-DATA-ENCR-FLIGHT->ENV_VAR1=;ENV_VAR2=DEFVAL2;ENV_VAR3=DEFVAL3###"
 //      String expectedReport = "R07-150(red)/(blue)=1-M-PHYS-PROT->ENV_VAR1=;ENV_VAR2=DEFVAL2;ENV_VAR3=DEFVAL3###"
-              + month + "##" + day + "##" + year + "##" + fullDate + "##" +
+              + "mar" + "##" + day + "##" + year + "##" + fullDate + "##" +
 
               lawfulBasis + "##TEM Execução";
       assertEquals(expectedReport, report);

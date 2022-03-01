@@ -1545,13 +1545,13 @@ color:#5B9BD5'>
 {{  pv:getEnvVarDefVal('PV_RIPD_CITY', 'S&atilde;o Paulo')  }}
 </span><span lang=PT-BR style='font-family:Calibri,sans-serif;
 mso-bidi-font-family:Tahoma'>,<span style='color:#5B9BD5'>
-{{  pv:formatDateNow('dd')  }}{# Dia #}
+{{  pv:formatDateNow('dd', 'pt', 'BR')  }}{# Dia #}
 </span>de<span
          style='color:#5B9BD5'>
-{{ pv:formatDateNow('MMM')  }}{# Mes #}
+{{ pv:formatDateNow('MMMM', 'pt', 'BR')  }}{# Mes #}
 
 </span> de <span style='color:#5B9BD5'>
-{{ pv:formatDateNow('yyyy') }}{# Ano #}
+{{ pv:formatDateNow('yyyy', 'pt', 'BR') }}{# Ano #}
 </span></span></p>
 
  <p class=MsoNormal align=center style='text-align:center;line-height:150%;
@@ -1622,7 +1622,7 @@ Calibri,sans-serif;mso-bidi-font-family:Tahoma'><o:p>&nbsp;</o:p></span></p>
   center;text-indent:0cm;line-height:normal'><span lang=PT-BR style='font-family:
   Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5;mso-fareast-language:
   ZH-CN'>
-  {{ pv:formatDateNow('dd/MM/yyyy') }}{# Data inicial #}
+  {{ pv:formatDateNow('dd/MM/yyyy', 'pt', 'BR') }}{# Data inicial #}
   <o:p></o:p></span></p>
    </td>
    <td width=59 style='width:44.35pt;border-top:none;border-left:solid gray 1.0pt;
@@ -3149,7 +3149,7 @@ Tahoma;color:#5B9BD5'>&gt;</span><span lang=PT-BR style='font-size:11.0pt'><o:p>
             lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
   mso-bidi-font-family:Tahoma;color:#FF3333'> </span><span lang=PT-BR
                                                            style='font-size:11.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:
-  Tahoma;color:#5B9BD5'> {{ pv:formatDateNow('dd') }}</span><span lang=PT-BR style='font-size:
+  Tahoma;color:#5B9BD5'> {{ pv:formatDateNow('dd', 'pt', 'BR') }}</span><span lang=PT-BR style='font-size:
   11.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;
   color:#FF3333'> </span><span lang=PT-BR style='font-size:11.0pt;font-family:
   Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:black;mso-color-alt:
@@ -3158,7 +3158,7 @@ Tahoma;color:#5B9BD5'>&gt;</span><span lang=PT-BR style='font-size:11.0pt'><o:p>
             lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
   mso-bidi-font-family:Tahoma;color:#5B9BD5'>
 
-     {{ pv:formatDateNow('MMM') }}
+     {{ pv:formatDateNow('MMMM', 'pt', 'BR') }}
 
     </span><span
             lang=PT-BR style='font-size:11.0pt;font-family:Calibri,sans-serif;
@@ -3168,7 +3168,7 @@ Tahoma;color:#5B9BD5'>&gt;</span><span lang=PT-BR style='font-size:11.0pt'><o:p>
                                                               style='font-size:11.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:
   Tahoma;color:#FF3333'> </span><span lang=PT-BR style='font-size:11.0pt;
   font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5'>
-     {{ pv:formatDateNow('yyyy') }}
+     {{ pv:formatDateNow('yyyy', 'pt', 'BR') }}
 
     </span></p>
    </td>
