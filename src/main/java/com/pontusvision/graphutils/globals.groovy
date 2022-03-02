@@ -579,7 +579,8 @@ class PontusJ2ReportingFunctions {
 
   }
 
-//  Formats string Date to local country/language
+//  Formats string Date to local country/language using ISO639-2 Country Code and Language Code
+//  Check the table at src/test/resources/country_date_formats.csv
   static String dateLocaleFormat(String date, String lang, String country) {
 
     //  If date is today, then it will be formatted to present
@@ -588,6 +589,7 @@ class PontusJ2ReportingFunctions {
     }
 
     Date d = PVConvMixin.asType(date, Date.class) as Date
+//  TODO: new parameter to option the DateFormat = LONG, SHORT, MEDIUM
     DateFormat dtf = DateFormat.getDateInstance(DateFormat.LONG, new Locale(lang, country))
     return dtf.format(d) as String
 
@@ -857,6 +859,9 @@ class PontusJ2ReportingFunctions {
     return System.getenv(envVar)
   }
 
+
+//  Formats string Date to local country/language using ISO639-2 Country Code and Language Code
+//  Check the table at src/test/resources/country_date_formats.csv
   static String formatDateNow(String pattern, String lang, String country) {
 
     Locale locale = new Locale.Builder().setLanguage(lang).setRegion(country).build()
