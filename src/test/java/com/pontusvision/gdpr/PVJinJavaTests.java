@@ -28,27 +28,27 @@ public class PVJinJavaTests extends AppTest {
 
       String brazilianDate = PontusJ2ReportingFunctions
               .dateLocaleFormat("Sat Jan 08 08:00:00 UTC 2022", "pt", "BR");
-      assertSame("8 de Janeiro de 2022", brazilianDate);
+      assertEquals("8 de Janeiro de 2022", brazilianDate);
 
       String chineseDate = PontusJ2ReportingFunctions
               .dateLocaleFormat("Wed Oct 6 10:15:09 UTC 2021", "zh", "CN");
-      assertSame("2021年10月6日", chineseDate);
+      assertEquals("2021年10月6日", chineseDate);
 
       String frenchDate = PontusJ2ReportingFunctions
               .dateLocaleFormat("Sat Dec 28 12:00:49 UTC 2019", "fr", "FR");
-      assertSame("28 décembre 2019", frenchDate);
+      assertEquals("28 décembre 2019", frenchDate);
 
       String hindiDate = PontusJ2ReportingFunctions
               .dateLocaleFormat("Mon Jul 20 19:56:34 UTC 2020", "hi", "IN");
-      assertSame("२० जुलाई, २०२०", hindiDate);
+      assertEquals("२० जुलाई, २०२०", hindiDate);
 
       String lebaneseDate = PontusJ2ReportingFunctions
               .dateLocaleFormat("Tue Mar 01 05:29:18 UTC 2022", "ar", "LB");
-      assertSame("01 آذار, 2022", lebaneseDate);
+      assertEquals("01 آذار, 2022", lebaneseDate);
 
       String usaDate = PontusJ2ReportingFunctions
               .dateLocaleFormat("Sat Dec 28 15:57:33 UTC 2019", "en", "US");
-      assertSame("December 28, 2019", usaDate);
+      assertEquals("December 28, 2019", usaDate);
 
     } catch (Exception e) {
       e.printStackTrace();
