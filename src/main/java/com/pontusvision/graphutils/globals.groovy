@@ -578,10 +578,17 @@ class PontusJ2ReportingFunctions {
 
   }
 
-//  Formats string Date to local country/language
+//  Formats string Date to local country/language using ISO639-2 Country Code and Language Code
+//  Check the table at src/test/resources/country_date_formats.csv
   static String dateLocaleFormat(String date, String lang, String country) {
 
+    //  If date is today, then it will be formatted to present
+    if (date == 'today'){
+      date = new Date().toString();
+    }
+
     Date d = PVConvMixin.asType(date, Date.class) as Date
+//  TODO: new parameter to option the DateFormat = LONG, SHORT, MEDIUM
     DateFormat dtf = DateFormat.getDateInstance(DateFormat.LONG, new Locale(lang, country))
     return dtf.format(d) as String
 
@@ -853,6 +860,17 @@ class PontusJ2ReportingFunctions {
 
   static String formatDateNow(String pattern) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern)
+
+    return formatter.format(LocalDate.now())
+
+  }
+
+//  Formats string Date to local country/language using ISO639-2 Country Code and Language Code
+//  Check the table at src/test/resources/country_date_formats.csv
+  static String formatLocaleDateNow(String pattern, String lang, String country) {
+
+    Locale locale = new Locale.Builder().setLanguage(lang).setRegion(country).build()
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern, locale)
 
     return formatter.format(LocalDate.now())
 
@@ -1197,6 +1215,9 @@ class PontusJ2ReportingFunctions {
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "formatDateNow",
             PontusJ2ReportingFunctions.class, "formatDateNow", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "formatLocaleDateNow",
+            PontusJ2ReportingFunctions.class, "formatLocaleDateNow", String.class, String.class, String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getEnvVar",
             PontusJ2ReportingFunctions.class, "getEnvVar", String.class))
