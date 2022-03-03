@@ -119,8 +119,8 @@ public class PVTemplateTests extends AppTest {
                               "({{ pv:getRiskLevelColour(risks[0].blah) }})=" +
                               "{{ context.Object_Data_Procedures_ID }}-{{ riskMitigations[0].Object_Risk_Mitigation_Data_Source_Mitigation_Id }}->" +
                               "ENV_VAR1={{ pv:getEnvVar('ENV_VAR1') }};ENV_VAR2={{ pv:getEnvVarDefVal('ENV_VAR2','DEFVAL2') }};" +
-                              "ENV_VAR3={{ pv:getEnvVarDefVal('ENV_VAR3','DEFVAL3') }}###{{ pv:formatDateNow('MMM', 'pt', 'BR') }}##" +
-                              "{{ pv:formatDateNow('dd', 'pt', 'BR')}}##{{ pv:formatDateNow('yyyy', 'pt', 'BR') }}##{{ pv:formatDateNow('dd/MM/yyyy', 'pt', 'BR') }}##" +
+                              "ENV_VAR3={{ pv:getEnvVarDefVal('ENV_VAR3','DEFVAL3') }}###{{ pv:formatDateNow('MMM') }}##" +
+                              "{{ pv:formatDateNow('dd')}}##{{ pv:formatDateNow('yyyy') }}##{{ pv:formatDateNow('dd/MM/yyyy') }}##" +
                               "{{ lawfulBasis[0].Object_Lawful_Basis_Description }}{% if 'EXECUÇÃO DE CONTRATO' in lawfulBasis.toString() %}" +
                               "##TEM Execução{% endif %}" +
                               "{% if 'BLAH DE CONTRATO' in lawfulBasis.toString()  %}" +
@@ -130,7 +130,7 @@ public class PVTemplateTests extends AppTest {
 
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");
 
-//      String month = formatter.format(LocalDate.now());
+      String month = formatter.format(LocalDate.now());
       DateTimeFormatter formatterDay = DateTimeFormatter.ofPattern("dd");
 
       String day = formatterDay.format(LocalDate.now());
@@ -170,7 +170,7 @@ public class PVTemplateTests extends AppTest {
               toUpperCase(Locale.ROOT);
       String expectedReport = "R02-150(red)/(blue)=1-M-DATA-ENCR-FLIGHT->ENV_VAR1=;ENV_VAR2=DEFVAL2;ENV_VAR3=DEFVAL3###"
 //      String expectedReport = "R07-150(red)/(blue)=1-M-PHYS-PROT->ENV_VAR1=;ENV_VAR2=DEFVAL2;ENV_VAR3=DEFVAL3###"
-              + "mar" + "##" + day + "##" + year + "##" + fullDate + "##" +
+              + month + "##" + day + "##" + year + "##" + fullDate + "##" +
 
               lawfulBasis + "##TEM Execução";
       assertEquals(expectedReport, report);
@@ -764,5 +764,53 @@ public class PVTemplateTests extends AppTest {
     }
 
   }
+
+//
+//  @Test
+//  public void test00010FormatLocaleDateNow() throws InterruptedException {
+//    try {
+//
+//      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
+//              "$.queryResp[*].fields", "sharepoint_mapeamentos");
+//
+//      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+//
+//      Resource res = new Resource();
+//
+//      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+//      req.setTemplateName("TEST2");
+//      req.setTemplatePOLEType("Event_Subject_Access_Request");
+//      req.setReportTextBase64(
+//              Base64.getEncoder().encodeToString((
+//                      "Conforme solicitado na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} " +
+//                              "pelo canal: ({{ context.Event_Subject_Access_Request_Request_Channel }}), seus dados foram corrigidos " +
+//                              "na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Update_Date, 'pt', 'BR') }}.")
+//                      .getBytes()));
+//
+//      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+//
+//      String templateId = reply.getTemplateId();
+//
+//      String contextId = App.g.V().has("Event_Subject_Access_Request_Form_Id", P.eq("2"))
+//              .id().next().toString();
+//
+//      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+//      renderReq.setRefEntryId(contextId);
+//      renderReq.setTemplateId(templateId);
+//      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+//
+//      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+//
+//      String expectedReport = "Conforme solicitado na data de 9 de Dezembro de 2021 pelo canal: (Via SMS), seus dados foram corrigidos na data de 10 de Dezembro de 2021.";
+//      assertEquals(expectedReport, report, "CORREÇÃO DOS DADOS message");
+//
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      assertNull(e);
+//
+//    }
+//
+//  }
+
 
 }
