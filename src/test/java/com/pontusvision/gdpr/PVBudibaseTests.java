@@ -31,16 +31,19 @@ public class PVBudibaseTests extends AppTest {
                       "eq('teste@email.com, teste2@mail.com, teste3@mail.com')).count().next().toString()").get().toString();
       assertEquals("3", numParties, "3 registries with same parties interested");
 
-      String juridicoInterest =
-              App.executor.eval("App.g.V().has('Object_Lawful_Basis_Description', eq('LEGÍTIMO INTERESSE DO CONTROLADOR'))" +
-                      ".count().next().toString()").get().toString();
-      assertEquals("7", juridicoInterest, "Jurídico Snowymountain is a Party Interested in these Data Procedures");
+      String legInterestCount=
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
+                      ".out('Has_Ingestion_Event').as('event_group')" +
+                      ".out('Has_Ingestion_Event').as('event')" +
+                      ".out('Has_Ingestion_Event').as('data_proc')" +
+                      ".out('Has_Lawful_Basis_On').as('lawful_basis')" +
+                      ".has('Object_Lawful_Basis_Description', eq('LEGÍTIMO INTERESSE DO CONTROLADOR'))" +
+//                      ".valueMap().toList()"
+                      ".count().next().toString()"
+      ).get().toString();
+      assertEquals("7", legInterestCount, "Jurídico Snowymountain is a Party Interested in these Data Procedures");
 
-//      String numJuridicoParties =
-//              App.executor.eval("App.g.V().has('Object_Data_Procedures_Interested_Parties_Consulted', " +
-//                      "eq('Jurídico Snowymountain')).count().next().toString()").get().toString();
-//      assertEquals("4", numJuridicoParties, "4 registries have Jurídico Snowymountain as an Interested Party");
-//
+
 //      String LIALawfulBasis =
 //              App.executor.eval("App.g.V().has('Object_Data_Procedures_Form_Id', eq('404'))" +
 //                      ".out('Has_Legitimate_Interests_Assessment')" +
