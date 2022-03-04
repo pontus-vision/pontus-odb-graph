@@ -256,7 +256,7 @@ public class PVTemplateTests extends AppTest {
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
                               "{% if lia %}" +
 
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }}" +
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Is_Essential | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }}" +
                               "{% endif %}")
 
                       .getBytes()));
@@ -314,7 +314,7 @@ public class PVTemplateTests extends AppTest {
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
                               "{% if lia %}" +
 
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}" +
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Is_Required | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}" +
                               "{% endif %}")
 
                       .getBytes()));
@@ -346,7 +346,7 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Is_Required | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
 
                       .getBytes()));
 
@@ -365,7 +365,7 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
-                              "{{ lia[20].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
+                              "{{ lia[20].Object_Legitimate_Interests_Assessment_Is_Required | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
 
                       .getBytes()));
 

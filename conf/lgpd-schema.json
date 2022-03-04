@@ -2774,7 +2774,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object_Legitimate_Interests_Assessment_Personal_Data_Treatment",
+      "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -2784,7 +2784,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object_Legitimate_Interests_Assessment_Processing_Purpose",
+      "name": "Object_Legitimate_Interests_Assessment_Is_Required",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -5397,9 +5397,9 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Legitimate_Interests_Assessment",
-        "Object_Legitimate_Interests_Assessment_Personal_Data_Treatment",
+        "Object_Legitimate_Interests_Assessment_Is_Essential",
         "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
-        "Object_Legitimate_Interests_Assessment_Processing_Purpose"
+        "Object_Legitimate_Interests_Assessment_Is_Required"
       ],
       "propertyKeysMappings": {}
     },

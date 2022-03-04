@@ -63,7 +63,7 @@ public class PVSharepointRoPaTests extends AppTest {
       String LIAProcessingPurpose =
               App.executor.eval("App.g.V().has('Object_Data_Procedures_Form_Id', eq('406'))" +
                       ".out('Has_Legitimate_Interests_Assessment')" +
-                      ".properties('Object_Legitimate_Interests_Assessment_Processing_Purpose').value()" +
+                      ".properties('Object_Legitimate_Interests_Assessment_Is_Required').value()" +
                       ".next().toString()").get().toString();
       assertEquals("Sim", LIAProcessingPurpose, "Processing Purpose for this LIA is => SIM");
 
@@ -73,7 +73,7 @@ public class PVSharepointRoPaTests extends AppTest {
                       ".out('Has_Ingestion_Event').out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', " +
                       "eq('EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR'))" +
                       ".in('Has_Lawful_Basis_On').out('Has_Legitimate_Interests_Assessment')" +
-                      ".properties('Object_Legitimate_Interests_Assessment_Personal_Data_Treatment')" +
+                      ".properties('Object_Legitimate_Interests_Assessment_Is_Essential')" +
                       ".value().next().toString()").get().toString();
       assertEquals("Sim, é indispensável - processo 1", LIAPersonalDataTreatment, "Personal Data Treatment for this LIA is => Sim, é indispensável");
 
