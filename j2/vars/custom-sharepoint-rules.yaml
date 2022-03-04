@@ -438,9 +438,11 @@ rules:
             processAll: true
 
       - label: Object_Legitimate_Interests_Assessment
-        condition: "${Essetratamentodedadospessoais_x0 == Sim && Esse_x0020_processamento_x0020_d == Sim}"
+        condition: "${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d}"
         props:
+          Is_Essential: "${Essetratamentodedadospessoais_x0}"
           Lawful_Basis_Justification: "${N_x00e3_oh_x00e1_outrabaselegalp}"
+          Is_Required: "${Esse_x0020_processamento_x0020_d}"
 
       - label: Event_Ingestion
         props:

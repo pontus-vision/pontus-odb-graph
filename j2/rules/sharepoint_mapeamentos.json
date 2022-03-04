@@ -139,11 +139,21 @@
       },
       {
         "label": "Object_Legitimate_Interests_Assessment",
-        "condition": "${Essetratamentodedadospessoais_x0 == Sim && Esse_x0020_processamento_x0020_d == Sim}",
+        "condition": "${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d}",
         "props": [
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
+            "val": "${Essetratamentodedadospessoais_x0}",
+            "mandatoryInSearch": true
+          },
           {
             "name": "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
             "val": "${N_x00e3_oh_x00e1_outrabaselegalp}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Is_Required",
+            "val": "${Esse_x0020_processamento_x0020_d}",
             "mandatoryInSearch": true
           }
         ]

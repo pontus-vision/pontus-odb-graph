@@ -820,9 +820,9 @@ schema:
       partition: false
       useStatic: false
       props:
-#        - name: Is_Essential
+        - name: Is_Essential
         - name: Lawful_Basis_Justification
-#        - name: Is_Required
+        - name: Is_Required
 
     - name: "Object_Risk_Data_Source"
       partition: false
