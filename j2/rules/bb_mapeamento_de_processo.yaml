@@ -88,6 +88,13 @@ updatereq:
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
     
+    - label: Object_Legitimate_Interests_Assessment
+      condition: ${Is_Essential == true && Is_Required == true}
+      props:
+        - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
+          val: ${N_x00e3_oh_x00e1_outrabaselegalp}
+          mandatoryInSearch: True
+    
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type

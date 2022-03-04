@@ -288,12 +288,10 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-#      - label: Object_Legitimate_Interests_Assessment
-#        condition: "${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d}"
-#        props:
-#          Personal_Data_Treatment: "${Essetratamentodedadospessoais_x0}"
-#          Lawful_Basis_Justification: "${N_x00e3_oh_x00e1_outrabaselegalp}"
-#          Processing_Purpose: "${Esse_x0020_processamento_x0020_d}"
+      - label: Object_Legitimate_Interests_Assessment
+        condition: "${Is_Essential == true && Is_Required == true}"
+        props:
+          Lawful_Basis_Justification: "${N_x00e3_oh_x00e1_outrabaselegalp}"
 
       - label: Event_Ingestion
         props:
