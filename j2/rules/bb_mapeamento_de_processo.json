@@ -1,0 +1,230 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Data_Source",
+        "name": "budibase",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "BUDIBASE/MAPEAMENTO-DE-PROCESSO",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "attached_data_sources",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Local_de_Armazenamento)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Policy",
+        "props": [
+          {
+            "name": "Object_Data_Policy_Type",
+            "val": "${Referencia}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Retention_Period",
+            "val": "${Periodo_de_retencao}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Procedures",
+        "props": [
+          {
+            "name": "Object_Data_Procedures_Form_Id",
+            "val": "${_id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_ID",
+            "val": "${Referencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Name",
+            "val": "${Processo}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
+            "val": "${Categoria_dos_titulares_dos_dados}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_BusinessAreaResponsible",
+            "val": "${Area}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Country_Where_Stored",
+            "val": "${Pais_onde_as_pessoas_estao_localizadas}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Why_Is_It_Collected",
+            "val": "${Finalidade_do_processo}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Collected",
+            "val": "${Dados_pessoais_utilizados}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Description",
+            "val": "${Fluxo_interno_dos_dados}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Interested_Parties_Consulted",
+            "val": "${Partes_Interessadas_Consultadas}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(Dados_pessoais_utilizados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Lawful_Basis",
+        "props": [
+          {
+            "name": "Object_Lawful_Basis_Description",
+            "val": "${new groovy.json.JsonBuilder(Base_Legal)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "budibase/mapeamento-de-processo",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "budibase/mapeamento-de-processo",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "budibase",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Sensitive_Data"
+      },
+      {
+        "label": "Has_Lawful_Basis_On",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Lawful_Basis"
+      },
+      {
+        "label": "Has_Policy",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Data_Policy"
+      },
+      {
+        "label": "Has_Data_Source",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "attached_data_sources"
+      }
+    ]
+  }
+}

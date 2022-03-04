@@ -1,0 +1,150 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Object_Data_Source
+      name: budibase
+      props:
+        - name: Object_Data_Source_Name
+          val: BUDIBASE/MAPEAMENTO-DE-PROCESSO
+          mandatoryInSearch: True
+    
+    - label: Object_Data_Source
+      name: attached_data_sources
+      props:
+        - name: Object_Data_Source_Form_Id
+          val: ${new groovy.json.JsonBuilder(Local_de_Armazenamento)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.BudibaseRef;"
+          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
+    
+    - label: Object_Data_Policy
+      props:
+        - name: Object_Data_Policy_Type
+          val: ${Referencia}
+          mandatoryInSearch: True
+        - name: Object_Data_Policy_Retention_Period
+          val: ${Periodo_de_retencao}
+          mandatoryInSearch: True
+    
+    - label: Object_Data_Procedures
+      props:
+        - name: Object_Data_Procedures_Form_Id
+          val: ${_id}
+          mandatoryInSearch: True
+        - name: Object_Data_Procedures_ID
+          val: ${Referencia}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Name
+          val: ${Processo}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Type_Of_Natural_Person
+          val: ${Categoria_dos_titulares_dos_dados}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_BusinessAreaResponsible
+          val: ${Area}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Country_Where_Stored
+          val: ${Pais_onde_as_pessoas_estao_localizadas}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Why_Is_It_Collected
+          val: ${Finalidade_do_processo}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Info_Collected
+          val: ${Dados_pessoais_utilizados}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Description
+          val: ${Fluxo_interno_dos_dados}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Interested_Parties_Consulted
+          val: ${Partes_Interessadas_Consultadas}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Sensitive_Data
+      props:
+        - name: Object_Sensitive_Data_Description
+          val: ${new groovy.json.JsonBuilder(Dados_pessoais_utilizados)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+    
+    - label: Object_Lawful_Basis
+      props:
+        - name: Object_Lawful_Basis_Description
+          val: ${new groovy.json.JsonBuilder(Base_Legal)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+    
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: budibase/mapeamento-de-processo
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: budibase/mapeamento-de-processo
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexName: budibase
+    toVertexLabel: Event_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Object_Data_Procedures
+  - label: Has_Sensitive_Data
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Sensitive_Data
+  - label: Has_Lawful_Basis_On
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Lawful_Basis
+  - label: Has_Policy
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Data_Policy
+  - label: Has_Data_Source
+    fromVertexLabel: Object_Data_Procedures
+    toVertexName: attached_data_sources
+
