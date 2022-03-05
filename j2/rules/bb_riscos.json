@@ -3,11 +3,11 @@
     "vertices": [
       {
         "label": "Object_Data_Source",
-        "name": "sharepoint",
+        "name": "budibase",
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "SHAREPOINT/RISK",
+            "val": "BUDIBASE/RISCOS-FONTES-DE-DADOS",
             "mandatoryInSearch": true
           }
         ]
@@ -15,15 +15,15 @@
       {
         "label": "Object_Data_Source",
         "name": "attached_data_sources",
-        "condition": "${Data_x0020_Sources?.size() > 0}",
+        "condition": "${Fontes_de_Dados?.size() > 0}",
         "props": [
           {
             "name": "Object_Data_Source_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Data_x0020_Sources)}",
+            "val": "${new groovy.json.JsonBuilder(Fontes_de_Dados)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
           }
         ]
       },
@@ -32,54 +32,54 @@
         "props": [
           {
             "name": "Object_Risk_Data_Source_Form_Id",
-            "val": "${id}",
+            "val": "${_id}",
             "mandatoryInSearch": true
           },
           {
             "name": "Object_Risk_Data_Source_Risk_Id",
-            "val": "${Title?.trim()?.toUpperCase()}",
+            "val": "${Referencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Data_Source_Description",
-            "val": "${field_Description}",
+            "val": "${Descricao}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Data_Source_Probability",
-            "val": "${field_Probability}",
+            "val": "${Probabilidade}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Data_Source_Impact",
-            "val": "${field_Impact}",
+            "val": "${Impacto}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Data_Source_Residual_Probability",
-            "val": "${field_Residual_x0020_Probability}",
+            "val": "${Probabilidade_Residual}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Data_Source_Residual_Impact",
-            "val": "${field_Residual_x0020_Impact}",
+            "val": "${Impacto_Residual}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Data_Source_Approved_By_DPO",
-            "val": "${field_Approved_x0020_by_x0020_DPO}",
+            "val": "${Aprovado_pelo_DPO}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Data_Source_Approved_By_Security",
-            "val": "${field_Approved_x0020_by_x0020_Security}",
+            "val": "${Aprovado_pela_Seguranca}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -90,11 +90,11 @@
         "props": [
           {
             "name": "Object_Risk_Mitigation_Data_Source_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Risk_x0020_Mitigations)}",
+            "val": "${new groovy.json.JsonBuilder(Mitigacoes_de_Riscos)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
           }
         ]
       },
@@ -103,7 +103,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sharepoint/risk",
+            "val": "budibase/risk",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -140,7 +140,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sharepoint/risk",
+            "val": "budibase/risk",
             "mandatoryInSearch": true
           },
           {
@@ -159,7 +159,7 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "sharepoint",
+        "fromVertexName": "budibase",
         "toVertexLabel": "Event_Group_Ingestion"
       },
       {

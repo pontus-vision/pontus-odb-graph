@@ -1,0 +1,219 @@
+{
+  "rows": [
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_5de61f5c85534fcbbe8c2999fafdbc46",
+      "_rev": "1-cf924b0f01c0dde15012854da4d16372",
+      "Referencia": "R07",
+      "Descricao": "Informação insuficiente sobre a finalidade do tratamento.",
+      "Probabilidade": "Medium",
+      "Impacto": "High",
+      "Probabilidade_Residual": null,
+      "Impacto_Residual": null,
+      "Aprovado_pelo_DPO": "true",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 7,
+      "Created_At": "2022-01-28T15:40:30.572Z",
+      "Updated_At": "2022-01-28T15:40:30.572Z",
+      "Mitigacoes_de_Riscos": [
+        {
+          "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_8cdd15047f9f40879be399b51764d1b3",
+          "primaryDisplay": "m-sec-dev"
+        }
+      ]
+    },
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_81b8ae6e7cf14a98b0f05339e7fa7514",
+      "_rev": "1-534ac2aa374546459eea5f5834732afe",
+      "Referencia": "R12",
+      "Descricao": "Vinculação/associação indevida, direta ou indireta, dos dados pessoais ao titular.",
+      "Probabilidade": "Low",
+      "Impacto": "High",
+      "Probabilidade_Residual": null,
+      "Impacto_Residual": null,
+      "Aprovado_pelo_DPO": "true",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 12,
+      "Created_At": "2022-01-28T15:40:30.588Z",
+      "Updated_At": "2022-01-28T15:40:30.588Z"
+    },
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_8896462c15d641819a5e7be6d5b8b131",
+      "_rev": "1-8f57a6bce30a125d6a7df64dda8442d6",
+      "Referencia": "R05",
+      "Descricao": "Remoção não autorizada.",
+      "Probabilidade": "Low",
+      "Impacto": "High",
+      "Probabilidade_Residual": null,
+      "Impacto_Residual": null,
+      "Aprovado_pelo_DPO": "true",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 5,
+      "Created_At": "2022-01-28T15:40:30.566Z",
+      "Updated_At": "2022-01-28T15:40:30.566Z"
+    },
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_8bc28ad1ff034fa0a4b50f9544ff2033",
+      "_rev": "1-e54fc1d1a3ee8d4acaa88d3e344ed150",
+      "Referencia": "R10",
+      "Descricao": "Compartilhar ou distribuir dados pessoais com terceiros sem o consentimento do titular dos dados pessoais.",
+      "Probabilidade": "Medium",
+      "Impacto": "High",
+      "Probabilidade_Residual": null,
+      "Impacto_Residual": null,
+      "Aprovado_pelo_DPO": "true",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 10,
+      "Created_At": "2022-01-28T15:40:30.580Z",
+      "Updated_At": "2022-01-28T15:40:30.580Z",
+      "Fontes_de_Dados": [
+        {
+          "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_cd02aa12d9ca4cc696bb2fb1e882e13d",
+          "primaryDisplay": "On-Premises"
+        }
+      ]
+    },
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_a390396986284f0489385bbf78e9b6c3",
+      "_rev": "1-957763c65157bdb677f49a3d1a583da5",
+      "Referencia": "R14",
+      "Descricao": "Reidentificação de dados pseudonimizados.",
+      "Probabilidade": "Low",
+      "Impacto": "High",
+      "Probabilidade_Residual": null,
+      "Impacto_Residual": null,
+      "Aprovado_pelo_DPO": "true",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 14,
+      "Created_At": "2022-01-28T15:40:30.595Z",
+      "Updated_At": "2022-01-28T15:40:30.595Z"
+    },
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_ae9daa84ea6b4c209e7dc556e080def9",
+      "_rev": "1-2e7f9b2b07c5f4a86e4dbe9f5781bc30",
+      "Referencia": "R03",
+      "Descricao": "Perda.",
+      "Probabilidade": "Low",
+      "Impacto": "Medium",
+      "Probabilidade_Residual": "Low",
+      "Impacto_Residual": "High",
+      "Aprovado_pelo_DPO": "true",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 3,
+      "Created_At": "2022-01-28T15:40:30.550Z",
+      "Updated_At": "2022-01-28T15:40:30.550Z",
+      "Fontes_de_Dados": [
+        {
+          "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_f623bcbc04c646d2943385bd83345fe1",
+          "primaryDisplay": "SaaS"
+        }
+      ]
+    },
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_bb21c95ab423453bbc4280c5c435768f",
+      "_rev": "1-80bc93ae568334acd069acec96e2baa6",
+      "Referencia": "R09",
+      "Descricao": "Falha em considerar os direitos do titular dos dados pessoais (Ex.: perda do direito de acesso).",
+      "Probabilidade": "Low",
+      "Impacto": "High",
+      "Probabilidade_Residual": null,
+      "Impacto_Residual": null,
+      "Aprovado_pelo_DPO": "true",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 9,
+      "Created_At": "2022-01-28T15:40:30.577Z",
+      "Updated_At": "2022-01-28T15:40:30.577Z",
+      "Fontes_de_Dados": [
+        {
+          "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_cd02aa12d9ca4cc696bb2fb1e882e13d",
+          "primaryDisplay": "On-Premises"
+        }
+      ],
+      "Mitigacoes_de_Riscos": [
+        {
+          "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_8cdd15047f9f40879be399b51764d1b3",
+          "primaryDisplay": "m-sec-dev"
+        }
+      ]
+    },
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_fcd98e1ad156470da005bf0e77d47a4c",
+      "_rev": "1-a6fc7ae6a90940598792a4ddbf65834d",
+      "Referencia": "R02",
+      "Descricao": "Modificação não autorizada.",
+      "Probabilidade": "Medium",
+      "Impacto": "High",
+      "Probabilidade_Residual": "Low",
+      "Impacto_Residual": "High",
+      "Aprovado_pelo_DPO": "true",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 2,
+      "Created_At": "2022-01-28T15:40:30.547Z",
+      "Updated_At": "2022-01-28T15:40:30.547Z",
+      "Fontes_de_Dados": [
+        {
+          "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35",
+          "primaryDisplay": "test123"
+        },
+        {
+          "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_f623bcbc04c646d2943385bd83345fe1",
+          "primaryDisplay": "SaaS"
+        }
+      ]
+    },
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_0db0552dc59d43b28c8448b1be2f9c21",
+      "_rev": "2-59c00f098ebae5a0b296a885a79bc910",
+      "Referencia": "R13",
+      "Descricao": "Falha/erro de processamento (Ex.: execução de script de banco de dados que_Atualiza dado pessoal com dado equivocado, ausência de validação dos dados de entrada, etc.).",
+      "Probabilidade": "Low",
+      "Impacto": "High",
+      "Probabilidade_Residual": null,
+      "Impacto_Residual": null,
+      "Aprovado_pelo_DPO": "true",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 13,
+      "Created_At": "2022-01-28T15:40:30.595Z",
+      "Updated_At": "2022-02-09T14:28:17.766Z",
+      "type": "row",
+      "Mitigacoes_de_Riscos": [
+        {
+          "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_1dd1a7f5cb7b4c8d90b3a44a9eab7ab6",
+          "primaryDisplay": "m-data-encr-flight"
+        }
+      ],
+      "Updated_By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "oghoche@pontusvision.com"
+        }
+      ]
+    },
+    {
+      "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_9c527fd3d559419fa7df7fa6d1ef9a67",
+      "_rev": "1-b48e75ced4cc4698f0b6beee3b978595",
+      "Referencia": "R06",
+      "Descricao": "Coleção excessiva.",
+      "Probabilidade": "Medium",
+      "Impacto": "High",
+      "Probabilidade_Residual": null,
+      "Impacto_Residual": null,
+      "Aprovado_pelo_DPO": "false",
+      "Aprovado_pela_Seguranca": "true",
+      "tableId": "ta_285c8a55b293461e9c2c50eefa082d96",
+      "Auto_ID": 6,
+      "Created_At": "2022-01-28T15:40:30.569Z",
+      "Updated_At": "2022-01-28T15:40:30.569Z"
+    }
+  ],
+  "bookmark": "g1AAAADreJzLYWBgYMpgTmEISM4vTc5ISXJIKk3JTEosTtUtKMpP0YWK6hrpYRWHi-oVlyXrJeeUFpekFunl5Ccn5uSATE5kSKr___9_VgaTmwPbuwlAIYZEUdpZl8cCsqEBSP2H2co6SXMByFamLABc3FCF",
+  "hasNextPage": true
+}

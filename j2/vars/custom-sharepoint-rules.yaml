@@ -657,6 +657,7 @@ rules:
 #          Description:  Data Source Risk
 
       - label: Object_Data_Source
+        condition: "${Data_x0020_Sources?.size() > 0}" # checking if there are any at all ... as there could be no Data Sources associated ... right ?!
         name: attached_data_sources
         props:
           Form_Id:

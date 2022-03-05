@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -110,7 +111,7 @@ public class PVBudibaseTests extends AppTest {
   }
 
   @Test
-  public void test00001BudibaseFontesDeDados() throws InterruptedException {
+  public void test00003BudibaseFontesDeDados() throws InterruptedException {
     try {
       jsonTestUtil("budibase/bb-fontes-dados.json", "$.rows", "bb_fontes_de_dados");
 
@@ -156,13 +157,19 @@ public class PVBudibaseTests extends AppTest {
         assertEquals("11", numSensitiveData,
                 "Telefone, Senha, Usuário, Ocupação, E-mail, Endereço, Nome Completo, CPF, CTPS, Certificado de Escolaridade, Certidão de Nascimento");
 
-        String numTelefones = App.executor.eval("App.g.V().has('Object_Sensitive_Data_Description', eq('TELEFONE'))" +
-                ".bothE().count().next().toString()").get().toString();
-        assertEquals("1", numTelefones);
-
-        String numNomes = App.executor.eval("App.g.V().has('Object_Sensitive_Data_Description', eq('NOME'))" +
-                ".bothE().count().next().toString()").get().toString();
-        assertEquals("0", numNomes);
+//        String numTelefones = App.executor.eval(queryPrefix +
+//                ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+//                ".out('Has_Sensitive_Data')" +
+//                ".has('Object_Sensitive_Data_Description', eq('TELEFONE'))" +
+//                ".bothE().count().next().toString()").get().toString();
+//        assertEquals("1", numTelefones);
+//
+//        String numNomes = App.executor.eval(queryPrefix +
+//                ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+//                ".out('Has_Sensitive_Data')" +
+//                ".has('Object_Sensitive_Data_Description', eq('NOME'))" +
+//                ".bothE().count().next().toString()").get().toString();
+//        assertEquals("0", numNomes);
 
       String dataSourceType = App.executor.eval(queryPrefix + ".as('data_source')" +
               ".out('Has_Ingestion_Event').as('event_group')" +
@@ -195,7 +202,7 @@ public class PVBudibaseTests extends AppTest {
 
   //   Testing for upsert of two similar json data using bb_fontes_de_dados POLE
   @Test
-  public void test00002UpsertBudibaseFontesDeDados() throws InterruptedException {
+  public void test00004UpsertBudibaseFontesDeDados() throws InterruptedException {
     try {
 
       jsonTestUtil("budibase/bb-fontes-dados.json", "$.rows", "bb_fontes_de_dados");
@@ -234,5 +241,115 @@ public class PVBudibaseTests extends AppTest {
     }
 
   }
+
+  @Test
+  public void test00005BudibaseAvisoPrivacidade() throws InterruptedException {
+    try {
+      jsonTestUtil("budibase/bb-aviso-privacidade.json", "$.rows", "bb_aviso_privacidade");
+
+      String getPrivacyNoticeDescription =
+              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id'" +
+                      ",eq('ro_ta_0714853d6bb241da8bab8e231d12e6e4_4a964bc2d5c54feaac7e889975cc1752'))" +
+                      ".properties('Object_Privacy_Notice_Description').value()" +
+                      ".next().toString()").get().toString();
+      assertEquals("Test privacy", getPrivacyNoticeDescription,"Privacy Notice's Description.");
+
+      String getPrivacyNoticeCreateDate =
+              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id'" +
+                      ",eq('ro_ta_0714853d6bb241da8bab8e231d12e6e4_4a964bc2d5c54feaac7e889975cc1752'))" +
+                      ".properties('Object_Privacy_Notice_Metadata_Create_Date').value()" +
+                      ".next().toString()").get().toString();
+//      getPrivacyNoticeCreateDate = getPrivacyNoticeCreateDate.replaceAll("... 2022", "GMT 2022");
+      assertEquals(dtfmt.parse("Tue Jan 25 14:10:42 UTC 2022"), dtfmt.parse(getPrivacyNoticeCreateDate),
+              "Privacy Notice's creation date.");
+
+      String getObjectDataSourceName =
+              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id'" +
+                      ",eq('ro_ta_0714853d6bb241da8bab8e231d12e6e4_4a964bc2d5c54feaac7e889975cc1752')).out('Has_Ingestion_Event')" +
+                      ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').properties('Object_Data_Source_Name').value()" +
+                      ".next().toString()").get().toString();
+      assertEquals("BUDIBASE/PRIVACY-NOTICE", getObjectDataSourceName, "Data Source Name.");
+
+      String getPrivacyNoticeDeliveryDate =
+              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id'" +
+                      ",eq('ro_ta_0714853d6bb241da8bab8e231d12e6e4_4a964bc2d5c54feaac7e889975cc1752'))" +
+                      ".properties('Object_Privacy_Notice_Delivery_Date').value()" +
+                      ".next().toString()").get().toString();
+      assertEquals(dtfmt.parse("Tue Jun 22 15:00:00 UTC 2021"), dtfmt.parse(getPrivacyNoticeDeliveryDate),
+              "Privacy Notice's delivery date for id 'stuvw'.");
+
+    } catch (ExecutionException | ParseException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
+// TODO: test00006UpsertBudibaseAvisoPrivacidade & bb-aviso-privacidade-2.json
+
+  @Test
+  public void test00007BudibaseRiscosDeFontesDeDados() throws InterruptedException {
+    try {
+
+      jsonTestUtil("budibase/bb-riscos-fontes-dados.json", "$.rows", "bb_riscos");
+
+      String numRiskMitigations =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/risk'))" +
+                      ".out('Has_Ingestion_Event').as('risk-data-source')" +
+                      ".has('Metadata_Type_Object_Risk_Data_Source'" +
+                      ",eq('Object_Risk_Data_Source'))" +
+                      ".dedup().count().next().toString()").get().toString();
+      assertEquals("10",numRiskMitigations, "10 Risks");
+
+      String numDataSourcesRo_ta_285c8a =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/risk'))" +
+                      ".out('Has_Ingestion_Event').as('risk-data-source')" +
+                      ".has('Object_Risk_Data_Source_Form_Id'" +
+                      ",eq('ro_ta_285c8a55b293461e9c2c50eefa082d96_fcd98e1ad156470da005bf0e77d47a4c'))" +
+                      ".in('Has_Risk')" +
+                      ".count().next().toString()"
+              ).get().toString();
+      assertEquals("2",numDataSourcesRo_ta_285c8a, "2 Data sources associated with ro_ta_285c8a");
+
+      String descriptionR02 =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/risk'))" +
+                      ".out('Has_Ingestion_Event').as('risk-data-source')" +
+                      ".has('Object_Risk_Data_Source_Risk_Id', eq('R02'))" +
+                      ".values('Object_Risk_Data_Source_Description')" +
+                      ".next().toString()").get().toString();
+      assertEquals("Modificação não autorizada.",descriptionR02, "R02 description is correct");
+
+
+      String numMitigationsR02 =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/risk'))" +
+                      ".out('Has_Ingestion_Event').as('risk-data-source')" +
+                      ".has('Object_Risk_Data_Source_Risk_Id', eq('R02')).in('Mitigates_Risk')\n" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("0",numMitigationsR02, "No Risk Mitigation is associated with R02");
+
+      String approvedBySecurity =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/risk'))" +
+                      ".out('Has_Ingestion_Event').as('risk-data-source')" +
+                      ".has('Object_Risk_Data_Source_Risk_Id', eq('R13'))" +
+                      ".values('Object_Risk_Data_Source_Approved_By_Security').next().toString()").get().toString();
+      assertEquals("true",approvedBySecurity, "bool status for Approved_By_Security");
+
+      String approvedByDPO =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/risk'))" +
+                      ".out('Has_Ingestion_Event').as('risk-data-source')" +
+                      ".has('Object_Risk_Data_Source_Risk_Id', eq('R06'))" +
+                      ".values('Object_Risk_Data_Source_Approved_By_DPO').next().toString()").get().toString();
+      assertEquals("false",approvedByDPO, "bool status for Approved_By_DPO");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
+// TODO: test00008UpsertBudibaseRiscosDeFontesDeDados & bb-riscos-fontes-dados-2.json
 
 }
