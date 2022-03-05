@@ -7,101 +7,98 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "BUDIBASE/MAPEAMENTO-DE-PROCESSO",
+            "val": "BUDIBASE/FONTES-DE-DADOS",
             "mandatoryInSearch": true
           }
         ]
       },
       {
         "label": "Object_Data_Source",
-        "name": "attached_data_sources",
+        "name": "fontes_de_dados",
+        "condition": "${Descricao?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object_Data_Source_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Local_de_Armazenamento)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
-            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Policy",
-        "props": [
-          {
-            "name": "Object_Data_Policy_Type",
-            "val": "${Referencia}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Retention_Period",
-            "val": "${Periodo_de_retencao}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Procedures",
-        "props": [
-          {
-            "name": "Object_Data_Procedures_Form_Id",
             "val": "${_id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object_Data_Procedures_ID",
-            "val": "${Referencia}",
+            "name": "Object_Data_Source_Name",
+            "val": "${Referencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Name",
-            "val": "${Processo}",
+            "name": "Object_Data_Source_Description",
+            "val": "${Descricao?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
-            "val": "${Categoria_dos_titulares_dos_dados}",
+            "name": "Object_Data_Source_Engine",
+            "val": "${Sistema}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_BusinessAreaResponsible",
-            "val": "${Area}",
+            "name": "Object_Data_Source_Type",
+            "val": "${Subsistema}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Country_Where_Stored",
-            "val": "${Pais_onde_as_pessoas_estao_localizadas}",
+            "name": "Object_Data_Source_Domain",
+            "val": "${Modulo}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Why_Is_It_Collected",
-            "val": "${Finalidade_do_processo}",
+            "name": "Object_Data_Source_URI_Delete",
+            "val": "${URL_Prefixo_Delete}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Info_Collected",
-            "val": "${Dados_pessoais_utilizados}",
+            "name": "Object_Data_Source_URI_Update",
+            "val": "${URL_Prefixo_Update}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Description",
-            "val": "${Fluxo_interno_dos_dados}",
+            "name": "Object_Data_Source_URI_Read",
+            "val": "${URL_Prefixo_Read}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
-          },
+          }
+        ]
+      },
+      {
+        "label": "Object_System",
+        "props": [
           {
-            "name": "Object_Data_Procedures_Interested_Parties_Consulted",
-            "val": "${Partes_Interessadas_Consultadas}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "name": "Object_System_Name",
+            "val": "${Sistema?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Subsystem",
+        "props": [
+          {
+            "name": "Object_Subsystem_Name",
+            "val": "${Subsistema?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Module",
+        "props": [
+          {
+            "name": "Object_Module_Name",
+            "val": "${Modulo?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -110,7 +107,7 @@
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
-            "val": "${new groovy.json.JsonBuilder(Dados_pessoais_utilizados)}",
+            "val": "${new groovy.json.JsonBuilder(Dados_Pessoais)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Ljava.lang.String;",
@@ -119,25 +116,21 @@
         ]
       },
       {
-        "label": "Object_Lawful_Basis",
+        "label": "Object_Data_Policy",
         "props": [
           {
-            "name": "Object_Lawful_Basis_Description",
-            "val": "${new groovy.json.JsonBuilder(Base_Legal)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
-          }
-        ]
-      },
-      {
-        "label": "Object_Legitimate_Interests_Assessment",
-        "condition": "${Lia_Is_Essential == true && Lia_Is_Required == true}",
-        "props": [
+            "name": "Object_Data_Policy_Update_Frequency",
+            "val": "${Frequencia_de_Atualizacao}",
+            "mandatoryInSearch": true
+          },
           {
-            "name": "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
-            "val": "${Lawful_Basis_Justification}",
+            "name": "Object_Data_Policy_Retention_Period",
+            "val": "${Periodo_de_Retencao_Maxima}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Type",
+            "val": "${Referencia}",
             "mandatoryInSearch": true
           }
         ]
@@ -147,7 +140,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "budibase/mapeamento-de-processo",
+            "val": "budibase/fontes-de-dados",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -184,7 +177,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "budibase/mapeamento-de-processo",
+            "val": "budibase/fontes-de-dados",
             "mandatoryInSearch": true
           },
           {
@@ -214,32 +207,32 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Object_Data_Procedures"
-      },
-      {
-        "label": "Has_Sensitive_Data",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Sensitive_Data"
-      },
-      {
-        "label": "Has_Lawful_Basis_On",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Lawful_Basis"
+        "toVertexName": "fontes_de_dados"
       },
       {
         "label": "Has_Policy",
-        "fromVertexLabel": "Object_Data_Procedures",
+        "fromVertexName": "fontes_de_dados",
         "toVertexLabel": "Object_Data_Policy"
       },
       {
-        "label": "Has_Data_Source",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexName": "attached_data_sources"
+        "label": "Has_Sensitive_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexLabel": "Object_Sensitive_Data"
       },
       {
-        "label": "Has_Legitimate_Interests_Assessment",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Legitimate_Interests_Assessment"
+        "label": "Has_Module",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexLabel": "Object_Module"
+      },
+      {
+        "label": "Has_Subsystem",
+        "fromVertexLabel": "Object_Module",
+        "toVertexLabel": "Object_Subsystem"
+      },
+      {
+        "label": "Has_System",
+        "fromVertexLabel": "Object_Subsystem",
+        "toVertexLabel": "Object_System"
       }
     ]
   }
