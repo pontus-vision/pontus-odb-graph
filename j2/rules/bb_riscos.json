@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "BUDIBASE/MAPEAMENTO-DE-PROCESSO",
+            "val": "BUDIBASE/RISCOS-FONTES-DE-DADOS",
             "mandatoryInSearch": true
           }
         ]
@@ -15,10 +15,11 @@
       {
         "label": "Object_Data_Source",
         "name": "attached_data_sources",
+        "condition": "${Fontes_de_Dados?.size() > 0}",
         "props": [
           {
             "name": "Object_Data_Source_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Local_de_Armazenamento)}",
+            "val": "${new groovy.json.JsonBuilder(Fontes_de_Dados)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.BudibaseRef;",
@@ -27,118 +28,73 @@
         ]
       },
       {
-        "label": "Object_Data_Policy",
+        "label": "Object_Risk_Data_Source",
         "props": [
           {
-            "name": "Object_Data_Policy_Type",
-            "val": "${Referencia}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Retention_Period",
-            "val": "${Periodo_de_retencao}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Procedures",
-        "props": [
-          {
-            "name": "Object_Data_Procedures_Form_Id",
+            "name": "Object_Risk_Data_Source_Form_Id",
             "val": "${_id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object_Data_Procedures_ID",
-            "val": "${Referencia}",
+            "name": "Object_Risk_Data_Source_Risk_Id",
+            "val": "${Referencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Name",
-            "val": "${Processo}",
+            "name": "Object_Risk_Data_Source_Description",
+            "val": "${Descricao}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
-            "val": "${Categoria_dos_titulares_dos_dados}",
+            "name": "Object_Risk_Data_Source_Probability",
+            "val": "${Probabilidade}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_BusinessAreaResponsible",
-            "val": "${Area}",
+            "name": "Object_Risk_Data_Source_Impact",
+            "val": "${Impacto}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Country_Where_Stored",
-            "val": "${Pais_onde_as_pessoas_estao_localizadas}",
+            "name": "Object_Risk_Data_Source_Residual_Probability",
+            "val": "${Probabilidade_Residual}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Why_Is_It_Collected",
-            "val": "${Finalidade_do_processo}",
+            "name": "Object_Risk_Data_Source_Residual_Impact",
+            "val": "${Impacto_Residual}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Info_Collected",
-            "val": "${Dados_pessoais_utilizados}",
+            "name": "Object_Risk_Data_Source_Approved_By_DPO",
+            "val": "${Aprovado_pelo_DPO}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Description",
-            "val": "${Fluxo_interno_dos_dados}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Interested_Parties_Consulted",
-            "val": "${Partes_Interessadas_Consultadas}",
+            "name": "Object_Risk_Data_Source_Approved_By_Security",
+            "val": "${Aprovado_pela_Seguranca}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
       },
       {
-        "label": "Object_Sensitive_Data",
+        "label": "Object_Risk_Mitigation_Data_Source",
         "props": [
           {
-            "name": "Object_Sensitive_Data_Description",
-            "val": "${new groovy.json.JsonBuilder(Dados_pessoais_utilizados)}",
+            "name": "Object_Risk_Mitigation_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Mitigacoes_de_Riscos)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
-          }
-        ]
-      },
-      {
-        "label": "Object_Lawful_Basis",
-        "props": [
-          {
-            "name": "Object_Lawful_Basis_Description",
-            "val": "${new groovy.json.JsonBuilder(Base_Legal)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
-          }
-        ]
-      },
-      {
-        "label": "Object_Legitimate_Interests_Assessment",
-        "condition": "${Lia_Is_Essential == true && Lia_Is_Required == true}",
-        "props": [
-          {
-            "name": "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
-            "val": "${Lawful_Basis_Justification}",
-            "mandatoryInSearch": true
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
           }
         ]
       },
@@ -147,7 +103,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "budibase/mapeamento-de-processo",
+            "val": "budibase/risk",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -184,7 +140,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "budibase/mapeamento-de-processo",
+            "val": "budibase/risk",
             "mandatoryInSearch": true
           },
           {
@@ -214,32 +170,17 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Object_Data_Procedures"
+        "toVertexLabel": "Object_Risk_Data_Source"
       },
       {
-        "label": "Has_Sensitive_Data",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Sensitive_Data"
+        "label": "Has_Risk",
+        "fromVertexName": "attached_data_sources",
+        "toVertexLabel": "Object_Risk_Data_Source"
       },
       {
-        "label": "Has_Lawful_Basis_On",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Lawful_Basis"
-      },
-      {
-        "label": "Has_Policy",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Data_Policy"
-      },
-      {
-        "label": "Has_Data_Source",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexName": "attached_data_sources"
-      },
-      {
-        "label": "Has_Legitimate_Interests_Assessment",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Legitimate_Interests_Assessment"
+        "label": "Mitigates_Risk",
+        "fromVertexLabel": "Object_Risk_Mitigation_Data_Source",
+        "toVertexLabel": "Object_Risk_Data_Source"
       }
     ]
   }

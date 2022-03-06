@@ -89,10 +89,10 @@ updatereq:
           postProcessor: ${it?.toUpperCase()?.trim()}
     
     - label: Object_Legitimate_Interests_Assessment
-      condition: ${Is_Essential == true && Is_Required == true}
+      condition: ${Lia_Is_Essential == true && Lia_Is_Required == true}
       props:
         - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
-          val: ${N_x00e3_oh_x00e1_outrabaselegalp}
+          val: ${Lawful_Basis_Justification}
           mandatoryInSearch: True
     
     - label: Event_Ingestion
@@ -154,4 +154,7 @@ updatereq:
   - label: Has_Data_Source
     fromVertexLabel: Object_Data_Procedures
     toVertexName: attached_data_sources
+  - label: Has_Legitimate_Interests_Assessment
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Legitimate_Interests_Assessment
 

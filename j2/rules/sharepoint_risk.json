@@ -15,6 +15,7 @@
       {
         "label": "Object_Data_Source",
         "name": "attached_data_sources",
+        "condition": "${Data_x0020_Sources?.size() > 0}",
         "props": [
           {
             "name": "Object_Data_Source_Form_Id",
