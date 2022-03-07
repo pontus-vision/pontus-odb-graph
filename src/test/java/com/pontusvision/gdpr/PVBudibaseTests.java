@@ -68,7 +68,7 @@ public class PVBudibaseTests extends AppTest {
 
   }
 
-//   Testing for upsert of two similar json data using bb_mapeamento_de_processo POLE
+  // Testing for upsert of two similar json data using bb_mapeamento_de_processo POLE
   @Test
   public void test00002UpsertBudibaseMapeamentoDeProcesso() throws InterruptedException {
     try {
@@ -200,7 +200,7 @@ public class PVBudibaseTests extends AppTest {
 
   }
 
-  //   Testing for upsert of two similar json data using bb_fontes_de_dados POLE
+  // Testing for upsert of two similar json data using bb_fontes_de_dados POLE
   @Test
   public void test00004UpsertBudibaseFontesDeDados() throws InterruptedException {
     try {
@@ -284,8 +284,7 @@ public class PVBudibaseTests extends AppTest {
     }
 
   }
-
-// TODO: test00006UpsertBudibaseAvisoPrivacidade & bb-aviso-privacidade-2.json
+  // TODO: test00006UpsertBudibaseAvisoPrivacidade & bb-aviso-privacidade-2.json
 
   @Test
   public void test00007BudibaseRiscosDeFontesDeDados() throws InterruptedException {
@@ -349,7 +348,85 @@ public class PVBudibaseTests extends AppTest {
 
 
   }
+  // TODO: test00008UpsertBudibaseRiscosDeFontesDeDados & bb-riscos-fontes-dados-2.json
 
-// TODO: test00008UpsertBudibaseRiscosDeFontesDeDados & bb-riscos-fontes-dados-2.json
+  @Test
+  public void test00009BudibaseAcoesJudiciais() throws InterruptedException {
+    try {
+
+      jsonTestUtil("budibase/bb-acoes-judiciais.json", "$.rows", "bb_acoes_judiciais_ppd");
+
+      String legalActionsDescription =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/ações-judiciais-p&pd'))" +
+                      ".out('Has_Ingestion_Event').as('legal-actions')" +
+                      ".has('Object_Legal_Actions_Form_Id'" +
+                      ",eq('ro_ta_98e11b0486e4491eb84a317e758e5493_1c18938bf60b447da319f824629e76f7'))" +
+                      ".values('Object_Legal_Actions_Description').next().toString()").get().toString();
+      assertEquals("teste",legalActionsDescription, "descrição da ação judicial");
+
+      String legalActionsDetails =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/ações-judiciais-p&pd'))" +
+                      ".out('Has_Ingestion_Event').as('legal-actions')" +
+                      ".has('Object_Legal_Actions_Form_Id'" +
+                      ",eq('ro_ta_98e11b0486e4491eb84a317e758e5493_1c18938bf60b447da319f824629e76f7'))" +
+                      ".values('Object_Legal_Actions_Details').next().toString()").get().toString();
+      assertEquals("teste",legalActionsDetails, "detalhe da ação judicial");
+
+      String legalActionsDate =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/ações-judiciais-p&pd'))" +
+                      ".out('Has_Ingestion_Event').as('legal-actions')" +
+                      ".has('Object_Legal_Actions_Form_Id'" +
+                      ",eq('ro_ta_98e11b0486e4491eb84a317e758e5493_1c18938bf60b447da319f824629e76f7'))" +
+                      ".values('Object_Legal_Actions_Date').next().toString()").get().toString();
+      assertEquals(dtfmt.parse("Tue Feb 08 15:00:00 UTC 2022"),dtfmt.parse(legalActionsDate), "data da ação judicial");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+  // TODO: test00010UpsertBudibaseAcoesJudiciais & bb-acoes-judiciais-2.json
+
+  @Test
+  public void test00011BudibaseMitigacaoDeRiscos() throws InterruptedException {
+    try {
+
+      jsonTestUtil("budibase/bb-mitigacao-de-riscos.json", "$.rows", "bb_mitigacao_de_riscos");
+
+      String riskMitigationCount =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type'" +
+                      ",eq('budibase/mitigação-de-riscos')).as('event-ingestion')" +
+                      ".outE('Has_Ingestion_Event').as('risk-mitigation')" +
+                      ".dedup().count().next().toString()").get().toString();
+      assertEquals("9",riskMitigationCount, "9 Risk Mitigations");
+
+      String riskMitigationDescription =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mitigação-de-riscos')).as('event-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('risk-mitigation')" +
+                      ".has('Object_Risk_Mitigation_Data_Source_Form_Id', eq('ro_ta_f756e115964544a48c5fb113231d48a7_dd168a0999374477b6808d37e3c0543c'))" +
+                      ".values('Object_Risk_Mitigation_Data_Source_Description')" +
+                      ".next().toString()").get().toString();
+      assertEquals("POLITICAS PARA ELIMINAREM O ACESSO LOCAL DE DISCOS",riskMitigationDescription, "This Risk Mitigation's description");
+
+      String riskMitigationId =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mitigação-de-riscos')).as('event-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('risk-mitigation')" +
+                      ".has('Object_Risk_Mitigation_Data_Source_Form_Id', eq('ro_ta_f756e115964544a48c5fb113231d48a7_950623b8115f4f31be6c6e4dc7f075c2'))" +
+                      ".values('Object_Risk_Mitigation_Data_Source_Mitigation_Id')" +
+                      ".next().toString()").get().toString();
+      assertEquals("M-DATA-ENCR-REST",riskMitigationId, "This risk mitigation's ID");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+  // TODO: test00012UpsertBudibaseMitigacaoDeRiscos & bb-mitigacao-de-riscos-2.json
 
 }

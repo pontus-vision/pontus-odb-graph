@@ -1,0 +1,151 @@
+{
+  "rows": [
+    {
+      "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_09adb370580f4d57aeae18eec3e7dec4",
+      "_rev": "1-e3251f7ebfc8c3327501cdd91b217a85",
+      "Referencia": "m-phys-prot",
+      "Descricao": "PROTEÇÃO FÍSICA E DO AMBIENTE",
+      "Aprovado": "true",
+      "Implementado": "true",
+      "tableId": "ta_f756e115964544a48c5fb113231d48a7",
+      "Auto_ID": 5,
+      "Created_At": "2022-01-28T15:38:26.602Z",
+      "Updated_At": "2022-01-28T15:38:26.602Z"
+    },
+    {
+      "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_1622f9707f554cb1a4252190bf111edd",
+      "_rev": "1-a65443251c95dcb646b32ceca74b7f40",
+      "Referencia": "m-user-mfa",
+      "Descricao": "AUTENTICAÇÃO DE USUÁRIOS USANDO MULTIPLOS FATORES DE AUTENTICAÇÃO",
+      "Aprovado": "true",
+      "Implementado": "true",
+      "tableId": "ta_f756e115964544a48c5fb113231d48a7",
+      "Auto_ID": 6,
+      "Created_At": "2022-01-28T15:38:26.602Z",
+      "Updated_At": "2022-01-28T15:38:26.602Z"
+    },
+    {
+      "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_1dd1a7f5cb7b4c8d90b3a44a9eab7ab6",
+      "_rev": "1-c7e626521320efc9cf9399edbdab34b9",
+      "Referencia": "m-data-encr-flight",
+      "Descricao": "CONTROLES CRIPTOGRÁFICOS QUANDO OS DADOS ESTÃO NA REDE",
+      "Aprovado": "true",
+      "Implementado": "true",
+      "tableId": "ta_f756e115964544a48c5fb113231d48a7",
+      "Auto_ID": 4,
+      "Created_At": "2022-01-28T15:38:26.601Z",
+      "Updated_At": "2022-01-28T15:38:26.601Z",
+      "Riscos_de_Fontes_de_Dados": [
+        {
+          "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_0db0552dc59d43b28c8448b1be2f9c21",
+          "primaryDisplay": "R13"
+        },
+        {
+          "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_387a58b9ae8a41c48a8cc30ee96a7017",
+          "primaryDisplay": "R04"
+        }
+      ]
+    },
+    {
+      "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_950623b8115f4f31be6c6e4dc7f075c2",
+      "_rev": "1-d6bde5c2cc1ba25799a52ad25ab3f4a7",
+      "Referencia": "m-data-encr-rest",
+      "Descricao": "CONTROLES CRIPTOGRÁFICOS QUANDO OS DADOS ESTÃO EM DISCO",
+      "Aprovado": "true",
+      "Implementado": "true",
+      "tableId": "ta_f756e115964544a48c5fb113231d48a7",
+      "Auto_ID": 7,
+      "Created_At": "2022-01-28T15:38:26.602Z",
+      "Updated_At": "2022-01-28T15:38:26.602Z",
+      "Riscos_de_Fontes_de_Dados": [
+        {
+          "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_387a58b9ae8a41c48a8cc30ee96a7017",
+          "primaryDisplay": "R04"
+        }
+      ]
+    },
+    {
+      "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_dd168a0999374477b6808d37e3c0543c",
+      "_rev": "1-d5cfbea0c8bccb0af55d00784ddb57df",
+      "Referencia": "m-local-access",
+      "Descricao": "POLITICAS PARA ELIMINAREM O ACESSO LOCAL DE DISCOS",
+      "Aprovado": "true",
+      "Implementado": "true",
+      "tableId": "ta_f756e115964544a48c5fb113231d48a7",
+      "Auto_ID": 8,
+      "Created_At": "2022-01-28T15:38:26.602Z",
+      "Updated_At": "2022-01-28T15:38:26.602Z"
+    },
+    {
+      "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_f9c58913ff5d47448b138c310317d279",
+      "_rev": "1-bd99e65cd43d62a3cf4400261a6c0347",
+      "Referencia": "m-ctrl-access-01",
+      "Descricao": "CONTROLE DE ACESSO LÓGICO",
+      "Aprovado": "true",
+      "Implementado": "true",
+      "tableId": "ta_f756e115964544a48c5fb113231d48a7",
+      "Auto_ID": 1,
+      "Created_At": "2022-01-28T15:38:26.601Z",
+      "Updated_At": "2022-01-28T15:38:26.601Z"
+    },
+    {
+      "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_1421d61869c242398021c2501f5023a6",
+      "_rev": "1-abd46b6d14d8f88bf828864ac586bcef",
+      "Referencia": "m-systm-passwd",
+      "Descricao": "SYSTEM ACCOUNTS AND CREDENTIALS ARE ENCRYPTED AND KEPT IN A SECURE LOCATION",
+      "Aprovado": "true",
+      "Implementado": "true",
+      "tableId": "ta_f756e115964544a48c5fb113231d48a7",
+      "Auto_ID": 9,
+      "Created_At": "2022-01-28T15:38:26.603Z",
+      "Updated_At": "2022-01-28T15:38:26.603Z"
+    },
+    {
+      "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_3e888307eae240c8aa403c4d66c4aafd",
+      "_rev": "1-3adc1a6c3dca4258c86da6dd9625413a",
+      "Referencia": "m-sec-net",
+      "Descricao": "SEGURANÇA EM REDES",
+      "Aprovado": "true",
+      "Implementado": "true",
+      "tableId": "ta_f756e115964544a48c5fb113231d48a7",
+      "Auto_ID": 3,
+      "Created_At": "2022-01-28T15:38:26.601Z",
+      "Updated_At": "2022-01-28T15:38:26.601Z"
+    },
+    {
+      "_id": "ro_ta_f756e115964544a48c5fb113231d48a7_8cdd15047f9f40879be399b51764d1b3",
+      "_rev": "2-76d0192c4d19df57e7d64903e862281e",
+      "Referencia": "m-sec-dev",
+      "Descricao": "DESENVOLVIMENTO SEGURO",
+      "Aprovado": "true",
+      "Implementado": "true",
+      "tableId": "ta_f756e115964544a48c5fb113231d48a7",
+      "Auto_ID": 2,
+      "Created_At": "2022-01-28T15:38:26.601Z",
+      "Updated_At": "2022-02-09T14:33:27.592Z",
+      "type": "row",
+      "Riscos_de_Fontes_de_Dados": [
+        {
+          "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_5de61f5c85534fcbbe8c2999fafdbc46",
+          "primaryDisplay": "R07"
+        },
+        {
+          "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_bb21c95ab423453bbc4280c5c435768f",
+          "primaryDisplay": "R09"
+        },
+        {
+          "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_ce960cf1c55c4cb68d404f400a5d7661",
+          "primaryDisplay": "R11"
+        }
+      ],
+      "Updated By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "oghoche@pontusvision.com"
+        }
+      ]
+    }
+  ],
+  "bookmark": "g1AAAADreJzLYWBgYMpgTmEISM4vTc5ISXJIKk3JTEosTtUtKMpP0YWK6hrqYRWHi-oVlyXrJeeUFpekFunl5Ccn5uSATE5kSKr___9_VgaTmwPnAvEFQLFEXtpZl8cCJBkagNR_mK0cc-6BxBJFswBHS1CM",
+  "hasNextPage": false
+}
