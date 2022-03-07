@@ -429,4 +429,119 @@ public class PVBudibaseTests extends AppTest {
   }
   // TODO: test00012UpsertBudibaseMitigacaoDeRiscos & bb-mitigacao-de-riscos-2.json
 
+  @Test
+  public void test00013BudibaseTreinamento() throws InterruptedException {
+    try {
+
+      jsonTestUtil("budibase/bb-treinamento.json", "$.rows", "bb_treinamento");
+
+      String trainingCompletedBy =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/treinamento')).as('event-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-training')" +
+                      ".has('Event_Training_Form_Id', eq('ro_ta_aad5934f39b3412ba8a8a3d59f4a4edc_0432eb6e47d04029b602e1ca7046bd23'))" +
+                      ".out('Completed_By').as('person-natural')" +
+                      ".values('Person_Natural_Full_Name')" +
+                      ".next().toString()").get().toString();
+      assertEquals("JULIO RIBEIRO", trainingCompletedBy, "This training was done by Julio.");
+
+      String trainingStatus =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/treinamento')).as('event-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-training')" +
+                      ".has('Event_Training_Form_Id', eq('ro_ta_aad5934f39b3412ba8a8a3d59f4a4edc_0432eb6e47d04029b602e1ca7046bd23'))" +
+                      ".values('Event_Training_Status')" +
+                      ".next().toString()").get().toString();
+      assertEquals("Passed", trainingStatus, "Julio PASSED this training.");
+
+      String trainingDescription =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/treinamento')).as('event-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-training')" +
+                      ".has('Event_Training_Form_Id', eq('ro_ta_aad5934f39b3412ba8a8a3d59f4a4edc_0432eb6e47d04029b602e1ca7046bd23'))" +
+                      ".out('Course_Training').as('aware-campaign')" +
+                      ".values('Object_Awareness_Campaign_Description')" +
+                      ".next().toString()").get().toString();
+      assertEquals("TREINAMENTO PARA TESTE 1", trainingDescription, "This training's description");
+
+      String trainingDate =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/treinamento')).as('event-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-training')" +
+                      ".has('Event_Training_Form_Id', eq('ro_ta_aad5934f39b3412ba8a8a3d59f4a4edc_0432eb6e47d04029b602e1ca7046bd23'))" +
+                      ".out('Course_Training').as('aware-campaign')" +
+                      ".values('Object_Awareness_Campaign_Start_Date')" +
+                      ".next().toString()").get().toString();
+      assertEquals(dtfmt.parse("Tue Feb 08 15:00:00 UTC 2022"), dtfmt.parse(trainingDate), "This training's description");
+
+    } catch (ExecutionException | ParseException e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+  }
+  // TODO: test00014UpsertBudibaseBudibaseTreinamento & bb-treinamento-2.json
+
+  @Test
+  public void test00014BudibaseControleDeSolicitacoes() throws InterruptedException {
+
+    jsonTestUtil("budibase/bb-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
+
+    jsonTestUtil("budibase/bb-solicitacoes.json", "$.rows", "bb_controle_de_solicitacoes");
+
+    try {
+
+      String dsarRequesterName =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/controle-de-solicitações')).as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('dsar')" +
+                      ".has('Event_Subject_Access_Request_Form_Id', eq('ro_ta_c638105c80d04cd2a8a73740e1a1d240_33aefc7448af413ea21d09963058c75d'))" +
+                      ".in('Made_SAR_Request').as('person-natural')" +
+                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
+      assertEquals("AMANDA MOZENA", dsarRequesterName, "Person that requested this DSAR");
+
+      String omarRequesterID =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/controle-de-solicitações')).as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('dsar')" +
+                      ".in('Made_SAR_Request').as('person-natural')" +
+                      ".has('Person_Natural_Full_Name', eq('OMAR MOHAMAD ABOU GHOCHE'))" +
+                      ".values('Person_Natural_Customer_ID')" +
+                      ".next().toString()").get().toString();
+      assertEquals("01222554389", omarRequesterID,"Omar's ID");
+
+      String completedDSARCount =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/controle-de-solicitações')).as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('dsar')" +
+                      ".has('Event_Subject_Access_Request_Status', eq('Completed'))" +
+                      ".count().next().toString()").get().toString();
+      assertEquals("2", completedDSARCount, "Two DSARs were Completed!");
+
+      String fromDsarToRopa =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/controle-de-solicitações')).as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('event-access-req')" +
+                      ".in('Made_SAR_Request').as('person-natural')" +
+                      ".has('Person_Natural_Full_Name'" +
+                      ",eq('OMAR MOHAMAD ABOU GHOCHE')).as('person-natural')" +
+                      ".out('Made_SAR_Request').as('dsar')" +
+                      ".out('Has_DSAR').as('dsar-group')" +
+                      ".out('Has_DSAR').as('ropa')" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b'))" +
+                      ".values('Object_Data_Procedures_Description')" +
+                      ".next().toString()").get().toString();
+      assertEquals("Necessário para entrada e saída de candidatos a sede da empresa",fromDsarToRopa,
+              "RoPA's Data Procedures' Description");
+
+      String fromRopaToDsar =
+              App.executor.eval("App.g.V().has('Object_Data_Procedures_Interested_Parties_Consulted'" +
+                      ",eq('vitor@gmail.com, omar@mail.com')).as('ropa-data-procs')" +
+                      ".in('Has_DSAR').as('dsar-group')" +
+                      ".in('Has_DSAR').as('dsar')" +
+                      ".in('Made_SAR_Request').as('person-natural')" +
+                      ".has('Person_Natural_Customer_ID', eq('80927892892'))" +
+                      ".values('Person_Natural_Full_Name')" +
+                      ".next().toString()").get().toString();
+      assertEquals("LEO MARTINS", fromRopaToDsar,"RoPA's Interested Parties");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
 }
