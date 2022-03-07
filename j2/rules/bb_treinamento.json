@@ -115,7 +115,7 @@
       {
         "label": "Course_Training",
         "fromVertexLabel": "Event_Training",
-        "toVertexLabel": "Start_Date"
+        "toVertexLabel": "Object_Awareness_Campaign"
       },
       {
         "label": "Completed_By",

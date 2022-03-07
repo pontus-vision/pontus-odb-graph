@@ -176,7 +176,7 @@ rules:
     edges:
       - label: "Course_Training"
         fromVertexLabel: "Event_Training"
-        toVertexLabel: "Start_Date"
+        toVertexLabel: "Object_Awareness_Campaign"
 
       - label: "Completed_By"
         fromVertexLabel: "Event_Training"
@@ -849,117 +849,104 @@ rules:
         fromVertexLabel: "Object_Privacy_Notice"
         toVertexLabel: "Event_Ingestion"
 
-#  sharepoint_consents:
-#
-#    vertices:
-#      - label: Event_Consent
-#        props:
-#          Form_Id: "${id}"
-#          Customer_ID:
-#            val: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
-#            excludeFromSearch: true
-#          Metadata_Create_Date:
-#            val: "${date}"
-#            excludeFromSearch: true
-#            type: java.util.Date
-#          Metadata_Update_Date:
-#            val: "${Modified}"
-#            excludeFromSearch: true
-#            type: java.util.Date
-##          Created_By: "${Author}"
-##          Changed_By: "${Editor}"
-##          Status:
-##          Description:
-#
-#      - label: Object_Privacy_Notice
-#        condition: "${privacy_notice.size() > 0}"
-#        props:
-#          Form_Id:
-#            val: "${new groovy.json.JsonBuilder(privacy_notice)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
-#
-#      - label: Person_Natural
-#        props:
-#          Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
-#          Full_Name:
-#            val: "${name?.trim()?.toUpperCase()}"
-#            excludeFromSearch: true
-#
-#      - label: Object_Data_Source
-#        props:
-#          Name: "SHAREPOINT/CONSENT"
-#
-#      - label: Event_Ingestion
-#        props:
-#          Type:
-#            val: "Consent"
-#            excludeFromSearch: true
-#          Operation:
-#            val: "Structured Data Insertion"
-#            excludeFromSearch: true
-#          Domain_b64:
-#            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
-#            excludeFromSearch: true
-#          Metadata_Create_Date:
-#            val: "${new Date()}"
-#            excludeFromSearch: true
-#            type: java.util.Date
-#          Metadata_Update_Date:
-#            val: "${new Date()}"
-#            excludeFromSearch: true
-#            type: java.util.Date
-#
-#      - label: Event_Group_Ingestion
-#        props:
-##          Metadata_Start_Date:
-##            val: "${new Date()}"
-##            excludeFromSearch: true
-##            type: java.util.Date
-##          Metadata_End_Date:
-##            val: "${new Date()}"
-##            excludeFromSearch: true
-##            type: java.util.Date
-#          Type: "sharepoint/consent"
-#          Operation: "Structured Data Insertion"
-#          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-#
-#      - label: Object_Data_Procedures
-#        condition: "${data_procedures.size() > 0}"
-#        props:
-#          Form_Id:
-#            val: "${new groovy.json.JsonBuilder(data_procedures)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
-#
-#    edges:
-#
-#      - label: Has_Ingestion_Event
-#        fromVertexLabel: "Object_Data_Source"
-#        toVertexLabel: "Event_Group_Ingestion"
-#
-#      - label: Has_Ingestion_Event
-#        fromVertexLabel: "Event_Group_Ingestion"
-#        toVertexLabel: "Event_Ingestion"
-#
-#      - label: Has_Ingestion_Event
-#        fromVertexLabel: "Person_Natural"
-#        toVertexLabel: "Event_Ingestion"
-#
-#      - label: Consent
-#        fromVertexLabel: "Person_Natural"
-#        toVertexLabel: "Event_Consent"
-#
-#      - label: Has_Privacy_Notice
-#        fromVertexLabel: "Event_Consent"
-#        toVertexLabel: "Object_Privacy_Notice"
-#
-#      - label: Consent #is it right? ... I am following instructions @ Trello SV card #262 ... or should it be Has_Data_Procedures
-#        fromVertexLabel: "Event_Consent"
-#        toVertexLabel: "Object_Data_Procedures"
-#
+  bb_consentimentos:
+    vertices:
+      - label: Event_Consent
+        props:
+          Form_Id: "${_id}"
+          Customer_ID:
+            val: "${Identificacao?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Data}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Updated_At}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object_Privacy_Notice
+        condition: "${Aviso_de_Privacidade.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Aviso_de_Privacidade)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Person_Natural
+        props:
+          Customer_ID: "${Identificacao?.replaceAll('[^0-9]', '')?.trim()}"
+          Full_Name:
+            val: "${Titular_do_Dado_Pessoal?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/CONSENTIMENTOS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/consentimentos"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/consentimentos"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+      - label: Object_Data_Procedures
+        condition: "${Mapeamento_de_Processo.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Consent
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Consent"
+
+      - label: Has_Privacy_Notice
+        fromVertexLabel: "Event_Consent"
+        toVertexLabel: "Object_Privacy_Notice"
+
+      - label: Consent
+        fromVertexLabel: "Event_Consent"
+        toVertexLabel: "Object_Data_Procedures"
+
 #  sharepoint_privacy_docs:
 #
 #    vertices:
