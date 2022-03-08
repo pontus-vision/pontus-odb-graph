@@ -21,7 +21,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Object_Privacy_Docs_Title
-          val: ${Título_Comunicado}
+          val: ${Titulo_Comunicado}
           mandatoryInSearch: False
           excludeFromSearch: True
     

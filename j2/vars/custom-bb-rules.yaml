@@ -939,7 +939,7 @@ rules:
           type: java.util.Date
           excludeFromSearch: true
         Title:
-          val: "${Título_Comunicado}"
+          val: "${Titulo_Comunicado}"
           excludeFromSearch: true
 
     - label: Object_Data_Source
