@@ -532,11 +532,11 @@ public class PVTemplateTests extends AppTest {
               "Gestão de ferramenta gerencial (PowerBI)-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
               "Gestão de acesso (recepção)-RG, Nome\n" +
               "Cadastramento de Clientes PJ-E-mail Corporativo, Nome da Empresa, Telefone, Dados Bancários\n" +
-              "Gestão de Currículos-Endereço, Nome Completo, Data de Nascimento, Estado Civil, E-mail\n" +
               "Gerenciamento do E-mail Marketing - clientes-Endereço, Nome, Telefone, Ocupação, E-mail\n" +
+              "Gestão de Currículos-Endereço, Nome Completo, Data de Nascimento, Estado Civil, E-mail\n" +
               "123-Nome do Usuário, E-mail Corporativo\n" +
-              "Homologação de Fornecedores-Nome, CPF, RG, Telefone, Endereço, E-mail, Responsáveis Legais da Empresa Fornecedora\n" +
-              "Gestão de Leads - Site-E-mail, Nome Completo, Telefone, Ocupação, Estado Civil\n";
+              "Gestão de Leads - Site-E-mail, Nome Completo, Telefone, Ocupação, Estado Civil\n" +
+              "Homologação de Fornecedores-Nome, CPF, RG, Telefone, Endereço, E-mail, Responsáveis Legais da Empresa Fornecedora\n";
       assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
 
 
