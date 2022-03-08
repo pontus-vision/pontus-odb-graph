@@ -23,6 +23,12 @@ public class PVSharepointDataBreachTests extends AppTest {
   @Test
   public void test00001SharepointDataBreach() throws InterruptedException {
 
+    jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+          "sharepoint_data_sources");
+
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+            "sharepoint_fontes_de_dados");
+
     jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
             "$.queryResp[*].fields", "sharepoint_data_breaches");
 

@@ -2,38 +2,36 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object_Privacy_Notice",
+        "label": "Object_Privacy_Docs",
         "props": [
           {
-            "name": "Object_Privacy_Notice_Form_Id",
+            "name": "Object_Privacy_Docs_Form_Id",
             "val": "${_id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object_Privacy_Notice_Description",
-            "val": "${Aviso_de_Privacidade}",
+            "name": "Object_Privacy_Docs_URL",
+            "val": "${Local_de_Compartilhamento}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Privacy_Notice_Metadata_Create_Date",
-            "val": "${Created_At}",
+            "name": "Object_Privacy_Docs_Description",
+            "val": "${Descricao}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Privacy_Docs_Date",
+            "val": "${Data}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Privacy_Notice_Metadata_Update_Date",
-            "val": "${Updated_At}",
+            "name": "Object_Privacy_Docs_Title",
+            "val": "${Título_Comunicado}",
             "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Privacy_Notice_Delivery_Date",
-            "val": "${Data_de_Inicio}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
             "excludeFromSearch": true
           }
         ]
@@ -43,7 +41,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "BUDIBASE/AVISO-DE-PRIVACIDADE",
+            "val": "BUDIBASE/COMUNICAÇÕES-P&PD",
             "mandatoryInSearch": true
           }
         ]
@@ -53,7 +51,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "budibase/aviso-de-privacidade",
+            "val": "budibase/comunicações-p&pd",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -90,7 +88,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "budibase/aviso-de-privacidade",
+            "val": "budibase/comunicações-p&pd",
             "mandatoryInSearch": true
           },
           {
@@ -119,8 +117,8 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Privacy_Notice",
-        "toVertexLabel": "Event_Ingestion"
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Object_Privacy_Docs"
       }
     ]
   }

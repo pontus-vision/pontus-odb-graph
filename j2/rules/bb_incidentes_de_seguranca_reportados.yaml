@@ -2,41 +2,71 @@
 updatereq:
   vertices:
     
-    - label: Object_Privacy_Notice
+    - label: Object_Data_Source
+      name: data_sources
       props:
-        - name: Object_Privacy_Notice_Form_Id
+        - name: Object_Data_Source_Form_Id
+          val: ${new groovy.json.JsonBuilder(Fontes_de_Dados)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.BudibaseRef;"
+          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
+    
+    - label: Event_Data_Breach
+      props:
+        - name: Event_Data_Breach_Form_Id
           val: ${_id}
           mandatoryInSearch: True
-        - name: Object_Privacy_Notice_Description
-          val: ${Aviso_de_Privacidade}
+        - name: Event_Data_Breach_Id
+          val: ${Referencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Privacy_Notice_Metadata_Create_Date
+        - name: Event_Data_Breach_Authority_Notified
+          val: ${Notificacao_ANPD?.trim()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Data_Breach_Description
+          val: ${Descricao?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Data_Breach_Impact
+          val: ${Impacto}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Data_Breach_Metadata_Create_Date
           val: ${Created_At}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Object_Privacy_Notice_Metadata_Update_Date
+        - name: Event_Data_Breach_Metadata_Update_Date
           val: ${Updated_At}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Object_Privacy_Notice_Delivery_Date
-          val: ${Data_de_Inicio}
+        - name: Event_Data_Breach_Natural_Person_Notified
+          val: ${Notificacao_Titular?.trim()}
           mandatoryInSearch: False
-          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Data_Breach_Source
+          val: ${Origem?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Data_Breach_Status
+          val: ${Status}
+          mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object_Data_Source
+      name: budibase
       props:
         - name: Object_Data_Source_Name
-          val: BUDIBASE/AVISO-DE-PRIVACIDADE
+          val: BUDIBASE/INCIDENTES-DE-SEGURANÇA-REPORTADOS
           mandatoryInSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: budibase/aviso-de-privacidade
+          val: budibase/incidentes-de-segurança-reportados
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -61,7 +91,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: budibase/aviso-de-privacidade
+          val: budibase/incidentes-de-segurança-reportados
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -72,12 +102,15 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Data_Source
+    fromVertexName: budibase
     toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Privacy_Notice
+    fromVertexLabel: Event_Data_Breach
     toVertexLabel: Event_Ingestion
+  - label: Impacted_By_Data_Breach
+    fromVertexLabel: Event_Data_Breach
+    toVertexName: data_sources
 
