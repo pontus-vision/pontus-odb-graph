@@ -481,9 +481,15 @@ public class PVTemplateTests extends AppTest {
     try {
 
       jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
-              "$.queryResp[*].fields", "sharepoint_mapeamentos");
+          "$.queryResp[*].fields", "sharepoint_mapeamentos");
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-ropa.json",
+          "$.queryResp[*].fields", "sharepoint_ropa");
 
       jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+
+      jsonTestUtil("budibase/bb-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
+
+      jsonTestUtil("budibase/bb-solicitacoes.json", "$.rows", "bb_controle_de_solicitacoes");
 
 //      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
 //
