@@ -142,6 +142,10 @@ rules:
         props:
           Full_Name: "${Nome?.trim()?.toUpperCase()}"
 
+      - label: Person_Employee
+        props:
+          Full_Name: "${Nome?.trim()?.toUpperCase()}"
+
       - label: Event_Ingestion
         props:
           Type:
@@ -181,6 +185,10 @@ rules:
       - label: "Completed_By"
         fromVertexLabel: "Event_Training"
         toVertexLabel: "Person_Natural"
+
+      - label: "Completed_By"
+        fromVertexLabel: "Event_Training"
+        toVertexLabel: "Person_Employee"
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Ingestion"

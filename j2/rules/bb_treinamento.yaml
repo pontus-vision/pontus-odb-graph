@@ -28,6 +28,12 @@ updatereq:
           val: ${Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: True
     
+    - label: Person_Employee
+      props:
+        - name: Person_Employee_Full_Name
+          val: ${Nome?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
@@ -78,6 +84,9 @@ updatereq:
   - label: Completed_By
     fromVertexLabel: Event_Training
     toVertexLabel: Person_Natural
+  - label: Completed_By
+    fromVertexLabel: Event_Training
+    toVertexLabel: Person_Employee
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
     toVertexLabel: Event_Training
