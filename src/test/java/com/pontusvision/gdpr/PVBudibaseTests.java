@@ -268,7 +268,7 @@ public class PVBudibaseTests extends AppTest {
                       ",eq('ro_ta_0714853d6bb241da8bab8e231d12e6e4_4a964bc2d5c54feaac7e889975cc1752')).out('Has_Ingestion_Event')" +
                       ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').properties('Object_Data_Source_Name').value()" +
                       ".next().toString()").get().toString();
-      assertEquals("BUDIBASE/PRIVACY-NOTICE", getObjectDataSourceName, "Data Source Name.");
+      assertEquals("BUDIBASE/AVISO-DE-PRIVACIDADE", getObjectDataSourceName, "Data Source Name.");
 
       String getPrivacyNoticeDeliveryDate =
               App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id'" +
