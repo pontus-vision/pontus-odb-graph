@@ -537,7 +537,7 @@ public class PVTemplateTests extends AppTest {
               "123-Nome do Usuário, E-mail Corporativo\n" +
               "Homologação de Fornecedores-Nome, CPF, RG, Telefone, Endereço, E-mail, Responsáveis Legais da Empresa Fornecedora\n" +
               "Gestão de Leads - Site-E-mail, Nome Completo, Telefone, Ocupação, Estado Civil\n";
-      assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
+      assertEquals(sortLines(expectedReport), sortLines(report), "Expecting ROPA to have a Lawful Basis");
 
 
     } catch (Exception e) {

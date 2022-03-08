@@ -11,8 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -99,6 +98,27 @@ public class AppTest {
       "    \"sortDir\": \"+desc\"\n" +
       "}\n";
   static Gson gson = new Gson();
+
+  public static String sortLines(String str){
+
+
+    List<String> lineList = Arrays.asList(str.split ("\n"));
+
+//    while ((inputLine = bufferedReader.readLine()) != null) {
+//      lineList.add(inputLine);
+//    }
+//    fileReader.close();
+
+    Collections.sort(lineList);
+
+    StringBuilder sb = new StringBuilder();
+
+    for (int i = 0, ilen = lineList.size(); i < ilen; i++){
+      sb.append(lineList.get(i)).append("\n");
+    }
+
+    return sb.toString();
+  }
 
   public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName) throws InterruptedException {
 
