@@ -101,39 +101,30 @@ rules:
       - label: "Object_Data_Source"
         props:
           Name:
-            val: "salesforce.com"
+            val: "SALESFORCE.COM"
             mandatoryInSearch: true
-          Type:
-            val: "salesforce.com"
-            mandatoryInSearch: true
-          Description:
-            val: "Salesforce.com CRM system data"
-            mandatoryInSearch: true
+#          Type:
+#            val: "salesforce.com"
+#            mandatoryInSearch: true
+#          Description:
+#            val: "Salesforce.com CRM system data"
+#            mandatoryInSearch: true
 
       - label: Event_Group_Ingestion
         props:
           Type:
-            val: Salesforce CRM System
+            val: salesforce.com
             mandatoryInSearch: true
           Operation:
             val: Structured Data Insertion
             mandatoryInSearch: true
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-#          Metadata_Start_Date:
-#            val: "${new Date()}"
-#            #            mandatoryInSearch: false
-#            excludeFromSearch: true
-#            type: java.util.Date
-#          Metadata_End_Date:
-#            val: "${new Date()}"
-#            excludeFromSearch: true
-#            type: java.util.Date
 
 
       - label: "Event_Ingestion"
         props:
           Type:
-            val: "Salesforce CRM System"
+            val: "salesforce.com"
             excludeFromSearch: true
 
           Operation:

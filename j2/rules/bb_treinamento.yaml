@@ -2,41 +2,36 @@
 updatereq:
   vertices:
     
-    - label: Object_Privacy_Notice
+    - label: Event_Training
       props:
-        - name: Object_Privacy_Notice_Form_Id
+        - name: Event_Training_Form_Id
           val: ${_id}
           mandatoryInSearch: True
-        - name: Object_Privacy_Notice_Description
-          val: ${Aviso_de_Privacidade}
+        - name: Event_Training_Status
+          val: ${Status}
           mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_Metadata_Create_Date
-          val: ${Created_At}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_Metadata_Update_Date
-          val: ${Updated_At}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_Delivery_Date
-          val: ${Data_de_Inicio}
-          mandatoryInSearch: False
-          type: "java.util.Date"
           excludeFromSearch: True
     
-    - label: Object_Data_Source
+    - label: Object_Awareness_Campaign
       props:
-        - name: Object_Data_Source_Name
-          val: BUDIBASE/AVISO-DE-PRIVACIDADE
+        - name: Object_Awareness_Campaign_Description
+          val: ${Descricao?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Object_Awareness_Campaign_Start_Date
+          val: ${Realizado_em}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+    
+    - label: Person_Natural
+      props:
+        - name: Person_Natural_Full_Name
+          val: ${Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: budibase/aviso-de-privacidade
+          val: budibase/treinamento
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -61,7 +56,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: budibase/aviso-de-privacidade
+          val: budibase/treinamento
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -69,15 +64,27 @@ updatereq:
         - name: Event_Group_Ingestion_Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
+    
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: BUDIBASE/TREINAMENTO
+          mandatoryInSearch: True
 
   edges:
+  - label: Course_Training
+    fromVertexLabel: Event_Training
+    toVertexLabel: Object_Awareness_Campaign
+  - label: Completed_By
+    fromVertexLabel: Event_Training
+    toVertexLabel: Person_Natural
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Data_Source
-    toVertexLabel: Event_Group_Ingestion
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Event_Training
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Privacy_Notice
-    toVertexLabel: Event_Ingestion
+    fromVertexLabel: Object_Data_Source
+    toVertexLabel: Event_Group_Ingestion
 

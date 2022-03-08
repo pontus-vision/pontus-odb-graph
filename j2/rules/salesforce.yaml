@@ -95,19 +95,13 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: salesforce.com
-          mandatoryInSearch: True
-        - name: Object_Data_Source_Type
-          val: salesforce.com
-          mandatoryInSearch: True
-        - name: Object_Data_Source_Description
-          val: Salesforce.com CRM system data
+          val: SALESFORCE.COM
           mandatoryInSearch: True
     
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: Salesforce CRM System
+          val: salesforce.com
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -119,7 +113,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Salesforce CRM System
+          val: salesforce.com
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

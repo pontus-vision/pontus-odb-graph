@@ -2,38 +2,61 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object_Privacy_Notice",
+        "label": "Event_Consent",
         "props": [
           {
-            "name": "Object_Privacy_Notice_Form_Id",
+            "name": "Event_Consent_Form_Id",
             "val": "${_id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object_Privacy_Notice_Description",
-            "val": "${Aviso_de_Privacidade}",
+            "name": "Event_Consent_Customer_ID",
+            "val": "${Identificacao?.replaceAll('[^0-9]', '')?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Privacy_Notice_Metadata_Create_Date",
-            "val": "${Created_At}",
+            "name": "Event_Consent_Metadata_Create_Date",
+            "val": "${Data}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Privacy_Notice_Metadata_Update_Date",
+            "name": "Event_Consent_Metadata_Update_Date",
             "val": "${Updated_At}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Privacy_Notice",
+        "condition": "${Aviso_de_Privacidade.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Privacy_Notice_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Aviso_de_Privacidade)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "props": [
+          {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${Identificacao?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": true
           },
           {
-            "name": "Object_Privacy_Notice_Delivery_Date",
-            "val": "${Data_de_Inicio}",
+            "name": "Person_Natural_Full_Name",
+            "val": "${Titular_do_Dado_Pessoal?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
-            "type": "java.util.Date",
             "excludeFromSearch": true
           }
         ]
@@ -43,7 +66,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "BUDIBASE/AVISO-DE-PRIVACIDADE",
+            "val": "BUDIBASE/CONSENTIMENTOS",
             "mandatoryInSearch": true
           }
         ]
@@ -53,7 +76,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "budibase/aviso-de-privacidade",
+            "val": "budibase/consentimentos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -90,7 +113,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "budibase/aviso-de-privacidade",
+            "val": "budibase/consentimentos",
             "mandatoryInSearch": true
           },
           {
@@ -102,6 +125,20 @@
             "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Procedures",
+        "condition": "${Mapeamento_de_Processo.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Data_Procedures_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
           }
         ]
       }
@@ -119,8 +156,23 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Privacy_Notice",
+        "fromVertexLabel": "Person_Natural",
         "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Consent",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event_Consent",
+        "toVertexLabel": "Object_Privacy_Notice"
+      },
+      {
+        "label": "Consent",
+        "fromVertexLabel": "Event_Consent",
+        "toVertexLabel": "Object_Data_Procedures"
       }
     ]
   }

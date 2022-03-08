@@ -481,9 +481,15 @@ public class PVTemplateTests extends AppTest {
     try {
 
       jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
-              "$.queryResp[*].fields", "sharepoint_mapeamentos");
+          "$.queryResp[*].fields", "sharepoint_mapeamentos");
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-ropa.json",
+          "$.queryResp[*].fields", "sharepoint_ropa");
 
       jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+
+      jsonTestUtil("budibase/bb-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
+
+      jsonTestUtil("budibase/bb-solicitacoes.json", "$.rows", "bb_controle_de_solicitacoes");
 
 //      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
 //
@@ -528,8 +534,16 @@ public class PVTemplateTests extends AppTest {
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
       String expectedReport = "Gestão de Rede de Distribuidores-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
-              "Gestão de ferramenta gerencial (PowerBI)-Nome, CPF, RG, Endereço, E-mail, Ocupação\n";
-      assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
+              "Gerenciamento de prestadores de serviços externos-CPF, Nome, RG, Ocupação, E-mail, Endereço\n" +
+              "Gestão de ferramenta gerencial (PowerBI)-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
+              "Gestão de acesso (recepção)-RG, Nome\n" +
+              "Cadastramento de Clientes PJ-E-mail Corporativo, Nome da Empresa, Telefone, Dados Bancários\n" +
+              "Gestão de Currículos-Endereço, Nome Completo, Data de Nascimento, Estado Civil, E-mail\n" +
+              "Gerenciamento do E-mail Marketing - clientes-Endereço, Nome, Telefone, Ocupação, E-mail\n" +
+              "123-Nome do Usuário, E-mail Corporativo\n" +
+              "Homologação de Fornecedores-Nome, CPF, RG, Telefone, Endereço, E-mail, Responsáveis Legais da Empresa Fornecedora\n" +
+              "Gestão de Leads - Site-E-mail, Nome Completo, Telefone, Ocupação, Estado Civil\n";
+      assertEquals(sortLines(expectedReport), sortLines(report), "Expecting ROPA to have a Lawful Basis");
 
 
     } catch (Exception e) {

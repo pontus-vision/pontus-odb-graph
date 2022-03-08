@@ -2,41 +2,29 @@
 updatereq:
   vertices:
     
-    - label: Object_Privacy_Notice
+    - label: Object_Policies
       props:
-        - name: Object_Privacy_Notice_Form_Id
+        - name: Object_Policies_Form_Id
           val: ${_id}
           mandatoryInSearch: True
-        - name: Object_Privacy_Notice_Description
-          val: ${Aviso_de_Privacidade}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_Metadata_Create_Date
-          val: ${Created_At}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_Metadata_Update_Date
-          val: ${Updated_At}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_Delivery_Date
-          val: ${Data_de_Inicio}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
+        - name: Object_Policies_Text
+          val: ${Texto}
+          mandatoryInSearch: True
+        - name: Object_Policies_Type
+          val: ${Tipo_de_Politica}
+          mandatoryInSearch: True
     
     - label: Object_Data_Source
+      name: budibase
       props:
         - name: Object_Data_Source_Name
-          val: BUDIBASE/AVISO-DE-PRIVACIDADE
+          val: BUDIBASE/POLÍTICAS
           mandatoryInSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: budibase/aviso-de-privacidade
+          val: budibase/políticas
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -61,7 +49,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: budibase/aviso-de-privacidade
+          val: budibase/políticas
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -72,12 +60,12 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Data_Source
+    fromVertexName: budibase
     toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Privacy_Notice
+    fromVertexName: Object_Policies
     toVertexLabel: Event_Ingestion
 

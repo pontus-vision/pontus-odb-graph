@@ -1,0 +1,157 @@
+{
+  "rows": [
+    {
+      "_id": "ro_ta_c638105c80d04cd2a8a73740e1a1d240_ba7ac71f689c42c8a6427daed9e23d43",
+      "_rev": "1-377d23a28e2a28ace763295077f087f4",
+      "Categoria_dos_titulares_dos_dados": "COLABORADOR",
+      "Resposta___Canal": "",
+      "Resposta___Data": "2022-02-18T15:00:00.000Z",
+      "Status": "New",
+      "Base_Legal___Artigo_e_Inciso": "",
+      "Abrangencia_e_Observacoes": "",
+      "Solicitacao___Descricao": "",
+      "Solicitacao___Tipo": "Read",
+      "Solicitacao___Canal": "email",
+      "Solicitacao___Data": "2022-02-01T15:00:00.000Z",
+      "CNPJ_CPF": "012.225.543-89",
+      "Razao_Social_Nome": "Omar Mohamad Abou Ghoche",
+      "Referencia": "solicitação 10",
+      "tableId": "ta_c638105c80d04cd2a8a73740e1a1d240",
+      "Auto_ID": 2,
+      "Created_At": "2022-02-11T13:51:41.384Z",
+      "Updated_At": "2022-02-11T13:51:41.384Z",
+      "type": "row",
+      "ID_do_Processo": [
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b",
+          "primaryDisplay": "Acesso-Recepção"
+        },
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_2994381e08684c4cb09b42f8dfe698c0",
+          "primaryDisplay": "Gestão-Prestadores-Externos"
+        }
+      ],
+      "Created_By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "oghoche@pontusvision.com"
+        }
+      ],
+      "Updated_By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "oghoche@pontusvision.com"
+        }
+      ],
+      "Resposta___Dias_Uteis": "17"
+    },
+    {
+      "_id": "ro_ta_c638105c80d04cd2a8a73740e1a1d240_33aefc7448af413ea21d09963058c75d",
+      "_rev": "1-c226644783536ef8289153f265fb96c5",
+      "Categoria_dos_titulares_dos_dados": "CLIENTE",
+      "Resposta___Canal": "email",
+      "Resposta___Data": "2022-02-02T15:00:00.000Z",
+      "Status": "Completed",
+      "Base_Legal___Artigo_e_Inciso": "",
+      "Abrangencia_e_Observacoes": "",
+      "Solicitacao___Descricao": "Remover conta.",
+      "Solicitacao___Tipo": "Delete",
+      "Solicitacao___Canal": "sms",
+      "Solicitacao___Data": "2022-01-04T15:00:00.000Z",
+      "CNPJ_CPF": "287.985.365-10",
+      "Razao_Social_Nome": "Amanda Mozena",
+      "Referencia": "solicitação Y",
+      "tableId": "ta_c638105c80d04cd2a8a73740e1a1d240",
+      "Auto_ID": 3,
+      "Created_At": "2022-02-11T14:15:50.148Z",
+      "Updated_At": "2022-02-11T14:15:50.148Z",
+      "type": "row",
+      "ID_do_Processo": [
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_d10589f702284ae7847c44fe845fcdfd",
+          "primaryDisplay": "Gestão-Emails"
+        }
+      ],
+      "Created_By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "oghoche@pontusvision.com"
+        }
+      ],
+      "Updated_By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "oghoche@pontusvision.com"
+        }
+      ],
+      "Resposta___Dias_Uteis": "29"
+    },
+    {
+      "_id": "ro_ta_c638105c80d04cd2a8a73740e1a1d240_1940fe7371ec466a899d01dd57ea720b",
+      "_rev": "2-aea492d85d3e6531d93f9f28dbc8c7d1",
+      "Categoria_dos_titulares_dos_dados": "CLIENTE",
+      "Resposta___Canal": "teste",
+      "Resposta___Data": "2022-02-08T15:00:00.000Z",
+      "Status": "Completed",
+      "Base_Legal___Artigo_e_Inciso": "teste",
+      "Abrangencia_e_Observacoes": "teste",
+      "Solicitacao___Descricao": "teste",
+      "Solicitacao___Tipo": "Delete",
+      "Solicitacao___Canal": "teste",
+      "Solicitacao___Data": "2022-02-08T15:00:00.000Z",
+      "CNPJ_CPF": "80927892892",
+      "Razao_Social_Nome": "Leo Martins",
+      "Referencia": "teste",
+      "tableId": "ta_c638105c80d04cd2a8a73740e1a1d240",
+      "Auto_ID": 1,
+      "Created_At": "2022-02-08T21:13:22.245Z",
+      "Updated_At": "2022-02-09T14:31:47.998Z",
+      "type": "row",
+      "ID_do_Processo": [
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5f159c390a0147bfa8fabab9502c2bd3",
+          "primaryDisplay": "Abertura-Chamados"
+        },
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_0bc5bedfb86547e0b76ff8df063356db",
+          "primaryDisplay": "Currículos"
+        },
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_1b7526cffd2b4490808ef4527457532a",
+          "primaryDisplay": "Emissão-NF"
+        },
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_2994381e08684c4cb09b42f8dfe698c0",
+          "primaryDisplay": "Gestão-Prestadores-Externos"
+        },
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5e673a2d7c6e4a1ba4ccd433d8ab1d94",
+          "primaryDisplay": "Email-Mkt-Clientes"
+        },
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_7e75c95ef43a4e5ca90fdb4db4209384",
+          "primaryDisplay": "Homologação-Fornecedores"
+        },
+        {
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_b7debf0b063947a38074292cfba48d8b",
+          "primaryDisplay": "Gestão-Leads"
+        }
+      ],
+      "Created_By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "oghoche@pontusvision.com"
+        }
+      ],
+      "Updated_By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "oghoche@pontusvision.com"
+        }
+      ],
+      "Resposta___Dias_Uteis": "0"
+    }
+  ],
+  "bookmark": "g1AAAADreJzLYWBgYMpgTmEISM4vTc5ISXJIKk3JTEosTtUtKMpP0YWK6hrqYRWHi-oVlyXrJeeUFpekFunl5Ccn5uSATE5kSKr___9_VgaTm4Pgkp4HQLFEMSKsMyLPujwWIMnQAKT-w2zlOrMDbKtQFgCxV1JA",
+  "hasNextPage": false
+}

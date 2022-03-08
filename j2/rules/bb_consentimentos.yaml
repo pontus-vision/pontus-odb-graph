@@ -2,41 +2,56 @@
 updatereq:
   vertices:
     
-    - label: Object_Privacy_Notice
+    - label: Event_Consent
       props:
-        - name: Object_Privacy_Notice_Form_Id
+        - name: Event_Consent_Form_Id
           val: ${_id}
           mandatoryInSearch: True
-        - name: Object_Privacy_Notice_Description
-          val: ${Aviso_de_Privacidade}
+        - name: Event_Consent_Customer_ID
+          val: ${Identificacao?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Privacy_Notice_Metadata_Create_Date
-          val: ${Created_At}
+        - name: Event_Consent_Metadata_Create_Date
+          val: ${Data}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Object_Privacy_Notice_Metadata_Update_Date
+        - name: Event_Consent_Metadata_Update_Date
           val: ${Updated_At}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Object_Privacy_Notice_Delivery_Date
-          val: ${Data_de_Inicio}
+    
+    - label: Object_Privacy_Notice
+      condition: ${Aviso_de_Privacidade.size() > 0}
+      props:
+        - name: Object_Privacy_Notice_Form_Id
+          val: ${new groovy.json.JsonBuilder(Aviso_de_Privacidade)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.BudibaseRef;"
+          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
+    
+    - label: Person_Natural
+      props:
+        - name: Person_Natural_Customer_ID
+          val: ${Identificacao?.replaceAll('[^0-9]', '')?.trim()}
+          mandatoryInSearch: True
+        - name: Person_Natural_Full_Name
+          val: ${Titular_do_Dado_Pessoal?.trim()?.toUpperCase()}
           mandatoryInSearch: False
-          type: "java.util.Date"
           excludeFromSearch: True
     
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: BUDIBASE/AVISO-DE-PRIVACIDADE
+          val: BUDIBASE/CONSENTIMENTOS
           mandatoryInSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: budibase/aviso-de-privacidade
+          val: budibase/consentimentos
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -61,7 +76,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: budibase/aviso-de-privacidade
+          val: budibase/consentimentos
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -69,6 +84,16 @@ updatereq:
         - name: Event_Group_Ingestion_Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
+    
+    - label: Object_Data_Procedures
+      condition: ${Mapeamento_de_Processo.size() > 0}
+      props:
+        - name: Object_Data_Procedures_Form_Id
+          val: ${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.BudibaseRef;"
+          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
 
   edges:
   - label: Has_Ingestion_Event
@@ -78,6 +103,15 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Privacy_Notice
+    fromVertexLabel: Person_Natural
     toVertexLabel: Event_Ingestion
+  - label: Consent
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Event_Consent
+  - label: Has_Privacy_Notice
+    fromVertexLabel: Event_Consent
+    toVertexLabel: Object_Privacy_Notice
+  - label: Consent
+    fromVertexLabel: Event_Consent
+    toVertexLabel: Object_Data_Procedures
 
