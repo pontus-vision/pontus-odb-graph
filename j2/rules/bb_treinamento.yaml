@@ -27,13 +27,13 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-    
+
     - label: Person_Employee
       props:
         - name: Person_Employee_Full_Name
           val: ${Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-    
+
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
