@@ -4523,53 +4523,60 @@ the end of the process.
 
 
   static def getPrivacyImpactAssessmentScores(def scoresMap) {
-    long numItems = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
+
+
+    long numDataProcedures = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .count().next()
 
+    if (numDataProcedures == 0) {
+      return 0
+    }
 
-    long numPIAWithoutPrivNotices =
+    long numDataProceduresWithoutDataSources =
             App.g.V()
-                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
-                    .where(__.both().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).count().is(eq(0)))
+                    .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+                    .where(__.both().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+                            .count().is(eq(0)))
                     .count().next()
 
 
-    long numPIAWithPrivNoticesAndDataWithoutConsent =
+    long numDataSources = App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+            .count().next()
+
+    if (numDataSources == 0) {
+      return 0
+    }
+
+    long numDataSourcesWithoutRisks =
             App.g.V()
-                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
-                    .where(
-                            __.both().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
-                                    .both().has('Event_Consent_Status', eq('No Consent '))
-                                    .count().is(gt(0))
-                    )
+                    .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+                    .where(__.out('Has_Risk').has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
+                            .count().is(eq(0)))
                     .count().next()
 
 
-    long numPIAWithPrivNoticesAndDataWithPendingConsent =
+    long numRisks = App.g.V().has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
+            .count().next()
+
+    if (numRisks == 0) {
+      return 0
+    }
+
+    long numRisksWithoutMitigations =
             App.g.V()
-                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
-                    .where(
-                            __.both().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
-                                    .both().has('Event_Consent_Status', eq('Consent Pending'))
-                                    .count().is(gt(0))
-                    )
+                    .has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
+                    .where(__.in('Mitigates_Risk').has('Metadata_Type_Object_Risk_Mitigation_Data_Source', eq('Object_Risk_Mitigation_Data_Source'))
+                            .count().is(eq(0)))
                     .count().next()
 
 
     long scoreValue = 100L
-    if (numItems > 0) {
 
-      scoreValue -= (numPIAWithoutPrivNotices > 0) ? (long) (15L + 10L * numPIAWithoutPrivNotices / numItems) : 0
-      scoreValue -= (numPIAWithPrivNoticesAndDataWithoutConsent > 0) ? (long) (40L + 5L * numPIAWithPrivNoticesAndDataWithoutConsent / numItems) : 0
-      scoreValue -= (numPIAWithPrivNoticesAndDataWithPendingConsent > 0) ? (long) (20L + 10L * numPIAWithPrivNoticesAndDataWithPendingConsent / numItems) : 0
+    scoreValue -= (numDataProceduresWithoutDataSources > 0) ? (long) (15L + 10L * numDataProceduresWithoutDataSources / numDataProcedures) : 0
+    scoreValue -= (numDataSourcesWithoutRisks > 0) ? (long) (40L + 5L * numDataSourcesWithoutRisks / numDataSources) : 0
+    scoreValue -= (numRisksWithoutMitigations > 0) ? (long) (20L + 10L * numRisksWithoutMitigations / numRisks) : 0
 
-
-      scoreValue = scoreValue < 0 ? 0 : scoreValue
-
-
-    } else {
-      scoreValue = 0L
-    }
+    scoreValue = scoreValue < 0 ? 0 : scoreValue
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), scoreValue)
     return scoreValue
