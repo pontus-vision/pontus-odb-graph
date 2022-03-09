@@ -1,0 +1,38 @@
+<html lang="pt-br">
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <title></title>
+</head>
+
+<body lang=PT-BR>
+
+<div style='padding: 10px; background: white; color: black;'>
+    <hr/>
+
+    <h1 style="text-align: center"> Relat&oacute;rio de Correspond&ecirc;ncia </h1>
+
+    <hr/>
+    {% set possibleMatches = pv:possibleMatches(context.id,'{"Object_Email_Address": 10.5, "Object_Identity_Card": 90.5, "Location_Address": 10.1, "Object_Phone_Number": 1.0, "Object_Senstive_Data": 10.0, "Object_Health": 1.0, "Object_Biometric": 50.0 , "Object_Insurance_Policy": 1.0}') %}
+    {% set numMatches = possibleMatches.size() %}
+    {% if numMatches == 0 %}
+    {{ context.Person_Natural_Full_Name}} é o único registro no sistema.
+
+    {% else %}
+    {{ context.Person_Natural_Full_Name}} Corresponde potencialmente a {{ numMatches }} registro{%- if numMatches != 1 -%}s{% endif %}.
+
+
+
+    {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Titular</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Percentual</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Propriedades em Comum</th></tr>" }}
+    {% for item in possibleMatches.entrySet() %}
+    {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%.2f%%</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (item.key.Person_Natural_Full_Name , item.value * 100.0, item.key.Labels_For_Match ) }}
+        {% endfor %}
+        {{ "</table>" }}
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>

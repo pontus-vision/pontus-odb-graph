@@ -1243,6 +1243,9 @@ rules:
           Customer_ID:
             val: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromSearch: true
+          Status:
+            val: "\"${(consent_status?.toString()?.equalsIgnoreCase('yes') || consent_status?.toString()?.equalsIgnoreCase('true') || consent_status?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }\""
+            excludeFromSearch: true
           Metadata_Create_Date:
             val: "${date}"
             excludeFromSearch: true

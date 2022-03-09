@@ -35,6 +35,7 @@
           "identity": "123",
           "name": "Karla Giulia",
           "date": "2021-12-09",
+          "consent_status": "Sim",
           "privacy_notice": [
             {
               "LookupId": 1,
@@ -76,6 +77,8 @@
         "eTag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
         "id": "2",
         "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "consent_status": "Nao",
+
         "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Aviso%20de%20Privacidade",
         "createdBy": {
           "user": {
@@ -175,6 +178,8 @@
           "identity": "789",
           "name": "Ziad Silva",
           "date": "2022-01-05",
+          "consent_status": "Sim",
+
           "privacy_notice": [
             {
               "LookupId": 5,
@@ -241,6 +246,8 @@
           "identity": "101112",
           "name": "Lara Croft",
           "date": "2020-05-06",
+          "consent_status": "Sim",
+
           "privacy_notice": [
             {
               "LookupId": 6,
@@ -306,6 +313,8 @@
           "Title": "mno",
           "identity": "131415",
           "name": "Petrus Papastathopoulos",
+          "consent_status": "Sim",
+
           "date": "2019-10-10",
           "privacy_notice": [
             {
@@ -372,6 +381,8 @@
           "identity": "161718",
           "name": "Janos Gábor",
           "date": "2021-01-13",
+          "consent_status": "Sim",
+
           "privacy_notice": [
             {
               "LookupId": 1,
@@ -443,6 +454,8 @@
           "name": "Lakshmi",
           "date": "2021-09-01",
           "privacy_notice": [],
+          "consent_status": "Sim",
+
           "data_procedures": [
             {
               "LookupId": 89,
@@ -503,6 +516,8 @@
         "identity": "192021",
         "name": "MODIFIED",
         "date": "1997-01-01",
+        "consent_status": "Sim",
+
         "privacy_notice": [],
         "data_procedures": [
           {
