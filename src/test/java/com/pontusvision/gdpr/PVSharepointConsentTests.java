@@ -98,7 +98,7 @@ public class PVSharepointConsentTests extends AppTest {
               ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
               ".out('Consent').dedup().has('Event_Consent_Status', eq('Consent')).count().next().toString()").get().toString();
 
-      assertEquals("8", consentEventStatusCount, "Consent event status count");
+      assertEquals("7", consentEventStatusCount, "Consent event status count");
 
 //    Test for duplicate data --------------------------------------------------------------------------------------
 
