@@ -4383,31 +4383,38 @@ the end of the process.
 
   static def getIndivRightsScores(def scoresMap) {
     long numItems = App.g.V()
-            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
             .count()
             .next()
 
 
     long numDeleteURL = App.g.V()
-            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-            .values('Object_Data_Procedures_Delete_URL')
+            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+            .values('Object_Data_Source_URI_Delete')
             .count()
             .next()
 
     long numUpdateURL = App.g.V()
-            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-            .values('Object_Data_Procedures_Delete_URL')
+            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+            .values('Object_Data_Source_URI_Update')
             .count()
             .next()
 
+    long numReadURL = App.g.V()
+            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+            .values('Object_Data_Source_URI_Read')
+            .count()
+            .next()
     long numWithoutDeleteUrl = (numItems - numDeleteURL)
     long numWithoutUpdateUrl = (numItems - numUpdateURL)
+    long numWithoutReadUrl = (numItems - numReadURL)
 
     long scoreValue = 100L
     if (numItems > 0) {
 
-      scoreValue -= (long) (50L * numWithoutDeleteUrl / numItems)
-      scoreValue -= (long) (50L * numWithoutUpdateUrl / numItems)
+      scoreValue -= (long) (33L * numWithoutDeleteUrl / numItems)
+      scoreValue -= (long) (33L * numWithoutUpdateUrl / numItems)
+      scoreValue -= (long) (34L * numWithoutReadUrl / numItems)
 
     } else {
       scoreValue = 0L
@@ -4662,23 +4669,22 @@ the end of the process.
 
     long numEvents = App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).count().next()
 
-    long numRecordsOlder15Days =
+    long numRecordsOlder15Days = App.g.V()
+            .has('Event_Subject_Access_Request_Metadata_Create_Date', lte(fifteenDayThreshold)).as('DSAR')
+            .or(
+                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('Acknowledged')),
+                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('New'))
+            )
+            .count().next();
 
-            App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).as('sar')
-                    .where(
-                            __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(lte(fifteenDayThreshold))
-                    )
-
-                    .count().next()
-
-    long numRecordsOlder5Days =
-
-            App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).as('sar')
-                    .where(
-                            __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(lte(fiveDayThreshold))
-                    )
-
-                    .count().next()
+    long numRecordsOlder5Days = App.g.V()
+            .has('Event_Subject_Access_Request_Metadata_Start_Date', lte(fiveDayThreshold)).as('DSAR')
+            .or(
+                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('Acknowledged')),
+                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('New'))
+            )
+            .count().next()
+    // - numRecordsOlder15Days ;
 
 
     long scoreValue = 100L
