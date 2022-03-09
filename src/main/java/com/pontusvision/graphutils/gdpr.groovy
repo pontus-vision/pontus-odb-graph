@@ -4486,23 +4486,44 @@ the end of the process.
 
   static def getLawfulBasisScores(def scoresMap) {
 
-    long numEvents = App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
+
+    long numDataProcs = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .count().next()
 
+    if (numDataProcs == 0){
+      return 0L
+    }
 
-    long numWithoutAnyLawfulBasis = App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
+    long numWithoutAnyLawfulBasis = App.g.V()
+            .has('Metadata_Type_Object_Data_Procedures',eq('Object_Data_Procedures'))
             .where(
-                    __.outE('Has_Lawful_Basis_On').count().is(eq(0))
+               __.outE('Has_Lawful_Basis_On').count().is(eq(0))
             )
             .count().next()
 
+    long numWithLegInt = App.g.V()
+            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+            .where(
+               __.outE('Has_Lawful_Basis_On').as('lawfulBasis')
+                    .has('Object_Lawful_Basis_Description', PText.textContains('LEGIT'))
+            )
+            .count().next()
+
+    long pcntWithLegInt =  (numWithLegInt/numDataProcs * 100L)
+
     long scoreValue = 100L
-    if (numEvents > 0) {
-      scoreValue -= (100L * numWithoutAnyLawfulBasis / numEvents)
+
+    if (pcntWithLegInt > 50){
+      scoreValue -= 20
+    }
+    if (numDataProcs > 0) {
+      scoreValue -= (100L * numWithoutAnyLawfulBasis / numDataProcs)
 
     } else {
       scoreValue = 0L
     }
+
+    scoreValue = java.lang.Math.max(0,scoreValue);
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), scoreValue)
     return scoreValue
