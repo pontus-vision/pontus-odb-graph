@@ -2,40 +2,39 @@
 updatereq:
   vertices:
     
-    - label: Event_Training
+    - label: Event_Meeting
       props:
-        - name: Event_Training_Form_Id
+        - name: Event_Meeting_Form_Id
           val: ${_id}
           mandatoryInSearch: True
-        - name: Event_Training_Status
-          val: ${Status}
+        - name: Event_Meeting_Title
+          val: ${Titulo_Reuniao?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Meeting_Date
+          val: ${Data}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Meeting_Discussed_Topics
+          val: ${Topicos_Reuniao?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Meeting_Participants
+          val: ${Participantes?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
-    - label: Object_Awareness_Campaign
+    - label: Object_Data_Source
       props:
-        - name: Object_Awareness_Campaign_Description
-          val: ${Descricao?.trim()?.toUpperCase()}
+        - name: Object_Data_Source_Name
+          val: BUDIBASE/REUNIÕES-COMITÊ-P&PD
           mandatoryInSearch: True
-        - name: Object_Awareness_Campaign_Start_Date
-          val: ${Realizado_em}
-          mandatoryInSearch: True
-          type: "java.util.Date"
     
-    - label: Person_Natural
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${Nome?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    - label: Person_Employee
-      props:
-        - name: Person_Employee_Full_Name
-          val: ${Nome?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: budibase/treinamento
+          val: budibase/reuniões-comitê-p&pd
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -60,7 +59,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: budibase/treinamento
+          val: budibase/reuniões-comitê-p&pd
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -68,30 +67,15 @@ updatereq:
         - name: Event_Group_Ingestion_Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
           mandatoryInSearch: True
-    
-    - label: Object_Data_Source
-      props:
-        - name: Object_Data_Source_Name
-          val: BUDIBASE/TREINAMENTO
-          mandatoryInSearch: True
 
   edges:
-  - label: Course_Training
-    fromVertexLabel: Event_Training
-    toVertexLabel: Object_Awareness_Campaign
-  - label: Completed_By
-    fromVertexLabel: Event_Training
-    toVertexLabel: Person_Natural
-  - label: Completed_By
-    fromVertexLabel: Event_Training
-    toVertexLabel: Person_Employee
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event_Ingestion
-    toVertexLabel: Event_Training
+    fromVertexLabel: Object_Data_Source
+    toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Data_Source
-    toVertexLabel: Event_Group_Ingestion
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Event_Meeting
 

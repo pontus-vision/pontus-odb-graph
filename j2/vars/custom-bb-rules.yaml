@@ -1054,66 +1054,126 @@ rules:
         fromVertexLabel: "Event_Ingestion"
         toVertexLabel: "Object_Legal_Actions"
 
-#  sharepoint_meetings:
-#
-#    vertices:
-#      - label: Event_Meeting
-#        props:
-#          Form_Id: "${id}"
-#          Title:
-#            val: "${subject?.trim()?.toUpperCase()}"  # Right ?!
-#            excludeFromSearch: true
-#          Date:
-#            val: "${date}"
-#            type: java.util.Date
-#            excludeFromSearch: true
-#          Discussed_Topics:
-#            val: "${topics?.trim()?.toUpperCase()}"  # Should it be upperCase or not ?!
-#            excludeFromSearch: true
-#          Participants:
-#            val: "${person?.trim()?.toUpperCase()}"  # Should it be upperCase or not ?!
-#            excludeFromSearch: true
-#
-#      - label: Object_Data_Source
-#        props:
-#          Name: "SHAREPOINT/P-AND-PD-COMMITTEE-MEETINGS"
-#
-#      - label: Event_Ingestion
-#        props:
-#          Type:
-#            val: "P & PD Committee Meetings"
-#            excludeFromSearch: true
-#          Operation:
-#            val: "Structured Data Insertion"
-#            excludeFromSearch: true
-#          Domain_b64:
-#            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
-#            excludeFromSearch: true
-#          Metadata_Create_Date:
-#            val: "${new Date()}"
-#            excludeFromSearch: true
-#            type: java.util.Date
-#          Metadata_Update_Date:
-#            val: "${new Date()}"
-#            excludeFromSearch: true
-#            type: java.util.Date
-#
-#      - label: Event_Group_Ingestion
-#        props:
-#          Type: "sharepoint/p-and-pd-committee-meetings"
-#          Operation: "Structured Data Insertion"
-#          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-#
-#    edges:
-#
-#      - label: Has_Ingestion_Event
-#        fromVertexLabel: "Object_Data_Source"
-#        toVertexLabel: "Event_Group_Ingestion"
-#
-#      - label: Has_Ingestion_Event
-#        fromVertexLabel: "Event_Group_Ingestion"
-#        toVertexLabel: "Event_Ingestion"
-#
-#      - label: Has_Ingestion_Event
-#        fromVertexLabel: "Event_Ingestion"
-#        toVertexLabel: "Event_Meeting"
+  bb_users:
+    vertices:
+      - label: Person_Natural
+        props:
+          Full_Name:
+            val: "${firstName?.toUpperCase()?.trim()} ${lastName?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
+
+      - label: Object_Email_Address
+        condition: "${email?.trim()?.length() > 0}"
+        props:
+          Email: "${email?.trim()?.toLowerCase()}"
+
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/USERS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/users"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/users"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Person_Natural"
+
+      - label: Uses_Email
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Email_Address"
+
+  bb_reunioes_ppd:
+    vertices:
+      - label: Event_Meeting
+        props:
+          Form_Id: "${_id}"
+          Title:
+            val: "${Titulo_Reuniao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Date:
+            val: "${Data}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Discussed_Topics:
+            val: "${Topicos_Reuniao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Participants:
+            val: "${Participantes?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/REUNIÕES-COMITÊ-P&PD"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/reuniões-comitê-p&pd"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/reuniões-comitê-p&pd"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Meeting"
