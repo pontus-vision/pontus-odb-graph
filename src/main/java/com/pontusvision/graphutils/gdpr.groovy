@@ -3864,16 +3864,17 @@ the end of the process.
   }
 
   static long oneYear = 24L * 3600000L * 365L
+
   static long getAwarenessScores(def scoresMap) {
 
     long scoreValue
     long scoreValue2
     try {
       def latestEntryId = App.g.V().has('Metadata_Type_Object_Awareness_Campaign', eq('Object_Awareness_Campaign'))
-              .order().by('Object_Awareness_Campaign_Start_Date',Order.desc).range(0,1).id().next()
+              .order().by('Object_Awareness_Campaign_Start_Date', Order.desc).range(0, 1).id().next()
 
-      if (!latestEntryId){
-        throw new Exception("Could not find campaign");
+      if (!latestEntryId) {
+        throw new Exception("Could not find campaign")
       }
 
       long numEvents = App.g.V(latestEntryId).in().as('events').count().next()
@@ -3930,7 +3931,7 @@ the end of the process.
       scoreValue = 0L
       scoreValue2 = 0L
     }
-    long scoreRetVal  = (long)(scoreValue2 + scoreValue)/2L
+    long scoreRetVal = (long) (scoreValue2 + scoreValue) / 2L
     scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness'), scoreRetVal)
 
     return scoreRetVal
@@ -4046,11 +4047,12 @@ the end of the process.
     return scoreValue
 
   }
+
   static def getConsentScores(def scoresMap) {
 
     long numProcedures = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .where(
-                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description',PText.textContainsPrefix('CONSENT')
+                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CONSENT')
                     )
             ).count().next()
 
@@ -4059,16 +4061,16 @@ the end of the process.
 //            .where(
             .out('Consent').has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).dedup()
             .where(
-                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description',PText.textContainsPrefix('CONSENT')
+                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CONSENT')
                     )
             )
 //            )
             .count().next()
 
-    long percentConsent = numProcedures > 0 ? (long) ((double )numConsent / (double )numProcedures * 100.0):0
+    long percentConsent = numProcedures > 0 ? (long) ((double) numConsent / (double) numProcedures * 100.0) : 0
 
-    long numWithoutAnyConsent = numProcedures - numConsent;
-    long pcntWithoutAnyConsent = 100L - percentConsent;
+    long numWithoutAnyConsent = numProcedures - numConsent
+    long pcntWithoutAnyConsent = 100L - percentConsent
 
     // percentConsent  - score
     //        0        -  0
@@ -4081,7 +4083,7 @@ the end of the process.
     //  score = 0.4 * percentConsent
 
     long scoreValue = 100L
-    if (numProcedures > 0 && percentConsent  < 100L) {
+    if (numProcedures > 0 && percentConsent < 100L) {
 
       scoreValue = percentConsent * 0.4
 
@@ -4195,7 +4197,6 @@ the end of the process.
                     .count().next()
 
 
-
     // num Legal Actions  - score
     //        0        -  100
     //        1        -  50
@@ -4203,11 +4204,10 @@ the end of the process.
 
 
     long scoreValue = 100L
-    if (numLegalActions == 1){
+    if (numLegalActions == 1) {
       scoreValue -= 50L
-    }
-    else if (numLegalActions > 1){
-      scoreValue =0
+    } else if (numLegalActions > 1) {
+      scoreValue = 0
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Legal Actions'), scoreValue)
 
@@ -4230,7 +4230,6 @@ the end of the process.
                     .count().next()
 
 
-
     // num Privacy Docs  - score
     //        >=4        -  100
     //         3         -  50
@@ -4238,11 +4237,10 @@ the end of the process.
 
 
     long scoreValue = 100L
-    if (numPrivacyDocs == 3){
+    if (numPrivacyDocs == 3) {
       scoreValue -= 50L
-    }
-    else if (numPrivacyDocs< 3 ){
-      scoreValue =0
+    } else if (numPrivacyDocs < 3) {
+      scoreValue = 0
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Docs'), scoreValue)
 
@@ -4265,7 +4263,6 @@ the end of the process.
                     .count().next()
 
 
-
     // num Privacy Docs  - score
     //        >=3        -  100
     //         2         -  50
@@ -4273,11 +4270,10 @@ the end of the process.
 
 
     long scoreValue = 100L
-    if (numPrivacyDocs == 2){
+    if (numPrivacyDocs == 2) {
       scoreValue -= 50L
-    }
-    else if (numPrivacyDocs< 2 ){
-      scoreValue =0
+    } else if (numPrivacyDocs < 2) {
+      scoreValue = 0
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Meetings'), scoreValue)
 
@@ -4490,40 +4486,35 @@ the end of the process.
     long numDataProcs = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .count().next()
 
-    if (numDataProcs == 0){
+    if (numDataProcs == 0) {
       return 0L
     }
 
     long numWithoutAnyLawfulBasis = App.g.V()
-            .has('Metadata_Type_Object_Data_Procedures',eq('Object_Data_Procedures'))
+            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .where(
-               __.outE('Has_Lawful_Basis_On').count().is(eq(0))
+                    __.outE('Has_Lawful_Basis_On').count().is(eq(0))
             )
             .count().next()
 
     long numWithLegInt = App.g.V()
             .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .where(
-               __.outE('Has_Lawful_Basis_On').as('lawfulBasis')
-                    .has('Object_Lawful_Basis_Description', PText.textContains('LEGIT'))
+                    __.out('Has_Lawful_Basis_On').as('lawfulBasis')
+                            .has('Object_Lawful_Basis_Description', PText.textContainsPrefix('LEG'))
             )
             .count().next()
 
-    long pcntWithLegInt =  (numWithLegInt/numDataProcs * 100L)
+    long pcntWithLegInt = (numWithLegInt / numDataProcs * 100L)
 
     long scoreValue = 100L
 
-    if (pcntWithLegInt > 50){
+    if (pcntWithLegInt > 50) {
       scoreValue -= 20
     }
-    if (numDataProcs > 0) {
-      scoreValue -= (100L * numWithoutAnyLawfulBasis / numDataProcs)
+    scoreValue -= (100L * numWithoutAnyLawfulBasis / numDataProcs)
 
-    } else {
-      scoreValue = 0L
-    }
-
-    scoreValue = java.lang.Math.max(0,scoreValue);
+    scoreValue = java.lang.Math.max(0, scoreValue)
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), scoreValue)
     return scoreValue
@@ -5347,7 +5338,7 @@ the end of the process.
                     sb.append("\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": $it2.value }".toString())
                   }
                 }
-      } catch (Exception e){
+      } catch (Exception e) {
         System.err("Ignoring error when processing Stats: ${e.getMessage()}; ${e.getCause()}")
         e.printStackTrace()
       }

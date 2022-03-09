@@ -35,6 +35,16 @@ public class PVBudibaseConsentimentosTests extends AppTest {
                       ".count().next().toString()").get().toString();
       assertEquals("1", joaoPrivacyNotices, "João has one Privacy notice linked.");
 
+
+      String joaoConsent =
+          App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/consentimentos')).as('event-ingestion')" +
+              ".in('Has_Ingestion_Event').as('person-natural')" +
+              ".has('Person_Natural_Full_Name', eq('JOÃO TEST'))" +
+              ".out('Consent').as('event-consent')" +
+              ".values('Event_Consent_Status')" +
+              ".next().toString()").get().toString();
+      assertEquals("Consent", joaoConsent, "João has one Consent.");
+
       String joaoDataProcedures =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type'" +
                       ",eq('budibase/consentimentos')).as('event-ingestion')" +
