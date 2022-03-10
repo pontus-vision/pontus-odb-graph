@@ -4076,8 +4076,6 @@ the end of the process.
 
     scoreValue -= (100L* numDataProcsWithSensitiveDataWithoutConsent/numDataProcsWithSensitiveData)
 
-
-
     scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
     return scoreValue
 
