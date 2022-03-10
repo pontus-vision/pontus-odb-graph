@@ -4361,6 +4361,8 @@ the end of the process.
     }
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Data Breaches'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Data Breaches - Open tickets for Lost'), numOpenDataBreachDataLost)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Data Breaches - Open tickets for Stolen'), numOpenDataBreachDataStolen)
     return scoreValue
 
 
@@ -4465,6 +4467,9 @@ the end of the process.
       scoreValue = 0L
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Indiv Rights'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Indiv Rights - Num Without Delete URL'), numWithoutDeleteUrl)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Indiv Rights - Num Without Update URL'), numWithoutUpdateUrl)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Indiv Rights - Num Without Read URL'), numWithoutReadUrl)
     return scoreValue
 
   }
@@ -4498,6 +4503,8 @@ the end of the process.
       scoreValue = 0L
     }
 
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Info you hold - num data sources without data procedures'),
+            numRecordsWithoutDataProcedures)
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Info you hold'), scoreValue)
     return scoreValue
@@ -4547,6 +4554,8 @@ the end of the process.
 
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('International'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country'), numProcessesOutOfCountry)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country without consent'), numProcessesOutOfCountryWithoutConsent)
     return scoreValue
 
   }
@@ -4590,6 +4599,8 @@ the end of the process.
     scoreValue = java.lang.Math.max(0, scoreValue)
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Legitimate Interest'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Data Procs without Lawful Basis'), scoreValue)
     return scoreValue
 
   }
@@ -4656,6 +4667,10 @@ the end of the process.
     scoreValue = scoreValue < 0 ? 0 : scoreValue
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), numDataSourcesWithoutRisks)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), numRisksWithoutMitigations)
+
     return scoreValue
 
   }
@@ -4674,15 +4689,15 @@ the end of the process.
                     .where(__.as('consentCount').is(eq(0)))
                     .count().next()
 
-    long numRecordsNoPIA =
-            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
-                    .match(
-                            __.as('privNotice').both().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment')).count().as('consentCount')
-
-                    )
-                    .select('consentCount')
-                    .where(__.as('consentCount').is(eq(0)))
-                    .count().next()
+//    long numRecordsNoPIA =
+//            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
+//                    .match(
+//                            __.as('privNotice').both().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment')).count().as('consentCount')
+//
+//                    )
+//                    .select('consentCount')
+//                    .where(__.as('consentCount').is(eq(0)))
+//                    .count().next()
 
     long numRecordsLessThan50PcntPositiveConsent =
             App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
@@ -4712,12 +4727,6 @@ the end of the process.
       }
 
 
-      long pcntNoPIA = (long) (100L * numRecordsNoPIA / numEvents)
-      if (pcntNoPIA > 10) {
-        scoreValue -= 50L
-      } else if (numRecordsNoPIA > 0) {
-        scoreValue -= (30L + 2L * pcntNoPIA)
-      }
 
       scoreValue -= (10L * numRecordsLessThan50PcntPositiveConsent / numEvents)
 
@@ -4726,6 +4735,8 @@ the end of the process.
       scoreValue = 0L
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Notices'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Notices - No Consent'), numRecordsNoConsent)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Notices - Num Records Less than 50pcnt Positive'), numRecordsLessThan50PcntPositiveConsent)
     return scoreValue
 
   }
@@ -4774,6 +4785,8 @@ the end of the process.
     } else {
       scoreValue = 100L
     }
+    scoresMap.put(PontusJ2ReportingFunctions.translate('DSAR - num records older 15 days'), numRecordsOlder15Days)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('DSAR - num records older 5 days'), numRecordsOlder5Days)
 
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Subject Access Requests'), scoreValue)
