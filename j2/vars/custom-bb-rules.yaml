@@ -788,6 +788,9 @@ rules:
             val: "${Data_de_Inicio}"
             excludeFromSearch: true
             type: java.util.Date
+          Who_Is_Collecting:
+            val: "${Quem_Coleta}"
+            excludeFromSearch: true
 
       - label: Object_Data_Source
         props:
