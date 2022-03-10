@@ -143,12 +143,13 @@ rules:
       - label: "Event_Consent"
         props:
           Status:
-            val: "Consentimento"
+            val: "Consent"
             excludeFromSearch: true
-          Date:
+          Metadata_Create_Date:
             val: "${new Date()}"
             excludeFromSearch: true
             type: "java.util.Date"
+
       - label: "Object_Privacy_Notice"
         props:
           Who_Is_Collecting:
