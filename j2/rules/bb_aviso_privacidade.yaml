@@ -26,6 +26,10 @@ updatereq:
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
+        - name: Object_Privacy_Notice_Who_Is_Collecting
+          val: ${Quem_Coleta}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_Data_Source
       props:

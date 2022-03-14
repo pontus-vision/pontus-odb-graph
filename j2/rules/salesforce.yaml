@@ -133,10 +133,10 @@ updatereq:
     - label: Event_Consent
       props:
         - name: Event_Consent_Status
-          val: Consentimento
+          val: Consent
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event_Consent_Date
+        - name: Event_Consent_Metadata_Create_Date
           val: ${new Date()}
           mandatoryInSearch: False
           type: "java.util.Date"
