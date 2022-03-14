@@ -788,6 +788,9 @@ rules:
             val: "${Data_de_Inicio}"
             excludeFromSearch: true
             type: java.util.Date
+          Who_Is_Collecting:
+            val: "${Quem_Coleta}"
+            excludeFromSearch: true
 
       - label: Object_Data_Source
         props:
@@ -838,6 +841,9 @@ rules:
       - label: Event_Consent
         props:
           Form_Id: "${_id}"
+          Status:
+            val: "\"${(Status?.toString()?.equalsIgnoreCase('yes') || Status?.toString()?.equalsIgnoreCase('true') || Status?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }\""
+            excludeFromSearch: true
           Customer_ID:
             val: "${Identificacao?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromSearch: true

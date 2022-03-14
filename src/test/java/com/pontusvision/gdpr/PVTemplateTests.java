@@ -15,8 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -826,5 +825,86 @@ public class PVTemplateTests extends AppTest {
 //
 //  }
 
+  @Test
+  public void test00010CorrespondeTemplate() throws InterruptedException {
+    try {
+
+      jsonTestUtil("totvs/totvs-sa1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+      jsonTestUtil("totvs/totvs-sa1-real-2.json", "$.objs", "totvs_protheus_sa1_clientes");
+
+
+
+
+      Resource res = new Resource();
+
+
+//      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Person_Natural_Full_Name", P.eq("MATHEUS ROCHA"))
+          .id().next().toString();
+
+      String templateId = "Person_Natural/Corresponde";
+//          App.g.V().has("Object_Notification_Templates_Id", P.eq("Person_Natural/Corresponde"))
+//          .id().next().toString();
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      String expectedReport = "MATHEUS ROCHA é o único registro no sistema";
+      assertTrue(report.contains(expectedReport), "Report orig = " + report);
+
+      contextId = App.g.V().has("Person_Natural_Full_Name", P.eq("KRACKOVSZI GLÓRIA 2"))
+          .id().next().toString();
+
+//          App.g.V().has("Object_Notification_Templates_Id", P.eq("Person_Natural/Corresponde"))
+//          .id().next().toString();
+
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      expectedReport = "KRACKOVSZI GLÓRIA 2 Corresponde potencialmente a 1 registro";
+      assertTrue(report.contains(expectedReport), "Contains KRACKOVSZI GLÓRIA 2; orig report = " + report);
+
+      expectedReport = "Location Address, Object Email Address, Object Phone Number";
+      assertTrue(report.contains(expectedReport),
+          "Contains Location Address, Object Email Address, Object Phone Number Report orig report = " + report);
+
+
+      contextId = App.g.V().has("Person_Natural_Full_Name", P.eq("GLÓRIA KRACKOVSZI"))
+          .id().next().toString();
+
+//          App.g.V().has("Object_Notification_Templates_Id", P.eq("Person_Natural/Corresponde"))
+//          .id().next().toString();
+
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      expectedReport = "GLÓRIA KRACKOVSZI Corresponde potencialmente a 1 registro";
+      assertTrue(report.contains(expectedReport), "Contains GLÓRIA KRACKOVSZI; orig report = " + report);
+
+      expectedReport = "Location Address, Object Email Address, Object Phone Number";
+      assertTrue(report.contains(expectedReport),
+          "Contains Location Address, Object Email Address, Object Phone Number Report orig report = " + report);
+
+
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+  }
 
 }

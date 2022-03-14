@@ -20,11 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestClassesOrder(15)
 
 public class PVSharepointConsentTests extends AppTest {
-  /**
-   * Create the test0000 case
-   *
-   * @param test0000Name name of the test0000 case
-   */
 
   @Test
   public void test00001SharepointConsents() throws InterruptedException {
@@ -97,6 +92,13 @@ public class PVSharepointConsentTests extends AppTest {
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('Consent'))" +
                       ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
                       ".out('Consent').dedup().count().next().toString()").get().toString();
+
+      String consentEventStatusCount =
+          App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('Consent'))" +
+              ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
+              ".out('Consent').dedup().has('Event_Consent_Status', eq('Consent')).count().next().toString()").get().toString();
+
+      assertEquals("7", consentEventStatusCount, "Consent event status count");
 
 //    Test for duplicate data --------------------------------------------------------------------------------------
 

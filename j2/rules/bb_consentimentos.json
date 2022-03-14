@@ -10,6 +10,12 @@
             "mandatoryInSearch": true
           },
           {
+            "name": "Event_Consent_Status",
+            "val": "${(Status?.toString()?.equalsIgnoreCase('yes') || Status?.toString()?.equalsIgnoreCase('true') || Status?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
             "name": "Event_Consent_Customer_ID",
             "val": "${Identificacao?.replaceAll('[^0-9]', '')?.trim()}",
             "mandatoryInSearch": false,

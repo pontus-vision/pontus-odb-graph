@@ -11,6 +11,10 @@ updatereq:
           val: ${identity?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Event_Consent_Status
+          val: "${(consent_status?.toString()?.equalsIgnoreCase('yes') || consent_status?.toString()?.equalsIgnoreCase('true') || consent_status?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }"
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Event_Consent_Metadata_Create_Date
           val: ${date}
           mandatoryInSearch: False

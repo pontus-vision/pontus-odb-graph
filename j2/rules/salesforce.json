@@ -204,12 +204,12 @@
         "props": [
           {
             "name": "Event_Consent_Status",
-            "val": "Consentimento",
+            "val": "Consent",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event_Consent_Date",
+            "name": "Event_Consent_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",

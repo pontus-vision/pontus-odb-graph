@@ -3864,16 +3864,17 @@ the end of the process.
   }
 
   static long oneYear = 24L * 3600000L * 365L
+
   static long getAwarenessScores(def scoresMap) {
 
     long scoreValue
     long scoreValue2
     try {
       def latestEntryId = App.g.V().has('Metadata_Type_Object_Awareness_Campaign', eq('Object_Awareness_Campaign'))
-              .order().by('Object_Awareness_Campaign_Start_Date',Order.desc).range(0,1).id().next()
+              .order().by('Object_Awareness_Campaign_Start_Date', Order.desc).range(0, 1).id().next()
 
-      if (!latestEntryId){
-        throw new Exception("Could not find campaign");
+      if (!latestEntryId) {
+        throw new Exception("Could not find campaign")
       }
 
       long numEvents = App.g.V(latestEntryId).in().as('events').count().next()
@@ -3930,127 +3931,161 @@ the end of the process.
       scoreValue = 0L
       scoreValue2 = 0L
     }
-    long scoreRetVal  = (long)(scoreValue2 + scoreValue)/2L
+    long scoreRetVal = (long) (scoreValue2 + scoreValue) / 2L
     scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness'), scoreRetVal)
 
     return scoreRetVal
   }
 
+  static String[] sensitiveData = getEnv("PV_SENSITIVE_DATA","DADOS DE SAÚDE,RAÇA,FILIAÇÃO A SINDICATO").split(',')
 
   static def getChildrenScores(scoresMap) {
 
-    long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L))
-    def dateThreshold = new Date(ageThresholdMs)
+//    long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L))
+//    def dateThreshold = new Date(ageThresholdMs)
+//
+//
+//    long numChildren = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
+//            .where(
+//                    __.and(
+//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
+//                    )
+//            )
+//            .count().next()
+//
+//    long numNoGuardian = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
+//            .where(
+//                    __.and(
+//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
+//                            , __.outE('Has_Parent_Or_Guardian').count().is(eq(0) as P<Long>)
+//                    )
+//            )
+//            .count().next()
+//
+//    long numWithoutAnyConsent = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
+//            .where(
+//                    __.and(
+//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
+//                            , __.outE('Consent').count().is(eq(0) as P<Long>)
+//                    )
+//            )
+//            .count().next()
+//
+//
+//    long numNegativeConsent =
+//
+//            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
+//                    .where(
+//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
+//                    ).as('children')
+//                    .match(
+//                            __.as('children').outE('Consent').as('consentEdges')
+//                            , __.as('consentEdges').count().as('consentEdgesCount')
+//                            , __.as('consentEdges').inV().as('consentEvents')
+//                            , __.as('consentEvents').has('Event_Consent_Status', eq('No Consent ')).count().as('negConsentCount')
+//                            , __.as('children').id().as('childId')
+//
+//                    )
+//                    .select('consentEdgesCount', 'negConsentCount', 'childId')
+//                    .where('consentEdgesCount', eq('negConsentCount'))
+//                    .where(__.as('consentEdgesCount').is(gt(0)))
+//
+//                    .count().next()
+//
+//
+//    long numPendingConsent =
+//
+//            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
+//                    .where(
+//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
+//                    ).as('children')
+//                    .match(
+//                            __.as('children').outE('Consent').as('consentEdges')
+//                            , __.as('consentEdges').count().as('consentEdgesCount')
+//                            , __.as('consentEdges').inV().as('consentEvents')
+//                            , __.as('consentEvents').has('Event_Consent_Status', eq('Consent Pending')).count().as('pendingConsentCount')
+//                            , __.as('children').id().as('childId')
+//
+//                    )
+//                    .select('consentEdgesCount', 'pendingConsentCount', 'childId')
+//                    .where('consentEdgesCount', eq('pendingConsentCount'))
+//                    .where(__.as('consentEdgesCount').is(gt(0)))
+//
+//                    .count().next()
+//
+//
+//    long scoreValue = 100L
+//    if (numChildren > 0) {
+//
+//      long pcntWithoutAnyConsent = (long) (100L * numWithoutAnyConsent / numChildren)
+//      if (pcntWithoutAnyConsent > 10) {
+//        scoreValue -= 32L
+//      } else if (numWithoutAnyConsent > 0) {
+//        scoreValue -= (22L + pcntWithoutAnyConsent)
+//      }
+//
+//
+//      long pcntWithoutAnyGuardian = (long) (100L * numNoGuardian / numChildren)
+//      if (pcntWithoutAnyGuardian > 10) {
+//        scoreValue -= 32L
+//      } else if (numNoGuardian > 0) {
+//        scoreValue -= (22L + pcntWithoutAnyGuardian)
+//      }
+//
+//      long pcntWithNegativeConsent = (long) (100L * numNegativeConsent / numChildren)
+//      if (pcntWithNegativeConsent > 10) {
+//        scoreValue -= 32L
+//      } else if (numNegativeConsent > 0) {
+//        scoreValue -= (22L + pcntWithNegativeConsent)
+//      }
+//
+//      scoreValue -= (7L * numPendingConsent / numChildren)
+//
+//
+//    }
 
 
-    long numChildren = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-            .where(
-                    __.and(
-                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-                    )
+
+    Long scoreValue = 100L
+
+    long numDataProcsWithSensitiveData =
+            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).where(
+                    __.out('Has_Sensitive_Data').has('Object_Sensitive_Data_Description', within(sensitiveData))
             )
             .count().next()
 
-    long numNoGuardian = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-            .where(
-                    __.and(
-                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-                            , __.outE('Has_Parent_Or_Guardian').count().is(eq(0) as P<Long>)
-                    )
-            )
-            .count().next()
 
-    long numWithoutAnyConsent = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-            .where(
-                    __.and(
-                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-                            , __.outE('Consent').count().is(eq(0) as P<Long>)
-                    )
-            )
-            .count().next()
-
-
-    long numNegativeConsent =
-
-            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-                    .where(
-                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-                    ).as('children')
-                    .match(
-                            __.as('children').outE('Consent').as('consentEdges')
-                            , __.as('consentEdges').count().as('consentEdgesCount')
-                            , __.as('consentEdges').inV().as('consentEvents')
-                            , __.as('consentEvents').has('Event_Consent_Status', eq('No Consent ')).count().as('negConsentCount')
-                            , __.as('children').id().as('childId')
-
-                    )
-                    .select('consentEdgesCount', 'negConsentCount', 'childId')
-                    .where('consentEdgesCount', eq('negConsentCount'))
-                    .where(__.as('consentEdgesCount').is(gt(0)))
-
-                    .count().next()
-
-
-    long numPendingConsent =
-
-            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-                    .where(
-                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-                    ).as('children')
-                    .match(
-                            __.as('children').outE('Consent').as('consentEdges')
-                            , __.as('consentEdges').count().as('consentEdgesCount')
-                            , __.as('consentEdges').inV().as('consentEvents')
-                            , __.as('consentEvents').has('Event_Consent_Status', eq('Consent Pending')).count().as('pendingConsentCount')
-                            , __.as('children').id().as('childId')
-
-                    )
-                    .select('consentEdgesCount', 'pendingConsentCount', 'childId')
-                    .where('consentEdgesCount', eq('pendingConsentCount'))
-                    .where(__.as('consentEdgesCount').is(gt(0)))
-
-                    .count().next()
-
-
-    long scoreValue = 100L
-    if (numChildren > 0) {
-
-      long pcntWithoutAnyConsent = (long) (100L * numWithoutAnyConsent / numChildren)
-      if (pcntWithoutAnyConsent > 10) {
-        scoreValue -= 32L
-      } else if (numWithoutAnyConsent > 0) {
-        scoreValue -= (22L + pcntWithoutAnyConsent)
-      }
-
-
-      long pcntWithoutAnyGuardian = (long) (100L * numNoGuardian / numChildren)
-      if (pcntWithoutAnyGuardian > 10) {
-        scoreValue -= 32L
-      } else if (numNoGuardian > 0) {
-        scoreValue -= (22L + pcntWithoutAnyGuardian)
-      }
-
-      long pcntWithNegativeConsent = (long) (100L * numNegativeConsent / numChildren)
-      if (pcntWithNegativeConsent > 10) {
-        scoreValue -= 32L
-      } else if (numNegativeConsent > 0) {
-        scoreValue -= (22L + pcntWithNegativeConsent)
-      }
-
-      scoreValue -= (7L * numPendingConsent / numChildren)
-
+    if (numDataProcsWithSensitiveData == 0){
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
+      return scoreValue
 
     }
+
+    long numDataProcsWithSensitiveDataWithConsent =
+            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+                    .as('procs')
+                    .where(
+                            __.and(
+                                    __.as('procs').out('Has_Sensitive_Data').has('Object_Sensitive_Data_Description', within(sensitiveData))
+                                    , __.as('procs').out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CON') )
+                            )
+                    )
+                    .count().next()
+
+    long numDataProcsWithSensitiveDataWithoutConsent = numDataProcsWithSensitiveData - numDataProcsWithSensitiveDataWithConsent
+
+    scoreValue -= (100L* numDataProcsWithSensitiveDataWithoutConsent/numDataProcsWithSensitiveData)
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
     return scoreValue
 
   }
+
   static def getConsentScores(def scoresMap) {
 
     long numProcedures = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .where(
-                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description',PText.textContainsPrefix('CONSENT')
+                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CONSENT')
                     )
             ).count().next()
 
@@ -4059,16 +4094,16 @@ the end of the process.
 //            .where(
             .out('Consent').has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).dedup()
             .where(
-                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description',PText.textContainsPrefix('CONSENT')
+                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CONSENT')
                     )
             )
 //            )
             .count().next()
 
-    long percentConsent = numProcedures > 0 ? (long) ((double )numConsent / (double )numProcedures * 100.0):0
+    long percentConsent = numProcedures > 0 ? (long) ((double) numConsent / (double) numProcedures * 100.0) : 0
 
-    long numWithoutAnyConsent = numProcedures - numConsent;
-    long pcntWithoutAnyConsent = 100L - percentConsent;
+    long numWithoutAnyConsent = numProcedures - numConsent
+    long pcntWithoutAnyConsent = 100L - percentConsent
 
     // percentConsent  - score
     //        0        -  0
@@ -4081,7 +4116,7 @@ the end of the process.
     //  score = 0.4 * percentConsent
 
     long scoreValue = 100L
-    if (numProcedures > 0 && percentConsent  < 100L) {
+    if (numProcedures > 0 && percentConsent < 100L) {
 
       scoreValue = percentConsent * 0.4
 
@@ -4195,7 +4230,6 @@ the end of the process.
                     .count().next()
 
 
-
     // num Legal Actions  - score
     //        0        -  100
     //        1        -  50
@@ -4203,11 +4237,10 @@ the end of the process.
 
 
     long scoreValue = 100L
-    if (numLegalActions == 1){
+    if (numLegalActions == 1) {
       scoreValue -= 50L
-    }
-    else if (numLegalActions > 1){
-      scoreValue =0
+    } else if (numLegalActions > 1) {
+      scoreValue = 0
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Legal Actions'), scoreValue)
 
@@ -4230,7 +4263,6 @@ the end of the process.
                     .count().next()
 
 
-
     // num Privacy Docs  - score
     //        >=4        -  100
     //         3         -  50
@@ -4238,11 +4270,10 @@ the end of the process.
 
 
     long scoreValue = 100L
-    if (numPrivacyDocs == 3){
+    if (numPrivacyDocs == 3) {
       scoreValue -= 50L
-    }
-    else if (numPrivacyDocs< 3 ){
-      scoreValue =0
+    } else if (numPrivacyDocs < 3) {
+      scoreValue = 0
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Docs'), scoreValue)
 
@@ -4265,7 +4296,6 @@ the end of the process.
                     .count().next()
 
 
-
     // num Privacy Docs  - score
     //        >=3        -  100
     //         2         -  50
@@ -4273,11 +4303,10 @@ the end of the process.
 
 
     long scoreValue = 100L
-    if (numPrivacyDocs == 2){
+    if (numPrivacyDocs == 2) {
       scoreValue -= 50L
-    }
-    else if (numPrivacyDocs< 2 ){
-      scoreValue =0
+    } else if (numPrivacyDocs < 2) {
+      scoreValue = 0
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Meetings'), scoreValue)
 
@@ -4330,6 +4359,8 @@ the end of the process.
     }
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Data Breaches'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Data Breaches - Open tickets for Lost'), numOpenDataBreachDataLost)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Data Breaches - Open tickets for Stolen'), numOpenDataBreachDataStolen)
     return scoreValue
 
 
@@ -4338,85 +4369,105 @@ the end of the process.
 
   static def getDataProtnOfficerScores(def scoresMap) {
 
-    long numDPOs = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer'))
-            .count().next()
-
-
-    long numDPODirectReports = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer')).inE('Reports_To')
-            .count().next()
-
-
-    long numDPOsFailed = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer'))
-            .in().has('Event_Training_Status', eq('Failed'))
-            .count().next()
-
-
-    long numDPODirectReportsFailed = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer')).inE('Reports_To')
-            .outV().in().has('Event_Training_Status', eq('Failed'))
-            .count().next()
-
-
-    long numDPOsSecondReminder = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer'))
-            .in().has('Event_Training_Status', eq('Second  Reminder'))
-            .count().next()
-
-
-    long numDPODirectReportsSecondReminder = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer')).inE('Reports_To')
-            .outV().in().has('Event_Training_Status', eq('Second  Reminder'))
-            .count().next()
-
-
-    long scoreValue = 100L
-    if (numDPOs > 0) {
-      scoreValue -= (long) (25L + 25L * numDPOsFailed / numDPOs)
-      scoreValue -= (long) (6L + 7L * numDPOsSecondReminder / numDPOs)
-    }
-    if (numDPODirectReports > 0) {
-      scoreValue -= (long) (13L + 12L * numDPODirectReportsFailed / numDPODirectReports)
-
-      scoreValue -= (long) (6L + 6L * numDPODirectReportsSecondReminder / numDPODirectReports)
-    }
-    if (numDPOs == 0 && numDPODirectReports == 0) {
-      scoreValue = 0L
+    long scoreVal = 100L
+    if (getEnv("PV_DSAR_DPO_EMAIL","[").startsWith("[") ||
+        getEnv("PV_DSAR_DPO_NAME","[").startsWith("[") ){
+      scoreVal -= 100L
     }
 
-    scoresMap.put(PontusJ2ReportingFunctions.translate('Data Protection Officer'), scoreValue)
-    return scoreValue
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Data Protection Officer'), scoreVal)
+    return scoreVal
+
+
+//    long numDPOs = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer'))
+//            .count().next()
+//
+//
+//    long numDPODirectReports = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer')).inE('Reports_To')
+//            .count().next()
+//
+//
+//    long numDPOsFailed = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer'))
+//            .in().has('Event_Training_Status', eq('Failed'))
+//            .count().next()
+//
+//
+//    long numDPODirectReportsFailed = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer')).inE('Reports_To')
+//            .outV().in().has('Event_Training_Status', eq('Failed'))
+//            .count().next()
+//
+//
+//    long numDPOsSecondReminder = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer'))
+//            .in().has('Event_Training_Status', eq('Second  Reminder'))
+//            .count().next()
+//
+//
+//    long numDPODirectReportsSecondReminder = App.g.V().has('Person_Employee_Role', eq('Data Protection Officer')).inE('Reports_To')
+//            .outV().in().has('Event_Training_Status', eq('Second  Reminder'))
+//            .count().next()
+//
+//
+//    long scoreValue = 100L
+//    if (numDPOs > 0) {
+//      scoreValue -= (long) (25L + 25L * numDPOsFailed / numDPOs)
+//      scoreValue -= (long) (6L + 7L * numDPOsSecondReminder / numDPOs)
+//    }
+//    if (numDPODirectReports > 0) {
+//      scoreValue -= (long) (13L + 12L * numDPODirectReportsFailed / numDPODirectReports)
+//
+//      scoreValue -= (long) (6L + 6L * numDPODirectReportsSecondReminder / numDPODirectReports)
+//    }
+//    if (numDPOs == 0 && numDPODirectReports == 0) {
+//      scoreValue = 0L
+//    }
+//
+//    scoresMap.put(PontusJ2ReportingFunctions.translate('Data Protection Officer'), scoreValue)
+//    return scoreValue
 
   }
 
   static def getIndivRightsScores(def scoresMap) {
     long numItems = App.g.V()
-            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
             .count()
             .next()
 
 
     long numDeleteURL = App.g.V()
-            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-            .values('Object_Data_Procedures_Delete_URL')
+            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+            .values('Object_Data_Source_URI_Delete')
             .count()
             .next()
 
     long numUpdateURL = App.g.V()
-            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-            .values('Object_Data_Procedures_Delete_URL')
+            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+            .values('Object_Data_Source_URI_Update')
             .count()
             .next()
 
+    long numReadURL = App.g.V()
+            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+            .values('Object_Data_Source_URI_Read')
+            .count()
+            .next()
     long numWithoutDeleteUrl = (numItems - numDeleteURL)
     long numWithoutUpdateUrl = (numItems - numUpdateURL)
+    long numWithoutReadUrl = (numItems - numReadURL)
 
     long scoreValue = 100L
     if (numItems > 0) {
 
-      scoreValue -= (long) (50L * numWithoutDeleteUrl / numItems)
-      scoreValue -= (long) (50L * numWithoutUpdateUrl / numItems)
+      scoreValue -= (long) (33L * numWithoutDeleteUrl / numItems)
+      scoreValue -= (long) (33L * numWithoutUpdateUrl / numItems)
+      scoreValue -= (long) (34L * numWithoutReadUrl / numItems)
 
     } else {
       scoreValue = 0L
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Indiv Rights'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Indiv Rights - Num Without Delete URL'), numWithoutDeleteUrl)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Indiv Rights - Num Without Update URL'), numWithoutUpdateUrl)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Indiv Rights - Num Without Read URL'), numWithoutReadUrl)
     return scoreValue
 
   }
@@ -4450,116 +4501,174 @@ the end of the process.
       scoreValue = 0L
     }
 
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Info you hold - num data sources without data procedures'),
+            numRecordsWithoutDataProcedures)
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Info you hold'), scoreValue)
     return scoreValue
 
   }
 
+  static String getEnv(String envVar, String defVal){
+    String retVal = System.getenv(envVar);
+    if (retVal == null){
+      retVal = defVal;
+    }
+    return retVal
+  }
+  static String country = getEnv("PV_COUNTRY", "Brasil");
 
   static def getInternationalScores(def scoresMap) {
-    long numItems = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
+
+
+    long numProcessesOutOfCountry = App.g.V()
+            .has('Object_Data_Procedures_Country_Where_Stored', neq(country))
+            .count().next()
+
+    long scoreValue = 100L
+
+    if (numProcessesOutOfCountry == 0){
+      scoresMap.put(PontusJ2ReportingFunctions.translate('International'), scoreValue)
+      return scoreValue
+    }
+
+//    long numProcessesOutOfCountryWithoutConsent = App.g.V()
+//            .has('Object_Data_Procedures_Country_Where_Stored', neq(country)).as('out_of_country')
+//            .where( __.both().has('Object_Lawful_Basis_Description',PText.textContainsPrefix('CONSENT')).count().is(eq(0)))
+//            .count().next()
+
+    long numProcessesOutOfCountryWithoutConsent = App.g.V()
+            .has('Object_Data_Procedures_Country_Where_Stored', neq(country)).as('out_of_country')
+            .where(
+                    __.as('out_of_country')
+                            .out('Has_Lawful_Basis_On')
+                            .has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CON'))
+                            .count().is(eq(0L)))
             .count().next()
 
 
-    long numPrivNoticesWithoutRegulator =
-            App.g.V()
-                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
-                    .where(__.out().has('Metadata_Type_Person_Organisation', eq('Person_Organisation')).count().is(eq(0)))
-                    .count().next()
+    scoreValue -= (long) (100L * numProcessesOutOfCountryWithoutConsent / numProcessesOutOfCountry)
 
 
-    long scoreValue = 100L
-    if (numItems > 0) {
-
-      scoreValue -= (long) (100L * numPrivNoticesWithoutRegulator / numItems)
-
-
-    } else {
-      scoreValue = 0L
-    }
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('International'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country'), numProcessesOutOfCountry)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country without consent'), numProcessesOutOfCountryWithoutConsent)
     return scoreValue
 
   }
 
   static def getLawfulBasisScores(def scoresMap) {
 
-    long numEvents = App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
+
+    long numDataProcs = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .count().next()
 
+    if (numDataProcs == 0) {
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), 0L)
 
-    long numWithoutAnyLawfulBasis = App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
+      return 0L
+    }
+
+    long numWithoutAnyLawfulBasis = App.g.V()
+            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .where(
                     __.outE('Has_Lawful_Basis_On').count().is(eq(0))
             )
             .count().next()
 
-    long scoreValue = 100L
-    if (numEvents > 0) {
-      scoreValue -= (100L * numWithoutAnyLawfulBasis / numEvents)
+    long numWithLegInt = App.g.V()
+            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+            .where(
+                    __.out('Has_Lawful_Basis_On').as('lawfulBasis')
+                            .has('Object_Lawful_Basis_Description', PText.textContainsPrefix('LEG'))
+            )
+            .count().next()
 
-    } else {
-      scoreValue = 0L
+    long pcntWithLegInt = (numWithLegInt / numDataProcs * 100L)
+
+    long scoreValue = 100L
+
+    if (pcntWithLegInt > 50) {
+      scoreValue -= 20
     }
+    scoreValue -= (100L * numWithoutAnyLawfulBasis / numDataProcs)
+
+    scoreValue = java.lang.Math.max(0, scoreValue)
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Legitimate Interest'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Data Procs without Lawful Basis'), scoreValue)
     return scoreValue
 
   }
 
 
   static def getPrivacyImpactAssessmentScores(def scoresMap) {
-    long numItems = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
+
+
+    long numDataProcedures = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .count().next()
 
+    if (numDataProcedures == 0) {
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      return 0
+    }
 
-    long numPIAWithoutPrivNotices =
+    long numDataProceduresWithoutDataSources =
             App.g.V()
-                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
-                    .where(__.both().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).count().is(eq(0)))
+                    .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+                    .where(__.both().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+                            .count().is(eq(0)))
                     .count().next()
 
 
-    long numPIAWithPrivNoticesAndDataWithoutConsent =
+    long numDataSources = App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+            .count().next()
+
+    if (numDataSources == 0) {
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      return 0L
+    }
+
+    long numDataSourcesWithoutRisks =
             App.g.V()
-                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
-                    .where(
-                            __.both().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
-                                    .both().has('Event_Consent_Status', eq('No Consent '))
-                                    .count().is(gt(0))
-                    )
+                    .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+                    .where(__.out('Has_Risk').has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
+                            .count().is(eq(0L)))
                     .count().next()
 
 
-    long numPIAWithPrivNoticesAndDataWithPendingConsent =
+    long numRisks = App.g.V().has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
+            .count().next()
+
+    if (numRisks == 0) {
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+
+      return 0L
+    }
+
+    long numRisksWithoutMitigations =
             App.g.V()
-                    .has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
-                    .where(
-                            __.both().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice'))
-                                    .both().has('Event_Consent_Status', eq('Consent Pending'))
-                                    .count().is(gt(0))
-                    )
+                    .has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
+                    .where(__.in('Mitigates_Risk').has('Metadata_Type_Object_Risk_Mitigation_Data_Source', eq('Object_Risk_Mitigation_Data_Source'))
+                            .count().is(eq(0L)))
                     .count().next()
 
 
     long scoreValue = 100L
-    if (numItems > 0) {
 
-      scoreValue -= (numPIAWithoutPrivNotices > 0) ? (long) (15L + 10L * numPIAWithoutPrivNotices / numItems) : 0
-      scoreValue -= (numPIAWithPrivNoticesAndDataWithoutConsent > 0) ? (long) (40L + 5L * numPIAWithPrivNoticesAndDataWithoutConsent / numItems) : 0
-      scoreValue -= (numPIAWithPrivNoticesAndDataWithPendingConsent > 0) ? (long) (20L + 10L * numPIAWithPrivNoticesAndDataWithPendingConsent / numItems) : 0
+    scoreValue -= (numDataProceduresWithoutDataSources > 0) ? (long) (15L + 10L * numDataProceduresWithoutDataSources / numDataProcedures) : 0
+    scoreValue -= (numDataSourcesWithoutRisks > 0) ? (long) (40L + 5L * numDataSourcesWithoutRisks / numDataSources) : 0
+    scoreValue -= (numRisksWithoutMitigations > 0) ? (long) (20L + 10L * numRisksWithoutMitigations / numRisks) : 0
 
-
-      scoreValue = scoreValue < 0 ? 0 : scoreValue
-
-
-    } else {
-      scoreValue = 0L
-    }
+    scoreValue = scoreValue < 0 ? 0 : scoreValue
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), numDataSourcesWithoutRisks)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), numRisksWithoutMitigations)
+
     return scoreValue
 
   }
@@ -4578,15 +4687,15 @@ the end of the process.
                     .where(__.as('consentCount').is(eq(0)))
                     .count().next()
 
-    long numRecordsNoPIA =
-            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
-                    .match(
-                            __.as('privNotice').both().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment')).count().as('consentCount')
-
-                    )
-                    .select('consentCount')
-                    .where(__.as('consentCount').is(eq(0)))
-                    .count().next()
+//    long numRecordsNoPIA =
+//            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
+//                    .match(
+//                            __.as('privNotice').both().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment')).count().as('consentCount')
+//
+//                    )
+//                    .select('consentCount')
+//                    .where(__.as('consentCount').is(eq(0)))
+//                    .count().next()
 
     long numRecordsLessThan50PcntPositiveConsent =
             App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
@@ -4616,12 +4725,6 @@ the end of the process.
       }
 
 
-      long pcntNoPIA = (long) (100L * numRecordsNoPIA / numEvents)
-      if (pcntNoPIA > 10) {
-        scoreValue -= 50L
-      } else if (numRecordsNoPIA > 0) {
-        scoreValue -= (30L + 2L * pcntNoPIA)
-      }
 
       scoreValue -= (10L * numRecordsLessThan50PcntPositiveConsent / numEvents)
 
@@ -4630,6 +4733,8 @@ the end of the process.
       scoreValue = 0L
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Notices'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Notices - No Consent'), numRecordsNoConsent)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Notices - Num Records Less than 50pcnt Positive'), numRecordsLessThan50PcntPositiveConsent)
     return scoreValue
 
   }
@@ -4643,23 +4748,22 @@ the end of the process.
 
     long numEvents = App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).count().next()
 
-    long numRecordsOlder15Days =
+    long numRecordsOlder15Days = App.g.V()
+            .has('Event_Subject_Access_Request_Metadata_Create_Date', lte(fifteenDayThreshold)).as('DSAR')
+            .or(
+                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('Acknowledged')),
+                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('New'))
+            )
+            .count().next();
 
-            App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).as('sar')
-                    .where(
-                            __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(lte(fifteenDayThreshold))
-                    )
-
-                    .count().next()
-
-    long numRecordsOlder5Days =
-
-            App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).as('sar')
-                    .where(
-                            __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(lte(fiveDayThreshold))
-                    )
-
-                    .count().next()
+    long numRecordsOlder5Days = App.g.V()
+            .has('Event_Subject_Access_Request_Metadata_Start_Date', lte(fiveDayThreshold)).as('DSAR')
+            .or(
+                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('Acknowledged')),
+                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('New'))
+            )
+            .count().next()
+    // - numRecordsOlder15Days ;
 
 
     long scoreValue = 100L
@@ -4679,6 +4783,8 @@ the end of the process.
     } else {
       scoreValue = 100L
     }
+    scoresMap.put(PontusJ2ReportingFunctions.translate('DSAR - num records older 15 days'), numRecordsOlder15Days)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('DSAR - num records older 5 days'), numRecordsOlder5Days)
 
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Subject Access Requests'), scoreValue)
@@ -5326,7 +5432,7 @@ the end of the process.
                     sb.append("\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": $it2.value }".toString())
                   }
                 }
-      } catch (Exception e){
+      } catch (Exception e) {
         System.err("Ignoring error when processing Stats: ${e.getMessage()}; ${e.getCause()}")
         e.printStackTrace()
       }

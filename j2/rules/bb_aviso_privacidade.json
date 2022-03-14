@@ -35,6 +35,12 @@
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Privacy_Notice_Who_Is_Collecting",
+            "val": "${Quem_Coleta}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
