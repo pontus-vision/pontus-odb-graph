@@ -8,7 +8,8 @@
           {
             "name": "Person_Natural_Full_Name",
             "val": "${Nome?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Person_Natural_Customer_ID",

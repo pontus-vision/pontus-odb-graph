@@ -7,7 +7,8 @@ updatereq:
       props:
         - name: Person_Natural_Full_Name
           val: ${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Person_Natural_Customer_ID
           val: ${Tax_Number_1?.replaceAll('[^0-9]', '')?.length() == 11?Tax_Number_1?.replaceAll('[^0-9]', ''):Tax_Number_2?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
@@ -41,7 +42,8 @@ updatereq:
       props:
         - name: Person_Natural_Full_Name
           val: ${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Person_Natural_Customer_ID
           val: ${Vendor}
           mandatoryInSearch: True

@@ -1064,9 +1064,7 @@ rules:
     vertices:
       - label: Person_Natural
         props:
-          Full_Name:
-            val: "${firstName?.toUpperCase()?.trim()} ${lastName?.toUpperCase()?.trim()}"
-            excludeFromSearch: true
+          Full_Name: "${firstName?.toUpperCase()?.trim()} ${lastName?.toUpperCase()?.trim()}"
 
       - label: Object_Email_Address
         condition: "${email?.trim()?.length() > 0}"

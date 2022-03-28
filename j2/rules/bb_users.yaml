@@ -6,8 +6,7 @@ updatereq:
       props:
         - name: Person_Natural_Full_Name
           val: ${firstName?.toUpperCase()?.trim()} ${lastName?.toUpperCase()?.trim()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
     
     - label: Object_Email_Address
       condition: ${email?.trim()?.length() > 0}

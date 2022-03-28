@@ -4243,7 +4243,7 @@ the end of the process.
       scoreValue = 0
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Legal Actions'), scoreValue)
-
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Legal Actions - Num 6 months'), numLegalActions)
 
     return scoreValue
 
@@ -4296,7 +4296,7 @@ the end of the process.
                     .count().next()
 
 
-    // num Privacy Docs  - score
+    // num Meetings - score
     //        >=3        -  100
     //         2         -  50
     //        <2         -  0

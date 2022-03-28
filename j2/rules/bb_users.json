@@ -7,8 +7,7 @@
           {
             "name": "Person_Natural_Full_Name",
             "val": "${firstName?.toUpperCase()?.trim()} ${lastName?.toUpperCase()?.trim()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           }
         ]
       },

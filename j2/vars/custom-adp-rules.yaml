@@ -5,7 +5,9 @@ rules:
       - label: Person_Natural
         name: titular
         props:
-          Full_Name: "${Nome?.trim()?.toUpperCase()}"
+          Full_Name:
+            val: "${Nome?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 #          Type:
 #            val: "colaborador"
 #            excludeFromSearch: true
