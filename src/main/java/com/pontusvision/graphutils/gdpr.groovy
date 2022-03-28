@@ -4278,6 +4278,7 @@ the end of the process.
       scoreValue = 0
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Docs'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Docs - Num 12 months'), numPrivacyDocs)
 
 
     return scoreValue
