@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @TestClassOrder(AnnotationTestsOrderer.class)
-@TestClassesOrder(18)
+@TestClassesOrder(27)
 //@RunWith(JUnitPlatform.class)
 public class PVScoreTestsLawfulBasis extends AppTest {
   /**
