@@ -175,7 +175,9 @@ rules:
     vertices:
       - label: Person_Natural
         props:
-          Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+          Full_Name:
+            val: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Customer_ID: "${Tax_Number?.replaceAll('[^0-9]','')}"
           Title:
             val: "${Title}"
@@ -1522,7 +1524,9 @@ rules:
     vertices:
       - label: Person_Natural
         props:
-          Full_Name: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
+          Full_Name:
+            val: "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Customer_ID: "${Tax_Number?.replaceAll('[^0-9]','')}"
 #          Type:
 #            val: "Data Quality"

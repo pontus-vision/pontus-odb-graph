@@ -25,7 +25,9 @@ rules:
       - label: Person_Natural
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         props:
-          Full_Name: "${A1_NOME?.trim()?.toUpperCase()}"
+          Full_Name:
+            val: "${A1_NOME?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Clientes"
 #            excludeFromSearch: true
@@ -34,7 +36,9 @@ rules:
       - label: Person_Organisation
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
-          Name: "${A1_NOME?.trim()?.toUpperCase()}"
+          Name:
+            val: "${A1_NOME?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Clientes"
 #            excludeFromSearch: true
@@ -273,7 +277,9 @@ rules:
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: colaborador
         props:
-          Full_Name: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
+          Full_Name:
+            val: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Colaborador"
 #            excludeFromSearch: true
@@ -288,7 +294,9 @@ rules:
       - label: Person_Organisation
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
-          Name: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
+          Name:
+            val: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Colaborador"
 #            excludeFromSearch: true
@@ -607,7 +615,9 @@ rules:
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: fornecedor
         props:
-          Name: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
+          Name:
+            val: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Fornecedor"
 #            excludeFromSearch: true
@@ -619,7 +629,10 @@ rules:
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         name: rep
         props:
-          Full_Name: "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}"
+          Full_Name:
+            val: "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Customer_ID: "${A2_CGC.replaceAll('[^0-9]','')}"
           #          Type:
           #            val: "fornecedor"
           #            excludeFromSearch: false
