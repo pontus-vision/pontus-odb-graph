@@ -6,8 +6,7 @@ updatereq:
       props:
         - name: Person_Natural_Full_Name
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
         - name: Person_Natural_Customer_ID
           val: ${Tax_Number?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True

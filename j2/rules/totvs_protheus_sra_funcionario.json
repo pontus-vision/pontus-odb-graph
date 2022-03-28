@@ -9,8 +9,7 @@
           {
             "name": "Person_Natural_Full_Name",
             "val": "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Natural_Customer_ID",
@@ -32,8 +31,7 @@
           {
             "name": "Person_Organisation_Name",
             "val": "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Id",

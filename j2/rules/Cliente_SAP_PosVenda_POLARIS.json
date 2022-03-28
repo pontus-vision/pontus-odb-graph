@@ -8,8 +8,7 @@
           {
             "name": "Person_Natural_Full_Name",
             "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Natural_Customer_ID",
@@ -63,8 +62,7 @@
           {
             "name": "Person_Natural_Full_Name",
             "val": "${Name_1?.trim()?.toUpperCase()}${Name_2?.trim()?' ':''}${Name_2?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Natural_Customer_ID",
