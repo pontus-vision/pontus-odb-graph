@@ -3887,6 +3887,10 @@ the end of the process.
       long secondReminder = map.get('Second  Reminder') == null ? 0 : map.get('Second  Reminder')
       long firstReminder = map.get('Reminder Sent') == null ? 0 : map.get('Reminder Sent')
 
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - failedCount'), new Long(failedCount))
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - firstReminder'), new Long(firstReminder))
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - secondReminder'), new Long(secondReminder))
+
       scoreValue = 100L
       if (numEvents > 0) {
 
@@ -3933,6 +3937,8 @@ the end of the process.
     }
     long scoreRetVal = (long) (scoreValue2 + scoreValue) / 2L
     scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness'), scoreRetVal)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - numEvents'), scoreRetVal)
+
 
     return scoreRetVal
   }
@@ -4077,6 +4083,7 @@ the end of the process.
     scoreValue -= (100L* numDataProcsWithSensitiveDataWithoutConsent/numDataProcsWithSensitiveData)
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data'), scoreValue)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveData'), numDataProcsWithSensitiveData)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveDataWithConsent'), numDataProcsWithSensitiveDataWithConsent)
     return scoreValue
@@ -4124,6 +4131,8 @@ the end of the process.
 
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Consent'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Consent - numProcedures'), numProcedures)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Consent - numConsent'), numConsent)
 
 
     return scoreValue
@@ -4292,7 +4301,7 @@ the end of the process.
     def dateThreshold = new java.util.Date(lastTwelveMonths)
 
 
-    long numPrivacyDocs =
+    long numMeetings12months =
             App.g.V().has('Event_Meeting_Date'
                     , gt(dateThreshold)
             )
@@ -4306,12 +4315,13 @@ the end of the process.
 
 
     long scoreValue = 100L
-    if (numPrivacyDocs == 2) {
+    if (numMeetings12months == 2) {
       scoreValue -= 50L
-    } else if (numPrivacyDocs < 2) {
+    } else if (numMeetings12months < 2) {
       scoreValue = 0
     }
     scoresMap.put(PontusJ2ReportingFunctions.translate('Meetings'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Meetings - Num 12 months'), numMeetings12months)
 
 
     return scoreValue
