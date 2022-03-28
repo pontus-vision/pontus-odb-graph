@@ -4593,9 +4593,10 @@ the end of the process.
     long numWithLegInt = App.g.V()
             .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
             .where(
-                    __.out('Has_Lawful_Basis_On').as('lawfulBasis')
-                            .has('Object_Lawful_Basis_Description', PText.textContainsPrefix('LEG'))
-            )
+                    __.out('Has_Lawful_Basis_On').as('lawfulBasis').or(
+                            __.has('Object_Lawful_Basis_Description', PText.textContainsPrefix('LEGÍ'))
+                            , __.has('Object_Lawful_Basis_Description', PText.textContainsPrefix('LEGI'))
+                    ))
             .count().next()
 
     long pcntWithLegInt = (numWithLegInt / numDataProcs * 100L)
