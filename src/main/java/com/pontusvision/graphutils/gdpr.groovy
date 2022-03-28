@@ -4610,8 +4610,8 @@ the end of the process.
     scoreValue = java.lang.Math.max(0, scoreValue)
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), scoreValue)
-    scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Legitimate Interest'), scoreValue)
-    scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Data Procs without Lawful Basis'), scoreValue)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Legitimate Interest'), numWithLegInt)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Data Procs without Lawful Basis'), numWithoutAnyLawfulBasis)
     return scoreValue
 
   }
