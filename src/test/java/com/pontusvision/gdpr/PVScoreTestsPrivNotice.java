@@ -39,6 +39,10 @@ public class PVScoreTestsPrivNotice extends AppTest {
 
       jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
           "sharepoint_mapeamentos");
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json", "$.queryResp[*].fields",
+          "sharepoint_privacy_notice");
+      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json", "$.queryResp[*].fields",
+          "sharepoint_consents");
 
 
 
@@ -46,7 +50,7 @@ public class PVScoreTestsPrivNotice extends AppTest {
 
       long score = (long) gdpr.getPrivacyNoticesScores(retVals);
 
-      assertEquals(100L, score);
+      assertEquals(98L, score);
       
 
     } catch (Exception e) {
