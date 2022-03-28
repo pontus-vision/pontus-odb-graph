@@ -17,7 +17,7 @@ public class K8sMetrics {
   }
 
 
-  public static final String version = "v1beta1"; // gdpr.getEnv("PV_K8S_METRICS_VER","v1beta1");
+  public static final String version = "v1"; // gdpr.getEnv("PV_K8S_METRICS_VER","v1beta1");
 
   public static final Gson gson = new Gson();
   @GET
