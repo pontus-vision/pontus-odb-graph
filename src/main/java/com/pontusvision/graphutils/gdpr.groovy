@@ -4545,6 +4545,9 @@ the end of the process.
 
     if (numProcessesOutOfCountry == 0){
       scoresMap.put(PontusJ2ReportingFunctions.translate('International'), scoreValue)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country'), numProcessesOutOfCountry)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country without consent'), new Long(0L))
+
       return scoreValue
     }
 
