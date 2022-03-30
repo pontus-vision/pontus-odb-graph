@@ -3924,6 +3924,8 @@ the end of the process.
       Date today = new Date()
       long delta = today.getTime() - date.getTime()
 
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - delta days'), delta / (24L * 3600000L))
+
       scoreValue2 = 100L
 
       if (delta > gdpr.oneYear) {
@@ -4086,6 +4088,7 @@ the end of the process.
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data'), scoreValue)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveData'), numDataProcsWithSensitiveData)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveDataWithConsent'), numDataProcsWithSensitiveDataWithConsent)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - data procs without consent'), numDataProcsWithSensitiveData - numDataProcsWithSensitiveDataWithConsent)
     return scoreValue
 
   }
@@ -4876,11 +4879,12 @@ the end of the process.
               , "Event_Ingestion"
               , "Event_Subject_Access_Request"
               , "Event_Training"
+              , "Event_Meeting"
               , "Location_Address"
-              , "Object_AWS_Instance"
-              , "Object_AWS_Network_Interface"
-              , "Object_AWS_Security_Group"
-              , "Object_AWS_VPC"
+//              , "Object_AWS_Instance"
+//              , "Object_AWS_Network_Interface"
+//              , "Object_AWS_Security_Group"
+//              , "Object_AWS_VPC"
               , "Object_Awareness_Campaign"
               , "Object_Credential"
               , "Object_Data_Procedures"
@@ -4890,10 +4894,14 @@ the end of the process.
               , "Object_Identity_Card"
               , "Object_Insurance_Policy"
               , "Object_Lawful_Basis"
+              , "Object_Legal_Actions"
               , "Object_Contract"
               , "Object_Notification_Templates"
+              , "Object_Privacy_Docs"
               , "Object_Privacy_Impact_Assessment"
               , "Object_Privacy_Notice"
+              , "Object_Risk_Data_Source"
+              , "Object_Risk_Mitigation_Data_Source"
               , "Object_Sensitive_Data"
               , "Object_Health"
               , "Object_Biometric"
