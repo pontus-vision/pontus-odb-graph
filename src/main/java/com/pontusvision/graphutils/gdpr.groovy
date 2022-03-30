@@ -3924,6 +3924,8 @@ the end of the process.
       Date today = new Date()
       long delta = today.getTime() - date.getTime()
 
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - delta days'), delta / (24L * 3600000L))
+
       scoreValue2 = 100L
 
       if (delta > gdpr.oneYear) {
@@ -4086,6 +4088,7 @@ the end of the process.
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data'), scoreValue)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveData'), numDataProcsWithSensitiveData)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveDataWithConsent'), numDataProcsWithSensitiveDataWithConsent)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - data procs without consent'), numDataProcsWithSensitiveData - numDataProcsWithSensitiveDataWithConsent)
     return scoreValue
 
   }
