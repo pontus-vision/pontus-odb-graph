@@ -4065,6 +4065,11 @@ the end of the process.
 
     if (numDataProcsWithSensitiveData == 0){
       scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data'), scoreValue)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveData'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveDataWithConsent'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - data procs without consent'),  0L)
+
       return scoreValue
 
     }
@@ -4122,7 +4127,6 @@ the end of the process.
     //       100       - 100
     //        90       -  x
     //        75       -  30
-    //        66       -
     //        50       -  20
     //        25       -  10
     //  score = 0.4 * percentConsent
