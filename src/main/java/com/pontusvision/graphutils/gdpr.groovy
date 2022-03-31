@@ -4065,6 +4065,11 @@ the end of the process.
 
     if (numDataProcsWithSensitiveData == 0){
       scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data'), scoreValue)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveData'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveDataWithConsent'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - data procs without consent'),  0L)
+
       return scoreValue
 
     }
@@ -4122,7 +4127,6 @@ the end of the process.
     //       100       - 100
     //        90       -  x
     //        75       -  30
-    //        66       -
     //        50       -  20
     //        25       -  10
     //  score = 0.4 * percentConsent
@@ -4585,6 +4589,8 @@ the end of the process.
 
     if (numDataProcs == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Legitimate Interest'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Data Procs without Lawful Basis'), 0L)
 
       return 0L
     }
@@ -4632,6 +4638,10 @@ the end of the process.
 
     if (numDataProcedures == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
+
       return 0
     }
 
@@ -4648,6 +4658,10 @@ the end of the process.
 
     if (numDataSources == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
+
       return 0L
     }
 
@@ -4664,6 +4678,9 @@ the end of the process.
 
     if (numRisks == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), numDataSourcesWithoutRisks)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
 
       return 0L
     }
