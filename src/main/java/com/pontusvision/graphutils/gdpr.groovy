@@ -3924,7 +3924,7 @@ the end of the process.
       Date today = new Date()
       long delta = today.getTime() - date.getTime()
 
-      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - delta days'), delta / (24L * 3600000L))
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - delta days'), (long)(delta / (24L * 3600000L)))
 
       scoreValue2 = 100L
 
