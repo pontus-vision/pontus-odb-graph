@@ -4589,6 +4589,8 @@ the end of the process.
 
     if (numDataProcs == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Legitimate Interest'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Data Procs without Lawful Basis'), 0L)
 
       return 0L
     }
@@ -4636,6 +4638,10 @@ the end of the process.
 
     if (numDataProcedures == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
+
       return 0
     }
 
@@ -4652,6 +4658,10 @@ the end of the process.
 
     if (numDataSources == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
+
       return 0L
     }
 
@@ -4668,6 +4678,9 @@ the end of the process.
 
     if (numRisks == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
 
       return 0L
     }
