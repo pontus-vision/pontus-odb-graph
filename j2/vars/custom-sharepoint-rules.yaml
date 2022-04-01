@@ -799,6 +799,12 @@ rules:
           Description:
             val: "${field_Description}"
             excludeFromSearch: true
+          Is_Implemented:
+            val: "${field_Implemented}"
+            excludeFromSearch: true
+          Is_Approved:
+            val: "${field_Approved}"
+            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:

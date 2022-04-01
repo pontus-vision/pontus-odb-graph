@@ -866,6 +866,8 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
         - name: Intrusion_On_Privacy
+        - name: Is_Approved
+        - name: Is_Implemented
         - name: Probability_Risk_Of_Reputational_Damage
         - name: Probability_Risk_To_Corporation
         - name: Probability_Risk_To_Individuals

@@ -1830,6 +1830,12 @@ propertyKeys:
   - name: Object_Risk_Mitigation_Data_Source_Intrusion_On_Privacy
     dataType: String
     cardinality: SINGLE
+  - name: Object_Risk_Mitigation_Data_Source_Is_Approved
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Risk_Mitigation_Data_Source_Is_Implemented
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Risk_Mitigation_Data_Source_Probability_Risk_Of_Reputational_Damage
     dataType: String
     cardinality: SINGLE
@@ -3845,6 +3851,8 @@ vertexIndexes:
       - Object_Risk_Mitigation_Data_Source_Form_Submission_Id
       - Object_Risk_Mitigation_Data_Source_Form_Submission_Owner_Id
       - Object_Risk_Mitigation_Data_Source_Intrusion_On_Privacy
+      - Object_Risk_Mitigation_Data_Source_Is_Approved
+      - Object_Risk_Mitigation_Data_Source_Is_Implemented
       - Object_Risk_Mitigation_Data_Source_Probability_Risk_Of_Reputational_Damage
       - Object_Risk_Mitigation_Data_Source_Probability_Risk_To_Corporation
       - Object_Risk_Mitigation_Data_Source_Probability_Risk_To_Individuals

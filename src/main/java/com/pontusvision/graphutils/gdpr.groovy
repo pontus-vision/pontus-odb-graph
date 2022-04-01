@@ -3925,6 +3925,7 @@ the end of the process.
       long delta = today.getTime() - date.getTime()
 
       scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - delta days'), (long)(delta / (24L * 3600000L)))
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - numEvents'), numEvents)
 
       scoreValue2 = 100L
 
@@ -3939,7 +3940,6 @@ the end of the process.
     }
     long scoreRetVal = (long) (scoreValue2 + scoreValue) / 2L
     scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness'), scoreRetVal)
-    scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - numEvents'), scoreRetVal)
 
 
     return scoreRetVal
@@ -4685,6 +4685,10 @@ the end of the process.
       return 0L
     }
 
+    long numMitigations = App.g.V().has('Metadata_Type_Object_Risk_Mitigation_Data_Source',
+            eq('Object_Risk_Mitigation_Data_Source'))
+            .count().next()
+
     long numRisksWithoutMitigations =
             App.g.V()
                     .has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
@@ -4692,8 +4696,25 @@ the end of the process.
                             .count().is(eq(0L)))
                     .count().next()
 
+    long numMitigationsNotApproved =
+            App.g.V()
+                    .has('Object_Risk_Mitigation_Data_Source_Approved', eq("false"))
+                    .count().next()
+
+    long numMitigationsNotImplemented =
+            App.g.V()
+                    .has('Object_Risk_Mitigation_Data_Source_Implemented', eq("false"))
+                    .count().next()
 
     long scoreValue = 100L
+
+    if (numMitigationsNotApproved > 0) {
+      scoreValue -= 10L + 10L * numMitigationsNotApproved / numMitigations
+    }
+
+    if (numMitigationsNotImplemented > 0) {
+      scoreValue -= 10L + 10L * numMitigationsNotImplemented / numMitigations
+    }
 
     scoreValue -= (numDataProceduresWithoutDataSources > 0) ? (long) (15L + 10L * numDataProceduresWithoutDataSources / numDataProcedures) : 0
     scoreValue -= (numDataSourcesWithoutRisks > 0) ? (long) (40L + 5L * numDataSourcesWithoutRisks / numDataSources) : 0
@@ -4705,6 +4726,8 @@ the end of the process.
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), numDataSourcesWithoutRisks)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), numRisksWithoutMitigations)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Approved'), numMitigationsNotApproved)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Implemented'), numMitigationsNotImplemented)
 
     return scoreValue
 
