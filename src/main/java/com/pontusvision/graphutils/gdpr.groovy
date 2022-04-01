@@ -3924,6 +3924,8 @@ the end of the process.
       Date today = new Date()
       long delta = today.getTime() - date.getTime()
 
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - delta days'), (long)(delta / (24L * 3600000L)))
+
       scoreValue2 = 100L
 
       if (delta > gdpr.oneYear) {
@@ -4063,6 +4065,11 @@ the end of the process.
 
     if (numDataProcsWithSensitiveData == 0){
       scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data'), scoreValue)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveData'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveDataWithConsent'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - data procs without consent'),  0L)
+
       return scoreValue
 
     }
@@ -4086,6 +4093,7 @@ the end of the process.
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data'), scoreValue)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveData'), numDataProcsWithSensitiveData)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveDataWithConsent'), numDataProcsWithSensitiveDataWithConsent)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - data procs without consent'), numDataProcsWithSensitiveData - numDataProcsWithSensitiveDataWithConsent)
     return scoreValue
 
   }
@@ -4119,7 +4127,6 @@ the end of the process.
     //       100       - 100
     //        90       -  x
     //        75       -  30
-    //        66       -
     //        50       -  20
     //        25       -  10
     //  score = 0.4 * percentConsent
@@ -4542,6 +4549,9 @@ the end of the process.
 
     if (numProcessesOutOfCountry == 0){
       scoresMap.put(PontusJ2ReportingFunctions.translate('International'), scoreValue)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country'), numProcessesOutOfCountry)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country without consent'), new Long(0L))
+
       return scoreValue
     }
 
@@ -4579,6 +4589,8 @@ the end of the process.
 
     if (numDataProcs == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Legitimate Interest'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis - Num Data Procs without Lawful Basis'), 0L)
 
       return 0L
     }
@@ -4626,6 +4638,10 @@ the end of the process.
 
     if (numDataProcedures == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
+
       return 0
     }
 
@@ -4642,6 +4658,10 @@ the end of the process.
 
     if (numDataSources == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
+
       return 0L
     }
 
@@ -4658,6 +4678,9 @@ the end of the process.
 
     if (numRisks == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), numDataSourcesWithoutRisks)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
 
       return 0L
     }
@@ -4669,26 +4692,8 @@ the end of the process.
                             .count().is(eq(0L)))
                     .count().next()
 
-    long numRiskMitigationsNotApproved =
-            App.g.V()
-                    .has('Object_Risk_Mitigation_Data_Source_Approved', eq("false"))
-                    .count().next()
-
-    long numRiskMitigationsNotImplemented =
-            App.g.V()
-                    .has('Object_Risk_Mitigation_Data_Source_Implemented', eq("false"))
-                    .count().next()
-
 
     long scoreValue = 100L
-
-    if (numRiskMitigationsNotApproved > 0) {
-      scoreValue -= 5L
-    }
-
-    if (numRiskMitigationsNotImplemented > 0) {
-      scoreValue -= 5L
-    }
 
     scoreValue -= (numDataProceduresWithoutDataSources > 0) ? (long) (15L + 10L * numDataProceduresWithoutDataSources / numDataProcedures) : 0
     scoreValue -= (numDataSourcesWithoutRisks > 0) ? (long) (40L + 5L * numDataSourcesWithoutRisks / numDataSources) : 0
@@ -4700,8 +4705,6 @@ the end of the process.
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), numDataSourcesWithoutRisks)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), numRisksWithoutMitigations)
-    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Approved'), numRiskMitigationsNotApproved)
-    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Implemented'), numRiskMitigationsNotImplemented)
 
     return scoreValue
 
@@ -4896,11 +4899,12 @@ the end of the process.
               , "Event_Ingestion"
               , "Event_Subject_Access_Request"
               , "Event_Training"
+              , "Event_Meeting"
               , "Location_Address"
-              , "Object_AWS_Instance"
-              , "Object_AWS_Network_Interface"
-              , "Object_AWS_Security_Group"
-              , "Object_AWS_VPC"
+//              , "Object_AWS_Instance"
+//              , "Object_AWS_Network_Interface"
+//              , "Object_AWS_Security_Group"
+//              , "Object_AWS_VPC"
               , "Object_Awareness_Campaign"
               , "Object_Credential"
               , "Object_Data_Procedures"
@@ -4910,10 +4914,14 @@ the end of the process.
               , "Object_Identity_Card"
               , "Object_Insurance_Policy"
               , "Object_Lawful_Basis"
+              , "Object_Legal_Actions"
               , "Object_Contract"
               , "Object_Notification_Templates"
+              , "Object_Privacy_Docs"
               , "Object_Privacy_Impact_Assessment"
               , "Object_Privacy_Notice"
+              , "Object_Risk_Data_Source"
+              , "Object_Risk_Mitigation_Data_Source"
               , "Object_Sensitive_Data"
               , "Object_Health"
               , "Object_Biometric"
