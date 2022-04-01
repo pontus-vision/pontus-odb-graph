@@ -4692,8 +4692,25 @@ the end of the process.
                             .count().is(eq(0L)))
                     .count().next()
 
+    long numRiskMitigationsNotApproved =
+            App.g.V()
+                    .has('Object_Risk_Mitigation_Data_Source_Approved', eq("false"))
+                    .count().next()
+
+    long numRiskMitigationsNotImplemented =
+            App.g.V()
+                    .has('Object_Risk_Mitigation_Data_Source_Implemented', eq("false"))
+                    .count().next()
 
     long scoreValue = 100L
+
+    if (numRiskMitigationsNotApproved > 0) {
+      scoreValue -= (long) 10L * numRiskMitigationsNotApproved
+    }
+
+    if (numRiskMitigationsNotImplemented > 0) {
+      scoreValue -= (long) 10L * numRiskMitigationsNotImplemented
+    }
 
     scoreValue -= (numDataProceduresWithoutDataSources > 0) ? (long) (15L + 10L * numDataProceduresWithoutDataSources / numDataProcedures) : 0
     scoreValue -= (numDataSourcesWithoutRisks > 0) ? (long) (40L + 5L * numDataSourcesWithoutRisks / numDataSources) : 0
@@ -4705,6 +4722,8 @@ the end of the process.
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), numDataSourcesWithoutRisks)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), numRisksWithoutMitigations)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Approved'), numRiskMitigationsNotApproved)
+    scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Implemented'), numRiskMitigationsNotImplemented)
 
     return scoreValue
 
