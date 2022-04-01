@@ -22,6 +22,14 @@ updatereq:
           val: ${field_Description}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Object_Risk_Mitigation_Data_Source_Is_Implemented
+          val: ${field_Implemented}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Risk_Mitigation_Data_Source_Is_Approved
+          val: ${field_Approved}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event_Ingestion
       props:
