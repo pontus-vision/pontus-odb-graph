@@ -4685,6 +4685,10 @@ the end of the process.
       return 0L
     }
 
+    long numMitigations = App.g.V().has('Metadata_Type_Object_Risk_Mitigation_Data_Source',
+            eq('Object_Risk_Mitigation_Data_Source'))
+            .count().next()
+
     long numRisksWithoutMitigations =
             App.g.V()
                     .has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
@@ -4705,11 +4709,11 @@ the end of the process.
     long scoreValue = 100L
 
     if (numMitigationsNotApproved > 0) {
-      scoreValue -= 10L + 10L * numMitigationsNotApproved / numRisks
+      scoreValue -= 10L + 10L * numMitigationsNotApproved / numMitigations
     }
 
     if (numMitigationsNotImplemented > 0) {
-      scoreValue -= 10L + 10L * numMitigationsNotImplemented / numRisks
+      scoreValue -= 10L + 10L * numMitigationsNotImplemented / numMitigations
     }
 
     scoreValue -= (numDataProceduresWithoutDataSources > 0) ? (long) (15L + 10L * numDataProceduresWithoutDataSources / numDataProcedures) : 0
