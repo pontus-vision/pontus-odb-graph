@@ -1,21 +1,12 @@
 package com.pontusvision.gdpr;
 
-import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
-import com.pontusvision.gdpr.report.ReportTemplateRenderResponse;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
 import com.pontusvision.graphutils.gdpr;
-import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,7 +41,7 @@ public class PVScoreTests extends AppTest {
       // periodically; otherwise, the tests will start failing.
 
 
-      jsonTestUtil("pv-extract-sharepoint-treinamentos2.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-treinamentos2.json", "$.queryResp[*].fields",
               "sharepoint_treinamentos");
 
 
@@ -74,7 +65,7 @@ public class PVScoreTests extends AppTest {
   public void test00002DataBreachesScores() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json", "$.queryResp[*].fields",
               "sharepoint_data_breaches");
 
 
@@ -93,5 +84,6 @@ public class PVScoreTests extends AppTest {
 
 
   }
-  
+
+
 }

@@ -115,6 +115,7 @@ try {
 //    OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
 //    orient.create("test", ODatabaseType.PLOCAL);
 
+
     System.out.println('\n\n\n\nABOUT TO LOAD conf/gdpr-schema.json\n\n\n\n\n')
     String retVal = ODBSchemaManager.loadSchema(graph, '/orientdb/conf/gdpr-schema.json', 'conf/gdpr-schema.json')
 

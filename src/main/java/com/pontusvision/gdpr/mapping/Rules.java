@@ -1,10 +1,21 @@
 package com.pontusvision.gdpr.mapping;
 
+import com.pontusvision.gdpr.App;
+
 public class Rules {
 
   UpdateReq updatereq;
   Double percentageThreshold;
   Integer maxHitsPerType;
+  Boolean useSlim = App.useSlim;
+
+  public Boolean getUseSlim() {
+    return this.useSlim;
+  }
+
+  public void setUseSlim(Boolean useSlim) {
+    this.useSlim = useSlim;
+  }
 
   public Double getPercentageThreshold() {
     return percentageThreshold;

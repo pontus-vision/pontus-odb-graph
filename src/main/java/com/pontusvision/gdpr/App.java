@@ -41,6 +41,8 @@ public class App // implements RequestStreamHandler
   public static Settings settings;
   public static OServer oServer;
   public static GremlinExecutor executor;
+  public static Boolean useSlim = Boolean.parseBoolean(System.getProperty("PV_TRACK_USE_SLIM","true"));
+
 
   public static void main(String[] args) {
     App.mainHandler(args);

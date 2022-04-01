@@ -46,7 +46,7 @@ public class Vertex {
   }
 
 
-  //  @ApiModelProperty(example = "Person.Natural", required = true, value = "POLE object name")
+  //  @ApiModelProperty(example = "Person_Natural", required = true, value = "POLE object name")
   @JsonProperty("label")
   @NotNull
 

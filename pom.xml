@@ -18,7 +18,7 @@
 
         <jetty-version>9.4.39.v20210325</jetty-version>
         <jersey-version>2.33</jersey-version>
-        <tinkerpop-version>3.4.6</tinkerpop-version>
+        <tinkerpop-version>3.4.7</tinkerpop-version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson2.version>2.13.0</jackson2.version>
         <hadoop2.version>2.7.2</hadoop2.version>
@@ -38,10 +38,10 @@
         <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
         <pontus-natty.version>100.15</pontus-natty.version>
         <netty-version>4.1.70.Final</netty-version>
-        <orientdb-version>3.1.12</orientdb-version>
+        <orientdb-version>3.2.4</orientdb-version>
         <!--guava-version>30.1.1-jre</guava-version-->
         <guava-version>25.0-jre</guava-version>
-        <aws-lambda-version>1.6</aws-lambda-version>
+        <aws-lambda-version>1.6.1</aws-lambda-version>
         <apache-commons-configuration.version>2.7</apache-commons-configuration.version>
         <apache-commons-csv.version>1.8</apache-commons-csv.version>
         <!--<apache.directory-api-version>
@@ -85,6 +85,7 @@
             <artifactId>aws-serverless-java-container-jersey</artifactId>
             <version>${aws-lambda-version}</version>
             <exclusions>
+                <exclusion><groupId>commons-io</groupId><artifactId>commons-io</artifactId></exclusion>
                 <exclusion>
                     <groupId>com.fasterxml.jackson.core</groupId>
                     <artifactId>jackson-core</artifactId>
@@ -136,6 +137,9 @@
             <groupId>com.orientechnologies</groupId>
             <artifactId>orientdb-client</artifactId>
             <version>${orientdb-version}</version>
+            <exclusions>
+                <exclusion><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-core</artifactId></exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.orientechnologies</groupId>

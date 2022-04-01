@@ -1,30 +1,30 @@
 propertyKeys:
-- name: Metadata.Type.Object.Sensitive_Data
+- name: Metadata_Type_Object_Sensitive_Data
   dataType: String
   cardinality: SINGLE
-- name: Object.Sensitive_Data.Ethnicity
+- name: Object_Sensitive_Data_Ethnicity
   dataType: String
   cardinality: SINGLE
-- name: Object.Sensitive_Data.Religion
+- name: Object_Sensitive_Data_Religion
   dataType: String
   cardinality: SINGLE
-- name: Object.Sensitive_Data.Political_View
+- name: Object_Sensitive_Data_Political_View
   dataType: String
   cardinality: SINGLE
-- name: Object.Sensitive_Data.Union_Membership
+- name: Object_Sensitive_Data_Union_Membership
   dataType: String
   cardinality: SINGLE
-- name: Object.Sensitive_Data.Club_Membership
+- name: Object_Sensitive_Data_Club_Membership
   dataType: String
   cardinality: SINGLE
-- name: Object.Sensitive_Data.Church_Membership
+- name: Object_Sensitive_Data_Church_Membership
   dataType: String
   cardinality: SINGLE
-- name: Object.Sensitive_Data.Sexual_Orientation
+- name: Object_Sensitive_Data_Sexual_Orientation
   dataType: String
   cardinality: SINGLE
 vertexLabels:
-- name: Object.Sensitive_Data
+- name: Object_Sensitive_Data
   partition: False
   useStatic: False
 edgeLabels:
@@ -41,17 +41,17 @@ edgeLabels:
   multiplicity: MULTI
   unidirected: False
 vertexIndexes:
-- name: "Object.Sensitive_Data.MixedIdx"
+- name: "Object_Sensitive_Data_MixedIdx"
   composite: false
   unique: false
   indexOnly: null
   mixedIndex: "search"
   propertyKeys:
-  - Metadata.Type.Object.Sensitive_Data
-  - Object.Sensitive_Data.Ethnicity
-  - Object.Sensitive_Data.Religion
-  - Object.Sensitive_Data.Political_View
-  - Object.Sensitive_Data.Union_Membership
-  - Object.Sensitive_Data.Club_Membership
-  - Object.Sensitive_Data.Church_Membership
-  - Object.Sensitive_Data.Sexual_Orientation
+  - Metadata_Type_Object_Sensitive_Data
+  - Object_Sensitive_Data_Ethnicity
+  - Object_Sensitive_Data_Religion
+  - Object_Sensitive_Data_Political_View
+  - Object_Sensitive_Data_Union_Membership
+  - Object_Sensitive_Data_Club_Membership
+  - Object_Sensitive_Data_Church_Membership
+  - Object_Sensitive_Data_Sexual_Orientation

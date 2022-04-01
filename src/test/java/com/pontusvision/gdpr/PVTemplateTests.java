@@ -13,14 +13,9 @@ import org.junit.jupiter.api.TestMethodOrder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-import com.pontusvision.graphutils.PontusJ2ReportingFunctions;
+import static org.junit.jupiter.api.Assertions.*;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -47,14 +42,14 @@ public class PVTemplateTests extends AppTest {
   public void test00001TemplateUpsert() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
               "sharepoint_data_sources");
 
       Resource res = new Resource();
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST");
-      req.setTemplatePOLEType("Object.Data_Source");
+      req.setTemplatePOLEType("Object_Data_Source");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString(" {% set var1=1 %} {{ var1 }} {{ context.Object_Data_Source_Name }}"
                       .getBytes()));
@@ -63,7 +58,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -76,7 +71,7 @@ public class PVTemplateTests extends AppTest {
       String expectedStartOfReport = "  1 ";
       assertEquals(expectedStartOfReport, report.substring(0, expectedStartOfReport.length()));
 
-      String dataSourceName = App.g.V(contextId).values("Object.Data_Source.Name").next().toString();
+      String dataSourceName = App.g.V(contextId).values("Object_Data_Source_Name").next().toString();
 
       assertEquals(expectedStartOfReport + dataSourceName, report);
 
@@ -96,23 +91,23 @@ public class PVTemplateTests extends AppTest {
   public void test00002TemplateRisksRender() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
               "sharepoint_fontes_de_dados");
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
               "sharepoint_mapeamentos");
 
-      jsonTestUtil("pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
               "sharepoint_risk_mitigation");
 
-      jsonTestUtil("pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
               "sharepoint_risk");
 
       Resource res = new Resource();
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST");
-      req.setTemplatePOLEType("Object.Data_Procedures");
+      req.setTemplatePOLEType("Object_Data_Procedures");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set risks=pv:getRisksForDataProcess(context.id) %}" +
@@ -153,7 +148,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("1"))
+      String contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("1"))
               .id().next().toString();
 
 //      MockedStatic<PontusJ2ReportingFunctions> mocked = mockStatic(PontusJ2ReportingFunctions.class);
@@ -193,14 +188,14 @@ public class PVTemplateTests extends AppTest {
   public void test00003TemplateGetPoliciesText() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
               "sharepoint_policies");
 
       Resource res = new Resource();
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setTemplatePOLEType("Object_Data_Sources");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString("{{ pv:getPolicyText('abc') }}"
                       .getBytes()));
@@ -209,7 +204,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -238,29 +233,29 @@ public class PVTemplateTests extends AppTest {
   public void test00004TemplateLiaRender() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
               "sharepoint_fontes_de_dados");
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
               "sharepoint_mapeamentos");
 
-      jsonTestUtil("pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
               "sharepoint_risk_mitigation");
 
-      jsonTestUtil("pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
               "sharepoint_risk");
 
       Resource res = new Resource();
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST1234");
-      req.setTemplatePOLEType("Object.Data_Procedures");
+      req.setTemplatePOLEType("Object_Data_Procedures");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
                               "{% if lia %}" +
 
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Personal_Data_Treatment | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }}" +
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Is_Essential | default('Favor Preencher o campo <b>Esse tratamento de dados pessoais é indispensável?</b> no SharePoint') }}" +
                               "{% endif %}")
 
                       .getBytes()));
@@ -269,7 +264,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("1"))
+      String contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("1"))
               .id().next().toString();
 
 //      MockedStatic<PontusJ2ReportingFunctions> mocked = mockStatic(PontusJ2ReportingFunctions.class);
@@ -302,7 +297,7 @@ public class PVTemplateTests extends AppTest {
 
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("6"))
+      contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("6"))
               .id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
@@ -318,14 +313,14 @@ public class PVTemplateTests extends AppTest {
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
                               "{% if lia %}" +
 
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}" +
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Is_Required | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}" +
                               "{% endif %}")
 
                       .getBytes()));
 
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("4"))
+      contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
               .id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
@@ -336,7 +331,7 @@ public class PVTemplateTests extends AppTest {
 
 
       // test a non-existent  LIA for entry number 5 with an empty reply (same template as before)
-      contextId = App.g.V().has("Object.Data_Procedures.ID", P.eq("5"))
+      contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("5"))
               .id().next().toString();
 
       renderReq.setRefEntryId(contextId);
@@ -350,7 +345,7 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Is_Required | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
 
                       .getBytes()));
 
@@ -369,7 +364,7 @@ public class PVTemplateTests extends AppTest {
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
-                              "{{ lia[20].Object_Legitimate_Interests_Assessment_Processing_Purpose | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
+                              "{{ lia[20].Object_Legitimate_Interests_Assessment_Is_Required | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}")
 
                       .getBytes()));
 
@@ -397,14 +392,14 @@ public class PVTemplateTests extends AppTest {
   public void test00005TemplateGetPoliciesTextInvalid() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
               "sharepoint_policies");
 
       Resource res = new Resource();
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setTemplatePOLEType("Object_Data_Sources");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString("{{ pv:getPolicyText('INVALID')|default ('BLAH') }}"
                       .getBytes()));
@@ -413,7 +408,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -440,14 +435,14 @@ public class PVTemplateTests extends AppTest {
   public void test00006TemplateGetPoliciesTextInvalidTemplate() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-policies.json", "$.queryResp[*].fields",
               "sharepoint_policies");
 
       Resource res = new Resource();
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setTemplatePOLEType("Object_Data_Sources");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString(("{{ pv:getPolicyText(null)|default ('BLAH') }}" +
                       "{{ pv:INVALIDFUNCTION() }}")
@@ -457,7 +452,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -484,12 +479,18 @@ public class PVTemplateTests extends AppTest {
   public void test00007TemplateGetDsarRopaByLawfulBasis() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
-              "$.queryResp[*].fields", "sharepoint_mapeamentos");
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
+          "$.queryResp[*].fields", "sharepoint_mapeamentos");
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-ropa.json",
+          "$.queryResp[*].fields", "sharepoint_ropa");
 
-      jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
 
-//      def dsarId= App.executor.eval("App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).id().next()").get().toString()
+      jsonTestUtil("budibase/bb-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
+
+      jsonTestUtil("budibase/bb-solicitacoes.json", "$.rows", "bb_controle_de_solicitacoes");
+
+//      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
 //
 //      def lawfulBasis  = "LEGÍTIMO INTERESSE DO CONTROLADOR"
 
@@ -497,7 +498,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Event.Subject_Access_Request");
+      req.setTemplatePOLEType("Event_Subject_Access_Request");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "{% set ropaContrato = pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}" +
@@ -521,7 +522,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Event.Subject_Access_Request.Form_Id", P.eq("2"))
+      String contextId = App.g.V().has("Event_Subject_Access_Request_Form_Id", P.eq("2"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -532,8 +533,16 @@ public class PVTemplateTests extends AppTest {
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
       String expectedReport = "Gestão de Rede de Distribuidores-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
-              "Gestão de ferramenta gerencial (PowerBI)-Nome, CPF, RG, Endereço, E-mail, Ocupação\n";
-      assertEquals(expectedReport, report, "Expecting ROPA to have a Lawful Basis");
+              "Gerenciamento de prestadores de serviços externos-CPF, Nome, RG, Ocupação, E-mail, Endereço\n" +
+              "Gestão de ferramenta gerencial (PowerBI)-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
+              "Gestão de acesso (recepção)-RG, Nome\n" +
+              "Cadastramento de Clientes PJ-E-mail Corporativo, Nome da Empresa, Telefone, Dados Bancários\n" +
+              "Gestão de Currículos-Endereço, Nome Completo, Data de Nascimento, Estado Civil, E-mail\n" +
+              "Gerenciamento do E-mail Marketing - clientes-Endereço, Nome, Telefone, Ocupação, E-mail\n" +
+              "123-Nome do Usuário, E-mail Corporativo\n" +
+              "Homologação de Fornecedores-Nome, CPF, RG, Telefone, Endereço, E-mail, Responsáveis Legais da Empresa Fornecedora\n" +
+              "Gestão de Leads - Site-E-mail, Nome Completo, Telefone, Ocupação, Estado Civil\n";
+      assertEquals(sortLines(expectedReport), sortLines(report), "Expecting ROPA to have a Lawful Basis");
 
 
     } catch (Exception e) {
@@ -550,24 +559,24 @@ public class PVTemplateTests extends AppTest {
   public void test00008TemplateDataBreachReport() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
               "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
-      jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
               "sharepoint_data_sources");
 
-      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json",
               "$.queryResp[*].fields",
               "sharepoint_fontes_de_dados");
 
-      jsonTestUtil("totvs1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+      jsonTestUtil("totvs/totvs-sa1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
 
-      jsonTestUtil("totvs1.json", "$.objs", "totvs_protheus_sa1_clientes");
+      jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
 
-      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
               "$.queryResp[*].fields", "sharepoint_data_breaches");
 
-//      def dsarId= App.executor.eval("App.g.V().has('Metadata.Type.Event.Subject_Access_Request', eq('Event.Subject_Access_Request')).id().next()").get().toString()
+//      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
 //
 //      def lawfulBasis  = "LEGÍTIMO INTERESSE DO CONTROLADOR"
 
@@ -575,7 +584,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Event.Data_Breach");
+      req.setTemplatePOLEType("Event_Data_Breach");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "People: {{ impacted_people | length }}\n" +
@@ -588,7 +597,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5"))
+      String contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("5"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -606,7 +615,7 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("5")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
@@ -620,7 +629,7 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("5")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
@@ -634,13 +643,13 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("4")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("4")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
       expectedReport = "Titulares dos dados NÃO foram notificados desse evento.";
-//    Event.Data_Breach id 4 has Natural_Person_Notified = "Não" ... therefore jinjava condition is always false !!
+//    Event_Data_Breach id 4 has Natural_Person_Notified = "Não" ... therefore jinjava condition is always false !!
       assertEquals(expectedReport, report, "Data Breache's Natural Person Notification Status");
 
 
@@ -657,7 +666,7 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("1")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("1")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
@@ -687,7 +696,7 @@ public class PVTemplateTests extends AppTest {
                       .getBytes()));
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Event.Data_Breach.Form_Id", P.eq("5")).id().next().toString();
+      contextId = App.g.V().has("Event_Data_Breach_Form_Id", P.eq("5")).id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
@@ -720,10 +729,10 @@ public class PVTemplateTests extends AppTest {
   public void test00009BrazilianDate() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-mapeamento-de-processo.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
               "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
-      jsonTestUtil("pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
 
 //      Object date = PVConvMixin.asType("Sat Jan 08 08:00:00 UTC 2022", Date.class);
 //
@@ -736,7 +745,7 @@ public class PVTemplateTests extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST2");
-      req.setTemplatePOLEType("Event.Subject_Access_Request");
+      req.setTemplatePOLEType("Event_Subject_Access_Request");
       req.setReportTextBase64(
               Base64.getEncoder().encodeToString((
                       "Conforme solicitado na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} " +
@@ -748,7 +757,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Event.Subject_Access_Request.Form_Id", P.eq("2"))
+      String contextId = App.g.V().has("Event_Subject_Access_Request_Form_Id", P.eq("2"))
               .id().next().toString();
 
       ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
@@ -760,6 +769,135 @@ public class PVTemplateTests extends AppTest {
 
       String expectedReport = "Conforme solicitado na data de 9 de Dezembro de 2021 pelo canal: (Via SMS), seus dados foram corrigidos na data de 10 de Dezembro de 2021.";
       assertEquals(expectedReport, report, "CORREÇÃO DOS DADOS message");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+  }
+
+//
+//  @Test
+//  public void test00010FormatLocaleDateNow() throws InterruptedException {
+//    try {
+//
+//      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
+//              "$.queryResp[*].fields", "sharepoint_mapeamentos");
+//
+//      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+//
+//      Resource res = new Resource();
+//
+//      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+//      req.setTemplateName("TEST2");
+//      req.setTemplatePOLEType("Event_Subject_Access_Request");
+//      req.setReportTextBase64(
+//              Base64.getEncoder().encodeToString((
+//                      "Conforme solicitado na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Create_Date, 'pt', 'BR') }} " +
+//                              "pelo canal: ({{ context.Event_Subject_Access_Request_Request_Channel }}), seus dados foram corrigidos " +
+//                              "na data de {{ pv:dateLocaleFormat(context.Event_Subject_Access_Request_Metadata_Update_Date, 'pt', 'BR') }}.")
+//                      .getBytes()));
+//
+//      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+//
+//      String templateId = reply.getTemplateId();
+//
+//      String contextId = App.g.V().has("Event_Subject_Access_Request_Form_Id", P.eq("2"))
+//              .id().next().toString();
+//
+//      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+//      renderReq.setRefEntryId(contextId);
+//      renderReq.setTemplateId(templateId);
+//      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+//
+//      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+//
+//      String expectedReport = "Conforme solicitado na data de 9 de Dezembro de 2021 pelo canal: (Via SMS), seus dados foram corrigidos na data de 10 de Dezembro de 2021.";
+//      assertEquals(expectedReport, report, "CORREÇÃO DOS DADOS message");
+//
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      assertNull(e);
+//
+//    }
+//
+//  }
+
+  @Test
+  public void test00010CorrespondeTemplate() throws InterruptedException {
+    try {
+
+      jsonTestUtil("totvs/totvs-sa1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+      jsonTestUtil("totvs/totvs-sa1-real-2.json", "$.objs", "totvs_protheus_sa1_clientes");
+
+
+
+
+      Resource res = new Resource();
+
+
+//      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Person_Natural_Full_Name", P.eq("MATHEUS ROCHA"))
+          .id().next().toString();
+
+      String templateId = "Person_Natural/Corresponde";
+//          App.g.V().has("Object_Notification_Templates_Id", P.eq("Person_Natural/Corresponde"))
+//          .id().next().toString();
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      String expectedReport = "MATHEUS ROCHA é o único registro no sistema";
+      assertTrue(report.contains(expectedReport), "Report orig = " + report);
+
+      contextId = App.g.V().has("Person_Natural_Full_Name", P.eq("KRACKOVSZI GLÓRIA 2"))
+          .id().next().toString();
+
+//          App.g.V().has("Object_Notification_Templates_Id", P.eq("Person_Natural/Corresponde"))
+//          .id().next().toString();
+
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      expectedReport = "KRACKOVSZI GLÓRIA 2 Corresponde potencialmente a 1 registro";
+      assertTrue(report.contains(expectedReport), "Contains KRACKOVSZI GLÓRIA 2; orig report = " + report);
+
+      expectedReport = "Location Address, Object Email Address, Object Phone Number";
+      assertTrue(report.contains(expectedReport),
+          "Contains Location Address, Object Email Address, Object Phone Number Report orig report = " + report);
+
+
+      contextId = App.g.V().has("Person_Natural_Full_Name", P.eq("GLÓRIA KRACKOVSZI"))
+          .id().next().toString();
+
+//          App.g.V().has("Object_Notification_Templates_Id", P.eq("Person_Natural/Corresponde"))
+//          .id().next().toString();
+
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      renderReply = res.reportTemplateRender(renderReq);
+
+      report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      expectedReport = "GLÓRIA KRACKOVSZI Corresponde potencialmente a 1 registro";
+      assertTrue(report.contains(expectedReport), "Contains GLÓRIA KRACKOVSZI; orig report = " + report);
+
+      expectedReport = "Location Address, Object Email Address, Object Phone Number";
+      assertTrue(report.contains(expectedReport),
+          "Contains Location Address, Object Email Address, Object Phone Number Report orig report = " + report);
+
+
+
 
     } catch (Exception e) {
       e.printStackTrace();

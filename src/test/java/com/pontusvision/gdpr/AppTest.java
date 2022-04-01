@@ -11,8 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -36,14 +35,14 @@ public class AppTest {
       "        \"searchExact\": true,\n" +
       "        \"cols\": [{\n" +
       "                \"field\": \"Event_Data_Breach_Description\",\n" +
-      "                \"id\": \"Event.Data_Breach.Description\",\n" +
+      "                \"id\": \"Event_Data_Breach_Description\",\n" +
       "                \"name\": \"Description\",\n" +
       "                \"sortable\": false,\n" +
       "                \"headerName\": \"Descrição\",\n" +
       "                \"filter\": false\n" +
       "            }, {\n" +
       "                \"field\": \"Event_Data_Breach_Impact\",\n" +
-      "                \"id\": \"Event.Data_Breach.Impact\",\n" +
+      "                \"id\": \"Event_Data_Breach_Impact\",\n" +
       "                \"name\": \"Impact\",\n" +
       "                \"sortable\": true,\n" +
       "                \"headerName\": \"Impacto\",\n" +
@@ -58,20 +57,20 @@ public class AppTest {
       "            }\n" +
       "        ],\n" +
       "        \"extraSearch\": {\n" +
-      "            \"label\": \"Event.Data_Breach\",\n" +
-      "            \"value\": \"Event.Data_Breach\"\n" +
+      "            \"label\": \"Event_Data_Breach\",\n" +
+      "            \"value\": \"Event_Data_Breach\"\n" +
       "        }\n" +
       "    },\n" +
       "    \"cols\": [{\n" +
       "            \"field\": \"Event_Data_Breach_Description\",\n" +
-      "            \"id\": \"Event.Data_Breach.Description\",\n" +
+      "            \"id\": \"Event_Data_Breach_Description\",\n" +
       "            \"name\": \"Description\",\n" +
       "            \"sortable\": false,\n" +
       "            \"headerName\": \"Descrição\",\n" +
       "            \"filter\": false\n" +
       "        }, {\n" +
       "            \"field\": \"Event_Data_Breach_Impact\",\n" +
-      "            \"id\": \"Event.Data_Breach.Impact\",\n" +
+      "            \"id\": \"Event_Data_Breach_Impact\",\n" +
       "            \"name\": \"Impact\",\n" +
       "            \"sortable\": true,\n" +
       "            \"headerName\": \"Impacto\",\n" +
@@ -86,19 +85,40 @@ public class AppTest {
       "        }\n" +
       "    ],\n" +
       "    \"filters\": [{\n" +
-      "            \"colId\": \"Event.Data_Breach.Impact\",\n" +
+      "            \"colId\": \"Event_Data_Breach_Impact\",\n" +
       "            \"filterType\": \"text\",\n" +
       "            \"type\": \"contains\",\n" +
       "            \"filter\": \"OS\"\n" +
       "        }\n" +
       "    ],\n" +
-      "    \"dataType\": \"Event.Data_Breach\",\n" +
+      "    \"dataType\": \"Event_Data_Breach\",\n" +
       "    \"from\": 0,\n" +
       "    \"to\": 100,\n" +
-      "    \"sortCol\": \"Event.Data_Breach.Impact\",\n" +
+      "    \"sortCol\": \"Event_Data_Breach_Impact\",\n" +
       "    \"sortDir\": \"+desc\"\n" +
       "}\n";
   static Gson gson = new Gson();
+
+  public static String sortLines(String str){
+
+
+    List<String> lineList = Arrays.asList(str.split ("\n"));
+
+//    while ((inputLine = bufferedReader.readLine()) != null) {
+//      lineList.add(inputLine);
+//    }
+//    fileReader.close();
+
+    Collections.sort(lineList);
+
+    StringBuilder sb = new StringBuilder();
+
+    for (int i = 0, ilen = lineList.size(); i < ilen; i++){
+      sb.append(lineList.get(i)).append("\n");
+    }
+
+    return sb.toString();
+  }
 
   public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName) throws InterruptedException {
 

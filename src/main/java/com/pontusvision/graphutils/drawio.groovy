@@ -2,9 +2,9 @@ package com.pontusvision.graphutils
 
 import com.pontusvision.gdpr.App
 
-// g.V().has('Metadata.Type.Event.Subject_Access_Request', 'Event.Subject_Access_Request').drop()
+// g.V().has('Metadata_Type_Event_Subject_Access_Request', 'Event_Subject_Access_Request').drop()
 
-// g.V().has('Metadata.Type.Object.Identity_Card', 'Object.Identity_Card')
+// g.V().has('Metadata_Type_Object_Identity_Card', 'Object_Identity_Card')
 import groovy.util.slurpersupport.GPathResult
 
 import java.nio.charset.StandardCharsets
@@ -72,7 +72,7 @@ public class DrawIOGremlin {
 
     parsedXML?.root?.object?.each {
       def id = it.attributes()['id'];
-      def metadataType = it.attributes()['Metadata.Type']
+      def metadataType = it.attributes()['Metadata_Type']
       if (metadataType) {
         def trav = App.g.addV("${metadataType}");
         sb.append("""\ng.addV("${metadataType}")""")
@@ -93,10 +93,10 @@ public class DrawIOGremlin {
       def target = it.attributes()['target'];
 
       def sourceObj = objMap[source];
-      def sourceType = sourceObj ? sourceObj['Metadata.Type'] : null;
+      def sourceType = sourceObj ? sourceObj['Metadata_Type'] : null;
 
       def targetObj = objMap[target];
-      def targetType = targetObj ? targetObj['Metadata.Type'] : null;
+      def targetType = targetObj ? targetObj['Metadata_Type'] : null;
 
       if (sourceType) {
         sb.append("${label} - from: ${source} (${sourceType}) to: ${target} (${targetType})\n")

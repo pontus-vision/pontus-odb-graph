@@ -20,6 +20,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -93,7 +94,7 @@ public class PVEndPointsTest extends AppTest {
 
       getRequest.setHeader("Accept", "*/*");
 
-      String res = IOUtils.toString(client.execute(getRequest).getEntity().getContent());
+      String res = IOUtils.toString(client.execute(getRequest).getEntity().getContent(), Charset.defaultCharset());
       assertEquals("{\"message\":\"Data source is working\",\"status\":\"success\",\"title\":\"success\"}", res,
           "json message from ~/home/grafana_backend endpoint");
 
@@ -106,13 +107,13 @@ public class PVEndPointsTest extends AppTest {
   @Test
   public void test00004Gremlin() throws InterruptedException {
 
-    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
+    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
 
     try {
 
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-          "App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
+          "App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()");
       String query1, query2, query3;
 
       HttpClient client = HttpClients.createMinimal();
@@ -129,7 +130,7 @@ public class PVEndPointsTest extends AppTest {
 //      String value = json.getJSONObject("@value").toString();
 //      System.out.println(value);
 
-      gremlinReq.setGremlin("App.g.V().has('Person.Organisation.Name',eq('PESSOA NOVA5')).next().id().toString()");
+      gremlinReq.setGremlin("App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()");
       data = new StringEntity(gson.toJson(gremlinReq));
       request.setEntity(data);
       query2 = IOUtils.toString(client.execute(request).getEntity().getContent());
@@ -156,7 +157,7 @@ public class PVEndPointsTest extends AppTest {
   @Test
   public void test00005TemplateRender() throws InterruptedException {
 
-    jsonTestUtil("pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-data-sources.json", "$.queryResp[*].fields",
         "sharepoint_data_sources");
 
     try {
@@ -165,7 +166,7 @@ public class PVEndPointsTest extends AppTest {
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
       req.setTemplateName("TEST");
-      req.setTemplatePOLEType("Object.Data_Sources");
+      req.setTemplatePOLEType("Object_Data_Sources");
       req.setReportTextBase64(
           Base64.getEncoder().encodeToString(" {% set var1=1 %} {{ var1 }} {{ context.Object_Data_Source_Name }}"
               .getBytes()));
@@ -174,7 +175,7 @@ public class PVEndPointsTest extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Metadata.Type.Object.Data_Source", P.eq("Object.Data_Source"))
+      String contextId = App.g.V().has("Metadata_Type_Object_Data_Source", P.eq("Object_Data_Source"))
           .id().next().toString();
 
       ReportTemplateRenderRequest reportReq = new ReportTemplateRenderRequest();

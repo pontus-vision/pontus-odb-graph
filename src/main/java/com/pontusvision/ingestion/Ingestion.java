@@ -80,6 +80,10 @@ public class Ingestion {
 
   }
 
+  public static String ingestMd2Data(IngestionJsonObjArrayRequest request){
+    return com.pontusvision.graphutils.Matcher.ingestMD2BulkData(request.jsonString, request.jsonPath, request.ruleName);
+
+  }
 
   @POST
   @Path("json_obj_array")
@@ -105,6 +109,10 @@ public class Ingestion {
           request.jsonString,
           request.jsonPath,
           request.ruleName);
+    }
+
+    else if ("pv_md2".equalsIgnoreCase(request.ruleName)){
+      return ingestMd2Data(request);
     }
 
     String res = com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(
@@ -159,12 +167,13 @@ public class Ingestion {
 
     obj.add("entries", entries);
 
+    IngestionJsonObjArrayRequest req = new IngestionJsonObjArrayRequest();
+    req.ruleName = request.ruleName;
+    req.jsonPath = "$.entries";
+    req.jsonString =  obj.toString();
 
-    String res = com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(
-        obj.toString(),
-        "$.entries",
-        request.ruleName);
 
+    String res = this.jsonObjArray(req);
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
     return res;

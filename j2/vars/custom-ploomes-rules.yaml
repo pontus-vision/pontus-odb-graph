@@ -2,7 +2,7 @@ rules:
 
   ploomes_clientes:
     vertices:
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${TypeId == 2 && LegalName != null}"
         props:
           Full_Name:
@@ -13,7 +13,7 @@ rules:
 #            val: "Clientes"
 #            excludeFromSearch: true
 
-      - label: Person.Organisation
+      - label: Person_Organisation
         condition: "${TypeId == 1 && CNPJ != null}"
         props:
           Registration_Number: "${CNPJ?.replaceAll('[^0-9]', '')}"
@@ -25,7 +25,7 @@ rules:
 #            val: "${Email?.trim()?.toLowerCase()}"
 #            excludeFromUpdate: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${TypeId == 2  && CPF != null}"
         name: cpf
         props:
@@ -34,7 +34,7 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${TypeId == 1  && CNPJ != null}"
         name: cnpj
         props:
@@ -44,13 +44,13 @@ rules:
             excludeFromSearch: true
 
       # EMAIL
-      - label: Object.Email_Address
+      - label: Object_Email_Address
         condition: "${Email?.trim()?.length() > 0 }"
         props:
           Email: "${Email?.trim()?.toLowerCase()}"
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
-      - label: Location.Address
+      - label: Location_Address
 #        condition: "${StreetAddress != null}"
         props:
           Full_Address:
@@ -64,7 +64,7 @@ rules:
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(ZipCode)}"
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "ploomes/clientes"
@@ -84,62 +84,62 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type: "ploomes/clientes"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Metadata_Start_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+#          Metadata_End_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "PLOOMES/CLIENTES"
 #          Type: ploomes/clientes
 #          Description: Registros de Clientes no protheus/Totvs
     edges:
       - label: Has_Ingestion_Event
-        toVertexLabel: "Event.Group_Ingestion"
-        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Event_Ingestion"
 
       - label: Uses_Email
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Email_Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Email_Address"
 
       - label: Uses_Email
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Object.Email_Address"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Object_Email_Address"
 
       - label: Has_Id_Card
-        fromVertexLabel: "Person.Natural"
+        fromVertexLabel: "Person_Natural"
         toVertexName: "cpf"
 
       - label: Has_Id_Card
-        fromVertexLabel: "Person.Organisation"
+        fromVertexLabel: "Person_Organisation"
         toVertexName: "cnpj"
 
       - label: Is_Located
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Location_Address"
 
       - label: Is_Located
-        fromVertexLabel: "Person.Organisation"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Location_Address"

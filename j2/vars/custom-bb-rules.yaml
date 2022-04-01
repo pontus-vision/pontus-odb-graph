@@ -1,0 +1,1185 @@
+rules:
+
+  bb_fontes_de_dados:
+    vertices:
+      - label: Object_Data_Source
+        name: budibase
+        props:
+          Name: BUDIBASE/FONTES-DE-DADOS
+
+      - label: Object_Data_Source
+        condition: "${Descricao?.trim()?.length() > 0}"
+        name: fontes_de_dados
+        props:
+          Form_Id: "${_id}"
+          Name:
+            val: "${Referencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Description:
+            val: "${Descricao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Engine:
+            val: "${Sistema}"
+            excludeFromSearch: true
+          Type:
+            val: "${Subsistema}"
+            excludeFromSearch: true
+          Domain:
+            val: "${Modulo}"
+            excludeFromSearch: true
+          URI_Delete:
+            val: "${URL_Prefixo_Delete}"
+            excludeFromSearch: true
+          URI_Update:
+            val: "${URL_Prefixo_Update}"
+            excludeFromSearch: true
+          URI_Read:
+            val: "${URL_Prefixo_Read}"
+            excludeFromSearch: true
+
+      - label: Object_System
+        props:
+          Name: "${Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object_Subsystem
+        props:
+          Name: "${Subsistema?.trim()?.toUpperCase()}"
+
+      - label: Object_Module
+        props:
+          Name: "${Modulo?.trim()?.toLowerCase()}"
+
+      - label: Object_Sensitive_Data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Dados_Pessoais)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Data_Policy
+        props:
+          Update_Frequency: "${Frequencia_de_Atualizacao}"
+          Retention_Period: "${Periodo_de_Retencao_Maxima}"
+          Type: "${Referencia}"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: budibase/fontes-de-dados
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: budibase/fontes-de-dados
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "budibase"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexName: "fontes_de_dados"
+
+      - label: "Has_Policy"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Data_Policy"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Sensitive_Data"
+
+      - label: "Has_Module"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Module"
+
+      - label: "Has_Subsystem"
+        fromVertexLabel: "Object_Module"
+        toVertexLabel: "Object_Subsystem"
+
+      - label: "Has_System"
+        fromVertexLabel: "Object_Subsystem"
+        toVertexLabel: "Object_System"
+
+  bb_treinamento:
+    vertices:
+      - label: Event_Training
+        props:
+          Form_Id: "${_id}"
+          Status:
+            val: "${Status}"
+            excludeFromSearch: true
+
+      - label: Object_Awareness_Campaign
+        props:
+          Description: "${Descricao?.trim()?.toUpperCase()}"
+          Start_Date:
+            val: "${Realizado_em}"
+            type: java.util.Date
+
+      - label: Person_Natural
+        props:
+          Full_Name: "${Nome?.trim()?.toUpperCase()}"
+
+      - label: Person_Employee
+        props:
+          Full_Name: "${Nome?.trim()?.toUpperCase()}"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: budibase/treinamento
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: budibase/treinamento
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+
+      - label: Object_Data_Source
+        props:
+          Name: BUDIBASE/TREINAMENTO
+
+    edges:
+      - label: "Course_Training"
+        fromVertexLabel: "Event_Training"
+        toVertexLabel: "Object_Awareness_Campaign"
+
+      - label: "Completed_By"
+        fromVertexLabel: "Event_Training"
+        toVertexLabel: "Person_Natural"
+
+      - label: "Completed_By"
+        fromVertexLabel: "Event_Training"
+        toVertexLabel: "Person_Employee"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Training"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        toVertexLabel: "Event_Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+
+  bb_mapeamento_de_processo:
+    vertices:
+      - label: Object_Data_Source
+        name: budibase
+        props:
+          Name: BUDIBASE/MAPEAMENTO-DE-PROCESSO
+
+      - label: Object_Data_Source
+        name: attached_data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Local_de_Armazenamento)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Object_Data_Policy
+        props:
+          Type: "${Referencia}"
+          Retention_Period: "${Periodo_de_retencao}"
+
+      - label: Object_Data_Procedures
+        props:
+          Form_Id: "${_id}"
+          ID:
+            val: "${Referencia}"
+            excludeFromSearch: true
+          Name:
+            val: "${Processo}"
+            excludeFromSearch: true
+#          Type:
+#            val: "${Acesso_x002c__x0020_Transfer_x00}"
+#            excludeFromSearch: true
+          Type_Of_Natural_Person:
+            val: "${Categoria_dos_titulares_dos_dados}"
+            excludeFromSearch: true
+          BusinessAreaResponsible:
+            val: "${Area}" # - ${Respons_x00e1_velLookupId}"
+            excludeFromSearch: true
+          Country_Where_Stored:
+            val: "${Pais_onde_as_pessoas_estao_localizadas}"
+            excludeFromSearch: true
+          Why_Is_It_Collected:
+            val: "${Finalidade_do_processo}"
+            excludeFromSearch: true
+          Info_Collected:
+            val: "${Dados_pessoais_utilizados}"
+            excludeFromSearch: true
+          Description:
+            val: "${Fluxo_interno_dos_dados}"
+            excludeFromSearch: true
+          Interested_Parties_Consulted:
+            val: "${Partes_Interessadas_Consultadas}"
+            excludeFromSearch: true
+
+      - label: Object_Sensitive_Data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Dados_pessoais_utilizados)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Lawful_Basis
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Base_Legal)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Legitimate_Interests_Assessment
+        condition: "${Lia_Is_Essential == true && Lia_Is_Required == true}"
+        props:
+          Lawful_Basis_Justification: "${Lawful_Basis_Justification}"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: budibase/mapeamento-de-processo
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: budibase/mapeamento-de-processo
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "budibase"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Sensitive_Data"
+
+      - label: "Has_Lawful_Basis_On"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Lawful_Basis"
+
+      - label: "Has_Policy"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Data_Policy"
+
+      - label: "Has_Data_Source"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "attached_data_sources"
+
+      - label: "Has_Legitimate_Interests_Assessment"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
+  bb_riscos:
+    vertices:
+      - label: Object_Data_Source
+        name: budibase
+        props:
+          Name: BUDIBASE/RISCOS-FONTES-DE-DADOS
+
+      - label: Object_Data_Source
+        condition: "${Fontes_de_Dados?.size() > 0}"
+        name: attached_data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Fontes_de_Dados)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Object_Risk_Data_Source
+        props:
+          Form_Id: "${_id}"
+          Risk_Id:
+            val: "${Referencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Description:
+            val: "${Descricao}"
+            excludeFromSearch: true
+          Probability:
+            val: "${Probabilidade}"
+            excludeFromSearch: true
+          Impact:
+            val: "${Impacto}"
+            excludeFromSearch: true
+          Residual_Probability:
+            val: "${Probabilidade_Residual}"
+            excludeFromSearch: true
+          Residual_Impact:
+            val: "${Impacto_Residual}"
+            excludeFromSearch: true
+          Approved_By_DPO:
+            val: "${Aprovado_pelo_DPO}"
+            excludeFromSearch: true
+          Approved_By_Security:
+            val: "${Aprovado_pela_Seguranca}"
+            excludeFromSearch: true
+
+      - label: Object_Risk_Mitigation_Data_Source
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Mitigacoes_de_Riscos)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: budibase/risk
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: budibase/risk
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "budibase"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Risk_Data_Source"
+
+      - label: "Has_Risk"
+        fromVertexName: "attached_data_sources"
+        toVertexLabel: "Object_Risk_Data_Source"
+
+      - label: "Mitigates_Risk"
+        fromVertexLabel: "Object_Risk_Mitigation_Data_Source"
+        toVertexLabel: "Object_Risk_Data_Source"
+
+  bb_mitigacao_de_riscos:
+    vertices:
+      - label: Object_Data_Source
+        name: budibase
+        props:
+          Name: BUDIBASE/MITIGAÇÃO-DE-RISCOS
+
+      - label: Object_Risk_Mitigation_Data_Source
+        props:
+          Form_Id: "${_id}"
+          Mitigation_Id:
+            val: "${Referencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Description:
+            val: "${Descricao}"
+            excludeFromSearch: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/mitigação-de-riscos"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/mitigação-de-riscos"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "budibase"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Risk_Mitigation_Data_Source"
+
+  bb_controle_de_solicitacoes:
+    vertices:
+
+      - label: Person_Organisation
+        condition: "${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}"
+        props:
+          Name:
+            val: "${Razao_Social_Nome?.trim()?.toUpperCase()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+          Registration_Number:
+            val: "${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+
+      - label: Person_Natural
+        condition: "${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
+        props:
+          Full_Name:
+            val: "${Razao_Social_Nome?.trim()?.toUpperCase()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+          Customer_ID:
+            val: "${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+
+      - label: Object_Data_Procedures
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(ID_do_Processo)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/CONTROLE-DE-SOLICITAÇÕES"
+
+      - label: Event_Subject_Access_Request
+        props:
+          Form_Id: "${_id}"
+          Id:
+            val: "${Referencia}"
+            excludeFromSearch: true
+          Metadata_Update_Date:
+            val: "${Resposta___Data}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Solicitacao___Data}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Request_Type:
+            val: "${Solicitacao___Tipo}"
+            excludeFromSearch: true
+          Request_Channel:
+            val: "${Solicitacao___Canal}"
+            excludeFromSearch: true
+          Status:
+            val: "${Status}"
+            excludeFromSearch: true
+          Natural_Person_Type:
+            val: "${Categoria_dos_titulares_dos_dados?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Event_Group_Subject_Access_Request
+        props:
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/controle-de-solicitações"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/controle-de-solicitações"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Subject_Access_Request"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_DSAR
+        fromVertexLabel: "Event_Subject_Access_Request"
+        toVertexLabel: "Event_Group_Subject_Access_Request"
+
+      - label: Made_SAR_Request
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Subject_Access_Request"
+
+      - label: Made_SAR_Request
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Event_Subject_Access_Request"
+
+      - label: Has_DSAR
+        fromVertexLabel: "Event_Group_Subject_Access_Request"
+        toVertexLabel: "Object_Data_Procedures"
+
+  bb_incidentes_de_seguranca_reportados:
+    vertices:
+      - label: Object_Data_Source
+        name: data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Fontes_de_Dados)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Event_Data_Breach
+        props:
+          Form_Id: "${_id}"
+          Id:
+            val: "${Referencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Authority_Notified:
+            val: "${Notificacao_ANPD?.trim()}"
+            excludeFromSearch: true
+          Description:
+            val: "${Descricao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Impact:
+            val: "${Impacto}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created_At}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Metadata_Update_Date:
+            val: "${Updated_At}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Natural_Person_Notified:
+            val: "${Notificacao_Titular?.trim()}"
+            excludeFromSearch: true
+          Source:
+            val: "${Origem?.toUpperCase()}"
+            excludeFromSearch: true
+          Status:
+            val: "${Status}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        name: budibase
+        props:
+          Name: "BUDIBASE/INCIDENTES-DE-SEGURANÇA-REPORTADOS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/incidentes-de-segurança-reportados"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/incidentes-de-segurança-reportados"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "budibase"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Data_Breach"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Impacted_By_Data_Breach
+        fromVertexLabel: "Event_Data_Breach"
+        toVertexName: "data_sources"
+
+  bb_politicas:
+    vertices:
+
+      - label: Object_Policies
+        props:
+          Form_Id: "${_id}"
+          Text:
+            val: "${Texto}"
+            excludeFromUpdate: true
+          Type:
+            val: "${Tipo_de_Politica}"
+            excludeFromUpdate: true
+
+      - label: Object_Data_Source
+        name: budibase
+        props:
+          Name: "BUDIBASE/POLÍTICAS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/políticas"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/políticas"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "budibase"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "Object_Policies"
+        toVertexLabel: "Event_Ingestion"
+
+  bb_aviso_privacidade:
+    vertices:
+      - label: Object_Privacy_Notice
+        props:
+          Form_Id: "${_id}"
+          Description:
+            val: "${Aviso_de_Privacidade}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created_At}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Updated_At}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Delivery_Date:
+            val: "${Data_de_Inicio}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Who_Is_Collecting:
+            val: "${Quem_Coleta}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/AVISO-DE-PRIVACIDADE"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/aviso-de-privacidade"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/aviso-de-privacidade"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Privacy_Notice"
+        toVertexLabel: "Event_Ingestion"
+
+  bb_consentimentos:
+    vertices:
+      - label: Event_Consent
+        props:
+          Form_Id: "${_id}"
+          Status:
+            val: "\"${(Status?.toString()?.equalsIgnoreCase('yes') || Status?.toString()?.equalsIgnoreCase('true') || Status?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }\""
+            excludeFromSearch: true
+          Customer_ID:
+            val: "${Identificacao?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Data}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Updated_At}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object_Privacy_Notice
+        condition: "${Aviso_de_Privacidade.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Aviso_de_Privacidade)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Person_Natural
+        props:
+          Customer_ID: "${Identificacao?.replaceAll('[^0-9]', '')?.trim()}"
+          Full_Name:
+            val: "${Titular_do_Dado_Pessoal?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/CONSENTIMENTOS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/consentimentos"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/consentimentos"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+      - label: Object_Data_Procedures
+        condition: "${Mapeamento_de_Processo.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Consent
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Consent"
+
+      - label: Has_Privacy_Notice
+        fromVertexLabel: "Event_Consent"
+        toVertexLabel: "Object_Privacy_Notice"
+
+      - label: Consent
+        fromVertexLabel: "Event_Consent"
+        toVertexLabel: "Object_Data_Procedures"
+
+  bb_comunicacoes_ppd:
+    vertices:
+    - label: Object_Privacy_Docs
+      props:
+        Form_Id: "${_id}"
+        URL:
+          val: "${Local_de_Compartilhamento}"
+          excludeFromSearch: true
+        Description:
+          val: "${Descricao}"
+          excludeFromSearch: true
+        Date:
+          val: "${Data}"
+          type: java.util.Date
+          excludeFromSearch: true
+        Title:
+          val: "${Titulo_Comunicado}"
+          excludeFromSearch: true
+
+    - label: Object_Data_Source
+      props:
+        Name: "BUDIBASE/COMUNICAÇÕES-P&PD"
+
+    - label: Event_Ingestion
+      props:
+        Type:
+          val: "budibase/comunicações-p&pd"
+          excludeFromSearch: true
+        Operation:
+          val: "Structured Data Insertion"
+          excludeFromSearch: true
+        Domain_b64:
+          val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+          excludeFromSearch: true
+        Metadata_Create_Date:
+          val: "${new Date()}"
+          excludeFromSearch: true
+          type: java.util.Date
+        Metadata_Update_Date:
+          val: "${new Date()}"
+          excludeFromSearch: true
+          type: java.util.Date
+
+    - label: Event_Group_Ingestion
+      props:
+        Type: "budibase/comunicações-p&pd"
+        Operation: "Structured Data Insertion"
+        Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+    - label: Has_Ingestion_Event
+      fromVertexLabel: "Object_Data_Source"
+      toVertexLabel: "Event_Group_Ingestion"
+
+    - label: Has_Ingestion_Event
+      fromVertexLabel: "Event_Group_Ingestion"
+      toVertexLabel: "Event_Ingestion"
+
+    - label: Has_Ingestion_Event
+      fromVertexLabel: "Event_Ingestion"
+      toVertexLabel: "Object_Privacy_Docs"
+
+  bb_acoes_judiciais_ppd:
+    vertices:
+      - label: Object_Legal_Actions
+        props:
+          Form_Id: "${_id}"
+          Description:
+            val: "${Descricao}"
+            excludeFromSearch: true
+          Date:
+            val: "${Data}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Details:
+            val: "${Detalhes}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/AÇÕES-JUDICIAIS-P&PD"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/ações-judiciais-p&pd"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/ações-judiciais-p&pd"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Legal_Actions"
+
+  bb_users:
+    vertices:
+      - label: Person_Natural
+        props:
+          Full_Name:
+            val: "${firstName?.toUpperCase()?.trim()} ${lastName?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
+
+      - label: Object_Email_Address
+        condition: "${email?.trim()?.length() > 0}"
+        props:
+          Email: "${email?.trim()?.toLowerCase()}"
+
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/USERS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/users"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/users"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Person_Natural"
+
+      - label: Uses_Email
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Email_Address"
+
+  bb_reunioes_ppd:
+    vertices:
+      - label: Event_Meeting
+        props:
+          Form_Id: "${_id}"
+          Title:
+            val: "${Titulo_Reuniao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Date:
+            val: "${Data}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Discussed_Topics:
+            val: "${Topicos_Reuniao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Participants:
+            val: "${Participantes?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/REUNIÕES-COMITÊ-P&PD"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/reuniões-comitê-p&pd"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/reuniões-comitê-p&pd"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Meeting"

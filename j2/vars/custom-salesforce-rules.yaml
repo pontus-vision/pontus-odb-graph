@@ -3,7 +3,7 @@ rules:
 
   salesforce:
     vertices:
-      - label: "Person.Natural"
+      - label: "Person_Natural"
         props:
           Full_Name:
             val: "${FirstName?.toUpperCase()?.trim()} ${LastName?.toUpperCase()?.trim()}"
@@ -46,7 +46,7 @@ rules:
             mandatoryInSearch: false
             excludeFromSubsequenceSearch: true
 
-      - label: "Object.Identity_Card"
+      - label: "Object_Identity_Card"
         condition: "${ (CPF__c != null) && ! (CPF__c.isEmpty())}"
         props:
           Id_Type:
@@ -57,7 +57,7 @@ rules:
             val: "${CPF__c.replaceAll('[^0-9]','')}"
             mandatoryInSearch: true
 
-      - label: "Location.Address"
+      - label: "Location_Address"
         props:
           Full_Address:
             val: "${ ( (MailingStreet?:'')+ '\\\\n' + (MailingCity?:'') + '\\\\n' + (MailingState?:'') + '\\\\n' + (MailingCountry?:'')).replaceAll('\\\\n', ' ') }"
@@ -72,13 +72,13 @@ rules:
             val: "${com.pontusvision.utils.PostCode.format(MailingPostalCode)}"
             excludeFromSearch: true
 
-      - label: "Object.Email_Address"
+      - label: "Object_Email_Address"
         props:
           Email:
             val: "${Email?.trim()?.toLowerCase()}"
             mandatoryInSearch: true
 
-      - label: "Object.Phone_Number"
+      - label: "Object_Phone_Number"
         props:
           Raw:
             val: "${Phone}"
@@ -98,44 +98,33 @@ rules:
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
-      - label: "Object.Data_Source"
+      - label: "Object_Data_Source"
         props:
           Name:
-            val: "salesforce.com"
+            val: "SALESFORCE.COM"
             mandatoryInSearch: true
-          Type:
-            val: "salesforce.com"
-            mandatoryInSearch: true
-          Description:
-            val: "Salesforce.com CRM system data"
-            mandatoryInSearch: true
+#          Type:
+#            val: "salesforce.com"
+#            mandatoryInSearch: true
+#          Description:
+#            val: "Salesforce.com CRM system data"
+#            mandatoryInSearch: true
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type:
-            val: Salesforce CRM System
+            val: salesforce.com
             mandatoryInSearch: true
           Operation:
             val: Structured Data Insertion
             mandatoryInSearch: true
-          Ingestion_Date:
-            val: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-            mandatoryInSearch: true
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            #            mandatoryInSearch: false
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
 
-      - label: "Event.Ingestion"
+      - label: "Event_Ingestion"
         props:
           Type:
-            val: "Salesforce CRM System"
+            val: "salesforce.com"
             excludeFromSearch: true
 
           Operation:
@@ -151,57 +140,58 @@ rules:
             excludeFromSearch: true
             type: "java.util.Date"
 
-      - label: "Event.Consent"
+      - label: "Event_Consent"
         props:
           Status:
-            val: "Consentimento"
+            val: "Consent"
             excludeFromSearch: true
-          Date:
+          Metadata_Create_Date:
             val: "${new Date()}"
             excludeFromSearch: true
             type: "java.util.Date"
-      - label: "Object.Privacy_Notice"
+
+      - label: "Object_Privacy_Notice"
         props:
           Who_Is_Collecting:
             val: "[CRM System]"
             excludeFromUpdate: true
     edges:
       - label: "Uses_Email"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Email_Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Email_Address"
 
       - label: "Has_Id_Card"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Identity_Card"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Identity_Card"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Natural"
+        fromVertexLabel: "Person_Natural"
         toVertexLabel: "Object.Home_Phone_Number"
 
       - label: "Has_Phone"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Object.Phone_Number"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Phone_Number"
 
       - label: "Lives"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Location.Address"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Location_Address"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        toVertexLabel: "Event.Group_Ingestion"
-        fromVertexLabel: "Object.Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
 
       - label: "Consent"
-        fromVertexLabel: "Person.Natural"
-        toVertexLabel: "Event.Consent"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Consent"
 
       - label: "Has_Privacy_Notice"
-        fromVertexLabel: "Event.Consent"
-        toVertexLabel: "Object.Privacy_Notice"
+        fromVertexLabel: "Event_Consent"
+        toVertexLabel: "Object_Privacy_Notice"

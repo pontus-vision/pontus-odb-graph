@@ -9,6 +9,7 @@ import org.junit.platform.launcher.TestPlan;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.TimeZone;
 
 public class GlobalSetupTeardownListener implements LauncherSessionListener {
 
@@ -74,6 +75,7 @@ public class GlobalSetupTeardownListener implements LauncherSessionListener {
       System.setProperty("ORIENTDB_HOME", absolutePath);
       System.setProperty("pg.jpostal.datadir", jpostalDataDir);
 
+      TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
       server = App.createJettyServer();
 
       server.start();

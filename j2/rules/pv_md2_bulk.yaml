@@ -1,0 +1,93 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Person_Natural
+      condition: ${name?.trim()?.length() > 0}
+      props:
+        - name: Person_Natural_Full_Name
+          val: ${name?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Natural_Customer_ID
+          val: ${document?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Identity_Card
+      condition: ${document?.replaceAll('[^0-9]','')?.length() > 0}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${document?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CPF
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Email_Address
+      condition: ${email?.trim()?.length() > 0}
+      props:
+        - name: Object_Email_Address_Email
+          val: ${email?.trim()?.toLowerCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: MD2
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: MD2
+          mandatoryInSearch: True
+        - name: Object_Data_Source_Description
+          val: Dados RH Colaboradores MD2
+          mandatoryInSearch: True
+        - name: Object_Data_Source_Type
+          val: Structured
+          mandatoryInSearch: True
+    
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: MD2
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object_Data_Source
+    toVertexLabel: Event_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Event_Ingestion
+  - label: Has_Id_Card
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Object_Identity_Card
+  - label: Uses_Email
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Object_Email_Address
+

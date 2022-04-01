@@ -1,0 +1,468 @@
+{
+  "queryResp": [
+      {
+        "@odata.etag": "cccdfs-aee3dsf-364535635-acc-1bc2sdfsdf5b,4",
+        "createdDateTime": "2021-07-27T19: 18: 05Z",
+        "eTag": "cccdfs-aee3dsf-364535635-acc-1bc2sdfsdf5b,4",
+        "id": "1",
+        "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+        "webUrl": "https: //xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Fontes%20de%20Dados/1_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,fgsdfg787-dfgdf789-jjkh343-scfgc,f456374-3467437-63456563c-3477a-34765"
+        },
+        "contentType": {
+          "id": "0x0100D3723F67D564456747FGHFGHFGHFGH",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('1')/fields/$entity",
+        "fields": {
+          "@odata.etag": "1b43a42e-aee3-34653456-abbf-gyhrtey,4",
+          "Title": "CRM-Leads",
+          "Sistema": "xxxxx",
+          "Tipo_x0020_Sistema": "SaaS",
+          "Tabela": "Lyyyy",
+          "Descri_x00e7__x00e3_o": "Sistema de CRM para captura de Lyyyy",
+          "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
+          "Pol_x00ed_tica_x0020_de_x0020_Re": "2 anos",
+          "DadosPessoais": [
+            "Nome",
+            "CPF",
+            "RG",
+            "Endereço",
+            "E-mail",
+            "Ocupação"
+          ],
+          "URL_x0020_Prefixo_x0020_Delete": "https://app.xxxxx.com/",
+          "URL_x0020_Prefixo_x0020_Read": "https://app.xxxxx.com/",
+          "URL_x0020_Prefixo_x0020_Update": "https://app.xxxxx.com/",
+          "LinkTitleNoMenu": "CRM-xxxxx",
+          "LinkTitle": "CRM-xxxxx",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "1",
+          "ContentType": "Item",
+          "Created": "2021-07-27T19:18:05Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "14",
+          "_UIVersionString": "4.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
+        "createdDateTime": "2021-07-27T19:18:05Z",
+        "eTag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
+        "id": "2",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Fontes%20de%20Dados/2_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,fgsdfg787-dfgdf789-jjkh343-scfgc,f456374-3467437-63456563c-3477a-34765"
+        },
+        "contentType": {
+          "id": "0x0100D3723F67D564456747FGHFGHFGHFGH",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('2')/fields/$entity",
+        "fields": {
+          "@odata.etag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
+          "Title": "CRM-Contatos",
+          "Sistema": "xxxxx",
+          "Tipo_x0020_Sistema": "SaaS",
+          "Tabela": "Czzzzzzz",
+          "Descri_x00e7__x00e3_o": "Sistema de CRM para armazenamento dos Czzzzzzz dos clientes",
+          "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
+          "Pol_x00ed_tica_x0020_de_x0020_Re": "5 anos",
+          "DadosPessoais": [
+            "Nome",
+            "CNPJ",
+            "Endereço",
+            "Fax",
+            "Telefone"
+          ],
+          "URL_x0020_Prefixo_x0020_Delete": "https://app.xxxxx.com/",
+          "URL_x0020_Prefixo_x0020_Read": "https://app.xxxxx.com/",
+          "URL_x0020_Prefixo_x0020_Update": "https://app.xxxxx.com/",
+          "LinkTitleNoMenu": "CRM-Czzzzzzz",
+          "LinkTitle": "CRM-Czzzzzzz",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "2",
+          "ContentType": "Item",
+          "Created": "2021-07-27T19:18:05Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "14",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
+        "createdDateTime": "2021-07-27T19:18:05Z",
+        "eTag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
+        "id": "3",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Fontes%20de%20Dados/3_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,fgsdfg787-dfgdf789-jjkh343-scfgc,f456374-3467437-63456563c-3477a-34765"
+        },
+        "contentType": {
+          "id": "0x0100D3723F67D564456747FGHFGHFGHFGH",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('3')/fields/$entity",
+        "fields": {
+          "@odata.etag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
+          "Title": "CRM-Users",
+          "Sistema": "xxxxx",
+          "Tipo_x0020_Sistema": "SaaS",
+          "Tabela": "Users",
+          "Descri_x00e7__x00e3_o": "Sistema de CRM para armazenamento dos usuários",
+          "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
+          "Pol_x00ed_tica_x0020_de_x0020_Re": "3 anos",
+          "DadosPessoais": [
+            "RG",
+            "Telefone",
+            "Estado Civil"
+          ],
+          "URL_x0020_Prefixo_x0020_Delete": "https://app.xxxxx.com/",
+          "URL_x0020_Prefixo_x0020_Read": "https://app.xxxxx.com/",
+          "URL_x0020_Prefixo_x0020_Update": "https://app.xxxxx.com/",
+          "LinkTitleNoMenu": "CRM-Users",
+          "LinkTitle": "CRM-Users",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "3",
+          "ContentType": "Item",
+          "Created": "2021-07-27T19:18:05Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "14",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
+        "createdDateTime": "2021-07-27T19:18:05Z",
+        "eTag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
+        "id": "4",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Fontes%20de%20Dados/4_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,fgsdfg787-dfgdf789-jjkh343-scfgc,f456374-3467437-63456563c-3477a-34765"
+        },
+        "contentType": {
+          "id": "0x0100D3723F67D564456747FGHFGHFGHFGH",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('4')/fields/$entity",
+        "fields": {
+          "@odata.etag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
+          "Title": "TOTVS/PROTHEUS/SA1_CLIENTES",
+          "Sistema": "Pxxxxxx",
+          "Tipo_x0020_Sistema": "Onprem",
+          "Tabela": "/sa1_cliente",
+          "Descri_x00e7__x00e3_o": "Sistema de ERP para cadastro dos clientes, para emissão de NF e fluxo financeiro",
+          "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
+          "Pol_x00ed_tica_x0020_de_x0020_Re": "10 anos",
+          "DadosPessoais": [
+            "Nome",
+            "E-mail",
+            "Ocupação",
+            "Orientação Sexual",
+            "Religião"
+          ],
+          "URL_x0020_Prefixo_x0020_Delete": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "URL_x0020_Prefixo_x0020_Read": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "URL_x0020_Prefixo_x0020_Update": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "LinkTitleNoMenu": "TOTVS/PROTHEUS/SA1_CLIENTES",
+          "LinkTitle": "TOTVS/PROTHEUS/SA1_CLIENTES",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "4",
+          "ContentType": "Item",
+          "Created": "2021-07-27T19:18:05Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "14",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "acab78f1-cbbf-4962-8c9e-0c0576c4c56d,5",
+        "createdDateTime": "2021-07-27T19:18:05Z",
+        "eTag": "acab78f1-cbbf-4962-8c9e-0c0576c4c56d,5",
+        "id": "5",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Fontes%20de%20Dados/5_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,fgsdfg787-dfgdf789-jjkh343-scfgc,f456374-3467437-63456563c-3477a-34765"
+        },
+        "contentType": {
+          "id": "0x0100D3723F67D564456747FGHFGHFGHFGH",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('5')/fields/$entity",
+        "fields": {
+          "@odata.etag": "acab78f1-cbbf-4962-8c9e-0c0576c4c56d,5",
+          "Title": "ERP-Funcionário",
+          "Sistema": "Pxxxxxx",
+          "Tipo_x0020_Sistema": "Onprem",
+          "Tabela": "/sra_funcionario",
+          "Descri_x00e7__x00e3_o": "Sistema de ERP para cadastro dos colaboradores",
+          "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
+          "Pol_x00ed_tica_x0020_de_x0020_Re": "25 anos",
+          "DadosPessoais": [
+            "Nome",
+            "CPF",
+            "CNH"
+          ],
+          "URL_x0020_Prefixo_x0020_Delete": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "URL_x0020_Prefixo_x0020_Read": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "URL_x0020_Prefixo_x0020_Update": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "LinkTitleNoMenu": "ERP-Funcionário",
+          "LinkTitle": "ERP-Funcionário",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "5",
+          "ContentType": "Item",
+          "Created": "2021-07-27T19:18:05Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "14",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "039c52f7-9e8f-45b6-95db-4aa0df51ff21,5",
+        "createdDateTime": "2021-07-27T19:18:05Z",
+        "eTag": "039c52f7-9e8f-45b6-95db-4aa0df51ff21,5",
+        "id": "6",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Fontes%20de%20Dados/6_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,fgsdfg787-dfgdf789-jjkh343-scfgc,f456374-3467437-63456563c-3477a-34765"
+        },
+        "contentType": {
+          "id": "0x0100D3723F67D564456747FGHFGHFGHFGH",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('6')/fields/$entity",
+        "fields": {
+          "@odata.etag": "039c52f7-9e8f-45b6-95db-4aa0df51ff21,5",
+          "Title": "ERP-Fornecedor",
+          "Sistema": "Pxxxxxx",
+          "Tipo_x0020_Sistema": "Onprem",
+          "Tabela": "/sa2_fornecedor",
+          "Descri_x00e7__x00e3_o": "Sistema de ERP para cadastro dos fornecedores",
+          "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
+          "Pol_x00ed_tica_x0020_de_x0020_Re": "5 anos",
+          "DadosPessoais": [
+            "Endereço",
+            "E-mail",
+            "Ocupação",
+            "Nome da Mãe",
+            "Nome do Pai"
+          ],
+          "URL_x0020_Prefixo_x0020_Delete": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "URL_x0020_Prefixo_x0020_Read": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "URL_x0020_Prefixo_x0020_Update": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "LinkTitleNoMenu": "ERP-Fornecedor",
+          "LinkTitle": "ERP-Fornecedor",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "6",
+          "ContentType": "Item",
+          "Created": "2021-07-27T19:18:05Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "14",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      },
+      {
+        "@odata.etag": "0a626c29-f1a6-4888-a267-a197b5caad00,5",
+        "createdDateTime": "2021-07-27T19:18:05Z",
+        "eTag": "0a626c29-f1a6-4888-a267-a197b5caad00,5",
+        "id": "7",
+        "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+        "webUrl": "https://xxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxvxxxx_LGPD/Lists/Fontes%20de%20Dados/7_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "sdffg5-0dde-6756-356356-8c56546tt6",
+            "displayName": "Axxxxxx Mxxxxxx"
+          }
+        },
+        "parentReference": {
+          "siteId": "xxxxxxxxxxxxxxxx.sharepoint.com,fgsdfg787-dfgdf789-jjkh343-scfgc,f456374-3467437-63456563c-3477a-34765"
+        },
+        "contentType": {
+          "id": "0x0100D3723F67D564456747FGHFGHFGHFGH",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('734678834-86675a-31094734987c-938746347d-3467')/items('7')/fields/$entity",
+        "fields": {
+          "@odata.etag": "0a626c29-f1a6-4888-a267-a197b5caad00,5",
+          "Title": "ERP-Dependente",
+          "Sistema": "Pxxxxxx",
+          "Tipo_x0020_Sistema": "Onprem",
+          "Tabela": "/srb_dependente",
+          "Descri_x00e7__x00e3_o": "Sistema de ERP para cadastro dos dependentes dos colaboradores",
+          "Frequ_x00ea_ncia_x0020_de_x0020_": "1 hora",
+          "Pol_x00ed_tica_x0020_de_x0020_Re": "25 anos",
+          "DadosPessoais": [
+            "Nome",
+            "CPF",
+            "Ocupação"
+          ],
+          "URL_x0020_Prefixo_x0020_Delete": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "URL_x0020_Prefixo_x0020_Read": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "URL_x0020_Prefixo_x0020_Update": "http://localhost:8080/pontusvision/pontusvision-lgpd-totvs-Pxxxxxx/1.0.0/",
+          "LinkTitleNoMenu": "ERP-Dependente",
+          "LinkTitle": "ERP-Dependente",
+          "Modified": "2021-09-17T18:33:03Z",
+          "id": "7",
+          "ContentType": "Item",
+          "Created": "2021-07-27T19:18:05Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "14",
+          "_UIVersionString": "5.0",
+          "Attachments": false,
+          "Edit": "",
+          "ItemChildCount": "0",
+          "FolderChildCount": "0",
+          "_ComplianceFlags": "",
+          "_ComplianceTag": "",
+          "_ComplianceTagWrittenTime": "",
+          "_ComplianceTagUserId": ""
+        }
+      }
+    ]
+}

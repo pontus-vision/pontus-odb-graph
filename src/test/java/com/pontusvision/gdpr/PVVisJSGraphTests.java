@@ -37,14 +37,14 @@ public class PVVisJSGraphTests extends AppTest {
   public void test00001InfraGraph() throws InterruptedException {
     try {
 
-      jsonTestUtil("pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
               "sharepoint_fontes_de_dados");
 
-      jsonTestUtil("pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
               "$.queryResp[*].fields", "sharepoint_data_breaches");
 
       String vId =
-              App.executor.eval("App.g.V().has('Event.Data_Breach.Form_Id', eq('1'))" +
+              App.executor.eval("App.g.V().has('Event_Data_Breach_Form_Id', eq('1'))" +
                       ".id().next().toString()").get().toString();
 
       String infraGraphJson = (String) VisJSGraph.getInfraGraph(vId);
@@ -54,7 +54,7 @@ public class PVVisJSGraphTests extends AppTest {
 //          "nodes": [
 //            {
 //              "id":"#190:0",
-//                    "group":"Object.Module",
+//                    "group":"Object_Module",
 //                    "label":"lyyyy",
 //                    "shape":"image",
 //                    "image":
@@ -62,7 +62,7 @@ public class PVVisJSGraphTests extends AppTest {
 //            },
 //            {
 //              "id":"#142:0",
-//                    "group":"Object.Data_Source",
+//                    "group":"Object_Data_Source",
 //                    "label":"SISTEMA DE CRM PARA CAPTURA DE LYYYY",
 //                    "shape":"image",
 //                    "image":
@@ -70,7 +70,7 @@ public class PVVisJSGraphTests extends AppTest {
 //            },
 //            {
 //              "id":"#238:0",
-//                    "group":"Object.System",
+//                    "group":"Object_System",
 //                    "label":"XXXXX",
 //                    "shape":"image",
 //                    "image":
@@ -78,7 +78,7 @@ public class PVVisJSGraphTests extends AppTest {
 //            },
 //            {
 //              "id":"#234:0",
-//                    "group":"Object.Subsystem",
+//                    "group":"Object_Subsystem",
 //                    "label":"SAAS",
 //                    "shape":"image",
 //                    "image":
@@ -104,9 +104,9 @@ public class PVVisJSGraphTests extends AppTest {
 //            ]
 //        }
 
-      // Object.Module--->Has Module--->Object.DataSource
-      // Object.Subsystem--->Has Subsystem--->Object.Module
-      // Object.System--->Has System--->Object.Subsystem
+      // Object_Module--->Has Module--->Object.DataSource
+      // Object_Subsystem--->Has Subsystem--->Object_Module
+      // Object_System--->Has System--->Object_Subsystem
 
       JSONObject obj = new JSONObject(infraGraphJson);
       Set<String> resp = new HashSet<>();
@@ -122,7 +122,7 @@ public class PVVisJSGraphTests extends AppTest {
 
       String vertices = resp.stream().sorted().collect(Collectors.toList()).toString();
 
-      assertEquals("[Object.Data_Source, Object.Module, Object.Subsystem, Object.System]",
+      assertEquals("[Object_Data_Source, Object_Module, Object_Subsystem, Object_System]",
               vertices, "Vertices to be drawn on the Dashboard");
 
       array = obj.getJSONArray("edges");
@@ -142,9 +142,9 @@ public class PVVisJSGraphTests extends AppTest {
 
       String edges = resp.stream().sorted().collect(Collectors.toList()).toString();
 
-      assertEquals("[Object.Module--->Has Module--->Object.Data_Source, " +
-              "Object.Subsystem--->Has Subsystem--->Object.Module, " +
-              "Object.System--->Has System--->Object.Subsystem]",
+      assertEquals("[Object_Module--->Has Module--->Object_Data_Source, " +
+              "Object_Subsystem--->Has Subsystem--->Object_Module, " +
+              "Object_System--->Has System--->Object_Subsystem]",
               edges, "Edges to be drawn on the Dashboard");
 
     } catch (Exception e) {

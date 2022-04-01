@@ -2,21 +2,21 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Person.Natural",
+        "label": "Person_Natural",
         "name": "titular",
         "props": [
           {
-            "name": "Person.Natural.Full_Name",
+            "name": "Person_Natural_Full_Name",
             "val": "${Nome?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Customer_ID",
+            "name": "Person_Natural_Customer_ID",
             "val": "${CPF?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Natural.Date_Of_Birth",
+            "name": "Person_Natural_Date_Of_Birth",
             "val": "${Data_de_Nascimento_Idade?.trim()}",
             "predicate": "eq",
             "mandatoryInSearch": true,
@@ -25,40 +25,40 @@
         ]
       },
       {
-        "label": "Person.Natural",
+        "label": "Person_Natural",
         "name": "mae",
         "condition": "${Nome_da_Mae?.trim()?.length() > 0}",
         "props": [
           {
-            "name": "Person.Natural.Full_Name",
+            "name": "Person_Natural_Full_Name",
             "val": "${Nome_da_Mae?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Person.Natural",
+        "label": "Person_Natural",
         "name": "pai",
         "condition": "${Nome_do_Pai?.trim()?.length() > 0}",
         "props": [
           {
-            "name": "Person.Natural.Full_Name",
+            "name": "Person_Natural_Full_Name",
             "val": "${Nome_do_Pai?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Person.Employee",
+        "label": "Person_Employee",
         "name": "colaborador",
         "props": [
           {
-            "name": "Person.Employee.ID",
+            "name": "Person_Employee_ID",
             "val": "${Matricula?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person.Employee.Role",
+            "name": "Person_Employee_Role",
             "val": "${Cargo?.trim()}/${Funcao?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -66,29 +66,29 @@
         ]
       },
       {
-        "label": "Person.Employee",
+        "label": "Person_Employee",
         "name": "chefe",
         "condition": "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
-            "name": "Person.Employee.ID",
+            "name": "Person_Employee_ID",
             "val": "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Identity_Card",
+        "label": "Object_Identity_Card",
         "name": "rne",
         "condition": "${RNE?.replaceAll('[^0-9]', '')?.length() > 0 }",
         "props": [
           {
-            "name": "Object.Identity_Card.Id_Value",
+            "name": "Object_Identity_Card_Id_Value",
             "val": "${RNE.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Identity_Card.Id_Type",
+            "name": "Object_Identity_Card_Id_Type",
             "val": "RNE",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -96,17 +96,17 @@
         ]
       },
       {
-        "label": "Object.Identity_Card",
+        "label": "Object_Identity_Card",
         "name": "cpf",
         "condition": "${CPF?.replaceAll('[^0-9]','')?.length() > 0}",
         "props": [
           {
-            "name": "Object.Identity_Card.Id_Value",
+            "name": "Object_Identity_Card_Id_Value",
             "val": "${CPF?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Identity_Card.Id_Type",
+            "name": "Object_Identity_Card_Id_Type",
             "val": "CPF",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -114,23 +114,23 @@
         ]
       },
       {
-        "label": "Object.Identity_Card",
+        "label": "Object_Identity_Card",
         "name": "rg",
         "condition": "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')?.length() > 0}",
         "props": [
           {
-            "name": "Object.Identity_Card.Id_Value",
+            "name": "Object_Identity_Card_Id_Value",
             "val": "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Identity_Card.Id_Text",
+            "name": "Object_Identity_Card_Id_Text",
             "val": "${Identidade___Orgao_Emissor___UF}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Identity_Card.Id_Type",
+            "name": "Object_Identity_Card_Id_Type",
             "val": "RG",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -138,78 +138,78 @@
         ]
       },
       {
-        "label": "Object.Email_Address",
+        "label": "Object_Email_Address",
         "name": "email",
         "condition": "${(Email != null) && !(Email.isEmpty())}",
         "props": [
           {
-            "name": "Object.Email_Address.Email",
+            "name": "Object_Email_Address_Email",
             "val": "${Email?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Email_Address",
+        "label": "Object_Email_Address",
         "name": "email_opcional",
         "condition": "${(E_Mail_Opcional != null) && !(E_Mail_Opcional.isEmpty())}",
         "props": [
           {
-            "name": "Object.Email_Address.Email",
+            "name": "Object_Email_Address_Email",
             "val": "${E_Mail_Opcional?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Location.Address",
+        "label": "Location_Address",
         "props": [
           {
-            "name": "Location.Address.Full_Address",
+            "name": "Location_Address_Full_Address",
             "val": "${Tipo___Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Phone_Number",
+        "label": "Object_Phone_Number",
         "condition": "${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}",
         "props": [
           {
-            "name": "Object.Phone_Number.Raw",
+            "name": "Object_Phone_Number_Raw",
             "val": "${Telefone}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Phone_Number.Numbers_Only",
+            "name": "Object_Phone_Number_Numbers_Only",
             "val": "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object.Phone_Number.Last_7_Digits",
+            "name": "Object_Phone_Number_Last_7_Digits",
             "val": "${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Event.Ingestion",
+        "label": "Event_Ingestion",
         "props": [
           {
-            "name": "Event.Ingestion.Type",
+            "name": "Event_Ingestion_Type",
             "val": "ADP",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Operation",
+            "name": "Event_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Create_Date",
+            "name": "Event_Ingestion_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -218,46 +218,32 @@
         ]
       },
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "ADP",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Event.Group_Ingestion",
+        "label": "Event_Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Type",
+            "name": "Event_Group_Ingestion_Type",
             "val": "ADP",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Operation",
+            "name": "Event_Group_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
           }
         ]
       }
@@ -265,18 +251,18 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object.Data_Source",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
         "fromVertexName": "titular",
-        "toVertexLabel": "Event.Ingestion"
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Is_Alias",
@@ -301,7 +287,7 @@
       {
         "label": "Is_Located",
         "fromVertexName": "titular",
-        "toVertexLabel": "Location.Address"
+        "toVertexLabel": "Location_Address"
       },
       {
         "label": "Has_Id_Card",
@@ -321,7 +307,7 @@
       {
         "label": "Has_Phone",
         "fromVertexName": "titular",
-        "toVertexLabel": "Object.Phone_Number"
+        "toVertexLabel": "Object_Phone_Number"
       },
       {
         "label": "Has_Parent_Or_Guardian",

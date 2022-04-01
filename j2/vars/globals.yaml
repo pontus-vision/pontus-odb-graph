@@ -27,23 +27,23 @@ schema:
       dataType: Double
       cardinality: SINGLE
 
-    - name: Metadata.Type
-    - name: Metadata.Controller
-    - name: Metadata.Create_Date
+    - name: Metadata_Type
+    - name: Metadata_Controller
+    - name: Metadata_Create_Date
       dataType: Date
-    - name: Metadata.GDPR_Status
-    - name: Metadata.Lineage
-    - name: Metadata.Lineage_Location_Tag
-    - name: Metadata.Lineage_Server_Tag
-    - name: Metadata.Orig_Id
-    - name: Metadata.Processor
-    - name: Metadata.Redaction
-    - name: Metadata.Status
+    - name: Metadata_GDPR_Status
+    - name: Metadata_Lineage
+    - name: Metadata_Lineage_Location_Tag
+    - name: Metadata_Lineage_Server_Tag
+    - name: Metadata_Orig_Id
+    - name: Metadata_Processor
+    - name: Metadata_Redaction
+    - name: Metadata_Status
 
       
 
   vertices:
-#    - name: "Object.Sensitive_Data"
+#    - name: "Object_Sensitive_Data"
 #      partition: false
 #      useStatic: false
 #      props:
@@ -58,9 +58,10 @@ schema:
 #        - name: "Church_Membership"
 #        - name: "Sexual_Orientation"
 
-    - name: "Event.Consent"
+    - name: "Event_Consent"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
       props:
         - name: Data_Origin
         - name: Created_By
@@ -71,15 +72,15 @@ schema:
         - name: Form_Owner_Id
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
-        - name: Metadata.Create_Date
+        - name: Metadata_Create_Date
           dataType: Date
-        - name: Metadata.Update_Date
+        - name: Metadata_Update_Date
           dataType: Date
         - name: Status
         - name: Description
         - name: Customer_ID
 
-    - name: "Event.Data_Breach"
+    - name: "Event_Data_Breach"
       partition: false
       useStatic: false
       props:
@@ -87,9 +88,9 @@ schema:
         - name: Description
         - name: Id
         - name: Impact
-        - name: Metadata.Create_Date
+        - name: Metadata_Create_Date
           dataType: Date
-        - name: Metadata.Update_Date
+        - name: Metadata_Update_Date
           dataType: Date
         - name: Natural_Person_Notified
         - name: Source
@@ -99,7 +100,7 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
 
-    - name: "Event.Form_Ingestion"
+    - name: "Event_Form_Ingestion"
       partition: false
       useStatic: false
       props:
@@ -114,56 +115,56 @@ schema:
         - name: Type
         - name: Id
 
-    - name: "Event.Email_Msg_Group"
+    - name: "Event_Email_Msg_Group"
       partition: false
       useStatic: false
       props:
         - name: Ingestion_Date
 
-    - name: "Event.Email_To_Group"
-      partition: false
-      useStatic: false
-      props:
-        - name: Ingestion_Date
-        - name: Email
-
-    - name: "Event.Email_From_Group"
+    - name: "Event_Email_To_Group"
       partition: false
       useStatic: false
       props:
         - name: Ingestion_Date
         - name: Email
 
-    - name: "Event.Email_CC_Group"
+    - name: "Event_Email_From_Group"
+      partition: false
+      useStatic: false
+      props:
+        - name: Ingestion_Date
+        - name: Email
+
+    - name: "Event_Email_CC_Group"
       partition: false
       useStatic: false
       props:
         - name: Ingestion_Date
         - name: Email
         
-    - name: "Event.Email_BCC_Group"
+    - name: "Event_Email_BCC_Group"
       partition: false
       useStatic: false
       props:
         - name: Ingestion_Date
         - name: Email
 
-    - name: "Event.NLP_Group"
+    - name: "Event_NLP_Group"
       partition: false
       useStatic: false
       props:
         - name: Ingestion_Date
-          # Use the Person.Natural.Id here:
+          # Use the Person_Natural_Id here:
         - name: Person_Id
 
-    - name: "Event.File_Group_Ingestion"
+    - name: "Event_File_Group_Ingestion"
       partition: false
       useStatic: false
       props:
         - name: Ingestion_Date
         - name: Group_Name
 
-    - name: "Event.File_Ingestion"
+    - name: "Event_File_Ingestion"
       partition: false
       useStatic: false
       props:
@@ -180,11 +181,12 @@ schema:
           dataType: Double
 
 
-    - name: "Event.Email_Message"
+    - name: "Event_Email_Message"
       partition: false
       useStatic: false
       props:
         - name: Business_Rules
+          index: false
         - name: Domain_Unstructured_Data_b64
           index: false
         - name: Domain_b64
@@ -204,7 +206,7 @@ schema:
         - name: User_Id
 
 
-    - name: "Event.Group_Ingestion"
+    - name: "Event_Group_Ingestion"
       partition: false
       useStatic: false
       props:
@@ -222,17 +224,20 @@ schema:
         - name: Type
         - name: Ingestion_Date
 
-    - name: "Event.Group_Subject_Access_Request"
+    - name: "Event_Group_Subject_Access_Request"
       partition: false
       useStatic: false
       props:
         - name: Ingestion_Date
 
-    - name: "Event.Ingestion"
+    - name: "Event_Ingestion"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
       props:
         - name: Business_Rules
+          index: false
+
         - name: Domain_Unstructured_Data_b64
           index: false
 
@@ -245,13 +250,24 @@ schema:
         - name: Operation
         - name: Type
 
-    - name: "Event.Subject_Access_Request"
+    - name: "Event_Meeting"
       partition: false
       useStatic: false
       props:
-        - name: Metadata.Create_Date
+        - name: Form_Id
+        - name: Title
+        - name: Date
           dataType: Date
-        - name: Metadata.Update_Date
+        - name: Discussed_Topics  # OR Discussed_Subjects ?!
+        - name: Participants
+
+    - name: "Event_Subject_Access_Request"
+      partition: false
+      useStatic: false
+      props:
+        - name: Metadata_Create_Date
+          dataType: Date
+        - name: Metadata_Update_Date
           dataType: Date
         - name: Request_Type
         - name: Request_Channel
@@ -263,7 +279,7 @@ schema:
         - name: Form_Submission_Owner_Id
         - name: Natural_Person_Type
 
-    - name: "Event.Training"
+    - name: "Event_Training"
       partition: false
       useStatic: false
       props:
@@ -273,7 +289,7 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
 
-    - name: "Event.Transaction"
+    - name: "Event_Transaction"
       partition: false
       useStatic: false
       props:
@@ -286,7 +302,7 @@ schema:
         - name: Type
         - name: Value
 
-    - name: "Event.Complaint"
+    - name: "Event_Complaint"
       partition: false
       useStatic: false
       props:
@@ -303,7 +319,7 @@ schema:
         - name: Status
         - name: Type
 
-    - name: "Location.Address"
+    - name: "Location_Address"
       partition: false
       useStatic: false
       props:
@@ -316,28 +332,28 @@ schema:
         - name: State
         - name: Street
         - name: Type
-        - name: parser.category
-        - name: parser.city
-        - name: parser.city_district
-        - name: parser.country
-        - name: parser.country_region
-        - name: parser.entrance
-        - name: parser.house
-        - name: parser.house_number
-        - name: parser.island
-        - name: parser.level
-        - name: parser.near
-        - name: parser.po_box
-        - name: parser.postcode
-        - name: parser.road
-        - name: parser.staircase
-        - name: parser.state
-        - name: parser.state_district
-        - name: parser.suburb
-        - name: parser.unit
-        - name: parser.world_region
+        - name: parser_category
+        - name: parser_city
+        - name: parser_city_district
+        - name: parser_country
+        - name: parser_country_region
+        - name: parser_entrance
+        - name: parser_house
+        - name: parser_house_number
+        - name: parser_island
+        - name: parser_level
+        - name: parser_near
+        - name: parser_po_box
+        - name: parser_postcode
+        - name: parser_road
+        - name: parser_staircase
+        - name: parser_state
+        - name: parser_state_district
+        - name: parser_suburb
+        - name: parser_unit
+        - name: parser_world_region
 
-    - name: "Object.AWS_Instance"
+    - name: "Object_AWS_Instance"
       partition: false
       useStatic: false
       props:
@@ -355,7 +371,7 @@ schema:
         - name: Public_Dns_Name
         - name: Tags
 
-    - name: "Object.AWS_Network_Interface"
+    - name: "Object_AWS_Network_Interface"
       partition: false
       useStatic: false
       props:
@@ -366,7 +382,7 @@ schema:
         - name: PrivateDnsName
         - name: PrivateIpAddresses
 
-    - name: "Object.AWS_Security_Group"
+    - name: "Object_AWS_Security_Group"
       partition: false
       useStatic: false
       props:
@@ -375,13 +391,13 @@ schema:
         - name: Ip_Perms_Egress_IpRanges
         - name: Ip_Perms_Ingress_IpRanges
 
-    - name: "Object.AWS_VPC"
+    - name: "Object_AWS_VPC"
       partition: false
       useStatic: false
       props:
         - name: Id
 
-    - name: "Object.Application"
+    - name: "Object_Application"
       partition: false
       useStatic: false
       props:
@@ -398,7 +414,7 @@ schema:
           dataType: Date
         - name: URL
 
-    - name: "Object.Awareness_Campaign"
+    - name: "Object_Awareness_Campaign"
       partition: false
       useStatic: false
       props:
@@ -415,7 +431,7 @@ schema:
 
         - name: URL
 
-    - name: "Object.Biometric"
+    - name: "Object_Biometric"
       partition: false
       useStatic: false
       props:
@@ -426,7 +442,7 @@ schema:
         - name: Retinal_scans
         - name: Weight_kg
 
-    - name: "Object.Contract"
+    - name: "Object_Contract"
       partition: false
       useStatic: false
       props:
@@ -444,7 +460,7 @@ schema:
         - name: Status
         - name: Type
 
-    - name: "Object.Campaign"
+    - name: "Object_Campaign"
       partition: false
       useStatic: false
       props:
@@ -461,7 +477,7 @@ schema:
         - name: Status
         - name: Type
 
-    - name: "Object.Credential"
+    - name: "Object_Credential"
       partition: false
       useStatic: false
       props:
@@ -470,7 +486,7 @@ schema:
 
         - name: User_Id
 
-    - name: "Object.Data_Policy"
+    - name: "Object_Data_Policy"
       partition: false
       useStatic: false
       props:
@@ -489,7 +505,7 @@ schema:
           dataType: Date
         - name: Update_Frequency
 
-    - name: "Object.Data_Procedures"
+    - name: "Object_Data_Procedures"
       partition: false
       useStatic: false
       props:
@@ -517,11 +533,12 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
 
-    - name: "Object.Data_Source"
+    - name: "Object_Data_Source"
       partition: false
       useStatic: false
       props:
         - name: Business_Rules
+          index: false
         - name: Create_Date
           dataType: Date
         - name: Credential_ApiKey
@@ -549,11 +566,12 @@ schema:
           dataType: Date
 
 
-    - name: "Object.Data_Src_Mapping_Rule"
+    - name: "Object_Data_Src_Mapping_Rule"
       partition: false
       useStatic: false
       props:
         - name: Business_Rules_JSON
+          index: false
         - name: Create_Date
           dataType: Date
         - name: Form_Id
@@ -565,15 +583,16 @@ schema:
           dataType: Date
 
 
-    - name: "Object.Email_Address"
+    - name: "Object_Email_Address"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
       props:
         - name: Email
         - name: Host
         - name: Type
 
-    - name: "Object.Email_Message_Attachment"
+    - name: "Object_Email_Message_Attachment"
       partition: false
       useStatic: false
       props:
@@ -606,7 +625,7 @@ schema:
         - name: Size_Bytes
           dataType: Double
 
-    - name: "Object.Email_Message_Body"
+    - name: "Object_Email_Message_Body"
       partition: false
       useStatic: false
       props:
@@ -640,7 +659,7 @@ schema:
 
 
 
-    - name: "Object.Form"
+    - name: "Object_Form"
       partition: false
       useStatic: false
       props:
@@ -652,7 +671,7 @@ schema:
         - name: URL
         - name: Vertex_Label
 
-    - name: "Object.Genetic"
+    - name: "Object_Genetic"
       partition: false
       useStatic: false
       props:
@@ -660,7 +679,7 @@ schema:
         - name: Family_Medical_History
         - name: RNA
 
-    - name: "Object.Health"
+    - name: "Object_Health"
       partition: false
       useStatic: false
       props:
@@ -669,16 +688,18 @@ schema:
         - name: Diseases
         - name: Organ_Donor
 
-    - name: "Object.Identity_Card"
+    - name: "Object_Identity_Card"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
+
       props:
         - name: Id_Name
         - name: Id_Text
         - name: Id_Type
         - name: Id_Value
 
-    - name: "Object.Insurance_Policy"
+    - name: "Object_Insurance_Policy"
       partition: false
       useStatic: false
       props:
@@ -695,7 +716,7 @@ schema:
         - name: Status
         - name: Type
 
-    - name: "Object.Lawful_Basis"
+    - name: "Object_Lawful_Basis"
       partition: false
       useStatic: false
       props:
@@ -703,7 +724,7 @@ schema:
         - name: Id
         - name: Short_Description
 
-    - name: "Object.Metadata_Source"
+    - name: "Object_Metadata_Source"
       partition: false
       useStatic: false
       props:
@@ -733,14 +754,15 @@ schema:
         - name: Domain
         - name: Domain_Frequency
         - name: Business_Rules
+          index: false
 
-    - name: "Object.Module"
+    - name: "Object_Module"
       partition: false
       useStatic: false
       props:
         - name: Name
 
-    - name: "Object.Notification_Templates"
+    - name: "Object_Notification_Templates"
       partition: false
       useStatic: false
       props:
@@ -751,7 +773,7 @@ schema:
         - name: Types
         - name: URL
 
-    - name: "Object.Policies"
+    - name: "Object_Policies"
       partition: false
       useStatic: false
       props:
@@ -764,7 +786,7 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
 
-    - name: "Object.Phone_Number"
+    - name: "Object_Phone_Number"
       partition: false
       useStatic: false
       props:
@@ -773,7 +795,7 @@ schema:
         - name: Raw
         - name: Type
 
-    - name: "Object.Privacy_Impact_Assessment"
+    - name: "Object_Privacy_Impact_Assessment"
       partition: false
       useStatic: false
       props:
@@ -794,15 +816,15 @@ schema:
         - name: Start_Date
           dataType: Date
 
-    - name: "Object.Legitimate_Interests_Assessment"
+    - name: "Object_Legitimate_Interests_Assessment"
       partition: false
       useStatic: false
       props:
-        - name: Personal_Data_Treatment
+        - name: Is_Essential
         - name: Lawful_Basis_Justification
-        - name: Processing_Purpose
+        - name: Is_Required
 
-    - name: "Object.Risk_Data_Source"
+    - name: "Object_Risk_Data_Source"
       partition: false
       useStatic: false
       props:
@@ -831,7 +853,7 @@ schema:
           dataType: Date
 
 
-    - name: "Object.Risk_Mitigation_Data_Source"
+    - name: "Object_Risk_Mitigation_Data_Source"
       partition: false
       useStatic: false
       props:
@@ -855,8 +877,28 @@ schema:
         - name: Update_Date
           dataType: Date
 
+    - name: "Object_Privacy_Docs"
+      partition: false
+      useStatic: false
+      props:
+        - name: Form_Id
+        - name: Title
+        - name: Date
+          dataType: Date
+        - name: Description
+        - name: URL
 
-    - name: "Object.Privacy_Notice"
+    - name: "Object_Legal_Actions"
+      partition: false
+      useStatic: false
+      props:
+        - name: Form_Id
+        - name: Date
+          dataType: Date
+        - name: Description
+        - name: Details
+
+    - name: "Object_Privacy_Notice"
       partition: false
       useStatic: false
       props:
@@ -877,9 +919,9 @@ schema:
         - name: Id
         - name: Info_Collected
         - name: Likely_To_Complain
-        - name: Metadata.Create_Date
+        - name: Metadata_Create_Date
           dataType: Date
-        - name: Metadata.Update_Date
+        - name: Metadata_Update_Date
           dataType: Date
         - name: Number_Of_Records_Monthly
         - name: Text
@@ -888,7 +930,7 @@ schema:
         - name: Who_Will_It_Be_Shared
         - name: Why_Is_It_Collected
 
-    - name: "Object.Salary"
+    - name: "Object_Salary"
       partition: false
       useStatic: false
       props:
@@ -896,7 +938,7 @@ schema:
         - name: Period
         - name: Value
 
-    - name: "Object.Sensitive_Data"
+    - name: "Object_Sensitive_Data"
       partition: false
       useStatic: false
       props:
@@ -909,19 +951,19 @@ schema:
         - name: Union_Membership
         - name: Description
 
-    - name: "Object.Subsystem"
+    - name: "Object_Subsystem"
       partition: false
       useStatic: false
       props:
         - name: Name
 
-    - name: "Object.System"
+    - name: "Object_System"
       partition: false
       useStatic: false
       props:
         - name: Name
 
-    - name: "Object.Vehicle"
+    - name: "Object_Vehicle"
       partition: false
       useStatic: false
       props:
@@ -930,7 +972,7 @@ schema:
         - name: Model_Year
 #        - name: CNH
 
-    - name: "Person.Employee"
+    - name: "Person_Employee"
       partition: false
       useStatic: false
       props:
@@ -951,7 +993,7 @@ schema:
         - name: Role
         - name: Title
 
-    - name: "Person.Identity"
+    - name: "Person_Identity"
       partition: false
       useStatic: false
       props:
@@ -974,9 +1016,11 @@ schema:
         - name: Religion
         - name: Title
 
-    - name: "Person.Natural"
+    - name: "Person_Natural"
       partition: false
       useStatic: false
+      indexType: NOTUNIQUE
+
       props:
         - name: Customer_ID
         - name: Id
@@ -998,7 +1042,7 @@ schema:
         - name: Title
         - name: Type
 
-    - name: "Person.Organisation"
+    - name: "Person_Organisation"
       partition: false
       useStatic: false
       props:
@@ -1020,87 +1064,87 @@ schema:
         - name: URL
         - name: orgCountrySet
 
-#  - name: "Object.Health"
+#  - name: "Object_Health"
 #
 #
-#  - name: "Object.Biometric"
+#  - name: "Object_Biometric"
 #
 #
-#  - name: "Object.Genetic"
+#  - name: "Object_Genetic"
 #
 #
-#  - name: "Event.Consent"
+#  - name: "Event_Consent"
 #
 #
-#  - name: "Event.Transaction"
+#  - name: "Event_Transaction"
 #
 #
-#  - name: "Event.Data_Breach"
+#  - name: "Event_Data_Breach"
 #
 #
-#  - name: "Event.Form_Ingestion"
+#  - name: "Event_Form_Ingestion"
 #
 #
-#  - name: "Event.Ingestion"
+#  - name: "Event_Ingestion"
 #
-#  - name: "Event.Group_Ingestion"
+#  - name: "Event_Group_Ingestion"
 #
-#  - name: "Event.Subject_Access_Request"
+#  - name: "Event_Subject_Access_Request"
 #
-#  - name: "Event.Training"
-#  - name: "Location.Address"
+#  - name: "Event_Training"
+#  - name: "Location_Address"
 #
-#  - name: "Object.AWS_Instance"
+#  - name: "Object_AWS_Instance"
 #
-#  - name: "Object.AWS_Network_Interface"
-#  - name: "Object.AWS_Security_Group"
+#  - name: "Object_AWS_Network_Interface"
+#  - name: "Object_AWS_Security_Group"
 #
-#  - name: "Object.AWS_VPC"
+#  - name: "Object_AWS_VPC"
 #
-#  - name: "Object.Application"
+#  - name: "Object_Application"
 #
-#  - name: "Object.Awareness_Campaign"
-#
-#
-#  - name: "Object.Credential"
-#
-#  - name: "Object.Data_Procedures"
-#
-#  - name: "Object.Data_Source"
-#
-#  - name: "Object.Metadata_Source"
-#
-#  - name: "Object.Data_Policy"
-#
-#  - name: "Object.Email_Address"
-#
-#  - name: "Object.Form"
+#  - name: "Object_Awareness_Campaign"
 #
 #
-#  - name: "Object.Identity_Card"
+#  - name: "Object_Credential"
 #
-#  - name: "Object.Insurance_Policy"
+#  - name: "Object_Data_Procedures"
 #
-#  - name: "Object.Lawful_Basis"
-#  - name: "Object.Contract"
+#  - name: "Object_Data_Source"
 #
-#  - name: "Object.Notification_Templates"
+#  - name: "Object_Metadata_Source"
 #
+#  - name: "Object_Data_Policy"
 #
-#  - name: "Object.Phone_Number"
+#  - name: "Object_Email_Address"
 #
-#  - name: "Object.Privacy_Impact_Assessment"
-#
-#  - name: "Object.Privacy_Notice"
-#
-#  - name: "Person.Identity"
+#  - name: "Object_Form"
 #
 #
-#  - name: "Person.Natural"
+#  - name: "Object_Identity_Card"
 #
-#  - name: "Person.Employee"
+#  - name: "Object_Insurance_Policy"
 #
-#  - name: "Person.Organisation"
+#  - name: "Object_Lawful_Basis"
+#  - name: "Object_Contract"
+#
+#  - name: "Object_Notification_Templates"
+#
+#
+#  - name: "Object_Phone_Number"
+#
+#  - name: "Object_Privacy_Impact_Assessment"
+#
+#  - name: "Object_Privacy_Notice"
+#
+#  - name: "Person_Identity"
+#
+#
+#  - name: "Person_Natural"
+#
+#  - name: "Person_Employee"
+#
+#  - name: "Person_Organisation"
 #
 
   edges:

@@ -2,7 +2,7 @@
 rules:
   ADP:
     vertices:
-      - label: Person.Natural
+      - label: Person_Natural
         name: titular
         props:
           Full_Name: "${Nome?.trim()?.toUpperCase()}"
@@ -16,19 +16,19 @@ rules:
             mandatoryInSearch: true
             predicate: "eq"
 
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${Nome_da_Mae?.trim()?.length() > 0}"
         name: mae
         props:
           Full_Name: "${Nome_da_Mae?.trim()?.toUpperCase()}"
 
-      - label: Person.Natural
+      - label: Person_Natural
         condition: "${Nome_do_Pai?.trim()?.length() > 0}"
         name: pai
         props:
           Full_Name: "${Nome_do_Pai?.trim()?.toUpperCase()}"
 
-      - label: Person.Employee
+      - label: Person_Employee
         name: colaborador
         props:
           ID: "${Matricula?.replaceAll('[^0-9]', '')}"
@@ -36,13 +36,13 @@ rules:
             val: "${Cargo?.trim()}/${Funcao?.trim()}"
             excludeFromSearch: true
 
-      - label: Person.Employee
+      - label: Person_Employee
         condition: "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: chefe
         props:
           ID: "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}"
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${RNE?.replaceAll('[^0-9]', '')?.length() > 0 }"
         name: rne
         props:
@@ -53,7 +53,7 @@ rules:
             val: "RNE"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${CPF?.replaceAll('[^0-9]','')?.length() > 0}"
         name: cpf
         props:
@@ -64,7 +64,7 @@ rules:
             val: "CPF"
             excludeFromSearch: true
 
-      - label: Object.Identity_Card
+      - label: Object_Identity_Card
         condition: "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')?.length() > 0}"
         name: rg
         props:
@@ -76,26 +76,26 @@ rules:
             val: "RG"
             excludeFromSearch: true
 
-      - label: Object.Email_Address
+      - label: Object_Email_Address
         condition: "${(Email != null) && !(Email.isEmpty())}"
         name: email
         props:
           Email: "${Email?.trim()?.toLowerCase()}"
 
-      - label: Object.Email_Address
+      - label: Object_Email_Address
         condition: "${(E_Mail_Opcional != null) && !(E_Mail_Opcional.isEmpty())}"
         name: email_opcional
         props:
           Email: "${E_Mail_Opcional?.trim()?.toLowerCase()}"
 
-      - label: Location.Address
+      - label: Location_Address
         props:
           Full_Address: "${Tipo___Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}"
 #          Type:
 #            val: "${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}"
 #            excludeFromSearch: true
 
-      - label: Object.Phone_Number
+      - label: Object_Phone_Number
         condition: "${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}"
         props:
           Raw:
@@ -111,7 +111,7 @@ rules:
             val: "${(((Telefone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             mandatoryInSearch: true
 
-      - label: Event.Ingestion
+      - label: Event_Ingestion
         props:
           Type:
             val: "ADP"
@@ -124,38 +124,38 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Object.Data_Source
+      - label: Object_Data_Source
         props:
           Name: "ADP"
 #          Description: "Dados RH Colaboradores ADP"
 #          Type: "Structured Data Insertion"
 
-      - label: Event.Group_Ingestion
+      - label: Event_Group_Ingestion
         props:
           Type: "ADP"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
-          Metadata_Start_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
-          Metadata_End_Date:
-            val: "${new Date()}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Metadata_Start_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+#          Metadata_End_Date:
+#            val: "${new Date()}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
     edges:
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Object.Data_Source"
-        toVertexLabel: "Event.Group_Ingestion"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event.Group_Ingestion"
-        toVertexLabel: "Event.Ingestion"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
         fromVertexName: "titular"
-        toVertexLabel: "Event.Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
       - label: "Is_Alias"
         fromVertexName: "titular"
@@ -175,7 +175,7 @@ rules:
 
       - label: "Is_Located"
         fromVertexName: "titular"
-        toVertexLabel: "Location.Address"
+        toVertexLabel: "Location_Address"
 
       - label: "Has_Id_Card"
         fromVertexName: "titular"
@@ -191,7 +191,7 @@ rules:
 
       - label: "Has_Phone"
         fromVertexName: "titular"
-        toVertexLabel: "Object.Phone_Number"
+        toVertexLabel: "Object_Phone_Number"
 
       - label: "Has_Parent_Or_Guardian"
         fromVertexName: "titular"

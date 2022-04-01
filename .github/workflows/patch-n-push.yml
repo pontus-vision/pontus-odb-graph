@@ -28,8 +28,6 @@ jobs:
         with:
           install: true
 
-          
-
       - name: semver-tags
         id: semver-tags
         uses: SOLIDSoftworks/semver-tags@1.0.1
@@ -44,6 +42,7 @@ jobs:
           export TAG=${{ steps.semver-tags.outputs.semantic-version }}
           cat ./docker-lib/Dockerfile.template | envsubst > ./docker-lib/Dockerfile
           cat ./docker-conf/Dockerfile.template | envsubst > ./docker-conf/Dockerfile
+
           cat ./docker-pontus-track-graphdb-base/base/Dockerfile.template | envsubst > ./docker-pontus-track-graphdb-base/base/Dockerfile
           cat ./docker-pontus-track-graphdb-base/orientdb/Dockerfile.template | envsubst > ./docker-pontus-track-graphdb-base/orientdb/Dockerfile
           cat ./docker-pontus-track-graphdb-base/orientdb-pt/Dockerfile.template | envsubst > ./docker-pontus-track-graphdb-base/orientdb-pt/Dockerfile
@@ -70,6 +69,7 @@ jobs:
           context: .
           tags: pontusvisiongdpr/pontus-graphdb-odb-conf:${{ steps.semver-tags.outputs.semantic-version }}
           file: ./docker-lib/Dockerfile
+
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
           push: true

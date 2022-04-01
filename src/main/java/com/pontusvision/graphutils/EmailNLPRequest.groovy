@@ -85,7 +85,10 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   static void upsertEmailNLPRequestArray(
           OrientStandardGraph graph,
           GraphTraversalSource g,
-          EmailNLPRequest[] reqs) {
+          EmailNLPRequest[] reqs,
+          String ruleName) {
+    Boolean isSlim = App.useSlim || ruleName?.toLowerCase()?.contains("slim");
+
     Transaction trans = App.graph.tx()
 
     for (EmailNLPRequest req : reqs) {
@@ -93,7 +96,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
         if (!trans.isOpen()) {
           trans.open()
         }
-        upsertEmailNLPRequest(graph, g, req)
+        upsertEmailNLPRequest(graph, g, req,isSlim)
         trans.commit()
       } catch (Throwable t) {
         trans.rollback()
@@ -105,53 +108,69 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
   }
 
+  static processUpsertNLPRequestSlim(OrientStandardGraph graph,
+                                 GraphTraversalSource g,
+                                 EmailNLPRequest req,
+                                 UpdateReq updateReq){
 
-  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequest(
-          OrientStandardGraph graph,
-          GraphTraversalSource g,
-          EmailNLPRequest req) {
-    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName
-
-    UpdateReq updateReq = new UpdateReq()
-    updateReq.vertices = []
-    updateReq.edges = []
-    String dataSourceName = "Office365/email"
-
-    Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
-    Vertex eventEmailMessageGroupVtx = createEventGroupIngestionVtx(updateReq, dataSourceName, "Event.Email_Msg_Group")
-
-    createEdge('Has_Ingestion_Event', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
-
-    Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
-    createEdge('Has_Ingestion_Event', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
-
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_To_Group', 'Email_To', req.toEmailAddresses)
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_From_Group', 'Email_From', req.toEmailAddresses)
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_CC_Group', 'Email_CC', req.toEmailAddresses)
-    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event.Email_BCC_Group', 'Email_BCC', req.toEmailAddresses)
-
-    Vertex emailBodyOrAttachmentVtx = createObjectEmailMessageBodyOrAttachmentVtx(req, updateReq)
-
-    createEdge(req.attachmentId ? 'Email_Attachment' : 'Email_Body', eventEmailVtx.name, emailBodyOrAttachmentVtx.name, updateReq)
-
-
-    StringBuffer sb = new StringBuffer()
+//    StringBuffer sb = new StringBuffer()
     Double pcntThreshold = 1.0
     Map<String, String> item = getMapFromEmailNLPRequest(req)
     def (
     List<MatchReq>            matchReqs,
     Map<String, AtomicDouble> maxScoresByVertexName,
     Map<String, Double>       percentageThresholdByVertexName
-    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
+    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold)
+
+    def (
+    Map<String, List<MatchReq>>            matchReqByVertexName,
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
+
+    ) = Matcher.matchVerticesSlim(graph, g, matchReqs)
+
+
+    def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
+    Matcher.parseEdges(updateReq)
+
+    Matcher.createEdgesSlim(g, (Set<EdgeRequest>) edgeReqs, matchReqListByOridByVertexName)
+
+
+
+    String[] emailAddrs = [req.email?:[], req.toEmailAddresses?:[],
+                           req.fromEmailAddresses?:[], req.ccEmailAddresses?:[], req.bccEmailAddresses?:[]].flatten()
+
+    req.person = [ req.person?:[], req.fromEmailNames?:[],
+                   req.toEmailNames?:[], req.ccEmailNames?:[], req.bccEmailNames?:[]  ].flatten()
+
+    matchReqListByOridByVertexName.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
+      createEventNLPGroups(req, it.key, emailAddrs)
+    })
+
+  }
+
+  static processUpsertNLPRequest(OrientStandardGraph graph,
+                                 GraphTraversalSource g,
+                                 EmailNLPRequest req,
+                                 UpdateReq updateReq){
+
+//    StringBuffer sb = new StringBuffer()
+    Double pcntThreshold = 1.0
+
+    Map<String, String> item = getMapFromEmailNLPRequest(req)
+    def (
+    List<MatchReq>            matchReqs,
+    Map<String, AtomicDouble> maxScoresByVertexName,
+    Map<String, Double>       percentageThresholdByVertexName
+    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold)
 
     def (
     Map<String, Map<ORID, AtomicDouble>>   vertexScoreMapByVertexNameLocal,
     Map<String, List<MatchReq>>            matchReqByVertexName,
     Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
 
-    ) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
+    ) = Matcher.matchVertices(graph, g, matchReqs, 100)
 
-    vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
+    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
 
     def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
     Matcher.parseEdges(updateReq)
@@ -173,17 +192,59 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   }
 
 
+  static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequest(
+          OrientStandardGraph graph,
+          GraphTraversalSource g,
+          EmailNLPRequest req,
+          Boolean useSlim) {
+
+    UpdateReq updateReq = new UpdateReq()
+    updateReq.vertices = []
+    updateReq.edges = []
+    String dataSourceName = "Office365/email"
+
+    Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
+    Vertex eventEmailMessageGroupVtx = createEventGroupIngestionVtx(updateReq, dataSourceName, "Event_Email_Msg_Group")
+
+    createEdge('Has_Ingestion_Event', dataSourceVtx.name, eventEmailMessageGroupVtx.name, updateReq)
+
+    Vertex eventEmailVtx = createEventEmailMessageVtx(req, updateReq)
+    createEdge('Has_Ingestion_Event', eventEmailMessageGroupVtx.name, eventEmailVtx.name, updateReq)
+
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event_Email_To_Group', 'Email_To', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event_Email_From_Group', 'Email_From', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event_Email_CC_Group', 'Email_CC', req.toEmailAddresses)
+    createEventEmailxxxGroupVtx(updateReq, eventEmailVtx, 'Event_Email_BCC_Group', 'Email_BCC', req.toEmailAddresses)
+
+    Vertex emailBodyOrAttachmentVtx = createObjectEmailMessageBodyOrAttachmentVtx(req, updateReq)
+
+    createEdge(req.attachmentId ? 'Email_Attachment' : 'Email_Body', eventEmailVtx.name, emailBodyOrAttachmentVtx.name, updateReq)
+
+    if (useSlim)
+    {
+      processUpsertNLPRequestSlim(graph,g,req, updateReq) as Map<String, Map<ORID, AtomicDouble>>
+    }
+    else
+    {
+
+      processUpsertNLPRequest(graph,g,req, updateReq)
+    }
+
+
+  }
+
+
   static Vertex createEmailGroupVtx(String vtxLabel, String vtxName, String email, UpdateReq updateReq) {
     Vertex emailGroupVtx = new Vertex()
     emailGroupVtx.label = vtxLabel
     emailGroupVtx.name = vtxName
     VertexProps emailGroupIngestionDateVtxProps = new VertexProps()
-    emailGroupIngestionDateVtxProps.name = "${vtxLabel}.Ingestion_Date"
+    emailGroupIngestionDateVtxProps.name = "${vtxLabel}_Ingestion_Date"
     emailGroupIngestionDateVtxProps.mandatoryInSearch = true
     emailGroupIngestionDateVtxProps.val = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
 
     VertexProps emailVtxProps = new VertexProps()
-    emailVtxProps.name = "${vtxLabel}.Email"
+    emailVtxProps.name = "${vtxLabel}_Email"
     emailVtxProps.mandatoryInSearch = true
     emailVtxProps.val = email
 
@@ -195,12 +256,12 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   }
 
   static Vertex createEmailAddressVertex(String email, String vtxName, UpdateReq req) {
-    String emailVtxLabel = 'Object.Email_Address'
+    String emailVtxLabel = 'Object_Email_Address'
     Vertex emailVtx = new Vertex()
     emailVtx.label = emailVtxLabel
     emailVtx.name = vtxName
     VertexProps emailAddrVtxProps = new VertexProps()
-    emailAddrVtxProps.name = "${emailVtxLabel}.Email"
+    emailAddrVtxProps.name = "${emailVtxLabel}_Email"
     emailAddrVtxProps.mandatoryInSearch = true
     emailAddrVtxProps.val = email
 
@@ -213,14 +274,14 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   }
 
   static Vertex createEventEmailMessageVtx(EmailNLPRequest req, UpdateReq updateReq) {
-    String emailVtxLabel = 'Event.Email_Message'
+    String emailVtxLabel = 'Event_Email_Message'
     Vertex emailVtx = new Vertex()
     emailVtx.props = []
 
     emailVtx.label = emailVtxLabel
     emailVtx.name = req.emailId
     VertexProps emailIdVtxProps = new VertexProps()
-    emailIdVtxProps.name = "${emailVtxLabel}.Email_Id"
+    emailIdVtxProps.name = "${emailVtxLabel}_Email_Id"
     emailIdVtxProps.mandatoryInSearch = true
     emailIdVtxProps.val = req.emailId
 
@@ -228,49 +289,49 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
     if (req.emailCreatedDateTime) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Created_Date_Time"
+      props.name = "${emailVtxLabel}_Created_Date_Time"
       props.mandatoryInSearch = true
       props.val = req.emailCreatedDateTime
       emailVtx.props.push(props)
     }
     if (req.emailSentDateTime) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Sent_Date_Time"
+      props.name = "${emailVtxLabel}_Sent_Date_Time"
       props.mandatoryInSearch = true
       props.val = req.emailSentDateTime
       emailVtx.props.push(props)
     }
     if (req.emailReceivedDateTime) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Received_Date_Time"
+      props.name = "${emailVtxLabel}_Received_Date_Time"
       props.mandatoryInSearch = true
       props.val = req.emailReceivedDateTime
       emailVtx.props.push(props)
     }
     if (req.categories) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Categories"
+      props.name = "${emailVtxLabel}_Categories"
       props.mandatoryInSearch = false
       props.val = req.categories.toArrayString()
       emailVtx.props.push(props)
     }
     if (req.emailSubject) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Subject"
+      props.name = "${emailVtxLabel}_Subject"
       props.mandatoryInSearch = false
       props.val = req.emailSubject
       emailVtx.props.push(props)
     }
     if (req.emailFolderId) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.Folder_Id"
+      props.name = "${emailVtxLabel}_Folder_Id"
       props.mandatoryInSearch = false
       props.val = req.emailFolderId
       emailVtx.props.push(props)
     }
     if (req.emailUserId) {
       VertexProps props = new VertexProps()
-      props.name = "${emailVtxLabel}.User_Id"
+      props.name = "${emailVtxLabel}_User_Id"
       props.mandatoryInSearch = false
       props.val = req.emailUserId
       emailVtx.props.push(props)
@@ -300,7 +361,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   }
 
   static String getObjectEmailBodyOrAttachmentVtxLabel(EmailNLPRequest req) {
-    return req.attachmentId ? 'Object.Email_Message_Attachment' : 'Object.Email_Message_Body'
+    return req.attachmentId ? 'Object_Email_Message_Attachment' : 'Object_Email_Message_Body'
   }
 
   static Vertex createObjectEmailMessageBodyOrAttachmentVtx(EmailNLPRequest req, UpdateReq updateReq) {
@@ -311,7 +372,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     emailVtx.label = emailVtxLabel
     emailVtx.name = emailVtxLabel //req.attachmentId ?: req.emailId
     VertexProps emailIdVtxProps = new VertexProps()
-    emailIdVtxProps.name = "${emailVtxLabel}.Email_Id"
+    emailIdVtxProps.name = "${emailVtxLabel}_Email_Id"
     emailIdVtxProps.mandatoryInSearch = true
     emailIdVtxProps.val = req.emailId
 
@@ -319,7 +380,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
     if (req.attachmentId) {
       VertexProps attachmentIdVtxProp = new VertexProps()
-      attachmentIdVtxProp.name = "${emailVtxLabel}.Attachment_Id"
+      attachmentIdVtxProp.name = "${emailVtxLabel}_Attachment_Id"
       attachmentIdVtxProp.mandatoryInSearch = true
       attachmentIdVtxProp.val = req.attachmentId
       emailVtx.props.push(attachmentIdVtxProp)
@@ -327,7 +388,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     }
     if (req.attachmentContentType) {
       VertexProps attachmentIdVtxProp = new VertexProps()
-      attachmentIdVtxProp.name = "${emailVtxLabel}.Attachment_Content_Type"
+      attachmentIdVtxProp.name = "${emailVtxLabel}_Attachment_Content_Type"
       attachmentIdVtxProp.mandatoryInSearch = true
       attachmentIdVtxProp.val = req.attachmentContentType
       emailVtx.props.push(attachmentIdVtxProp)
@@ -335,7 +396,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     }
     if (req.sizeBytes) {
       VertexProps attachmentIdVtxProp = new VertexProps()
-      attachmentIdVtxProp.name = "${emailVtxLabel}.Size_Bytes"
+      attachmentIdVtxProp.name = "${emailVtxLabel}_Size_Bytes"
       attachmentIdVtxProp.mandatoryInSearch = true
       attachmentIdVtxProp.val = req.sizeBytes.toString()
       attachmentIdVtxProp.type = VertexProps.TypeEnum.JAVA_LANG_DOUBLE
@@ -343,14 +404,14 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     }
     if (req.attachmentName) {
       VertexProps vtxProp = new VertexProps()
-      vtxProp.name = "${emailVtxLabel}.Attachment_Name"
+      vtxProp.name = "${emailVtxLabel}_Attachment_Name"
       vtxProp.mandatoryInSearch = true
       vtxProp.val = req.attachmentName
       emailVtx.props.push(vtxProp)
     }
     if (req.emailSubject) {
       VertexProps vtxProp = new VertexProps()
-      vtxProp.name = "${emailVtxLabel}.Email_Subject"
+      vtxProp.name = "${emailVtxLabel}_Email_Subject"
       vtxProp.mandatoryInSearch = true
       vtxProp.val = req.emailSubject
       emailVtx.props.push(vtxProp)
@@ -358,23 +419,23 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
     if (req.emailCreatedDateTime) {
       VertexProps vtxProp = new VertexProps()
-      vtxProp.name = "${emailVtxLabel}.Created_Date_Time"
+      vtxProp.name = "${emailVtxLabel}_Created_Date_Time"
       vtxProp.mandatoryInSearch = true
       vtxProp.val = req.emailCreatedDateTime
       emailVtx.props.push(vtxProp)
     }
 
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Address", req.address, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Cred_card", req.cred_card, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Email", req.email, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Location", req.location, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Person", req.person, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Phone", req.phone, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Postcode", req.postcode, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Policy_number", req.policy_number, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Org", req.org, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_CPF", req.cpf, emailVtx)
-    createEmailNLPVertexProp("${emailVtxLabel}.NLP_Money", req.money, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Address", req.address, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Cred_card", req.cred_card, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Email", req.email, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Location", req.location, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Person", req.person, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Phone", req.phone, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Postcode", req.postcode, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Policy_number", req.policy_number, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Org", req.org, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_CPF", req.cpf, emailVtx)
+    createEmailNLPVertexProp("${emailVtxLabel}_NLP_Money", req.money, emailVtx)
 
     updateReq.vertices.push(emailVtx)
     return emailVtx

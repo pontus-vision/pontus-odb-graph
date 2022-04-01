@@ -2,11 +2,11 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "name": "data_sources",
         "props": [
           {
-            "name": "Object.Data_Source.Form_Id",
+            "name": "Object_Data_Source_Form_Id",
             "val": "${new groovy.json.JsonBuilder(data_sources)}",
             "mandatoryInSearch": true,
             "processAll": true,
@@ -16,63 +16,65 @@
         ]
       },
       {
-        "label": "Event.Data_Breach",
+        "label": "Event_Data_Breach",
         "props": [
           {
-            "name": "Event.Data_Breach.Form_Id",
+            "name": "Event_Data_Breach_Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Data_Breach.Id",
+            "name": "Event_Data_Breach_Id",
             "val": "${Title?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Data_Breach.Authority_Notified",
+            "name": "Event_Data_Breach_Authority_Notified",
             "val": "${authority_notified?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
-            "name": "Event.Data_Breach.Description",
+            "name": "Event_Data_Breach_Description",
             "val": "${description?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Data_Breach.Impact",
+            "name": "Event_Data_Breach_Impact",
             "val": "${impact}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Data_Breach.Metadata.Create_Date",
+            "name": "Event_Data_Breach_Metadata_Create_Date",
             "val": "${Created}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Data_Breach.Metadata.Update_Date",
+            "name": "Event_Data_Breach_Metadata_Update_Date",
             "val": "${Modified}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Data_Breach.Natural_Person_Notified",
+            "name": "Event_Data_Breach_Natural_Person_Notified",
             "val": "${natural_person_notified?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
-            "name": "Event.Data_Breach.Source",
+            "name": "Event_Data_Breach_Source",
             "val": "${source?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Data_Breach.Status",
+            "name": "Event_Data_Breach_Status",
             "val": "${status}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -80,46 +82,46 @@
         ]
       },
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "name": "sharepoint",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "SHAREPOINT/DATA-BREACHES",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Event.Ingestion",
+        "label": "Event_Ingestion",
         "props": [
           {
-            "name": "Event.Ingestion.Type",
+            "name": "Event_Ingestion_Type",
             "val": "Data Breaches",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Operation",
+            "name": "Event_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Domain_b64",
+            "name": "Event_Ingestion_Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Create_Date",
+            "name": "Event_Ingestion_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Update_Date",
+            "name": "Event_Ingestion_Metadata_Update_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -128,34 +130,20 @@
         ]
       },
       {
-        "label": "Event.Group_Ingestion",
+        "label": "Event_Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Type",
+            "name": "Event_Group_Ingestion_Type",
             "val": "sharepoint/data-breaches",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Operation",
+            "name": "Event_Group_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
           }
@@ -166,21 +154,21 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexName": "sharepoint",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "toVertexLabel": "Event_Group_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Data_Breach",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Data_Breach",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Impacted_By_Data_Breach",
-        "fromVertexLabel": "Event.Data_Breach",
+        "fromVertexLabel": "Event_Data_Breach",
         "toVertexName": "data_sources"
       }
     ]

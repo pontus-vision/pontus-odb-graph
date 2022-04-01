@@ -2,66 +2,66 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object.Policies",
+        "label": "Object_Policies",
         "props": [
           {
-            "name": "Object.Policies.Form_Id",
+            "name": "Object_Policies_Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Policies.Text",
+            "name": "Object_Policies_Text",
             "val": "${text}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object.Policies.Type",
+            "name": "Object_Policies_Type",
             "val": "${Title}",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object.Data_Source",
+        "label": "Object_Data_Source",
         "name": "sharepoint",
         "props": [
           {
-            "name": "Object.Data_Source.Name",
+            "name": "Object_Data_Source_Name",
             "val": "SHAREPOINT/POLICIES",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Event.Ingestion",
+        "label": "Event_Ingestion",
         "props": [
           {
-            "name": "Event.Ingestion.Type",
+            "name": "Event_Ingestion_Type",
             "val": "Policies",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Operation",
+            "name": "Event_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Domain_b64",
+            "name": "Event_Ingestion_Domain_b64",
             "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Create_Date",
+            "name": "Event_Ingestion_Metadata_Create_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Event.Ingestion.Metadata_Update_Date",
+            "name": "Event_Ingestion_Metadata_Update_Date",
             "val": "${new Date()}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -70,34 +70,20 @@
         ]
       },
       {
-        "label": "Event.Group_Ingestion",
+        "label": "Event_Group_Ingestion",
         "props": [
           {
-            "name": "Event.Group_Ingestion.Metadata_Start_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Metadata_End_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event.Group_Ingestion.Type",
+            "name": "Event_Group_Ingestion_Type",
             "val": "sharepoint/policies",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Operation",
+            "name": "Event_Group_Ingestion_Operation",
             "val": "Structured Data Insertion",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event.Group_Ingestion.Ingestion_Date",
+            "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
             "mandatoryInSearch": true
           }
@@ -108,17 +94,17 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexName": "sharepoint",
-        "toVertexLabel": "Event.Group_Ingestion"
+        "toVertexLabel": "Event_Group_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event.Group_Ingestion",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "Object.Policies",
-        "toVertexLabel": "Event.Ingestion"
+        "fromVertexName": "Object_Policies",
+        "toVertexLabel": "Event_Ingestion"
       }
     ]
   }

@@ -1,0 +1,401 @@
+<html lang="pt-br">
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <title></title>
+</head>
+
+<body lang=PT-BR>
+
+<p style='text-align:justify'>Segue relat&oacute;rio resultante da sua
+solicita&ccedil;&atilde;o de informa&ccedil;&otilde;es e exclus&atilde;o automatizada dos seus dados, conforme Lei 13.709/2018 (LGPD):</p>
+
+<h2><span style='mso-fareast-font-family:"Times New Roman"'>DADOS COLETADOS E
+FINALIDADE - Art. 9&ordm;, &sect; I e Art. 18 &sect; I</span></h2>
+
+<p style='text-align:justify'>Nos termos do Art. 18, &sect; I, confirmamos o
+tratamento de seus dados, exclusivamente pelo per&iacute;odo de v&iacute;nculo
+contratual firmado com o Sr. (a).</p>
+
+{% set ropaServicosContratados=pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}
+
+{% set trs='border: 1px solid #dddddd;text-align: left;padding: 8px; font-size:10.0pt;font-family:Calibri,sans-serif;mso-bidi-font-family:Tahoma;color:#5B9BD5' %}
+
+{% if ropaServicosContratados.size() > 0 %}
+
+<p><b>Dados para execu&ccedil;&atilde;o dos servi&ccedil;os contratados</b></p>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+text-align:justify'><span style='mso-fareast-font-family:
+"Times New Roman"'>Esclarecemos que coletamos dados exclusivamente para a
+execu&ccedil;&atilde;o dos servi&ccedil;os contratados pelo Sr.(a), nos termos
+do Art. 7&ordm;, &sect; V da LGPD, quais sejam:</span></p>
+<br/>
+<table>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='{{ trs }}'>
+        Processo
+        </th>
+        <th style='{{ trs }}'>
+            Descri&ccedil;&atilde;o
+        </th>
+        <th style='{{ trs }}'>
+            Dados Coletados
+        </th>
+    </tr>
+
+    {% for ropa in ropaServicosContratados %}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description, trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {% endfor %}
+</table>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><span
+style='mso-fareast-font-family:"Times New Roman"'></span></p>
+<br/>
+
+{% endif %}
+{% set ropaProtecaoDoCredito=pv:getDsarRopaByLawfulBasis(context.id,'PROTEÇÃO AO CRÉDITO') %}
+{% if ropaProtecaoDoCredito.size() > 0 %}
+
+<h3 class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Prote&ccedil;&atilde;o do cr&eacute;dito</b></h3>
+
+<p><span style='mso-fareast-font-family:"Times New Roman"'>Esclarecemos
+     que coletamos dados exclusivamente para a prote&ccedil;&atilde;o ao
+     cr&eacute;ditos, conforme autorizado pelo Art. 7&ordm;, &sect; V da LGPD,
+    quais sejam:</span>
+</p>
+
+<table>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='{{ trs }}'>
+            Processo
+        </th>
+        <th style='{{ trs }}'>
+            Descri&ccedil;&atilde;o
+        </th>
+        <th style='{{ trs }}'>
+            Dados Coletados
+        </th>
+    </tr>
+
+    {% for ropa in ropaProtecaoDoCredito %}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description, trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {% endfor %}
+</table>
+<br/>
+{% endif %}
+
+{% set ropaObrigacaoLegal=pv:getDsarRopaByLawfulBasis(context.id,'OBRIGAÇÃO LEGAL OU REGULATÓRIA') %}
+{% set ropaTutelaSaude=pv:getDsarRopaByLawfulBasis(context.id,'TUTELA DA SAÚDE') %}
+{% set ropaConsentimento=pv:getDsarRopaByLawfulBasis(context.id,'CONSENTIMENTO') %}
+{% set ropaLegitimoInteresse=pv:getDsarRopaByLawfulBasis(context.id,'LEGÍTIMO INTERESSE DO CONTROLADOR') %}
+{% set ropaJudicial=pv:getDsarRopaByLawfulBasis(context.id,'EXERCÍCIOS DE DIREITOS EM PROCESSOS JUDICIAIS, ADMINISTRATIVOS OU ARBITRAIS') %}
+
+{% if (ropaObrigacaoLegal.size() + ropaTutelaSaude.size() + ropaConsentimento.size() + ropaLegitimoInteresse.size() + ropaJudicial.size()) > 0 %}
+<h3 class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'>Outras Finalidades</h3>
+
+<p><span style='mso-fareast-font-family:"Times New Roman"'>Esclarecemos
+        que coletamos as seguintes informa&ccedil;&otilde;es:</span>
+</p>
+
+<table>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='{{ trs }}'>
+            Processo
+        </th>
+        <th style='{{ trs }}'>
+            Descri&ccedil;&atilde;o
+        </th>
+        <th style='{{ trs }}'>
+            Dados Coletados
+        </th>
+    </tr>
+
+
+    {% for ropa in ropaJudicial %}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {% endfor %}
+
+    {% for ropa in ropaLegitimoInteresse %}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {% endfor %}
+
+    {% for ropa in ropaConsentimento %}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {% endfor %}
+
+    {% for ropa in ropaTutelaSaude %}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {% endfor %}
+
+    {% for ropa in ropaObrigacaoLegal %}
+    {{ "<tr style='%s'><td style='%s'>%s</td><td style='%s'>%s</td><td style='%s'>%s</td></tr>" | format(trs,trs,ropa.Object_Data_Procedures_Name, trs,ropa.Object_Data_Procedures_Description|default('n/a'), trs, pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected)) }}
+    {% endfor %}
+
+</table>
+{% endif %}
+
+{# TODO: Here ... which RoPA  to use?! how to get the oldest  RoPA ... that has the earliest Metadata_Create_Date
+<!--
+{% if ropaConsentimento.size() > 0 %}
+<br/>
+
+<h2><span style='mso-fareast-font-family:"Times New Roman"'>DO CONSENTIMENTO - Art. 7&ordm;, &sect; I</span></h2>
+
+{% for ropa in ropaList %}
+
+<h3 class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Meio
+eletr&ocirc;nico - Termos de Uso</b><span style='color:red'></span></h3>
+
+<ul style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     text-align:justify;mso-list:l5 level1 lfo3;tab-stops:list 36.0pt'><span
+     style='mso-fareast-font-family:"Times New Roman"'>O seu consentimento foi
+     firmado pelo Sr.(a) em <span style='color:red'>{{
+     ropa.Event_Ingestion_Metadata_Create_Date }}</span> , no ato da
+     contrata&ccedil;&atilde;o, ao aceitar expressamente nossos Termos de Uso e
+     Privacidade, os quais podem ser consultados em: <span style='color:red'>{{
+     endere&ccedil;o/link do contrato }}</span>.</span></li>
+</ul>
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b><span
+style='mso-fareast-font-family:"Times New Roman"'>Contrato</span></b></p>
+
+<ul style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     text-align:justify;mso-list:l1 level1 lfo4;tab-stops:list 36.0pt'><span style='mso-fareast-font-family:"Times New Roman"'>O
+     seu consentimento foi firmado pelo Sr.(a) em <span style='color:red'>{{
+     ropa.Event_Ingestion_Metadata_Create_Date }}</span>, no ato da
+     contrata&ccedil;&atilde;o, ao firmar o Contrato, no qual constava
+     expressamente o termo de consentimento na Cl&aacute;usula <span
+     style='color:red'>{{ clausula }}</span>. </span></li>
+</ul>
+
+{% endfor %}
+{% endif %}
+-->
+#}
+
+<br/>
+
+<h2><span style='mso-fareast-font-family:"Times New Roman"'>ENCARREGADO PELO
+TRATAMENTO DOS DADOS - Art. 9&ordm;, &sect; III e IV</span></h2>
+
+<p style='text-align:justify'>Informamos que o Encarregado respons&aacute;vel
+pelo tratamento dos seus dados &eacute;: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_NAME',
+'use env var PV_DSAR_DPO_NAME') }}, registro: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_CPF',
+'use env var PV_DSAR_DPO_CPF') || pv:getEnvVarDefVal('PV_DSAR_ORG_CNPJ', 'use
+env var PV_DSAR_ORG_CNPJ') }}. </p>
+<br/>
+
+<h2><span style='mso-fareast-font-family:"Times New Roman"'>COMUNICA&Ccedil;&Atilde;O
+COM O ENCARREGADO - Art. 9&ordm;, &sect; IV</span></h2>
+
+<p style='text-align:justify'>Voc&ecirc; pode entrar em contato direto com o
+Encarregado pelos dados atrav&eacute;s do e-mail: {{ pv:getEnvVarDefVal('PV_DSAR_DPO_EMAIL',
+'use env var PV_DSAR_DPO_EMAIL') }}. </p>
+
+<br/>
+
+{# TO-DO: Fix this later!
+<!--
+<h2>DO COMPRARTILHAMENTO DE DADOS - Art. 9&ordm;, &sect; V e 18 &sect;
+VII</h2>
+
+{% if NO_DATA_SHARED %}
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b><span
+style='mso-fareast-font-family:"Times New Roman"'>Sem nenhum compartilhamento
+de dados</span></b></p>
+
+<ul>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     text-align:justify;mso-list:l3 level1 lfo5;tab-stops:list 36.0pt'><span style='mso-fareast-font-family:
+     "Times New Roman"'>Caso o(a) Sr. (a) n&atilde;o tenha efetuado nenhuma
+     compra, contrata&ccedil;&atilde;o ou tentativa de compra ou
+     contrata&ccedil;&atilde;o de produtos ou servi&ccedil;os, informamos que
+     os seus dados n&atilde;o foram compartilhados com nenhum empresa terceira,
+     pois n&atilde;o acarretou nenhuma obriga&ccedil;&atilde;o legal de nossa
+     parte.</span></li>
+</ul>
+
+{% endif %}
+
+{% if COMPARTILHAMENTO_OBRIGACAO_LEGAL %}
+
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b><span
+style='mso-fareast-font-family:"Times New Roman"'>Compartilhamento para
+cumprimento de obriga&ccedil;&atilde;o legal</span></b></p>
+
+<ul>
+ <li class=MsoNormal style='text-align:justify;mso-list:l0 level1 lfo6;
+     tab-stops:list 36.0pt'><span
+     style='mso-fareast-font-family:"Times New Roman"'>Se houve ao menos uma
+     compra, contrata&ccedil;&atilde;o ou tentativa de compra ou contrata&ccedil;&atilde;o
+     de produtos ou servi&ccedil;os, os seus dados N&Atilde;O foram
+     compartilhados com terceiros, exceto para fins legais, tribut&aacute;rios,
+     cont&aacute;beis ou mediante transa&ccedil;&atilde;o financeira por
+     solicita&ccedil;&atilde;o e escolha sua (emiss&atilde;o de boletos,
+     pagamento atrav&eacute;s de cart&atilde;o de cr&eacute;dito ou outro meio
+     de pagamento), conforme segue:</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify'><span style='mso-fareast-font-family:
+"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+{% if AO_MENOS_UMA_COMPRA %}
+<br>
+<p class=MsoNormal style='margin-left:18.0pt'><span style='mso-fareast-font-family:
+"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<ul>
+ <ul>
+  <li class=MsoNormal style='text-align:justify;mso-list:l0 level2 lfo6;
+      tab-stops:list 72.0pt'><span style='mso-fareast-font-family:"Times New Roman"'>Caso
+      o Sr.(a) tenha efetuado com sucesso ao menos uma compra,
+      contrata&ccedil;&atilde;o ou tentativa de compra ou
+      contrata&ccedil;&atilde;o de produtos ou servi&ccedil;os, os seus dados
+      essencialmente necess&aacute;rios para o processamento fiscal e
+      cont&aacute;bil foram compartilhados com as seguinte entidades: </span></li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<ul>
+ <ul>
+  <ol style='margin-top:0cm' start=1 type=1>
+   <li class=MsoNormal style='mso-list:l0 level3 lfo6;tab-stops:list 108.0pt'><span
+       style='mso-fareast-font-family:"Times New Roman"'>Prefeitura Municipal
+       de<span style='mso-spacerun:yes'>&nbsp; </span>{{ pv:getEnvVarDefVal('PV_DSAR_CITY',
+       'S&atilde;o Paulo') }}{{ pv:getEnvVarDefVal('PV_DSAR_STATE', 'SP') }} -
+       FISCAL</span></li>
+   <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+       auto;mso-list:l0 level3 lfo6;tab-stops:list 108.0pt'><span
+       style='mso-fareast-font-family:"Times New Roman"'>Receita Federal do
+       Brasil - FISCAL</span></li>
+   <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+       auto;mso-list:l0 level3 lfo6;tab-stops:list 108.0pt'><span
+       contenteditable=false data-type=texto><span data-bot="" data-explain=""
+       data-placeholder="Raz&atilde;o social do contador" data-type=texto>{{
+       pv:getEnvVarDefVal('PV_DSAR_CONTADOR_NAME', 'use env var PV_DSAR_CONTADOR_NAME')}}
+       (CNPJ {{ pv:getEnvVarDefVal('PV_DSAR_CONTADOR_CNPJ', 'use env var PV_DSAR_CONTADOR_CNPJ')
+       }} ) - CONT&Aacute;BIL</li>
+   <li class=MsoNormal style='mso-list:l0 level3 lfo6;tab-stops:list 108.0pt'><span
+       contenteditable=false data-type=texto><span data-bot="" data-explain=""
+       data-placeholder="Raz&atilde;o social da empresa respons&aacute;vel por emitir a NFe/NFSe"
+       data-type=texto>{{ pv:getEnvVarDefVal('PV_DSAR_ORG_NFSE_NAME'), ''use
+       env var PV_DSAR_ORG_NFSE_NAME' }} </span>(CNPJ<span style='color:red'> </span>{{
+       pv:getEnvVarDefVal('PV_DSAR_ORG_NFSE_CNPJ', 'use env var PV_DSAR_ORG_NFSE_CNPJ
+       ') }}) - EMISS&Atilde;O NFe/NFSe/CTe </li>
+  </ol>
+ </ul>
+</ul>
+
+{% endif %}
+
+{% if PAGAMENTO_COM_CARTAO %}
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<ul>
+ <ul>
+  <li class=MsoNormal style='text-align:justify;mso-list:l0 level2 lfo6;
+      tab-stops:list 72.0pt'><span style='mso-fareast-font-family:"Times New Roman"'>Caso
+      o(a) Sr. (a) tenha efetuado algum pagamento por meio de cart&atilde;o de
+      cr&eacute;dito ou d&eacute;bito, os seus dados essencialmente
+      necess&aacute;rios para o processamento da requisi&ccedil;&atilde;o
+      financeira podem ter sido compartilhados com:</span></li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<ul>
+ <ul>
+  <ol style='margin-top:0cm' start=1 type=1>
+   <li class=MsoNormal style='mso-list:l0 level3 lfo6;tab-stops:list 108.0pt'><span
+       style='color:red'>{{ Raz&atilde;o social }}</span>. (CNPJ <span
+       style='color:red'>{{ cnpj da Empresa }}</span>) </li>
+  </ol>
+ </ul>
+</ul>
+
+{% endif %}
+
+<p class=MsoNormal><span style='color:red'><o:p>&nbsp;</o:p></span></p>
+
+{% if EMISSAO_BOLETO %}
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<ul>
+ <ul>
+  <li class=MsoNormal style='text-align:justify;mso-list:l0 level2 lfo6;
+      tab-stops:list 72.0pt'><span style='mso-fareast-font-family:"Times New Roman"'>Caso
+      o(a) Sr. (a) tenha solicitado em algum momento a emiss&atilde;o de boleto
+      banc&aacute;rio, seus dados essencialmente necess&aacute;rios para o
+      processamento da requisi&ccedil;&atilde;o financeira foram compartilhados
+      com:</span></li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<ul>
+ <ul>
+  <ol style='margin-top:0cm' start=1 type=1>
+   <li class=MsoNormal style='mso-list:l0 level3 lfo6;tab-stops:list 108.0pt'><span
+       style='color:red'>{{ Nome da empresa emissora de boletos }}</span>(CNPJ <span
+       style='color:red'>{{ cnpj da empresa emissora de boletos }}</span>)</li>
+  </ol>
+ </ul>
+</ul>
+
+{% endif %}
+
+{% endif %}
+
+{% if DATA_SHARED %}
+<br>
+<p class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto'><b>Compartilhamento
+de dados</b></p>
+
+<ul>
+ <li class=MsoNormal style='text-align:justify;mso-list:l6 level1 lfo7;
+     tab-stops:list 36.0pt'><span
+     style='mso-fareast-font-family:"Times New Roman"'>Realizamos o compartilhamento dos dados com as seguintes empresas e finalidade, respectivamente:</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify'><span style='mso-fareast-font-family:
+"Times New Roman"'><span data-bot="" data-explain="" data-placeholder="Raz&atilde;o social da empresa"
+data-type=texto></span></p>
+
+<ul>
+ <ol style='margin-top:0cm' start=1 type=1>
+  <li class=MsoNormal style='mso-list:l6 level2 lfo7;tab-stops:list 72.0pt'><span
+      style='color:red'>{{ Raz&atilde;o social da Empresa }}</span>, CNPJ <span
+      style='color:red'>{{ cnpj da Empresa }}</span> - FINALIDADE: <span
+      style='color:red'>{{ indicar Finalidade }}</span> ; </li>
+  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:
+      auto;mso-list:l6 level2 lfo7;tab-stops:list 72.0pt'><span
+      style='color:red'>{{ Raz&atilde;o social da Empresa }}</span>, CNPJ <span
+      style='color:red'>{{ cnpj da Empresa }} </span>- FINALIDADE:<span
+      style='color:red'> {{ indicar Finalidade }}</span> ; </li>
+ </ol>
+</ul>
+
+{% endif %} -->
+#}
+<br/>
+
+<p style='text-align:justify'>Caso o(a) Sr. (a) tenha qualquer d&uacute;vida ou
+solicita&ccedil;&atilde;o adicional, por favor n&atilde;o deixe de entrar em
+contato direto com o controlador de dados atrav&eacute;s do e-mail {{ pv:getEnvVarDefVal('PV_DSAR_DPO_EMAIL',
+'use env var PV_DSAR_DPO_EMAIL') }}.</p>
+
+<br/>
+
+</body>
+
+</html>

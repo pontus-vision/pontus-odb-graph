@@ -1,0 +1,112 @@
+Created,by,Michael Connor,https://github.com/mlconnor,https://gist.github.com/mlconnor/1887156
+,,,,
+ISO639-2 Country Code,Country,ISO639-2 Lang,Language,Date Format
+AL,Albania,sq,Albanian,yyyy-MM-dd
+AE,United Arab Emirates,ar,Arabic,dd/MM/yyyy
+AR,Argentina,es,Spanish,dd/MM/yyyy
+AU,Australia,en,English,d/MM/yyyy
+AT,Austria,de,German,dd.MM.yyyy
+BE,Belgium,fr,French,d/MM/yyyy
+BE,Belgium,nl,Dutch,d/MM/yyyy
+BG,Bulgaria,bg,Bulgarian,yyyy-M-d
+BH,Bahrain,ar,Arabic,dd/MM/yyyy
+BA,Bosnia and Herzegovina,sr,Serbian,yyyy-MM-dd
+BY,Belarus,be,Belarusian,d.M.yyyy
+BO,Bolivia,es,Spanish,dd-MM-yyyy
+BR,Brazil,pt,Portuguese,dd/MM/yyyy
+CA,Canada,fr,French,yyyy-MM-dd
+CA,Canada,en,English,dd/MM/yyyy
+CH,Switzerland,de,German,dd.MM.yyyy
+CH,Switzerland,fr,French,dd.MM.yyyy
+CH,Switzerland,it,Italian,dd.MM.yyyy
+CL,Chile,es,Spanish,dd-MM-yyyy
+CN,China,zh,Chinese,yyyy-M-d
+CO,Colombia,es,Spanish,d/MM/yyyy
+CR,Costa Rica,es,Spanish,dd/MM/yyyy
+CY,Cyprus,el,Greek,dd/MM/yyyy
+CZ,Czech Republic,cs,Czech,d.M.yyyy
+DE,Germany,de,German,dd.MM.yyyy
+DK,Denmark,da,Danish,dd-MM-yyyy
+DO,Dominican Republic,es,Spanish,MM/dd/yyyy
+DZ,Algeria,ar,Arabic,dd/MM/yyyy
+EC,Ecuador,es,Spanish,dd/MM/yyyy
+EG,Egypt,ar,Arabic,dd/MM/yyyy
+ES,Spain,es,Spanish,d/MM/yyyy
+ES,Spain,ca,Catalan,dd/MM/yyyy
+EE,Estonia,et,Estonian,d.MM.yyyy
+FI,Finland,fi,Finnish,d.M.yyyy
+FR,France,fr,French,dd/MM/yyyy
+GB,United Kingdom,en,English,dd/MM/yyyy
+GR,Greece,el,Greek,d/M/yyyy
+GT,Guatemala,es,Spanish,d/MM/yyyy
+HK,Hong Kong,zh,Chinese,yyyy年M月d日
+HN,Honduras,es,Spanish,MM-dd-yyyy
+HR,Croatia,hr,Croatian,dd.MM.yyyy.
+HU,Hungary,hu,Hungarian,yyyy.MM.dd.
+ID,Indonesia,in,Indonesian,dd/MM/yyyy
+IN,India,hi,Hindi,३/६/१२
+IN,India,en,English,d/M/yyyy
+IE,Ireland,ga,Irish,dd/MM/yyyy
+IE,Ireland,en,English,dd/MM/yyyy
+IQ,Iraq,ar,Arabic,dd/MM/yyyy
+IS,Iceland,is,Icelandic,d.M.yyyy
+IL,Israel,iw,Hebrew,dd/MM/yyyy
+IT,Italy,it,Italian,dd/MM/yyyy
+JO,Jordan,ar,Arabic,dd/MM/yyyy
+JP,Japan,ja,Japanese,yyyy/MM/dd
+JP,Japan,ja,Japanese,H24.MM.dd
+KR,South Korea,ko,Korean,yyyy. M. d
+KW,Kuwait,ar,Arabic,dd/MM/yyyy
+LB,Lebanon,ar,Arabic,dd/MM/yyyy
+LY,Libya,ar,Arabic,dd/MM/yyyy
+LT,Lithuania,lt,Lithuanian,yyyy.M.d
+LU,Luxembourg,fr,French,dd/MM/yyyy
+LU,Luxembourg,de,German,dd.MM.yyyy
+LV,Latvia,lv,Latvian,yyyy.d.M
+MA,Morocco,ar,Arabic,dd/MM/yyyy
+MX,Mexico,es,Spanish,d/MM/yyyy
+MK,Macedonia,mk,Macedonian,d.M.yyyy
+MT,Malta,en,English,dd/MM/yyyy
+MT,Malta,mt,Maltese,dd/MM/yyyy
+ME,Montenegro,sr,Serbian,d.M.yyyy.
+MY,Malaysia,ms,Malay,dd/MM/yyyy
+NI,Nicaragua,es,Spanish,MM-dd-yyyy
+NL,Netherlands,nl,Dutch,d-M-yyyy
+NO,Norway,no,Norwegian,dd.MM.yyyy
+NO,Norway,no,Norwegian,dd.MM.yyyy
+NZ,New Zealand,en,English,d/MM/yyyy
+OM,Oman,ar,Arabic,dd/MM/yyyy
+PA,Panama,es,Spanish,MM/dd/yyyy
+PE,Peru,es,Spanish,dd/MM/yyyy
+PH,Philippines,en,English,M/d/yyyy
+PL,Poland,pl,Polish,dd.MM.yyyy
+PR,Puerto Rico,es,Spanish,MM-dd-yyyy
+PT,Portugal,pt,Portuguese,dd-MM-yyyy
+PY,Paraguay,es,Spanish,dd/MM/yyyy
+QA,Qatar,ar,Arabic,dd/MM/yyyy
+RO,Romania,ro,Romanian,dd.MM.yyyy
+RU,Russia,ru,Russian,dd.MM.yyyy
+SA,Saudi Arabia,ar,Arabic,dd/MM/yyyy
+CS,Serbia and Montenegro,sr,Serbian,d.M.yyyy.
+SD,Sudan,ar,Arabic,dd/MM/yyyy
+SG,Singapore,zh,Chinese,dd/MM/yyyy
+SG,Singapore,en,English,M/d/yyyy
+SV,El Salvador,es,Spanish,MM-dd-yyyy
+RS,Serbia,sr,Serbian,d.M.yyyy.
+SK,Slovakia,sk,Slovak,d.M.yyyy
+SI,Slovenia,sl,Slovenian,d.M.yyyy
+SE,Sweden,sv,Swedish,yyyy-MM-dd
+SY,Syria,ar,Arabic,dd/MM/yyyy
+TH,Thailand,th,Thai,d/M/2555
+TH,Thailand,th,Thai,๓/๖/๒๕๕๕
+TN,Tunisia,ar,Arabic,dd/MM/yyyy
+TR,Turkey,tr,Turkish,dd.MM.yyyy
+TW,Taiwan,zh,Chinese,yyyy/M/d
+UA,Ukraine,uk,Ukrainian,dd.MM.yyyy
+UY,Uruguay,es,Spanish,dd/MM/yyyy
+US,United States,en,English,M/d/yyyy
+US,United States,es,Spanish,M/d/yyyy
+VE,Venezuela,es,Spanish,dd/MM/yyyy
+VN,Vietnam,vi,Vietnamese,dd/MM/yyyy
+YE,Yemen,ar,Arabic,dd/MM/yyyy
+ZA,South Africa,en,English,yyyy/MM/dd

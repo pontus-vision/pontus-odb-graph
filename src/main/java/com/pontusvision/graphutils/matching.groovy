@@ -19,6 +19,7 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import groovy.text.GStringTemplateEngine
 import groovy.text.Template
+import org.apache.lucene.document.DateTools
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResult
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet
@@ -27,8 +28,10 @@ import org.apache.tinkerpop.gremlin.process.traversal.Text
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.structure.Transaction
+import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.codehaus.groovy.runtime.StringGroovyMethods
 
+import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiPredicate
@@ -335,6 +338,9 @@ class MatchReq<T> {
   private Double percentageThreshold
   private String predicateStr
   private Closure predicate
+
+
+  private String sqlPredicateStr
   private Convert<T> conv
   private StringBuffer sb = null
 
@@ -343,6 +349,9 @@ class MatchReq<T> {
   private boolean excludeFromSubsequenceSearch
   private boolean excludeFromUpdate
 
+  String getSqlPredicateStr() {
+    return sqlPredicateStr
+  }
 
   static Closure convertPredicateFromStr(String predicateStr) {
     if ("eq".equals(predicateStr)) {
@@ -375,6 +384,38 @@ class MatchReq<T> {
 
   }
 
+  static String convertPredicateToSqlStr(String predicateStr) {
+    if ("eq".equals(predicateStr)) {
+      return "="
+    } else if ("neq".equals(predicateStr)) {
+      return "<>"
+    } else if ("gt".equals(predicateStr)) {
+      return ">"
+    } else if ("lt".equals(predicateStr)) {
+      return "<"
+    } else if ("gte".equals(predicateStr)) {
+      return ">="
+    } else if ("lte".equals(predicateStr)) {
+      return "<"
+    } else if ("textContains".equals(predicateStr)) {
+      return "CONTAINSTEXT"
+    } else if ("textContainsPrefix".equals(predicateStr)) {
+      return "CONTAINSTEXT"
+//    } else if ("textContainsRegex".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textContainsRegex
+//    } else if ("textContainsFuzzy".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textContainsFuzzy
+//    } else if ("textPrefix".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textPrefix
+//    } else if ("textRegex".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textRegex
+//    } else if ("textFuzzy".equals(predicateStr)) {
+//      return org.janusgraph.core.attribute.Text.&textFuzzy
+    } else return "="
+
+  }
+
+
   MatchReq(String attribVals, Class<T> attribType, String propName, String vertexName, String vertexLabel, String predicateStr, boolean excludeFromSearch = false, boolean excludeFromSubsequenceSearch = false, boolean excludeFromUpdate = false, boolean mandatoryInSearch = false, boolean processAll = false, double matchWeight, StringBuffer sb = null) {
     this.attribVal = attribVals
     this.attribType = attribType
@@ -385,7 +426,7 @@ class MatchReq<T> {
     this.conv = new Convert<>(attribType)
     this.predicateStr = predicateStr
     this.predicate = convertPredicateFromStr(predicateStr)
-
+    this.sqlPredicateStr = convertPredicateToSqlStr(predicateStr)
     this.sb = sb
 
     this.excludeFromSearch = excludeFromSearch
@@ -701,6 +742,88 @@ class Matcher {
     return ans
   }
 
+  static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+
+  static String createSearchClassAttribs(List<MatchReq> mandatoryFields) {
+    StringBuilder sb = new StringBuilder()
+    long counter = 0
+    sb.append("(")
+    mandatoryFields.each { field ->
+      if (field.attribNativeVal) {
+        if (counter > 0) {
+          sb.append(" AND ")
+        }
+        counter++
+        String attribVal = field.attribType == Date.class ?
+                "${DateTools.dateToString(field.attribNativeVal as Date, DateTools.Resolution.SECOND)}" :
+                "\"${escapeLucene(field.attribNativeVal.toString())}\""
+
+        sb.append(field.propName).append(":").append(attribVal)
+      }
+    }
+    sb.append(")")
+
+    return sb.toString()
+  }
+
+  static String createWhereClauseAttribs(List<MatchReq> mandatoryFields) {
+    StringBuilder sb = new StringBuilder()
+    long counter = 0
+    sb.append("(")
+    mandatoryFields.each { field ->
+      if (field.attribNativeVal) {
+        if (counter > 0) {
+          sb.append(" AND ")
+        }
+        counter++
+        Object attribVal = " :${field.propName}"
+//                (field.attribType == String.class) ?
+//                " '${field.attribNativeVal}'" :
+//                   (field.attribType == Date.class)?
+//                   "'${sdf.format(field.attribNativeVal as Date)}'"
+//                           :
+//        " ${field.attribNativeVal}"
+
+        String predicate = field.sqlPredicateStr
+        sb.append(field.propName).append(predicate).append(attribVal)
+      }
+    }
+    sb.append(")")
+
+    return sb.toString()
+  }
+
+  static createJsonMergeParam(List<MatchReq> updateFields, String vertexLabel) {
+//    JsonObject jb = new JsonObject()
+    StringBuilder sb = new StringBuilder()
+    sb.append("{")
+    long counter = 0
+    Map<String, Object> sqlParams = [:]
+    updateFields.each { field ->
+      if (counter > 0) {
+        sb.append(",")
+      }
+      counter++
+      sb.append('"').append(field.propName).append('":').append(" :${field.propName} ")
+//      jb.addProperty(field.propName, ":${field.propName}")
+      sqlParams.put(field.propName, field.attribNativeVal)
+
+    }
+    if (counter > 0) {
+      String metadataTypeVertexLabel = "Metadata_Type_${vertexLabel}"
+      sb.append(',"').append(metadataTypeVertexLabel).append('":').append(" :${metadataTypeVertexLabel} ")
+      sqlParams.put(metadataTypeVertexLabel, vertexLabel)
+
+      sb.append(', "Metadata_Type": :Metadata_Type')
+      sqlParams.put("Metadata_Type", vertexLabel)
+
+    }
+    sb.append("}")
+
+
+    return [sb.toString(), sqlParams]
+  }
+
 
   static matchVertices(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs, int maxHitsPerType, StringBuffer sb = null) {
 
@@ -741,15 +864,15 @@ class Matcher {
       if (processAll) {
         vFiltered.each { matchReq ->
           GraphTraversal exists =
-                  gTravSource.V().has("Metadata.Type." + matchReq.vertexLabel, P.eq(matchReq.vertexLabel))
+                  gTravSource.V().has("Metadata_Type_" + matchReq.vertexLabel, P.eq(matchReq.vertexLabel))
                           .has(matchReq.propName, matchReq.predicate(matchReq.attribNativeVal)).id()
           ORID id
           if (exists.hasNext()) {
             id = exists.next() as ORID
           } else {
             id = gTravSource.addV(matchReq.vertexLabel)
-                    .property("Metadata.Type." + matchReq.vertexLabel, matchReq.vertexLabel)
-                    .property("Metadata.Type", matchReq.vertexLabel)
+                    .property("Metadata_Type_" + matchReq.vertexLabel, matchReq.vertexLabel)
+                    .property("Metadata_Type", matchReq.vertexLabel)
                     .property(matchReq.propName, matchReq.attribNativeVal)
                     .id()
                     .next() as ORID
@@ -860,8 +983,8 @@ class Matcher {
                   } else {
                     if (!atLeastOneTraversal) {
 
-                      sb?.append("\ng.V().has('Metadata.Type.")?.append(matchReq.vertexLabel)?.append("',eq('")?.append(matchReq.vertexLabel)?.append("')")
-                      graphTraversal = gTravSource.V().has("Metadata.Type." + matchReq.vertexLabel, P.eq(matchReq.vertexLabel))
+                      sb?.append("\ng.V().has('Metadata_Type_")?.append(matchReq.vertexLabel)?.append("',eq('")?.append(matchReq.vertexLabel)?.append("')")
+                      graphTraversal = gTravSource.V().has("Metadata_Type_" + matchReq.vertexLabel, P.eq(matchReq.vertexLabel))
                       atLeastOneTraversal = true
                     }
                     standardScore += matchReq.matchWeight
@@ -1002,37 +1125,37 @@ class Matcher {
       addr.tokens.each { key, val ->
 
 //        val.each { it ->
-          String it = val;
+        String it = val
 
-          binding.put(postProcessorVar ?: "it", it)
+        binding.put(postProcessorVar ?: "it", it)
 
 
-          String processedVal = (postProcessor != null) ?
-                  PVValTemplate.getTemplate((String) postProcessor).make(binding) :
-                  it
+        String processedVal = (postProcessor != null) ?
+                PVValTemplate.getTemplate((String) postProcessor).make(binding) :
+                it
 
-          if (processedVal != null) {
+        if (processedVal != null) {
 
-            mreq = new MatchReq(
-                    (String) processedVal as String
-                    , nativeTypeAddrParts
-                    , (String) "${propName}.${key}" as String
-                    , (String) vertexName
-                    , (String) vertexLabel
-                    , (String) predicate
-                    , (boolean) excludeFromSearch
-                    , (boolean) excludeFromSubsequenceSearch
-                    , (boolean) excludeFromUpdate
-                    , (boolean) mandatoryInSearch
-                    , (boolean) processAll
-                    , (double) matchWeight
-                    , sb
-            )
+          mreq = new MatchReq(
+                  (String) processedVal as String
+                  , nativeTypeAddrParts
+                  , (String) "${propName}_${key}" as String
+                  , (String) vertexName
+                  , (String) vertexLabel
+                  , (String) predicate
+                  , (boolean) excludeFromSearch
+                  , (boolean) excludeFromSubsequenceSearch
+                  , (boolean) excludeFromUpdate
+                  , (boolean) mandatoryInSearch
+                  , (boolean) processAll
+                  , (double) matchWeight
+                  , sb
+          )
 
-            if (mreq?.attribNativeVal != null) {
-              matchReqs.add(mreq)
+          if (mreq?.attribNativeVal != null) {
+            matchReqs.add(mreq)
 
-            }
+          }
 //          }
         }
 
@@ -1078,12 +1201,12 @@ class Matcher {
   static com.pontusvision.gdpr.mapping.Rules getRule(String rulesName) {
     def hasEntry =
             (App.g.V()
-                    .has("Metadata.Type", "Object.Data_Src_Mapping_Rule")
-                    .has("Metadata.Type.Object.Data_Src_Mapping_Rule",
-                            P.eq("Object.Data_Src_Mapping_Rule"))
-                    .has("Object.Data_Src_Mapping_Rule.Name", P.eq(rulesName))
+                    .has("Metadata_Type", "Object_Data_Src_Mapping_Rule")
+                    .has("Metadata_Type_Object_Data_Src_Mapping_Rule",
+                            P.eq("Object_Data_Src_Mapping_Rule"))
+                    .has("Object_Data_Src_Mapping_Rule_Name", P.eq(rulesName))
                     .next()
-                    .property("Object.Data_Src_Mapping_Rule.Business_Rules_JSON")
+                    .property("Object_Data_Src_Mapping_Rule_Business_Rules_JSON")
                     .value()
 
             )
@@ -1091,6 +1214,264 @@ class Matcher {
     def rules = jsonSlurper.parseText(hasEntry as String) as com.pontusvision.gdpr.mapping.Rules
 
     return rules
+
+  }
+
+  /*
+      - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: MD2
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+
+   */
+
+  static Vertex addEventIngestion(String dataSourceName, Vertex groupIngestionVertex) {
+    Vertex eventIngestionVertex = App.g.addV('Event_Ingestion')
+            .property('Metadata_Type_Event_Ingestion', 'Event_Ingestion')
+            .property('Event_Ingestion_Type', dataSourceName)
+            .property('Event_Ingestion_Operation', 'Structured Data Insertion')
+            .property('Event_Ingestion_Metadata_Create_Date', new Date())
+            .next()
+
+    App.g.addE('Has_Ingestion_Event').from(groupIngestionVertex).to(eventIngestionVertex).iterate()
+
+    return eventIngestionVertex
+  }
+/*
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: MD2
+          mandatoryInSearch: True
+        - name: Object_Data_Source_Description
+          val: Dados RH Colaboradores MD2
+          mandatoryInSearch: True
+        - name: Object_Data_Source_Type
+          val: Structured
+          mandatoryInSearch: True
+
+ */
+
+  static Vertex getObjectDataSource(String dataSourceName) {
+    if (App.g.V().has('Object_Data_Source_Name', P.eq(dataSourceName)).hasNext()) {
+      return App.g.V().has('Object_Data_Source_Name', P.eq(dataSourceName)).next()
+    }
+    Vertex dataSourceVertex = App.g.addV('Object_Data_Source')
+            .property('Metadata_Type_Object_Data_Source', 'Object_Data_Source')
+            .property('Object_Data_Source_Name', dataSourceName)
+            .property('Object_Data_Source_Description', dataSourceName)
+            .property('Object_Data_Source_Type', 'Structured')
+            .next()
+
+    return dataSourceVertex
+
+  }
+
+  static Vertex getEventGroupIngestion(String dataSourceName) {
+    /*
+          - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: MD2
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Metadata_Start_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Group_Ingestion_Metadata_End_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+
+     */
+    String ingestionDate = "${new SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+    def groupIngestionVertex
+    if (App.g.V().has('Event_Group_Ingestion_Type', P.eq(dataSourceName))
+            .has('Event_Group_Ingestion_Ingestion_Date', P.eq(ingestionDate)).hasNext()) {
+      return App.g.V().has('Event_Group_Ingestion_Type', P.eq(dataSourceName))
+              .has('Event_Group_Ingestion_Ingestion_Date', P.eq(ingestionDate)).next()
+    }
+    groupIngestionVertex = App.g.addV('Event_Group_Ingestion')
+            .property('Metadata_Type_Event_Group_Ingestion', 'Event_Group_Ingestion')
+            .property('Event_Group_Ingestion_Type', dataSourceName)
+            .property('Event_Group_Ingestion_Ingestion_Date', ingestionDate)
+            .property('Event_Group_Ingestion_Operation', 'Structured Data Insertion')
+            .property('Event_Group_Ingestion_Metadata_Start_Date', new Date())
+            .property('Event_Group_Ingestion_Metadata_End_Date', new Date())
+            .next()
+
+    Vertex dataSource = getObjectDataSource(dataSourceName)
+
+    App.g.addE('Has_Ingestion_Event').from(dataSource).to(groupIngestionVertex)
+
+    return groupIngestionVertex
+
+  }
+
+  static Vertex addPersonVertex(String name, String document) {
+    Vertex retVal = null
+//    Transaction trans = App.graph.tx()
+//    if (!trans.isOpen()) {
+//      trans.open()
+//    }
+//    try {
+    try {
+      retVal = App.g.addV('Person_Natural')
+              .property('Metadata_Type_Person_Natural', 'Person_Natural')
+              .property('Person_Natural_Full_Name', name?.toUpperCase()?.trim())
+              .property('Person_Natural_Customer_ID', "${document?.replaceAll('[^0-9]', '')}")
+              .next()
+    }
+    catch (Throwable t) {
+      retVal = App.g.V()
+              .has('Metadata_Type_Person_Natural', P.eq('Person_Natural'))
+              .has('Person_Natural_Full_Name', P.eq(name?.toUpperCase()?.trim()))
+              .has('Person_Natural_Customer_ID', P.eq("${document?.replaceAll('[^0-9]', '')}"))
+              .next()
+    }
+//      trans.commit()
+//    } catch (Throwable t) {
+//      trans.rollback()
+//    }
+//    finally {
+//      trans.close()
+//    }
+    return retVal
+  }
+
+  static Vertex addIdentityVertex(String document) {
+
+    Vertex retVal = null
+//    Transaction trans = App.graph.tx()
+//    if (!trans.isOpen()) {
+//      trans.open()
+//    }
+//    try {
+    try {
+      retVal = App.g.addV('Object_Identity_Card')
+              .property('Metadata_Type_Object_Identity_Card', 'Object_Identity_Card')
+              .property('Object_Identity_Card_Type', 'CPF')
+              .property('Object_Identity_Card_Id_Value', "${document?.replaceAll('[^0-9]', '')}")
+              .next()
+    }
+    catch (Throwable t) {
+      retVal = App.g.V()
+              .has('Metadata_Type_Object_Identity_Card', P.eq('Object_Identity_Card'))
+              .has('Object_Identity_Card_Type', P.eq('CPF'))
+              .has('Object_Identity_Card_Id_Value', P.eq("${document?.replaceAll('[^0-9]', '')}"))
+              .next()
+    }
+//
+//    trans.commit()
+//  }
+//
+//  catch (  Throwable t ) {
+//    trans.rollback()
+//  }
+//  finally {
+//    trans.close()
+//  }
+    return retVal
+  }
+
+  static Vertex addEmailAddressVertex(String email) {
+//  Transaction trans = App.graph.tx()
+//  if (!trans.isOpen()) {
+//    trans.open()
+//  }
+//
+//  try {
+    try {
+      return App.g.addV('Object_Email_Address')
+              .property('Metadata_Type_Object_Email_Address', 'Object_Email_Address')
+              .property('Object_Email_Address_Email', "${email?.trim()?.toLowerCase()}")
+              .next()
+    } catch (Throwable t) {
+      return App.g.V()
+              .has('Metadata_Type_Object_Email_Address', P.eq('Object_Email_Address'))
+              .has('Object_Email_Address_Email', P.eq("${email?.trim()?.toLowerCase()}"))
+              .next()
+    }
+////  }
+////  trans.commit()
+//}
+//
+//catch (Throwable t ) {
+//  trans.rollback()
+//}
+//finally {
+//  trans.close()
+//}
+
+  }
+
+
+  static String ingestMD2BulkData(String jsonString, String jsonPath, String ruleName) {
+
+    def recordList = JsonPath.read(jsonString, jsonPath)
+    String dataSourceName = 'MD2'
+
+
+    Vertex groupIngestionVertex = null
+
+    Transaction trans = App.graph.tx()
+    long successCount = 0
+
+    if (!trans.isOpen()) {
+      trans.open()
+    }
+    try {
+      groupIngestionVertex = getEventGroupIngestion(dataSourceName)
+
+
+      for (def item in recordList) {
+        String name = item.name
+        String email = item.email
+        String document = item.document
+        Vertex personNaturalVertex = addPersonVertex(name, document)
+        Vertex documentVertex = addIdentityVertex(document)
+        Vertex emailVertex = addEmailAddressVertex(email)
+
+        Vertex eventIngestionVertex = addEventIngestion(dataSourceName, groupIngestionVertex)
+
+        App.g.addE('Has_Ingestion').from(eventIngestionVertex).to(personNaturalVertex).iterate()
+        App.g.addE('Uses_Email').from(personNaturalVertex).to(emailVertex).iterate()
+        App.g.addE('Has_Id_Card').from(personNaturalVertex).to(documentVertex).iterate()
+
+        successCount++
+      }
+      trans.commit()
+
+    } catch (Throwable t) {
+      trans.rollback()
+      throw t
+    } finally {
+      trans.close()
+    }
+
+//    return sb?.toString()
+    return "{ \"status\": \"success\"," +
+            " \"successCount\": ${successCount} }"
+
 
   }
 
@@ -1103,13 +1484,13 @@ class Matcher {
   static String ingestEmail(String jsonString, String jsonPath, String ruleName) {
     EmailNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
 
-    return EmailNLPRequest.upsertEmailNLPRequestArray(App.graph, App.g, recordList).toString()
+    return EmailNLPRequest.upsertEmailNLPRequestArray(App.graph, App.g, recordList, ruleName).toString()
   }
 
   static String ingestFile(String jsonString, String jsonPath, String ruleName) {
     FileNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
 
-    return FileNLPRequest.upsertFileNLPRequestArray(App.graph, App.g, recordList).toString()
+    return FileNLPRequest.upsertFileNLPRequestArray(App.graph, App.g, recordList, ruleName).toString()
   }
 
   static String ingestRecordListUsingRules(OrientStandardGraph graph, GraphTraversalSource g,
@@ -1125,8 +1506,6 @@ class Matcher {
 //                new TypeReference<List<Map<String, String>>>(){} as TypeReference<List<Map<String, String>>>);
 
 
-
-
     def rules = getRule(ruleName)
     //jsonSlurper.parseText(jsonRules) as com.pontusvision.com.pontusvision.graphutils.gdpr.mapping.Rules;
 
@@ -1137,7 +1516,6 @@ class Matcher {
     int maxHitsPerType = (rules.maxHitsPerType == null) ? 1000 : (int) rules.maxHitsPerType
 
 
-
     for (def item in recordList) {
       Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName = new HashMap<>()
 
@@ -1146,22 +1524,28 @@ class Matcher {
       Transaction trans = graph.tx()
       try {
         def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName,
-             Map<String, Double> percentageThresholdByVertexName) =
+        Map<String, Double> percentageThresholdByVertexName) =
         getMatchRequests(item as Map<String, String>, rules.updatereq, percentageThreshold, sb)
 
+        if (rules.useSlim) {
+          processMatchRequestsSlim(graph, g,
+                  matchReqs,
+                  edgeReqs)
+        } else {
+          processMatchRequests(graph, g,
+                  matchReqs,
+                  maxHitsPerType,
+                  percentageThresholdByVertexName,
+                  maxScoresByVertexName,
+                  finalVertexIdByVertexName,
+                  edgeReqsByVertexName,
+                  edgeReqs,
+                  sb)
+        }
 
-        processMatchRequests(graph, g,
-                matchReqs,
-                maxHitsPerType,
-                percentageThresholdByVertexName,
-                maxScoresByVertexName,
-                finalVertexIdByVertexName,
-                edgeReqsByVertexName,
-                edgeReqs,
-                sb)
 
         trans.commit()
-        successCount ++
+        successCount++
       } catch (Throwable t) {
         trans.rollback()
         sb?.append(t)
@@ -1185,10 +1569,10 @@ class Matcher {
       String id = null
       try {
         id = (g.V()
-                .has("Metadata.Type", "Object.Data_Src_Mapping_Rule")
-                .has("Metadata.Type.Object.Data_Src_Mapping_Rule",
-                        P.eq("Object.Data_Src_Mapping_Rule"))
-                .has("Object.Data_Src_Mapping_Rule.Name", P.eq(ruleName))
+                .has("Metadata_Type", "Object_Data_Src_Mapping_Rule")
+                .has("Metadata_Type_Object_Data_Src_Mapping_Rule",
+                        P.eq("Object_Data_Src_Mapping_Rule"))
+                .has("Object_Data_Src_Mapping_Rule_Name", P.eq(ruleName))
                 .next()
                 .id().toString())
       }
@@ -1196,23 +1580,23 @@ class Matcher {
       }
 
       if (!id) {
-        def localG = g.addV("Object.Data_Src_Mapping_Rule")
-                .property("Metadata.Type", "Object.Data_Src_Mapping_Rule")
-                .property("Metadata.Type.Object.Data_Src_Mapping_Rule", "Object.Data_Src_Mapping_Rule")
-                .property("Object.Data_Src_Mapping_Rule.Name", ruleName)
-                .property("Object.Data_Src_Mapping_Rule.Business_Rules_JSON", ruleStr)
-                .property("Object.Data_Src_Mapping_Rule.Update_Date", new Date())
+        def localG = g.addV("Object_Data_Src_Mapping_Rule")
+                .property("Metadata_Type", "Object_Data_Src_Mapping_Rule")
+                .property("Metadata_Type_Object_Data_Src_Mapping_Rule", "Object_Data_Src_Mapping_Rule")
+                .property("Object_Data_Src_Mapping_Rule_Name", ruleName)
+                .property("Object_Data_Src_Mapping_Rule_Business_Rules_JSON", ruleStr)
+                .property("Object_Data_Src_Mapping_Rule_Update_Date", new Date())
 
 
         sb.append("\nAdded a new Entry for ${ruleName}")
-        localG = localG.property("Object.Data_Src_Mapping_Rule.Create_Date", new Date())
+        localG = localG.property("Object_Data_Src_Mapping_Rule_Create_Date", new Date())
         id = localG.next().id().toString()
 
       } else {
         sb.append("\nUpdating exiting Entry for ${ruleName}; id = ${id}")
 
         g.V(id)
-                .property("Object.Data_Src_Mapping_Rule.Business_Rules_JSON", ruleStr)
+                .property("Object_Data_Src_Mapping_Rule_Business_Rules_JSON", ruleStr)
                 .next()
 
       }
@@ -1563,15 +1947,15 @@ class Matcher {
 
       if (!moreThanOneVertex) {
         localTrav = g.addV(vertexLabel)
-                .property('Metadata.Type.' + vertexLabel, vertexLabel)
-                .property('Metadata.Type', vertexLabel)
+                .property('Metadata_Type_' + vertexLabel, vertexLabel)
+                .property('Metadata_Type', vertexLabel)
 
       }
       matchesForUpdate.each { it ->
         if (moreThanOneVertex) {
           localTrav = g.addV(vertexLabel)
-                  .property('Metadata.Type.' + vertexLabel, vertexLabel)
-                  .property('Metadata.Type', vertexLabel)
+                  .property('Metadata_Type_' + vertexLabel, vertexLabel)
+                  .property('Metadata_Type', vertexLabel)
 
         }
 
@@ -1680,6 +2064,181 @@ class Matcher {
     }
 
     return [edgeReqsByVertexName, edgeReqs]
+  }
+
+  static createEdgesSlim(GraphTraversalSource gTrav, Set<EdgeRequest> edgeReqs, Map<String, Map<ORID, List<MatchReq>>> finalVertexIdByVertexName) {
+
+    edgeReqs.each { it ->
+
+      Map<ORID, List<MatchReq>> fromIds = finalVertexIdByVertexName?.get(it.fromVertexName)
+      Map<ORID, List<MatchReq>> toIds = finalVertexIdByVertexName?.get(it.toVertexName)
+
+      fromIds?.forEach { fromId, fromScore ->
+
+        toIds?.forEach { toId, toScore ->
+
+          if (fromId != null && toId != null) {
+
+            ORID[] foundIds = gTrav.V(toId)
+                    .both()
+                    .hasId(P.within(fromId)).id()
+                    .toSet() as ORID[]
+
+            if (foundIds.size() == 0) {
+
+              def fromV = gTrav.V(fromId)
+              def toV = gTrav.V(toId)
+
+              gTrav.addE(it.label)
+                      .from(fromV).to(toV)
+                      .next()
+
+
+            }
+          }
+        }
+
+      }
+
+
+    }
+  }
+
+  static String escapeLucene(String s) {
+//    return s;
+    StringBuilder sb = new StringBuilder()
+
+    for (int i = 0; i < s.length(); ++i) {
+      char c = s.charAt(i)
+      if (c == '\\'
+//              c == '+' || c == '-' ||
+              || c == '!'
+//              || c == '('
+//          c == ')' || c == ':' || c == '^' || c == '[' || c == ']' ||
+              || c == '"'
+//          || c == '{' || c == '}' || c == '~' || c == '*' ||
+//          c == '?' || c == '|' || c == '&' || c == '/' || c == "'"
+      ) {
+        sb.append('\\')
+      }
+
+      if (c != '\n' && c != '\'') {
+        sb.append(c)
+      } else {
+        sb.append(' ')
+      }
+    }
+
+    return sb.toString()
+  }
+
+  static processVerticesSlim(List<MatchReq> uniqueProps,
+                             String vertexLabel,
+                             String vertexName,
+                             Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName) {
+
+    List<MatchReq> mandatoryFields = uniqueProps.findAll { it2 -> it2.mandatoryInSearch }
+    List<MatchReq> updateFields = uniqueProps.findAll { it2 -> !it2.excludeFromUpdate }
+
+    def (String jsonToMerge, Map<String, Object> sqlParams) = createJsonMergeParam(updateFields, vertexLabel)
+
+
+    String searchClassAttribs = createSearchClassAttribs(mandatoryFields)
+    String whereClauseAttribs = createWhereClauseAttribs(mandatoryFields)
+
+
+    final boolean isPureInsert = "()".equals(searchClassAttribs)
+    String whereClause = "WHERE ${whereClauseAttribs}"
+//              "WHERE SEARCH_CLASS ('${searchClassAttribs}') = true"
+
+    final String sqlStr = isPureInsert ?
+            "INSERT INTO `${vertexLabel}` CONTENT ${jsonToMerge}" :
+            "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} LOCK record LIMIT 1 "
+    final def retVals = App.graph.executeSql(sqlStr, sqlParams)
+    retVals.each { OGremlinResult result ->
+
+      result.getVertex().ifPresent({ res ->
+        Map<ORID, List<MatchReq>> mrl = matchReqListByOridByVertexName.get(vertexName)
+        mrl.computeIfAbsent(res.id(), { k -> uniqueProps })
+      })
+
+    }
+  }
+
+  static matchVerticesSlim(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs) {
+
+
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName = new HashMap<>()
+
+    Map<String, List<MatchReq>> matchReqByVertexName = new HashMap<>()
+
+    matchReqs.each {
+      List<MatchReq> matchReqList = matchReqByVertexName.computeIfAbsent(it.vertexName, { k -> new ArrayList<>() })
+
+      // LPPM - 25 June 2019 - reduce the number of combinations below by pruning out any records that don't have
+      // any hits in the graph as early as possible.  The logic here is that if a match request does not have any matches
+      // on its own, what hope do we have to use it as a filter combined with other entries???  This is especially true
+      // when the NLP engines give us false positives (e.g. erroneous matches for names, dates, etc).
+//      if (it.hasGraphEntries(graph, gTravSource.V(), sb)) {
+      matchReqList.push(it)
+      matchReqListByOridByVertexName.computeIfAbsent(it.vertexName, { k -> new HashMap<>() })
+//      } else {
+//        sb?.append("\nremoved match Request $it from the list as it was not in the graph, and marked as searchable without updates\n")
+//
+//      }
+    }
+
+
+    matchReqByVertexName.each { vertexName, v ->
+
+
+      // LPPM - must do a deep copy here, because unique is a bit nasty and actually changes the
+      // original record.
+      List<MatchReq> vFiltered = []
+
+      vFiltered.addAll(v.findAll { it2 -> !(it2.excludeFromSearch) })
+
+
+      List<MatchReq> vCopy2 = []
+      vCopy2.addAll(v)
+
+
+      List<MatchReq> uniqueProps = vCopy2.unique { a, b -> a.propName <=> b.propName }
+      String vertexLabel = uniqueProps.size() > 0 ? uniqueProps.get(0).vertexLabel : vertexName
+
+      // This is used primarily for Sharepoint references, where we have a x to many relationship
+      if (uniqueProps.size() < vFiltered.size() && uniqueProps.size() > 0 && uniqueProps.get(0).processAll) {
+        int i = 0, ilen = vFiltered.size()
+        for (; i < ilen; i++) {
+          List<MatchReq> indivList = new ArrayList<>()
+          indivList.push(vFiltered.get(i))
+          processVerticesSlim(indivList, vertexLabel, vertexName, matchReqListByOridByVertexName)
+        }
+
+      } else {
+        processVerticesSlim(uniqueProps, vertexLabel, vertexName, matchReqListByOridByVertexName)
+
+      }
+
+//        int maxExpectedSizeOfQueries = uniqueProps.size()
+
+
+    }
+    return [matchReqByVertexName, matchReqListByOridByVertexName]
+  }
+
+
+  static processMatchRequestsSlim(OrientStandardGraph graph, GraphTraversalSource g,
+                                  List<MatchReq> matchReqs,
+                                  Set<EdgeRequest> edgeReqs) {
+
+    def (
+    Map<String, List<MatchReq>>            matchReqByVertexName,
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
+    ) = matchVerticesSlim(graph, g, matchReqs)
+
+    createEdgesSlim(g, (Set<EdgeRequest>) edgeReqs, matchReqListByOridByVertexName)
+
   }
 
   static createEdges(GraphTraversalSource gTrav, Set<EdgeRequest> edgeReqs, Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName, Map<String, AtomicDouble> maxScoresByVertexName, StringBuffer sb = null) {
@@ -1797,10 +2356,10 @@ class Matcher {
             ORID vId = vIds.get(v)
             newVertices.put(vId, new AtomicDouble(maxScore))
             finalVertexIdByVertexName.put((String) vertexTypeStr, newVertices)
-            if ('Event.Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
+            if ('Event_Ingestion'.equalsIgnoreCase(matchReqsForThisVertexType?.get(0)?.getVertexLabel())) {
               String bizRule = JsonSerializer.gson.toJson(matchReqByVertexName)
-              sb?.append("\n\n\n ADDING Event.Ingestion.Business_Rules: ${bizRule}\n\n")
-              g.V(vId).property('Event.Ingestion.Business_Rules', bizRule).next()
+              sb?.append("\n\n\n ADDING Event_Ingestion_Business_Rules: ${bizRule}\n\n")
+              g.V(vId).property('Event_Ingestion_Business_Rules', bizRule).next()
             }
           }
         }
@@ -1995,11 +2554,11 @@ def rulesStr = '''
     "vertices":
 	[
 	  {
-		"label": "Person.Natural"
+		"label": "Person_Natural"
 	   ,"props":
 		[
 		  {
-			"name": "Person.Natural.Full_Name_fuzzy"
+			"name": "Person_Natural_Full_Name_fuzzy"
 		   ,"val": "${person}"
 		   ,"predicate": "textContainsFuzzy"
 		   ,"type":"[Ljava.lang.String;"
@@ -2009,7 +2568,7 @@ def rulesStr = '''
 
 		  }
 		 ,{
-			"name": "Person.Natural.Last_Name"
+			"name": "Person_Natural_Last_Name"
 		   ,"val": "${person}"
 		   ,"predicate": "textContainsFuzzy"
 		   ,"type":"[Ljava.lang.String;"
@@ -2019,11 +2578,11 @@ def rulesStr = '''
 		]
 	  }
 	 ,{
-		"label": "Location.Address"
+		"label": "Location_Address"
 	   ,"props":
 		[
 		  {
-			"name": "Location.Address.parser.postcode"
+			"name": "Location_Address_parser_postcode"
 		   ,"val": "${postcode}"
 		   ,"type":"[Ljava.lang.String;"
 		   ,"excludeFromUpdate": true
@@ -2035,11 +2594,11 @@ def rulesStr = '''
 
 	  }
 	 ,{
-		"label": "Object.Email_Address"
+		"label": "Object_Email_Address"
 	   ,"props":
 		[
 		  {
-			"name": "Object.Email_Address.Email"
+			"name": "Object_Email_Address_Email"
 		   ,"val": "${email}"
 		   ,"type":"[Ljava.lang.String;"
 		   ,"excludeFromUpdate": true
@@ -2049,11 +2608,11 @@ def rulesStr = '''
 
 	  }
 	 ,{
-		"label": "Object.Insurance_Policy"
+		"label": "Object_Insurance_Policy"
 	   ,"props":
 		[
 		  {
-			"name": "Object.Insurance_Policy.Number"
+			"name": "Object_Insurance_Policy_Number"
 		   ,"val": "${policy_number}"
 		   ,"type":"[Ljava.lang.String;"
 		   ,"excludeFromUpdate": true
@@ -2063,31 +2622,31 @@ def rulesStr = '''
 
 	  }
 	 ,{
-		"label": "Event.Ingestion"
+		"label": "Event_Ingestion"
 	   ,"props":
 		[
 		  {
-			"name": "Event.Ingestion.Type"
+			"name": "Event_Ingestion_Type"
 		   ,"val": "Outlook PST Files"
 		   ,"excludeFromSearch": true
 		  }
 		 ,{
-			"name": "Event.Ingestion.Operation"
+			"name": "Event_Ingestion_Operation"
 		   ,"val": "Unstructured Data Insertion"
 		   ,"excludeFromSearch": true
 		  }
 		 ,{
-			"name": "Event.Ingestion.Domain_b64"
+			"name": "Event_Ingestion_Domain_b64"
 		   ,"val": "${original_request?.bytes?.encodeBase64()?.toString()}"
 		   ,"excludeFromSearch": true
 		  }
 		 ,{
-			"name": "Event.Ingestion.Domain_Unstructured_Data_b64"
+			"name": "Event_Ingestion_Domain_Unstructured_Data_b64"
 		   ,"val": "${pg_content?.bytes?.encodeBase64()?.toString()}"
 		   ,"excludeFromSearch": true
 		  }
 		 ,{
-			"name": "Event.Ingestion.Metadata_Create_Date"
+			"name": "Event_Ingestion_Metadata_Create_Date"
 		   ,"val": "${new Date()}"
 		   ,"excludeFromSearch": true
 		   ,"type": "java.util.Date"
@@ -2097,17 +2656,17 @@ def rulesStr = '''
 		]
 	  }
      ,{
-		"label": "Event.Group_Ingestion"
+		"label": "Event_Group_Ingestion"
 	   ,"props":
 		[
 		  {
-			"name": "Event.Group_Ingestion.Metadata_Start_Date"
+			"name": "Event_Group_Ingestion_Metadata_Start_Date"
 		   ,"val": "${pg_currDate}"
 		   ,"mandatoryInSearch": true
 		   ,"type": "java.util.Date"
 		  }
 		 ,{
-			"name": "Event.Group_Ingestion.Metadata_End_Date"
+			"name": "Event_Group_Ingestion_Metadata_End_Date"
 		   ,"val": "${new Date()}"
 		   ,"excludeFromSearch": true
 		   ,"excludeFromSubsequenceSearch": true
@@ -2115,12 +2674,12 @@ def rulesStr = '''
 		  }
 
 		 ,{
-			"name": "Event.Group_Ingestion.Type"
+			"name": "Event_Group_Ingestion_Type"
 		   ,"val": "Outlook PST Files"
 		   ,"mandatoryInSearch": true
 		  }
 		 ,{
-			"name": "Event.Group_Ingestion.Operation"
+			"name": "Event_Group_Ingestion_Operation"
 		   ,"val": "Unstructured Data Insertion"
 		   ,"mandatoryInSearch": true
 		  }
@@ -2131,8 +2690,8 @@ def rulesStr = '''
 	]
    ,"edges":
     [
-      { "label": "Has_Ingestion_Event", "fromVertexLabel": "Person.Natural", "toVertexLabel": "Event.Ingestion"  }
-     ,{ "label": "Has_Ingestion_Event", "fromVertexLabel": "Event.Group_Ingestion", "toVertexLabel": "Event.Ingestion"  }
+      { "label": "Has_Ingestion_Event", "fromVertexLabel": "Person_Natural", "toVertexLabel": "Event_Ingestion"  }
+     ,{ "label": "Has_Ingestion_Event", "fromVertexLabel": "Event_Group_Ingestion", "toVertexLabel": "Event_Ingestion"  }
     ]
   }
 }
