@@ -21,6 +21,8 @@ class FileNLPRequest implements Serializable {
   String metadataController
   String metadataGDPRStatus
   String metadataLineage
+  String dataSourceName
+
   String pg_currDate
   String pg_content
   String[] address
@@ -86,7 +88,7 @@ class FileNLPRequest implements Serializable {
     return retVal
   }
 
-  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email') {
+  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email', String status = 'In Progress') {
     final String vtxLabel = 'Object_Data_Source'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
@@ -95,6 +97,13 @@ class FileNLPRequest implements Serializable {
     vtxProps.name = "${vtxLabel}_Name"
     vtxProps.mandatoryInSearch = true
     vtxProps.val = dataSourceType
+
+    VertexProps vtxPropStatus = new VertexProps()
+    vtxProps.name = "${vtxLabel}_Status"
+    vtxProps.mandatoryInSearch = false
+    vtxProps.excludeFromSearch = true
+    vtxProps.excludeFromUpdate = false
+    vtxProps.val = status
 
     vtx.props = [vtxProps]
     req.vertices.push(vtx)
@@ -136,7 +145,7 @@ class FileNLPRequest implements Serializable {
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
     updateReq.edges = []
-    String dataSourceName = "file_server_${req.server}"
+    String dataSourceName = req.dataSourceName?: "file_server_${req.server}"
     Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
     Vertex eventGroupFileIngestionVtx = createEventGroupIngestionVtx(updateReq, dataSourceName)
 

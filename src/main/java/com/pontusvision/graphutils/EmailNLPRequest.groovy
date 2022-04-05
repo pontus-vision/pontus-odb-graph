@@ -19,6 +19,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   String attachmentId
   String attachmentName
 
+
   String emailSubject
   String emailId
   String emailUserId
@@ -90,6 +91,8 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     Boolean isSlim = App.useSlim || ruleName?.toLowerCase()?.contains("slim");
 
     Transaction trans = App.graph.tx()
+
+    // TODO: add marker here with status
 
     for (EmailNLPRequest req : reqs) {
       try {
@@ -201,7 +204,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
     updateReq.edges = []
-    String dataSourceName = "Office365/email"
+    String dataSourceName = req.dataSourceName?:"Office365/email"
 
     Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
     Vertex eventEmailMessageGroupVtx = createEventGroupIngestionVtx(updateReq, dataSourceName, "Event_Email_Msg_Group")

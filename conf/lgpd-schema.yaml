@@ -315,6 +315,12 @@ propertyKeys:
   - name: Event_File_Ingestion_Server
     dataType: String
     cardinality: SINGLE
+  - name: Event_File_Ingestion_Status
+    dataType: String
+    cardinality: SINGLE
+  - name: Event_File_Ingestion_Error
+    dataType: String
+    cardinality: SINGLE
   - name: Event_File_Ingestion_Size_Bytes
     dataType: Double
     cardinality: SINGLE
@@ -1152,6 +1158,9 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Source_URI_Update
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Source_Status
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Source_Update_Date
@@ -2952,6 +2961,7 @@ vertexIndexes:
       - Event_File_Ingestion_Owner
       - Event_File_Ingestion_Path
       - Event_File_Ingestion_Server
+      - Event_File_Ingestion_Status
       - Event_File_Ingestion_Size_Bytes
     propertyKeysMappings:
     
@@ -3446,6 +3456,7 @@ vertexIndexes:
       - Object_Data_Source_URI_Read
       - Object_Data_Source_URI_Template
       - Object_Data_Source_URI_Update
+      - Object_Data_Source_Status
       - Object_Data_Source_Update_Date
     propertyKeysMappings:
     

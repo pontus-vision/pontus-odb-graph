@@ -565,6 +565,7 @@ schema:
         - name: URI_Read
         - name: URI_Template
         - name: URI_Update
+        - name: Status
         - name: Update_Date
           dataType: Date
 
