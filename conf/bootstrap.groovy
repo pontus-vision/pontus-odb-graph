@@ -91,6 +91,9 @@ static def getScoresJson(){
 static def calculatePOLECounts(){
     return gdpr.calculatePOLECounts();
 }
+static def getMd2Stats(){
+    return gdpr.getMd2Stats();
+}
 
 static def renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g){
     return PontusJ2ReportingFunctions.renderReportInBase64(pg_id,pg_templateTextInBase64,g);

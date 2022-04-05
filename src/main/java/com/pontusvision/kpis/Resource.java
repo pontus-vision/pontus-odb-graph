@@ -22,6 +22,12 @@ public class Resource {
   public String calculatePOLECounts() {
     return gdpr.calculatePOLECounts().toString();
   }
+  @GET
+  @Path("kpi/getMd2Stats")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getMd2Stats() {
+    return gdpr.getMd2Stats().toString();
+  }
 
   @GET
   @Path("kpi/getScoresJson")

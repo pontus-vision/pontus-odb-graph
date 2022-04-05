@@ -177,6 +177,9 @@ schema:
         - name: Owner
         - name: Path
         - name: Server
+        - name: Status
+        - name: Error
+          index: false
         - name: Size_Bytes
           dataType: Double
 
