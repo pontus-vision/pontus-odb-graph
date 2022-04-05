@@ -4941,11 +4941,17 @@ the end of the process.
         sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(dataType.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
       }
 
+      App.graph.executeSql("SELECT Event_File_Ingestion_File_Type as type,SUM(Event_File_Ingestion_Size_Bytes) as bytes FROM Event_File_Ingestion GROUP BY Event_File_Ingestion_File_Type", Collections.EMPTY_MAP).toList().each {
+        String type = "Event_File_Ingestion_File_Type_Bytes(${it.getRawResult().getProperty('type')})"
+        String bytes = it.getRawResult().getProperty('bytes')
+        sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate(type.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": ${Long.valueOf((long) Double.valueOf(bytes).doubleValue())}, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
-      String queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'Mixed'"
-      Long numEntries = getCountQueryResults(queryStr)
+      }
 
-      sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Mixed Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+//      String queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'Mixed'"
+//      Long numEntries = getCountQueryResults(queryStr)
+//
+//      sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Mixed Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
       sb.append(']')

@@ -1,9 +1,13 @@
 package com.pontusvision.gdpr;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.pontusvision.graphutils.gdpr;
 import org.junit.jupiter.api.*;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @TestClassOrder(AnnotationTestsOrderer.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestClassesOrder(11)
+@TestClassesOrder(30)
 //@RunWith(JUnitPlatform.class)
 public class PVMD2ScoreTests extends AppTest {
   /**
@@ -46,6 +50,11 @@ public class PVMD2ScoreTests extends AppTest {
     try {
 
       String md2Stats = gdpr.getMd2Stats();
+      Gson gson = new Gson();
+      Type resultType = new TypeToken<List<Map<String, Object>>>(){}.getType();
+      List<Map<String, Object>> result = gson.fromJson(md2Stats, resultType);
+
+      assertEquals(result.size(),8);
 
 //      Map<String, Long> retVals = new HashMap<>();
 //
