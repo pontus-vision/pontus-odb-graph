@@ -1884,6 +1884,21 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Data_Source_Ingestion_Start",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Source_Ingestion_Finish",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Source_Error",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata_Type_Object_Data_Src_Mapping_Rule",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -5076,7 +5091,9 @@
         "Object_Data_Source_URI_Template",
         "Object_Data_Source_URI_Update",
         "Object_Data_Source_Status",
-        "Object_Data_Source_Update_Date"
+        "Object_Data_Source_Update_Date",
+        "Object_Data_Source_Ingestion_Start",
+        "Object_Data_Source_Ingestion_Finish"
       ],
       "propertyKeysMappings": {}
     },
