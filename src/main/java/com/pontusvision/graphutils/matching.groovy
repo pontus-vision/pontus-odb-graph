@@ -795,6 +795,7 @@ class Matcher {
     return sb.toString()
   }
 
+
   static createJsonMergeParam(List<MatchReq> updateFields, String vertexLabel) {
 //    JsonObject jb = new JsonObject()
     StringBuilder sb = new StringBuilder()
@@ -809,13 +810,10 @@ class Matcher {
       sb.append('"').append(field.propName).append('":').append(" :${field.propName} ")
 //      jb.addProperty(field.propName, ":${field.propName}")
       if (field.attribType == Date.class){
-
-        sqlParams.put(field.propName, ((Date) field.attribNativeVal).toInstant().toString())
-
+        sqlParams.put(field.propName, sdf.format((Date) field.attribNativeVal))
       }
-      else{
+      else {
         sqlParams.put(field.propName, field.attribNativeVal)
-
       }
 
     }
