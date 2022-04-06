@@ -28,26 +28,18 @@ public class PVMD2ScoreTests extends AppTest {
   /**
    * Create the test0000 case
    *
-   * @param test0000Name name of the test0000 case
    */
 
-  /**
-   * @return the suite of test0000s being test0000ed
-   */
-  @BeforeAll
-  public void prepareData() throws InterruptedException {
-    jsonTestUtil("md2/md2.json", "$.person", "pv_md2");
 
-    jsonTestUtil("pv-extract-file-ingest-md2.json", "$.value", "pv_file");
-    jsonTestUtil("office365/pv-extract-o365-email-md2.json", "$.value", "pv_email");
-    jsonTestUtil("office365/pv-extract-o365-email-md2-pt2.json", "$.value", "pv_email");
-
-
-  }
 
   @Test
-  public void test00001TemplateUpsert() throws InterruptedException {
+  public void test00001Md2Stats() throws InterruptedException {
     try {
+      jsonTestUtil("md2/md2.json", "$.person", "pv_md2");
+
+      jsonTestUtil("pv-extract-file-ingest-md2.json", "$.value", "pv_file");
+      jsonTestUtil("office365/pv-extract-o365-email-md2.json", "$.value", "pv_email");
+      jsonTestUtil("office365/pv-extract-o365-email-md2-pt2.json", "$.value", "pv_email");
 
       String md2Stats = gdpr.getMd2Stats();
       Gson gson = new Gson();

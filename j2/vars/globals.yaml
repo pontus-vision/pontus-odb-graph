@@ -568,6 +568,10 @@ schema:
         - name: Status
         - name: Update_Date
           dataType: Date
+        - name: Ingestion_Start
+          dataType: Date
+        - name: Ingestion_Finish
+          dataType: Date
 
 
     - name: "Object_Data_Src_Mapping_Rule"

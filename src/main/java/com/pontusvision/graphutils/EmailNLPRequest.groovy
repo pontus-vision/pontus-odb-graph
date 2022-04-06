@@ -90,7 +90,17 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
           String ruleName) {
     Boolean isSlim = App.useSlim || ruleName?.toLowerCase()?.contains("slim");
 
+    if (reqs.length == 0){
+
+      return;
+    }
+
+
+    upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('In Progress'), true)
+
+
     Transaction trans = App.graph.tx()
+
 
     // TODO: add marker here with status
 
@@ -103,11 +113,15 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
         trans.commit()
       } catch (Throwable t) {
         trans.rollback()
+        upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('Server-Side Error'),false)
+
         throw t
       } finally {
         trans.close()
       }
     }
+
+    upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('Finished'),false)
 
   }
 
@@ -195,6 +209,11 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
   }
 
 
+  static String getDataSourceName(EmailNLPRequest req){
+    return req.dataSourceName?:"Office365/email"
+
+
+  }
   static Map<String, Map<ORID, AtomicDouble>> upsertEmailNLPRequest(
           OrientStandardGraph graph,
           GraphTraversalSource g,
@@ -204,7 +223,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
     updateReq.edges = []
-    String dataSourceName = req.dataSourceName?:"Office365/email"
+    String dataSourceName = getDataSourceName(req)
 
     Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
     Vertex eventEmailMessageGroupVtx = createEventGroupIngestionVtx(updateReq, dataSourceName, "Event_Email_Msg_Group")

@@ -88,7 +88,7 @@ class FileNLPRequest implements Serializable {
     return retVal
   }
 
-  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email', String status = 'In Progress') {
+  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email', String status = 'In Progress', Boolean isStart = null) {
     final String vtxLabel = 'Object_Data_Source'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
@@ -99,13 +99,24 @@ class FileNLPRequest implements Serializable {
     vtxProps.val = dataSourceType
 
     VertexProps vtxPropStatus = new VertexProps()
-    vtxProps.name = "${vtxLabel}_Status"
-    vtxProps.mandatoryInSearch = false
-    vtxProps.excludeFromSearch = true
-    vtxProps.excludeFromUpdate = false
-    vtxProps.val = status
+    vtxPropStatus.name = "${vtxLabel}_Status"
+    vtxPropStatus.mandatoryInSearch = false
+    vtxPropStatus.excludeFromSearch = true
+    vtxPropStatus.excludeFromUpdate = false
+    vtxPropStatus.val = status
 
-    vtx.props = [vtxProps]
+
+
+    vtx.props = [vtxProps, vtxPropStatus]
+    if (isStart != null){
+      VertexProps vtxPropTime = new VertexProps()
+      vtxPropTime.name = "${vtxLabel}_Ingestion_${isStart?'Start':'Finish'}"
+      vtxPropTime.mandatoryInSearch = false
+      vtxPropTime.excludeFromSearch = true
+      vtxPropTime.excludeFromUpdate = false
+      vtxPropTime.val = new Date()
+      vtx.props.push(vtxPropTime)
+    }
     req.vertices.push(vtx)
     return vtx
   }
@@ -161,6 +172,29 @@ class FileNLPRequest implements Serializable {
       processUpsertFileNLPRequest(graph,g,req,updateReq)
 
     }
+
+  }
+  static void upsertDataSourceStatus(String dataSourceName, String status, Boolean isStart = null){
+    UpdateReq updateReq = new UpdateReq()
+    updateReq.vertices = []
+    updateReq.edges = []
+
+    createObjectDataSourceVtx(updateReq, dataSourceName, status, isStart)
+    def (
+    List<MatchReq>            matchReqs,
+    Map<String, AtomicDouble> maxScoresByVertexName,
+    Map<String, Double>       percentageThresholdByVertexName
+    ) = Matcher.getMatchRequests(Collections.EMPTY_MAP, updateReq, 0.0)
+
+    List<MatchReq> mandatoryFields = matchReqs.findAll { it2 -> it2.mandatoryInSearch }
+
+
+    String whereClause = Matcher.createWhereClauseAttribs(mandatoryFields)
+
+    def (String jsonToMerge, Map<String, Object> sqlParams) = Matcher.createJsonMergeParam(matchReqs,"Object_Data_Source")
+
+    App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} LOCK record LIMIT 1 ",
+            sqlParams   ).toList()
 
   }
 
