@@ -4642,6 +4642,8 @@ the end of the process.
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), 0L)
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), 0L)
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Approved'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Implemented'), 0L)
 
       return 0
     }
@@ -4650,7 +4652,7 @@ the end of the process.
             App.g.V()
                     .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
                     .where(__.both().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-                            .count().is(eq(0)))
+                            .count().is(eq(0L)))
                     .count().next()
 
 
@@ -4662,6 +4664,8 @@ the end of the process.
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), 0L)
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Approved'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Implemented'), 0L)
 
       return 0L
     }
@@ -4682,6 +4686,8 @@ the end of the process.
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Procs Without Data Sources'), numDataProceduresWithoutDataSources)
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Data Sources Without Risks'), numDataSourcesWithoutRisks)
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Risks Without Mitigations'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Approved'), 0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment - Mitigations not Implemented'), 0L)
 
       return 0L
     }
@@ -4924,6 +4930,7 @@ the end of the process.
               "Object_Email_Message_Attachment",
               "Person_Natural"
       ]
+
 
 
       StringBuffer sb = new StringBuffer("[")

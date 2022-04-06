@@ -130,12 +130,23 @@ class FileNLPRequest implements Serializable {
     return vtx
   }
 
+
+  static String getDataSourceName(FileNLPRequest req){
+    return req.dataSourceName?: "file_server_${req.server}"
+  }
   static void upsertFileNLPRequestArray(
           OrientStandardGraph graph,
           GraphTraversalSource g,
           FileNLPRequest[] reqs,
           String ruleName) {
     Boolean isSlim = App.useSlim || ruleName?.toLowerCase()?.contains("slim");
+    if (reqs.length == 0){
+
+      return;
+    }
+
+
+    upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('In Progress'), true)
 
     Transaction trans = App.graph.tx()
     try {
@@ -148,10 +159,14 @@ class FileNLPRequest implements Serializable {
       trans.commit()
     } catch (Throwable t) {
       trans.rollback()
+      upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('Server-Side Error'),false)
+
       throw t
     } finally {
       trans.close()
     }
+    upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('Finished'),false)
+
   }
 
 
@@ -165,7 +180,7 @@ class FileNLPRequest implements Serializable {
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
     updateReq.edges = []
-    String dataSourceName = req.dataSourceName?: "file_server_${req.server}"
+    String dataSourceName = getDataSourceName(req)
     Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
     Vertex eventGroupFileIngestionVtx = createEventGroupIngestionVtx(updateReq, dataSourceName)
 

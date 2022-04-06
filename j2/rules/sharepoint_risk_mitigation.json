@@ -34,13 +34,13 @@
           },
           {
             "name": "Object_Risk_Mitigation_Data_Source_Is_Implemented",
-            "val": "${field_Implemented}",
+            "val": "${(field_Implemented.toLowerCase().equals('sim')|| field_Implemented.toLowerCase().equals('true'))?'true':'false' }",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Mitigation_Data_Source_Is_Approved",
-            "val": "${field_Approved}",
+            "val": "${(field_Approved.toLowerCase().equals('sim')|| field_Approved.toLowerCase().equals('true'))?'true':'false' }",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
