@@ -32,7 +32,9 @@ import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.codehaus.groovy.runtime.StringGroovyMethods
 
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiPredicate
 import java.util.regex.Pattern
@@ -793,6 +795,7 @@ class Matcher {
     return sb.toString()
   }
 
+
   static createJsonMergeParam(List<MatchReq> updateFields, String vertexLabel) {
 //    JsonObject jb = new JsonObject()
     StringBuilder sb = new StringBuilder()
@@ -806,7 +809,12 @@ class Matcher {
       counter++
       sb.append('"').append(field.propName).append('":').append(" :${field.propName} ")
 //      jb.addProperty(field.propName, ":${field.propName}")
-      sqlParams.put(field.propName, field.attribNativeVal)
+      if (field.attribType == Date.class){
+        sqlParams.put(field.propName, sdf.format((Date) field.attribNativeVal))
+      }
+      else {
+        sqlParams.put(field.propName, field.attribNativeVal)
+      }
 
     }
     if (counter > 0) {

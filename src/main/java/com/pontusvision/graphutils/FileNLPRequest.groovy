@@ -21,6 +21,8 @@ class FileNLPRequest implements Serializable {
   String metadataController
   String metadataGDPRStatus
   String metadataLineage
+  String dataSourceName
+
   String pg_currDate
   String pg_content
   String[] address
@@ -86,7 +88,7 @@ class FileNLPRequest implements Serializable {
     return retVal
   }
 
-  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email') {
+  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email', String status = 'In Progress', Boolean isStart = null, String errorStr = null) {
     final String vtxLabel = 'Object_Data_Source'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
@@ -96,7 +98,34 @@ class FileNLPRequest implements Serializable {
     vtxProps.mandatoryInSearch = true
     vtxProps.val = dataSourceType
 
-    vtx.props = [vtxProps]
+    VertexProps vtxPropStatus = new VertexProps()
+    vtxPropStatus.name = "${vtxLabel}_Status"
+    vtxPropStatus.mandatoryInSearch = false
+    vtxPropStatus.excludeFromSearch = true
+    vtxPropStatus.excludeFromUpdate = false
+    vtxPropStatus.val = status
+
+
+
+    vtx.props = [vtxProps, vtxPropStatus]
+    if (isStart != null){
+      VertexProps vtxPropTime = new VertexProps()
+      vtxPropTime.name = "${vtxLabel}_Ingestion_${isStart?'Start':'Finish'}"
+      vtxPropTime.mandatoryInSearch = false
+      vtxPropTime.excludeFromSearch = true
+      vtxPropTime.excludeFromUpdate = false
+      vtxPropTime.val = Matcher.sdf.format(new Date())
+      vtx.props.push(vtxPropTime)
+    }
+    if (errorStr != null){
+      VertexProps vtxPropError = new VertexProps()
+      vtxPropError.name = "${vtxLabel}_Error"
+      vtxPropError.mandatoryInSearch = false
+      vtxPropError.excludeFromSearch = true
+      vtxPropError.excludeFromUpdate = false
+      vtxPropError.val = errorStr
+      vtx.props.push(vtxPropError)
+    }
     req.vertices.push(vtx)
     return vtx
   }
@@ -136,7 +165,7 @@ class FileNLPRequest implements Serializable {
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
     updateReq.edges = []
-    String dataSourceName = "file_server_${req.server}"
+    String dataSourceName = req.dataSourceName?: "file_server_${req.server}"
     Vertex dataSourceVtx = createObjectDataSourceVtx(updateReq, dataSourceName)
     Vertex eventGroupFileIngestionVtx = createEventGroupIngestionVtx(updateReq, dataSourceName)
 
@@ -152,6 +181,29 @@ class FileNLPRequest implements Serializable {
       processUpsertFileNLPRequest(graph,g,req,updateReq)
 
     }
+
+  }
+  static void upsertDataSourceStatus(String dataSourceName, String status, Boolean isStart = null, String errorStr = null){
+    UpdateReq updateReq = new UpdateReq()
+    updateReq.vertices = []
+    updateReq.edges = []
+
+    createObjectDataSourceVtx(updateReq, dataSourceName, status, isStart, errorStr)
+    def (
+    List<MatchReq>            matchReqs,
+    Map<String, AtomicDouble> maxScoresByVertexName,
+    Map<String, Double>       percentageThresholdByVertexName
+    ) = Matcher.getMatchRequests(Collections.EMPTY_MAP, updateReq, 0.0)
+
+    List<MatchReq> mandatoryFields = matchReqs.findAll { it2 -> it2.mandatoryInSearch }
+
+
+    String whereClause = Matcher.createWhereClauseAttribs(mandatoryFields)
+
+    def (String jsonToMerge, Map<String, Object> sqlParams) = Matcher.createJsonMergeParam(matchReqs,"Object_Data_Source")
+
+    App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
+            sqlParams   ).toList()
 
   }
 

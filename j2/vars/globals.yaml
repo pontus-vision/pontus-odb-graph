@@ -177,6 +177,9 @@ schema:
         - name: Owner
         - name: Path
         - name: Server
+        - name: Status
+        - name: Error
+          index: false
         - name: Size_Bytes
           dataType: Double
 
@@ -562,8 +565,15 @@ schema:
         - name: URI_Read
         - name: URI_Template
         - name: URI_Update
+        - name: Status
         - name: Update_Date
           dataType: Date
+        - name: Ingestion_Start
+          dataType: Date
+        - name: Ingestion_Finish
+          dataType: Date
+        - name: Error
+          index: false
 
 
     - name: "Object_Data_Src_Mapping_Rule"

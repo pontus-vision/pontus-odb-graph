@@ -3879,7 +3879,8 @@ the end of the process.
 
       long numEvents = App.g.V(latestEntryId).in().as('events').count().next()
 
-      def map = App.g.V(latestEntryId).in().as('events').groupCount().by('Event_Training_Status').next()
+      def map = App.g.V(latestEntryId)
+              .in().as('events').groupCount().by('Event_Training_Status').next()
 
 
       long failedCount = map.get('Failed') == null ? 0 : map.get('Failed')
@@ -4900,6 +4901,9 @@ the end of the process.
     return CalculatePOLECount.calculatePOLECounts()
   }
 
+  static String getMd2Stats() {
+    return CalculatePOLECount.md2Stats()
+  }
   static class CalculatePOLECount {
 
     static Long getCountQueryResults(String queryStr) {
@@ -4912,7 +4916,49 @@ the end of the process.
       return numEntries
 
     }
+    static String md2Stats() {
 
+      List<String> vertexLabels = [
+              "Event_File_Ingestion",
+              "Object_Email_Message_Body",
+              "Object_Email_Message_Attachment",
+              "Person_Natural"
+      ]
+
+
+      StringBuffer sb = new StringBuffer("[")
+      boolean firstTime = true
+      vertexLabels.each { dataType ->
+        if (!firstTime) {
+          sb.append(",")
+        } else {
+          firstTime = false
+        }
+
+        String queryStr = "SELECT COUNT(*) FROM `${dataType}`"
+        Long numEntries = getCountQueryResults(queryStr)
+
+        sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(dataType.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+      }
+
+      App.graph.executeSql("SELECT Event_File_Ingestion_File_Type as type,SUM(Event_File_Ingestion_Size_Bytes) as bytes FROM Event_File_Ingestion GROUP BY Event_File_Ingestion_File_Type", Collections.EMPTY_MAP).toList().each {
+        String type = "Event_File_Ingestion_File_Type_Bytes(${it.getRawResult().getProperty('type')})"
+        String bytes = it.getRawResult().getProperty('bytes')
+        sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate(type.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": ${Long.valueOf((long) Double.valueOf(bytes).doubleValue())}, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+      }
+
+//      String queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'Mixed'"
+//      Long numEntries = getCountQueryResults(queryStr)
+//
+//      sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Mixed Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+
+
+      sb.append(']')
+
+      return sb.toString()
+
+    }
     static String calculatePOLECounts() {
 
       List<String> vertexLabels = [
@@ -5018,6 +5064,7 @@ the end of the process.
 
     }
   }
+
 
   static def getNumEventsPerDataSource() {
     StringBuffer sb = new StringBuffer("[")
