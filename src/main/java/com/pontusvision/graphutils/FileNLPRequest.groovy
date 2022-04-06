@@ -114,7 +114,7 @@ class FileNLPRequest implements Serializable {
       vtxPropTime.mandatoryInSearch = false
       vtxPropTime.excludeFromSearch = true
       vtxPropTime.excludeFromUpdate = false
-      vtxPropTime.val = new Date()
+      vtxPropTime.val = Matcher.sdf.format(new Date())
       vtx.props.push(vtxPropTime)
     }
     if (errorStr != null){
