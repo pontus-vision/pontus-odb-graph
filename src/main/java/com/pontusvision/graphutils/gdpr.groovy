@@ -4932,6 +4932,7 @@ the end of the process.
       ]
 
 
+
       StringBuffer sb = new StringBuffer("[")
       boolean firstTime = true
       vertexLabels.each { dataType ->
