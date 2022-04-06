@@ -572,6 +572,8 @@ schema:
           dataType: Date
         - name: Ingestion_Finish
           dataType: Date
+        - name: Error
+          index: false
 
 
     - name: "Object_Data_Src_Mapping_Rule"

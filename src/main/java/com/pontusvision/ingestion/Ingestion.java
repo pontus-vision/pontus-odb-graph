@@ -6,6 +6,7 @@ import com.orientechnologies.apache.commons.csv.CSVFormat;
 import com.orientechnologies.apache.commons.csv.CSVRecord;
 import com.pontusvision.gdpr.App;
 import com.pontusvision.graphutils.EmailNLPRequest;
+import com.pontusvision.graphutils.FileNLPRequest;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ws.rs.Consumes;
@@ -134,6 +135,17 @@ public class Ingestion {
     return retVal;
   }
 
+
+
+  @POST
+  @Path("status_update")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public String statusUpdate(IngestionStatusRequest  request)  {
+//    upsertDataSourceStatus
+    FileNLPRequest.upsertDataSourceStatus(request.dataSourceName,request.status,request.isStart,request.errorStr);
+    return "{\"status\": true}";
+  }
   @POST
   @Path("csvBase64")
   @Produces(MediaType.APPLICATION_JSON)

@@ -88,7 +88,7 @@ class FileNLPRequest implements Serializable {
     return retVal
   }
 
-  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email', String status = 'In Progress', Boolean isStart = null) {
+  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email', String status = 'In Progress', Boolean isStart = null, String errorStr = null) {
     final String vtxLabel = 'Object_Data_Source'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
@@ -116,6 +116,15 @@ class FileNLPRequest implements Serializable {
       vtxPropTime.excludeFromUpdate = false
       vtxPropTime.val = new Date()
       vtx.props.push(vtxPropTime)
+    }
+    if (errorStr != null){
+      VertexProps vtxPropError = new VertexProps()
+      vtxPropError.name = "${vtxLabel}_Error"
+      vtxPropError.mandatoryInSearch = false
+      vtxPropError.excludeFromSearch = true
+      vtxPropError.excludeFromUpdate = false
+      vtxPropError.val = errorStr
+      vtx.props.push(vtxPropError)
     }
     req.vertices.push(vtx)
     return vtx
@@ -174,12 +183,12 @@ class FileNLPRequest implements Serializable {
     }
 
   }
-  static void upsertDataSourceStatus(String dataSourceName, String status, Boolean isStart = null){
+  static void upsertDataSourceStatus(String dataSourceName, String status, Boolean isStart = null, String errorStr = null){
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
     updateReq.edges = []
 
-    createObjectDataSourceVtx(updateReq, dataSourceName, status, isStart)
+    createObjectDataSourceVtx(updateReq, dataSourceName, status, isStart, errorStr)
     def (
     List<MatchReq>            matchReqs,
     Map<String, AtomicDouble> maxScoresByVertexName,
