@@ -205,7 +205,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
 
   static String getDataSourceName(EmailNLPRequest req){
-    return req.dataSourceName?:"Office365/email"
+    return req.dataSourceName?:"OFFICE365/EMAIL"
 
 
   }

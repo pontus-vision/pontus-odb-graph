@@ -254,7 +254,7 @@ public class Resource {
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Attachment")
               .out("Email_From").values("Event_Email_From_Group_Email");
           reg.owner = trav.hasNext() ? trav.next().toString() : "";
-          reg.server = "office365/email";
+          reg.server = "OFFICE365/EMAIL";
         } else if ("Object_Email_Message_Body".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Body";
           reg.sizeBytes = getFirstDoubleItem(values.get("Object_Email_Message_Body_Size_Bytes"),0.0).longValue();
@@ -280,7 +280,7 @@ public class Resource {
 
 
           reg.owner = owner;
-          reg.server = "office365/email";
+          reg.server = "OFFICE365/EMAIL";
 
         }
 

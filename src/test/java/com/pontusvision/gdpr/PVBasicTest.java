@@ -580,7 +580,7 @@ public class PVBasicTest extends AppTest {
 
     try {
       String numDataSources =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name',eq('Office365/email')).count().next().toString()")
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name',eq('OFFICE365/EMAIL')).count().next().toString()")
                       .get().toString();
 
       assertEquals("1", numDataSources, "Ensure that We only have one data source");
@@ -774,7 +774,7 @@ public class PVBasicTest extends AppTest {
 
     try {
       String numDataSources =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name',eq('file_server_srv1')).count().next().toString()")
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name',eq('FILE_SERVER_SRV1')).count().next().toString()")
                       .get().toString();
 
       assertEquals("1", numDataSources, "Ensure that We only have one data source");

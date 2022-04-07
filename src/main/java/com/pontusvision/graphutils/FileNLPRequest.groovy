@@ -88,7 +88,7 @@ class FileNLPRequest implements Serializable {
     return retVal
   }
 
-  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email', String status = 'In Progress', Boolean isStart = null, String errorStr = null) {
+  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'OFFICE365/EMAIL', String status = 'In Progress', Boolean isStart = null, String errorStr = null) {
     final String vtxLabel = 'Object_Data_Source'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
@@ -215,8 +215,21 @@ class FileNLPRequest implements Serializable {
 
     def (String jsonToMerge, Map<String, Object> sqlParams) = Matcher.createJsonMergeParam(matchReqs,"Object_Data_Source")
 
-    App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
-            sqlParams   ).toList()
+    def tx = App.graph.tx();
+    if (!tx.isOpen()){
+      tx.open()
+    }
+    try {
+      App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
+              sqlParams).toList()
+
+      tx.commit()
+    } catch (Exception e){
+      tx.rollback()
+    }
+    finally{
+      tx.close()
+    }
 
   }
 
