@@ -88,7 +88,7 @@ class FileNLPRequest implements Serializable {
     return retVal
   }
 
-  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'Office365/email', String status = 'In Progress', Boolean isStart = null, String errorStr = null) {
+  static Vertex createObjectDataSourceVtx(UpdateReq req, String dataSourceType = 'OFFICE365/EMAIL', String status = 'In Progress', Boolean isStart = null, String errorStr = null) {
     final String vtxLabel = 'Object_Data_Source'
     Vertex vtx = new Vertex()
     vtx.label = vtxLabel
@@ -96,7 +96,7 @@ class FileNLPRequest implements Serializable {
     VertexProps vtxProps = new VertexProps()
     vtxProps.name = "${vtxLabel}_Name"
     vtxProps.mandatoryInSearch = true
-    vtxProps.val = dataSourceType
+    vtxProps.val = dataSourceType.toUpperCase()
 
     VertexProps vtxPropStatus = new VertexProps()
     vtxPropStatus.name = "${vtxLabel}_Status"
@@ -132,7 +132,7 @@ class FileNLPRequest implements Serializable {
 
 
   static String getDataSourceName(FileNLPRequest req){
-    return req.dataSourceName?: "file_server_${req.server}"
+    return (req.dataSourceName?: "file_server_${req.server}").toUpperCase()
   }
   static void upsertFileNLPRequestArray(
           OrientStandardGraph graph,
@@ -146,7 +146,6 @@ class FileNLPRequest implements Serializable {
     }
 
 
-    upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('In Progress'), true)
 
     Transaction trans = App.graph.tx()
     try {
@@ -159,13 +158,12 @@ class FileNLPRequest implements Serializable {
       trans.commit()
     } catch (Throwable t) {
       trans.rollback()
-      upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('Server-Side Error'),false)
+      upsertDataSourceStatus(getDataSourceName(reqs[0]), 'Server-Side Error',false)
 
       throw t
     } finally {
       trans.close()
     }
-    upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('Finished'),false)
 
   }
 
@@ -203,7 +201,7 @@ class FileNLPRequest implements Serializable {
     updateReq.vertices = []
     updateReq.edges = []
 
-    createObjectDataSourceVtx(updateReq, dataSourceName, status, isStart, errorStr)
+    createObjectDataSourceVtx(updateReq, dataSourceName, PontusJ2ReportingFunctions.translate(status), isStart, errorStr)
     def (
     List<MatchReq>            matchReqs,
     Map<String, AtomicDouble> maxScoresByVertexName,
@@ -217,8 +215,21 @@ class FileNLPRequest implements Serializable {
 
     def (String jsonToMerge, Map<String, Object> sqlParams) = Matcher.createJsonMergeParam(matchReqs,"Object_Data_Source")
 
-    App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
-            sqlParams   ).toList()
+    def tx = App.graph.tx();
+    if (!tx.isOpen()){
+      tx.open()
+    }
+    try {
+      App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
+              sqlParams).toList()
+
+      tx.commit()
+    } catch (Exception e){
+      tx.rollback()
+    }
+    finally{
+      tx.close()
+    }
 
   }
 

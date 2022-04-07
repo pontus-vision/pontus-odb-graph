@@ -95,10 +95,6 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
       return;
     }
 
-
-    upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('In Progress'), true)
-
-
     Transaction trans = App.graph.tx()
 
 
@@ -113,7 +109,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
         trans.commit()
       } catch (Throwable t) {
         trans.rollback()
-        upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('Server-Side Error'),false)
+        upsertDataSourceStatus(getDataSourceName(reqs[0]), 'Server-Side Error',false)
 
         throw t
       } finally {
@@ -121,7 +117,6 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
       }
     }
 
-    upsertDataSourceStatus(getDataSourceName(reqs[0]), PontusJ2ReportingFunctions.translate('Finished'),false)
 
   }
 
@@ -210,7 +205,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
 
 
   static String getDataSourceName(EmailNLPRequest req){
-    return req.dataSourceName?:"Office365/email"
+    return req.dataSourceName?:"OFFICE365/EMAIL"
 
 
   }

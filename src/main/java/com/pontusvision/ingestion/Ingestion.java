@@ -27,6 +27,10 @@ public class Ingestion {
   //  KeycloakSecurityContext keycloakSecurityContext;
 
 
+  public static String getDataSourceName (IngestionJsonObjArrayRequest request){
+    String dsName =  (request.getDataSourceName() == null )? request.getRuleName() : request.getDataSourceName();
+    return (dsName == null) ? "UNKNOWN": dsName.toUpperCase();
+  }
   public Ingestion() {
 
   }
@@ -44,11 +48,13 @@ public class Ingestion {
 //      put("ruleName", request.ruleName);
 //    }};
 
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"In Progress",true, null);
 
     String res = com.pontusvision.graphutils.Matcher.ingestEmail(
         request.jsonString,
         request.jsonPath,
         request.ruleName);
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"Finished",true, null);
 
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
@@ -68,12 +74,15 @@ public class Ingestion {
 //      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
 //      put("ruleName", request.ruleName);
 //    }};
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"In Progress",true, null);
 
 
     String res = com.pontusvision.graphutils.Matcher.ingestFile(
         request.jsonString,
         request.jsonPath,
         request.ruleName);
+
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"Finished",true, null);
 
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
@@ -98,6 +107,7 @@ public class Ingestion {
 //      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
 //      put("ruleName", request.ruleName);
 //    }};
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"In Progress",true, null);
 
     if ("pv_email".equalsIgnoreCase(request.ruleName)){
       return com.pontusvision.graphutils.Matcher.ingestEmail(
@@ -120,6 +130,8 @@ public class Ingestion {
         request.jsonString,
         request.jsonPath,
         request.ruleName);
+
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"Finished",false, null);
 
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
@@ -151,7 +163,6 @@ public class Ingestion {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   public String csvFile(IngestionCSVFileRequest  request) throws ExecutionException, InterruptedException, IOException {
-
 
 //    Map<String, Object> bindings = new HashMap() {{
 //      put("jsonString", request.jsonString);
@@ -188,6 +199,7 @@ public class Ingestion {
     String res = this.jsonObjArray(req);
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
+
     return res;
 
   }
