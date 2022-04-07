@@ -1436,7 +1436,7 @@ class Matcher {
   static String ingestMD2BulkData(String jsonString, String jsonPath, String ruleName) {
 
     def recordList = JsonPath.read(jsonString, jsonPath)
-    String dataSourceName = 'MD2'
+    String dataSourceName = 'PV_MD2'
 
 
     Vertex groupIngestionVertex = null
