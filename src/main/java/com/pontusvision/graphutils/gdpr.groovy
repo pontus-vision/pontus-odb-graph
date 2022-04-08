@@ -4705,12 +4705,12 @@ the end of the process.
 
     long numMitigationsNotApproved =
             App.g.V()
-                    .has('Object_Risk_Mitigation_Data_Source_Approved', eq("false"))
+                    .has('Object_Risk_Mitigation_Data_Source_Is_Approved', eq("false"))
                     .count().next()
 
     long numMitigationsNotImplemented =
             App.g.V()
-                    .has('Object_Risk_Mitigation_Data_Source_Implemented', eq("false"))
+                    .has('Object_Risk_Mitigation_Data_Source_Is_Implemented', eq("false"))
                     .count().next()
 
     long scoreValue = 100L
