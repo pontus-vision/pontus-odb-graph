@@ -4634,8 +4634,12 @@ the end of the process.
   static def getPrivacyImpactAssessmentScores(def scoresMap) {
 
 
-    long numDataProcedures = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-            .count().next()
+    long numDataProcedures =
+            App.graph.executeSql('SELECT COUNT(*) from Object_Data_Procedures',[:])
+                    .toList().get(0).getProperty('COUNT(*)')
+
+//            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+//            .count().next()
 
     if (numDataProcedures == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
@@ -4649,15 +4653,25 @@ the end of the process.
     }
 
     long numDataProceduresWithoutDataSources =
-            App.g.V()
-                    .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-                    .where(__.both().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-                            .count().is(eq(0L)))
-                    .count().next()
+
+            App.graph.executeSql(
+                    'SELECT COUNT(*) from Object_Data_Procedures  where ( (both().Metadata_Type_Object_Data_Source.size()) ) = 0 ',[:])
+                    .toList().get(0).getProperty('COUNT(*)')
 
 
-    long numDataSources = App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-            .count().next()
+
+//            App.g.V()
+//                    .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+//                    .where(__.both().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//                            .count().is(eq(0L)))
+//                    .count().next()
+
+
+    long numDataSources =
+            App.graph.executeSql('SELECT COUNT(*) from Object_Data_Source',[:])
+                    .toList().get(0).getProperty('COUNT(*)')
+//            App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//            .count().next()
 
     if (numDataSources == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
@@ -4670,16 +4684,23 @@ the end of the process.
       return 0L
     }
 
-    long numDataSourcesWithoutRisks =
-            App.g.V()
-                    .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-                    .where(__.out('Has_Risk').has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
-                            .count().is(eq(0L)))
-                    .count().next()
+    long numDataSourcesWithoutRisks =  App.graph.executeSql(
+            'SELECT COUNT(*) from Object_Data_Source  where ( (both("Has_Risk").Metadata_Type_Object_Risk_Data_Source.size()) ) = 0 ',[:])
+            .toList().get(0).getProperty('COUNT(*)')
+
+//            App.g.V()
+//                    .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//                    .where(__.out('Has_Risk').has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
+//                            .count().is(eq(0L)))
+//                    .count().next()
 
 
-    long numRisks = App.g.V().has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
-            .count().next()
+    long numRisks =
+            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Data_Source',[:])
+                    .toList().get(0).getProperty('COUNT(*)')
+
+//            App.g.V().has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
+//            .count().next()
 
     if (numRisks == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
@@ -4692,26 +4713,37 @@ the end of the process.
       return 0L
     }
 
-    long numMitigations = App.g.V().has('Metadata_Type_Object_Risk_Mitigation_Data_Source',
-            eq('Object_Risk_Mitigation_Data_Source'))
-            .count().next()
+    long numMitigations =
+            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Mitigation_Data_Source',[:])
+                    .toList().get(0).getProperty('COUNT(*)')
 
-    long numRisksWithoutMitigations =
-            App.g.V()
-                    .has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
-                    .where(__.in('Mitigates_Risk').has('Metadata_Type_Object_Risk_Mitigation_Data_Source', eq('Object_Risk_Mitigation_Data_Source'))
-                            .count().is(eq(0L)))
-                    .count().next()
+//            App.g.V().has('Metadata_Type_Object_Risk_Mitigation_Data_Source',
+//            eq('Object_Risk_Mitigation_Data_Source'))
+//            .count().next()
+
+    long numRisksWithoutMitigations = App.graph.executeSql(
+            'SELECT COUNT(*) from Object_Risk_Data_Source where (in("Mitigates_Risk").Metadata_Type_Object_Risk_Mitigation_Data_Source.size()) = 0',[:]
+         ).toList().get(0).getProperty('COUNT(*)')
+
+//            App.g.V()
+//                    .has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
+//                    .where(__.in('Mitigates_Risk').has('Metadata_Type_Object_Risk_Mitigation_Data_Source', eq('Object_Risk_Mitigation_Data_Source'))
+//                            .count().is(eq(0L)))
+//                    .count().next()
 
     long numMitigationsNotApproved =
-            App.g.V()
-                    .has('Object_Risk_Mitigation_Data_Source_Is_Approved', eq("false"))
-                    .count().next()
+            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Mitigation_Data_Source where Object_Risk_Mitigation_Data_Source_Is_Approved="false"',[:])
+                    .toList().get(0).getProperty('COUNT(*)')
+//    App.g.V()
+//                    .has('Object_Risk_Mitigation_Data_Source_Is_Approved', eq("false"))
+//                    .count().next()
 
     long numMitigationsNotImplemented =
-            App.g.V()
-                    .has('Object_Risk_Mitigation_Data_Source_Is_Implemented', eq("false"))
-                    .count().next()
+            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Mitigation_Data_Source where Object_Risk_Mitigation_Data_Source_Is_Implemented="false"',[:])
+                    .toList().get(0).getProperty('COUNT(*)')
+//            App.g.V()
+//                    .has('Object_Risk_Mitigation_Data_Source_Is_Implemented', eq("false"))
+//                    .count().next()
 
     long scoreValue = 100L
 
@@ -4742,17 +4774,24 @@ the end of the process.
 
 
   static def getPrivacyNoticesScores(def scoresMap) {
-    long numEvents = App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).count().next()
+    long numEvents =
+             App.graph.executeSql('SELECT COUNT(*) from Object_Privacy_Notice',[:])
+                     .toList().get(0).getProperty('COUNT(*)')
+//            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).count().next()
 
     long numRecordsNoConsent =
-            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
-                    .match(
-                            __.as('privNotice').both().has('Metadata_Type_Event_Consent', eq('Event_Consent')).count().as('consentCount')
+            App.graph.executeSql(
+                    'SELECT COUNT(*) from Object_Privacy_Notice  where ( (both("Has_Privacy_Notice").Metadata_Type_Event_Consent.size()) ) = 0 ',[:])
+                    .toList().get(0).getProperty('COUNT(*)')
 
-                    )
-                    .select('consentCount')
-                    .where(__.as('consentCount').is(eq(0)))
-                    .count().next()
+//            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
+//                    .match(
+//                            __.as('privNotice').both().has('Metadata_Type_Event_Consent', eq('Event_Consent')).count().as('consentCount')
+//
+//                    )
+//                    .select('consentCount')
+//                    .where(__.as('consentCount').is(eq(0)))
+//                    .count().next()
 
 //    long numRecordsNoPIA =
 //            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
@@ -4765,20 +4804,25 @@ the end of the process.
 //                    .count().next()
 
     long numRecordsLessThan50PcntPositiveConsent =
-            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
-                    .match(
-                            __.as('privNotice').both().has('Metadata_Type_Event_Consent', eq('Event_Consent')).count().as('consentCount')
-                            , __.as('privNotice').both().has('Event_Consent_Status', eq('Consent')).count().math('_ * 2').as('posConsentCountDouble')
-                    )
-                    .select(
-                            'consentCount'
-                            , 'posConsentCountDouble'
-                    )
-                    .where(
-                            'consentCount', gt('posConsentCountDouble')
+            App.graph.executeSql(
+                    'SELECT COUNT(*) from Object_Privacy_Notice where (2* both("Has_Privacy_Notice").Event_Consent_Status.removeAll("Consent").size()) > ( both("Has_Privacy_Notice").Event_Consent_Status.size())  ',
+                    [:])
+                    .toList().get(0).getProperty('COUNT(*)')
 
-                    )
-                    .count().next()
+//            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
+//                    .match(
+//                            __.as('privNotice').both().has('Metadata_Type_Event_Consent', eq('Event_Consent')).count().as('consentCount')
+//                            , __.as('privNotice').both().has('Event_Consent_Status', eq('Consent')).count().math('_ * 2').as('posConsentCountDouble')
+//                    )
+//                    .select(
+//                            'consentCount'
+//                            , 'posConsentCountDouble'
+//                    )
+//                    .where(
+//                            'consentCount', gt('posConsentCountDouble')
+//
+//                    )
+//                    .count().next()
 
 
     long scoreValue = 100L
