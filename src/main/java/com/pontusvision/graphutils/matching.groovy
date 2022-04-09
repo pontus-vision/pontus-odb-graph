@@ -1576,13 +1576,15 @@ class Matcher {
     if (ruleJson.updatereq) {
       String id = null
       try {
-        id = (g.V()
-                .has("Metadata_Type", "Object_Data_Src_Mapping_Rule")
-                .has("Metadata_Type_Object_Data_Src_Mapping_Rule",
-                        P.eq("Object_Data_Src_Mapping_Rule"))
-                .has("Object_Data_Src_Mapping_Rule_Name", P.eq(ruleName))
-                .next()
-                .id().toString())
+//        id = (g.V()
+//                .has("Metadata_Type", "Object_Data_Src_Mapping_Rule")
+//                .has("Metadata_Type_Object_Data_Src_Mapping_Rule",
+//                        P.eq("Object_Data_Src_Mapping_Rule"))
+//                .has("Object_Data_Src_Mapping_Rule_Name", P.eq(ruleName))
+//                .next()
+//                .id().toString())
+        id = ((OrientStandardGraph)g.graph).executeSql('SELECT @rid from Object_Data_Src_Mapping_Rule where Object_Data_Src_Mapping_Rule_Name = :ruleName ',
+                ['ruleName': ruleName]).getRawResultSet().next().getProperty('@rid').toString()
       }
       catch (Throwable t) {
       }

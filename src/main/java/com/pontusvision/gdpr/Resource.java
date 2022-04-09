@@ -1000,19 +1000,30 @@ status: "success", message: "Data source is working", title: "Success"
 
     String templateId = request.getTemplateId();
 
-    GraphTraversal<Vertex, Vertex> trav = App.g.V().has("Object_Notification_Templates_Id", P.eq(templateId));
+//    GraphTraversal<Vertex, Vertex> trav = App.g.V().has("Object_Notification_Templates_Id", P.eq(templateId));
+//
+//    if (!trav.hasNext()) {
+//      return new ReportTemplateRenderResponse(Response.Status.NOT_FOUND, "Cannot find template id " +
+//          templateId);
+//
+//    }
+    OResultSet resSet = App.graph.executeSql(
+        "SELECT Object_Notification_Templates_Text from Object_Notification_Templates where Object_Notification_Templates_Id = :tid ",
+        Collections.singletonMap("tid",templateId)).getRawResultSet();
 
-    if (!trav.hasNext()) {
+    if ((!resSet.hasNext())) {
       return new ReportTemplateRenderResponse(Response.Status.NOT_FOUND, "Cannot find template id " +
           templateId);
-
     }
-
 
     ORecordId refId = new ORecordId(request.getRefEntryId());
 
-    String templateTextBase64 = App.g.V().has("Object_Notification_Templates_Id", P.eq(templateId))
-        .values("Object_Notification_Templates_Text").next().toString();
+    String templateTextBase64 =
+        resSet.next().getProperty("Object_Notification_Templates_Text").toString();
+
+
+//        App.g.V().has("Object_Notification_Templates_Id", P.eq(templateId))
+//        .values("Object_Notification_Templates_Text").next().toString();
     String resolvedStr = "";
 
     try {
