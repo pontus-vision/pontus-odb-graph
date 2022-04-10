@@ -18,6 +18,7 @@ import com.orientechnologies.orient.core.metadata.schema.OProperty
 // res
 
 import com.orientechnologies.orient.core.metadata.schema.OType
+import com.orientechnologies.orient.core.sql.executor.OResultSet
 import com.pontusvision.gdpr.*
 import com.pontusvision.utils.LocationAddress
 import groovy.json.JsonSlurper
@@ -2648,14 +2649,26 @@ the end of the process.
       if (!trans.isOpen()) {
         trans.open()
       }
+      def args = [:]
+      args ['tid'] = templateId
+      args ['poleType'] = templatePOLEType
+      args['templateName'] = templateName
 
-      GraphTraversal<Vertex, Vertex> trav = App.g.V()
-              .has("Object_Notification_Templates_Id", P.eq(templateId))
-              .has("Object_Notification_Templates_Types", P.eq(templatePOLEType))
-              .has("Object_Notification_Templates_Label", P.eq(templateName)).id()
+      OResultSet resSet = App.graph.executeSql(
+              "SELECT @rid from Object_Notification_Templates where Object_Notification_Templates_Id = :tid AND " +
+                      "Object_Notification_Templates_Types = :poleType AND " +
+                      "Object_Notification_Templates_Label = :templateName   ",
+              args).getRawResultSet();
 
-      if (trav.hasNext()) {
-        String id = trav.next().toString()
+//      GraphTraversal<Vertex, Vertex> trav = App.g.V()
+//              .has("Object_Notification_Templates_Id", P.eq(templateId))
+//              .has("Object_Notification_Templates_Types", P.eq(templatePOLEType))
+//              .has("Object_Notification_Templates_Label", P.eq(templateName)).id()
+
+//      if (trav.hasNext()) {
+//        String id = trav.next().toString()
+      if (resSet.hasNext()) {
+        String id = resSet.next().getProperty("@rid").toString()
         App.g.V(new ORecordId(id))
                 .property("Object_Notification_Templates_Text", reportTextBase64).next()
       } else {
@@ -2737,7 +2750,11 @@ the end of the process.
         return createNotificationTemplatesPt()
       }
 
-      Long count = App.g.V().has("Metadata_Type_Object_Notification_Templates", eq("Object_Notification_Templates")).count().next()
+      Long count = App.graph.executeSql(
+              "SELECT count(*) as ct from  Object_Notification_Templates",
+              [:]).getRawResultSet().next().getProperty('ct')
+
+//              App.g.V().has("Metadata_Type_Object_Notification_Templates", eq("Object_Notification_Templates")).count().next()
 
 
       if (count == 0) {
@@ -2988,7 +3005,10 @@ the end of the process.
 //      App.g = g;
 //    }
 
-      Long count = App.g.V().has("Metadata_Type_Object_Notification_Templates", eq("Object_Notification_Templates")).count().next()
+      Long count =// App.g.V().has("Metadata_Type_Object_Notification_Templates", eq("Object_Notification_Templates")).count().next()
+      App.graph.executeSql(
+              "SELECT count(*) as ct from  Object_Notification_Templates",
+              [:]).getRawResultSet().next().getProperty('ct')
 
 
       if (count == 0) {
@@ -3870,8 +3890,12 @@ the end of the process.
     long scoreValue
     long scoreValue2
     try {
-      def latestEntryId = App.g.V().has('Metadata_Type_Object_Awareness_Campaign', eq('Object_Awareness_Campaign'))
-              .order().by('Object_Awareness_Campaign_Start_Date', Order.desc).range(0, 1).id().next()
+      def latestEntryId =
+              App.graph.executeSql(
+                      "SELECT @rid FROM  Object_Awareness_Campaign ORDER BY Object_Awareness_Campaign_Start_Date DESC LIMIT 1",
+                      [:]).getRawResultSet().next().getProperty('@rid')
+//              App.g.V().has('Metadata_Type_Object_Awareness_Campaign', eq('Object_Awareness_Campaign'))
+//              .order().by('Object_Awareness_Campaign_Start_Date', Order.desc).range(0, 1).id().next()
 
       if (!latestEntryId) {
         throw new Exception("Could not find campaign")
@@ -3947,6 +3971,7 @@ the end of the process.
   }
 
   static String[] sensitiveData = getEnv("PV_SENSITIVE_DATA","DADOS DE SAÚDE,RAÇA,FILIAÇÃO A SINDICATO").split(',')
+  static  String[] consentData = getEnv("PV_CONSENT_DATA","CONSENTIMENTO,CONSENT").split(',')
 
   static def getChildrenScores(scoresMap) {
 
@@ -4058,10 +4083,14 @@ the end of the process.
     Long scoreValue = 100L
 
     long numDataProcsWithSensitiveData =
-            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).where(
-                    __.out('Has_Sensitive_Data').has('Object_Sensitive_Data_Description', within(sensitiveData))
-            )
-            .count().next()
+            App.graph.executeSql(
+                    "SELECT count(*) as ct  FROM  Object_Data_Procedures where (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())  ",
+                    ['sd':sensitiveData]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).where(
+//                    __.out('Has_Sensitive_Data').has('Object_Sensitive_Data_Description', within(sensitiveData))
+//            )
+//            .count().next()
 
 
     if (numDataProcsWithSensitiveData == 0){
@@ -4076,15 +4105,23 @@ the end of the process.
     }
 
     long numDataProcsWithSensitiveDataWithConsent =
-            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-                    .as('procs')
-                    .where(
-                            __.and(
-                                    __.as('procs').out('Has_Sensitive_Data').has('Object_Sensitive_Data_Description', within(sensitiveData))
-                                    , __.as('procs').out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CON') )
-                            )
-                    )
-                    .count().next()
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Object_Data_Procedures where 
+           (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())
+        AND (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
+        """,
+                    ['sd':sensitiveData, 'con': consentData]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+//                    .as('procs')
+//                    .where(
+//                            __.and(
+//                                    __.as('procs').out('Has_Sensitive_Data').has('Object_Sensitive_Data_Description', within(sensitiveData))
+//                                    , __.as('procs').out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CON') )
+//                            )
+//                    )
+//                    .count().next()
 
     long numDataProcsWithSensitiveDataWithoutConsent = numDataProcsWithSensitiveData - numDataProcsWithSensitiveDataWithConsent
 
@@ -4101,22 +4138,39 @@ the end of the process.
 
   static def getConsentScores(def scoresMap) {
 
-    long numProcedures = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-            .where(
-                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CONSENT')
-                    )
-            ).count().next()
+    long numProcedures =
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Object_Data_Procedures where 
+         (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
+        """,
+                    [ 'con': consentData]).getRawResultSet().next().getProperty('ct')
 
-
-    long numConsent = App.g.V().has('Metadata_Type_Event_Consent', eq('Event_Consent'))
+//    App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
 //            .where(
-            .out('Consent').has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).dedup()
-            .where(
-                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CONSENT')
-                    )
-            )
+//                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CONSENT')
+//                    )
+//            ).count().next()
+
+
+    long numConsent =
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Object_Data_Procedures where 
+         (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
+         AND (in('Consent').Metadata_Type_Object_Data_Procedures.removeAll(null).size() ) > 0    
+        """,
+                    [ 'con': consentData]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V().has('Metadata_Type_Event_Consent', eq('Event_Consent'))
+////            .where(
+//            .out('Consent').has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).dedup()
+//            .where(
+//                    __.out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', PText.textContainsPrefix('CONSENT')
+//                    )
 //            )
-            .count().next()
+////            )
+//            .count().next()
 
     long percentConsent = numProcedures > 0 ? (long) ((double) numConsent / (double) numProcedures * 100.0) : 0
 
@@ -4243,10 +4297,17 @@ the end of the process.
 
 
     long numLegalActions =
-            App.g.V().has('Object_Legal_Actions_Date'
-                    , gt(dateThreshold)
-            )
-                    .count().next()
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Object_Legal_Actions where
+        Object_Legal_Actions_Date > :dt
+        """,
+                    [ 'dt': dateThreshold]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V().has('Object_Legal_Actions_Date'
+//                    , gt(dateThreshold)
+//            )
+//                    .count().next()
 
 
     // num Legal Actions  - score
@@ -4276,10 +4337,17 @@ the end of the process.
 
 
     long numPrivacyDocs =
-            App.g.V().has('Object_Privacy_Docs_Date'
-                    , gt(dateThreshold)
-            )
-                    .count().next()
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Object_Privacy_Docs where
+        Object_Privacy_Docs_Date > :dt
+        """,
+                    [ 'dt': dateThreshold]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V().has('Object_Privacy_Docs_Date'
+//                    , gt(dateThreshold)
+//            )
+//                    .count().next()
 
 
     // num Privacy Docs  - score
@@ -4310,10 +4378,17 @@ the end of the process.
 
 
     long numMeetings12months =
-            App.g.V().has('Event_Meeting_Date'
-                    , gt(dateThreshold)
-            )
-                    .count().next()
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Event_Meeting where
+        Event_Meeting_Date > :dt
+        """,
+                    [ 'dt': dateThreshold]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V().has('Event_Meeting_Date'
+//                    , gt(dateThreshold)
+//            )
+//                    .count().next()
 
 
     // num Meetings - score
@@ -4338,27 +4413,52 @@ the end of the process.
   }
 
   static def getDataBreachesScores(def scoresMap) {
-    long numItems = App.g.V().has('Metadata_Type_Event_Data_Breach', eq('Event_Data_Breach'))
-            .count().next()
+    long numItems =
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Event_Data_Breach 
+        """,
+                    [ :]).getRawResultSet().next().getProperty('ct')
+
+//    App.g.V().has('Metadata_Type_Event_Data_Breach', eq('Event_Data_Breach'))
+//            .count().next()
 
     long numOpenDataBreachDataStolen =
-            App.g.V()
-                    .has('Event_Data_Breach_Status', eq('Open'))
-                    .where(
-                            __.or(
-                                    __.has('Event_Data_Breach_Impact', eq('Customer Data Stolen (External)'))
-                                    , __.has('Event_Data_Breach_Impact', eq('Customer Data Stolen (Internal)'))
-                            )
-                    )
-                    .count().next()
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Event_Data_Breach where
+        Event_Data_Breach_Status = "Open" AND
+        (  Event_Data_Breach_Impact = "Customer Data Stolen (External)" OR
+           Event_Data_Breach_Impact = "Customer Data Stolen (Internal)" )
+        """,
+                    [ :]).getRawResultSet().next().getProperty('ct')
+
+
+//    App.g.V()
+//                    .has('Event_Data_Breach_Status', eq('Open'))
+//                    .where(
+//                            __.or(
+//                                    __.has('Event_Data_Breach_Impact', eq('Customer Data Stolen (External)'))
+//                                    , __.has('Event_Data_Breach_Impact', eq('Customer Data Stolen (Internal)'))
+//                            )
+//                    )
+//                    .count().next()
 
     long numOpenDataBreachDataLost =
-            App.g.V()
-                    .has('Event_Data_Breach_Status', eq('Open'))
-                    .where(
-                            __.has('Event_Data_Breach_Impact', eq('Data Lost'))
-                    )
-                    .count().next()
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Event_Data_Breach where
+        Event_Data_Breach_Status = "Open" AND
+        (  Event_Data_Breach_Impact = "Data Lost"  )
+        """,
+                    [ :]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V()
+//                    .has('Event_Data_Breach_Status', eq('Open'))
+//                    .where(
+//                            __.has('Event_Data_Breach_Impact', eq('Data Lost'))
+//                    )
+//                    .count().next()
 
 
     long scoreValue = 100L

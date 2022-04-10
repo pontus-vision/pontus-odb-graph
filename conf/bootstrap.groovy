@@ -136,7 +136,7 @@ try {
     gdpr.createNotificationTemplates()
 
     gdpr.createNotificationTemplatesFromFiles(graph,'/orientdb/conf/reports', 'conf/reports' )
-    gdpr.addLawfulBasisAndPrivacyNotices(graph, App.g)
+//    gdpr.addLawfulBasisAndPrivacyNotices(graph, App.g)
 
 } catch (e) {
     e.printStackTrace()
