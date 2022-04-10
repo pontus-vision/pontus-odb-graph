@@ -2656,7 +2656,7 @@ the end of the process.
 
       OResultSet resSet = App.graph.executeSql(
               "SELECT @rid from Object_Notification_Templates where Object_Notification_Templates_Id = :tid AND " +
-                      "Object_Notification_Templates_Types = :poleType AND" +
+                      "Object_Notification_Templates_Types = :poleType AND " +
                       "Object_Notification_Templates_Label = :templateName   ",
               args).getRawResultSet();
 
