@@ -3972,6 +3972,7 @@ the end of the process.
 
   static String[] sensitiveData = getEnv("PV_SENSITIVE_DATA","DADOS DE SAÚDE,RAÇA,FILIAÇÃO A SINDICATO").split(',')
   static  String[] consentData = getEnv("PV_CONSENT_DATA","CONSENTIMENTO,CONSENT").split(',')
+  String[] legInt = getEnv("PV_LEG_INT_DATA","LEGITIMATE INTEREST,LEGÍTIMO INTERESSE DO CONTROLADOR,LEGÍTIMO INTERESSE DO CONTROLADOR | OBRIGAÇÃO LEGAL OU REGULATÓRIO PELO CONTROLADOR").split(',')
 
   static def getChildrenScores(scoresMap) {
 
@@ -4548,29 +4549,60 @@ the end of the process.
   }
 
   static def getIndivRightsScores(def scoresMap) {
-    long numItems = App.g.V()
-            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-            .count()
-            .next()
+    long numItems =
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Object_Data_Source 
+        """,
+                    [ :]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V()
+//            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//            .count()
+//            .next()
 
 
-    long numDeleteURL = App.g.V()
-            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-            .values('Object_Data_Source_URI_Delete')
-            .count()
-            .next()
+    long numDeleteURL =
+            App.graph.executeSql(
+        """
+        SELECT count(Object_Data_Source_URI_Delete) as ct  FROM  Object_Data_Source 
+        """,
+                    [ :]).getRawResultSet().next().getProperty('ct')
 
-    long numUpdateURL = App.g.V()
-            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-            .values('Object_Data_Source_URI_Update')
-            .count()
-            .next()
+//            App.g.V()
+//            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//            .values('Object_Data_Source_URI_Delete')
+//            .count()
+//            .next()
 
-    long numReadURL = App.g.V()
-            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-            .values('Object_Data_Source_URI_Read')
-            .count()
-            .next()
+    long numUpdateURL =
+//            App.g.V()
+//            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//            .values('Object_Data_Source_URI_Update')
+//            .count()
+//            .next()
+    App.graph.executeSql(
+            """
+        SELECT count(Object_Data_Source_URI_Update) as ct  FROM  Object_Data_Source 
+        """,
+            [ :]).getRawResultSet().next().getProperty('ct')
+
+
+    long numReadURL =
+            App.graph.executeSql(
+                    """
+                    SELECT count(Object_Data_Source_URI_Read) as ct  FROM  Object_Data_Source 
+                    """,
+                    [ :]).getRawResultSet().next().getProperty('ct')
+
+
+//    App.g.V()
+//            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//            .values('Object_Data_Source_URI_Read')
+//            .count()
+//            .next()
+
+
     long numWithoutDeleteUrl = (numItems - numDeleteURL)
     long numWithoutUpdateUrl = (numItems - numUpdateURL)
     long numWithoutReadUrl = (numItems - numReadURL)
@@ -4595,14 +4627,28 @@ the end of the process.
 
   static def getInfoYouHoldScores(def scoresMap) {
 
-    long numDataSources = App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source')).count().next()
+    long numDataSources =
+            App.graph.executeSql(
+                    """
+                    SELECT count(*)  as ct  FROM  Object_Data_Source
+                    """,
+                    [:]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source')).count().next()
 
     long numRecordsWithoutDataProcedures =
-            App.g.V()
-                    .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-                    .where(__.in('Has_Data_Source')
-                            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).count().is(eq(0)))
-                    .count().next()
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Object_Data_Source where 
+        (in('Has_Data_Source').Metadata_Type_Object_Data_Procedures.size() ) = 0    
+        """,
+                    [ : ]).getRawResultSet().next().getProperty('ct')
+
+//            App.g.V()
+//                    .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//                    .where(__.in('Has_Data_Source')
+//                            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).count().is(eq(0)))
+//                    .count().next()
 
 
     long scoreValue = 100L
@@ -4611,10 +4657,14 @@ the end of the process.
       long pcntNoEdges = (long) (100L * numRecordsWithoutDataProcedures / numDataSources)
       if (pcntNoEdges > 5 && pcntNoEdges < 40) {
         scoreValue -= 40L
-      } else if (pcntNoEdges > 40) {
+      } else if (pcntNoEdges >= 40) {
         scoreValue -= (20L + Math.min(2L * pcntNoEdges, 70L))
       } else {
         scoreValue -= (pcntNoEdges)
+      }
+
+      if (scoreValue < 0L){
+        scoreValue = 0L
       }
 
 
@@ -4685,8 +4735,15 @@ the end of the process.
   static def getLawfulBasisScores(def scoresMap) {
 
 
-    long numDataProcs = App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-            .count().next()
+    long numDataProcs =
+            App.graph.executeSql(
+                    """
+                    SELECT count(*)  as ct  FROM  Object_Data_Procedures
+                    """,
+                    [:]).getRawResultSet().next().getProperty('ct')
+
+//    App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+//            .count().next()
 
     if (numDataProcs == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), 0L)
@@ -4696,21 +4753,39 @@ the end of the process.
       return 0L
     }
 
-    long numWithoutAnyLawfulBasis = App.g.V()
-            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-            .where(
-                    __.outE('Has_Lawful_Basis_On').count().is(eq(0))
-            )
-            .count().next()
+    long numWithoutAnyLawfulBasis =
+            App.graph.executeSql(
+            """
+            SELECT count(*) as ct  FROM  Object_Data_Procedures where 
+            (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )= 0  
+            """,
+             [ :]).getRawResultSet().next().getProperty('ct')
 
-    long numWithLegInt = App.g.V()
-            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
-            .where(
-                    __.out('Has_Lawful_Basis_On').as('lawfulBasis').or(
-                            __.has('Object_Lawful_Basis_Description', PText.textContainsPrefix('LEGÍ'))
-                            , __.has('Object_Lawful_Basis_Description', PText.textContainsPrefix('LEGI'))
-                    ))
-            .count().next()
+
+//            App.g.V()
+//            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+//            .where(
+//                    __.outE('Has_Lawful_Basis_On').count().is(eq(0))
+//            )
+//            .count().next()
+
+    long numWithLegInt =
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Object_Data_Procedures where 
+        (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:leg).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
+        """,
+                    [ 'leg': legInt]).getRawResultSet().next().getProperty('ct')
+
+
+//            App.g.V()
+//            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
+//            .where(
+//                    __.out('Has_Lawful_Basis_On').as('lawfulBasis').or(
+//                            __.has('Object_Lawful_Basis_Description', PText.textContainsPrefix('LEGÍ'))
+//                            , __.has('Object_Lawful_Basis_Description', PText.textContainsPrefix('LEGI'))
+//                    ))
+//            .count().next()
 
     long pcntWithLegInt = (numWithLegInt / numDataProcs * 100L)
 
@@ -4957,23 +5032,56 @@ the end of the process.
     long fiveDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 5L))
     def fiveDayThreshold = new java.util.Date(fiveDayThresholdMs)
 
-    long numEvents = App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).count().next()
+    long numEvents =
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Event_Subject_Access_Request
+        """,
+                    [ :]).getRawResultSet().next().getProperty('ct')
 
-    long numRecordsOlder15Days = App.g.V()
-            .has('Event_Subject_Access_Request_Metadata_Create_Date', lte(fifteenDayThreshold)).as('DSAR')
-            .or(
-                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('Acknowledged')),
-                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('New'))
-            )
-            .count().next();
+    // App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).count().next()
 
-    long numRecordsOlder5Days = App.g.V()
-            .has('Event_Subject_Access_Request_Metadata_Start_Date', lte(fiveDayThreshold)).as('DSAR')
-            .or(
-                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('Acknowledged')),
-                    __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('New'))
-            )
-            .count().next()
+
+
+    long numRecordsOlder15Days =
+
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Event_Subject_Access_Request where 
+        Event_Subject_Access_Request_Metadata_Create_Date <= :threshold
+        AND (
+          Event_Subject_Access_Request_Status = 'Acknowledged'   
+          OR 
+          Event_Subject_Access_Request_Status = 'New'   
+
+        )
+           
+        """,
+                    [ 'threshold': fifteenDayThreshold]).getRawResultSet().next().getProperty('ct')
+
+
+    // App.g.V()
+    //         .has('Event_Subject_Access_Request_Metadata_Create_Date', lte(fifteenDayThreshold)).as('DSAR')
+    //         .or(
+    //                 __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('Acknowledged')),
+    //                 __.as('DSAR').has('Event_Subject_Access_Request_Status', eq('New'))
+    //         )
+    //         .count().next();
+
+    long numRecordsOlder5Days =
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Event_Subject_Access_Request where 
+        Event_Subject_Access_Request_Metadata_Create_Date <= :threshold
+        AND (
+          Event_Subject_Access_Request_Status = 'Acknowledged'   
+          OR 
+          Event_Subject_Access_Request_Status = 'New'   
+
+        )
+           
+        """,
+                    [ 'threshold': fiveDayThreshold]).getRawResultSet().next().getProperty('ct')
     // - numRecordsOlder15Days ;
 
 
