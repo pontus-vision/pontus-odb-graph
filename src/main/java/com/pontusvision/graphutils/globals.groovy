@@ -548,8 +548,16 @@ class PontusJ2ReportingFunctions {
 
   static String getPolicyText(String policyType) {
     try {
-      def text = App.g.V().has("Object_Policies_Type", P.eq(policyType))
-              .values("Object_Policies_Text").next().toString()
+      def text =
+              App.graph.executeSql(
+                      """
+        SELECT Object_Policies_Text  as ct  FROM  Object_Policies where
+        Object_Policies_Type = :pt
+        """,
+                      ['pt':policyType]).getRawResultSet().next().getProperty('ct')
+
+//              App.g.V().has("Object_Policies_Type", P.eq(policyType))
+//              .values("Object_Policies_Text").next().toString()
       return text;
     } catch(Throwable t){
       return null;
