@@ -3971,8 +3971,8 @@ the end of the process.
   }
 
   static String[] sensitiveData = getEnv("PV_SENSITIVE_DATA","DADOS DE SAÚDE,RAÇA,FILIAÇÃO A SINDICATO").split(',')
-  static  String[] consentData = getEnv("PV_CONSENT_DATA","CONSENTIMENTO,CONSENT").split(',')
-  String[] legInt = getEnv("PV_LEG_INT_DATA","LEGITIMATE INTEREST,LEGÍTIMO INTERESSE DO CONTROLADOR,LEGÍTIMO INTERESSE DO CONTROLADOR | OBRIGAÇÃO LEGAL OU REGULATÓRIO PELO CONTROLADOR").split(',')
+  static String[] consentData = getEnv("PV_CONSENT_DATA","CONSENTIMENTO,CONSENT").split(',')
+  static String[] legInt = getEnv("PV_LEG_INT_DATA","LEGITIMATE INTEREST,LEGÍTIMO INTERESSE DO CONTROLADOR,LEGÍTIMO INTERESSE DO CONTROLADOR | OBRIGAÇÃO LEGAL OU REGULATÓRIO PELO CONTROLADOR").split(',')
 
   static def getChildrenScores(scoresMap) {
 
