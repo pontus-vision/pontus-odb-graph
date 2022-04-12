@@ -478,8 +478,13 @@ public class RecordRequest
         String neighbourId = customFilter.substring("hasNeighbourId:".length());
         ORecordId recordId = new ORecordId(neighbourId); // try to instantiate to validate, and prevent sql injection
 
-        sb.append(recordId.toString()).append(" IN both() ");
+        // NOTE: the original query (see example below) was inefficient, as the graph had to do a full table scan
+        // #47:2 IN  both()
+//        sb.append(recordId.toString()).append(" IN both() ");
 
+        // This mechanism is far more efficient, as it pre-selects all the RIDs, which have O(1) search times.
+        sb.append("@rid in (SELECT both() from [").append(recordId.toString()).append("] )");
+//        @rid in (SELECT both() from [#47:2] )
 //        long neighbourId = Long.parseLong(customFilter.split(":")[1]);
 //        resSet = resSet.where(__.both().hasId(neighbourId));
 
