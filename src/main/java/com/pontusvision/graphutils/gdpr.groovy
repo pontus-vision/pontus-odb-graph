@@ -5206,7 +5206,11 @@ the end of the process.
         sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate(type.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": ${Long.valueOf((long) Double.valueOf(bytes).doubleValue())}, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
       }
-
+      App.graph.executeSql("SELECT Event_File_Ingestion_File_Type as type,count(*) as num FROM Event_File_Ingestion GROUP BY Event_File_Ingestion_File_Type", Collections.EMPTY_MAP).toList().each {
+        String type = "Event_File_Ingestion_File_Type_Count(${it.getRawResult().getProperty('type')})"
+        String num = it.getRawResult().getProperty('num')
+        sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate(type.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": ${Long.valueOf((long) Double.valueOf(num).doubleValue())}, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+      }
 //      String queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'Mixed'"
 //      Long numEntries = getCountQueryResults(queryStr)
 //
