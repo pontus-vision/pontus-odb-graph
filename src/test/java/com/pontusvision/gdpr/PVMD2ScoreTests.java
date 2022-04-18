@@ -46,7 +46,7 @@ public class PVMD2ScoreTests extends AppTest {
       Type resultType = new TypeToken<List<Map<String, Object>>>(){}.getType();
       List<Map<String, Object>> result = gson.fromJson(md2Stats, resultType);
 
-      assertEquals(result.size(),8);
+      assertEquals(result.size(),12);
 
 //      Map<String, Long> retVals = new HashMap<>();
 //
