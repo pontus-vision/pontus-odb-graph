@@ -1,0 +1,203 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Object_Data_Source
+      name: gov.br
+      props:
+        - name: Object_Data_Source_Name
+          val: GOV.BR/MAPEAMENTO-DE-PROCESSO
+          mandatoryInSearch: True
+    
+    - label: Object_Data_Source
+      name: attached_data_sources
+      props:
+        - name: Object_Data_Source_Form_Id
+          val: ${new groovy.json.JsonBuilder(Local_de_Armazenamento)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.BudibaseRef;"
+          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
+    
+    - label: Object_Data_Policy
+      props:
+        - name: Object_Data_Policy_Type
+          val: ${Referencia}
+          mandatoryInSearch: True
+        - name: Object_Data_Policy_Retention_Period
+          val: ${Periodo_de_Retencao}
+          mandatoryInSearch: True
+        - name: Object_Data_Policy_Deletion_Policy
+          val: ${new groovy.json.JsonBuilder(Politicas)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.BudibaseRef;"
+          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
+        - name: Object_Data_Policy_Supplier_Agreements_Revision
+          val: ${Contratos_Fornecedores_Revistos}
+          mandatoryInSearch: True
+        - name: Object_Data_Policy_Data_Publicity_And_Transparency
+          val: ${Publicidade_e_Transparencia_aos_Dados}
+          mandatoryInSearch: True
+        - name: Object_Data_Policy_Data_Publication_Forecasting
+          val: ${Previsao_Legal_Para_Publicacao_dos_Dados}
+          mandatoryInSearch: True
+    
+    - label: Object_Data_Procedures
+      props:
+        - name: Object_Data_Procedures_Form_Id
+          val: ${_id}
+          mandatoryInSearch: True
+        - name: Object_Data_Procedures_ID
+          val: ${Referencia}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Name
+          val: ${Processo}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Type_Of_Natural_Person
+          val: ${Categoria_dos_Titulares_dos_Dados}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_BusinessAreaResponsible
+          val: ${Area_Responsavel}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Country_Where_Stored
+          val: ${Pais_Onde_as_Pessoas_Estao_Localizadas}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Why_Is_It_Collected
+          val: ${Finalidade_do_Processo}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Info_Collected
+          val: ${Dados_Pessoais_Utilizados}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Description
+          val: ${Fluxo_dos_Dados}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Interested_Parties_Consulted
+          val: ${Partes_Interessadas_Consultadas}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Info_Shared_With_Third_Parties
+          val: ${Dados_Pessoais_Compartilhados_com_Terceiros}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_Info_Share_Justification
+          val: ${Finalidade_de_Compartilhamento_com_Terceiros}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Procedures_MacroProcessName
+          val: ${Macroprocesso}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Sensitive_Data
+      props:
+        - name: Object_Sensitive_Data_Description
+          val: ${new groovy.json.JsonBuilder(Dados_Pessoais_Sensiveis)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+    
+    - label: Object_Lawful_Basis
+      props:
+        - name: Object_Lawful_Basis_Description
+          val: ${new groovy.json.JsonBuilder(Base_Legal)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+        - name: Object_Lawful_Basis_Other_Basis
+          val: ${Outros_Fundamentos_Legais}
+          mandatoryInSearch: True
+    
+    - label: Object_Legitimate_Interests_Assessment
+      condition: ${Justificativa_da_Base_Legal?.trim()?.length() > 0}
+      props:
+        - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
+          val: ${Justificativa_da_Base_Legal}
+          mandatoryInSearch: True
+    
+    - label: Object_Email_Address
+      condition: ${Responsavel?.trim()?.size() > 0}
+      props:
+        - name: Object_Email_Address_Email
+          val: ${Responsavel?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.BudibaseRef;"
+          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
+    
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: gov.br/mapeamento-de-processo
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: gov.br/mapeamento-de-processo
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexName: gov.br
+    toVertexLabel: Event_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Object_Data_Procedures
+  - label: Has_Sensitive_Data
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Sensitive_Data
+  - label: Has_Lawful_Basis_On
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Lawful_Basis
+  - label: Has_Policy
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Data_Policy
+  - label: Has_Data_Source
+    fromVertexLabel: Object_Data_Procedures
+    toVertexName: attached_data_sources
+  - label: Has_Legitimate_Interests_Assessment
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Legitimate_Interests_Assessment
+  - label: Is_Responsible
+    fromVertexLabel: Object_Email_Address
+    toVertexLabel: fontes_de_dados
+

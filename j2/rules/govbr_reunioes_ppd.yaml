@@ -1,0 +1,81 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Event_Meeting
+      props:
+        - name: Event_Meeting_Form_Id
+          val: ${_id}
+          mandatoryInSearch: True
+        - name: Event_Meeting_Title
+          val: ${Titulo_Reuniao?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Meeting_Date
+          val: ${Data}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Meeting_Discussed_Topics
+          val: ${Topicos_Reuniao?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Meeting_Participants
+          val: ${Participantes?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: GOV.BR/REUNIÕES-COMITÊ-P&PD
+          mandatoryInSearch: True
+    
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: gov.br/reuniões-comitê-p&pd
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: gov.br/reuniões-comitê-p&pd
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object_Data_Source
+    toVertexLabel: Event_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Event_Meeting
+

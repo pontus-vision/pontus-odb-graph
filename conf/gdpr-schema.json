@@ -1579,6 +1579,16 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Data_Policy_Data_Publicity_And_Transparency",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Policy_Data_Publication_Forecasting",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object_Data_Policy_Description",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1625,6 +1635,16 @@
     },
     {
       "name": "Object_Data_Policy_Update_Frequency",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Policy_Deletion_Policy",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Policy_Supplier_Agreements_Revision",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1680,6 +1700,16 @@
     },
     {
       "name": "Object_Data_Procedures_Info_Collected",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Procedures_Info_Share_Justification",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Procedures_Info_Shared_With_Third_Parties",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1760,6 +1790,11 @@
     },
     {
       "name": "Object_Data_Source_Business_Rules",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Source_Classification",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -2460,6 +2495,11 @@
     },
     {
       "name": "Object_Lawful_Basis_Short_Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Lawful_Basis_Other_Basis",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3325,6 +3365,11 @@
     },
     {
       "name": "Object_System_Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_System_Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -5012,6 +5057,8 @@
       "propertyKeys": [
         "Metadata_Type_Object_Data_Policy",
         "Object_Data_Policy_Create_Date",
+        "Object_Data_Policy_Data_Publicity_And_Transparency",
+        "Object_Data_Policy_Data_Publication_Forecasting",
         "Object_Data_Policy_Description",
         "Object_Data_Policy_Form_Id",
         "Object_Data_Policy_Form_Owner_Id",
@@ -5021,7 +5068,9 @@
         "Object_Data_Policy_Retention_Period",
         "Object_Data_Policy_Type",
         "Object_Data_Policy_Update_Date",
-        "Object_Data_Policy_Update_Frequency"
+        "Object_Data_Policy_Update_Frequency",
+        "Object_Data_Policy_Deletion_Policy",
+        "Object_Data_Policy_Supplier_Agreements_Revision"
       ],
       "propertyKeysMappings": {}
     },
@@ -5043,6 +5092,8 @@
         "Object_Data_Procedures_Delete_Mechanism",
         "Object_Data_Procedures_Delete_URL",
         "Object_Data_Procedures_Info_Collected",
+        "Object_Data_Procedures_Info_Share_Justification",
+        "Object_Data_Procedures_Info_Shared_With_Third_Parties",
         "Object_Data_Procedures_Name",
         "Object_Data_Procedures_Number_Of_Records_Monthly",
         "Object_Data_Procedures_Property",
@@ -5068,6 +5119,7 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Data_Source",
+        "Object_Data_Source_Classification",
         "Object_Data_Source_Create_Date",
         "Object_Data_Source_Credential_ApiKey",
         "Object_Data_Source_Credential_Principal",
@@ -5305,7 +5357,8 @@
         "Metadata_Type_Object_Lawful_Basis",
         "Object_Lawful_Basis_Description",
         "Object_Lawful_Basis_Id",
-        "Object_Lawful_Basis_Short_Description"
+        "Object_Lawful_Basis_Short_Description",
+        "Object_Lawful_Basis_Other_Basis"
       ],
       "propertyKeysMappings": {}
     },
@@ -5635,7 +5688,8 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_System",
-        "Object_System_Name"
+        "Object_System_Name",
+        "Object_System_Type"
       ],
       "propertyKeysMappings": {}
     },
