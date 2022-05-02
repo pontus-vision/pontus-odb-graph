@@ -495,7 +495,8 @@ schema:
       props:
         - name: Create_Date
           dataType: Date
-
+        - name: Data_Publicity_And_Transparency
+        - name: Data_Publication_Forecasting
         - name: Description
         - name: Form_Id
         - name: Form_Owner_Id
@@ -507,6 +508,8 @@ schema:
         - name: Update_Date
           dataType: Date
         - name: Update_Frequency
+        - name: Deletion_Policy
+        - name: Supplier_Agreements_Revision
 
     - name: "Object_Data_Procedures"
       partition: false
@@ -521,6 +524,8 @@ schema:
         - name: Delete_Mechanism
         - name: Delete_URL
         - name: Info_Collected
+        - name: Info_Share_Justification
+        - name: Info_Shared_With_Third_Parties
         - name: Name
         - name: Number_Of_Records_Monthly
         - name: Property
@@ -542,6 +547,7 @@ schema:
       props:
         - name: Business_Rules
           index: false
+        - name: Classification
         - name: Create_Date
           dataType: Date
         - name: Credential_ApiKey
@@ -733,6 +739,7 @@ schema:
         - name: Description
         - name: Id
         - name: Short_Description
+        - name: Other_Basis
 
     - name: "Object_Metadata_Source"
       partition: false
@@ -974,6 +981,7 @@ schema:
       useStatic: false
       props:
         - name: Name
+        - name: Type
 
     - name: "Object_Vehicle"
       partition: false
