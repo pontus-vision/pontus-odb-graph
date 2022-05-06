@@ -1931,16 +1931,6 @@ propertyKeys:
   - name: Object_Legal_Actions_Details
     dataType: String
     cardinality: SINGLE
-  - name: Metadata_Type_Object_Personal_Data
-    dataType: String
-    cardinality: SINGLE
-
-  - name: Object_Personal_Data_Type
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Personal_Data_Type
-    dataType: String
-    cardinality: SINGLE
   - name: Metadata_Type_Object_Privacy_Notice
     dataType: String
     cardinality: SINGLE
@@ -2059,9 +2049,6 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object_Sensitive_Data_Description
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Sensitive_Data_Type
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Subsystem
@@ -2483,9 +2470,6 @@ vertexLabels:
   - name: Object_Legal_Actions
     partition: False
     useStatic: False
-  - name: Object_Personal_Data
-    partition: False
-    useStatic: False
   - name: Object_Privacy_Notice
     partition: False
     useStatic: False
@@ -2663,10 +2647,6 @@ edgeLabels:
     unidirected: False
 
   - name: Has_Phone
-    multiplicity: MULTI
-    unidirected: False
-
-  - name: Has_Personal_Data
     multiplicity: MULTI
     unidirected: False
 
@@ -3960,19 +3940,6 @@ vertexIndexes:
     
       {}
     
-  - name: "Object_Personal_Data_MixedIdx"
-    composite: false
-    unique: false
-    indexOnly: null
-    indexType: UNIQUE
-    mixedIndex: "search"
-    propertyKeys:
-      - Metadata_Type_Object_Personal_Data
-      - Object_Personal_Data_Type
-    propertyKeysMappings:
-    
-      {}
-    
   - name: "Object_Privacy_Notice_MixedIdx"
     composite: false
     unique: false
@@ -4038,7 +4005,6 @@ vertexIndexes:
       - Object_Sensitive_Data_Sexual_Orientation
       - Object_Sensitive_Data_Union_Membership
       - Object_Sensitive_Data_Description
-      - Object_Sensitive_Data_Type
     propertyKeysMappings:
     
       {}

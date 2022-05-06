@@ -27,10 +27,10 @@
         ]
       },
       {
-        "label": "Object_Data_Policy",
+        "label": "Object_Policies",
         "props": [
           {
-            "name": "Object_Data_Policy_Form_Id",
+            "name": "Object_Policies_Form_Id",
             "val": "${new groovy.json.JsonBuilder(Politicas)}",
             "mandatoryInSearch": true,
             "processAll": true,
@@ -122,10 +122,11 @@
         ]
       },
       {
-        "label": "Object_Personal_Data",
+        "label": "Object_Sensitive_Data",
+        "name": "personal_data",
         "props": [
           {
-            "name": "Object_Personal_Data_Type",
+            "name": "Object_Sensitive_Data_Description",
             "val": "${new groovy.json.JsonBuilder(Dados_Pessoais_Utilizados)}",
             "mandatoryInSearch": true,
             "processAll": true,
@@ -136,9 +137,10 @@
       },
       {
         "label": "Object_Sensitive_Data",
+        "name": "sensitive_data",
         "props": [
           {
-            "name": "Object_Sensitive_Data_Type",
+            "name": "Object_Sensitive_Data_Description",
             "val": "${new groovy.json.JsonBuilder(Dados_Pessoais_Sensiveis)}",
             "mandatoryInSearch": true,
             "processAll": true,
@@ -275,12 +277,12 @@
       {
         "label": "Has_Sensitive_Data",
         "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Sensitive_Data"
+        "toVertexName": "personal_data"
       },
       {
-        "label": "Has_Personal_Data",
+        "label": "Has_Sensitive_Data",
         "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Personal_Data"
+        "toVertexName": "sensitive_data"
       },
       {
         "label": "Has_Lawful_Basis_On",
@@ -295,7 +297,7 @@
       {
         "label": "Has_Policy",
         "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Data_Policy"
+        "toVertexLabel": "Object_Policies"
       },
       {
         "label": "Has_Data_Source",

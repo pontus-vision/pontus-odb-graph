@@ -913,12 +913,6 @@ schema:
         - name: Description
         - name: Details
 
-    - name: Object_Personal_Data
-      partition: false
-      useStatic: false
-      props:
-        - name: Type
-
     - name: "Object_Privacy_Notice"
       partition: false
       useStatic: false
@@ -966,13 +960,11 @@ schema:
         - name: Church_Membership
         - name: Club_Membership
         - name: Ethnicity
-        - name: Political_View             # I think these props are too specific ... it is better just to have "Type"
+        - name: Political_View
         - name: Religion
         - name: Sexual_Orientation
         - name: Union_Membership
         - name: Description
-        # Type prop is enough ... because we'll have one for each vertex of sensitive data
-        - name: Type
 
     - name: "Object_Subsystem"
       partition: false
@@ -1208,7 +1200,7 @@ schema:
   - name: Has_Other_Lawful_Basis
   - name: Has_Parent_Or_Guardian
   - name: Has_Phone
-  - name: Has_Personal_Data
+#  - name: Has_Personal_Data
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice

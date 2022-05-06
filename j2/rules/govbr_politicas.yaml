@@ -2,19 +2,19 @@
 updatereq:
   vertices:
     
-    - label: Object_Data_Policy
+    - label: Object_Policies
       props:
-        - name: Object_Data_Policy_Form_Id
+        - name: Object_Policies_Form_Id
           val: ${_id}
           mandatoryInSearch: True
-        - name: Object_Data_Policy_Name
+        - name: Object_Policies_Name
           val: ${Referencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Policy_Text
+        - name: Object_Policies_Text
           val: ${Texto}
           mandatoryInSearch: True
-        - name: Object_Data_Policy_Type
+        - name: Object_Policies_Type
           val: ${Tipo_de_Politica}
           mandatoryInSearch: True
     
@@ -69,6 +69,6 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexName: Object_Data_Policy
+    fromVertexName: Object_Data_Policies
     toVertexLabel: Event_Ingestion
 

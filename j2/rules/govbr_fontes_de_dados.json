@@ -119,12 +119,19 @@
         "label": "Object_Data_Policy",
         "props": [
           {
-            "name": "Object_Data_Policy_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Politicas_de_eliminacao_de_dados)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
-            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            "name": "Object_Data_Policy_Update_Frequency",
+            "val": "${Frequencia_de_Atualizacao}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Retention_Period",
+            "val": "${Periodo_de_Retencao}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Type",
+            "val": "${Referencia}",
+            "mandatoryInSearch": true
           }
         ]
       },

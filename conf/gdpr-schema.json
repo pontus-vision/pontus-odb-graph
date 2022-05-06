@@ -3124,21 +3124,6 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Metadata_Type_Object_Personal_Data",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Personal_Data_Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Personal_Data_Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
       "name": "Metadata_Type_Object_Privacy_Notice",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -3330,11 +3315,6 @@
     },
     {
       "name": "Object_Sensitive_Data_Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Sensitive_Data_Type",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -4026,11 +4006,6 @@
       "useStatic": false
     },
     {
-      "name": "Object_Personal_Data",
-      "partition": false,
-      "useStatic": false
-    },
-    {
       "name": "Object_Privacy_Notice",
       "partition": false,
       "useStatic": false
@@ -4264,11 +4239,6 @@
     },
     {
       "name": "Has_Phone",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Personal_Data",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -5604,19 +5574,6 @@
       "propertyKeysMappings": {}
     },
     {
-      "name": "Object_Personal_Data_MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "indexType": "UNIQUE",
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata_Type_Object_Personal_Data",
-        "Object_Personal_Data_Type"
-      ],
-      "propertyKeysMappings": {}
-    },
-    {
       "name": "Object_Privacy_Notice_MixedIdx",
       "composite": false,
       "unique": false,
@@ -5681,8 +5638,7 @@
         "Object_Sensitive_Data_Religion",
         "Object_Sensitive_Data_Sexual_Orientation",
         "Object_Sensitive_Data_Union_Membership",
-        "Object_Sensitive_Data_Description",
-        "Object_Sensitive_Data_Type"
+        "Object_Sensitive_Data_Description"
       ],
       "propertyKeysMappings": {}
     },
