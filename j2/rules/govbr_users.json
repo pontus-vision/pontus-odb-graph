@@ -17,9 +17,15 @@
         "condition": "${email?.trim()?.length() > 0}",
         "props": [
           {
+            "name": "Object_Email_Address_Form_Id",
+            "val": "${_id}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Object_Email_Address_Email",
             "val": "${email?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },

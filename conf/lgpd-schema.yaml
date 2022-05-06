@@ -981,12 +981,6 @@ propertyKeys:
   - name: Object_Data_Policy_Create_Date
     dataType: Date
     cardinality: SINGLE
-  - name: Object_Data_Policy_Data_Publicity_And_Transparency
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Data_Policy_Data_Publication_Forecasting
-    dataType: String
-    cardinality: SINGLE
   - name: Object_Data_Policy_Description
     dataType: String
     cardinality: SINGLE
@@ -1008,6 +1002,9 @@ propertyKeys:
   - name: Object_Data_Policy_Retention_Period
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Policy_Text
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Policy_Type
     dataType: String
     cardinality: SINGLE
@@ -1015,12 +1012,6 @@ propertyKeys:
     dataType: Date
     cardinality: SINGLE
   - name: Object_Data_Policy_Update_Frequency
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Data_Policy_Deletion_Policy
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Data_Policy_Supplier_Agreements_Revision
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Data_Procedures
@@ -1110,9 +1101,6 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Source_Business_Rules
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Data_Source_Classification
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Source_Create_Date
@@ -1545,9 +1533,6 @@ propertyKeys:
   - name: Object_Lawful_Basis_Short_Description
     dataType: String
     cardinality: SINGLE
-  - name: Object_Lawful_Basis_Other_Basis
-    dataType: String
-    cardinality: SINGLE
   - name: Metadata_Type_Object_Metadata_Source
     dataType: String
     cardinality: SINGLE
@@ -1664,6 +1649,9 @@ propertyKeys:
     cardinality: SINGLE
 
   - name: Object_Policies_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Policies_Name
     dataType: String
     cardinality: SINGLE
   - name: Object_Policies_Type
@@ -1943,6 +1931,16 @@ propertyKeys:
   - name: Object_Legal_Actions_Details
     dataType: String
     cardinality: SINGLE
+  - name: Metadata_Type_Object_Personal_Data
+    dataType: String
+    cardinality: SINGLE
+
+  - name: Object_Personal_Data_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Personal_Data_Type
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata_Type_Object_Privacy_Notice
     dataType: String
     cardinality: SINGLE
@@ -2063,6 +2061,9 @@ propertyKeys:
   - name: Object_Sensitive_Data_Description
     dataType: String
     cardinality: SINGLE
+  - name: Object_Sensitive_Data_Type
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata_Type_Object_Subsystem
     dataType: String
     cardinality: SINGLE
@@ -2081,9 +2082,6 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object_System_Name
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_System_Type
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Vehicle
@@ -2485,6 +2483,9 @@ vertexLabels:
   - name: Object_Legal_Actions
     partition: False
     useStatic: False
+  - name: Object_Personal_Data
+    partition: False
+    useStatic: False
   - name: Object_Privacy_Notice
     partition: False
     useStatic: False
@@ -2653,11 +2654,19 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Other_Lawful_Basis
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Parent_Or_Guardian
     multiplicity: MULTI
     unidirected: False
 
   - name: Has_Phone
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Personal_Data
     multiplicity: MULTI
     unidirected: False
 
@@ -3414,8 +3423,6 @@ vertexIndexes:
     propertyKeys:
       - Metadata_Type_Object_Data_Policy
       - Object_Data_Policy_Create_Date
-      - Object_Data_Policy_Data_Publicity_And_Transparency
-      - Object_Data_Policy_Data_Publication_Forecasting
       - Object_Data_Policy_Description
       - Object_Data_Policy_Form_Id
       - Object_Data_Policy_Form_Owner_Id
@@ -3423,11 +3430,10 @@ vertexIndexes:
       - Object_Data_Policy_Form_Submission_Owner_Id
       - Object_Data_Policy_Name
       - Object_Data_Policy_Retention_Period
+      - Object_Data_Policy_Text
       - Object_Data_Policy_Type
       - Object_Data_Policy_Update_Date
       - Object_Data_Policy_Update_Frequency
-      - Object_Data_Policy_Deletion_Policy
-      - Object_Data_Policy_Supplier_Agreements_Revision
     propertyKeysMappings:
     
       {}
@@ -3476,7 +3482,6 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Data_Source
-      - Object_Data_Source_Classification
       - Object_Data_Source_Create_Date
       - Object_Data_Source_Credential_ApiKey
       - Object_Data_Source_Credential_Principal
@@ -3715,7 +3720,6 @@ vertexIndexes:
       - Object_Lawful_Basis_Description
       - Object_Lawful_Basis_Id
       - Object_Lawful_Basis_Short_Description
-      - Object_Lawful_Basis_Other_Basis
     propertyKeysMappings:
     
       {}
@@ -3792,6 +3796,7 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Policies
+      - Object_Policies_Name
       - Object_Policies_Type
       - Object_Policies_URL
       - Object_Policies_Form_Id
@@ -3955,6 +3960,19 @@ vertexIndexes:
     
       {}
     
+  - name: "Object_Personal_Data_MixedIdx"
+    composite: false
+    unique: false
+    indexOnly: null
+    indexType: UNIQUE
+    mixedIndex: "search"
+    propertyKeys:
+      - Metadata_Type_Object_Personal_Data
+      - Object_Personal_Data_Type
+    propertyKeysMappings:
+    
+      {}
+    
   - name: "Object_Privacy_Notice_MixedIdx"
     composite: false
     unique: false
@@ -4020,6 +4038,7 @@ vertexIndexes:
       - Object_Sensitive_Data_Sexual_Orientation
       - Object_Sensitive_Data_Union_Membership
       - Object_Sensitive_Data_Description
+      - Object_Sensitive_Data_Type
     propertyKeysMappings:
     
       {}
@@ -4046,7 +4065,6 @@ vertexIndexes:
     propertyKeys:
       - Metadata_Type_Object_System
       - Object_System_Name
-      - Object_System_Type
     propertyKeysMappings:
     
       {}

@@ -69,12 +69,6 @@
             "val": "${URL_Prefixo_Read}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Source_Classification",
-            "val": "${Classificacao_dos_dados}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -84,11 +78,6 @@
           {
             "name": "Object_System_Name",
             "val": "${Sistema?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_System_Type",
-            "val": "${Descricao_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]
@@ -130,22 +119,7 @@
         "label": "Object_Data_Policy",
         "props": [
           {
-            "name": "Object_Data_Policy_Update_Frequency",
-            "val": "${Frequencia_de_Atualizacao}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Retention_Period",
-            "val": "${Periodo_de_Retencao}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Type",
-            "val": "${Referencia}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Deletion_Policy",
+            "name": "Object_Data_Policy_Form_Id",
             "val": "${new groovy.json.JsonBuilder(Politicas_de_eliminacao_de_dados)}",
             "mandatoryInSearch": true,
             "processAll": true,
@@ -213,11 +187,11 @@
       },
       {
         "label": "Object_Email_Address",
-        "condition": "${Responsavel?.trim()?.size() > 0}",
+        "condition": "${Responsavel?.size() > 0}",
         "props": [
           {
-            "name": "Object_Email_Address_Email",
-            "val": "${Responsavel?.trim()?.toLowerCase()}",
+            "name": "Object_Email_Address_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Responsavel)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.BudibaseRef;",

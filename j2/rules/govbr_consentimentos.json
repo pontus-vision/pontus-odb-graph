@@ -39,7 +39,7 @@
       },
       {
         "label": "Object_Privacy_Notice",
-        "condition": "${Aviso_de_Privacidade.size() > 0}",
+        "condition": "${Aviso_de_Privacidade?.size() > 0}",
         "props": [
           {
             "name": "Object_Privacy_Notice_Form_Id",
@@ -136,7 +136,7 @@
       },
       {
         "label": "Object_Data_Procedures",
-        "condition": "${Mapeamento_de_Processo.size() > 0}",
+        "condition": "${Mapeamento_de_Processo?.size() > 0}",
         "props": [
           {
             "name": "Object_Data_Procedures_Form_Id",

@@ -495,8 +495,6 @@ schema:
       props:
         - name: Create_Date
           dataType: Date
-        - name: Data_Publicity_And_Transparency
-        - name: Data_Publication_Forecasting
         - name: Description
         - name: Form_Id
         - name: Form_Owner_Id
@@ -504,12 +502,11 @@ schema:
         - name: Form_Submission_Owner_Id
         - name: Name
         - name: Retention_Period
+        - name: Text
         - name: Type
         - name: Update_Date
           dataType: Date
         - name: Update_Frequency
-        - name: Deletion_Policy
-        - name: Supplier_Agreements_Revision
 
     - name: "Object_Data_Procedures"
       partition: false
@@ -547,7 +544,6 @@ schema:
       props:
         - name: Business_Rules
           index: false
-        - name: Classification
         - name: Create_Date
           dataType: Date
         - name: Credential_ApiKey
@@ -739,7 +735,6 @@ schema:
         - name: Description
         - name: Id
         - name: Short_Description
-        - name: Other_Basis
 
     - name: "Object_Metadata_Source"
       partition: false
@@ -794,6 +789,7 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Name
         - name: Type
         - name: Text
           index: false
@@ -917,6 +913,12 @@ schema:
         - name: Description
         - name: Details
 
+    - name: Object_Personal_Data
+      partition: false
+      useStatic: false
+      props:
+        - name: Type
+
     - name: "Object_Privacy_Notice"
       partition: false
       useStatic: false
@@ -964,11 +966,13 @@ schema:
         - name: Church_Membership
         - name: Club_Membership
         - name: Ethnicity
-        - name: Political_View
+        - name: Political_View             # I think these props are too specific ... it is better just to have "Type"
         - name: Religion
         - name: Sexual_Orientation
         - name: Union_Membership
         - name: Description
+        # Type prop is enough ... because we'll have one for each vertex of sensitive data
+        - name: Type
 
     - name: "Object_Subsystem"
       partition: false
@@ -981,7 +985,6 @@ schema:
       useStatic: false
       props:
         - name: Name
-        - name: Type
 
     - name: "Object_Vehicle"
       partition: false
@@ -1202,8 +1205,10 @@ schema:
   - name: Has_NLP_Events
   - name: Has_Mobile
   - name: Has_Module
+  - name: Has_Other_Lawful_Basis
   - name: Has_Parent_Or_Guardian
   - name: Has_Phone
+  - name: Has_Personal_Data
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice

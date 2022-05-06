@@ -2,20 +2,23 @@
 updatereq:
   vertices:
     
-    - label: Object_Policies
+    - label: Object_Data_Policy
       props:
-        - name: Object_Policies_Form_Id
+        - name: Object_Data_Policy_Form_Id
           val: ${_id}
           mandatoryInSearch: True
-        - name: Object_Policies_Text
+        - name: Object_Data_Policy_Name
+          val: ${Referencia?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Policy_Text
           val: ${Texto}
           mandatoryInSearch: True
-        - name: Object_Policies_Type
+        - name: Object_Data_Policy_Type
           val: ${Tipo_de_Politica}
           mandatoryInSearch: True
     
     - label: Object_Data_Source
-      name: gov.br
       props:
         - name: Object_Data_Source_Name
           val: GOV.BR/POLÍTICAS
@@ -60,12 +63,12 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexName: gov.br
+    fromVertexLabel: Object_Data_Source
     toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexName: Object_Policies
+    fromVertexName: Object_Data_Policy
     toVertexLabel: Event_Ingestion
 

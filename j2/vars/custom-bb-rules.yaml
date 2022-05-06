@@ -857,7 +857,7 @@ rules:
             type: java.util.Date
 
       - label: Object_Privacy_Notice
-        condition: "${Aviso_de_Privacidade.size() > 0}"
+        condition: "${Aviso_de_Privacidade?.size() > 0}"
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(Aviso_de_Privacidade)}"
@@ -903,7 +903,7 @@ rules:
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
       - label: Object_Data_Procedures
-        condition: "${Mapeamento_de_Processo.size() > 0}"
+        condition: "${Mapeamento_de_Processo?.size() > 0}"
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}"
@@ -1071,7 +1071,10 @@ rules:
       - label: Object_Email_Address
         condition: "${email?.trim()?.length() > 0}"
         props:
-          Email: "${email?.trim()?.toLowerCase()}"
+          Form_Id: "${_id}"
+          Email:
+            val: "${email?.trim()?.toLowerCase()}"
+            excludeFromSearch: true
 
       - label: Object_Data_Source
         props:

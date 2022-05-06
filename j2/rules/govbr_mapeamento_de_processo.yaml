@@ -21,27 +21,12 @@ updatereq:
     
     - label: Object_Data_Policy
       props:
-        - name: Object_Data_Policy_Type
-          val: ${Referencia}
-          mandatoryInSearch: True
-        - name: Object_Data_Policy_Retention_Period
-          val: ${Periodo_de_Retencao}
-          mandatoryInSearch: True
-        - name: Object_Data_Policy_Deletion_Policy
+        - name: Object_Data_Policy_Form_Id
           val: ${new groovy.json.JsonBuilder(Politicas)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.BudibaseRef;"
           postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
-        - name: Object_Data_Policy_Supplier_Agreements_Revision
-          val: ${Contratos_Fornecedores_Revistos}
-          mandatoryInSearch: True
-        - name: Object_Data_Policy_Data_Publicity_And_Transparency
-          val: ${Publicidade_e_Transparencia_aos_Dados}
-          mandatoryInSearch: True
-        - name: Object_Data_Policy_Data_Publication_Forecasting
-          val: ${Previsao_Legal_Para_Publicacao_dos_Dados}
-          mandatoryInSearch: True
     
     - label: Object_Data_Procedures
       props:
@@ -97,9 +82,18 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
     
+    - label: Object_Personal_Data
+      props:
+        - name: Object_Personal_Data_Type
+          val: ${new groovy.json.JsonBuilder(Dados_Pessoais_Utilizados)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+    
     - label: Object_Sensitive_Data
       props:
-        - name: Object_Sensitive_Data_Description
+        - name: Object_Sensitive_Data_Type
           val: ${new groovy.json.JsonBuilder(Dados_Pessoais_Sensiveis)}
           mandatoryInSearch: True
           processAll: True
@@ -107,6 +101,7 @@ updatereq:
           postProcessor: ${it?.toUpperCase()?.trim()}
     
     - label: Object_Lawful_Basis
+      name: lawful_basis
       props:
         - name: Object_Lawful_Basis_Description
           val: ${new groovy.json.JsonBuilder(Base_Legal)}
@@ -114,8 +109,13 @@ updatereq:
           processAll: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
-        - name: Object_Lawful_Basis_Other_Basis
-          val: ${Outros_Fundamentos_Legais}
+    
+    - label: Object_Lawful_Basis
+      name: other_lawful_basis
+      condition: ${Outros_Fundamentos_Legais?.trim()?.length() > 0}
+      props:
+        - name: Object_Lawful_Basis_Description
+          val: ${Outros_Fundamentos_Legais?.toUpperCase()?.trim()}
           mandatoryInSearch: True
     
     - label: Object_Legitimate_Interests_Assessment
@@ -126,10 +126,10 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Object_Email_Address
-      condition: ${Responsavel?.trim()?.size() > 0}
+      condition: ${Responsavel?.size() > 0}
       props:
-        - name: Object_Email_Address_Email
-          val: ${Responsavel?.trim()?.toLowerCase()}
+        - name: Object_Email_Address_Form_Id
+          val: ${new groovy.json.JsonBuilder(Responsavel)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.BudibaseRef;"
@@ -185,9 +185,15 @@ updatereq:
   - label: Has_Sensitive_Data
     fromVertexLabel: Object_Data_Procedures
     toVertexLabel: Object_Sensitive_Data
+  - label: Has_Personal_Data
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Personal_Data
   - label: Has_Lawful_Basis_On
     fromVertexLabel: Object_Data_Procedures
-    toVertexLabel: Object_Lawful_Basis
+    toVertexName: lawful_basis
+  - label: Has_Other_Lawful_Basis
+    fromVertexLabel: Object_Data_Procedures
+    toVertexName: other_lawful_basis
   - label: Has_Policy
     fromVertexLabel: Object_Data_Procedures
     toVertexLabel: Object_Data_Policy
@@ -199,5 +205,5 @@ updatereq:
     toVertexLabel: Object_Legitimate_Interests_Assessment
   - label: Is_Responsible
     fromVertexLabel: Object_Email_Address
-    toVertexLabel: fontes_de_dados
+    toVertexLabel: Object_Data_Procedures
 
