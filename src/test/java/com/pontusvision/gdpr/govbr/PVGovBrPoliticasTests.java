@@ -47,14 +47,14 @@ public class PVGovBrPoliticasTests extends AppTest {
       assertEquals("Privacidade e Proteção_de_Dados Pessoais - Site",
               policiesType, "This policies' type.");
 
-      String dataSourceName =
-              App.executor.eval("App.g.V().has('Object_Policies_Form_Id'" +
-                      ",eq('ro_ta_d40a2a1b6e6840e59214e15a3bd487cd_cb354fa4aa4443eeb9a2e170ae9d5b3d'))" +
-                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
-                      ".in('Has_Ingestion_Event').as('group-ingestion')" +
-                      ".in('Has_Ingestion_Event').as('data-source')" +
-                      ".values('Object_Data_Source_Name').next().toString()").get().toString();
-      assertEquals("GOV.BR/POLÍTICAS",dataSourceName, "This data source's name.");
+//      String dataSourceName =
+//              App.executor.eval("App.g.V().has('Object_Policies_Form_Id'" +
+//                      ",eq('ro_ta_d40a2a1b6e6840e59214e15a3bd487cd_cb354fa4aa4443eeb9a2e170ae9d5b3d'))" +
+//                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
+//                      ".in('Has_Ingestion_Event').as('group-ingestion')" +
+//                      ".in('Has_Ingestion_Event').as('data-source')" +
+//                      ".values('Object_Data_Source_Name').next().toString()").get().toString();
+//      assertEquals("GOV.BR/POLÍTICAS",dataSourceName, "This data source's name.");
 
       String policiesName =
               App.executor.eval("App.g.V().has('Object_Policies_Form_Id'" +
