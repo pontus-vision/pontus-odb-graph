@@ -15,7 +15,7 @@
       {
         "label": "Object_Data_Source",
         "name": "fontes_de_dados",
-        "condition": "${Descricao_2?.trim()?.length() > 0}",
+        "condition": "${Descricao?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object_Data_Source_Form_Id",
@@ -30,7 +30,7 @@
           },
           {
             "name": "Object_Data_Source_Description",
-            "val": "${Descricao_2?.trim()?.toUpperCase()}",
+            "val": "${Descricao?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

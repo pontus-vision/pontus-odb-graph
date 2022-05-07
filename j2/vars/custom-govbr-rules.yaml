@@ -8,7 +8,7 @@ rules:
           Name: GOV.BR/FONTES-DE-DADOS
 
       - label: Object_Data_Source
-        condition: "${Descricao_2?.trim()?.length() > 0}"
+        condition: "${Descricao?.trim()?.length() > 0}"
         name: fontes_de_dados
         props:
           Form_Id: "${_id}"
@@ -16,7 +16,7 @@ rules:
             val: "${Referencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Description:
-            val: "${Descricao_2?.trim()?.toUpperCase()}"
+            val: "${Descricao?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Engine:
             val: "${Sistema}"
@@ -827,7 +827,7 @@ rules:
         toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexName: "Object_Data_Policies"
+        fromVertexName: "Object_Policies"
         toVertexLabel: "Event_Ingestion"
 
   govbr_aviso_privacidade:

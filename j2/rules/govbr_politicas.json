@@ -108,7 +108,7 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "Object_Data_Policies",
+        "fromVertexName": "Object_Policies",
         "toVertexLabel": "Event_Ingestion"
       }
     ]

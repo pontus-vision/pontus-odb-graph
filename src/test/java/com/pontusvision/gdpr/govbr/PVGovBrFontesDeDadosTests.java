@@ -44,23 +44,14 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
                       ".count().next().toString()").get().toString();
       assertEquals("10", countEventIngestions);
 
-
       String countObjectDataSourcesIngested =
               App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".count().next().toString()").get().toString();
-      assertEquals("10" +
-              "", countObjectDataSourcesIngested);
+      assertEquals("10", countObjectDataSourcesIngested, "Data Sources Ingested");
 
-      String countDataPolicy =
+      String numPersonalData =
               App.executor.eval(queryPrefix +
-                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".has('Object_Data_Source_Form_Id', eq('ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35'))" +
-                      ".out('Has_Policy').has('Metadata_Type_Object_Data_Policy', eq('Object_Data_Policy')).dedup()" +
-                      ".count().next().toString()").get().toString();
-      assertEquals("5", countDataPolicy, "Data Policies count for this Source");
-
-      String numPersonalData = App.executor.eval(queryPrefix +
               ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
               ".out('Has_Sensitive_Data')" +
               ".has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data')).id().toSet()" +
@@ -74,15 +65,6 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
               ".has('Object_Data_Source_Form_Id', eq('ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_ca627d7dfb974178a6c2ca7f3cf74dc4'))" +
               ".values('Object_Data_Source_Type').next().toString()").get().toString();
       assertEquals("OneDrive", dataSourceType, "SubSystem for this Data Source");
-
-//      String dataRetentionPeriod = App.executor.eval(queryPrefix + ".as('data_source')" +
-//              ".out('Has_Ingestion_Event').as('event_group')" +
-//              ".out('Has_Ingestion_Event').as('event_ingestion')" +
-//              ".out('Has_Ingestion_Event').as('fontes_de_dados')" +
-//              ".has('Object_Data_Source_Form_Id', eq('ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d985ca0f2d847a98bc860b87b6960ce'))" +
-//              ".out('Has_Policy').as('data_policy')" +
-//              ".values('Object_Data_Policy_Retention_Period').next().toString()").get().toString();
-//      assertEquals("6 anos", dataRetentionPeriod, "Retention Period for this Data Source (in years)");
 
       String dataSourceEngine = App.executor.eval(queryPrefix + ".as('data_source')" +
               ".out('Has_Ingestion_Event').as('event_group')" +
@@ -204,22 +186,6 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
                       ".in('Is_Responsible').has('Metadata_Type_Object_Email_Address', eq('Object_Email_Address')).in('Uses_Email')" +
                       ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("GOV BR", responsible);
-
-      String countDataPolicy =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('GOV.BR/FONTES-DE-DADOS'))" +
-                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".has('Object_Data_Source_Form_Id', eq('ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35'))" +
-                      ".out('Has_Policy').has('Metadata_Type_Object_Data_Policy', eq('Object_Data_Policy'))" +
-                      ".dedup().count().next().toString()").get().toString();
-      assertEquals("5", countDataPolicy, "This Data_Source has 5 Policies attached to it");
-
-      String dataPolicyName =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('GOV.BR/FONTES-DE-DADOS'))" +
-                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".has('Object_Data_Source_Form_Id', eq('ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35'))" +
-                      ".out('Has_Policy').has('Object_Data_Policy_Form_Id', eq('ro_ta_d40a2a1b6e6840e59214e15a3bd487cd_6be56a3bbd294dc88f9367fb7734d961'))" +
-                      ".values('Object_Data_Policy_Name').next().toString()").get().toString();
-      assertEquals("OUTLOOK", dataPolicyName, "Data Policy Name is OUTLOOK");
 
     } catch (ExecutionException e) {
       e.printStackTrace();

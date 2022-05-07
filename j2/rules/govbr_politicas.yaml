@@ -69,6 +69,6 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexName: Object_Data_Policies
+    fromVertexName: Object_Policies
     toVertexLabel: Event_Ingestion
 

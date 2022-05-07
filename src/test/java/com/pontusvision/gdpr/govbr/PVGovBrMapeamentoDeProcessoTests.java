@@ -29,8 +29,8 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
       String govIsInterested =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
-                      ".out('Has_Policy').as('data_policy')" +
-                      ".has('Object_Data_Policy_Type', eq('Seguranca e Tratamento'))" +
+                      ".out('Has_Policy').as('policies')" +
+                      ".has('Object_Policies_Type', eq('Seguranca e Tratamento'))" +
                       ".in('Has_Policy').as('data_procs_again').has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
                       ".properties('Object_Data_Procedures_Interested_Parties_Consulted').value().next().toString()").get().toString();
       assertEquals("pv@gov.br", govIsInterested, "The Government is interested in this Process");
@@ -76,6 +76,8 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
   public void test00002UpsertGovBrMapeamentoDeProcesso() throws InterruptedException {
     try {
 
+      boolean hasSensitiveDataModified = true;
+
       jsonTestUtil("govbr/govbr-mapeamentos.json", "$.rows", "govbr_mapeamento_de_processo");
 
       String countEventIngestions =
@@ -89,9 +91,20 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
 
       String countPersonalData =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
-                      ".out('Has_Ingestion_Event').out('Has_Personal_Data')" +
-                      ".has('Metadata_Type_Object_Personal_Data', eq('Object_Personal_Data'))" +
+                      ".out('Has_Ingestion_Event').out('Has_Sensitive_Data')" +
+                      ".has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))" +
                       ".dedup().count().next().toString()").get().toString();
+
+      try {
+        App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
+                ".out('Has_Ingestion_Event').out('Has_Sensitive_Data')" +
+                ".has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))" +
+                ".has('Object_Sensitive_Data_Description', eq('MODIFIED')).next().toString()").get().toString();
+      }
+      catch (Exception e) {
+        hasSensitiveDataModified = false;
+      }
+
 
       jsonTestUtil("govbr/govbr-mapeamentos-2.json", "$.rows", "govbr_mapeamento_de_processo");
 
@@ -108,8 +121,8 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
 
       String countPersonalDataAgain =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
-                      ".out('Has_Ingestion_Event').out('Has_Personal_Data')" +
-                      ".has('Metadata_Type_Object_Personal_Data', eq('Object_Personal_Data'))" +
+                      ".out('Has_Ingestion_Event').out('Has_Sensitive_Data')" +
+                      ".has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))" +
                       ".dedup().count().next().toString()").get().toString();
 
 //    This proves that new insertions were made to the gov.br/mapeamento-de-processo Graph part
@@ -118,8 +131,10 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
 //    This proves that data (Object_Data_Procedures is primary key) is still the same
       assertTrue(Integer.parseInt(countDataProcs) == Integer.parseInt(countDataProcsAgain));
 
-//    There is a new Object_Personal_Data = MODIFIED
+      if (!hasSensitiveDataModified) {
+//    There is a new Object_Sensitive_Data = MODIFIED
      assertTrue(Integer.parseInt(countPersonalData) < Integer.parseInt(countPersonalDataAgain));
+      }
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -154,22 +169,22 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
                       ".dedup().count().next().toString()").get().toString();
       assertEquals("1", countUser, "Number of Users for this Procedure");
 
-      String getPolicy =
+      String getPolicies =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
-                      ".out('Has_Policy').as('policy')" +
-                      ".has('Object_Data_Policy_Form_Id', eq('ro_ta_d40a2a1b6e6840e59214e15a3bd487cd_357035b395cc4d02920534a6976b1ead'))" +
-                      ".values('Object_Data_Policy_Name').next().toString()").get().toString();
-      assertEquals("TESTE", getPolicy, "One of the policies' name for this Procedure");
+                      ".out('Has_Policy').as('policies')" +
+                      ".has('Object_Policies_Form_Id', eq('ro_ta_d40a2a1b6e6840e59214e15a3bd487cd_357035b395cc4d02920534a6976b1ead'))" +
+                      ".values('Object_Policies_Type').next().toString()").get().toString();
+      assertEquals("Seguranca e Tratamento", getPolicies, "One of the policies' type for this Procedure");
 
-      String countPolicy =
+      String countPolicies =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
-                      ".out('Has_Policy').as('policy')" +
+                      ".out('Has_Policy').as('policies')" +
                       ".dedup().count().next().toString()").get().toString();
-      assertEquals("2", countPolicy, "Number of Policies for this Procedure");
+      assertEquals("2", countPolicies, "Number of Policies for this Procedure");
 
       String getSource = //Fontes de Dados
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +

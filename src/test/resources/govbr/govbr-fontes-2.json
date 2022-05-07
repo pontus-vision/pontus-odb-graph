@@ -24,7 +24,7 @@
       "Created_At": "2022-03-08T16:26:46.960Z",
       "Updated_At": "2022-03-10T16:53:03.686Z",
       "type": "row",
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "Indeterminado",
       "Riscos_de_Fontes_de_Dados": [
         {
@@ -60,7 +60,7 @@
       "Created_At": "2022-03-08T17:48:48.730Z",
       "Updated_At": "2022-03-09T17:34:48.084Z",
       "type": "row",
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "1 ano",
       "Riscos_de_Fontes_de_Dados": [
         {
@@ -110,7 +110,7 @@
         "Endereço",
         "Nome Completo"
       ],
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "2 meses",
       "Riscos_de_Fontes_de_Dados": [
         {
@@ -160,7 +160,7 @@
       "Created_At": "2022-03-10T14:25:20.588Z",
       "Updated_At": "2022-03-16T19:34:29.259Z",
       "type": "row",
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "Indeterminado",
       "Riscos_de_Fontes_de_Dados": [
         {
@@ -192,7 +192,7 @@
       "Created_At": "2022-03-27T17:56:40.391Z",
       "Updated_At": "2022-03-27T17:57:35.227Z",
       "type": "row",
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "Indeterminado",
       "Riscos_de_Fontes_de_Dados": [
         {
@@ -221,7 +221,7 @@
         "Imagem em Vídeo",
         "Imagens de Câmeras"
       ],
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "Indeterminado",
       "Riscos_de_Fontes_de_Dados": [
         {
@@ -271,7 +271,7 @@
       "Created_At": "2022-03-08T16:29:25.600Z",
       "Updated_At": "2022-03-09T18:41:08.217Z",
       "type": "row",
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "Indeterminado",
       "Riscos_de_Fontes_de_Dados": [
         {
@@ -306,7 +306,7 @@
       "Created_At": "2022-03-08T16:36:22.458Z",
       "Updated_At": "2022-03-09T21:09:05.364Z",
       "type": "row",
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "Indeterminado",
       "Riscos_de_Fontes_de_Dados": [
         {
@@ -348,13 +348,12 @@
         "Certidão de Nascimento",
         "Dados do Técnico para Efetuar a Calibração In Loco"
       ],
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "Indeterminado",
       "Classificação dos dados": [
         "DADOS FUNCIONAIS",
         "DADOS PESSOAIS"
       ],
-      "Descricao_1": "SOLUÇÃO NACIONAL",
       "Riscos_de_Fontes_de_Dados": [
         {
           "_id": "ro_ta_285c8a55b293461e9c2c50eefa082d96_d5cbf6614a9b4882867ea852726fd909",
@@ -452,13 +451,12 @@
       "Created_At": "2022-03-08T16:32:56.764Z",
       "Updated_At": "2022-05-02T03:43:48.911Z",
       "type": "row",
-      "Descricao_2": "MODIFIED",
+      "Descricao": "MODIFIED",
       "Periodo_de_Retencao": "6 anos",
       "Classificacao_dos_dados": [
         "DADOS DE CRIANÇAS E DE ADOLESCENTES",
         "DADOS PESSOAIS SENSÍVEIS"
       ],
-      "Descricao_1": "SISTEMA LOCAL",
       "Politicas_de_eliminacao_de_dados": [
         {
           "_id": "ro_ta_d40a2a1b6e6840e59214e15a3bd487cd_357035b395cc4d02920534a6976b1ead",
