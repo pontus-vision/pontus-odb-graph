@@ -58,7 +58,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
       String LIALawfulBasis =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
-                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5e673a2d7c6e4a1ba4ccd433d8ab1d94'))" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5e673a2d7c6e4a1ba4ccd433modified'))" +
                       ".out('Has_Legitimate_Interests_Assessment').as('lia')" +
                       ".properties('Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification')" +
                       ".value().next().toString()").get().toString();
