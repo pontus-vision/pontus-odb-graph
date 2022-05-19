@@ -102,6 +102,16 @@ updatereq:
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
     
+    - label: Object_Sensitive_Data
+      name: shared_data
+      props:
+        - name: Object_Sensitive_Data_Description
+          val: ${new groovy.json.JsonBuilder(Dados_Pessoais_Compartilhados_com_Terceiros)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+    
     - label: Object_Lawful_Basis
       name: lawful_basis
       props:
@@ -190,6 +200,9 @@ updatereq:
   - label: Has_Sensitive_Data
     fromVertexLabel: Object_Data_Procedures
     toVertexName: sensitive_data
+  - label: Has_Sensitive_Data
+    fromVertexLabel: Object_Data_Procedures
+    toVertexName: shared_data
   - label: Has_Lawful_Basis_On
     fromVertexLabel: Object_Data_Procedures
     toVertexName: lawful_basis

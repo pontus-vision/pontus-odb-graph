@@ -26,14 +26,14 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
     try {
       jsonTestUtil("govbr/govbr-mapeamentos.json", "$.rows", "govbr_mapeamento_de_processo");
 
-      String govIsInterested =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
-                      ".out('Has_Ingestion_Event').as('data_procs')" +
-                      ".out('Has_Policy').as('policies')" +
-                      ".has('Object_Policies_Type', eq('Seguranca e Tratamento'))" +
-                      ".in('Has_Policy').as('data_procs_again').has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
-                      ".properties('Object_Data_Procedures_Interested_Parties_Consulted').value().next().toString()").get().toString();
-      assertEquals("pv@gov.br", govIsInterested, "The Government is interested in this Process");
+//      String govIsInterested =
+//              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+//                      ".out('Has_Ingestion_Event').as('data_procs')" +
+//                      ".out('Has_Policy').as('policies')" +
+//                      ".has('Object_Policies_Type', eq('Seguranca e Tratamento'))" +
+//                      ".in('Has_Policy').as('data_procs_again').has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
+//                      ".properties('Object_Data_Procedures_Interested_Parties_Consulted').value().next().toString()").get().toString();
+//      assertEquals("pv@gov.br", govIsInterested, "The Government is interested in this Process");
 
       String numParties =
               App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('GOV.BR/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
@@ -62,7 +62,28 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
                       ".out('Has_Legitimate_Interests_Assessment').as('lia')" +
                       ".properties('Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification')" +
                       ".value().next().toString()").get().toString();
-      assertEquals("Justificativa jkl", LIALawfulBasis, "Lawful Basis Justification for this LIA");
+      assertEquals("Dados pessoais para Marketing", LIALawfulBasis, "Lawful Basis Justification for this LIA");
+
+//    RoPA ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d is the only registry with the 3 types of Data: Personal Data, Sensitive Data and Shared Data
+      String dataColectedCount =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+                      ".out('Has_Ingestion_Event').as('data_procs')" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
+                      ".out('Has_Sensitive_Data').as('data_colected')" +
+                      ".has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))" +
+                      ".dedup().count().next().toString()").get().toString();
+      assertEquals("7", dataColectedCount, "This RoPA colects 7 types os data, these are: " +
+              "['NOME', 'CPF', 'DADOS DE CONTRATO', 'ETNIA', 'FILIAÇÃO SINDICAL OU PARTIDÁRIA', 'OPINIÃO POLÍTICA', 'DADOS DE QUALIFICAÇÃO PESSOAL']");
+
+      String sharedData =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+                      ".out('Has_Ingestion_Event').as('data_procs')" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
+                      ".out('Has_Sensitive_Data').as('data_colected')" +
+                      ".has('Object_Sensitive_Data_Description', eq('DADOS DE QUALIFICAÇÃO PESSOAL'))" +
+                      ".valueMap().toList()").get().toString();
+      assertEquals("[{Object_Sensitive_Data_Description=[DADOS DE QUALIFICAÇÃO PESSOAL], Metadata_Type=[Object_Sensitive_Data], Metadata_Type_Object_Sensitive_Data=[Object_Sensitive_Data]}]",
+              sharedData, "The personal data type 'DADOS DE QUALIFICAÇÃO PESSOAL' is shared with 3rd parties");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
