@@ -5656,13 +5656,19 @@ the end of the process.
 
       long count = 0
       try {
-        App.g.V()
-                .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
-                .where(
-                        __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(P.between(gtDateThreshold, lteDateThreshold))
-                )
+        def args = [:]
+        args['gtDateThreshold'] = gtDateThreshold
+        args['lteDateThreshold'] = lteDateThreshold
+        args['groupByCount'] = groupByCount
 
-                .groupCount().by(groupByCount)
+        App.graph.executeSql(
+                'SELECT count(*) as ct ' +
+                'FROM Event_Subject_Access_Request ' +
+                'WHERE Event_Subject_Access_Request_Metadata_Create_Date' +
+                'BETWEEN :gtDateThreshold AND :lteDateThreshold' +
+                'GROUP BY :groupByCount',
+                args).getRawResultSet().next().getProperty('ct')
+
                 .each {
                   it.each { it2 ->
                     if (!firstTime) {
@@ -5748,6 +5754,7 @@ the end of the process.
               ]
 
       typeOrg.each { org ->
+        // TODO: SQLize this
         App.g.V().has('Metadata_Type_Person_Organisation', eq('Person_Organisation'))
                 .as('organisation')
                 .outE(org)
@@ -5800,9 +5807,11 @@ the end of the process.
 
 
       try {
-        App.g.V()
-                .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
-                .groupCount().by('Event_Subject_Access_Request_Request_Type')
+        App.graph.executeSql(
+                'SELECT count(*) as ct ' +
+                'FROM Event_Subject_Access_Request ' +
+                'GROUP BY Event_Subject_Access_Request_Request_Type'
+                ,[:]).getRawResultSet().next().getProperty('ct')
                 .each {
                   it.each { it2 ->
                     if (!firstTime) {
@@ -5819,9 +5828,11 @@ the end of the process.
         e.printStackTrace()
       }
 
-      App.g.V()
-              .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
-              .groupCount().by('Event_Subject_Access_Request_Status')
+      App.graph.executeSql(
+              'SELECT count(*) as ct ' +
+              'FROM Event_Subject_Access_Request ' +
+              'GROUP BY Event_Subject_Access_Request_Status',
+              [:]).getRawResultSet().next().getProperty('ct')
               .each {
                 it.each { it2 ->
                   if (!firstTime) {
