@@ -1,10 +1,15 @@
 package com.pontusvision.gdpr;
 
+import com.pontusvision.graphutils.gdpr;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.util.Date;
+
+import static com.pontusvision.graphutils.gdpr.DSARStats.getDSARStatsPerOrganisation;
+import static com.pontusvision.graphutils.gdpr.DSARStats.getDSARStatsPerRequestType;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,11 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestClassesOrder(9)
 
 public class PVSharepointDSARTests extends AppTest {
-  /**
-   * Create the test0000 case
-   *
-   * @param test0000Name name of the test0000 case
-   */
 
   @Test
   public void test00001SharepointDSAR() throws InterruptedException {
@@ -97,6 +97,55 @@ public class PVSharepointDSARTests extends AppTest {
                       .get().toString();
       assertEquals("Jurídico Snowymountain", fromDsarToRopa2,"RoPA's Interested Parties");
 
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
+
+  @Test
+  public void test00002DSARStats() throws InterruptedException {
+
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+            "sharepoint_fontes_de_dados");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
+            "$.queryResp[*].fields", "sharepoint_mapeamentos");
+    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
+    jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+    jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
+    jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
+            "$.queryResp[*].fields", "sharepoint_consents");
+    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+            "$.queryResp[*].fields", "sharepoint_privacy_notice");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+            "sharepoint_risk");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
+            "sharepoint_risk_mitigation");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-treinamentos.json", "$.queryResp[*].fields",
+            "sharepoint_treinamentos");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
+            "$.queryResp[*].fields", "sharepoint_data_breaches");
+
+
+    try {
+
+      StringBuffer sb = new StringBuffer("[");
+      boolean firstTime = true;
+
+      long nowMs = System.currentTimeMillis();
+      Date nowThreshold = new Date(nowMs);
+
+      long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L));
+      Date oneYearDateThreshold = new Date(oneYearThresholdMs);
+
+//      String output = getDSARStatsPerOrganisation(App.g);
+//      String output2 = gdpr.getDSARStatsPerOrganisation().toString();
+      boolean output = getDSARStatsPerRequestType(nowThreshold, oneYearDateThreshold, firstTime, "0-365d", sb);
+//      assertEquals("", output, "DSAR Stats per Organisation");
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);

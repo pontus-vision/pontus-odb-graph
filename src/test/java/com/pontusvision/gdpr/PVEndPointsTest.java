@@ -262,4 +262,25 @@ public class PVEndPointsTest extends AppTest {
 //    }
 //  }
 
+
+  @Test
+  public void test00007getDSARStatsPerOrganisation() throws InterruptedException {
+
+    try {
+
+      HttpClient client = HttpClients.createMinimal();
+      HttpGet getRequest = new HttpGet(URI.create("http://localhost:3001/home/kpi/getDSARStatsPerOrganisation"));
+      getRequest.setHeader("Accept", "*/*");
+
+      HttpResponse resp = client.execute(getRequest);
+
+      String output = IOUtils.toString(resp.getEntity().getContent());
+      assertEquals("????", output, "????");
+
+    } catch (IOException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
 }
