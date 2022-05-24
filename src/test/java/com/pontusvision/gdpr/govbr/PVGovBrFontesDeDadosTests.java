@@ -42,7 +42,7 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
               App.executor.eval(queryPrefix +
                       ".out().out()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("45", countEventIngestions);
+      assertEquals("20", countEventIngestions);
 
       String countObjectDataSourcesIngested =
               App.executor.eval(queryPrefix +
