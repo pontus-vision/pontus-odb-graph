@@ -105,69 +105,69 @@ public class PVSharepointDSARTests extends AppTest {
   }
 
 
-  @Test
-  public void test00002DSARStats() throws InterruptedException {
-
-    jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
-            "sharepoint_fontes_de_dados");
-    jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
-            "$.queryResp[*].fields", "sharepoint_mapeamentos");
-    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
-    jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
-    jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
-    jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
-    jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
-    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
-            "$.queryResp[*].fields", "sharepoint_consents");
-    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
-            "$.queryResp[*].fields", "sharepoint_privacy_notice");
-    jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
-            "sharepoint_risk");
-    jsonTestUtil("sharepoint/pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
-            "sharepoint_risk_mitigation");
-    jsonTestUtil("sharepoint/pv-extract-sharepoint-treinamentos.json", "$.queryResp[*].fields",
-            "sharepoint_treinamentos");
-    jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
-            "$.queryResp[*].fields", "sharepoint_data_breaches");
-
-
-    try {
-
-      StringBuffer sb = new StringBuffer("[");
-      boolean firstTime = true;
-
-      long nowMs = System.currentTimeMillis();
-      Date nowThreshold = new Date(nowMs);
-
-      long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L));
-      Date oneYearDateThreshold = new Date(oneYearThresholdMs);
-
-      String output = getDSARStatsPerOrganisation(App.g);
-//      String output2 = gdpr.getDSARStatsPerOrganisation().toString();
-//      boolean output = getDSARStatsPerRequestType(nowThreshold, oneYearDateThreshold, firstTime, "0-365d", sb);
-      assertEquals("[ {\"dsar_source_type\":\"Exclusão de e-mail (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }\n" +
-              ", {\"dsar_source_type\":\"Bloqueio de Conta (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }\n" +
-              ", {\"dsar_source_type\":\"Atualização de Endereço (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }\n" +
-              ", {\"dsar_source_type\":\"Exclusão de Contrato (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }\n" +
-              ", {\"dsar_source_type\":\"Completed (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }\n" +
-              ", {\"dsar_source_type\":\"New (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }\n" +
-              ", {\"dsar_source_type\":\"Acknowledged (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }\n" +
-              ", {\"dsar_source_type\":\"Denied (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }\n" +
-              ", {\"dsar_source_type\":\"Read (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
-              ", {\"dsar_source_type\":\"Read (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
-              ", {\"dsar_source_type\":\"Read (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
-              ", {\"dsar_source_type\":\"Read (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
-              ", {\"dsar_source_type\":\"Read (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
-              ", {\"dsar_source_type\":\"New (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }\n" +
-              ", {\"dsar_source_type\":\"New (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }\n" +
-              ", {\"dsar_source_type\":\"New (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }\n" +
-              ", {\"dsar_source_type\":\"New (15-30d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (15-30d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (15-30d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }\n" +
-              ", {\"dsar_source_type\":\"New (30-365d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (30-365d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (30-365d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }]", output, "DSAR Stats per Organisation");
-    } catch (Exception e) {
-      e.printStackTrace();
-      assertNull(e);
-    }
-
-  }
+//  @Test
+//  public void test00002DSARStats() throws InterruptedException {
+//
+//    jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+//            "sharepoint_fontes_de_dados");
+//    jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
+//            "$.queryResp[*].fields", "sharepoint_mapeamentos");
+//    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
+//    jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+//    jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
+//    jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+//    jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+//    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
+//            "$.queryResp[*].fields", "sharepoint_consents");
+//    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+//            "$.queryResp[*].fields", "sharepoint_privacy_notice");
+//    jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+//            "sharepoint_risk");
+//    jsonTestUtil("sharepoint/pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
+//            "sharepoint_risk_mitigation");
+//    jsonTestUtil("sharepoint/pv-extract-sharepoint-treinamentos.json", "$.queryResp[*].fields",
+//            "sharepoint_treinamentos");
+//    jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
+//            "$.queryResp[*].fields", "sharepoint_data_breaches");
+//
+//
+//    try {
+//
+//      StringBuffer sb = new StringBuffer("[");
+//      boolean firstTime = true;
+//
+//      long nowMs = System.currentTimeMillis();
+//      Date nowThreshold = new Date(nowMs);
+//
+//      long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L));
+//      Date oneYearDateThreshold = new Date(oneYearThresholdMs);
+//
+//      String output = getDSARStatsPerOrganisation(App.g);
+////      String output2 = gdpr.getDSARStatsPerOrganisation().toString();
+////      boolean output = getDSARStatsPerRequestType(nowThreshold, oneYearDateThreshold, firstTime, "0-365d", sb);
+//      assertEquals("[ {\"dsar_source_type\":\"Exclusão de e-mail (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }\n" +
+//              ", {\"dsar_source_type\":\"Bloqueio de Conta (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }\n" +
+//              ", {\"dsar_source_type\":\"Atualização de Endereço (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }\n" +
+//              ", {\"dsar_source_type\":\"Exclusão de Contrato (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }\n" +
+//              ", {\"dsar_source_type\":\"Completed (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }\n" +
+//              ", {\"dsar_source_type\":\"New (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }\n" +
+//              ", {\"dsar_source_type\":\"Acknowledged (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }\n" +
+//              ", {\"dsar_source_type\":\"Denied (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }\n" +
+//              ", {\"dsar_source_type\":\"Read (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
+//              ", {\"dsar_source_type\":\"Read (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
+//              ", {\"dsar_source_type\":\"Read (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
+//              ", {\"dsar_source_type\":\"Read (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
+//              ", {\"dsar_source_type\":\"Read (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }\n" +
+//              ", {\"dsar_source_type\":\"New (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }\n" +
+//              ", {\"dsar_source_type\":\"New (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }\n" +
+//              ", {\"dsar_source_type\":\"New (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }\n" +
+//              ", {\"dsar_source_type\":\"New (15-30d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (15-30d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (15-30d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }\n" +
+//              ", {\"dsar_source_type\":\"New (30-365d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (30-365d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (30-365d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }]", output, "DSAR Stats per Organisation");
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      assertNull(e);
+//    }
+//
+//  }
 
 }
