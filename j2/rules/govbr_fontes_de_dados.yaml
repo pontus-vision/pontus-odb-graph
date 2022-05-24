@@ -6,7 +6,7 @@ updatereq:
       name: gov.br
       props:
         - name: Object_Data_Source_Name
-          val: GOV.BR/FONTES-DE-DADOS
+          val: BUDIBASE/FONTES-DE-DADOS
           mandatoryInSearch: True
     
     - label: Object_Data_Source
@@ -91,7 +91,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: gov.br/fontes-de-dados
+          val: budibase/fontes-de-dados
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -116,7 +116,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: gov.br/fontes-de-dados
+          val: budibase/fontes-de-dados
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
