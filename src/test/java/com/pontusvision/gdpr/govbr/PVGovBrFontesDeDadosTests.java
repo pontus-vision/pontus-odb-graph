@@ -48,7 +48,7 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
               App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".count().next().toString()").get().toString();
-      assertEquals("38", countObjectDataSourcesIngested, "Data Sources Ingested");
+      assertEquals("19", countObjectDataSourcesIngested, "Data Sources Ingested");
 
       String numPersonalData =
               App.executor.eval(queryPrefix +
