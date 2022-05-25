@@ -1,10 +1,15 @@
 package com.pontusvision.gdpr;
 
+import com.pontusvision.graphutils.gdpr;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.util.Date;
+
+import static com.pontusvision.graphutils.gdpr.DSARStats.getDSARStatsPerOrganisation;
+import static com.pontusvision.graphutils.gdpr.DSARStats.getDSARStatsPerRequestType;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,11 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestClassesOrder(9)
 
 public class PVSharepointDSARTests extends AppTest {
-  /**
-   * Create the test0000 case
-   *
-   * @param test0000Name name of the test0000 case
-   */
 
   @Test
   public void test00001SharepointDSAR() throws InterruptedException {
@@ -96,6 +96,77 @@ public class PVSharepointDSARTests extends AppTest {
                               ".values('Object_Data_Procedures_Interested_Parties_Consulted').next().toString()")
                       .get().toString();
       assertEquals("Jurídico Snowymountain", fromDsarToRopa2,"RoPA's Interested Parties");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
+
+  @Test
+  public void test00002DSARStats() throws InterruptedException {
+
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields",
+            "sharepoint_fontes_de_dados");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
+            "$.queryResp[*].fields", "sharepoint_mapeamentos");
+    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
+    jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+    jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
+    jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
+            "$.queryResp[*].fields", "sharepoint_consents");
+    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
+            "$.queryResp[*].fields", "sharepoint_privacy_notice");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
+            "sharepoint_risk");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-risk-mitigations.json", "$.queryResp[*].fields",
+            "sharepoint_risk_mitigation");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-treinamentos.json", "$.queryResp[*].fields",
+            "sharepoint_treinamentos");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
+            "$.queryResp[*].fields", "sharepoint_data_breaches");
+
+
+    try {
+
+      StringBuffer sb = new StringBuffer("[");
+      boolean firstTime = true;
+
+      long nowMs = System.currentTimeMillis();
+      Date nowThreshold = new Date(nowMs);
+
+      long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L));
+      Date oneYearDateThreshold = new Date(oneYearThresholdMs);
+
+      String output = getDSARStatsPerOrganisation(App.g);
+
+      assertTrue(output.contains("{\"dsar_source_type\":\"Exclusão de e-mail (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio de Conta (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Atualização de Endereço (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Exclusão de Contrato (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Completed (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"New (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Acknowledged (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Denied (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Read (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (0-5d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Read (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Read (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Read (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio de Conta (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"New (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"New (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"New (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"New (15-30d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (15-30d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (15-30d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"New (30-365d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
+
+      sb.setLength(0);
+
+      boolean output2 = getDSARStatsPerRequestType(nowThreshold, oneYearDateThreshold, firstTime, "0-365d", sb);
+      assertTrue(sb.toString().contains("{\"dsar_source_type\":\"Bloqueio de Conta (0-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
 
     } catch (Exception e) {
       e.printStackTrace();

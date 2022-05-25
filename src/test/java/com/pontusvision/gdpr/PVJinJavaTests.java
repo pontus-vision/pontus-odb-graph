@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @TestClassOrder(AnnotationTestsOrderer.class)
-@TestClassesOrder(1)
+@TestClassesOrder(4)
 
 public class PVJinJavaTests extends AppTest {
 

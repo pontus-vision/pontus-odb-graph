@@ -35,6 +35,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.apache.tinkerpop.gremlin.structure.Vertex
 
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.regex.Pattern
 
@@ -57,7 +58,7 @@ class gdpr {
 
       }
       catch (Throwable t2) {
-        dob = new Date("01/01/1666")
+        dob = DateFormat.parse("01/01/1666")
 
       }
     }
@@ -5656,13 +5657,28 @@ the end of the process.
 
       long count = 0
       try {
-        App.g.V()
-                .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
-                .where(
-                        __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(P.between(gtDateThreshold, lteDateThreshold))
-                )
 
-                .groupCount().by(groupByCount)
+//        App.g.V()
+//                .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
+//                .where(
+//                        __.values('Event_Subject_Access_Request_Metadata_Create_Date').is(P.between(gtDateThreshold, lteDateThreshold))
+//                )
+//
+//                .groupCount().by(groupByCount)
+
+        def args = [:]
+        args['gtDateThreshold'] = gtDateThreshold
+        args['lteDateThreshold'] = lteDateThreshold
+        args['groupByCount'] = groupByCount
+
+        App.graph.executeSql(
+                'SELECT count(*) as ct, ' + groupByCount + ' ' +
+                'FROM Event_Subject_Access_Request ' +
+                'WHERE Event_Subject_Access_Request_Metadata_Create_Date ' +
+                'BETWEEN :gtDateThreshold AND :lteDateThreshold ' +
+                'GROUP BY  ' + groupByCount,
+                args).getRawResultSet()
+
                 .each {
                   it.each { it2 ->
                     if (!firstTime) {
@@ -5671,8 +5687,8 @@ the end of the process.
                       firstTime = false
                     }
                     count++
-                    sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
-                    sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": $it2.value }")
+                    sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.getProperty(groupByCount))} (${PontusJ2ReportingFunctions.translate(dateLabel)})\",")
+                    sb.append("\"dsar_source_name\":\"${dataSourceName}\", \"dsar_count\": ${it2.getProperty('ct')} }")
                   }
                 }
       } catch (Throwable t) {
@@ -5717,111 +5733,100 @@ the end of the process.
 
     static String getDSARStatsPerOrganisation(GraphTraversalSource g) {
 
-      StringBuffer sb = new StringBuffer("[")
-      boolean firstTime = true
+    StringBuffer sb = new StringBuffer("[")
+    boolean firstTime = true
 
-      long nowMs = System.currentTimeMillis()
-      def nowThreshold = new Date(nowMs)
+    long nowMs = System.currentTimeMillis()
+    def nowThreshold = new Date(nowMs)
 
-      long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L))
-      def oneYearDateThreshold = new Date(oneYearThresholdMs)
-
-
-      long thirtyDayThresholdMs = (long) (nowMs - (3600000L * 24L * 30L))
-      def thirtyDayDateThreshold = new Date(thirtyDayThresholdMs)
-
-      long fifteenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 15L))
-      def fifteenDayDateThreshold = new Date(fifteenDayThresholdMs)
+    long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L))
+    def oneYearDateThreshold = new Date(oneYearThresholdMs)
 
 
-      long tenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 10L))
-      def tenDayDateThreshold = new Date(tenDayThresholdMs)
+    long thirtyDayThresholdMs = (long) (nowMs - (3600000L * 24L * 30L))
+    def thirtyDayDateThreshold = new Date(thirtyDayThresholdMs)
 
-      long fiveDayThresholdMs = (long) (nowMs - (3600000L * 24L * 5L))
-      def fiveDayDateThreshold = new Date(fiveDayThresholdMs)
-
-      def typeOrg =
-              [
-                      "Is_Data_Controller",
-                      "Is_Data_Processor",
-                      "Is_Data_Owner"
-              ]
-
-      typeOrg.each { org ->
-        App.g.V().has('Metadata_Type_Person_Organisation', eq('Person_Organisation'))
-                .as('organisation')
-                .outE(org)
-                .as('dsar_source_type')
-                .inV().in('Has_Contract')
-                .out("Has_Ingestion_Event")
-                .out("Has_Ingestion_Event")
-                .in("Has_Ingestion_Event")
-                .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-                .out("Made_SAR_Request")
-                .where(
-                        __.or(
-                                __.values('Event_Subject_Access_Request_Metadata_Update_Date').is(gte(thirtyDayDateThreshold)),
-                                __.hasNot('Event_Subject_Access_Request_Metadata_Update_Date')
-                        )
-                )
-
-                .dedup()
-                .as('events')
-                .match(
-                        __.as('organisation').values('Person_Organisation_Name').as('dsar_source_name')
-                        , __.as('events').values('Event_Subject_Access_Request_Status').as('dsar_status')
-                        , __.as('events').values('Event_Subject_Access_Request_Request_Type').as('dsar_type')
-                        , __.as('events').values('Event_Subject_Access_Request_Metadata_Create_Date').as('dsar_create_date')
-                        .coalesce(__.is(gt(fiveDayDateThreshold)).constant("Last 5 days"),
-                                __.is(between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
-                                __.is(between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
-                                __.is(between(fifteenDayDateThreshold, thirtyDayDateThreshold)).constant("Last 30 days"),
-                                __.is(lt(thirtyDayDateThreshold)).constant("Older than 30 days"))
-                        .as('dsar_age')
-                )
-                .select('dsar_source_type', 'dsar_source_name', 'dsar_status', 'dsar_type', 'dsar_age')
-                .groupCount()
-                .each { metric ->
-                  metric.each { key, metricvalue ->
-                    if (!firstTime) {
-                      sb.append("\n,")
-                    } else {
-                      firstTime = false
-                    }
-                    sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(key['dsar_type'].toString())}   " +
-                            " ${PontusJ2ReportingFunctions.translate(key['dsar_status'].toString())}    " +
-                            " ${PontusJ2ReportingFunctions.translate(key['dsar_source_type'].label().toString().replaceAll('[Is_ |_|.]', ' ').toString())}  " +
-                            "   ${PontusJ2ReportingFunctions.translate(key['dsar_age'].toString())}\", \"dsar_source_name\":\"${PontusJ2ReportingFunctions.translate(key['dsar_source_name'].toString())}\", \"dsar_count\": $metricvalue }".toString())
-
-                  }
-
-                }
-      }
+    long fifteenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 15L))
+    def fifteenDayDateThreshold = new Date(fifteenDayThresholdMs)
 
 
-      try {
-        App.g.V()
-                .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
-                .groupCount().by('Event_Subject_Access_Request_Request_Type')
-                .each {
-                  it.each { it2 ->
-                    if (!firstTime) {
-                      sb.append("\n,")
-                    } else {
-                      firstTime = false
-                    }
-                    sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (Total)\",")
-                    sb.append("\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": $it2.value }".toString())
-                  }
-                }
-      } catch (Exception e) {
-        System.err("Ignoring error when processing Stats: ${e.getMessage()}; ${e.getCause()}")
-        e.printStackTrace()
-      }
+    long tenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 10L))
+    def tenDayDateThreshold = new Date(tenDayThresholdMs)
 
-      App.g.V()
-              .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
-              .groupCount().by('Event_Subject_Access_Request_Status')
+    long fiveDayThresholdMs = (long) (nowMs - (3600000L * 24L * 5L))
+    def fiveDayDateThreshold = new Date(fiveDayThresholdMs)
+
+//    def typeOrg =
+//            [
+//                    "Is_Data_Controller",
+//                    "Is_Data_Processor",
+//                    "Is_Data_Owner"
+//            ]
+
+//    typeOrg.each { org ->
+//      // TODO: SQLize this
+//      App.g.V().has('Metadata_Type_Person_Organisation', eq('Person_Organisation'))
+//              .as('organisation')
+//              .outE(org)
+//              .as('dsar_source_type')
+//              .inV().in('Has_Contract')
+//              .out("Has_Ingestion_Event")
+//              .out("Has_Ingestion_Event")
+//              .in("Has_Ingestion_Event")
+//              .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
+//              .out("Made_SAR_Request")
+//              .where(
+//                      __.or(
+//                              __.values('Event_Subject_Access_Request_Metadata_Update_Date').is(gte(thirtyDayDateThreshold)),
+//                              __.hasNot('Event_Subject_Access_Request_Metadata_Update_Date')
+//                      )
+//              )
+//
+//              .dedup()
+//              .as('events')
+//              .match(
+//                      __.as('organisation').values('Person_Organisation_Name').as('dsar_source_name')
+//                      , __.as('events').values('Event_Subject_Access_Request_Status').as('dsar_status')
+//                      , __.as('events').values('Event_Subject_Access_Request_Request_Type').as('dsar_type')
+//                      , __.as('events').values('Event_Subject_Access_Request_Metadata_Create_Date').as('dsar_create_date')
+//                      .coalesce(__.is(gt(fiveDayDateThreshold)).constant("Last 5 days"),
+//                              __.is(between(fiveDayDateThreshold, tenDayDateThreshold)).constant("Last 10 days"),
+//                              __.is(between(tenDayDateThreshold, fifteenDayDateThreshold)).constant("Last 15 days"),
+//                              __.is(between(fifteenDayDateThreshold, thirtyDayDateThreshold)).constant("Last 30 days"),
+//                              __.is(lt(thirtyDayDateThreshold)).constant("Older than 30 days"))
+//                      .as('dsar_age')
+//              )
+//              .select('dsar_source_type', 'dsar_source_name', 'dsar_status', 'dsar_type', 'dsar_age')
+//              .groupCount()
+//              .each { metric ->
+//                metric.each { key, metricvalue ->
+//                  if (!firstTime) {
+//                    sb.append("\n,")
+//                  } else {
+//                    firstTime = false
+//                  }
+//                  sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(key['dsar_type'].toString())}   " +
+//                          " ${PontusJ2ReportingFunctions.translate(key['dsar_status'].toString())}    " +
+//                          " ${PontusJ2ReportingFunctions.translate(key['dsar_source_type'].label().toString().replaceAll('[Is_ |_|.]', ' ').toString())}  " +
+//                          "   ${PontusJ2ReportingFunctions.translate(key['dsar_age'].toString())}\", \"dsar_source_name\":\"${PontusJ2ReportingFunctions.translate(key['dsar_source_name'].toString())}\", \"dsar_count\": $metricvalue }".toString())
+//
+//                }
+//
+//              }
+//    }
+
+
+    try {
+
+//        App.g.V()
+//                .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
+//                .groupCount().by('Event_Subject_Access_Request_Request_Type')
+
+      App.graph.executeSql(
+              'SELECT count(*) as ct, Event_Subject_Access_Request_Request_Type ' +
+              'FROM Event_Subject_Access_Request ' +
+              'GROUP BY Event_Subject_Access_Request_Request_Type'
+              ,[:]).getRawResultSet()
               .each {
                 it.each { it2 ->
                   if (!firstTime) {
@@ -5829,31 +5834,56 @@ the end of the process.
                   } else {
                     firstTime = false
                   }
-                  sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.key)} (Total)\",")
-                  sb.append("\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": $it2.value }".toString())
+                  sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.getProperty('Event_Subject_Access_Request_Request_Type'))} (Total)\",")
+                  sb.append("\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": ${it2.getProperty('ct')} }".toString())
                 }
               }
-
-
-      firstTime = getDSARStatsPerRequestType(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb)
-      firstTime = getDSARStatsPerRequestType(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb)
-      firstTime = getDSARStatsPerRequestType(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb)
-      firstTime = getDSARStatsPerRequestType(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb)
-      firstTime = getDSARStatsPerRequestType(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb)
-
-      firstTime = getDSARStatsPerRequestStatus(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb)
-      firstTime = getDSARStatsPerRequestStatus(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb)
-      firstTime = getDSARStatsPerRequestStatus(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb)
-      firstTime = getDSARStatsPerRequestStatus(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb)
-      firstTime = getDSARStatsPerRequestStatus(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb)
-
-      sb.append(']')
-
-      return sb.toString()
-
-
+    } catch (Exception e) {
+      System.err("Ignoring error when processing Stats: ${e.getMessage()}; ${e.getCause()}")
+      e.printStackTrace()
     }
+
+//      App.g.V()
+//              .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
+//              .groupCount().by('Event_Subject_Access_Request_Status')
+
+    App.graph.executeSql(
+            'SELECT count(*) as ct, Event_Subject_Access_Request_Status ' +
+                    'FROM Event_Subject_Access_Request ' +
+                    'GROUP BY Event_Subject_Access_Request_Status',
+            [:]).getRawResultSet()
+            .each {
+              it.each { it2 ->
+                if (!firstTime) {
+                  sb.append("\n,")
+                } else {
+                  firstTime = false
+                }
+                sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.getProperty('Event_Subject_Access_Request_Status'))} (Total)\",")
+                sb.append("\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": ${it2.getProperty('ct')} }".toString())
+              }
+            }
+
+
+    firstTime = getDSARStatsPerRequestType(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb)
+    firstTime = getDSARStatsPerRequestType(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb)
+    firstTime = getDSARStatsPerRequestType(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb)
+    firstTime = getDSARStatsPerRequestType(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb)
+    firstTime = getDSARStatsPerRequestType(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb)
+
+    firstTime = getDSARStatsPerRequestStatus(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb)
+    firstTime = getDSARStatsPerRequestStatus(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb)
+    firstTime = getDSARStatsPerRequestStatus(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb)
+    firstTime = getDSARStatsPerRequestStatus(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb)
+    firstTime = getDSARStatsPerRequestStatus(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb)
+
+    sb.append(']')
+
+    return sb.toString()
+
+
   }
+}
 
   static class Discovery {
     static String domainTranslationStr = """
