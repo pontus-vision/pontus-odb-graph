@@ -60,7 +60,7 @@ rules:
       - label: Object_Data_Policy
         props:
           Update_Frequency: "${Frequencia_de_Atualizacao}"
-          Retention_Period: "${Periodo_de_Retencao_Maxima}"
+          Retention_Period: "${Periodo_de_Retencao}"
           Type: "${Referencia}"
 
       - label: Event_Ingestion
@@ -88,6 +88,15 @@ rules:
           Type: budibase/fontes-de-dados
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+      - label: Object_Email_Address
+        condition: "${Responsavel?.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Responsavel)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -121,6 +130,10 @@ rules:
       - label: "Has_System"
         fromVertexLabel: "Object_Subsystem"
         toVertexLabel: "Object_System"
+
+      - label: "Is_Responsible"
+        fromVertexLabel: "Object_Email_Address"
+        toVertexLabel: "fontes_de_dados"
 
   bb_treinamento:
     vertices:
@@ -223,6 +236,14 @@ rules:
           Type: "${Referencia}"
           Retention_Period: "${Periodo_de_retencao}"
 
+      - label: Object_Policies
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Politicas)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
       - label: Object_Data_Procedures
         props:
           Form_Id: "${_id}"
@@ -232,40 +253,72 @@ rules:
           Name:
             val: "${Processo}"
             excludeFromSearch: true
-#          Type:
-#            val: "${Acesso_x002c__x0020_Transfer_x00}"
-#            excludeFromSearch: true
+          #          Type:
+          #            val: "${Acesso_x002c__x0020_Transfer_x00}"
+          #            excludeFromSearch: true
           Type_Of_Natural_Person:
-            val: "${Categoria_dos_titulares_dos_dados}"
+            val: "${Categoria_dos_Titulares_dos_Dados}"
             excludeFromSearch: true
           BusinessAreaResponsible:
-            val: "${Area}" # - ${Respons_x00e1_velLookupId}"
+            val: "${Area_Responsavel}"
             excludeFromSearch: true
           Country_Where_Stored:
-            val: "${Pais_onde_as_pessoas_estao_localizadas}"
+            val: "${Pais_Onde_as_Pessoas_Estao_Localizadas}"
             excludeFromSearch: true
           Why_Is_It_Collected:
-            val: "${Finalidade_do_processo}"
+            val: "${Finalidade_do_Processo}"
             excludeFromSearch: true
           Info_Collected:
-            val: "${Dados_pessoais_utilizados}"
+            val: "${Dados_Pessoais_Utilizados}"
             excludeFromSearch: true
           Description:
-            val: "${Fluxo_interno_dos_dados}"
+            val: "${Fluxo_dos_Dados}"
             excludeFromSearch: true
           Interested_Parties_Consulted:
             val: "${Partes_Interessadas_Consultadas}"
             excludeFromSearch: true
+          Info_Shared_With_Third_Parties:
+            val: "${Dados_Pessoais_Compartilhados_com_Terceiros}"
+            excludeFromSearch: true
+          Info_Share_Justification:
+            val: "${Finalidade_de_Compartilhamento_com_Terceiros}"
+            excludeFromSearch: true
+          MacroProcessName:
+            val: "${Macroprocesso}"
+            excludeFromSearch: true
 
       - label: Object_Sensitive_Data
+        name: personal_data
+        condition: "${Dados_Pessoais_Utilizados?.size() > 0}"
         props:
           Description:
-            val: "${new groovy.json.JsonBuilder(Dados_pessoais_utilizados)}"
+            val: "${new groovy.json.JsonBuilder(Dados_Pessoais_Utilizados)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: sensitive_data
+        condition: "${Dados_Pessoais_Sensiveis?.size() > 0}"
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Dados_Pessoais_Sensiveis)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: shared_data
+        condition: "${Dados_Pessoais_Compartilhados_com_Terceiros?.size() > 0}"
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Dados_Pessoais_Compartilhados_com_Terceiros)}"
             type: "[Ljava.lang.String;"
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
       - label: Object_Lawful_Basis
+        name: lawful_basis
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Base_Legal)}"
@@ -273,10 +326,25 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-      - label: Object_Legitimate_Interests_Assessment
-        condition: "${Lia_Is_Essential == true && Lia_Is_Required == true}"
+      - label: Object_Lawful_Basis
+        condition: "${Outros_Fundamentos_Legais?.trim()?.length() > 0}"
+        name: other_lawful_basis
         props:
-          Lawful_Basis_Justification: "${Lawful_Basis_Justification}"
+          Description: "${Outros_Fundamentos_Legais?.toUpperCase()?.trim()}"
+
+      - label: Object_Legitimate_Interests_Assessment
+        condition: "${Justificativa_da_Base_Legal?.trim()?.length() > 0}"
+        props:
+          Lawful_Basis_Justification: "${Justificativa_da_Base_Legal}"
+
+      - label: Object_Email_Address
+        condition: "${Responsavel?.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Responsavel)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            processAll: true
 
       - label: Event_Ingestion
         props:
@@ -318,15 +386,31 @@ rules:
 
       - label: "Has_Sensitive_Data"
         fromVertexLabel: "Object_Data_Procedures"
-        toVertexLabel: "Object_Sensitive_Data"
+        toVertexName: "personal_data"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "sensitive_data"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "shared_data"
 
       - label: "Has_Lawful_Basis_On"
         fromVertexLabel: "Object_Data_Procedures"
-        toVertexLabel: "Object_Lawful_Basis"
+        toVertexName: "lawful_basis"
+
+      - label: "Has_Other_Lawful_Basis"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "other_lawful_basis"
 
       - label: "Has_Policy"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Data_Policy"
+
+      - label: "Has_Policy"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Policies"
 
       - label: "Has_Data_Source"
         fromVertexLabel: "Object_Data_Procedures"
@@ -335,6 +419,10 @@ rules:
       - label: "Has_Legitimate_Interests_Assessment"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
+      - label: "Is_Responsible"
+        fromVertexLabel: "Object_Email_Address"
+        toVertexLabel: "Object_Data_Procedures"
 
   bb_riscos:
     vertices:
@@ -554,7 +642,7 @@ rules:
             val: "${Status}"
             excludeFromSearch: true
           Natural_Person_Type:
-            val: "${Categoria_dos_titulares_dos_dados?.trim()?.toUpperCase()}"
+            val: "${Categoria_dos_Titulares_dos_Dados?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Event_Group_Subject_Access_Request
@@ -716,6 +804,9 @@ rules:
       - label: Object_Policies
         props:
           Form_Id: "${_id}"
+          Name:
+            val: "${Referencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Text:
             val: "${Texto}"
             excludeFromUpdate: true
@@ -724,7 +815,6 @@ rules:
             excludeFromUpdate: true
 
       - label: Object_Data_Source
-        name: budibase
         props:
           Name: "BUDIBASE/POLÍTICAS"
 
@@ -757,7 +847,7 @@ rules:
     edges:
 
       - label: Has_Ingestion_Event
-        fromVertexName: "budibase"
+        fromVertexLabel: "Object_Data_Source"
         toVertexLabel: "Event_Group_Ingestion"
 
       - label: Has_Ingestion_Event
@@ -939,66 +1029,66 @@ rules:
 
   bb_comunicacoes_ppd:
     vertices:
-    - label: Object_Privacy_Docs
-      props:
-        Form_Id: "${_id}"
-        URL:
-          val: "${Local_de_Compartilhamento}"
-          excludeFromSearch: true
-        Description:
-          val: "${Descricao}"
-          excludeFromSearch: true
-        Date:
-          val: "${Data}"
-          type: java.util.Date
-          excludeFromSearch: true
-        Title:
-          val: "${Titulo_Comunicado}"
-          excludeFromSearch: true
+      - label: Object_Privacy_Docs
+        props:
+          Form_Id: "${_id}"
+          URL:
+            val: "${Local_de_Compartilhamento}"
+            excludeFromSearch: true
+          Description:
+            val: "${Descricao}"
+            excludeFromSearch: true
+          Date:
+            val: "${Data}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Title:
+            val: "${Titulo_Comunicado}"
+            excludeFromSearch: true
 
-    - label: Object_Data_Source
-      props:
-        Name: "BUDIBASE/COMUNICAÇÕES-P&PD"
+      - label: Object_Data_Source
+        props:
+          Name: "BUDIBASE/COMUNICAÇÕES-P&PD"
 
-    - label: Event_Ingestion
-      props:
-        Type:
-          val: "budibase/comunicações-p&pd"
-          excludeFromSearch: true
-        Operation:
-          val: "Structured Data Insertion"
-          excludeFromSearch: true
-        Domain_b64:
-          val: "${original_request?.bytes?.encodeBase64()?.toString()}"
-          excludeFromSearch: true
-        Metadata_Create_Date:
-          val: "${new Date()}"
-          excludeFromSearch: true
-          type: java.util.Date
-        Metadata_Update_Date:
-          val: "${new Date()}"
-          excludeFromSearch: true
-          type: java.util.Date
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "budibase/comunicações-p&pd"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
 
-    - label: Event_Group_Ingestion
-      props:
-        Type: "budibase/comunicações-p&pd"
-        Operation: "Structured Data Insertion"
-        Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+      - label: Event_Group_Ingestion
+        props:
+          Type: "budibase/comunicações-p&pd"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
     edges:
 
-    - label: Has_Ingestion_Event
-      fromVertexLabel: "Object_Data_Source"
-      toVertexLabel: "Event_Group_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
-    - label: Has_Ingestion_Event
-      fromVertexLabel: "Event_Group_Ingestion"
-      toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
-    - label: Has_Ingestion_Event
-      fromVertexLabel: "Event_Ingestion"
-      toVertexLabel: "Object_Privacy_Docs"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Privacy_Docs"
 
   bb_acoes_judiciais_ppd:
     vertices:

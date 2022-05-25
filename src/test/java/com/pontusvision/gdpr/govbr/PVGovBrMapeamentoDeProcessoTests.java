@@ -24,7 +24,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
   @Test
   public void test00001GovBrMapeamentoDeProcesso() throws InterruptedException {
     try {
-      jsonTestUtil("govbr/govbr-mapeamentos.json", "$.rows", "govbr_mapeamento_de_processo");
+      jsonTestUtil("govbr/govbr-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
 
 //      String govIsInterested =
 //              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
@@ -36,7 +36,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
 //      assertEquals("pv@gov.br", govIsInterested, "The Government is interested in this Process");
 
       String numParties =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('GOV.BR/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
                       ".out('Has_Ingestion_Event').as('event_group')" +
                       ".out('Has_Ingestion_Event').as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
@@ -45,7 +45,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
       assertEquals("3", numParties, "3 registries with same parties interested");
 
       String legInterestCount=
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('GOV.BR/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
                       ".out('Has_Ingestion_Event').as('event_group')" +
                       ".out('Has_Ingestion_Event').as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
@@ -53,10 +53,10 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
                       ".has('Object_Lawful_Basis_Description', eq('PARA A PROTEÇÃO DA VIDA OU DA INCOLUMIDADE FÍSICA DO TITULAR OU DE TERCEIRO'))" +
 //                      ".valueMap().toList()"
                       ".count().next().toString()").get().toString();
-      assertEquals("4", legInterestCount, "This Lawful Basis is present in 4 registries");
+      assertEquals("9", legInterestCount, "This Lawful Basis is present in 4 registries");
 
       String LIALawfulBasis =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5e673a2d7c6e4a1ba4ccd433modified'))" +
                       ".out('Has_Legitimate_Interests_Assessment').as('lia')" +
@@ -66,7 +66,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
 
 //    RoPA ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d is the only registry with the 3 types of Data: Personal Data, Sensitive Data and Shared Data
       String dataColectedCount =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
                       ".out('Has_Sensitive_Data').as('data_colected')" +
@@ -76,7 +76,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
               "['NOME', 'CPF', 'DADOS DE CONTRATO', 'ETNIA', 'FILIAÇÃO SINDICAL OU PARTIDÁRIA', 'OPINIÃO POLÍTICA', 'DADOS DE QUALIFICAÇÃO PESSOAL']");
 
       String sharedData =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
                       ".out('Has_Sensitive_Data').as('data_colected')" +
@@ -92,32 +92,32 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
 
   }
 
-  // Testing for upsert of two similar json data using govbr_mapeamento_de_processo POLE
+  // Testing for upsert of two similar json data using bb_mapeamento_de_processo POLE
   @Test
   public void test00002UpsertGovBrMapeamentoDeProcesso() throws InterruptedException {
     try {
 
       boolean hasSensitiveDataModified = true;
 
-      jsonTestUtil("govbr/govbr-mapeamentos.json", "$.rows", "govbr_mapeamento_de_processo");
+      jsonTestUtil("govbr/govbr-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
 
       String countEventIngestions =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo'))" +
                       ".count().next().toString()").get().toString();
 
       String countDataProcs =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo'))" +
                       ".out('Has_Ingestion_Event').has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))" +
                       ".dedup().count().next().toString()").get().toString();
 
       String countPersonalData =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo'))" +
                       ".out('Has_Ingestion_Event').out('Has_Sensitive_Data')" +
                       ".has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))" +
                       ".dedup().count().next().toString()").get().toString();
 
       try {
-        App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
+        App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo'))" +
                 ".out('Has_Ingestion_Event').out('Has_Sensitive_Data')" +
                 ".has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))" +
                 ".has('Object_Sensitive_Data_Description', eq('MODIFIED')).next().toString()").get().toString();
@@ -127,21 +127,21 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
       }
 
 
-      jsonTestUtil("govbr/govbr-mapeamentos-2.json", "$.rows", "govbr_mapeamento_de_processo");
+      jsonTestUtil("govbr/govbr-mapeamentos-2.json", "$.rows", "bb_mapeamento_de_processo");
 
       String countEventIngestionsAgain =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo'))" +
                       ".count().next().toString()").get().toString();
 
 //      Test for duplicate data
 
       String countDataProcsAgain =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo'))" +
                       ".out('Has_Ingestion_Event').has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))" +
                       ".dedup().count().next().toString()").get().toString();
 
       String countPersonalDataAgain =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo'))" +
                       ".out('Has_Ingestion_Event').out('Has_Sensitive_Data')" +
                       ".has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))" +
                       ".dedup().count().next().toString()").get().toString();
@@ -169,13 +169,13 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
   public void test00003GovBrMapeamentoAndFontesAndPoliciesAndUsers() throws InterruptedException {
     try {
 
-      jsonTestUtil("govbr/govbr-users.json", "$.rows", "govbr_users");
-      jsonTestUtil("govbr/govbr-politicas.json", "$.rows", "govbr_politicas");
-      jsonTestUtil("govbr/govbr-fontes.json", "$.rows", "govbr_fontes_de_dados");
-      jsonTestUtil("govbr/govbr-mapeamentos.json", "$.rows", "govbr_mapeamento_de_processo");
+      jsonTestUtil("govbr/govbr-users.json", "$.rows", "bb_users");
+      jsonTestUtil("govbr/govbr-politicas.json", "$.rows", "bb_politicas");
+      jsonTestUtil("govbr/govbr-fontes.json", "$.rows", "bb_fontes_de_dados");
+      jsonTestUtil("govbr/govbr-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
 
       String getUser =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_7e2db45b5cd24722a7ea04f83b8c7b2c'))" +
                       ".in('Is_Responsible').as('email')" +
@@ -183,7 +183,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
       assertEquals("gov-br@pontusvision.com", getUser, "User email for this Procedure");
 
       String countUser =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_7e2db45b5cd24722a7ea04f83b8c7b2c'))" +
                       ".in('Is_Responsible').as('email')" +
@@ -191,7 +191,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
       assertEquals("1", countUser, "Number of Users for this Procedure");
 
       String getPolicies =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
                       ".out('Has_Policy').as('policies')" +
@@ -200,15 +200,15 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
       assertEquals("Seguranca e Tratamento", getPolicies, "One of the policies' type for this Procedure");
 
       String countPolicies =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
                       ".out('Has_Policy').as('policies')" +
                       ".dedup().count().next().toString()").get().toString();
-      assertEquals("2", countPolicies, "Number of Policies for this Procedure");
+      assertEquals("4", countPolicies, "Number of Policies for this Procedure");
 
       String getSource = //Fontes de Dados
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
                       ".out('Has_Data_Source').as('source')" +
@@ -217,7 +217,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
       assertEquals("BLU-RAY", getSource, "One of the sources' name for this Procedure");
 
       String countSource = //Fontes de Dados
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/mapeamento-de-processo')).as('event_ingestion')" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_6f48fd8a585b4f18af44ee8633269f2d'))" +
                       ".out('Has_Data_Source').as('source')" +

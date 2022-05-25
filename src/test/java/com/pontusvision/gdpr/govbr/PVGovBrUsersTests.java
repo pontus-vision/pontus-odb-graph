@@ -24,13 +24,13 @@ public class PVGovBrUsersTests extends AppTest {
   @Test
   public void test00001GovBrUsers() throws InterruptedException {
 
-    jsonTestUtil("govbr/govbr-users.json", "$.rows","govbr_users");
+    jsonTestUtil("govbr/govbr-users.json", "$.rows","bb_users");
 
     try {
 
       String omarUserEmail =
               App.executor.eval("App.g.V().has('Object_Data_Source_Name'" +
-                      ",eq('GOV.BR/USERS')).as('data-source')" +
+                      ",eq('BUDIBASE/USERS')).as('data-source')" +
                       ".out('Has_Ingestion_Event').as('event-group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
                       ".out('Has_Ingestion_Event').as('person-natural')" +
@@ -41,7 +41,7 @@ public class PVGovBrUsersTests extends AppTest {
 
       String getUserName =
               App.executor.eval("App.g.V().has('Object_Data_Source_Name'" +
-                      ",eq('GOV.BR/USERS')).as('data-source')" +
+                      ",eq('BUDIBASE/USERS')).as('data-source')" +
                       ".out('Has_Ingestion_Event').as('event-group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
                       ".out('Has_Ingestion_Event').as('person-natural')" +
@@ -58,45 +58,45 @@ public class PVGovBrUsersTests extends AppTest {
 
   }
 
-  // Testing for upsert of two similar json data using govbr_users POLE
+  // Testing for upsert of two similar json data using bb_users POLE
   @Test
   public void test00002UpsertGovBrUsers() throws InterruptedException {
     try {
 
-      jsonTestUtil("govbr/govbr-users.json", "$.rows", "govbr_users");
+      jsonTestUtil("govbr/govbr-users.json", "$.rows", "bb_users");
 
       String countEventIngestions =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/users'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/users'))" +
                       ".count().next().toString()").get().toString();
 
       String countEmails =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/users'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/users'))" +
                       ".out('Has_Ingestion_Event').out('Uses_Email')" +
                       ".has('Metadata_Type_Object_Email_Address', eq('Object_Email_Address'))" +
                       ".dedup().count().next().toString()").get().toString();
 
       String countPerson =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/users'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/users'))" +
                       ".out('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
                       ".dedup().count().next().toString()").get().toString();
 
 
-      jsonTestUtil("govbr/govbr-users-2.json", "$.rows", "govbr_users");
+      jsonTestUtil("govbr/govbr-users-2.json", "$.rows", "bb_users");
 
       String countEventIngestionsAgain =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/users'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/users'))" +
                       ".count().next().toString()").get().toString();
 
 //      Test for duplicate data
 
       String countEmailsAgain =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/users'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/users'))" +
                       ".out('Has_Ingestion_Event').out('Uses_Email')" +
                       ".has('Metadata_Type_Object_Email_Address', eq('Object_Email_Address'))" +
                       ".dedup().count().next().toString()").get().toString();
 
       String countPersonAgain =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('gov.br/users'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/users'))" +
                       ".out('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
                       ".dedup().count().next().toString()").get().toString();
 

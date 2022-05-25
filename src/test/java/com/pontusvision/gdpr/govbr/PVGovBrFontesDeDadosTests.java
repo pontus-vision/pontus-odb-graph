@@ -23,7 +23,7 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
   @Test
   public void test00001GovBrFontesDeDados() throws InterruptedException {
     try {
-      jsonTestUtil("govbr/govbr-fontes.json", "$.rows", "govbr_fontes_de_dados");
+      jsonTestUtil("govbr/govbr-fontes.json", "$.rows", "bb_fontes_de_dados");
 
       String queryPrefix = "App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/FONTES-DE-DADOS'))";
 
@@ -42,13 +42,13 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
               App.executor.eval(queryPrefix +
                       ".out().out()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("20", countEventIngestions);
+      assertEquals("23", countEventIngestions);
 
       String countObjectDataSourcesIngested =
               App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".count().next().toString()").get().toString();
-      assertEquals("19", countObjectDataSourcesIngested, "Data Sources Ingested");
+      assertEquals("22", countObjectDataSourcesIngested, "Data Sources Ingested");
 
       String numPersonalData =
               App.executor.eval(queryPrefix +
@@ -81,14 +81,14 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
 
   }
 
-  // Testing for upsert of two similar json data using govbr_fontes_de_dados POLE
+  // Testing for upsert of two similar json data using bb_fontes_de_dados POLE
   @Test
   public void test00002UpsertGovBrFontesDeDados() throws InterruptedException {
     try {
 
       boolean hasModuleModified = true;
 
-      jsonTestUtil("govbr/govbr-fontes.json", "$.rows", "govbr_fontes_de_dados");
+      jsonTestUtil("govbr/govbr-fontes.json", "$.rows", "bb_fontes_de_dados");
 
       String countEventIngestions =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/fontes-de-dados'))" +
@@ -123,7 +123,7 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
         hasModuleModified = false;
       }
 
-      jsonTestUtil("govbr/govbr-fontes-2.json", "$.rows", "govbr_fontes_de_dados");
+      jsonTestUtil("govbr/govbr-fontes-2.json", "$.rows", "bb_fontes_de_dados");
 
       String countEventIngestionsAgain =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/fontes-de-dados'))" +
@@ -175,9 +175,9 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
   public void test00003GovBrFontesAndUsersAndPolicies() throws InterruptedException {
     try {
 
-      jsonTestUtil("govbr/govbr-users.json", "$.rows", "govbr_users");
-      jsonTestUtil("govbr/govbr-politicas.json", "$.rows", "govbr_politicas");
-      jsonTestUtil("govbr/govbr-fontes.json", "$.rows", "govbr_fontes_de_dados");
+      jsonTestUtil("govbr/govbr-users.json", "$.rows", "bb_users");
+      jsonTestUtil("govbr/govbr-politicas.json", "$.rows", "bb_politicas");
+      jsonTestUtil("govbr/govbr-fontes.json", "$.rows", "bb_fontes_de_dados");
 
       String responsible =
               App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/FONTES-DE-DADOS'))" +

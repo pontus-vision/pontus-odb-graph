@@ -10,6 +10,12 @@
             "mandatoryInSearch": true
           },
           {
+            "name": "Object_Policies_Name",
+            "val": "${Referencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
             "name": "Object_Policies_Text",
             "val": "${Texto}",
             "mandatoryInSearch": true
@@ -23,7 +29,6 @@
       },
       {
         "label": "Object_Data_Source",
-        "name": "budibase",
         "props": [
           {
             "name": "Object_Data_Source_Name",
@@ -93,7 +98,7 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "budibase",
+        "fromVertexLabel": "Object_Data_Source",
         "toVertexLabel": "Event_Group_Ingestion"
       },
       {

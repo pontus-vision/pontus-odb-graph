@@ -55,7 +55,7 @@ public class PVBudibaseTests extends AppTest {
       String LIALawfulBasis =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
-                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b'))" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddc345sa'))" +
                       ".out('Has_Legitimate_Interests_Assessment').as('lia')" +
                       ".properties('Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification')" +
                       ".value().next().toString()").get().toString();
@@ -520,7 +520,7 @@ public class PVBudibaseTests extends AppTest {
                       ".out('Made_SAR_Request').as('dsar')" +
                       ".out('Has_DSAR').as('dsar-group')" +
                       ".out('Has_DSAR').as('ropa')" +
-                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b'))" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddc345sa'))" +
                       ".values('Object_Data_Procedures_Description')" +
                       ".next().toString()").get().toString();
       assertEquals("Necessário para entrada e saída de candidatos a sede da empresa",fromDsarToRopa,
