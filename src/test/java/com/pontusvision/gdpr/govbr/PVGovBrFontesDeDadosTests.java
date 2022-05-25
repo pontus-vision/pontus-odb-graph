@@ -36,13 +36,13 @@ public class PVGovBrFontesDeDadosTests extends AppTest {
               App.executor.eval(queryPrefix +
                       ".both()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("5", countEventGroupIngestions);
+      assertEquals("6", countEventGroupIngestions);
 
       String countEventIngestions =
               App.executor.eval(queryPrefix +
-                      ".out().out()" +
-                      ".count().next().toString()").get().toString();
-      assertEquals("23", countEventIngestions);
+                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+                      ".dedup().count().next().toString()").get().toString();
+      assertEquals("19", countEventIngestions);
 
       String countObjectDataSourcesIngested =
               App.executor.eval(queryPrefix +
