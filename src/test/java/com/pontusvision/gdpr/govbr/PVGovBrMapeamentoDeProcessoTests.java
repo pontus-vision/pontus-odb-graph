@@ -53,7 +53,7 @@ public class PVGovBrMapeamentoDeProcessoTests extends AppTest {
                       ".has('Object_Lawful_Basis_Description', eq('PARA A PROTEÇÃO DA VIDA OU DA INCOLUMIDADE FÍSICA DO TITULAR OU DE TERCEIRO'))" +
 //                      ".valueMap().toList()"
                       ".count().next().toString()").get().toString();
-      assertEquals("9", legInterestCount, "This Lawful Basis is present in 4 registries");
+      assertEquals("16", legInterestCount, "This Lawful Basis is present in 4 registries");
 
       String LIALawfulBasis =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
