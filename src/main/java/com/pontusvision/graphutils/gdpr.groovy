@@ -5673,8 +5673,8 @@ the end of the process.
         App.graph.executeSql(
                 'SELECT count(*) as ct, ' + groupByCount + ' ' +
                 'FROM Event_Subject_Access_Request ' +
-                'WHERE Event_Subject_Access_Request_Metadata_Create_Date' +
-                'BETWEEN :gtDateThreshold AND :lteDateThreshold' +
+                'WHERE Event_Subject_Access_Request_Metadata_Create_Date ' +
+                'BETWEEN :gtDateThreshold AND :lteDateThreshold ' +
                 'GROUP BY  ' + groupByCount,
                 args).getRawResultSet()
 
