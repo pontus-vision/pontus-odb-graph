@@ -4693,9 +4693,17 @@ the end of the process.
   static def getInternationalScores(def scoresMap) {
 
 
-    long numProcessesOutOfCountry = App.g.V()
-            .has('Object_Data_Procedures_Country_Where_Stored', neq(country))
-            .count().next()
+//    long numProcessesOutOfCountry = App.g.V()
+//            .has('Object_Data_Procedures_Country_Where_Stored', neq(country))
+//            .count().next()
+
+    long numProcessesOutOfCountry =
+            App.graph.executeSql(
+                    """
+        SELECT count(*) as ct  FROM  Object_Data_Procedures where 
+        Object_Data_Procedures_Country_Where_Stored != :country    
+        """,
+                    [ 'country':country ]).getRawResultSet().next().getProperty('ct')
 
     long scoreValue = 100L
 
@@ -5296,12 +5304,12 @@ the end of the process.
 
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
-      try {
-        numEntries = App.g.V().has('Object_Data_Source_Type', eq('Structured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
-        sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
-      } catch (e) {
-
-      }
+//      try {
+//        numEntries = App.g.V().has('Object_Data_Source_Type', eq('Structured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
+//        sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Structured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+//      } catch (e) {
+//
+//      }
       queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'DB_TABLE'"
       numEntries = getCountQueryResults(queryStr)
 
@@ -5319,8 +5327,8 @@ the end of the process.
       sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data Sources')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
-      numEntries = App.g.V().has('Object_Data_Source_Type', eq('Unstructured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
-      sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
+//      numEntries = App.g.V().has('Object_Data_Source_Type', eq('Unstructured')).out().out().in().has('Metadata_Type_Person_Identity', eq('Person_Identity')).dedup().count().next()
+//      sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate('Unstructured Data PII')}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
 
       queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'Mixed'"
