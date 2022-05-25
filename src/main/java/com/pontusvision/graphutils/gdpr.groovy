@@ -35,6 +35,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.apache.tinkerpop.gremlin.structure.Vertex
 
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.regex.Pattern
 
@@ -57,7 +58,7 @@ class gdpr {
 
       }
       catch (Throwable t2) {
-        dob = new Date("01/01/1666")
+        dob = DateFormat.parse("01/01/1666")
 
       }
     }
