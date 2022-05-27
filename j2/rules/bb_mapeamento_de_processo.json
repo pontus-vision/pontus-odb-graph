@@ -42,6 +42,19 @@
         ]
       },
       {
+        "label": "Object_Policies",
+        "props": [
+          {
+            "name": "Object_Policies_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Politicas)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
         "label": "Object_Data_Procedures",
         "props": [
           {
@@ -63,37 +76,37 @@
           },
           {
             "name": "Object_Data_Procedures_Type_Of_Natural_Person",
-            "val": "${Categoria_dos_titulares_dos_dados}",
+            "val": "${Categoria_dos_Titulares_dos_Dados}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_BusinessAreaResponsible",
-            "val": "${Area}",
+            "val": "${Area_Responsavel}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Country_Where_Stored",
-            "val": "${Pais_onde_as_pessoas_estao_localizadas}",
+            "val": "${Pais_Onde_as_Pessoas_Estao_Localizadas}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Why_Is_It_Collected",
-            "val": "${Finalidade_do_processo}",
+            "val": "${Finalidade_do_Processo}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Info_Collected",
-            "val": "${Dados_pessoais_utilizados}",
+            "val": "${Dados_Pessoais_Utilizados}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Description",
-            "val": "${Fluxo_interno_dos_dados}",
+            "val": "${Fluxo_dos_Dados}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -102,15 +115,65 @@
             "val": "${Partes_Interessadas_Consultadas}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Shared_With_Third_Parties",
+            "val": "${Dados_Pessoais_Compartilhados_com_Terceiros}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Share_Justification",
+            "val": "${Finalidade_de_Compartilhamento_com_Terceiros}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_MacroProcessName",
+            "val": "${Macroprocesso}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
       {
         "label": "Object_Sensitive_Data",
+        "name": "personal_data",
+        "condition": "${Dados_Pessoais_Utilizados?.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
-            "val": "${new groovy.json.JsonBuilder(Dados_pessoais_utilizados)}",
+            "val": "${new groovy.json.JsonBuilder(Dados_Pessoais_Utilizados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "sensitive_data",
+        "condition": "${Dados_Pessoais_Sensiveis?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(Dados_Pessoais_Sensiveis)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "shared_data",
+        "condition": "${Dados_Pessoais_Compartilhados_com_Terceiros?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(Dados_Pessoais_Compartilhados_com_Terceiros)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Ljava.lang.String;",
@@ -120,6 +183,7 @@
       },
       {
         "label": "Object_Lawful_Basis",
+        "name": "lawful_basis",
         "props": [
           {
             "name": "Object_Lawful_Basis_Description",
@@ -132,13 +196,39 @@
         ]
       },
       {
+        "label": "Object_Lawful_Basis",
+        "name": "other_lawful_basis",
+        "condition": "${Outros_Fundamentos_Legais?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object_Lawful_Basis_Description",
+            "val": "${Outros_Fundamentos_Legais?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
         "label": "Object_Legitimate_Interests_Assessment",
-        "condition": "${Lia_Is_Essential == true && Lia_Is_Required == true}",
+        "condition": "${Justificativa_da_Base_Legal?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
-            "val": "${Lawful_Basis_Justification}",
+            "val": "${Justificativa_da_Base_Legal}",
             "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "condition": "${Responsavel?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Responsavel)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
           }
         ]
       },
@@ -219,17 +309,37 @@
       {
         "label": "Has_Sensitive_Data",
         "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Sensitive_Data"
+        "toVertexName": "personal_data"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "sensitive_data"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "shared_data"
       },
       {
         "label": "Has_Lawful_Basis_On",
         "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Lawful_Basis"
+        "toVertexName": "lawful_basis"
+      },
+      {
+        "label": "Has_Other_Lawful_Basis",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "other_lawful_basis"
       },
       {
         "label": "Has_Policy",
         "fromVertexLabel": "Object_Data_Procedures",
         "toVertexLabel": "Object_Data_Policy"
+      },
+      {
+        "label": "Has_Policy",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Policies"
       },
       {
         "label": "Has_Data_Source",
@@ -240,6 +350,11 @@
         "label": "Has_Legitimate_Interests_Assessment",
         "fromVertexLabel": "Object_Data_Procedures",
         "toVertexLabel": "Object_Legitimate_Interests_Assessment"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexLabel": "Object_Email_Address",
+        "toVertexLabel": "Object_Data_Procedures"
       }
     ]
   }

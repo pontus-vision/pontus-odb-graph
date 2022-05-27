@@ -7,6 +7,10 @@ updatereq:
         - name: Object_Policies_Form_Id
           val: ${_id}
           mandatoryInSearch: True
+        - name: Object_Policies_Name
+          val: ${Referencia?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Policies_Text
           val: ${Texto}
           mandatoryInSearch: True
@@ -15,7 +19,6 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Object_Data_Source
-      name: budibase
       props:
         - name: Object_Data_Source_Name
           val: BUDIBASE/POLÍTICAS
@@ -60,7 +63,7 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexName: budibase
+    fromVertexLabel: Object_Data_Source
     toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Group_Ingestion

@@ -104,7 +104,7 @@
           },
           {
             "name": "Event_Subject_Access_Request_Natural_Person_Type",
-            "val": "${Categoria_dos_titulares_dos_dados?.trim()?.toUpperCase()}",
+            "val": "${Categoria_dos_Titulares_dos_Dados?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

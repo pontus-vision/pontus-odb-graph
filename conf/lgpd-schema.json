@@ -1614,6 +1614,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Data_Policy_Text",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object_Data_Policy_Type",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1680,6 +1685,16 @@
     },
     {
       "name": "Object_Data_Procedures_Info_Collected",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Procedures_Info_Share_Justification",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Procedures_Info_Shared_With_Third_Parties",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -2650,6 +2665,11 @@
     },
     {
       "name": "Object_Policies_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Policies_Name",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -4208,6 +4228,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_Other_Lawful_Basis",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Parent_Or_Guardian",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -5019,6 +5044,7 @@
         "Object_Data_Policy_Form_Submission_Owner_Id",
         "Object_Data_Policy_Name",
         "Object_Data_Policy_Retention_Period",
+        "Object_Data_Policy_Text",
         "Object_Data_Policy_Type",
         "Object_Data_Policy_Update_Date",
         "Object_Data_Policy_Update_Frequency"
@@ -5043,6 +5069,8 @@
         "Object_Data_Procedures_Delete_Mechanism",
         "Object_Data_Procedures_Delete_URL",
         "Object_Data_Procedures_Info_Collected",
+        "Object_Data_Procedures_Info_Share_Justification",
+        "Object_Data_Procedures_Info_Shared_With_Third_Parties",
         "Object_Data_Procedures_Name",
         "Object_Data_Procedures_Number_Of_Records_Monthly",
         "Object_Data_Procedures_Property",
@@ -5382,6 +5410,7 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Policies",
+        "Object_Policies_Name",
         "Object_Policies_Type",
         "Object_Policies_URL",
         "Object_Policies_Form_Id",

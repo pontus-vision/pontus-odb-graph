@@ -495,7 +495,6 @@ schema:
       props:
         - name: Create_Date
           dataType: Date
-
         - name: Description
         - name: Form_Id
         - name: Form_Owner_Id
@@ -503,6 +502,7 @@ schema:
         - name: Form_Submission_Owner_Id
         - name: Name
         - name: Retention_Period
+        - name: Text
         - name: Type
         - name: Update_Date
           dataType: Date
@@ -521,6 +521,8 @@ schema:
         - name: Delete_Mechanism
         - name: Delete_URL
         - name: Info_Collected
+        - name: Info_Share_Justification
+        - name: Info_Shared_With_Third_Parties
         - name: Name
         - name: Number_Of_Records_Monthly
         - name: Property
@@ -787,6 +789,7 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Name
         - name: Type
         - name: Text
           index: false
@@ -1194,8 +1197,10 @@ schema:
   - name: Has_NLP_Events
   - name: Has_Mobile
   - name: Has_Module
+  - name: Has_Other_Lawful_Basis
   - name: Has_Parent_Or_Guardian
   - name: Has_Phone
+#  - name: Has_Personal_Data
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice

@@ -75,7 +75,7 @@ public class PVBudibasePoliticasTests extends AppTest {
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/políticas'))" +
                       ".count().next().toString()").get().toString();
 
-      String countDataBreach =
+      String countPolicies =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/políticas'))" +
                       ".out('Has_Ingestion_Event').has('Metadata_Type_Object_Policies', eq('Object_Policies'))" +
                       ".dedup().count().next().toString()").get().toString();
@@ -88,7 +88,7 @@ public class PVBudibasePoliticasTests extends AppTest {
 
 //      Test for duplicate data
 
-      String countDataBreachAgain =
+      String countPoliciesAgain =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/políticas'))" +
                       ".out('Has_Ingestion_Event').has('Metadata_Type_Object_Policies', eq('Object_Policies'))" +
                       ".dedup().count().next().toString()").get().toString();
@@ -97,7 +97,7 @@ public class PVBudibasePoliticasTests extends AppTest {
       assertTrue(Integer.parseInt(countEventIngestionsAgain) > Integer.parseInt(countEventIngestions));
 
 //    This proves that data is still the same
-      assertTrue(Integer.parseInt(countDataBreach) == Integer.parseInt(countDataBreachAgain));
+      assertTrue(Integer.parseInt(countPolicies) == Integer.parseInt(countPoliciesAgain));
 
     } catch (ExecutionException e) {
       e.printStackTrace();

@@ -3,7 +3,7 @@
     {
       "_id": "ro_ta_c638105c80d04cd2a8a73740e1a1d240_ba7ac71f689c42c8a6427daed9e23d43",
       "_rev": "1-377d23a28e2a28ace763295077f087f4",
-      "Categoria_dos_titulares_dos_dados": "COLABORADOR",
+      "Categoria_dos_Titulares_dos_Dados": "COLABORADOR",
       "Resposta___Canal": "",
       "Resposta___Data": "2022-02-18T15:00:00.000Z",
       "Status": "New",
@@ -48,7 +48,7 @@
     {
       "_id": "ro_ta_c638105c80d04cd2a8a73740e1a1d240_33aefc7448af413ea21d09963058c75d",
       "_rev": "1-c226644783536ef8289153f265fb96c5",
-      "Categoria_dos_titulares_dos_dados": "CLIENTE",
+      "Categoria_dos_Titulares_dos_Dados": "CLIENTE",
       "Resposta___Canal": "email",
       "Resposta___Data": "2022-02-02T15:00:00.000Z",
       "Status": "Completed",
@@ -89,7 +89,7 @@
     {
       "_id": "ro_ta_c638105c80d04cd2a8a73740e1a1d240_1940fe7371ec466a899d01dd57ea720b",
       "_rev": "2-aea492d85d3e6531d93f9f28dbc8c7d1",
-      "Categoria_dos_titulares_dos_dados": "CLIENTE",
+      "Categoria_dos_Titulares_dos_Dados": "CLIENTE",
       "Resposta___Canal": "teste",
       "Resposta___Data": "2022-02-08T15:00:00.000Z",
       "Status": "Completed",
