@@ -50,7 +50,7 @@ public class PVScoreTestsLawfulBasis extends AppTest {
 
       long score = (long) gdpr.getLawfulBasisScores(retVals);
 
-      assertEquals(99L, score);
+      assertEquals(100L, score);
 
 
     } catch (Exception e) {
