@@ -5380,31 +5380,68 @@ the end of the process.
     boolean firstTime = true
 
 
-    App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-            .as('ingestion_event')
-            .out("Has_Ingestion_Event")
-            .out("Has_Ingestion_Event")
-            .in("Has_Ingestion_Event")
-            .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-            .id()
-            .dedup()
-            .as('events')
-            .match(
-                    __.as('ingestion_event').values('Object_Data_Source_Name').as('event_id')
-            )
-            .select('event_id')
-            .groupCount().each { metric ->
-      metric.each { metricname, metricvalue ->
+    App.graph.executeSql(
+            """
+        SELECT 
+          Object_Data_Source_Name,
+          @rid as rid 
+        
+        FROM  Object_Data_Source 
+        
+    
+        GROUP BY Object_Data_Source_Name
+       
+        """,
+            [:]).getRawResultSet().each { it ->
+
+      def rid = it.getProperty('rid')
+      def metricname = it.getProperty('Object_Data_Source_Name')
+      def metricvalue = App.g.V(rid)
+              .out("Has_Ingestion_Event")
+              .out("Has_Ingestion_Event")
+              .in("Has_Ingestion_Event")
+              .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
+              .id()
+              .dedup().count().next()
+
+
+      if (metricvalue > 0){
         if (!firstTime) {
           sb.append(",")
         } else {
           firstTime = false
         }
         sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"Natural Person Per Data Source\" }")
-
       }
+
     }
-    sb.append(getNumSensitiveDataPerDataSource())
+
+
+//    App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//            .as('ingestion_event')
+//            .out("Has_Ingestion_Event")
+//            .out("Has_Ingestion_Event")
+//            .in("Has_Ingestion_Event")
+//            .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
+//            .id()
+//            .dedup()
+//            .as('events')
+//            .match(
+//                    __.as('ingestion_event').values('Object_Data_Source_Name').as('event_id')
+//            )
+//            .select('event_id')
+//            .groupCount().each { metric ->
+//      metric.each { metricname, metricvalue ->
+//        if (!firstTime) {
+//          sb.append(",")
+//        } else {
+//          firstTime = false
+//        }
+//        sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"Natural Person Per Data Source\" }")
+//
+//      }
+//    }
+//    sb.append(getNumSensitiveDataPerDataSource())
     sb.append(']')
 
     return sb.toString()
@@ -5413,43 +5450,44 @@ the end of the process.
   }
 
   static def getNumSensitiveDataPerDataSource() {
-    StringBuffer sb = new StringBuffer()
-    boolean firstTime = false
-
-
-    App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-            .as('ingestion_event')
-            .out("Has_Ingestion_Event")
-            .out("Has_Ingestion_Event")
-            .out("Has_Sensitive_Data")
-            .has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))
-    // .bothE("Has_Sensitive_Data")
-    // .label()
-    // .dedup().count()
-    //   .
-
-    // .filter(bothE("Has_Sensitive_Data").count().is(gt(0)))
-            .id()
-    // .dedup()
-            .as('events')
-            .match(
-                    __.as('ingestion_event').values('Object_Data_Source_Name').as('event_id')
-            )
-            .select('event_id')
-            .groupCount().each { metric ->
-      metric.each { metricname, metricvalue ->
-        if (!firstTime) {
-          sb.append(",")
-        } else {
-          firstTime = false
-        }
-        sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"Sensitive Data Per Data Source\" }")
-
-      }
-    }
-//  sb.append(']')
-
-    return sb.toString()
+    return ''
+//    StringBuffer sb = new StringBuffer()
+//    boolean firstTime = false
+//
+//
+//    App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
+//            .as('ingestion_event')
+//            .out("Has_Ingestion_Event")
+//            .out("Has_Ingestion_Event")
+//            .out("Has_Sensitive_Data")
+//            .has('Metadata_Type_Object_Sensitive_Data', eq('Object_Sensitive_Data'))
+//    // .bothE("Has_Sensitive_Data")
+//    // .label()
+//    // .dedup().count()
+//    //   .
+//
+//    // .filter(bothE("Has_Sensitive_Data").count().is(gt(0)))
+//            .id()
+//    // .dedup()
+//            .as('events')
+//            .match(
+//                    __.as('ingestion_event').values('Object_Data_Source_Name').as('event_id')
+//            )
+//            .select('event_id')
+//            .groupCount().each { metric ->
+//      metric.each { metricname, metricvalue ->
+//        if (!firstTime) {
+//          sb.append(",")
+//        } else {
+//          firstTime = false
+//        }
+//        sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"Sensitive Data Per Data Source\" }")
+//
+//      }
+//    }
+////  sb.append(']')
+//
+//    return sb.toString()
 
 
   }
@@ -5510,37 +5548,49 @@ the end of the process.
       StringBuffer sb = new StringBuffer("[")
       boolean firstTime = true
 
+      App.graph.executeSql(
+              """
+        SELECT 
+          Event_Consent_Status,
+          @rid as rid 
+        FROM  Event_Consent 
+    
+        GROUP BY Event_Consent_Status
+       
+        """,
+              [:]).getRawResultSet().each { it ->
 
-      App.g.V().has('Metadata_Type_Event_Consent', P.eq('Event_Consent'))
-              .as('consent')
-              .in('consent')
-              .has('Metadata_Type_Person_Natural', P.eq('Person_Natural'))
-              .dedup()
-              .as('person')
-      // .id()
-      // .dedup()
-      // // .as('events')
-              .match(
-                      __.as('person').values('Person_Natural_Type').as('person_type'),
-                      __.as('consent').values('Event_Consent_Status').as('consent_type')
-              )
-              .select('person_type', 'consent_type')
-              .groupCount()
-              .each { metric ->
-                metric.each { metricname, metricvalue ->
-                  if (!firstTime) {
-                    sb.append(",")
-                  } else {
-                    firstTime = false
+        def rid = it.getProperty('rid')
+        def consent_type = it.getProperty('Event_Consent_Status')
+
+        App.g.V(rid)
+                .as('consent')
+                .in('consent')
+                .has('Metadata_Type_Person_Natural', P.eq('Person_Natural'))
+                .dedup()
+                .as('person')
+
+                .match(
+                        __.as('person').values('Person_Natural_Type').as('person_type'),
+                        __.as('consent').values('Event_Consent_Status').as('consent_type')
+                )
+                .select('person_type', 'consent_type')
+                .groupCount()
+                .each { metric ->
+                  metric.each { metricname, metricvalue ->
+                    if (!firstTime) {
+                      sb.append(",")
+                    } else {
+                      firstTime = false
+                    }
+                    def metricNameLabel = "${PontusJ2ReportingFunctions.translate(metricname.person_type)} (${metricname.consent_type})"
+                    sb.append(" \n{ \"metricname\": \"${metricNameLabel}\", \"metricvalue\": $metricvalue," +
+                            " \"metrictype\": \"${PontusJ2ReportingFunctions.translate('Consentimento Por Titulares')}\" }")
+
                   }
-                  def metricNameLabel = "${PontusJ2ReportingFunctions.translate(metricname.person_type)} (${metricname.consent_type})"
-                  sb.append(" \n{ \"metricname\": \"${metricNameLabel}\", \"metricvalue\": $metricvalue," +
-                          " \"metrictype\": \"${PontusJ2ReportingFunctions.translate('Consentimento Por Titulares')}\" }")
 
                 }
-
-              }
-
+      }
 
       sb.append(']')
 
