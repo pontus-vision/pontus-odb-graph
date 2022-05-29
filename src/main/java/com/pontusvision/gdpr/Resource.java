@@ -682,23 +682,34 @@ public class Resource {
 
       );
 
-      List<Map<Object, Object>> notificationTemplates = App.g.V()
-          .has("Object_Notification_Templates_Types", eq(label))
-          .valueMap("Object_Notification_Templates_Label",
-              "Object_Notification_Templates_Text",
-              "Object_Notification_Templates_Id")
-          .toList();
+//      List<Map<Object, Object>> notificationTemplates = App.g.V()
+//          .has("Object_Notification_Templates_Types", eq(label))
+//          .valueMap("Object_Notification_Templates_Label",
+//              "Object_Notification_Templates_Text",
+//              "Object_Notification_Templates_Id")
+//          .toList();
+
+
 
       boolean useNewMode = vlabReq.version != null && vlabReq.version.startsWith("v2.");
-      notificationTemplates.forEach(map -> {
-        props.add("@" + map.get("Object_Notification_Templates_Label") + "@" +
-            (useNewMode?
-              map.get("Object_Notification_Templates_Id"):
-              map.get("Object_Notification_Templates_Text"))
+
+      HashMap<String,String> args = new HashMap<>();
+      args.put("label",label);
+      App.graph.executeSql(
+      "SELECT Object_Notification_Templates_Label, Object_Notification_Templates_Text, Object_Notification_Templates_Id      \n" +
+          "      FROM  Object_Notification_Templates \n" +
+          "      WHERE Object_Notification_Templates_Types = :label"
+     ,args).getRawResultSet().forEachRemaining( it -> {
+
+//        notificationTemplates.forEach(map -> {
+        props.add("@" + it.getProperty("Object_Notification_Templates_Label") + "@" +
+            (useNewMode ?
+                it.getProperty("Object_Notification_Templates_Id") :
+                it.getProperty("Object_Notification_Templates_Text"))
         );
 
+//        });
       });
-
       return new NodePropertyNamesReply(props);
 //      return reply;
 
