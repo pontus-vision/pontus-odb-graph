@@ -5378,70 +5378,33 @@ the end of the process.
   static def getNumNaturalPersonPerDataSource() {
     StringBuffer sb = new StringBuffer("[")
     boolean firstTime = true
-
-
     App.graph.executeSql(
             """
         SELECT 
-          Object_Data_Source_Name,
-          @rid as rid 
+          count( distinct(@rid)) as ct,
+          out('Has_Ingestion_Event').Event_Ingestion_Type[0] as  Event_Ingestion_Type
         
-        FROM  Object_Data_Source 
-        
-    
-        GROUP BY Object_Data_Source_Name
+        FROM  Person_Natural 
+
+        GROUP BY out('Has_Ingestion_Event').Event_Ingestion_Type[0]
        
         """,
             [:]).getRawResultSet().each { it ->
 
-      def rid = it.getProperty('rid')
-      def metricname = it.getProperty('Object_Data_Source_Name')
-      def metricvalue = App.g.V(rid)
-              .out("Has_Ingestion_Event")
-              .out("Has_Ingestion_Event")
-              .in("Has_Ingestion_Event")
-              .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-              .id()
-              .dedup().count().next()
+      def metricname = it.getProperty('Event_Ingestion_Type')
+      def metricvalue = it.getProperty('ct')
 
 
-      if (metricvalue > 0){
+      if (metricvalue > 0 && metricname){
         if (!firstTime) {
           sb.append(",")
         } else {
           firstTime = false
         }
-        sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"Natural Person Per Data Source\" }")
+        sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname).toUpperCase()}\", \"metricvalue\": $metricvalue, \"metrictype\": \"Natural Person Per Data Source\" }")
       }
 
     }
-
-
-//    App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
-//            .as('ingestion_event')
-//            .out("Has_Ingestion_Event")
-//            .out("Has_Ingestion_Event")
-//            .in("Has_Ingestion_Event")
-//            .has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//            .id()
-//            .dedup()
-//            .as('events')
-//            .match(
-//                    __.as('ingestion_event').values('Object_Data_Source_Name').as('event_id')
-//            )
-//            .select('event_id')
-//            .groupCount().each { metric ->
-//      metric.each { metricname, metricvalue ->
-//        if (!firstTime) {
-//          sb.append(",")
-//        } else {
-//          firstTime = false
-//        }
-//        sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(metricname)}\", \"metricvalue\": $metricvalue, \"metrictype\": \"Natural Person Per Data Source\" }")
-//
-//      }
-//    }
-//    sb.append(getNumSensitiveDataPerDataSource())
     sb.append(']')
 
     return sb.toString()
