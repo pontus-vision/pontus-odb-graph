@@ -1080,71 +1080,73 @@ class PontusJ2ReportingFunctions {
   }
 
   static String renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
-    return renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g)
+    return pg_id? renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g):
+            renderReportInBase64(null, pg_templateTextInBase64, g);
   }
 
   static String renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
 
-    String vertType = App.g.V(pg_id).label().next()
     def allData = new HashMap<>()
 
+    if (pg_id) {
+      String vertType = App.g.V(pg_id).label().next()
 
-    def context = App.g.V(pg_id).elementMap()[0].collectEntries { key, val ->
-      [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
-    }
-
-    def neighbours = App.g.V(pg_id).both().elementMap().toList().collect { item ->
-      item.collectEntries { key, val ->
+      def context = App.g.V(pg_id).elementMap()[0].collectEntries { key, val ->
         [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
       }
-    }
 
-    allData.put('context', context)
-    allData.put('connected_data', neighbours)
+      def neighbours = App.g.V(pg_id).both().elementMap().toList().collect { item ->
+        item.collectEntries { key, val ->
+          [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
+        }
+      }
+
+      allData.put('context', context)
+      allData.put('connected_data', neighbours)
 
 
-    if ('Event_Data_Breach' == vertType) {
-      GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id).out('Impacted_By_Data_Breach').dedup()
+      if ('Event_Data_Breach' == vertType) {
+        GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id).out('Impacted_By_Data_Breach').dedup()
 //              .both().has("Metadata_Type_Object_AWS_Instance", P.eq('Object_AWS_Instance'))
 //              .bothE('Runs_On').outV().dedup()
 
-      GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
-      GraphTraversal dsTravClone2 = impactedDataSourcesTrav.clone()
+        GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
+        GraphTraversal dsTravClone2 = impactedDataSourcesTrav.clone()
 
 
-      def impactedServers = dsTravClone2
-              .out('Has_Module').dedup()
+        def impactedServers = dsTravClone2
+                .out('Has_Module').dedup()
 //              .has("Metadata_Type_Object_AWS_Instance", P.eq('Object_AWS_Instance'))
-              .valueMap().toList().collect { item ->
-        item.collectEntries { key, val ->
-          [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+                .valueMap().toList().collect { item ->
+          item.collectEntries { key, val ->
+            [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+          }
         }
-      }
 
 
-
-      def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
-        item.collectEntries { key, val ->
-          [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+        def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
+          item.collectEntries { key, val ->
+            [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+          }
         }
-      }
-      def impactedPeople = dsTravClone
-              .out("Has_Ingestion_Event")
-              .out("Has_Ingestion_Event")
-              .in("Has_Ingestion_Event")
-              .has("Metadata_Type_Person_Natural", P.eq('Person_Natural'))
-              .dedup()
-              .valueMap()
-              .toList()
-              .collect { item ->
-                item.collectEntries { key, val ->
-                  [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+        def impactedPeople = dsTravClone
+                .out("Has_Ingestion_Event")
+                .out("Has_Ingestion_Event")
+                .in("Has_Ingestion_Event")
+                .has("Metadata_Type_Person_Natural", P.eq('Person_Natural'))
+                .dedup()
+                .valueMap()
+                .toList()
+                .collect { item ->
+                  item.collectEntries { key, val ->
+                    [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+                  }
                 }
-              }
-      allData.put('impacted_data_sources', impactedDataSources)
-      allData.put('impacted_servers', impactedServers)
-      allData.put('impacted_people', impactedPeople)
+        allData.put('impacted_data_sources', impactedDataSources)
+        allData.put('impacted_servers', impactedServers)
+        allData.put('impacted_people', impactedPeople)
 
+      }
     }
 
 
