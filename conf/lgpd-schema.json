@@ -1989,6 +1989,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Email_Address_Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata_Type_Object_Email_Message_Attachment",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -5155,7 +5160,8 @@
         "Metadata_Type_Object_Email_Address",
         "Object_Email_Address_Email",
         "Object_Email_Address_Host",
-        "Object_Email_Address_Type"
+        "Object_Email_Address_Type",
+        "Object_Email_Address_Form_Id"
       ],
       "propertyKeysMappings": {}
     },
