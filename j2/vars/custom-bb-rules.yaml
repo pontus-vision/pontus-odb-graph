@@ -1153,6 +1153,7 @@ rules:
   bb_users:
     vertices:
       - label: Person_Natural
+        condition: "${firstName?.trim()?.length() > 0}"
         props:
           Full_Name:
             val: "${firstName?.toUpperCase()?.trim()} ${lastName?.toUpperCase()?.trim()}"

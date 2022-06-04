@@ -4176,8 +4176,8 @@ the end of the process.
 
     long percentConsent = numProcedures > 0 ? (long) ((double) numConsent / (double) numProcedures * 100.0) : 0
 
-    long numWithoutAnyConsent = numProcedures - numConsent
-    long pcntWithoutAnyConsent = 100L - percentConsent
+//    long numWithoutAnyConsent = numProcedures - numConsent
+//    long pcntWithoutAnyConsent = 100L - percentConsent
 
     // percentConsent  - score
     //        0        -  0
