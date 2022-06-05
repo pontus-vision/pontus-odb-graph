@@ -3,6 +3,7 @@
     "vertices": [
       {
         "label": "Person_Natural",
+        "condition": "${firstName?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Person_Natural_Full_Name",

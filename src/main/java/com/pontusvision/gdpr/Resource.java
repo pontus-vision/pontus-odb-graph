@@ -10,10 +10,7 @@ import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.mapping.MappingReq;
-import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
-import com.pontusvision.gdpr.report.ReportTemplateRenderResponse;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
+import com.pontusvision.gdpr.report.*;
 import com.pontusvision.graphutils.PText;
 import com.pontusvision.graphutils.PontusJ2ReportingFunctions;
 import com.pontusvision.graphutils.gdpr;
@@ -1049,6 +1046,40 @@ status: "success", message: "Data source is working", title: "Success"
     reply.setBase64Report(resolvedStr);
     reply.setRefEntryId(request.getRefEntryId());
     reply.setTemplateId(request.getTemplateId());
+    return reply;
+
+  }
+
+  @POST
+  @Path("report/render")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+
+  public ReportRenderResponse reportTemplateRender(ReportRenderRequest request) {
+
+    if (request.getReportTemplateBase64() == null) {
+      return new ReportRenderResponse(Response.Status.BAD_REQUEST, "Missing Report Template Base 64");
+    }
+
+    String templateBase64 = request.getReportTemplateBase64();
+    String refId = request.getRefEntryId();
+
+//        App.g.V().has("Object_Notification_Templates_Id", P.eq(templateId))
+//        .values("Object_Notification_Templates_Text").next().toString();
+    String resolvedStr = "";
+
+    try {
+      resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateBase64, App.g);
+    } catch (Throwable t){
+
+      resolvedStr = Base64.getEncoder().encodeToString(
+          ("Error resolving template:  " + t.getMessage()).getBytes(StandardCharsets.UTF_8));
+    }
+
+    ReportRenderResponse reply = new ReportRenderResponse();
+    reply.setBase64Report(resolvedStr);
+    reply.setRefEntryId(request.getRefEntryId());
+
     return reply;
 
   }
