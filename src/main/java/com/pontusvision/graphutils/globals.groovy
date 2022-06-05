@@ -545,20 +545,28 @@ class PontusJ2ReportingFunctions {
 
   }
 
-  static List<Map<String, Object>> runSQLQuery(String sqlQuery, Map params) {
+  static List<Map<String, Object>> runSql(String sqlQuery, Map params) {
     List<Map<String, Object>> retVal = new LinkedList<>()
 
-    App.graph.executeSql(sqlQuery,
-                    params).getRawResultSet().each {
-              Map<String, Object> item = new HashMap<>(it.getProperties())
-              retVal.add(item);
-            }
+    def matcher = (sqlQuery.toUpperCase() ==~ /('(''|[^'])*')|(;)|(\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|UPDATE|UNION( +ALL){0,1})\b)/)
+
+    if (!matcher) {
+
+      App.graph.executeSql(sqlQuery,
+              params).getRawResultSet().each {
+
+
+        Map<String, Object> item = new HashMap<>()
+        it.propertyNames.each {propName->
+           item.put(propName, it.getProperty(propName))
+        }
+        retVal.add(item);
+      }
+    }
     return retVal
-
-
   }
   static List<Map<String,Object>> getConsentDataProceduresWithoutEvents(String consentDataCsv){
-    return runSQLQuery(
+    return runSql(
             """
         SELECT *  FROM  Object_Data_Procedures where 
          (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
@@ -1276,8 +1284,8 @@ class PontusJ2ReportingFunctions {
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getConsentDataProceduresWithoutEvents",
             PontusJ2ReportingFunctions.class, "getConsentDataProceduresWithoutEvents", String.class))
-    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "runSQLQuery",
-            PontusJ2ReportingFunctions.class, "runSQLQuery", String.class, Map.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "runSql",
+            PontusJ2ReportingFunctions.class, "runSql", String.class, Map.class))
 
   }
 }
