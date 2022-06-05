@@ -28,6 +28,7 @@ import java.text.DateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.regex.Pattern
 
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.bothV
 
@@ -545,10 +546,21 @@ class PontusJ2ReportingFunctions {
 
   }
 
+  static Pattern sqlPattern =
+          Pattern.compile(".*(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|UPDATE|UNION( +ALL){0,1})(\\s).*")
+
+  static Boolean testQuery(String sqlQuery){
+
+    return sqlPattern.matcher(sqlQuery).matches()
+    // def matcher = (sqlQuery.toUpperCase() ==~ /(?:INSERT|ALTER|CREATE|EXEC|UPDATE|WITH|DELETE)(?:[^;']|(?:'[^']+'))/)
+
+    // return matcher;
+  }
+
   static List<Map<String, Object>> runSql(String sqlQuery, Map params) {
     List<Map<String, Object>> retVal = new LinkedList<>()
 
-    def matcher = (sqlQuery.toUpperCase() ==~ /('(''|[^'])*')|(;)|(\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|UPDATE|UNION( +ALL){0,1})\b)/)
+    def matcher = testQuery(sqlQuery.toUpperCase())
 
     if (!matcher) {
 
