@@ -1126,7 +1126,6 @@ class PontusJ2ReportingFunctions {
       allData.put('context', context)
       allData.put('connected_data', neighbours)
 
-
       if ('Event_Data_Breach' == vertType) {
         GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id).out('Impacted_By_Data_Breach').dedup()
 //              .both().has("Metadata_Type_Object_AWS_Instance", P.eq('Object_AWS_Instance'))
@@ -1144,8 +1143,6 @@ class PontusJ2ReportingFunctions {
             [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
           }
         }
-
-
         def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
           item.collectEntries { key, val ->
             [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
