@@ -603,6 +603,7 @@ schema:
         - name: Email
         - name: Host
         - name: Type
+        - name: Form_Id
 
     - name: "Object_Email_Message_Attachment"
       partition: false

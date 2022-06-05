@@ -41,7 +41,6 @@ class ODBSchemaManager {
 //    graph.executeSql("ALTER DATABASE demodb plocal users ( admin identified by '${System.getenv('ORIENTDB_ROOT_PASSWORD')?:'admin'}' role admin)");
 
 
-
     Map<String, OProperty> propsMap = [:]
     for (f in files) {
       try {
@@ -130,7 +129,7 @@ class ODBSchemaManager {
 //              oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), null as OProgressListener,
 //                      metadata as ODocument,
 //                      "LUCENE", idx.propertyKeys as String[])
-              OClass.INDEX_TYPE idxType = Enum.valueOf(OClass.INDEX_TYPE.class,idx.indexType)
+              OClass.INDEX_TYPE idxType = Enum.valueOf(OClass.INDEX_TYPE.class, idx.indexType)
               oClass.createIndex(idx.name as String, idxType.toString(), null as OProgressListener,
                       metadata as ODocument,
                       null, idx.propertyKeys as String[])
@@ -546,6 +545,28 @@ class PontusJ2ReportingFunctions {
 
   }
 
+  static List<Map<String, Object>> runSQLQuery(String sqlQuery, Map params) {
+    List<Map<String, Object>> retVal = new LinkedList<>()
+
+    App.graph.executeSql(sqlQuery,
+                    params).getRawResultSet().each {
+              Map<String, Object> item = new HashMap<>(it.getProperties())
+              retVal.add(item);
+            }
+    return retVal
+
+
+  }
+  static List<Map<String,Object>> getConsentDataProceduresWithoutEvents(String consentDataCsv){
+    return runSQLQuery(
+            """
+        SELECT *  FROM  Object_Data_Procedures where 
+         (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
+         AND (in('Consent').Metadata_Type_Object_Data_Procedures.removeAll(null).size() ) = 0    
+     """,
+            ['con':consentDataCsv.split(',')]
+    )
+  }
   static String getPolicyText(String policyType) {
     try {
       def text =
@@ -554,16 +575,17 @@ class PontusJ2ReportingFunctions {
         SELECT Object_Policies_Text  as ct  FROM  Object_Policies where
         Object_Policies_Type = :pt
         """,
-                      ['pt':policyType]).getRawResultSet().next().getProperty('ct')
+                      ['pt': policyType]).getRawResultSet().next().getProperty('ct')
 
 //              App.g.V().has("Object_Policies_Type", P.eq(policyType))
 //              .values("Object_Policies_Text").next().toString()
       return text;
-    } catch(Throwable t){
+    } catch (Throwable t) {
       return null;
     }
 
   }
+
   static List<Map<String, String>> getDsarRopaByLawfulBasis(String dsarId, String lawfulBasis) {
 
     try {
@@ -580,7 +602,7 @@ class PontusJ2ReportingFunctions {
 
 
       return ropaList
-    }catch (Throwable t){
+    } catch (Throwable t) {
       return [];
     }
 
@@ -591,7 +613,7 @@ class PontusJ2ReportingFunctions {
   static String dateLocaleFormat(String date, String lang, String country) {
 
     //  If date is today, then it will be formatted to present
-    if (date == 'today'){
+    if (date == 'today') {
       date = new Date().toString();
     }
 
@@ -605,8 +627,8 @@ class PontusJ2ReportingFunctions {
   static String removeSquareBrackets(String orig) {
 
     try {
-      return orig- '[' - ']'
-    }catch (Throwable t){
+      return orig - '[' - ']'
+    } catch (Throwable t) {
       return orig;
     }
 
@@ -1080,71 +1102,73 @@ class PontusJ2ReportingFunctions {
   }
 
   static String renderReportInBase64(String pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
-    return renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g)
+    return pg_id ? renderReportInBase64(new ORecordId(pg_id), pg_templateTextInBase64, g) :
+            renderReportInBase64(null, pg_templateTextInBase64, g);
   }
 
   static String renderReportInBase64(ORID pg_id, String pg_templateTextInBase64, GraphTraversalSource g = App.g) {
 
-    String vertType = App.g.V(pg_id).label().next()
     def allData = new HashMap<>()
 
+    if (pg_id) {
+      String vertType = App.g.V(pg_id).label().next()
 
-    def context = App.g.V(pg_id).elementMap()[0].collectEntries { key, val ->
-      [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
-    }
-
-    def neighbours = App.g.V(pg_id).both().elementMap().toList().collect { item ->
-      item.collectEntries { key, val ->
+      def context = App.g.V(pg_id).elementMap()[0].collectEntries { key, val ->
         [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
       }
-    }
 
-    allData.put('context', context)
-    allData.put('connected_data', neighbours)
+      def neighbours = App.g.V(pg_id).both().elementMap().toList().collect { item ->
+        item.collectEntries { key, val ->
+          [key.toString().replaceAll('[.]', '_'), val.toString().startsWith('[') ? val.toString().substring(1, val.toString().length() - 1) : val.toString()]
+        }
+      }
+
+      allData.put('context', context)
+      allData.put('connected_data', neighbours)
 
 
-    if ('Event_Data_Breach' == vertType) {
-      GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id).out('Impacted_By_Data_Breach').dedup()
+      if ('Event_Data_Breach' == vertType) {
+        GraphTraversal impactedDataSourcesTrav = App.g.V(pg_id).out('Impacted_By_Data_Breach').dedup()
 //              .both().has("Metadata_Type_Object_AWS_Instance", P.eq('Object_AWS_Instance'))
 //              .bothE('Runs_On').outV().dedup()
 
-      GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
-      GraphTraversal dsTravClone2 = impactedDataSourcesTrav.clone()
+        GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
+        GraphTraversal dsTravClone2 = impactedDataSourcesTrav.clone()
 
 
-      def impactedServers = dsTravClone2
-              .out('Has_Module').dedup()
+        def impactedServers = dsTravClone2
+                .out('Has_Module').dedup()
 //              .has("Metadata_Type_Object_AWS_Instance", P.eq('Object_AWS_Instance'))
-              .valueMap().toList().collect { item ->
-        item.collectEntries { key, val ->
-          [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+                .valueMap().toList().collect { item ->
+          item.collectEntries { key, val ->
+            [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+          }
         }
-      }
 
 
-
-      def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
-        item.collectEntries { key, val ->
-          [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+        def impactedDataSources = impactedDataSourcesTrav.valueMap().toList().collect { item ->
+          item.collectEntries { key, val ->
+            [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+          }
         }
-      }
-      def impactedPeople = dsTravClone
-              .out("Has_Ingestion_Event")
-              .out("Has_Ingestion_Event")
-              .in("Has_Ingestion_Event")
-              .has("Metadata_Type_Person_Natural", P.eq('Person_Natural'))
-              .dedup()
-              .valueMap()
-              .toList()
-              .collect { item ->
-                item.collectEntries { key, val ->
-                  [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+        def impactedPeople = dsTravClone
+                .out("Has_Ingestion_Event")
+                .out("Has_Ingestion_Event")
+                .in("Has_Ingestion_Event")
+                .has("Metadata_Type_Person_Natural", P.eq('Person_Natural'))
+                .dedup()
+                .valueMap()
+                .toList()
+                .collect { item ->
+                  item.collectEntries { key, val ->
+                    [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+                  }
                 }
-              }
-      allData.put('impacted_data_sources', impactedDataSources)
-      allData.put('impacted_servers', impactedServers)
-      allData.put('impacted_people', impactedPeople)
+        allData.put('impacted_data_sources', impactedDataSources)
+        allData.put('impacted_servers', impactedServers)
+        allData.put('impacted_people', impactedPeople)
 
+      }
     }
 
 
@@ -1253,6 +1277,10 @@ class PontusJ2ReportingFunctions {
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "t",
             PontusJ2ReportingFunctions.class, "translate", String.class))
 
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "getConsentDataProceduresWithoutEvents",
+            PontusJ2ReportingFunctions.class, "getConsentDataProceduresWithoutEvents", String.class))
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "runSQLQuery",
+            PontusJ2ReportingFunctions.class, "runSQLQuery", String.class, Map.class))
 
   }
 }
