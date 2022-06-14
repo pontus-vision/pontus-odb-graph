@@ -139,6 +139,8 @@
             <version>${orientdb-version}</version>
             <exclusions>
                 <exclusion><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-core</artifactId></exclusion>
+                <exclusion><groupId>com.github.jnr</groupId><artifactId>jnr-posix</artifactId></exclusion>
+                <exclusion><groupId>org.graalvm.js</groupId><artifactId>js</artifactId></exclusion>
             </exclusions>
         </dependency>
         <dependency>
