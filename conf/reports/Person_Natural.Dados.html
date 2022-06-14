@@ -1,0 +1,77 @@
+<html lang="pt-br">
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    <title></title>
+</head>
+
+<body lang=PT-BR>
+
+<div style='padding: 10px; background: white; color: black;'>
+    {% if context.Person_Natural_Full_Name | default (false, true) %}
+
+    <hr/>
+
+    <h1 style="text-align: center"> Relat&oacute;rio de Dados Pessoais </h1>
+
+    <hr/>
+
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        h3 {
+            position:sticky;
+            top: 0;
+        }
+        th {
+            position:sticky;
+            top: 0;
+            border: 2px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            background: white;
+
+        }
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+
+    Segue abaixo um resumo dos seus dados pessoais:
+
+    <p><br></p><p>
+    <h3>{{pv:t( context.Metadata_Type |replace('.',' ')|replace('_',' ') )}}</h3>
+    {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de dado</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>" }}
+    {% for key, value in context.items() %}
+    {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (  pv:t(key.replaceAll('_',' ')) , value )}}
+        {% endfor %}
+        {{ "</table>" }}
+
+
+    {% for mainkey in connected_data %}
+    <h3>{{ pv:t(mainkey.Metadata_Type |replace('.',' ')|replace('_',' ')) }}</h3>
+    {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de dado</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>" }}
+    {% for key, value in mainkey.items() %}
+    {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (pv:t(key.replaceAll('_',' ')) , value )}}
+        {% endfor %}
+        {{ "</table>" }}
+    {% endfor %}
+
+
+    {% endif %}
+</div>
+
+</body>
+
+</html>

@@ -576,6 +576,13 @@ schema:
           dataType: Date
         - name: Error
           index: false
+#        - name: Num_Objects
+#          dataType: Double
+#        - name: Total_Bytes
+#          dataType: Double
+#        - name: Avg_Bytes
+#          dataType: Double
+
 
 
     - name: "Object_Data_Src_Mapping_Rule"
