@@ -49,6 +49,7 @@
         </apache.directory-api-version>-->
 
         <java-jwt.version>3.18.2</java-jwt.version>
+        <jnr-posix.version>3.0.50</jnr-posix.version>
     </properties>
 <!--    <dependencyManagement>-->
 <!--        <dependencies>-->
@@ -142,6 +143,11 @@
                 <exclusion><groupId>com.github.jnr</groupId><artifactId>jnr-posix</artifactId></exclusion>
                 <exclusion><groupId>org.graalvm.js</groupId><artifactId>js</artifactId></exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jnr</groupId>
+            <artifactId>jnr-posix</artifactId>
+            <version>${jnr-posix.version}</version>
         </dependency>
         <dependency>
             <groupId>com.orientechnologies</groupId>
