@@ -234,7 +234,7 @@ rules:
       - label: Object_Data_Policy
         props:
           Type: "${Referencia}"
-          Retention_Period: "${Periodo_de_retencao}"
+          Retention_Period: "${Periodo_de_Retencao}"
 
       - label: Object_Policies
         props:
@@ -609,7 +609,7 @@ rules:
       - label: Object_Data_Procedures
         props:
           Form_Id:
-            val: "${new groovy.json.JsonBuilder(ID_do_Processo)}"
+            val: "${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}"
             type: "[Lcom.pontusvision.utils.BudibaseRef;"
             postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
             processAll: true

@@ -25,7 +25,7 @@ updatereq:
           val: ${Referencia}
           mandatoryInSearch: True
         - name: Object_Data_Policy_Retention_Period
-          val: ${Periodo_de_retencao}
+          val: ${Periodo_de_Retencao}
           mandatoryInSearch: True
     
     - label: Object_Policies

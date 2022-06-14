@@ -38,7 +38,7 @@
         "props": [
           {
             "name": "Object_Data_Procedures_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(ID_do_Processo)}",
+            "val": "${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.BudibaseRef;",
