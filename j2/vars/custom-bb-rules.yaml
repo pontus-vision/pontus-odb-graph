@@ -540,6 +540,12 @@ rules:
           Description:
             val: "${Descricao}"
             excludeFromSearch: true
+          Is_Implemented:
+            val: "${(Implementado.toLowerCase().equals('sim')|| Implementado.toLowerCase().equals('true'))?'true':'false' }"
+            excludeFromSearch: true
+          Is_Approved:
+            val: "${(Aprovado.toLowerCase().equals('sim')|| Aprovado.toLowerCase().equals('true'))?'true':'false' }"
+            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
@@ -609,7 +615,7 @@ rules:
       - label: Object_Data_Procedures
         props:
           Form_Id:
-            val: "${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}"
+            val: "${new groovy.json.JsonBuilder(ID_do_Processo)}"
             type: "[Lcom.pontusvision.utils.BudibaseRef;"
             postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
             processAll: true
@@ -993,10 +999,10 @@ rules:
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
       - label: Object_Data_Procedures
-        condition: "${Mapeamento_de_Processo?.size() > 0}"
+        condition: "${ID_do_Processo?.size() > 0}"
         props:
           Form_Id:
-            val: "${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}"
+            val: "${new groovy.json.JsonBuilder(ID_do_Processo)}"
             type: "[Lcom.pontusvision.utils.BudibaseRef;"
             postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
             processAll: true
