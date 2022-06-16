@@ -21,7 +21,7 @@
       "lastName": "Martins",
       "roleId": "ADMIN",
       "tableId": "ta_users",
-      "Mapeamento_de_Processo": [
+      "ID_do_Processo": [
         {
           "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_2994381e08684c4cb09b42f8dfe698c0",
           "primaryDisplay": "Gestão-Prestadores-Externos"
@@ -376,7 +376,7 @@
           "primaryDisplay": "Cadastro-Clientes-PJ"
         }
       ],
-      "Mapeamento_de_Processo": [
+      "ID_do_Processo": [
         {
           "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_0bc5bedfb86547e0b76ff8df063356db",
           "primaryDisplay": "Currículos"
@@ -566,7 +566,7 @@
           "primaryDisplay": "001"
         }
       ],
-      "Mapeamento_de_Processo": [
+      "ID_do_Processo": [
         {
           "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_1b7526cffd2b4490808ef4527457532a",
           "primaryDisplay": "Emissão-NF"

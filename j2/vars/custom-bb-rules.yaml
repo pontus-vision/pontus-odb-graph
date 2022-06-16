@@ -234,7 +234,7 @@ rules:
       - label: Object_Data_Policy
         props:
           Type: "${Referencia}"
-          Retention_Period: "${Periodo_de_Retencao}"
+          Retention_Period: "${Periodo_de_retencao}"
 
       - label: Object_Policies
         props:
@@ -539,12 +539,6 @@ rules:
             excludeFromSearch: true
           Description:
             val: "${Descricao}"
-            excludeFromSearch: true
-          Is_Implemented:
-            val: "${(Implementado.toLowerCase().equals('sim')|| Implementado.toLowerCase().equals('true'))?'true':'false' }"
-            excludeFromSearch: true
-          Is_Approved:
-            val: "${(Aprovado.toLowerCase().equals('sim')|| Aprovado.toLowerCase().equals('true'))?'true':'false' }"
             excludeFromSearch: true
 
       - label: Event_Ingestion

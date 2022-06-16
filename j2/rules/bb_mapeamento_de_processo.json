@@ -36,7 +36,7 @@
           },
           {
             "name": "Object_Data_Policy_Retention_Period",
-            "val": "${Periodo_de_Retencao}",
+            "val": "${Periodo_de_retencao}",
             "mandatoryInSearch": true
           }
         ]
