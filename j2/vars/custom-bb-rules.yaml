@@ -540,6 +540,12 @@ rules:
           Description:
             val: "${Descricao}"
             excludeFromSearch: true
+          Is_Implemented:
+            val: "${(Implementado.toLowerCase().equals('sim')|| Implementado.toLowerCase().equals('true'))?'true':'false' }"
+            excludeFromSearch: true
+          Is_Approved:
+            val: "${(Aprovado.toLowerCase().equals('sim')|| Aprovado.toLowerCase().equals('true'))?'true':'false' }"
+            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
