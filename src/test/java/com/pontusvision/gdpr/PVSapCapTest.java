@@ -203,15 +203,15 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/ownership-change.csv", "cap_ownership_change");
 
       String getResponsibleDealer =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('CAROL SANTANA')).in('Is_Responsible')" +
+              App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('AHOII BRAUSE')).in('Is_Responsible')" +
                       ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
-      assertEquals("FELLIPE XAXIM", getResponsibleDealer, "Felipe Xaxim is Carol's Responsible Dealer");
+      assertEquals("PORSCHE CENTER SÃO PAULO", getResponsibleDealer, "Responsible Dealer");
 
 
       String getResponsibleOwner =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('VINICIUS GAMA')).out('Is_Responsible')" +
+              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('PORSCHE CENTER SÃO PAULO')).out('Is_Responsible')" +
                       ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
-      assertEquals("ARMANDO ZACHARIA", getResponsibleOwner, "Armando Zacharia is Vinicius' client");
+      assertEquals("AHOII BRAUSE", getResponsibleOwner, "client");
 
     } catch (ExecutionException e) {
       e.printStackTrace();

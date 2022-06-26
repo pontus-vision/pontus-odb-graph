@@ -1,3 +1,2 @@
-Vehicle Ident.,Model,Model Type,Model Type Text,Model Year of Vehicl,Changed on,Changed By,BP (new),First Name,Last Name,Valid From,Valid To,Transaction Number,Kind of Change,Change Reason,BP (old),Status,Responsible Dealer,Name 1,Relationships,Product,Code,Destination
-,,,,,,Magnolia,,Armando,Zacharia,,,,,,,,Vinicius Gama,Vinicius,Customer Relations,,,
-,,,,,,Magnolia,,Carol,Santana,,,,,,,,Fellipe Xaxim,Fellipe,Marketing,,,
+Vehicle Ident.,Model,Model Type,Model Type Text,Model Year of Vehicl,Changed on,Changed By,BP (new),First Name,Last Name,Valid From,Valid To,Transaction Number,Kind of Change,Change Reason,Status,Responsible Dealer,Name 1
+WP0AA2921MS810409,92A,AA1,2012 92A,2016,05.12.2014,P316575,2001000010,Ahoii,Brause,05.12.2014,31.12.9999,5264151,Incoming,New Car Sale,N,20009937,Porsche Center São Paulo

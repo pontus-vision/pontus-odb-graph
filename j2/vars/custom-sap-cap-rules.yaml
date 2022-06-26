@@ -612,20 +612,18 @@ rules:
   cap_ownership_change:
     vertices:
       - label: Person_Natural
-        name: owner
         props:
           Full_Name: "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "Porsche Ownership Change"
 #            excludeFromSearch: true
 
-      - label: Person_Natural
-        name: responsible_dealer
+      - label: Person_Organisation
         props:
-          Full_Name: "${Responsible_Dealer?.trim()?.toUpperCase()}"
-          Full_Name_fuzzy:
+          Full_Name:
             val: "${Name_1?.trim()?.toUpperCase()}"
             excludeFromSearch: true
+          Customer_ID: "${Responsible_Dealer?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "Porsche Responsible Dealer"
 #            excludeFromSearch: true
@@ -685,12 +683,12 @@ rules:
         toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexName: "owner"
+        fromVertexName: "Person_Natural"
         toVertexLabel: "Event_Ingestion"
 
       - label: "Is_Responsible"
-        fromVertexName: "responsible_dealer"
-        toVertexName: "owner"
+        fromVertexName: "Person_Organisation"
+        toVertexName: "Person_Natural"
 
   cap_complaint:
     vertices:
