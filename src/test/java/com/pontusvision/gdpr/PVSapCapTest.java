@@ -203,8 +203,8 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/ownership-change.csv", "cap_ownership_change");
 
       String getResponsibleDealer =
-              App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('AHOII BRAUSE')).in('Is_Responsible')" +
-                      ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('AHOII BRAUSE')).in('Is_Responsible')" +
+                      ".properties('Person_Organisation_Name').value().next().toString()").get().toString();
       assertEquals("PORSCHE CENTER SÃO PAULO", getResponsibleDealer, "Responsible Dealer");
 
 
