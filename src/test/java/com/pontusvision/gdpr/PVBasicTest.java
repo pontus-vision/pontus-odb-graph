@@ -576,7 +576,7 @@ public class PVBasicTest extends AppTest {
 
   @Test
   public void test00011EmailOffice365() throws InterruptedException {
-    jsonTestUtil("office365/pv-extract-o365-email.json", "$.value", "pv_email");
+    jsonTestUtil("office365/pv-extract-o365-email.json", "$.value", "pv_email", "OFFICE365/EMAIL");
 
     try {
       String numDataSources =
@@ -584,6 +584,12 @@ public class PVBasicTest extends AppTest {
                       .get().toString();
 
       assertEquals("1", numDataSources, "Ensure that We only have one data source");
+      String numBytes  =
+          App.graph.executeSql(
+              "SELECT Object_Data_Source_Total_Bytes from Object_Data_Source WHERE Object_Data_Source_Name = 'OFFICE365/EMAIL'",Collections.EMPTY_MAP)
+              .getRawResultSet().next().getProperty("Object_Data_Source_Total_Bytes").toString();;
+      assertEquals("3003.0", numBytes, "Ensure that we are counting bytes");
+
 
       String currDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
       String numDataEventEmailMessageGroups =

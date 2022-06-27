@@ -1914,6 +1914,26 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Data_Source_Num_Objects",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Source_Total_Bytes",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Source_Avg_Bytes",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Source_Kahan_Bytes",
+      "dataType": "Double",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata_Type_Object_Data_Src_Mapping_Rule",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -5126,7 +5146,11 @@
         "Object_Data_Source_Status",
         "Object_Data_Source_Update_Date",
         "Object_Data_Source_Ingestion_Start",
-        "Object_Data_Source_Ingestion_Finish"
+        "Object_Data_Source_Ingestion_Finish",
+        "Object_Data_Source_Num_Objects",
+        "Object_Data_Source_Total_Bytes",
+        "Object_Data_Source_Avg_Bytes",
+        "Object_Data_Source_Kahan_Bytes"
       ],
       "propertyKeysMappings": {}
     },

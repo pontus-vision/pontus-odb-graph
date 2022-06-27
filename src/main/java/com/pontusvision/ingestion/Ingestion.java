@@ -2,22 +2,32 @@ package com.pontusvision.ingestion;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.Option;
+import com.jayway.jsonpath.spi.json.GsonJsonProvider;
+import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
+import com.jayway.jsonpath.spi.json.JsonProvider;
+import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
+import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
+import com.jayway.jsonpath.spi.mapper.MappingProvider;
 import com.orientechnologies.apache.commons.csv.CSVFormat;
 import com.orientechnologies.apache.commons.csv.CSVRecord;
-import com.pontusvision.gdpr.App;
 import com.pontusvision.graphutils.EmailNLPRequest;
 import com.pontusvision.graphutils.FileNLPRequest;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.math3.util.Pair;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Pattern;
 
 
 @Path("ingestion")
@@ -27,10 +37,50 @@ public class Ingestion {
   //  KeycloakSecurityContext keycloakSecurityContext;
 
 
-  public static String getDataSourceName (IngestionJsonObjArrayRequest request){
-    String dsName =  (request.getDataSourceName() == null )? request.getRuleName() : request.getDataSourceName();
-    return (dsName == null) ? "UNKNOWN": dsName.toUpperCase();
+  public static String getDataSourceName(IngestionJsonObjArrayRequest request) {
+    String dsName = (request.getDataSourceName() == null) ? request.getRuleName() : request.getDataSourceName();
+    return (dsName == null) ? "UNKNOWN" : dsName.toUpperCase();
   }
+
+  static Configuration conf = new Configuration.ConfigurationBuilder().build()
+      .jsonProvider(new GsonJsonProvider())
+      .mappingProvider(new GsonMappingProvider());
+
+  public static Pair<Long, Long> getNumBytesNumObjects(IngestionJsonObjArrayRequest request) {
+
+    Long totalBytes = 0L;
+    Long numItems = 0L;
+//    Configuration.setDefaults(conf);
+
+    if ("pv_email".equalsIgnoreCase(request.ruleName)) {
+      EmailNLPRequest[] recordList = JsonPath.parse(request.jsonString,conf)
+          .read(request.jsonPath, EmailNLPRequest[].class);
+//      List<EmailNLPRequest> recordList = JsonPath.read(request.jsonString, request.jsonPath);
+      for (int i = 0, ilen = recordList.length; i < ilen; i++) {
+        EmailNLPRequest rec = recordList[i];
+        if (rec.getSizeBytes() != null) {
+          totalBytes += rec.getSizeBytes();
+        }
+      }
+      numItems = (long) recordList.length;
+
+    } else if ("pv_file".equalsIgnoreCase(request.ruleName)) {
+      FileNLPRequest[] recordList = JsonPath.parse(request.jsonString,conf)
+          .read( request.jsonPath,FileNLPRequest[].class);
+      for (int i = 0, ilen = recordList.length; i < ilen; i++) {
+        FileNLPRequest rec = recordList[i];
+        if (rec.getSizeBytes() != null) {
+          totalBytes += rec.getSizeBytes();
+        }
+      }
+      numItems = (long) recordList.length;
+
+    }
+
+    return new Pair<>(totalBytes, numItems);
+
+  }
+
   public Ingestion() {
 
   }
@@ -48,13 +98,17 @@ public class Ingestion {
 //      put("ruleName", request.ruleName);
 //    }};
 
-    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"In Progress",true, null);
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request), "In Progress", true);
 
     String res = com.pontusvision.graphutils.Matcher.ingestEmail(
         request.jsonString,
         request.jsonPath,
         request.ruleName);
-    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"Finished",true, null);
+
+    Pair<Long, Long> stats = getNumBytesNumObjects(request);
+
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request), "Finished", false, stats.getFirst(),
+        stats.getSecond());
 
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
@@ -74,7 +128,7 @@ public class Ingestion {
 //      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
 //      put("ruleName", request.ruleName);
 //    }};
-    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"In Progress",true, null);
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request), "In Progress", true, null);
 
 
     String res = com.pontusvision.graphutils.Matcher.ingestFile(
@@ -82,7 +136,10 @@ public class Ingestion {
         request.jsonPath,
         request.ruleName);
 
-    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"Finished",true, null);
+    Pair<Long, Long> stats = getNumBytesNumObjects(request);
+
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request), "Finished", false, stats.getFirst(),
+        stats.getSecond());
 
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
@@ -90,7 +147,7 @@ public class Ingestion {
 
   }
 
-  public static String ingestMd2Data(IngestionJsonObjArrayRequest request){
+  public static String ingestMd2Data(IngestionJsonObjArrayRequest request) {
     return com.pontusvision.graphutils.Matcher.ingestMD2BulkData(request.jsonString, request.jsonPath, request.ruleName);
 
   }
@@ -107,62 +164,64 @@ public class Ingestion {
 //      put("jsonPath", (request.jsonPath == null) ? "$.objs" : request.jsonPath);
 //      put("ruleName", request.ruleName);
 //    }};
-    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"In Progress",true, null);
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request), "In Progress", true, null);
+    String retVal;
 
-    if ("pv_email".equalsIgnoreCase(request.ruleName)){
-      return com.pontusvision.graphutils.Matcher.ingestEmail(
+    if ("pv_email".equalsIgnoreCase(request.ruleName)) {
+      retVal = com.pontusvision.graphutils.Matcher.ingestEmail(
+          request.jsonString,
+          request.jsonPath,
+          request.ruleName);
+    } else if ("pv_file".equalsIgnoreCase(request.ruleName)) {
+      retVal = com.pontusvision.graphutils.Matcher.ingestFile(
+          request.jsonString,
+          request.jsonPath,
+          request.ruleName);
+    } else if ("pv_md2".equalsIgnoreCase(request.ruleName)) {
+      retVal = ingestMd2Data(request);
+    } else {
+
+      retVal = com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(
           request.jsonString,
           request.jsonPath,
           request.ruleName);
     }
-    else if ("pv_file".equalsIgnoreCase(request.ruleName)){
-      return com.pontusvision.graphutils.Matcher.ingestFile(
-          request.jsonString,
-          request.jsonPath,
-          request.ruleName);
-    }
+    Pair<Long, Long> stats = getNumBytesNumObjects(request);
 
-    else if ("pv_md2".equalsIgnoreCase(request.ruleName)){
-      return ingestMd2Data(request);
-    }
-
-    String res = com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(
-        request.jsonString,
-        request.jsonPath,
-        request.ruleName);
-
-    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request),"Finished",false, null);
+    FileNLPRequest.upsertDataSourceStatus(getDataSourceName(request), "Finished", false, stats.getFirst(),
+        stats.getSecond());
 
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
-    return res;
+    return retVal;
 
   }
 
-  public static String cleanHeader (String headerSub){
-    String retVal  = StringReplacer.replaceAll(headerSub, (" ,.;:-)([]{}$\"'!£%^&*+/\\?><@~#`|"), "_");
-    retVal = java.text.Normalizer.normalize(retVal,  java.text.Normalizer.Form.NFD);
+  public static String cleanHeader(String headerSub) {
+    String retVal = StringReplacer.replaceAll(headerSub, (" ,.;:-)([]{}$\"'!£%^&*+/\\?><@~#`|"), "_");
+    retVal = java.text.Normalizer.normalize(retVal, java.text.Normalizer.Form.NFD);
     retVal = retVal.replaceAll("\\p{M}", "");
     retVal = retVal.replaceAll("[^\\p{ASCII}]", "");
     return retVal;
   }
 
 
-
   @POST
   @Path("status_update")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public String statusUpdate(IngestionStatusRequest  request)  {
+  public String statusUpdate(IngestionStatusRequest request) {
 //    upsertDataSourceStatus
-    FileNLPRequest.upsertDataSourceStatus(request.dataSourceName,request.status,request.isStart,request.errorStr);
+    FileNLPRequest.upsertDataSourceStatus(request.dataSourceName, request.status, request.isStart,
+        null, null, request.errorStr);
     return "{\"status\": true}";
   }
+
   @POST
   @Path("csvBase64")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public String csvFile(IngestionCSVFileRequest  request) throws ExecutionException, InterruptedException, IOException {
+  public String csvFile(IngestionCSVFileRequest request) throws ExecutionException, InterruptedException, IOException {
 
 //    Map<String, Object> bindings = new HashMap() {{
 //      put("jsonString", request.jsonString);
@@ -177,12 +236,12 @@ public class Ingestion {
     JsonArray entries = new JsonArray();
 //    List<Map> listOfMaps = new ArrayList<>();
     for (CSVRecord record : records) {
-      Map<String,String> recMap = record.toMap();
+      Map<String, String> recMap = record.toMap();
       recMap.put("currDate", new Date().toString());
       JsonObject entry = new JsonObject();
 
-      recMap.forEach((key,value)-> {
-        entry.addProperty(cleanHeader(key),value);
+      recMap.forEach((key, value) -> {
+        entry.addProperty(cleanHeader(key), value);
       });
       entries.add(entry);
 
@@ -193,7 +252,7 @@ public class Ingestion {
     IngestionJsonObjArrayRequest req = new IngestionJsonObjArrayRequest();
     req.ruleName = request.ruleName;
     req.jsonPath = "$.entries";
-    req.jsonString =  obj.toString();
+    req.jsonString = obj.toString();
 
 
     String res = this.jsonObjArray(req);
