@@ -620,7 +620,7 @@ rules:
 
       - label: Person_Organisation
         props:
-          Full_Name:
+          Name:
             val: "${Name_1?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Customer_ID: "${Responsible_Dealer?.trim()?.toUpperCase()}"

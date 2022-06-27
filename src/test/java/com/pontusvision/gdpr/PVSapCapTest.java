@@ -208,10 +208,10 @@ public class PVSapCapTest extends AppTest {
       assertEquals("PORSCHE CENTER SÃO PAULO", getResponsibleDealer, "Responsible Dealer");
 
 
-//      String getResponsibleOwner =
-//              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('PORSCHE CENTER SÃO PAULO')).out('Is_Responsible')" +
-//                      ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
-//      assertEquals("AHOII BRAUSE", getResponsibleOwner, "client");
+      String getResponsibleOwner =
+              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('PORSCHE CENTER SÃO PAULO')).out('Is_Responsible')" +
+                      ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
+      assertEquals("AHOII BRAUSE", getResponsibleOwner, "client");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -374,7 +374,7 @@ public class PVSapCapTest extends AppTest {
       String locationAddress =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARIA DOLORES'))" +
                       ".out('Is_Located').properties('Location_Address_parser_city').value().next().toString()").get().toString();
-      assertEquals("[são paulo]", locationAddress, "Maria' city");
+      assertEquals("[sao paulo, saopaulo]", locationAddress, "Maria' city");
 
       String cimedTaxNumber =
               App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('CIMED INDÚSTRIA DE MEDICAMENTOS LTDA.')).in('Works')" +

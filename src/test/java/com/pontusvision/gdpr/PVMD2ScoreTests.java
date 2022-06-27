@@ -6,7 +6,6 @@ import com.pontusvision.graphutils.gdpr;
 import org.junit.jupiter.api.*;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +45,7 @@ public class PVMD2ScoreTests extends AppTest {
       Type resultType = new TypeToken<List<Map<String, Object>>>(){}.getType();
       List<Map<String, Object>> result = gson.fromJson(md2Stats, resultType);
 
-      assertEquals(131,result.size());
+      assertEquals(133,result.size());
 
 //      Map<String, Long> retVals = new HashMap<>();
 //

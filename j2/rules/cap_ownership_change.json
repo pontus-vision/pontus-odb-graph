@@ -15,7 +15,7 @@
         "label": "Person_Organisation",
         "props": [
           {
-            "name": "Person_Organisation_Full_Name",
+            "name": "Person_Organisation_Name",
             "val": "${Name_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
