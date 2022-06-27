@@ -379,7 +379,7 @@ public class PVSapCapTest extends AppTest {
       String cimedTaxNumber =
               App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('CIMED INDÚSTRIA DE MEDICAMENTOS LTDA.')).in('Works')" +
                       ".out('Has_Id_Card').has('Object_Identity_Card_Id_Type', eq('CPF')).properties('Object_Identity_Card_Id_Value').value().next().toString()").get().toString();
-      assertEquals("8586336807", cimedTaxNumber, "CIMED's Tax Number");
+      assertEquals("18586336807", cimedTaxNumber, "CIMED's Tax Number");
 
       String emailNameTest =
               App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('nelquio@hotmail.com'))" +

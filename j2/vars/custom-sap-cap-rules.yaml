@@ -1548,7 +1548,7 @@ rules:
         condition: "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}"
         name: cpf
         props:
-          Id_Value: "${ID_number?.replaceAll('[^0-9]','')}"
+          Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
