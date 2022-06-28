@@ -37,6 +37,7 @@
       {
         "label": "Object_Identity_Card",
         "name": "cnpj",
+        "condition": "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}",
         "props": [
           {
             "name": "Object_Identity_Card_Id_Value",
@@ -54,10 +55,11 @@
       {
         "label": "Object_Identity_Card",
         "name": "cpf",
+        "condition": "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}",
         "props": [
           {
             "name": "Object_Identity_Card_Id_Value",
-            "val": "${ID_number?.replaceAll('[^0-9]','')}",
+            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {

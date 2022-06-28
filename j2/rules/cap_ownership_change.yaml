@@ -3,22 +3,20 @@ updatereq:
   vertices:
     
     - label: Person_Natural
-      name: owner
       props:
         - name: Person_Natural_Full_Name
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
     
-    - label: Person_Natural
-      name: responsible_dealer
+    - label: Person_Organisation
       props:
-        - name: Person_Natural_Full_Name
-          val: ${Responsible_Dealer?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person_Natural_Full_Name_fuzzy
+        - name: Person_Organisation_Name
           val: ${Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Person_Organisation_Customer_ID
+          val: ${Responsible_Dealer?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
     
     - label: Event_Ingestion
       props:
@@ -71,9 +69,9 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexName: owner
+    fromVertexName: Person_Natural
     toVertexLabel: Event_Ingestion
   - label: Is_Responsible
-    fromVertexName: responsible_dealer
-    toVertexName: owner
+    fromVertexName: Person_Organisation
+    toVertexName: Person_Natural
 

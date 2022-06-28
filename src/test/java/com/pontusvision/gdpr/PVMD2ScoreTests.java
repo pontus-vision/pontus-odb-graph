@@ -6,7 +6,6 @@ import com.pontusvision.graphutils.gdpr;
 import org.junit.jupiter.api.*;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
