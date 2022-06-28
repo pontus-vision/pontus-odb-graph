@@ -74,8 +74,8 @@
       "person": [
         "Â \nUnfortunately"
       ],
-      "cpf": "[]",
-      "cnpj": "[]",
+      "cpf": [],
+      "cnpj": [],
       "categories": [],
       "name":  "b.out",
       "created": "2019-09-08T20:35:33Z",

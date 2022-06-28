@@ -109,7 +109,8 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
         trans.commit()
       } catch (Throwable t) {
         trans.rollback()
-        upsertDataSourceStatus(getDataSourceName(reqs[0]), 'Server-Side Error',false)
+        upsertDataSourceStatus(getDataSourceName(reqs[0]), 'Server-Side Error',false,
+                null, null, t.getMessage())
 
         throw t
       } finally {

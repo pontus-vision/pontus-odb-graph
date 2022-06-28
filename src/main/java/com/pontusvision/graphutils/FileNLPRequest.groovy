@@ -53,7 +53,6 @@ class FileNLPRequest implements Serializable {
   String server
   Long sizeBytes
 
-
   static Map<String, String> getMapFromFileNLPRequest(FileNLPRequest req) {
     Map<String, String> retVal = [:]
 
@@ -158,7 +157,8 @@ class FileNLPRequest implements Serializable {
       trans.commit()
     } catch (Throwable t) {
       trans.rollback()
-      upsertDataSourceStatus(getDataSourceName(reqs[0]), 'Server-Side Error',false)
+      upsertDataSourceStatus(getDataSourceName(reqs[0]), 'Server-Side Error',
+              false, null, null, t.getMessage())
 
       throw t
     } finally {
@@ -196,7 +196,7 @@ class FileNLPRequest implements Serializable {
     }
 
   }
-  static void upsertDataSourceStatus(String dataSourceName, String status, Boolean isStart = null, String errorStr = null){
+  static void upsertDataSourceStatus(String dataSourceName, String status, Boolean isStart = null, Long numBytes = null, Long numObjects = null, String errorStr = null){
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
     updateReq.edges = []
@@ -220,8 +220,18 @@ class FileNLPRequest implements Serializable {
       tx.open()
     }
     try {
-      App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
+      def retVal = App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
               sqlParams).toList()
+
+      if (numBytes && numObjects) {
+        def rid = retVal[0].rawResult.getIdentity().get()
+        if (rid) {
+          App.graph.executeSql("UPDATE ${rid} " +
+                  "SET Object_Data_Source_Total_Bytes += ${numBytes}, " +
+                  "Object_Data_Source_Num_Objects += ${numObjects}", [:])
+        }
+      }
+
 
       tx.commit()
     } catch (Exception e){
