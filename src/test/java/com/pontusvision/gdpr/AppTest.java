@@ -120,7 +120,10 @@ public class AppTest {
     return sb.toString();
   }
 
-  public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName) throws InterruptedException {
+  public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName ) throws InterruptedException {
+    jsonTestUtil(jsonFile,jsonPath,ruleName,null);
+  }
+    public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName, String dataSourceName ) throws InterruptedException {
 
     String res;
     try {
@@ -134,6 +137,7 @@ public class AppTest {
       req.jsonString = jsonString;
       req.jsonPath = jsonPath;
       req.ruleName = ruleName;
+      req.dataSourceName = dataSourceName;
 
       Ingestion ingestion = new Ingestion();
 
