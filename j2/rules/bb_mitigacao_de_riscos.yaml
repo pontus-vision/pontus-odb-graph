@@ -22,6 +22,14 @@ updatereq:
           val: ${Descricao}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Object_Risk_Mitigation_Data_Source_Is_Implemented
+          val: ${(Implementado.toLowerCase().equals('sim')|| Implementado.toLowerCase().equals('true'))?'true':'false' }
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Risk_Mitigation_Data_Source_Is_Approved
+          val: ${(Aprovado.toLowerCase().equals('sim')|| Aprovado.toLowerCase().equals('true'))?'true':'false' }
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event_Ingestion
       props:

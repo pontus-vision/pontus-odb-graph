@@ -576,12 +576,16 @@ schema:
           dataType: Date
         - name: Error
           index: false
-#        - name: Num_Objects
-#          dataType: Double
-#        - name: Total_Bytes
-#          dataType: Double
-#        - name: Avg_Bytes
-#          dataType: Double
+        - name: Num_Objects
+          dataType: Double
+        - name: Total_Bytes
+          dataType: Double
+        - name: Avg_Bytes
+          dataType: Double
+
+          #https://www.geeksforgeeks.org/kahan-summation-algorithm/
+        - name: Kahan_Bytes
+          dataType: Double
 
 
 

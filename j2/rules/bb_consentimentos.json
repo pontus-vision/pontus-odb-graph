@@ -136,11 +136,11 @@
       },
       {
         "label": "Object_Data_Procedures",
-        "condition": "${Mapeamento_de_Processo?.size() > 0}",
+        "condition": "${ID_do_Processo?.size() > 0}",
         "props": [
           {
             "name": "Object_Data_Procedures_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Mapeamento_de_Processo)}",
+            "val": "${new groovy.json.JsonBuilder(ID_do_Processo)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.BudibaseRef;",

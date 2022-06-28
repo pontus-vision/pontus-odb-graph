@@ -1,6 +1,7 @@
 {
   "value": [
     {
+      "sizeBytes": 1000,
       "metadataController": "",
       "metadataGDPRStatus": "",
       "metadataLineage": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZZZZZMASMVg9RZpQvx1RA5gOBwCdoYR88J93Trj61dww2kItAAAAAAFYAACdoYR88J93Trj61dww2kItAAEwzmzdAAA=",
@@ -72,6 +73,8 @@
       ]
     },
     {
+      "sizeBytes": 1001,
+
       "metadataController": "",
       "metadataGDPRStatus": "",
       "metadataLineage": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZZZZZMASMVg9RZpQvx1RA5gOBwCdoYR88J93Trj61dww2kItAAAAAAFYAACdoYR88J93Trj61dww2kItAAEwzmzcAAA=",
@@ -89,8 +92,8 @@
       "person": [
         "Â \nUnfortunately"
       ],
-      "cpf": "[]",
-      "cnpj": "[]",
+      "cpf": [],
+      "cnpj": [],
       "emailId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZZZZZMASMVg9RZpQvx1RA5gOBwCdoYR88J93Trj61dww2kItAAAAAAFYAACdoYR88J93Trj61dww2kItAAEwzmzcAAA=",
       "categories": [],
       "emailSubject": "Automatic reply: SABE Webinar",
@@ -113,6 +116,8 @@
       "ccEmailNames": []
     },
     {
+      "sizeBytes": 1002,
+
       "metadataController": "",
       "metadataGDPRStatus": "",
       "metadataLineage": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZZZZZMASMVg9RZpQvx1RA5gOBwCdoYR88J93Trj61dww2kItAAAAAAFYAACdoYR88J93Trj61dww2kItAAACk72GAAA=",
