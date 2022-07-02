@@ -3,6 +3,9 @@ package com.pontusvision.graphutils
 import com.orientechnologies.orient.core.id.ORecordId
 import com.orientechnologies.orient.core.metadata.schema.OClass
 import com.orientechnologies.orient.core.metadata.schema.OProperty
+import com.orientechnologies.orient.core.metadata.schema.OType
+import com.orientechnologies.orient.core.sql.executor.OResultSet
+import com.pontusvision.gdpr.*
 
 // Long count = App.g.V()
 //   .has("Object_Contract_Description", eq("This is a Data Sharing Contract"))
@@ -17,9 +20,6 @@ import com.orientechnologies.orient.core.metadata.schema.OProperty
 
 // res
 
-import com.orientechnologies.orient.core.metadata.schema.OType
-import com.orientechnologies.orient.core.sql.executor.OResultSet
-import com.pontusvision.gdpr.*
 import com.pontusvision.utils.LocationAddress
 import groovy.json.JsonSlurper
 import groovy.json.StringEscapeUtils
@@ -2651,15 +2651,15 @@ the end of the process.
         trans.open()
       }
       def args = [:]
-      args ['tid'] = templateId
-      args ['poleType'] = templatePOLEType
+      args['tid'] = templateId
+      args['poleType'] = templatePOLEType
       args['templateName'] = templateName
 
       OResultSet resSet = App.graph.executeSql(
               "SELECT @rid from Object_Notification_Templates where Object_Notification_Templates_Id = :tid AND " +
                       "Object_Notification_Templates_Types = :poleType AND " +
                       "Object_Notification_Templates_Label = :templateName   ",
-              args).getRawResultSet();
+              args).getRawResultSet()
 
 //      GraphTraversal<Vertex, Vertex> trav = App.g.V()
 //              .has("Object_Notification_Templates_Id", P.eq(templateId))
@@ -2682,6 +2682,7 @@ the end of the process.
                 .property("Object_Notification_Templates_Label", templateName)
                 .id().next().toString()
       }
+      resSet.close()
       trans.commit()
     }
     catch (Throwable t) {
@@ -2751,10 +2752,12 @@ the end of the process.
         return createNotificationTemplatesPt()
       }
 
-      Long count = App.graph.executeSql(
-              "SELECT count(*) as ct from  Object_Notification_Templates",
-              [:]).getRawResultSet().next().getProperty('ct')
+      OResultSet resultSet = App.graph.executeSql("SELECT count(*) as ct from  Object_Notification_Templates", [:]).getRawResultSet()
 
+
+      Long count = resultSet.next().getProperty('ct')
+
+      resultSet.close()
 //              App.g.V().has("Metadata_Type_Object_Notification_Templates", eq("Object_Notification_Templates")).count().next()
 
 
@@ -3006,12 +3009,13 @@ the end of the process.
 //      App.g = g;
 //    }
 
-      Long count =// App.g.V().has("Metadata_Type_Object_Notification_Templates", eq("Object_Notification_Templates")).count().next()
-      App.graph.executeSql(
+      // App.g.V().has("Metadata_Type_Object_Notification_Templates", eq("Object_Notification_Templates")).count().next()
+      OResultSet resultSet = App.graph.executeSql(
               "SELECT count(*) as ct from  Object_Notification_Templates",
-              [:]).getRawResultSet().next().getProperty('ct')
+              [:]).getRawResultSet()
+      Long count = resultSet.next().getProperty('ct')
 
-
+      resultSet.close()
       if (count == 0) {
 
 
@@ -3891,12 +3895,14 @@ the end of the process.
     long scoreValue
     long scoreValue2
     try {
-      def latestEntryId =
-              App.graph.executeSql(
-                      "SELECT @rid FROM  Object_Awareness_Campaign ORDER BY Object_Awareness_Campaign_Start_Date DESC LIMIT 1",
-                      [:]).getRawResultSet().next().getProperty('@rid')
+      OResultSet resultSet = App.graph.executeSql(
+              "SELECT @rid FROM  Object_Awareness_Campaign ORDER BY Object_Awareness_Campaign_Start_Date DESC LIMIT 1",
+              [:]).getRawResultSet()
 //              App.g.V().has('Metadata_Type_Object_Awareness_Campaign', eq('Object_Awareness_Campaign'))
 //              .order().by('Object_Awareness_Campaign_Start_Date', Order.desc).range(0, 1).id().next()
+      def latestEntryId = resultSet.next().getProperty('@rid')
+
+      resultSet.close()
 
       if (!latestEntryId) {
         throw new Exception("Could not find campaign")
@@ -3950,7 +3956,7 @@ the end of the process.
       Date today = new Date()
       long delta = today.getTime() - date.getTime()
 
-      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - delta days'), (long)(delta / (24L * 3600000L)))
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - delta days'), (long) (delta / (24L * 3600000L)))
       scoresMap.put(PontusJ2ReportingFunctions.translate('Awareness - numEvents'), numEvents)
 
       scoreValue2 = 100L
@@ -3971,9 +3977,9 @@ the end of the process.
     return scoreRetVal
   }
 
-  static String[] sensitiveData = getEnv("PV_SENSITIVE_DATA","DADOS DE SAÚDE,RAÇA,FILIAÇÃO A SINDICATO").split(',')
-  static String[] consentData = getEnv("PV_CONSENT_DATA","CONSENTIMENTO,CONSENT").split(',')
-  static String[] legInt = getEnv("PV_LEG_INT_DATA","LEGITIMATE INTEREST,LEGÍTIMO INTERESSE DO CONTROLADOR,LEGÍTIMO INTERESSE DO CONTROLADOR | OBRIGAÇÃO LEGAL OU REGULATÓRIO PELO CONTROLADOR").split(',')
+  static String[] sensitiveData = getEnv("PV_SENSITIVE_DATA", "DADOS DE SAÚDE,RAÇA,FILIAÇÃO A SINDICATO").split(',')
+  static String[] consentData = getEnv("PV_CONSENT_DATA", "CONSENTIMENTO,CONSENT").split(',')
+  static String[] legInt = getEnv("PV_LEG_INT_DATA", "LEGITIMATE INTEREST,LEGÍTIMO INTERESSE DO CONTROLADOR,LEGÍTIMO INTERESSE DO CONTROLADOR | OBRIGAÇÃO LEGAL OU REGULATÓRIO PELO CONTROLADOR").split(',')
 
   static def getChildrenScores(scoresMap) {
 
@@ -4081,39 +4087,43 @@ the end of the process.
 //    }
 
 
-
     Long scoreValue = 100L
 
-    long numDataProcsWithSensitiveData =
-            App.graph.executeSql(
-                    "SELECT count(*) as ct  FROM  Object_Data_Procedures where (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())  ",
-                    ['sd':sensitiveData]).getRawResultSet().next().getProperty('ct')
+    OResultSet resultSet = App.graph.executeSql(
+            "SELECT count(*) as ct  FROM  Object_Data_Procedures where (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())  ",
+            ['sd': sensitiveData]).getRawResultSet()
 
 //            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).where(
 //                    __.out('Has_Sensitive_Data').has('Object_Sensitive_Data_Description', within(sensitiveData))
 //            )
 //            .count().next()
 
+    long numDataProcsWithSensitiveData = resultSet.next().getProperty('ct')
 
-    if (numDataProcsWithSensitiveData == 0){
+    resultSet.close()
+
+    if (numDataProcsWithSensitiveData == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
       scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data'), scoreValue)
       scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveData'), 0L)
       scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - numDataProcsWithSensitiveDataWithConsent'), 0L)
-      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - data procs without consent'),  0L)
+      scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data - data procs without consent'), 0L)
 
       return scoreValue
 
     }
 
-    long numDataProcsWithSensitiveDataWithConsent =
-            App.graph.executeSql(
-                    """
+    resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Object_Data_Procedures where 
            (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())
         AND (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
         """,
-                    ['sd':sensitiveData, 'con': consentData]).getRawResultSet().next().getProperty('ct')
+            ['sd': sensitiveData, 'con': consentData]).getRawResultSet()
+
+    long numDataProcsWithSensitiveDataWithConsent = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
 //            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
 //                    .as('procs')
@@ -4127,7 +4137,7 @@ the end of the process.
 
     long numDataProcsWithSensitiveDataWithoutConsent = numDataProcsWithSensitiveData - numDataProcsWithSensitiveDataWithConsent
 
-    scoreValue -= (100L* numDataProcsWithSensitiveDataWithoutConsent/numDataProcsWithSensitiveData)
+    scoreValue -= (100L * numDataProcsWithSensitiveDataWithoutConsent / numDataProcsWithSensitiveData)
 
     scoresMap.put(PontusJ2ReportingFunctions.translate('Children'), scoreValue)
     scoresMap.put(PontusJ2ReportingFunctions.translate('Sensitive-Data'), scoreValue)
@@ -4140,13 +4150,16 @@ the end of the process.
 
   static def getConsentScores(def scoresMap) {
 
-    long numProcedures =
-            App.graph.executeSql(
-                    """
+    OResultSet resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Object_Data_Procedures where 
          (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
         """,
-                    [ 'con': consentData]).getRawResultSet().next().getProperty('ct')
+            ['con': consentData]).getRawResultSet()
+
+    long numProcedures = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
 //    App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
 //            .where(
@@ -4155,14 +4168,18 @@ the end of the process.
 //            ).count().next()
 
 
-    long numConsent =
-            App.graph.executeSql(
-                    """
+    resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Object_Data_Procedures where 
          (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
          AND (in('Consent').Metadata_Type_Object_Data_Procedures.removeAll(null).size() ) > 0    
         """,
-                    [ 'con': consentData]).getRawResultSet().next().getProperty('ct')
+            ['con': consentData]).getRawResultSet()
+
+    long numConsent = resultSet.next().getProperty('ct')
+
+    resultSet.close()
+
 
 //            App.g.V().has('Metadata_Type_Event_Consent', eq('Event_Consent'))
 ////            .where(
@@ -4298,13 +4315,19 @@ the end of the process.
     def dateThreshold = new java.util.Date(lastSixMonths)
 
 
-    long numLegalActions =
+    OResultSet resultSet =
             App.graph.executeSql(
                     """
         SELECT count(*) as ct  FROM  Object_Legal_Actions where
         Object_Legal_Actions_Date > :dt
         """,
-                    [ 'dt': dateThreshold]).getRawResultSet().next().getProperty('ct')
+                    ['dt': dateThreshold]).getRawResultSet()
+
+
+    long numLegalActions = resultSet.next().getProperty('ct')
+
+    resultSet.close()
+
 
 //            App.g.V().has('Object_Legal_Actions_Date'
 //                    , gt(dateThreshold)
@@ -4338,13 +4361,16 @@ the end of the process.
     def dateThreshold = new java.util.Date(lastTwelveMonths)
 
 
-    long numPrivacyDocs =
-            App.graph.executeSql(
-                    """
+    OResultSet resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Object_Privacy_Docs where
         Object_Privacy_Docs_Date > :dt
         """,
-                    [ 'dt': dateThreshold]).getRawResultSet().next().getProperty('ct')
+            ['dt': dateThreshold]).getRawResultSet()
+
+    long numPrivacyDocs = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
 //            App.g.V().has('Object_Privacy_Docs_Date'
 //                    , gt(dateThreshold)
@@ -4379,13 +4405,17 @@ the end of the process.
     def dateThreshold = new java.util.Date(lastTwelveMonths)
 
 
-    long numMeetings12months =
+    OResultSet resultSet =
             App.graph.executeSql(
                     """
         SELECT count(*) as ct  FROM  Event_Meeting where
         Event_Meeting_Date > :dt
         """,
-                    [ 'dt': dateThreshold]).getRawResultSet().next().getProperty('ct')
+                    ['dt': dateThreshold]).getRawResultSet()
+
+    long numMeetings12months = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
 //            App.g.V().has('Event_Meeting_Date'
 //                    , gt(dateThreshold)
@@ -4415,26 +4445,32 @@ the end of the process.
   }
 
   static def getDataBreachesScores(def scoresMap) {
-    long numItems =
+    OResultSet resultSet =
             App.graph.executeSql(
                     """
         SELECT count(*) as ct  FROM  Event_Data_Breach 
         """,
-                    [ :]).getRawResultSet().next().getProperty('ct')
+                    [:]).getRawResultSet()
 
 //    App.g.V().has('Metadata_Type_Event_Data_Breach', eq('Event_Data_Breach'))
 //            .count().next()
 
-    long numOpenDataBreachDataStolen =
-            App.graph.executeSql(
-                    """
+    long numItems = resultSet.next().getProperty('ct')
+    resultSet.close()
+
+
+    resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Event_Data_Breach where
         Event_Data_Breach_Status = "Open" AND
         (  Event_Data_Breach_Impact = "Customer Data Stolen (External)" OR
            Event_Data_Breach_Impact = "Customer Data Stolen (Internal)" )
         """,
-                    [ :]).getRawResultSet().next().getProperty('ct')
+            [:]).getRawResultSet()
 
+    long numOpenDataBreachDataStolen = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
 //    App.g.V()
 //                    .has('Event_Data_Breach_Status', eq('Open'))
@@ -4446,15 +4482,17 @@ the end of the process.
 //                    )
 //                    .count().next()
 
-    long numOpenDataBreachDataLost =
-            App.graph.executeSql(
-                    """
+
+    resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Event_Data_Breach where
         Event_Data_Breach_Status = "Open" AND
         (  Event_Data_Breach_Impact = "Data Lost"  )
         """,
-                    [ :]).getRawResultSet().next().getProperty('ct')
+            [:]).getRawResultSet()
 
+    long numOpenDataBreachDataLost = resultSet.next().getProperty('ct')
+    resultSet.close()
 //            App.g.V()
 //                    .has('Event_Data_Breach_Status', eq('Open'))
 //                    .where(
@@ -4493,8 +4531,8 @@ the end of the process.
   static def getDataProtnOfficerScores(def scoresMap) {
 
     long scoreVal = 100L
-    if (getEnv("PV_DSAR_DPO_EMAIL","[").startsWith("[") ||
-        getEnv("PV_DSAR_DPO_NAME","[").startsWith("[") ){
+    if (getEnv("PV_DSAR_DPO_EMAIL", "[").startsWith("[") ||
+            getEnv("PV_DSAR_DPO_NAME", "[").startsWith("[")) {
       scoreVal -= 100L
     }
 
@@ -4550,12 +4588,14 @@ the end of the process.
   }
 
   static def getIndivRightsScores(def scoresMap) {
-    long numItems =
-            App.graph.executeSql(
-                    """
+    OResultSet resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Object_Data_Source 
         """,
-                    [ :]).getRawResultSet().next().getProperty('ct')
+            [:]).getRawResultSet()
+
+    long numItems = resultSet.next().getProperty('ct')
+    resultSet.close()
 
 //            App.g.V()
 //            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
@@ -4563,12 +4603,15 @@ the end of the process.
 //            .next()
 
 
-    long numDeleteURL =
-            App.graph.executeSql(
-        """
+    resultSet = App.graph.executeSql(
+            """
         SELECT count(Object_Data_Source_URI_Delete) as ct  FROM  Object_Data_Source 
         """,
-                    [ :]).getRawResultSet().next().getProperty('ct')
+            [:]).getRawResultSet()
+    long numDeleteURL = resultSet.next().getProperty('ct')
+
+    resultSet.close()
+
 
 //            App.g.V()
 //            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
@@ -4576,25 +4619,30 @@ the end of the process.
 //            .count()
 //            .next()
 
-    long numUpdateURL =
 //            App.g.V()
 //            .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
 //            .values('Object_Data_Source_URI_Update')
 //            .count()
 //            .next()
-    App.graph.executeSql(
-            """
+    resultSet = App.graph.executeSql("""
         SELECT count(Object_Data_Source_URI_Update) as ct  FROM  Object_Data_Source 
         """,
-            [ :]).getRawResultSet().next().getProperty('ct')
+            [:]).getRawResultSet()
 
 
-    long numReadURL =
+    long numUpdateURL = resultSet.next().getProperty('ct')
+
+    resultSet.close()
+
+    resultSet =
             App.graph.executeSql(
                     """
                     SELECT count(Object_Data_Source_URI_Read) as ct  FROM  Object_Data_Source 
                     """,
-                    [ :]).getRawResultSet().next().getProperty('ct')
+                    [:]).getRawResultSet()
+    long numReadURL = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
 
 //    App.g.V()
@@ -4628,23 +4676,30 @@ the end of the process.
 
   static def getInfoYouHoldScores(def scoresMap) {
 
-    long numDataSources =
+    OResultSet resultSet =
             App.graph.executeSql(
                     """
                     SELECT count(*)  as ct  FROM  Object_Data_Source
                     """,
-                    [:]).getRawResultSet().next().getProperty('ct')
+                    [:]).getRawResultSet()
+
+    long numDataSources = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
 //            App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source')).count().next()
 
-    long numRecordsWithoutDataProcedures =
+    resultSet =
             App.graph.executeSql(
                     """
         SELECT count(*) as ct  FROM  Object_Data_Source where 
         (in('Has_Data_Source').Metadata_Type_Object_Data_Procedures.size() ) = 0    
         """,
-                    [ : ]).getRawResultSet().next().getProperty('ct')
+                    [:]).getRawResultSet()
 
+    Long numRecordsWithoutDataProcedures = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 //            App.g.V()
 //                    .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
 //                    .where(__.in('Has_Data_Source')
@@ -4664,7 +4719,7 @@ the end of the process.
         scoreValue -= (pcntNoEdges)
       }
 
-      if (scoreValue < 0L){
+      if (scoreValue < 0L) {
         scoreValue = 0L
       }
 
@@ -4681,14 +4736,14 @@ the end of the process.
 
   }
 
-  static String getEnv(String envVar, String defVal){
-    String retVal = System.getenv(envVar);
-    if (retVal == null){
-      retVal = defVal;
+  static String getEnv(String envVar, String defVal) {
+    String retVal = System.getenv(envVar)
+    if (retVal == null) {
+      retVal = defVal
     }
     return retVal
   }
-  static String country = getEnv("PV_COUNTRY", "Brasil");
+  static String country = getEnv("PV_COUNTRY", "Brasil")
 
   static def getInternationalScores(def scoresMap) {
 
@@ -4696,18 +4751,20 @@ the end of the process.
 //    long numProcessesOutOfCountry = App.g.V()
 //            .has('Object_Data_Procedures_Country_Where_Stored', neq(country))
 //            .count().next()
-
-    long numProcessesOutOfCountry =
+    OResultSet resultSet =
             App.graph.executeSql(
                     """
         SELECT count(*) as ct  FROM  Object_Data_Procedures where 
         Object_Data_Procedures_Country_Where_Stored != :country    
         """,
-                    [ 'country':country ]).getRawResultSet().next().getProperty('ct')
+                    ['country': country]).getRawResultSet()
+
+    long numProcessesOutOfCountry = resultSet.next().getProperty('ct')
+    resultSet.close()
 
     long scoreValue = 100L
 
-    if (numProcessesOutOfCountry == 0){
+    if (numProcessesOutOfCountry == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('International'), scoreValue)
       scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country'), numProcessesOutOfCountry)
       scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country without consent'), new Long(0L))
@@ -4733,7 +4790,6 @@ the end of the process.
     scoreValue -= (long) (100L * numProcessesOutOfCountryWithoutConsent / numProcessesOutOfCountry)
 
 
-
     scoresMap.put(PontusJ2ReportingFunctions.translate('International'), scoreValue)
     scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country'), numProcessesOutOfCountry)
     scoresMap.put(PontusJ2ReportingFunctions.translate('International - num processes out of country without consent'), numProcessesOutOfCountryWithoutConsent)
@@ -4743,16 +4799,19 @@ the end of the process.
 
   static def getLawfulBasisScores(def scoresMap) {
 
-
-    long numDataProcs =
+    OResultSet resultSet =
             App.graph.executeSql(
                     """
                     SELECT count(*)  as ct  FROM  Object_Data_Procedures
                     """,
-                    [:]).getRawResultSet().next().getProperty('ct')
+                    [:]).getRawResultSet()
 
 //    App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
 //            .count().next()
+
+    long numDataProcs = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
     if (numDataProcs == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Lawful Basis'), 0L)
@@ -4762,14 +4821,16 @@ the end of the process.
       return 0L
     }
 
-    long numWithoutAnyLawfulBasis =
-            App.graph.executeSql(
+    resultSet = App.graph.executeSql(
             """
             SELECT count(*) as ct  FROM  Object_Data_Procedures where 
             (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )= 0  
             """,
-             [ :]).getRawResultSet().next().getProperty('ct')
+            [:]).getRawResultSet()
 
+    long numWithoutAnyLawfulBasis = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
 //            App.g.V()
 //            .has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
@@ -4778,13 +4839,15 @@ the end of the process.
 //            )
 //            .count().next()
 
-    long numWithLegInt =
-            App.graph.executeSql(
-                    """
+    resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Object_Data_Procedures where 
         (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:leg).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
         """,
-                    [ 'leg': legInt]).getRawResultSet().next().getProperty('ct')
+            ['leg': legInt]).getRawResultSet()
+    long numWithLegInt = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
 
 //            App.g.V()
@@ -4818,9 +4881,12 @@ the end of the process.
   static def getPrivacyImpactAssessmentScores(def scoresMap) {
 
 
-    long numDataProcedures =
-            App.graph.executeSql('SELECT COUNT(*) from Object_Data_Procedures',[:])
-                    .toList().get(0).getProperty('COUNT(*)')
+    OResultSet resultSet = App.graph.executeSql('SELECT COUNT(*) from Object_Data_Procedures', [:])
+            .getRawResultSet()
+
+    long numDataProcedures = resultSet.next().getProperty('COUNT(*)')
+
+    resultSet.close()
 
 //            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures'))
 //            .count().next()
@@ -4836,12 +4902,13 @@ the end of the process.
       return 0
     }
 
-    long numDataProceduresWithoutDataSources =
 
-            App.graph.executeSql(
-                    'SELECT COUNT(*) from Object_Data_Procedures  where ( (both().Metadata_Type_Object_Data_Source.size()) ) = 0 ',[:])
-                    .toList().get(0).getProperty('COUNT(*)')
+    resultSet = App.graph.executeSql(
+            'SELECT COUNT(*) from Object_Data_Procedures  where ( (both().Metadata_Type_Object_Data_Source.size()) ) = 0 ', [:])
+            .getRawResultSet()
+    long numDataProceduresWithoutDataSources = resultSet.next().getProperty('COUNT(*)')
 
+    resultSet.close()
 
 
 //            App.g.V()
@@ -4851,11 +4918,13 @@ the end of the process.
 //                    .count().next()
 
 
-    long numDataSources =
-            App.graph.executeSql('SELECT COUNT(*) from Object_Data_Source',[:])
-                    .toList().get(0).getProperty('COUNT(*)')
+    resultSet = App.graph.executeSql('SELECT COUNT(*) from Object_Data_Source', [:])
+            .getRawResultSet();
 //            App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
 //            .count().next()
+    long numDataSources = resultSet.next().getProperty('COUNT(*)');
+
+    resultSet.close()
 
     if (numDataSources == 0) {
       scoresMap.put(PontusJ2ReportingFunctions.translate('Privacy Impact Assessment'), 0L)
@@ -4868,20 +4937,25 @@ the end of the process.
       return 0L
     }
 
-    long numDataSourcesWithoutRisks =  App.graph.executeSql(
-            'SELECT COUNT(*) from Object_Data_Source  where ( (both("Has_Risk").Metadata_Type_Object_Risk_Data_Source.size()) ) = 0 ',[:])
-            .toList().get(0).getProperty('COUNT(*)')
+    resultSet = App.graph.executeSql(
+            'SELECT COUNT(*) from Object_Data_Source  where ( (both("Has_Risk").Metadata_Type_Object_Risk_Data_Source.size()) ) = 0 ', [:])
+            .getRawResultSet()
 
 //            App.g.V()
 //                    .has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
 //                    .where(__.out('Has_Risk').has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
 //                            .count().is(eq(0L)))
 //                    .count().next()
+    long numDataSourcesWithoutRisks = resultSet.next().getProperty('COUNT(*)')
+
+    resultSet.close()
 
 
-    long numRisks =
-            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Data_Source',[:])
-                    .toList().get(0).getProperty('COUNT(*)')
+    resultSet = App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Data_Source', [:])
+            .getRawResultSet()
+    long numRisks = resultSet.next().getProperty('COUNT(*)')
+
+    resultSet.close()
 
 //            App.g.V().has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
 //            .count().next()
@@ -4897,37 +4971,51 @@ the end of the process.
       return 0L
     }
 
-    long numMitigations =
-            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Mitigation_Data_Source',[:])
-                    .toList().get(0).getProperty('COUNT(*)')
+    resultSet = App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Mitigation_Data_Source', [:])
+            .getRawResultSet()
+
+    long numMitigations = resultSet.next().getProperty('COUNT(*)')
 
 //            App.g.V().has('Metadata_Type_Object_Risk_Mitigation_Data_Source',
 //            eq('Object_Risk_Mitigation_Data_Source'))
 //            .count().next()
 
-    long numRisksWithoutMitigations = App.graph.executeSql(
-            'SELECT COUNT(*) from Object_Risk_Data_Source where (in("Mitigates_Risk").Metadata_Type_Object_Risk_Mitigation_Data_Source.size()) = 0',[:]
-         ).toList().get(0).getProperty('COUNT(*)')
+    resultSet.close()
+
+    resultSet = App.graph.executeSql(
+            'SELECT COUNT(*) from Object_Risk_Data_Source where (in("Mitigates_Risk").Metadata_Type_Object_Risk_Mitigation_Data_Source.size()) = 0', [:]
+    ).getRawResultSet()
+    long numRisksWithoutMitigations = resultSet.next().getProperty('COUNT(*)')
+
+    resultSet.close()
+
 
 //            App.g.V()
 //                    .has('Metadata_Type_Object_Risk_Data_Source', eq('Object_Risk_Data_Source'))
 //                    .where(__.in('Mitigates_Risk').has('Metadata_Type_Object_Risk_Mitigation_Data_Source', eq('Object_Risk_Mitigation_Data_Source'))
 //                            .count().is(eq(0L)))
 //                    .count().next()
-
-    long numMitigationsNotApproved =
-            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Mitigation_Data_Source where Object_Risk_Mitigation_Data_Source_Is_Approved="false"',[:])
-                    .toList().get(0).getProperty('COUNT(*)')
+    resultSet =
+            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Mitigation_Data_Source where Object_Risk_Mitigation_Data_Source_Is_Approved="false"', [:])
+                    .getRawResultSet()
 //    App.g.V()
 //                    .has('Object_Risk_Mitigation_Data_Source_Is_Approved', eq("false"))
 //                    .count().next()
+    long numMitigationsNotApproved = resultSet.next().getProperty('COUNT(*)')
 
-    long numMitigationsNotImplemented =
-            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Mitigation_Data_Source where Object_Risk_Mitigation_Data_Source_Is_Implemented="false"',[:])
-                    .toList().get(0).getProperty('COUNT(*)')
+    resultSet.close()
+
+    resultSet =
+
+            App.graph.executeSql('SELECT COUNT(*) from Object_Risk_Mitigation_Data_Source where Object_Risk_Mitigation_Data_Source_Is_Implemented="false"', [:])
+                    .getRawResultSet()
 //            App.g.V()
 //                    .has('Object_Risk_Mitigation_Data_Source_Is_Implemented', eq("false"))
 //                    .count().next()
+
+    long numMitigationsNotImplemented = resultSet.next().getProperty('COUNT(*)')
+
+    resultSet.close()
 
     long scoreValue = 100L
 
@@ -4958,15 +5046,21 @@ the end of the process.
 
 
   static def getPrivacyNoticesScores(def scoresMap) {
-    long numEvents =
-             App.graph.executeSql('SELECT COUNT(*) from Object_Privacy_Notice',[:])
-                     .toList().get(0).getProperty('COUNT(*)')
+
+    OResultSet resultSet = App.graph.executeSql('SELECT COUNT(*) from Object_Privacy_Notice', [:])
+            .getRawResultSet()
 //            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).count().next()
 
-    long numRecordsNoConsent =
-            App.graph.executeSql(
-                    'SELECT COUNT(*) from Object_Privacy_Notice  where ( (both("Has_Privacy_Notice").Metadata_Type_Event_Consent.size()) ) = 0 ',[:])
-                    .toList().get(0).getProperty('COUNT(*)')
+    long numEvents = resultSet.next().getProperty('COUNT(*)')
+    resultSet.close()
+
+    resultSet = App.graph.executeSql(
+            'SELECT COUNT(*) from Object_Privacy_Notice  where ( (both("Has_Privacy_Notice").Metadata_Type_Event_Consent.size()) ) = 0 ', [:])
+            .getRawResultSet()
+
+
+    long numRecordsNoConsent = resultSet.next().getProperty('COUNT(*)')
+    resultSet.close()
 
 //            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
 //                    .match(
@@ -4987,11 +5081,13 @@ the end of the process.
 //                    .where(__.as('consentCount').is(eq(0)))
 //                    .count().next()
 
-    long numRecordsLessThan50PcntPositiveConsent =
-            App.graph.executeSql(
-                    'SELECT COUNT(*) from Object_Privacy_Notice where (2* both("Has_Privacy_Notice").Event_Consent_Status.removeAll("Consent").size()) > ( both("Has_Privacy_Notice").Event_Consent_Status.size())  ',
-                    [:])
-                    .toList().get(0).getProperty('COUNT(*)')
+    resultSet = App.graph.executeSql(
+            'SELECT COUNT(*) from Object_Privacy_Notice where (2* both("Has_Privacy_Notice").Event_Consent_Status.removeAll("Consent").size()) > ( both("Has_Privacy_Notice").Event_Consent_Status.size())  ',
+            [:])
+            .getRawResultSet()
+
+    long numRecordsLessThan50PcntPositiveConsent = resultSet.next().getProperty('COUNT(*)')
+    resultSet.close()
 
 //            App.g.V().has('Metadata_Type_Object_Privacy_Notice', eq('Object_Privacy_Notice')).as('privNotice')
 //                    .match(
@@ -5020,7 +5116,6 @@ the end of the process.
       }
 
 
-
       scoreValue -= (10L * numRecordsLessThan50PcntPositiveConsent / numEvents)
 
 
@@ -5041,21 +5136,21 @@ the end of the process.
     long fiveDayThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 5L))
     def fiveDayThreshold = new java.util.Date(fiveDayThresholdMs)
 
-    long numEvents =
-            App.graph.executeSql(
-                    """
+    OResultSet resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Event_Subject_Access_Request
         """,
-                    [ :]).getRawResultSet().next().getProperty('ct')
+            [:]).getRawResultSet()
+
+    long numEvents = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
     // App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).count().next()
 
 
-
-    long numRecordsOlder15Days =
-
-            App.graph.executeSql(
-                    """
+    resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Event_Subject_Access_Request where 
         Event_Subject_Access_Request_Metadata_Create_Date <= :threshold
         AND (
@@ -5066,9 +5161,10 @@ the end of the process.
         )
            
         """,
-                    [ 'threshold': fifteenDayThreshold]).getRawResultSet().next().getProperty('ct')
+            ['threshold': fifteenDayThreshold]).getRawResultSet()
 
-
+    long numRecordsOlder15Days = resultSet.next().getProperty('ct')
+    resultSet.close()
     // App.g.V()
     //         .has('Event_Subject_Access_Request_Metadata_Create_Date', lte(fifteenDayThreshold)).as('DSAR')
     //         .or(
@@ -5077,9 +5173,8 @@ the end of the process.
     //         )
     //         .count().next();
 
-    long numRecordsOlder5Days =
-            App.graph.executeSql(
-                    """
+    resultSet = App.graph.executeSql(
+            """
         SELECT count(*) as ct  FROM  Event_Subject_Access_Request where 
         Event_Subject_Access_Request_Metadata_Create_Date <= :threshold
         AND (
@@ -5090,9 +5185,12 @@ the end of the process.
         )
            
         """,
-                    [ 'threshold': fiveDayThreshold]).getRawResultSet().next().getProperty('ct')
+            ['threshold': fiveDayThreshold]).getRawResultSet()
     // - numRecordsOlder15Days ;
 
+    long numRecordsOlder5Days = resultSet.next().getProperty('ct')
+
+    resultSet.close()
 
     long scoreValue = 100L
     if (numEvents > 0) {
@@ -5171,6 +5269,7 @@ the end of the process.
   static String getMd2Stats() {
     return CalculatePOLECount.md2Stats()
   }
+
   static class CalculatePOLECount {
 
     static Long getCountQueryResults(String queryStr) {
@@ -5183,6 +5282,7 @@ the end of the process.
       return numEntries
 
     }
+
     static String md2Stats() {
 
       List<String> vertexLabels = [
@@ -5191,7 +5291,6 @@ the end of the process.
               "Object_Email_Message_Attachment",
               "Person_Natural"
       ]
-
 
 
       StringBuffer sb = new StringBuffer("[")
@@ -5209,24 +5308,42 @@ the end of the process.
         sb.append(" { \"metricname\": \"${PontusJ2ReportingFunctions.translate(dataType.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": $numEntries, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
       }
 
-      App.graph.executeSql("SELECT Event_File_Ingestion_File_Type as type,SUM(Event_File_Ingestion_Size_Bytes) as bytes FROM Event_File_Ingestion GROUP BY Event_File_Ingestion_File_Type", Collections.EMPTY_MAP).toList().each {
-        String type = "Event_File_Ingestion_File_Type_Bytes(${it.getRawResult().getProperty('type')})"
-        String bytes = it.getRawResult().getProperty('bytes')
+      OResultSet resultSet =
+              App.graph.executeSql("SELECT Event_File_Ingestion_File_Type as type,SUM(Event_File_Ingestion_Size_Bytes) as bytes FROM Event_File_Ingestion GROUP BY Event_File_Ingestion_File_Type", Collections.EMPTY_MAP).getRawResultSet()
+
+      while (resultSet.hasNext()) {
+        def it = resultSet.next()
+        String type = "Event_File_Ingestion_File_Type_Bytes(${it.getProperty('type')})"
+        String bytes = it.getProperty('bytes')
         sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate(type.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": ${Long.valueOf((long) Double.valueOf(bytes).doubleValue())}, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
 
       }
-      App.graph.executeSql("SELECT Event_File_Ingestion_File_Type as type,count(*) as num FROM Event_File_Ingestion GROUP BY Event_File_Ingestion_File_Type", Collections.EMPTY_MAP).toList().each {
-        String type = "Event_File_Ingestion_File_Type_Count(${it.getRawResult().getProperty('type')})"
-        String num = it.getRawResult().getProperty('num')
+      resultSet.close()
+
+
+      resultSet = App.graph.executeSql("SELECT Event_File_Ingestion_File_Type as type,count(*) as num FROM Event_File_Ingestion GROUP BY Event_File_Ingestion_File_Type", Collections.EMPTY_MAP)
+              .getRawResultSet();
+
+      while (resultSet.hasNext()) {
+        def it = resultSet.next()
+        String type = "Event_File_Ingestion_File_Type_Count(${it.getProperty('type')})"
+        String num = it.getProperty('num')
         sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate(type.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": ${Long.valueOf((long) Double.valueOf(num).doubleValue())}, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
       }
 
+      resultSet.close()
 
-      App.graph.executeSql("SELECT Object_Data_Source_Name as type, out('Has_Ingestion_Event').out('Has_Ingestion_Event').size() as num FROM Object_Data_Source GROUP BY Object_Data_Source_Name", Collections.EMPTY_MAP).toList().each {
-        String type = "Data_Source_Obj_Count(${it.getRawResult().getProperty('type')})"
-        String bytes = it.getRawResult().getProperty('num')
+
+      resultSet = App.graph.executeSql("SELECT Object_Data_Source_Name as type, out('Has_Ingestion_Event').out('Has_Ingestion_Event').size() as num FROM Object_Data_Source GROUP BY Object_Data_Source_Name", Collections.EMPTY_MAP)
+              .getRawResultSet();
+
+      while (resultSet.hasNext()) {
+        def it = resultSet.next();
+        String type = "Data_Source_Obj_Count(${it.getProperty('type')})"
+        String bytes = it.getProperty('num')
         sb.append(", { \"metricname\": \"${PontusJ2ReportingFunctions.translate(type.replaceAll('[_|\\.]', ' '))}\", \"metricvalue\": ${Long.valueOf((long) Double.valueOf(bytes).doubleValue())}, \"metrictype\": \"${PontusJ2ReportingFunctions.translate('POLE Counts')}\" }")
       }
+      resultSet.close()
 //      String queryStr = "SELECT COUNT(*) FROM `Object_Data_Source` WHERE `Object_Data_Source_Type` = 'Mixed'"
 //      Long numEntries = getCountQueryResults(queryStr)
 //
@@ -5238,6 +5355,7 @@ the end of the process.
       return sb.toString()
 
     }
+
     static String calculatePOLECounts() {
 
       List<String> vertexLabels = [
@@ -5395,7 +5513,7 @@ the end of the process.
       def metricvalue = it.getProperty('ct')
 
 
-      if (metricvalue > 0 && metricname){
+      if (metricvalue > 0 && metricname) {
         if (!firstTime) {
           sb.append(",")
         } else {
@@ -5694,10 +5812,10 @@ the end of the process.
 
         App.graph.executeSql(
                 'SELECT count(*) as ct, ' + groupByCount + ' ' +
-                'FROM Event_Subject_Access_Request ' +
-                'WHERE Event_Subject_Access_Request_Metadata_Create_Date ' +
-                'BETWEEN :gtDateThreshold AND :lteDateThreshold ' +
-                'GROUP BY  ' + groupByCount,
+                        'FROM Event_Subject_Access_Request ' +
+                        'WHERE Event_Subject_Access_Request_Metadata_Create_Date ' +
+                        'BETWEEN :gtDateThreshold AND :lteDateThreshold ' +
+                        'GROUP BY  ' + groupByCount,
                 args).getRawResultSet()
 
                 .each {
@@ -5754,28 +5872,28 @@ the end of the process.
 
     static String getDSARStatsPerOrganisation(GraphTraversalSource g) {
 
-    StringBuffer sb = new StringBuffer("[")
-    boolean firstTime = true
+      StringBuffer sb = new StringBuffer("[")
+      boolean firstTime = true
 
-    long nowMs = System.currentTimeMillis()
-    def nowThreshold = new Date(nowMs)
+      long nowMs = System.currentTimeMillis()
+      def nowThreshold = new Date(nowMs)
 
-    long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L))
-    def oneYearDateThreshold = new Date(oneYearThresholdMs)
-
-
-    long thirtyDayThresholdMs = (long) (nowMs - (3600000L * 24L * 30L))
-    def thirtyDayDateThreshold = new Date(thirtyDayThresholdMs)
-
-    long fifteenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 15L))
-    def fifteenDayDateThreshold = new Date(fifteenDayThresholdMs)
+      long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L))
+      def oneYearDateThreshold = new Date(oneYearThresholdMs)
 
 
-    long tenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 10L))
-    def tenDayDateThreshold = new Date(tenDayThresholdMs)
+      long thirtyDayThresholdMs = (long) (nowMs - (3600000L * 24L * 30L))
+      def thirtyDayDateThreshold = new Date(thirtyDayThresholdMs)
 
-    long fiveDayThresholdMs = (long) (nowMs - (3600000L * 24L * 5L))
-    def fiveDayDateThreshold = new Date(fiveDayThresholdMs)
+      long fifteenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 15L))
+      def fifteenDayDateThreshold = new Date(fifteenDayThresholdMs)
+
+
+      long tenDayThresholdMs = (long) (nowMs - (3600000L * 24L * 10L))
+      def tenDayDateThreshold = new Date(tenDayThresholdMs)
+
+      long fiveDayThresholdMs = (long) (nowMs - (3600000L * 24L * 5L))
+      def fiveDayDateThreshold = new Date(fiveDayThresholdMs)
 
 //    def typeOrg =
 //            [
@@ -5837,17 +5955,42 @@ the end of the process.
 //    }
 
 
-    try {
+      try {
 
 //        App.g.V()
 //                .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
 //                .groupCount().by('Event_Subject_Access_Request_Request_Type')
 
+        App.graph.executeSql(
+                'SELECT count(*) as ct, Event_Subject_Access_Request_Request_Type ' +
+                        'FROM Event_Subject_Access_Request ' +
+                        'GROUP BY Event_Subject_Access_Request_Request_Type'
+                , [:]).getRawResultSet()
+                .each {
+                  it.each { it2 ->
+                    if (!firstTime) {
+                      sb.append("\n,")
+                    } else {
+                      firstTime = false
+                    }
+                    sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.getProperty('Event_Subject_Access_Request_Request_Type'))} (Total)\",")
+                    sb.append("\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": ${it2.getProperty('ct')} }".toString())
+                  }
+                }
+      } catch (Exception e) {
+        System.err("Ignoring error when processing Stats: ${e.getMessage()}; ${e.getCause()}")
+        e.printStackTrace()
+      }
+
+//      App.g.V()
+//              .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
+//              .groupCount().by('Event_Subject_Access_Request_Status')
+
       App.graph.executeSql(
-              'SELECT count(*) as ct, Event_Subject_Access_Request_Request_Type ' +
-              'FROM Event_Subject_Access_Request ' +
-              'GROUP BY Event_Subject_Access_Request_Request_Type'
-              ,[:]).getRawResultSet()
+              'SELECT count(*) as ct, Event_Subject_Access_Request_Status ' +
+                      'FROM Event_Subject_Access_Request ' +
+                      'GROUP BY Event_Subject_Access_Request_Status',
+              [:]).getRawResultSet()
               .each {
                 it.each { it2 ->
                   if (!firstTime) {
@@ -5855,56 +5998,31 @@ the end of the process.
                   } else {
                     firstTime = false
                   }
-                  sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.getProperty('Event_Subject_Access_Request_Request_Type'))} (Total)\",")
-                  sb.append("\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": ${it2.getProperty('ct')} }".toString())
+                  sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.getProperty('Event_Subject_Access_Request_Status'))} (Total)\",")
+                  sb.append("\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": ${it2.getProperty('ct')} }".toString())
                 }
               }
-    } catch (Exception e) {
-      System.err("Ignoring error when processing Stats: ${e.getMessage()}; ${e.getCause()}")
-      e.printStackTrace()
+
+
+      firstTime = getDSARStatsPerRequestType(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb)
+      firstTime = getDSARStatsPerRequestType(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb)
+      firstTime = getDSARStatsPerRequestType(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb)
+      firstTime = getDSARStatsPerRequestType(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb)
+      firstTime = getDSARStatsPerRequestType(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb)
+
+      firstTime = getDSARStatsPerRequestStatus(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb)
+      firstTime = getDSARStatsPerRequestStatus(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb)
+      firstTime = getDSARStatsPerRequestStatus(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb)
+      firstTime = getDSARStatsPerRequestStatus(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb)
+      firstTime = getDSARStatsPerRequestStatus(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb)
+
+      sb.append(']')
+
+      return sb.toString()
+
+
     }
-
-//      App.g.V()
-//              .has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request'))
-//              .groupCount().by('Event_Subject_Access_Request_Status')
-
-    App.graph.executeSql(
-            'SELECT count(*) as ct, Event_Subject_Access_Request_Status ' +
-                    'FROM Event_Subject_Access_Request ' +
-                    'GROUP BY Event_Subject_Access_Request_Status',
-            [:]).getRawResultSet()
-            .each {
-              it.each { it2 ->
-                if (!firstTime) {
-                  sb.append("\n,")
-                } else {
-                  firstTime = false
-                }
-                sb.append(" {\"dsar_source_type\":\"${PontusJ2ReportingFunctions.translate(it2.getProperty('Event_Subject_Access_Request_Status'))} (Total)\",")
-                sb.append("\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": ${it2.getProperty('ct')} }".toString())
-              }
-            }
-
-
-    firstTime = getDSARStatsPerRequestType(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb)
-    firstTime = getDSARStatsPerRequestType(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb)
-    firstTime = getDSARStatsPerRequestType(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb)
-    firstTime = getDSARStatsPerRequestType(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb)
-    firstTime = getDSARStatsPerRequestType(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb)
-
-    firstTime = getDSARStatsPerRequestStatus(nowThreshold, fiveDayDateThreshold, firstTime, "0-5d", sb)
-    firstTime = getDSARStatsPerRequestStatus(fiveDayDateThreshold, tenDayDateThreshold, firstTime, "5-10d", sb)
-    firstTime = getDSARStatsPerRequestStatus(tenDayDateThreshold, fifteenDayDateThreshold, firstTime, "10-15d", sb)
-    firstTime = getDSARStatsPerRequestStatus(fifteenDayDateThreshold, thirtyDayDateThreshold, firstTime, "15-30d", sb)
-    firstTime = getDSARStatsPerRequestStatus(thirtyDayDateThreshold, oneYearDateThreshold, firstTime, "30-365d", sb)
-
-    sb.append(']')
-
-    return sb.toString()
-
-
   }
-}
 
   static class Discovery {
     static String domainTranslationStr = """

@@ -3,6 +3,7 @@ package com.pontusvision.gdpr;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.security.JWTTokenNeededFilter;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.HttpClient;
@@ -584,11 +585,15 @@ public class PVBasicTest extends AppTest {
                       .get().toString();
 
       assertEquals("1", numDataSources, "Ensure that We only have one data source");
-      String numBytes  =
-          App.graph.executeSql(
+      OResultSet resultSet = App.graph.executeSql(
               "SELECT Object_Data_Source_Total_Bytes from Object_Data_Source WHERE Object_Data_Source_Name = 'OFFICE365/EMAIL'",Collections.EMPTY_MAP)
-              .getRawResultSet().next().getProperty("Object_Data_Source_Total_Bytes").toString();;
-      assertEquals("3003.0", numBytes, "Ensure that we are counting bytes");
+              .getRawResultSet();
+
+      String numBytes  = resultSet.next().getProperty("Object_Data_Source_Total_Bytes").toString();
+
+      resultSet.close();
+
+          assertEquals("3003.0", numBytes, "Ensure that we are counting bytes");
 
 
       String currDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());

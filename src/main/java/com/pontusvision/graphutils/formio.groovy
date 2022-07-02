@@ -106,10 +106,10 @@ class FormData {
     def data = formDataParsed.request.data
 
 
-    def Key_Form_Owner_Id = "${dataType}.Form_Owner_Id" as String
-    def Key_Form_Id = "${dataType}.Form_Id" as String
-    def Key_Form_Submission_Id = "${dataType}.Form_Submission_Id" as String
-    def Key_Form_Submission_Owner_Id = "${dataType}.Form_Submission_Owner_Id" as String
+    def Key_Form_Owner_Id = "${dataType}_Form_Owner_Id" as String
+    def Key_Form_Id = "${dataType}_Form_Id" as String
+    def Key_Form_Submission_Id = "${dataType}_Form_Submission_Id" as String
+    def Key_Form_Submission_Owner_Id = "${dataType}_Form_Submission_Owner_Id" as String
     def Key_Metadata_Type = "Metadata_Type_${dataType}" as String
 
 
@@ -128,7 +128,7 @@ class FormData {
       if (k != 'submit') {
         def key = ((k.startsWith(dataType) || k.startsWith("Metadata_Type")) ?
           k :
-          "$dataType.$k") as String
+          "${dataType}_$k") as String
 
         createPropsIfNotThere(vertexClass, key, String.class, sb)
       }
@@ -137,9 +137,9 @@ class FormData {
 
     if (indices.size() == 0) {
       String[] fields = classFields.values().toArray(new String[0]);
-      vertexClass.createIndex("${dataType}.MixedIdx" as String,
+      vertexClass.createIndex("${dataType}_MixedIdx" as String,
         OClass.INDEX_TYPE.FULLTEXT.toString(), fields);
-      System.out.println("Added  fields ${fields} to ${dataType}.MixedIdx ");
+      System.out.println("Added  fields ${fields} to ${dataType}_MixedIdx ");
     }
 
     return classFields;
@@ -149,7 +149,7 @@ class FormData {
   static String updateFormData(GraphTraversalSource gtrav, Map<String, String> fields, String dataType, OClass vertexClass, StringBuffer sb = new StringBuffer()) {
 
 
-    String Key_Form_Submission_Id = "${dataType}.Form_Submission_Id" as String
+    String Key_Form_Submission_Id = "${dataType}_Form_Submission_Id" as String
     String submissionId = fields.get(Key_Form_Submission_Id);
 
     def localGtrav = gtrav.V()
@@ -163,7 +163,7 @@ class FormData {
 
         def key = ((k.startsWith(dataType) || k.startsWith("Metadata_Type")) ?
           k :
-          "$dataType.$k") as String
+          "${dataType}_$k") as String
 
         def val = "$v" as String
         sb.append("\nadding $key with val = $v =>").append(v.getClass().toString())
@@ -272,8 +272,8 @@ class FormData {
 
     Map<String, String> fields = prepareFormData(dataFromFormInJSON, dataType, vertexClass,sb);
 
-    String submissionId = fields.get("${dataType}.Form_Submission_Id")
-    String submissionOwner = fields.get("${dataType}.Form_Submission_Owner_Id")
+    String submissionId = fields.get("${dataType}_Form_Submission_Id")
+    String submissionOwner = fields.get("${dataType}_Form_Submission_Owner_Id")
 
     def trans = App.graph.tx()
     def retVal = "";
@@ -292,7 +292,7 @@ class FormData {
 
       if (otherDataType && otherDataTypeSubmissionId)
       {
-        def otherDataTypeSubmissionIdKey = "${otherDataType}.Form_Submission_Id" as String
+        def otherDataTypeSubmissionIdKey = "${otherDataType}_Form_Submission_Id" as String
         def otherTypeId = gtrav.V().has(otherDataTypeSubmissionIdKey, otherDataTypeSubmissionId).next().id()
 
         if (otherTypeId)
@@ -344,8 +344,8 @@ class FormData {
       if (!trans.isOpen()) {
         trans.open();
       }
-      def Key_Form_Submission_Id = "${dataType}.Form_Submission_Id" as String
-      def Key_Form_Submission_Owner_Id = "${dataType}.Form_Submission_Owner_Id" as String
+      def Key_Form_Submission_Id = "${dataType}_Form_Submission_Id" as String
+      def Key_Form_Submission_Owner_Id = "${dataType}_Form_Submission_Owner_Id" as String
 
       def v = gtrav.V()
         .has(Key_Form_Submission_Id, (String) submissionId)
