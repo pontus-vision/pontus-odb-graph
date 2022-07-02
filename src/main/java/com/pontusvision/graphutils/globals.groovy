@@ -10,11 +10,13 @@ import com.orientechnologies.orient.core.metadata.schema.OClass
 import com.orientechnologies.orient.core.metadata.schema.OProperty
 import com.orientechnologies.orient.core.metadata.schema.OType
 import com.orientechnologies.orient.core.record.impl.ODocument
+import com.orientechnologies.orient.core.sql.executor.OResultSet
 import com.pontusvision.gdpr.App
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import groovy.json.StringEscapeUtils
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
+import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet
 import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
@@ -589,14 +591,17 @@ class PontusJ2ReportingFunctions {
   }
   static String getPolicyText(String policyType) {
     try {
-      def text =
+      OGremlinResultSet resultSet =
               App.graph.executeSql(
                       """
         SELECT Object_Policies_Text  as ct  FROM  Object_Policies where
         Object_Policies_Type = :pt
         """,
-                      ['pt': policyType]).getRawResultSet().next().getProperty('ct')
+                      ['pt': policyType])
 
+      String text = resultSet.getRawResultSet().next().getProperty('ct')
+
+      resultSet.close()
 //              App.g.V().has("Object_Policies_Type", P.eq(policyType))
 //              .values("Object_Policies_Text").next().toString()
       return text;

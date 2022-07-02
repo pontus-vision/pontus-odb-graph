@@ -2173,6 +2173,7 @@ class Matcher {
       })
 
     }
+    retVals.close()
   }
 
   static matchVerticesSlim(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs) {

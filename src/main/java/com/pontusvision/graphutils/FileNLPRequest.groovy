@@ -2,6 +2,7 @@ package com.pontusvision.graphutils
 
 import com.google.common.util.concurrent.AtomicDouble
 import com.orientechnologies.orient.core.id.ORID
+import com.orientechnologies.orient.core.sql.executor.OResultSet
 import com.pontusvision.gdpr.App
 import com.pontusvision.gdpr.mapping.Edge
 import com.pontusvision.gdpr.mapping.UpdateReq
@@ -220,17 +221,19 @@ class FileNLPRequest implements Serializable {
       tx.open()
     }
     try {
-      def retVal = App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
-              sqlParams).toList()
+      OResultSet retVal = App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
+              sqlParams).getRawResultSet()
 
       if (numBytes && numObjects) {
-        def rid = retVal[0].rawResult.getIdentity().get()
+        def rid = retVal.next().getIdentity().get()
         if (rid) {
           App.graph.executeSql("UPDATE ${rid} " +
                   "SET Object_Data_Source_Total_Bytes += ${numBytes}, " +
-                  "Object_Data_Source_Num_Objects += ${numObjects}", [:])
+                  "Object_Data_Source_Num_Objects += ${numObjects}", [:]).rawResultSet.close();
         }
       }
+
+      retVal.close()
 
 
       tx.commit()

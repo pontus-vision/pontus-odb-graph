@@ -9,6 +9,9 @@ import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
+import com.pontusvision.gdpr.form.FormDataRequest;
+import com.pontusvision.gdpr.form.FormDataResponse;
+import com.pontusvision.gdpr.form.PVFormData;
 import com.pontusvision.gdpr.mapping.MappingReq;
 import com.pontusvision.gdpr.report.*;
 import com.pontusvision.graphutils.PText;
@@ -18,6 +21,7 @@ import com.pontusvision.security.JWTTokenNeeded;
 import com.pontusvision.security.PVDecodedJWT;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseMessage;
 import org.apache.tinkerpop.gremlin.driver.message.ResponseStatusCode;
 import org.apache.tinkerpop.gremlin.driver.ser.GraphSONMessageSerializerV3d0;
@@ -30,6 +34,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.structure.Edge;
+import org.apache.tinkerpop.gremlin.structure.Transaction;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.structure.io.IoRegistry;
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper;
@@ -37,17 +42,17 @@ import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
 import org.glassfish.jersey.process.internal.RequestScoped;
 import org.glassfish.jersey.server.ContainerRequest;
 
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -93,7 +98,7 @@ public class Resource {
   //addRandomDataInit(App.graph,App.g)
 
 
-  public static boolean isAdminOrDPO(ContainerRequestContext request){
+  public static boolean isAdminOrDPO(ContainerRequestContext request) {
     PVDecodedJWT pvDecodedJWT = (PVDecodedJWT) request.getProperty("pvDecodedJWT");
     return (pvDecodedJWT != null && pvDecodedJWT.isAdmin() || pvDecodedJWT.isDPO());
   }
@@ -123,27 +128,29 @@ public class Resource {
    */
 
 
-  public static String getFirstStringItem (List<Object> list, String defaultVal){
+  public static String getFirstStringItem(List<Object> list, String defaultVal) {
 
-    if (list == null || list.size() != 1){
+    if (list == null || list.size() != 1) {
       return defaultVal;
     }
     return list.get(0).toString();
 
   }
-  public static Double getFirstDoubleItem (List<Object> list, Double defaultVal){
 
-    if (list == null || list.size() != 1){
+  public static Double getFirstDoubleItem(List<Object> list, Double defaultVal) {
+
+    if (list == null || list.size() != 1) {
       return defaultVal;
     }
-    return (Double)list.get(0);
+    return (Double) list.get(0);
 
   }
+
   @POST
   @Path("md2_search")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Md2Reply md2Search(@Context ContainerRequestContext req,Md2Request md2req) throws HTTPException {
+  public Md2Reply md2Search(@Context ContainerRequestContext req, Md2Request md2req) throws HTTPException {
     if (!isAdminOrDPO(req)) {
       return new Md2Reply(Response.Status.UNAUTHORIZED,
           "Auth Token does not give rights to execute this");
@@ -224,22 +231,22 @@ public class Resource {
         Object eventId = res.get(i).get("ID");
 
         if ("Event_File_Ingestion".equalsIgnoreCase(eventType)) {
-          reg.fileType = getFirstStringItem(values.get("Event_File_Ingestion_File_Type"),"");
-          reg.sizeBytes = getFirstDoubleItem(values.get("Event_File_Ingestion_Size_Bytes"),0.0).longValue();
-          reg.name = getFirstStringItem(values.get("Event_File_Ingestion_Name"),"");
-          reg.path = getFirstStringItem(values.get("Event_File_Ingestion_Path"),"");
-          reg.created =  getFirstStringItem(values.get("Event_File_Ingestion_Created"),"");
-          reg.owner = getFirstStringItem(values.get("Event_File_Ingestion_Owner"),"");
-          reg.server = getFirstStringItem(values.get("Event_File_Ingestion_Server"),"");
+          reg.fileType = getFirstStringItem(values.get("Event_File_Ingestion_File_Type"), "");
+          reg.sizeBytes = getFirstDoubleItem(values.get("Event_File_Ingestion_Size_Bytes"), 0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Event_File_Ingestion_Name"), "");
+          reg.path = getFirstStringItem(values.get("Event_File_Ingestion_Path"), "");
+          reg.created = getFirstStringItem(values.get("Event_File_Ingestion_Created"), "");
+          reg.owner = getFirstStringItem(values.get("Event_File_Ingestion_Owner"), "");
+          reg.server = getFirstStringItem(values.get("Event_File_Ingestion_Server"), "");
 
-          reg.lastAccess = getFirstStringItem(values.get("Event_File_Ingestion_Last_Access"),"");
+          reg.lastAccess = getFirstStringItem(values.get("Event_File_Ingestion_Last_Access"), "");
         } else if ("Object_Email_Message_Attachment".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Attachment";
-          reg.sizeBytes = getFirstDoubleItem(values.get("Object_Email_Message_Attachment_Size_Bytes"),0.0).longValue();
-          reg.name = getFirstStringItem(values.get("Object_Email_Message_Attachment_Attachment_Name"),"");
+          reg.sizeBytes = getFirstDoubleItem(values.get("Object_Email_Message_Attachment_Size_Bytes"), 0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Object_Email_Message_Attachment_Attachment_Name"), "");
           StringBuilder sb = new StringBuilder();
           sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
-          sb.append(getFirstStringItem(values.get("Object_Email_Message_Attachment_Attachment_Id"),""));
+          sb.append(getFirstStringItem(values.get("Object_Email_Message_Attachment_Attachment_Id"), ""));
           reg.path = sb.toString();
           List<Object> createdDateTime = values.get("Object_Email_Message_Attachment_Created_Date_Time");
 
@@ -254,14 +261,14 @@ public class Resource {
           reg.server = "OFFICE365/EMAIL";
         } else if ("Object_Email_Message_Body".equalsIgnoreCase(eventType)) {
           reg.fileType = "Email_Message_Body";
-          reg.sizeBytes = getFirstDoubleItem(values.get("Object_Email_Message_Body_Size_Bytes"),0.0).longValue();
-          reg.name = getFirstStringItem(values.get("Object_Email_Message_Body_Email_Subject"),"");
+          reg.sizeBytes = getFirstDoubleItem(values.get("Object_Email_Message_Body_Size_Bytes"), 0.0).longValue();
+          reg.name = getFirstStringItem(values.get("Object_Email_Message_Body_Email_Subject"), "");
           StringBuffer sb = new StringBuffer();
           sb.append("https://outlook.office365.com/mail/deeplink?ItemID=");
-          String emailId = getFirstStringItem(values.get("Object_Email_Message_Body_Email_Id"),"");
+          String emailId = getFirstStringItem(values.get("Object_Email_Message_Body_Email_Id"), "");
           sb.append(URLEncoder.encode(emailId, "UTF-8"));
           reg.path = sb.toString();
-          reg.created = getFirstStringItem(values.get("Object_Email_Message_Body_Created_Date_Time"), "" );
+          reg.created = getFirstStringItem(values.get("Object_Email_Message_Body_Created_Date_Time"), "");
 
           GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Body")
               .out("Email_From").values("Event_Email_From_Group_Email");
@@ -270,9 +277,9 @@ public class Resource {
           String owner = trav.hasNext() ? trav.next().toString() : "";
 
           reg.lastAccess = values.get("Object_Email_Message_Body_Received_Date_Time") != null ?
-              values.get("Object_Email_Message_Body_Received_Date_Time").get(0).toString():
+              values.get("Object_Email_Message_Body_Received_Date_Time").get(0).toString() :
               (values.get("Object_Email_Message_Body_Sent_Date_Time") != null ?
-                  values.get("Object_Email_Message_Body_Sent_Date_Time").get(0).toString():
+                  values.get("Object_Email_Message_Body_Sent_Date_Time").get(0).toString() :
                   "");
 
 
@@ -333,17 +340,16 @@ public class Resource {
 
       String[] vals = valsSet.toArray(new String[valsSet.size()]);
 
-      try {
 
-        String sqlQueryCount = recordRequest.getSQL(true);
+      String sqlQueryCount = recordRequest.getSQL(true);
 
-        String sqlQueryData = recordRequest.getSQL(false);
+      String sqlQueryData = recordRequest.getSQL(false);
 
-        String dataType = recordRequest.dataType; //req.search.extraSearch[0].value;
+//      String dataType = recordRequest.dataType; //req.search.extraSearch[0].value;
+//
+//      boolean hasFilters = recordRequest.filters != null && recordRequest.filters.length > 0;
+      try (OGremlinResultSet resultSet = App.graph.executeSql(sqlQueryCount, Collections.EMPTY_MAP)) {
 
-        boolean hasFilters = recordRequest.filters != null && recordRequest.filters.length > 0;
-
-        OGremlinResultSet resultSet = App.graph.executeSql(sqlQueryCount, Collections.EMPTY_MAP);
         Long count = resultSet.iterator().next().getRawResult().getProperty("COUNT(*)");
         resultSet.close();
 
@@ -636,17 +642,6 @@ public class Resource {
     }
     try {
 
-      //        String[] labels = new String[req.labels.length - 1];
-      //        String label0 = req.labels[0].value;
-      //        GraphTraversal g = App.g.V();
-      //        for (int i = 0, ilen = req.labels.length; i < ilen; i++)
-      //        {
-      //          g = g.has("Metadata_Type", req.labels[i].value).range(0, 1);
-      //
-      //          //          labels[i] = (req.labels[i + 1].value);
-      //
-      //        }
-
       Set<String> props = new HashSet<>();
       final String label = vlabReq.labels[0].value;
 
@@ -687,16 +682,17 @@ public class Resource {
 //          .toList();
 
 
-
       boolean useNewMode = vlabReq.version != null && vlabReq.version.startsWith("v2.");
 
-      HashMap<String,String> args = new HashMap<>();
-      args.put("label",label);
-      App.graph.executeSql(
-      "SELECT Object_Notification_Templates_Label, Object_Notification_Templates_Text, Object_Notification_Templates_Id      \n" +
-          "      FROM  Object_Notification_Templates \n" +
-          "      WHERE Object_Notification_Templates_Types = :label"
-     ,args).getRawResultSet().forEachRemaining( it -> {
+      HashMap<String, String> args = new HashMap<>();
+      args.put("label", label);
+      OResultSet res = App.graph.executeSql(
+          "SELECT Object_Notification_Templates_Label, Object_Notification_Templates_Text, Object_Notification_Templates_Id      \n" +
+              "      FROM  Object_Notification_Templates \n" +
+              "      WHERE Object_Notification_Templates_Types = :label"
+          , args).getRawResultSet();
+
+      res.forEachRemaining(it -> {
 
 //        notificationTemplates.forEach(map -> {
         props.add("@" + it.getProperty("Object_Notification_Templates_Label") + "@" +
@@ -707,12 +703,13 @@ public class Resource {
 
 //        });
       });
+      res.close();
       return new NodePropertyNamesReply(props);
 //      return reply;
 
     } catch (Throwable e) {
       e.printStackTrace();
-      return new NodePropertyNamesReply(Response.Status.INTERNAL_SERVER_ERROR,e.getMessage());
+      return new NodePropertyNamesReply(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 //    return new NodePropertyNamesReply(Collections.EMPTY_SET);
   }
@@ -950,7 +947,7 @@ status: "success", message: "Data source is working", title: "Success"
 
   }
 
-// Work In Progress
+  // Work In Progress
   @POST
   @Path("admin/mapping")
   @Produces(MediaType.TEXT_PLAIN)
@@ -1017,7 +1014,7 @@ status: "success", message: "Data source is working", title: "Success"
 //    }
     OResultSet resSet = App.graph.executeSql(
         "SELECT Object_Notification_Templates_Text from Object_Notification_Templates where Object_Notification_Templates_Id = :tid ",
-        Collections.singletonMap("tid",templateId)).getRawResultSet();
+        Collections.singletonMap("tid", templateId)).getRawResultSet();
 
     if ((!resSet.hasNext())) {
       return new ReportTemplateRenderResponse(Response.Status.NOT_FOUND, "Cannot find template id " +
@@ -1032,11 +1029,14 @@ status: "success", message: "Data source is working", title: "Success"
 
 //        App.g.V().has("Object_Notification_Templates_Id", P.eq(templateId))
 //        .values("Object_Notification_Templates_Text").next().toString();
+    resSet.close();
+
+
     String resolvedStr = "";
 
     try {
       resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateTextBase64, App.g);
-    } catch (Throwable t){
+    } catch (Throwable t) {
 
       resolvedStr = Base64.getEncoder().encodeToString(
           ("Error resolving template:  " + t.getMessage()).getBytes(StandardCharsets.UTF_8));
@@ -1070,7 +1070,7 @@ status: "success", message: "Data source is working", title: "Success"
 
     try {
       resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateBase64, App.g);
-    } catch (Throwable t){
+    } catch (Throwable t) {
 
       resolvedStr = Base64.getEncoder().encodeToString(
           ("Error resolving template:  " + t.getMessage()).getBytes(StandardCharsets.UTF_8));
@@ -1084,5 +1084,166 @@ status: "success", message: "Data source is working", title: "Success"
 
   }
 
+  static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+
+  static Pair<String, Map<String, Object>> createJsonMergeParam(PVFormData[] updateFields, String vertexLabel) {
+//    JsonObject jb = new JsonObject()
+    StringBuilder sb = new StringBuilder();
+    sb.append("{");
+    long counter = 0;
+    Map<String, Object> sqlParams = new HashMap<>();
+    for (PVFormData field : updateFields) {
+      if (counter > 0) {
+        sb.append(",");
+      }
+      counter++;
+      sb.append('"').append(field.getName()).append("\":").append(" :").append(field.getName());
+//      jb.addProperty(field.propName, ":${field.propName}")
+      String userData = field.getUserData()[0];
+      if ("date".equals(field.getType())) {
+        sqlParams.put(field.getName(), sdf.format(sdf.parse(field.getUserData()[0], new ParsePosition(0))));
+      } else {
+        sqlParams.put(field.getName(), userData);
+      }
+
+    }
+    if (counter > 0) {
+      String metadataTypeVertexLabel = new StringBuilder("Metadata_Type_").append(vertexLabel).toString();
+
+      sb.append(",\"").append(metadataTypeVertexLabel).append("\":  :").append(metadataTypeVertexLabel);
+      sqlParams.put(metadataTypeVertexLabel, vertexLabel);
+
+      sb.append(", \"Metadata_Type\": :Metadata_Type");
+      sqlParams.put("Metadata_Type", vertexLabel);
+
+    }
+    sb.append("}");
+
+    return Pair.of(sb.toString(), sqlParams);
+  }
+  public static FormDataResponse getFormDataImpl( FormDataRequest request)  {
+
+
+    String operation = request.getOperation();
+    if (!"create".equalsIgnoreCase(operation) &&
+        !"read".equalsIgnoreCase(operation) &&
+        !"update".equalsIgnoreCase(operation) &&
+        !"delete".equalsIgnoreCase(operation)
+    ) {
+      return new FormDataResponse(Response.Status.BAD_REQUEST, "Invalid operation type:" + operation);
+    }
+
+    operation = operation.toLowerCase();
+
+    String rid = request.getRid();
+    if (!"create".equals(operation) && rid == null) {
+      return new FormDataResponse(Response.Status.BAD_REQUEST,
+          "Missing the record id (rid) field for operation " +
+              operation);
+    }
+    PVFormData[] components = request.getComponents();
+
+    if ("read".equals(operation) || "update".equals(operation)) {
+      if (components == null || components.length == 0 ||
+          Arrays.stream(components).anyMatch((comp) -> comp == null || comp.getName() == null)) {
+        return new FormDataResponse(Response.Status.BAD_REQUEST,
+            "Missing Components array with valid names for operation" +
+                operation);
+
+      }
+    }
+
+    if ("read".equals(operation)) {
+      Map<String, String> args = new HashMap<>();
+      args.put("rid", rid);
+      args.put("table", request.getDataType());
+      OResultSet oResultSet = App.graph.executeSql(
+          "SELECT * FROM  :table where @rid = :rid"
+          , args).getRawResultSet();
+
+      while (oResultSet.hasNext()) {
+        OResult oResult = oResultSet.next();
+        Map<String, String> props = new HashMap<>();
+
+        oResult.getPropertyNames().forEach(propName -> props.put(propName, oResult.getProperty(propName)));
+        oResult.getIdentity().ifPresent(id -> props.put("id", id.toString()));
+
+        for (int i = 0, ilen = components.length; i < ilen; i++) {
+          PVFormData component = components[i];
+          String[] userData = new String[1];
+          userData[0] = props.get(component.getName());
+          component.setUserData(userData);
+        }
+      }
+      oResultSet.close();
+    }
+    else if ("update".equals(operation) || "create".equals(operation)) {
+      Pair<String, Map<String, Object>> upsertParams = createJsonMergeParam(request.getComponents(), request.dataType);
+
+      String jsonToMerge = upsertParams.getLeft();
+      Map<String, Object> sqlParams = upsertParams.getRight();
+
+      Transaction tx = App.graph.tx();
+      if (!tx.isOpen()) {
+        tx.open();
+      }
+      try {
+        sqlParams.put("table", request.getDataType());
+        sqlParams.put("rid", request.getRid());
+        App.graph.executeSql("UPDATE :table MERGE "+jsonToMerge+" UPSERT WHERE @rid = :rid LOCK record LIMIT 1 ",
+            sqlParams).getRawResultSet().close();
+
+
+        tx.commit();
+      } catch (Exception e) {
+        tx.rollback();
+      } finally {
+        tx.close();
+      }
+    }
+    else if ("delete".equals(operation)) {
+//      Pair<String, Map<String, Object>> upsertParams = createJsonMergeParam(request.getComponents(), request.dataType);
+
+//      String jsonToMerge = upsertParams.getLeft();
+      Map<String, Object> sqlParams = new HashMap<>();
+
+      Transaction tx = App.graph.tx();
+      if (!tx.isOpen()) {
+        tx.open();
+      }
+      try {
+//        sqlParams.put("table", request.getDataType());
+        sqlParams.put("rid", request.getRid());
+        App.graph.executeSql("DELETE VERTEX :rid ",
+            sqlParams).getRawResultSet().close();
+
+
+        tx.commit();
+      } catch (Exception e) {
+        tx.rollback();
+      } finally {
+        tx.close();
+      }
+    }
+
+    return new FormDataResponse(request);
+
+  }
+
+  @POST
+  @Path("form/data")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  public FormDataResponse getFormData(@Context ContainerRequestContext req, FormDataRequest request) {
+
+
+    if (!isAdminOrDPO(req)) {
+      return new FormDataResponse(Response.Status.UNAUTHORIZED,
+          "Auth Token does not give rights to execute this");
+    }
+
+    return getFormDataImpl(request);
+
+  }
 
 }
