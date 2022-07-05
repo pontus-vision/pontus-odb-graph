@@ -1,0 +1,95 @@
+rules:
+
+  govbr_apex_participante:
+
+    vertices:
+
+      - label: Person_Employee
+        props:
+          ID: "${CARGO_EFETIVO_COD?.replaceAll('[^0-9]', '')?.trim()}"
+          Role:
+            val: "${FUNCAO?.trim()?.toUpperCase()} — ${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Full_Name:
+            val: "${NOME?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Person_Natural
+        props:
+          Customer_ID: "${MATRICULA?.replaceAll('[^0-9]', '')?.trim()}"
+          Full_Name:
+            val: "${NOME?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: GOVBR/APEX-PARTICIPANTE
+
+      - label: Object_Email_Address
+        condition: "${EMAIL?.trim()?.length() > 0}"
+        props:
+          # Form_Id: "${_id}"
+          Email: "${EMAIL?.trim()?.toLowerCase()}"
+
+      #LOTAÇÃO (CÓDIGO E DESCRIÇÃO SIMPLES)
+      - label: Location_Address
+        props:
+          Full_Address:
+            val: "${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL"
+            excludeFromSearch: true
+          parser:
+            val: "${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL"
+            type: "com.pontusvision.utils.LocationAddress"
+            excludeFromSearch: true
+          Post_Code: "${com.pontusvision.utils.PostCode.format(LOTACAO_NR_CLASS)}"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: govbr/apex-participante
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: govbr/apex-participante
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexName: "Person_Natural"
+
+      - label: "Is_Alias"
+        fromVertexName: "Person_Natural"
+        toVertexName: "Person_Employee"
+
+      - label: "Uses_Email"
+        fromVertexName: "Person_Natural"
+        toVertexName: "Object_Email_Address"
+
+      - label: "Is_Located"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Location_Address"

@@ -1,0 +1,177 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Employee",
+        "props": [
+          {
+            "name": "Person_Employee_ID",
+            "val": "${CARGO_EFETIVO_COD?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Employee_Role",
+            "val": "${FUNCAO?.trim()?.toUpperCase()} — ${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Employee_Full_Name",
+            "val": "${NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "props": [
+          {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${MATRICULA?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "GOVBR/APEX-PARTICIPANTE",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "condition": "${EMAIL?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${EMAIL?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Location_Address",
+        "props": [
+          {
+            "name": "Location_Address_Full_Address",
+            "val": "${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location_Address_parser",
+            "val": "${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL",
+            "mandatoryInSearch": false,
+            "type": "com.pontusvision.utils.LocationAddress",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location_Address_Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(LOTACAO_NR_CLASS)}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "govbr/apex-participante",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "govbr/apex-participante",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexName": "Person_Natural"
+      },
+      {
+        "label": "Is_Alias",
+        "fromVertexName": "Person_Natural",
+        "toVertexName": "Person_Employee"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "Person_Natural",
+        "toVertexName": "Object_Email_Address"
+      },
+      {
+        "label": "Is_Located",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Location_Address"
+      }
+    ]
+  }
+}
