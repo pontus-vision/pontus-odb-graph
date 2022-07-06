@@ -213,15 +213,24 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/ownership-change.csv", "cap_ownership_change");
 
       String getResponsibleDealer =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('AHOII BRAUSE')).in('Is_Responsible')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P PORSCHE OWNERSHIP CHANGE'))" +
+                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".has('Person_Natural_Full_Name', eq('LARA CRAFT')).in('Is_Responsible')" +
                       ".properties('Person_Organisation_Name').value().next().toString()").get().toString();
-      assertEquals("PORSCHE CENTER SÃO PAULO", getResponsibleDealer, "Responsible Dealer");
+      assertEquals("P CENTER SÃO PAULO", getResponsibleDealer, "Responsible Dealer");
 
 
       String getResponsibleOwner =
-              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('PORSCHE CENTER SÃO PAULO')).out('Is_Responsible')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P PORSCHE OWNERSHIP CHANGE'))" +
+                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".in('Is_Responsible').as('person-org')" +
+                      ".has('Person_Organisation_Name',eq('P CENTER SÃO PAULO')).out('Is_Responsible')" +
                       ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
-      assertEquals("AHOII BRAUSE", getResponsibleOwner, "client");
+      assertEquals("LARA CRAFT", getResponsibleOwner, "client");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -376,30 +385,30 @@ public class PVSapCapTest extends AppTest {
 
       csvTestUtil("SAP/sap-cap/data-quality.csv", "cap_data_quality");
 
-      String mariaCompany =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARIA DOLORES'))" +
+      String kumaCompany =
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('KUMA CASTRO'))" +
                       ".out('Works').properties('Person_Organisation_Name').value().next().toString()").get().toString();
-      assertEquals("CIMED INDÚSTRIA DE MEDICAMENTOS LTDA.", mariaCompany, "Maria' company");
+      assertEquals("PHARMA", kumaCompany, "Kuma's company");
 
       String locationAddress =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARIA DOLORES'))" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('KUMA CASTRO'))" +
                       ".out('Is_Located').properties('Location_Address_parser_city').value().next().toString()").get().toString();
-      assertEquals("[sao paulo, saopaulo]", locationAddress, "Maria' city");
+      assertEquals("[sao paulo, saopaulo]", locationAddress, "Kuma's city");
 
-      String cimedTaxNumber =
-              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('CIMED INDÚSTRIA DE MEDICAMENTOS LTDA.')).in('Works')" +
+      String pharmaTaxNumber =
+              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('PHARMA')).in('Works')" +
                       ".out('Has_Id_Card').has('Object_Identity_Card_Id_Type', eq('CPF')).properties('Object_Identity_Card_Id_Value').value().next().toString()").get().toString();
-      assertEquals("18586336807", cimedTaxNumber, "CIMED's Tax Number");
+      assertEquals("21398213986", pharmaTaxNumber, "Pharma's Tax Number");
 
       String emailNameTest =
-              App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('nelquio@hotmail.com'))" +
+              App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('castro.kuma@hotmail.com'))" +
                       ".in('Uses_Email').properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
-      assertEquals("MARIA DOLORES", emailNameTest);
+      assertEquals("KUMA CASTRO", emailNameTest);
 
-      String mariaPostalCode =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARIA DOLORES')).out('Is_Located')" +
+      String kumaPostalCode =
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('KUMA CASTRO')).out('Is_Located')" +
                       ".properties('Location_Address_parser_postcode').value().next().toString()").get().toString();
-      assertEquals("[04514-050]", mariaPostalCode, "Maria's post code");
+      assertEquals("[98767-090]", kumaPostalCode, "Kuma's postal code");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
