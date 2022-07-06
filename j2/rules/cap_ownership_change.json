@@ -21,8 +21,8 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person_Organisation_Customer_ID",
-            "val": "${Responsible_Dealer?.trim()?.toUpperCase()}",
+            "name": "Person_Organisation_Form_Id",
+            "val": "${Responsible_Dealer?.replaceAll('[^0-9]', '')}",
             "mandatoryInSearch": true
           }
         ]

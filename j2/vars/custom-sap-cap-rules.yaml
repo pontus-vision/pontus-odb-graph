@@ -521,6 +521,13 @@ rules:
             val: "${Title}"
             excludeFromSearch: true
 
+      - label: Person_Organisation
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
       - label: Object_Phone_Number
         condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: mobile
@@ -609,6 +616,10 @@ rules:
         fromVertexLabel: "Person_Natural"
         toVertexLabel: "Object_Email_Address"
 
+      - label: "Is_Responsible"
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Person_Natural"
+
   cap_ownership_change:
     vertices:
       - label: Person_Natural
@@ -623,7 +634,7 @@ rules:
           Name:
             val: "${Name_1?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-          Customer_ID: "${Responsible_Dealer?.trim()?.toUpperCase()}"
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
 #          Type:
 #            val: "Porsche Responsible Dealer"
 #            excludeFromSearch: true

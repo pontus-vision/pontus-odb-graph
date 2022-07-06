@@ -178,16 +178,26 @@ public class PVSapCapTest extends AppTest {
 
       csvTestUtil("SAP/sap-cap/p-connect-mandatory-fields.csv", "cap_p_connect_mandatory_fields");
 
-      String gandiEmail =
-              App.executor.eval("App.g.V().has('Object_Email_Address_Email', eq('gandipunjabi@icloud.com')).in('Uses_Email')" +
+      String jamesEmail =
+              App.executor.eval("App.g.V().has('Object_Email_Address_Email', eq('hollywood@movies.com')).in('Uses_Email')" +
                       ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
-      assertEquals("GANDI PUNJABI", gandiEmail, "gandipunjabi@icloud.com is used by Gandi Punjabi");
+      assertEquals("FORTUNI JAMES", jamesEmail, "James' Email");
 
 
-      String camilaPhoneNumber =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('CAMILA DIOGINES')).out('Has_Phone')" +
+      String jamesPhoneNumber =
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('FORTUNI JAMES')).out('Has_Phone')" +
                       ".properties('Object_Phone_Number_Raw').value().next().toString()").get().toString();
-      assertEquals("+5541998675898", camilaPhoneNumber, "Camila Diogines' mobile number");
+      assertEquals("302543787", jamesPhoneNumber, "James' mobile number");
+
+      String responsibleDealer =
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FORTUNI JAMES')).in('Is_Responsible')" +
+                      ".properties('Person_Organisation_Form_Id').value().next().toString()").get().toString();
+      assertEquals("784384", responsibleDealer, "James' responsible dealer");
+
+      String respSalesDealer =
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FORTUNI JAMES')).in('Is_Responsible')" +
+                      ".properties('Person_Organisation_Name').value().next().toString()").get().toString();
+      assertEquals("P CENTER CURITIBA", respSalesDealer, "James' responsible dealer");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
