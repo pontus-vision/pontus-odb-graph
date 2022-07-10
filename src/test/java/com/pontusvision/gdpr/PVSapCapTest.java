@@ -98,7 +98,7 @@ public class PVSapCapTest extends AppTest {
       String eventConsentCreatedBy =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
                       ".properties('Event_Consent_Created_By').value().next().toString()").get().toString();
-      assertEquals("DBR0200WK", eventConsentCreatedBy, "Porsche Employee code");
+      assertEquals("DBR0200WK", eventConsentCreatedBy, "Pxxxxxx Employee code");
 
       String natanBolderiNoConsentCount =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
@@ -163,7 +163,7 @@ public class PVSapCapTest extends AppTest {
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MÔNICA COELHO'))" +
                       ".out('Has_Ingestion_Event').in('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
                       ".properties('Object_Data_Source_Name').value().next().toString()").get().toString();
-      assertEquals("SAP/C@P MY PORSCHE CHANGE REPORT", DataSourceName, "The source for Mônica's data");
+      assertEquals("SAP/C@P MY PXXXXXX CHANGE REPORT", DataSourceName, "The source for Mônica's data");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -213,7 +213,7 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/ownership-change.csv", "cap_ownership_change");
 
       String getResponsibleDealer =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P PORSCHE OWNERSHIP CHANGE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P PXXXXXX OWNERSHIP CHANGE'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
                       ".in('Has_Ingestion_Event').as('person-natural')" +
@@ -223,7 +223,7 @@ public class PVSapCapTest extends AppTest {
 
 
       String getResponsibleOwner =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P PORSCHE OWNERSHIP CHANGE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P PXXXXXX OWNERSHIP CHANGE'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
                       ".in('Has_Ingestion_Event').as('person-natural')" +

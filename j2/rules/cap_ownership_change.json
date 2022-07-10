@@ -32,7 +32,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sap/c@p Porsche Ownership Change",
+            "val": "sap/c@p Pxxxxxx Ownership Change",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -69,7 +69,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p Porsche Ownership Change",
+            "val": "sap/c@p Pxxxxxx Ownership Change",
             "mandatoryInSearch": true
           },
           {
@@ -89,7 +89,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P PORSCHE OWNERSHIP CHANGE",
+            "val": "SAP/C@P PXXXXXX OWNERSHIP CHANGE",
             "mandatoryInSearch": true
           }
         ]
