@@ -2733,6 +2733,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Is_Client
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Is_Data_Controller
     multiplicity: MULTI
     unidirected: False

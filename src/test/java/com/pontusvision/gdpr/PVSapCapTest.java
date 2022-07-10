@@ -358,20 +358,52 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/vehicle.csv", "cap_vehicle");
 
       String getVehicleLicensePlate =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('HELGA BARBOSA')).out('Has_Vehicle')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".has('Person_Natural_Full_Name', eq('THOMAS THAMES')).out('Has_Vehicle')" +
                       ".properties('Object_Vehicle_License_Plate').value().next().toString()").get().toString();
-      assertEquals("S987-T098", getVehicleLicensePlate, "Helga's Car's License plate");
+      assertEquals("JHFU7857", getVehicleLicensePlate, "Thomas' Car's License plate");
 
       String getVehicleModel =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('JORGE NIAGURA')).out('Has_Vehicle')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".has('Person_Natural_Full_Name', eq('THOMAS THAMES')).out('Has_Vehicle')" +
                       ".properties('Object_Vehicle_Model').value().next().toString()").get().toString();
-      assertEquals("ZXR500", getVehicleModel, "Jorge's Vehicle's Model");
+      assertEquals("766", getVehicleModel, "Thomas' Vehicle's Model");
 
       String getEmailAddress =
-              App.executor.eval("App.g.V().has('Object_Phone_Number_Last_7_Digits',eq('1657448')).in('Has_Mobile')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".out('Has_Mobile').as('mobile-phone')" +
+                      ".has('Object_Phone_Number_Last_7_Digits',eq('6453545'))" +
+                      ".in('Has_Mobile')" +
                       ".out('Uses_Email').properties('Object_Email_Address_Email').value().next().toString()").get().toString();
-      assertEquals("jorginho10@icloud.com", getEmailAddress, "Jorge's Email");
+      assertEquals("colchoes.thames@hotmail.com", getEmailAddress, "Thomas' job Email");
 
+      String thomasIsClient =
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".out('Is_Client').as('p-company')" +
+                      ".properties('Person_Organisation_Name').value().next().toString()").get().toString();
+      assertEquals("P CENTER SÃO PAULO", thomasIsClient, "Thomas is P's client");
+
+
+      String thomasId =
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
+                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
+                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".out('Has_Id_Card').as('cnpj')" +
+                      ".properties('Object_Identity_Card_Id_Value').value().next().toString()").get().toString();
+      assertEquals("28938923809747", thomasId, "Thomas' company Tax ID");
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);

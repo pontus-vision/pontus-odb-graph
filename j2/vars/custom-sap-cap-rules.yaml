@@ -1381,12 +1381,38 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
+          Id: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Registration_Number: "${Tax_Number?.replaceAll('[^0-9]','')}"
 #          Type:
 #            val: "SAP/C@P Vehicle"
 #            excludeFromSearch: true
+
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Name: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+
+      - label: Object_Identity_Card
+        condition: "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}"
+        name: cnpj
+        props:
+          Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "CNPJ"
+            excludeFromSearch: true
+
+      - label: Object_Identity_Card
+        condition: "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}"
+        name: cpf
+        props:
+          Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "CPF"
+            excludeFromSearch: true
 
       - label: Object_Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -1427,10 +1453,10 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -1525,7 +1551,19 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "cnpj"
+
+      - label: "Has_Id_Card"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "cpf"
 
   cap_data_quality:
     vertices:
@@ -1565,6 +1603,12 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: other_company
+        props:
+          Name: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+
+      - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
@@ -1797,7 +1841,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
       - label: "Has_Id_Card"
         fromVertexLabel: "Person_Natural"
