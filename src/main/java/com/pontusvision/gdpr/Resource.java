@@ -3,10 +3,14 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.orientechnologies.orient.core.db.record.ridbag.ORidBag;
+import com.orientechnologies.orient.core.id.ORID;
 import com.orientechnologies.orient.core.id.ORecordId;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.schema.OProperty;
 import com.orientechnologies.orient.core.metadata.schema.OType;
+import com.orientechnologies.orient.core.record.impl.OEdgeDocument;
+import com.orientechnologies.orient.core.record.impl.OVertexDocument;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import com.pontusvision.gdpr.form.FormDataRequest;
@@ -1093,18 +1097,27 @@ status: "success", message: "Data source is working", title: "Success"
     long counter = 0;
     Map<String, Object> sqlParams = new HashMap<>();
     for (PVFormData field : updateFields) {
-      if (counter > 0) {
-        sb.append(",");
+      if (field != null && field.getName() != null) {
+        if (field.getName().startsWith(">") || field.getName().startsWith("<")) {
+          continue;
+        }
+        if (counter > 0) {
+          sb.append(",");
+        }
+        //      jb.addProperty(field.propName, ":${field.propName}")
+        if (field.getUserData() != null && field.getUserData().length > 0) {
+          counter++;
+          sb.append('"').append(field.getName()).append("\":").append(" :").append(field.getName());
+          String userData = field.getUserData()[0];
+          if ("date".equals(field.getType())) {
+            sqlParams.put(field.getName(), sdf.format(sdf.parse(field.getUserData()[0], new ParsePosition(0))));
+          } else {
+            sqlParams.put(field.getName(), userData);
+          }
+        }
+
       }
-      counter++;
-      sb.append('"').append(field.getName()).append("\":").append(" :").append(field.getName());
-//      jb.addProperty(field.propName, ":${field.propName}")
-      String userData = field.getUserData()[0];
-      if ("date".equals(field.getType())) {
-        sqlParams.put(field.getName(), sdf.format(sdf.parse(field.getUserData()[0], new ParsePosition(0))));
-      } else {
-        sqlParams.put(field.getName(), userData);
-      }
+
 
     }
     if (counter > 0) {
@@ -1118,10 +1131,60 @@ status: "success", message: "Data source is working", title: "Success"
 
     }
     sb.append("}");
-
     return Pair.of(sb.toString(), sqlParams);
   }
-  public static FormDataResponse getFormDataImpl( FormDataRequest request)  {
+
+  public static void createEdgesFromFormRequest(ORID newEntry, FormDataRequest request) {
+    for (PVFormData comp : request.getComponents()) {
+      if (comp != null && comp.getName() != null) {
+        final String origName = comp.getName();
+        final String[] userData = comp.getUserData();
+        if (origName != null && userData != null &&
+            comp.getUserData().length > 0 && (origName.startsWith(">") || origName.startsWith("<"))) {
+          final boolean isOut = origName.startsWith(">out_");
+          final String parsedName = isOut ? origName.substring(5) :
+              origName.substring(4);
+          Map<String, Object> sqlParams = new HashMap<>();
+
+          if ("update".equalsIgnoreCase(request.getOperation())) {
+
+            if (isOut) {
+              App.g.V(newEntry.toString()).outE(parsedName).drop().iterate();
+            } else {
+              App.g.V(newEntry.toString()).inE(parsedName).drop().iterate();
+            }
+//          sqlParams.clear();
+//          sqlParams.put("edgeType", parsedName);
+//          String query = isOut ? "DELETE EDGE WHERE @rid in (SELECT inE(':edgeType') FROM " + newEntry.toString() + ")" :
+//              "DELETE EDGE WHERE @rid in (SELECT outE(':edgeType') FROM " + newEntry.toString() + ")";
+//          App.graph.executeSql(query,
+//              sqlParams).close();
+
+          }
+
+          for (int i = 0, ilen = userData.length; i < ilen; i++) {
+            sqlParams.clear();
+            sqlParams.put("edgeType", parsedName);
+            final String data = userData[i];
+            if (isOut) {
+//            sqlParams.put("fromId", newEntry.toString());
+//            sqlParams.put("toId", data);
+              App.g.addE(parsedName).from(App.g.V(newEntry.toString()).next()).to(App.g.V(data).next()).iterate();
+
+            } else {
+              App.g.addE(parsedName).from(App.g.V(data).next()).to(App.g.V(newEntry.toString()).next()).iterate();
+
+//            sqlParams.put("toId", newEntry.toString());
+//            sqlParams.put("fromId", data);
+            }
+
+          }
+        }
+      }
+    }
+  }
+
+  public static FormDataResponse getFormDataImpl(FormDataRequest request) {
 
 
     String operation = request.getOperation();
@@ -1163,23 +1226,48 @@ status: "success", message: "Data source is working", title: "Success"
 
       while (oResultSet.hasNext()) {
         OResult oResult = oResultSet.next();
-        Map<String, String> props = new HashMap<>();
+        Map<String, Object> props = new HashMap<>();
 
         oResult.getPropertyNames().forEach(propName -> props.put(propName, oResult.getProperty(propName)));
         oResult.getIdentity().ifPresent(id -> props.put("id", id.toString()));
 
         for (int i = 0, ilen = components.length; i < ilen; i++) {
           PVFormData component = components[i];
-          String[] userData = new String[1];
-          userData[0] = props.get(component.getName());
+          String componentName = component.getName();
+          String[] userData = null;
+          if (componentName.startsWith(">out_")) {
+            List<String> userDataLst = new LinkedList<>();
+            ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
+            bag.forEach((entry) -> {
+              userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("in")).getIdentity().toString());
+            });
+
+            userData = userDataLst.toArray(new String[0]);
+          } else if (componentName.startsWith("<in_")) {
+            List<String> userDataLst = new LinkedList<>();
+            ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
+            bag.forEach((entry) -> {
+              userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("out")).getIdentity().toString());
+            });
+
+            userData = userDataLst.toArray(new String[0]);
+
+
+          } else {
+            userData = new String[1];
+
+            userData[0] = (String) props.get(component.getName());
+          }
+
           component.setUserData(userData);
         }
+
       }
       oResultSet.close();
-    }
-    else if ("update".equals(operation) || "create".equals(operation)) {
+    } else if ("update".equals(operation) || "create".equals(operation)) {
       Pair<String, Map<String, Object>> upsertParams = createJsonMergeParam(request.getComponents(), request.dataType);
 
+      boolean isCreate = "create".equals(operation);
       String jsonToMerge = upsertParams.getLeft();
       Map<String, Object> sqlParams = upsertParams.getRight();
 
@@ -1189,10 +1277,31 @@ status: "success", message: "Data source is working", title: "Success"
       }
       try {
         sqlParams.put("table", request.getDataType());
-        sqlParams.put("rid", request.getRid());
-        App.graph.executeSql("UPDATE :table MERGE "+jsonToMerge+" UPSERT WHERE @rid = :rid LOCK record LIMIT 1 ",
-            sqlParams).getRawResultSet().close();
+        if (isCreate) {
+          OGremlinResultSet resSet = App.graph.executeSql("UPDATE :table MERGE " + jsonToMerge + " UPSERT RETURN AFTER LOCK record LIMIT 1 ",
+              sqlParams);
+          if (resSet.getRawResultSet().hasNext()) {
+            ORID newItem = resSet.getRawResultSet().next().getIdentity().get();
+            request.setRid(newItem.toString());
+            createEdgesFromFormRequest(newItem, request);
+          }
+          resSet.close();
+        } else {
+          sqlParams.put("rid", request.getRid());
 
+          OGremlinResultSet resSet = App.graph.executeSql("UPDATE :table MERGE " + jsonToMerge + " UPSERT WHERE @rid = :rid LOCK record LIMIT 1 ",
+              sqlParams);
+
+          if (resSet.getRawResultSet().hasNext()) {
+
+            // Create a new ORecordId so we can avoid SQL injections;
+            // the rid is passed in, and is, thus, subject to injections.
+            ORID newItem = new ORecordId(request.getRid());
+
+            createEdgesFromFormRequest(newItem, request);
+          }
+          resSet.close();
+        }
 
         tx.commit();
       } catch (Exception e) {
@@ -1200,8 +1309,7 @@ status: "success", message: "Data source is working", title: "Success"
       } finally {
         tx.close();
       }
-    }
-    else if ("delete".equals(operation)) {
+    } else if ("delete".equals(operation)) {
 //      Pair<String, Map<String, Object>> upsertParams = createJsonMergeParam(request.getComponents(), request.dataType);
 
 //      String jsonToMerge = upsertParams.getLeft();
@@ -1213,10 +1321,11 @@ status: "success", message: "Data source is working", title: "Success"
       }
       try {
 //        sqlParams.put("table", request.getDataType());
-        sqlParams.put("rid", request.getRid());
-        App.graph.executeSql("DELETE VERTEX :rid ",
-            sqlParams).getRawResultSet().close();
+        App.g.V(request.getRid()).drop().iterate();
 
+        sqlParams.put("rid", request.getRid());
+        App.graph.executeSql("DELETE VERTEX " + (new ORecordId(request.getRid())).toString(),
+            sqlParams).getRawResultSet().close();
 
         tx.commit();
       } catch (Exception e) {
