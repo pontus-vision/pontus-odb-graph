@@ -98,7 +98,7 @@ public class PVFormData {
   }
 
   public String getName() {
-    if (name.startsWith("#") || name.startsWith("@")) {
+    if (name != null && name.startsWith("#") || name.startsWith("@")) {
       return name.substring(1);
     }
     return name;
