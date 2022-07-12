@@ -13,11 +13,49 @@ updatereq:
           excludeFromSearch: True
     
     - label: Person_Organisation
+      name: own_company
       condition: ${Company_Name_1?.trim()?.length() > 0}
       props:
         - name: Person_Organisation_Name
           val: ${Company_Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person_Organisation_Id
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Registration_Number
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+    
+    - label: Person_Organisation
+      name: other_company
+      props:
+        - name: Person_Organisation_Name
+          val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
+    - label: Object_Identity_Card
+      name: cnpj
+      condition: ${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CNPJ
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Identity_Card
+      name: cpf
+      condition: ${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CPF
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_Phone_Number
       name: telephone
@@ -58,11 +96,11 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location_Address_parser
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location_Address_Post_Code
@@ -158,5 +196,14 @@ updatereq:
     toVertexLabel: Object_Vehicle
   - label: Works
     fromVertexLabel: Person_Natural
-    toVertexLabel: Person_Organisation
+    toVertexName: own_company
+  - label: Is_Client
+    fromVertexLabel: Person_Natural
+    toVertexName: other_company
+  - label: Has_Id_Card
+    fromVertexLabel: Person_Natural
+    toVertexName: cnpj
+  - label: Has_Id_Card
+    fromVertexLabel: Person_Natural
+    toVertexName: cpf
 

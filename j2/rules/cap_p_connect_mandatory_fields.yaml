@@ -12,6 +12,16 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
     
+    - label: Person_Organisation
+      props:
+        - name: Person_Organisation_Form_Id
+          val: ${Responsible_Dealer?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Name
+          val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
     - label: Object_Phone_Number
       name: mobile
       condition: ${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}
@@ -42,7 +52,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Porsche Connect Mandatory Fields
+          val: sap/c@p Pxxxxxx Connect Mandatory Fields
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -67,7 +77,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Porsche Connect Mandatory Fields
+          val: sap/c@p Pxxxxxx Connect Mandatory Fields
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -79,7 +89,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: SAP/C@P PORSCHE CONNECT MANDATORY FIELDS
+          val: SAP/C@P PXXXXXX CONNECT MANDATORY FIELDS
           mandatoryInSearch: True
 
   edges:
@@ -98,4 +108,7 @@ updatereq:
   - label: Uses_Email
     fromVertexLabel: Person_Natural
     toVertexLabel: Object_Email_Address
+  - label: Is_Responsible
+    fromVertexLabel: Person_Organisation
+    toVertexLabel: Person_Natural
 

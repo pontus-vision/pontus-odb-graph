@@ -4353,6 +4353,11 @@
       "unidirected": false
     },
     {
+      "name": "Is_Client",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Is_Data_Controller",
       "multiplicity": "MULTI",
       "unidirected": false
