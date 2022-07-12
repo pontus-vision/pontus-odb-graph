@@ -231,35 +231,54 @@ public class Ingestion {
     byte[] decodedBytes = Base64.getDecoder().decode(request.csvBase64);
     Reader in = new InputStreamReader(new ByteArrayInputStream(decodedBytes));
     Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
-
-    JsonObject obj = new JsonObject();
-    JsonArray entries = new JsonArray();
+    long successCount = 0L;
+    long failureCount = 0L;
+//    JsonObject obj = new JsonObject();
+//    JsonArray entries = new JsonArray();
 //    List<Map> listOfMaps = new ArrayList<>();
     for (CSVRecord record : records) {
       Map<String, String> recMap = record.toMap();
       recMap.put("currDate", new Date().toString());
       JsonObject entry = new JsonObject();
+      JsonObject obj = new JsonObject();
+      JsonArray entries = new JsonArray();
 
       recMap.forEach((key, value) -> {
         entry.addProperty(cleanHeader(key), value);
       });
       entries.add(entry);
+      obj.add("entries", entries);
+      IngestionJsonObjArrayRequest req = new IngestionJsonObjArrayRequest();
+      req.ruleName = request.ruleName;
+      req.jsonPath = "$.entries";
+      req.jsonString = obj.toString();
+
+
+      String res = this.jsonObjArray(req);
+      if (res.contains("success")){
+        successCount ++;
+      }
+      else {
+        failureCount ++;
+      }
 
     }
 
-    obj.add("entries", entries);
-
-    IngestionJsonObjArrayRequest req = new IngestionJsonObjArrayRequest();
-    req.ruleName = request.ruleName;
-    req.jsonPath = "$.entries";
-    req.jsonString = obj.toString();
-
-
-    String res = this.jsonObjArray(req);
+//
+//    IngestionJsonObjArrayRequest req = new IngestionJsonObjArrayRequest();
+//    req.ruleName = request.ruleName;
+//    req.jsonPath = "$.entries";
+//    req.jsonString = obj.toString();
+//
+//
+//    String res = this.jsonObjArray(req);
 //    String res = App.executor.eval("com.pontusvision.graphutils.Matcher.ingestRecordListUsingRules(jsonString,jsonPath,ruleName)",
 //        bindings).get().toString();
-
-    return res;
+    return "{ \"status\": \"success\"" +
+        ", \"successCount\":"+successCount +
+        ", \"failureCount\": "+ failureCount+
+        "}";
+//    return res;
 
   }
 
