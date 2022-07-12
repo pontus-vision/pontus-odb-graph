@@ -6,12 +6,12 @@
         "props": [
           {
             "name": "Person_Employee_ID",
-            "val": "${CARGO_EFETIVO_COD?.replaceAll('[^0-9]', '')?.trim()}",
+            "val": "${MATRICULA?.replaceAll('[^0-9]', '')?.trim()}",
             "mandatoryInSearch": true
           },
           {
             "name": "Person_Employee_Role",
-            "val": "${FUNCAO?.trim()?.toUpperCase()} — ${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}",
+            "val": "${FUNCAO?.trim()?.toUpperCase()}-${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

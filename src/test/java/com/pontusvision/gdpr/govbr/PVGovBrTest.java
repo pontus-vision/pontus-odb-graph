@@ -74,7 +74,7 @@ public class PVGovBrTest extends AppTest {
                       ".has('Person_Natural_Full_Name', eq('JERONIMO DE MADERO'))" +
                       ".out('Is_Alias').as('person-employee')" +
                       ".values('Person_Employee_Role').next().toString()").get().toString();
-      assertEquals("ASSISTENTE NIVEL II — ANALISTA", jeronimoRole, "Jeronimo's role @ work");
+      assertEquals("ASSISTENTE NIVEL II - ANALISTA", jeronimoRole, "Jeronimo's role @ work");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
