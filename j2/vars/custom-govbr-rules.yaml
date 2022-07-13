@@ -8,7 +8,7 @@ rules:
         props:
           ID: "${MATRICULA?.replaceAll('[^0-9]', '')?.trim()}"
           Role:
-            val: "${FUNCAO?.trim()?.toUpperCase()}-${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}"
+            val: "${FUNCAO?.trim()?.toUpperCase()} - ${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Full_Name:
             val: "${NOME?.trim()?.toUpperCase()}"

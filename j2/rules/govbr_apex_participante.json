@@ -11,7 +11,7 @@
           },
           {
             "name": "Person_Employee_Role",
-            "val": "${FUNCAO?.trim()?.toUpperCase()}-${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}",
+            "val": "${FUNCAO?.trim()?.toUpperCase()} - ${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

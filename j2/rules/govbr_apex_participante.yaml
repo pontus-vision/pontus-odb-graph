@@ -8,7 +8,7 @@ updatereq:
           val: ${MATRICULA?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
         - name: Person_Employee_Role
-          val: ${FUNCAO?.trim()?.toUpperCase()}-${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}
+          val: ${FUNCAO?.trim()?.toUpperCase()} - ${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person_Employee_Full_Name
