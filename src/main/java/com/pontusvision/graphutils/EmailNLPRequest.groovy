@@ -159,7 +159,10 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
       createEventNLPGroups(req, it.key, emailAddrs)
     })
 
+    Matcher.cleanMaps(item, matchReqs, maxScoresByVertexName, percentageThresholdByVertexName, matchReqByVertexName, matchReqListByOridByVertexName);
   }
+
+
 
   static processUpsertNLPRequest(OrientStandardGraph graph,
                                  GraphTraversalSource g,
@@ -199,7 +202,7 @@ class EmailNLPRequest extends FileNLPRequest implements Serializable {
     finalVertexIdByVertexName.get(getObjectEmailBodyOrAttachmentVtxLabel(req)).entrySet().forEach({
       createEventNLPGroups(req, it.key, emailAddrs)
     })
-
+    Matcher.cleanMaps(item,matchReqs,maxScoresByVertexName,percentageThresholdByVertexName,matchReqByVertexName,matchReqListByOridByVertexName);
 
     return finalVertexIdByVertexName
   }
