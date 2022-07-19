@@ -61,13 +61,13 @@ rules:
 #        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             excludeFromSearch: true
 #          Type:
 #            val: "Business"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -235,10 +235,10 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -761,13 +761,13 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             excludeFromSearch: true
 #          Type:
 #            val: "${Addresstype?.trim()}"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -928,13 +928,13 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             excludeFromSearch: true
 #          Type:
 #            val: "${Addresstype?.trim()}"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -1098,13 +1098,13 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             excludeFromSearch: true
 #          Type:
 #            val: "${Addresstype?.trim()}"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -1265,13 +1265,13 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             excludeFromSearch: true
 #          Type:
 #            val: "${Addresstype?.trim()}"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -1453,10 +1453,10 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -1657,13 +1657,13 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             excludeFromSearch: true
 #          Type:
 #            val: "${Addresstype?.trim()}"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 

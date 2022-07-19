@@ -91,13 +91,13 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
+            "val": "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location_Address_parser",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
+            "val": "${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
