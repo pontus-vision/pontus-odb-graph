@@ -174,7 +174,6 @@ class FileNLPRequest implements Serializable {
           GraphTraversalSource g,
           FileNLPRequest req,
           Boolean useSlim) {
-    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName
 
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
@@ -244,6 +243,8 @@ class FileNLPRequest implements Serializable {
       tx.close()
     }
 
+    Matcher.cleanMaps(null,matchReqs,maxScoresByVertexName,percentageThresholdByVertexName,null,null)
+
   }
 
   static processUpsertFileNLPRequestSlim(OrientStandardGraph graph,
@@ -277,6 +278,9 @@ class FileNLPRequest implements Serializable {
     matchReqListByOridByVertexName.get("Event_File_Ingestion").entrySet().forEach({
       createEventNLPGroups(req, it.key, req.email)
     })
+
+    Matcher.cleanMaps(item,matchReqs,maxScoresByVertexName,percentageThresholdByVertexName,
+            matchReqByVertexName,matchReqListByOridByVertexName)
 
 
   }
@@ -312,6 +316,9 @@ class FileNLPRequest implements Serializable {
       createEventNLPGroups(req, it.key, req.email)
     })
 
+    Matcher.cleanMaps(item,matchReqs,maxScoresByVertexName,percentageThresholdByVertexName,
+            matchReqByVertexName,finalVertexIdByVertexName);
+    Matcher.cleanMaps(vertexScoreMapByVertexNameLocal)
 
   }
 
