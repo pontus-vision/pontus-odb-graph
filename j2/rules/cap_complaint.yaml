@@ -13,11 +13,22 @@ updatereq:
           excludeFromSearch: True
     
     - label: Person_Organisation
+      name: own_company
       condition: ${Company_Name_1?.trim()?.length() > 0}
       props:
         - name: Person_Organisation_Name
           val: ${Company_Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+    
+    - label: Person_Organisation
+      props:
+        - name: Person_Organisation_Form_Id
+          val: ${Responsible_Dealer?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Name
+          val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_Phone_Number
       name: telephone
@@ -71,17 +82,27 @@ updatereq:
     
     - label: Event_Complaint
       props:
-        - name: Event_Complaint_Description
-          val: ${Description}; Resolvido = ${Solved}; Finalizado = ${Closed}.
-          mandatoryInSearch: True
         - name: Event_Complaint_Id
-          val: ${Campaign_ID}
+          val: ${Transaction_Number}
           mandatoryInSearch: True
+        - name: Event_Complaint_Date
+          val: ${Opened}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Complaint_Description
+          val: ${Description}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Event_Complaint_Status
           val: ${Status}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Event_Complaint_Type
           val: SAP/C@P Complaint
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Complaint_Expiry
+          val: ${Due_Date}
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -162,5 +183,8 @@ updatereq:
     toVertexLabel: Event_Complaint
   - label: Works
     fromVertexLabel: Person_Natural
-    toVertexLabel: Person_Organisation
+    toVertexName: own_company
+  - label: Is_Client
+    fromVertexLabel: Person_Natural
+    toVertexName: other_company
 

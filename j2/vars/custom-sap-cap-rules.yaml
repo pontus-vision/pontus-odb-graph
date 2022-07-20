@@ -14,12 +14,21 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "Leads"
 #            excludeFromSearch: true
+
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 
       - label: Object_Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -166,7 +175,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_customer_prospect:
     #TODO => Object_Privacy_Notice
@@ -196,11 +209,17 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
           Id: "${Tax_Number?.replaceAll('[^0-9]','')}"
           Registration_Number: "${Tax_Number?.replaceAll('[^0-9]','')}"
+
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Name: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
 
       - label: Object_Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -416,7 +435,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
       - label: "Has_Id_Card"
         fromVertexLabel: "Person_Natural"
@@ -616,9 +639,9 @@ rules:
         fromVertexLabel: "Person_Natural"
         toVertexLabel: "Object_Email_Address"
 
-      - label: "Is_Responsible"
-        fromVertexLabel: "Person_Organisation"
-        toVertexLabel: "Person_Natural"
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Person_Organisation"
 
   cap_ownership_change:
     vertices:
@@ -631,10 +654,10 @@ rules:
 
       - label: Person_Organisation
         props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
           Name:
             val: "${Name_1?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
 #          Type:
 #            val: "Pxxxxxx Responsible Dealer"
 #            excludeFromSearch: true
@@ -697,9 +720,9 @@ rules:
         fromVertexName: "Person_Natural"
         toVertexLabel: "Event_Ingestion"
 
-      - label: "Is_Responsible"
-        fromVertexName: "Person_Organisation"
-        toVertexName: "Person_Natural"
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Person_Organisation"
 
   cap_complaint:
     vertices:
@@ -715,12 +738,21 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "SAP/C@P Complaint"
 #            excludeFromSearch: true
+
+      - label: Person_Organisation
+        ame: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 
       - label: Object_Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -773,12 +805,21 @@ rules:
 
       - label: Event_Complaint
         props:
-#          Date: "${Due_Date}"
-          Description: "${Description}; Resolvido = ${Solved}; Finalizado = ${Closed}."
-          Id: "${Campaign_ID}"
-          Status: "${Status}"
+          Id: "${Transaction_Number}"
+          Date:
+            val: "${Opened}"
+            excludeFromSearch: true
+          Description:
+            val: "${Description}"
+            excludeFromSearch: true
+          Status:
+            val: "${Status}"
+            excludeFromSearch: true
           Type:
             val: "SAP/C@P Complaint"
+            excludeFromSearch: true
+          Expiry:
+            val: "${Due_Date}"
             excludeFromSearch: true
 
       - label: Object_Email_Address
@@ -866,7 +907,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_activity:
     vertices:
@@ -882,12 +927,21 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "SAP/C@P Activity"
 #            excludeFromSearch: true
+
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 
       - label: Object_Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -1033,7 +1087,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_workshop_campaigns_and_recalls:
     vertices:
@@ -1052,12 +1110,21 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "SAP/C@P Workshop Campaigns and Recalls"
 #            excludeFromSearch: true
+
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 
       - label: Object_Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -1203,7 +1270,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_competitor_vehicles:
     vertices:
@@ -1219,12 +1290,21 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
 #          Type:
 #            val: "SAP/C@P Competitor Vehicles"
 #            excludeFromSearch: true
+
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 
       - label: Object_Phone_Number
         condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
@@ -1365,7 +1445,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_vehicle:
     vertices:

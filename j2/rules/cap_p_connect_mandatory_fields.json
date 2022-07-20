@@ -169,9 +169,9 @@
         "toVertexLabel": "Object_Email_Address"
       },
       {
-        "label": "Is_Responsible",
-        "fromVertexLabel": "Person_Organisation",
-        "toVertexLabel": "Person_Natural"
+        "label": "Is_Client",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Person_Organisation"
       }
     ]
   }

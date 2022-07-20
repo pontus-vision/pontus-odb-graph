@@ -35,6 +35,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Person_Organisation
+      name: own_company
       condition: ${Company_Name_1?.trim()?.length() > 0}
       props:
         - name: Person_Organisation_Name
@@ -45,6 +46,13 @@ updatereq:
           mandatoryInSearch: True
         - name: Person_Organisation_Registration_Number
           val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+    
+    - label: Person_Organisation
+      name: other_company
+      props:
+        - name: Person_Organisation_Name
+          val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
           mandatoryInSearch: True
     
     - label: Object_Phone_Number
@@ -326,7 +334,10 @@ updatereq:
     toVertexLabel: Object_Email_Address
   - label: Works
     fromVertexLabel: Person_Natural
-    toVertexLabel: Person_Organisation
+    toVertexName: own_company
+  - label: Is_Client
+    fromVertexLabel: Person_Natural
+    toVertexName: other_company
   - label: Has_Id_Card
     fromVertexLabel: Person_Natural
     toVertexName: cpf

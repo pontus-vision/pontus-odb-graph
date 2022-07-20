@@ -19,12 +19,29 @@
       },
       {
         "label": "Person_Organisation",
+        "name": "own_company",
         "condition": "${Company_Name_1?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Person_Organisation_Name",
             "val": "${Company_Name_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Organisation",
+        "props": [
+          {
+            "name": "Person_Organisation_Form_Id",
+            "val": "${Responsible_Dealer?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Name",
+            "val": "${Resp__Sales_Dealer?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -106,23 +123,37 @@
         "label": "Event_Complaint",
         "props": [
           {
-            "name": "Event_Complaint_Description",
-            "val": "${Description}; Resolvido = ${Solved}; Finalizado = ${Closed}.",
+            "name": "Event_Complaint_Id",
+            "val": "${Transaction_Number}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event_Complaint_Id",
-            "val": "${Campaign_ID}",
-            "mandatoryInSearch": true
+            "name": "Event_Complaint_Date",
+            "val": "${Opened}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Complaint_Description",
+            "val": "${Description}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Event_Complaint_Status",
             "val": "${Status}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Event_Complaint_Type",
             "val": "SAP/C@P Complaint",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Complaint_Expiry",
+            "val": "${Due_Date}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -251,7 +282,12 @@
       {
         "label": "Works",
         "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Person_Organisation"
+        "toVertexName": "own_company"
+      },
+      {
+        "label": "Is_Client",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexName": "other_company"
       }
     ]
   }
