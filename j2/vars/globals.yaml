@@ -998,6 +998,7 @@ schema:
         - name: Model
         - name: Model_Year
 #        - name: CNH
+        - name: Brand
 
     - name: "Person_Employee"
       partition: false

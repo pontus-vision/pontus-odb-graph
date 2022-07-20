@@ -131,6 +131,7 @@
             "name": "Event_Complaint_Date",
             "val": "${Opened}",
             "mandatoryInSearch": false,
+            "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {

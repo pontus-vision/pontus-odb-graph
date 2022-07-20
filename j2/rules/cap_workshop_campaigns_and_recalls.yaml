@@ -90,6 +90,7 @@ updatereq:
         - name: Object_Campaign_Date
           val: ${Start_date}
           mandatoryInSearch: True
+          type: "java.util.Date"
         - name: Object_Campaign_Description
           val: ${Description}
           mandatoryInSearch: True

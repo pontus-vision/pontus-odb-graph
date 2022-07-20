@@ -88,6 +88,7 @@ updatereq:
         - name: Event_Complaint_Date
           val: ${Opened}
           mandatoryInSearch: False
+          type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Complaint_Description
           val: ${Description}

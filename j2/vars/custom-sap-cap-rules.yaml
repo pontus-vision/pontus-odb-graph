@@ -808,6 +808,7 @@ rules:
           Id: "${Transaction_Number}"
           Date:
             val: "${Opened}"
+            type: java.util.Date
             excludeFromSearch: true
           Description:
             val: "${Description}"
@@ -1177,7 +1178,9 @@ rules:
 
       - label: Object_Campaign
         props:
-          Date: "${Start_date}"
+          Date:
+            val: "${Start_date}"
+            type: java.util.Date
           Description: "${Description}"
           Id: "${Recall_campaign_ID?.trim()}"
 #          Status: "${}"
@@ -1357,6 +1360,7 @@ rules:
 
       - label: Object_Vehicle
         props:
+          Brand: "${Make}"
           License_Plate: "${License_Plate}"
           Model: "${Model}"
           Model_Year: "${Model_Year}"

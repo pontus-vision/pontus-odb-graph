@@ -132,7 +132,8 @@
           {
             "name": "Object_Campaign_Date",
             "val": "${Start_date}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
           },
           {
             "name": "Object_Campaign_Description",

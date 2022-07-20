@@ -3399,6 +3399,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Vehicle_Brand",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata_Type_Person_Employee",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -5714,7 +5719,8 @@
         "Metadata_Type_Object_Vehicle",
         "Object_Vehicle_License_Plate",
         "Object_Vehicle_Model",
-        "Object_Vehicle_Model_Year"
+        "Object_Vehicle_Model_Year",
+        "Object_Vehicle_Brand"
       ],
       "propertyKeysMappings": {}
     },

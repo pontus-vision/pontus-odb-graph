@@ -83,6 +83,9 @@ updatereq:
     
     - label: Object_Vehicle
       props:
+        - name: Object_Vehicle_Brand
+          val: ${Make}
+          mandatoryInSearch: True
         - name: Object_Vehicle_License_Plate
           val: ${License_Plate}
           mandatoryInSearch: True
