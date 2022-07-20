@@ -190,7 +190,7 @@ public class PVSapCapTest extends AppTest {
       assertEquals("302543787", jamesPhoneNumber, "James' mobile number");
 
       String responsibleDealer =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FORTUNI JAMES')).in('Is_Responsible')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FORTUNI JAMES')).out('Is_Client')" +
                       ".properties('Person_Organisation_Form_Id').value().next().toString()").get().toString();
       assertEquals("784384", responsibleDealer, "James' responsible dealer");
 
@@ -217,7 +217,7 @@ public class PVSapCapTest extends AppTest {
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
                       ".in('Has_Ingestion_Event').as('person-natural')" +
-                      ".has('Person_Natural_Full_Name', eq('LARA CRAFT')).in('Is_Responsible')" +
+                      ".has('Person_Natural_Full_Name', eq('LARA CRAFT')).out('Is_Client')" +
                       ".properties('Person_Organisation_Name').value().next().toString()").get().toString();
       assertEquals("P CENTER SÃO PAULO", getResponsibleDealer, "Responsible Dealer");
 

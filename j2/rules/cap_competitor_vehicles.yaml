@@ -70,11 +70,11 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location_Address_parser
-          val: ${Street?:''}, ${Street_2?:''}, ${House_Number?:'S/N'}, ${Addresstype?:''} ${Address_Number?:''}, ${District?:''}. CEP ${Postal_Code?:'S/N'}. ${City?:''}, ${Region_Desc_?:''}, ${Region?:''} - ${Country?:''}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location_Address_Post_Code
