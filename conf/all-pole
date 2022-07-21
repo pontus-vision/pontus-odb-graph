@@ -531,6 +531,7 @@ Object_System_Name
 Object_Vehicle_License_Plate
 Object_Vehicle_Model
 Object_Vehicle_Model_Year
+Object_Vehicle_Brand
 Person_Employee_Date_Of_Birth
 Person_Employee_Ethnicity
 Person_Employee_Full_Name

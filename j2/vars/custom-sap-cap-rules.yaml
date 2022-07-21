@@ -14,6 +14,7 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
@@ -21,22 +22,30 @@ rules:
 #            val: "Leads"
 #            excludeFromSearch: true
 
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
       - label: Object_Phone_Number
-        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        condition: "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
           Raw:
-            val: "${Telephone_no_}"
+            val: "${Telephone_No_}"
             excludeFromSearch: true
 #          Type:
 #            val: "Leads"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -61,13 +70,13 @@ rules:
 #        condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
 #          Type:
 #            val: "Business"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} (${Region}) - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -166,7 +175,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_customer_prospect:
     #TODO => Object_Privacy_Notice
@@ -196,25 +209,31 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
           Id: "${Tax_Number?.replaceAll('[^0-9]','')}"
           Registration_Number: "${Tax_Number?.replaceAll('[^0-9]','')}"
 
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Name: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+
       - label: Object_Phone_Number
-        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        condition: "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
           Raw:
-            val: "${Telephone_no_}"
+            val: "${Telephone_No_}"
             excludeFromSearch: true
           Numbers_Only:
-            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -235,10 +254,10 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -416,7 +435,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
       - label: "Has_Id_Card"
         fromVertexLabel: "Person_Natural"
@@ -616,9 +639,9 @@ rules:
         fromVertexLabel: "Person_Natural"
         toVertexLabel: "Object_Email_Address"
 
-      - label: "Is_Responsible"
-        fromVertexLabel: "Person_Organisation"
-        toVertexLabel: "Person_Natural"
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Person_Organisation"
 
   cap_ownership_change:
     vertices:
@@ -631,6 +654,7 @@ rules:
 
       - label: Person_Organisation
         props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
           Name:
             val: "${Name_1?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -697,9 +721,9 @@ rules:
         fromVertexName: "Person_Natural"
         toVertexLabel: "Event_Ingestion"
 
-      - label: "Is_Responsible"
-        fromVertexName: "Person_Organisation"
-        toVertexName: "Person_Natural"
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Person_Organisation"
 
   cap_complaint:
     vertices:
@@ -715,6 +739,7 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
@@ -722,22 +747,30 @@ rules:
 #            val: "SAP/C@P Complaint"
 #            excludeFromSearch: true
 
+      - label: Person_Organisation
+        ame: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
       - label: Object_Phone_Number
-        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        condition: "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
           Raw: 
-            val: "${Telephone_no_}"
+            val: "${Telephone_No_}"
             excludeFromSearch: true
 #          Type:
 #            val: "SAP/C@P Complaint"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -761,24 +794,34 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
 #          Type:
 #            val: "${Addresstype?.trim()}"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
       - label: Event_Complaint
         props:
-#          Date: "${Due_Date}"
-          Description: "${Description}; Resolvido = ${Solved}; Finalizado = ${Closed}."
-          Id: "${Campaign_ID}"
-          Status: "${Status}"
+          Id: "${Transaction_Number}"
+          Date:
+            val: "${Opened}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Description:
+            val: "${Description}"
+            excludeFromSearch: true
+          Status:
+            val: "${Status}"
+            excludeFromSearch: true
           Type:
             val: "SAP/C@P Complaint"
+            excludeFromSearch: true
+          Expiry:
+            val: "${Due_Date}"
             excludeFromSearch: true
 
       - label: Object_Email_Address
@@ -866,7 +909,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_activity:
     vertices:
@@ -882,6 +929,7 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
@@ -889,22 +937,30 @@ rules:
 #            val: "SAP/C@P Activity"
 #            excludeFromSearch: true
 
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
       - label: Object_Phone_Number
-        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        condition: "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
           Raw:
-            val: "${Telephone_no_}"
+            val: "${Telephone_No_}"
             excludeFromSearch: true
 #          Type:
 #            val: "SAP/C@P Activity"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -928,13 +984,13 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
 #          Type:
 #            val: "${Addresstype?.trim()}"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
@@ -1033,7 +1089,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_workshop_campaigns_and_recalls:
     vertices:
@@ -1052,6 +1112,7 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
@@ -1059,22 +1120,30 @@ rules:
 #            val: "SAP/C@P Workshop Campaigns and Recalls"
 #            excludeFromSearch: true
 
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
       - label: Object_Phone_Number
-        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        condition: "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
           Raw:
-            val: "${Telephone_no_}"
+            val: "${Telephone_No_}"
             excludeFromSearch: true
 #          Type:
 #            val: "SAP/C@P Workshop Campaigns and Recalls"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1098,19 +1167,21 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
 #          Type:
 #            val: "${Addresstype?.trim()}"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
       - label: Object_Campaign
         props:
-          Date: "${Start_date}"
+          Date:
+            val: "${Start_date}"
+            type: java.util.Date
           Description: "${Description}"
           Id: "${Recall_campaign_ID?.trim()}"
 #          Status: "${}"
@@ -1203,7 +1274,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_competitor_vehicles:
     vertices:
@@ -1219,6 +1294,7 @@ rules:
             excludeFromSearch: true
 
       - label: Person_Organisation
+        name: own_company
         condition: "${Company_Name_1?.trim()?.length() > 0}"
         props:
           Name: "${Company_Name_1?.trim()?.toUpperCase()}"
@@ -1226,22 +1302,30 @@ rules:
 #            val: "SAP/C@P Competitor Vehicles"
 #            excludeFromSearch: true
 
+      - label: Person_Organisation
+        name: other_company
+        props:
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
+          Name:
+            val: "${Resp__Sales_Dealer?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
       - label: Object_Phone_Number
-        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        condition: "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
           Raw:
-            val: "${Telephone_no_}"
+            val: "${Telephone_No_}"
             excludeFromSearch: true
 #          Type:
 #            val: "SAP/C@P Competitor Vehicles"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1265,18 +1349,19 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
 #          Type:
 #            val: "${Addresstype?.trim()}"
 #            excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
       - label: Object_Vehicle
         props:
+          Brand: "${Make}"
           License_Plate: "${License_Plate}"
           Model: "${Model}"
           Model_Year: "${Model_Year}"
@@ -1365,7 +1450,11 @@ rules:
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Person_Organisation"
+        toVertexName: "own_company"
+
+      - label: "Is_Client"
+        fromVertexLabel: "Person_Natural"
+        toVertexName: "other_company"
 
   cap_vehicle:
     vertices:
@@ -1415,21 +1504,21 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Phone_Number
-        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        condition: "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
           Raw:
-            val: "${Telephone_no_}"
+            val: "${Telephone_No_}"
             excludeFromSearch: true
 #          Type:
 #            val: "SAP/C@P Vehicle"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1619,21 +1708,21 @@ rules:
 #            excludeFromSearch: true
 
       - label: Object_Phone_Number
-        condition: "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}"
+        condition: "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: telephone
         props:
           Raw:
-            val: "${Telephone_no_}"
+            val: "${Telephone_No_}"
             excludeFromSearch: true
 #          Type:
 #            val: "Data Quality"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
