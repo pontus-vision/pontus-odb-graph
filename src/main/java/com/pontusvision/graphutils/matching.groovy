@@ -10,6 +10,7 @@ import com.jayway.jsonpath.JsonPath
 import com.joestelmach.natty.DateGroup
 import com.joestelmach.natty.Parser
 import com.orientechnologies.orient.core.id.ORID
+import com.orientechnologies.orient.core.sql.executor.OResultSet
 import com.pontusvision.gdpr.App
 import com.pontusvision.gdpr.mapping.Rules
 import com.pontusvision.gdpr.mapping.VertexProps
@@ -32,9 +33,7 @@ import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.codehaus.groovy.runtime.StringGroovyMethods
 
 import java.text.SimpleDateFormat
-import java.time.Instant
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiPredicate
 import java.util.regex.Pattern
@@ -809,10 +808,9 @@ class Matcher {
       counter++
       sb.append('"').append(field.propName).append('":').append(" :${field.propName} ")
 //      jb.addProperty(field.propName, ":${field.propName}")
-      if (field.attribType == Date.class){
+      if (field.attribType == Date.class) {
         sqlParams.put(field.propName, sdf.format((Date) field.attribNativeVal))
-      }
-      else {
+      } else {
         sqlParams.put(field.propName, field.attribNativeVal)
       }
 
@@ -1207,18 +1205,23 @@ class Matcher {
   }
 
   static com.pontusvision.gdpr.mapping.Rules getRule(String rulesName) {
-    def hasEntry =
-            (App.g.V()
-                    .has("Metadata_Type", "Object_Data_Src_Mapping_Rule")
-                    .has("Metadata_Type_Object_Data_Src_Mapping_Rule",
-                            P.eq("Object_Data_Src_Mapping_Rule"))
-                    .has("Object_Data_Src_Mapping_Rule_Name", P.eq(rulesName))
-                    .next()
-                    .property("Object_Data_Src_Mapping_Rule_Business_Rules_JSON")
-                    .value()
 
-            )
+    OGremlinResultSet res = App.graph.executeSql(
+            "SELECT Object_Data_Src_Mapping_Rule_Business_Rules_JSON FROM Object_Data_Src_Mapping_Rule WHERE Object_Data_Src_Mapping_Rule_Name = :ruleName",
+            Collections.singletonMap("ruleName", rulesName))
+
+    OResultSet oResultSet = res.getRawResultSet();
+    String hasEntry = null
+    if (oResultSet.hasNext()) {
+      hasEntry = oResultSet.next().getProperty("Object_Data_Src_Mapping_Rule_Business_Rules_JSON")
+    }
+
+    res.close()
     def jsonSlurper = new JsonSlurper()
+
+    if (!hasEntry) {
+      throw new Exception("Failed to find Rule ${rulesName}")
+    }
     def rules = jsonSlurper.parseText(hasEntry as String) as com.pontusvision.gdpr.mapping.Rules
 
     return rules
@@ -1495,6 +1498,38 @@ class Matcher {
     return EmailNLPRequest.upsertEmailNLPRequestArray(App.graph, App.g, recordList, ruleName).toString()
   }
 
+  static void cleanMaps(Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName){
+    cleanMaps(null,null,null,null,null,matchReqListByOridByVertexName);
+
+  }
+  public static void cleanMaps(Map<String, String> item,     List<MatchReq>            matchReqs,
+                               Map<String, AtomicDouble> maxScoresByVertexName,
+                               Map<String, Double>       percentageThresholdByVertexName,
+                               Map<String, List<MatchReq>>            matchReqByVertexName,
+                               Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
+  ){
+
+
+    item?.clear();
+    matchReqs?.clear();
+    maxScoresByVertexName?.clear()
+    percentageThresholdByVertexName?.clear()
+    matchReqByVertexName?.entrySet()?.each {
+      it.value.clear()
+    }
+    matchReqByVertexName?.clear()
+
+    matchReqListByOridByVertexName?.entrySet()?.each {
+      it.value.entrySet().each{ it2 ->
+        it2.value.clear()
+      }
+      it.value.clear()
+    }
+    matchReqListByOridByVertexName?.clear();
+
+  }
+
+
   static String ingestFile(String jsonString, String jsonPath, String ruleName) {
     FileNLPRequest[] recordList = JsonPath.read(jsonString, jsonPath) // as EmailNLPRequest[]
 
@@ -1551,6 +1586,20 @@ class Matcher {
                   sb)
         }
 
+        matchReqs.clear()
+        edgeReqs.clear()
+
+        def entries = finalVertexIdByVertexName.entrySet();
+        for (def entry: entries){
+          entry.value.clear()
+        }
+
+        Set< Map.Entry<String, List<EdgeRequest>>> edgeReqEntries = edgeReqsByVertexName.entrySet();
+        for (Map.Entry<String, List<EdgeRequest>> entry: edgeReqEntries){
+          entry.value.clear()
+        }
+        finalVertexIdByVertexName.clear()
+
 
         trans.commit()
         successCount++
@@ -1583,7 +1632,7 @@ class Matcher {
 //                .has("Object_Data_Src_Mapping_Rule_Name", P.eq(ruleName))
 //                .next()
 //                .id().toString())
-        id = ((OrientStandardGraph)g.graph).executeSql('SELECT @rid from Object_Data_Src_Mapping_Rule where Object_Data_Src_Mapping_Rule_Name = :ruleName ',
+        id = ((OrientStandardGraph) g.graph).executeSql('SELECT @rid from Object_Data_Src_Mapping_Rule where Object_Data_Src_Mapping_Rule_Name = :ruleName ',
                 ['ruleName': ruleName]).getRawResultSet().next().getProperty('@rid').toString()
       }
       catch (Throwable t) {
@@ -2250,6 +2299,8 @@ class Matcher {
 
     createEdgesSlim(g, (Set<EdgeRequest>) edgeReqs, matchReqListByOridByVertexName)
 
+    cleanMaps(null,null,null,null,matchReqByVertexName,matchReqListByOridByVertexName)
+
   }
 
   static createEdges(GraphTraversalSource gTrav, Set<EdgeRequest> edgeReqs, Map<String, Map<ORID, AtomicDouble>> finalVertexIdByVertexName, Map<String, AtomicDouble> maxScoresByVertexName, StringBuffer sb = null) {
@@ -2383,6 +2434,7 @@ class Matcher {
 
     createEdges(g, (Set<EdgeRequest>) edgeReqs, finalVertexIdByVertexName, maxScoresByVertexName, sb)
 
+    cleanMaps(null,null,maxScoresByVertexName,percentageThresholdByVertexName,matchReqByVertexName,matchReqListByOridByVertexName)
 
   }
 

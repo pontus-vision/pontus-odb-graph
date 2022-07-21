@@ -658,6 +658,7 @@ rules:
           Name:
             val: "${Name_1?.trim()?.toUpperCase()}"
             excludeFromSearch: true
+          Form_Id: "${Responsible_Dealer?.replaceAll('[^0-9]', '')}"
 #          Type:
 #            val: "Pxxxxxx Responsible Dealer"
 #            excludeFromSearch: true
@@ -1541,10 +1542,10 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             excludeFromSearch: true
           parser:
-            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}"
+            val: "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
