@@ -50,7 +50,7 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/lead.csv", "cap_lead");
 
       String marcelPhoneCount =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MARCEL MOLICA ARAÚJO'))" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('EMILY VARGAS'))" +
                       ".bothE('Has_Phone').count().next().toString()").get().toString();
       // Object_Contract has been removed ... so no more Is_Lead EDGE ... total of 6 EDGES
       assertEquals("2", marcelPhoneCount, "Marcel has 2 phone numbers registered");
@@ -58,15 +58,15 @@ public class PVSapCapTest extends AppTest {
 
       String fullName =
               App.executor.eval("App.g.V().has('Location_Address_Full_Address'," +
-                      "eq('Rua Tarcisio Vanderbilt 260 Casa, Araraquara, São Paulo (SP) - BR, 88650024')).in('Is_Located')" +
+                      "eq('test street 1 casa 110, Rio, Rio de Janeiro RJ - BR, 12345')).in('Is_Located')" +
                       ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
-      assertEquals("MARCEL MOLICA ARAÚJO", fullName, "Full Name de Marcel Molica Araújo");
+      assertEquals("EMILY VARGAS", fullName, "Full Name de Marcel Molica Araújo");
 
 
       String gettingEmailAddress =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MARCEL MOLICA ARAÚJO')).out('Uses_Email')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('EMILY VARGAS')).out('Uses_Email')" +
                       ".properties('Object_Email_Address_Email').value().next().toString()").get().toString();
-      assertEquals("marcelmolica@hotmail.com", gettingEmailAddress, "E-mail de Marcel Molica Araújo");
+      assertEquals("test@test.com", gettingEmailAddress, "E-mail de Marcel Molica Araújo");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -82,64 +82,25 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/customer-prospect.csv", "cap_customer_prospect");
 
       String gettingEmailAddress =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('NATAN BOLDERI')).out('Uses_Email')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('BORGES KALL')).out('Uses_Email')" +
                       ".properties('Object_Email_Address_Email').value().next().toString()").get().toString();
-      assertEquals("natinhobolderi@gmail.com", gettingEmailAddress, "E-mail de Natan Bolderi");
+      assertEquals("test@test.com", gettingEmailAddress, "E-mail");
 
-      String natanBDay =
+      String bDay =
               App.executor.eval("App.g.V().has('Location_Address_Post_Code'," +
-                      "eq('14022-000'))" +
+                      "eq('90982-090'))" +
                       ".in('Is_Located').properties('Person_Natural_Date_Of_Birth').value().next().toString()").get().toString();
-      // replace the timezone with GMT; otherwise, if the test is run in Brazil, that appears as BRT 1975
-      // ... in regex means any character, so ... 1976 will replace BRT 1976 with GMT 1975
-//      natanBDay = natanBDay.replaceAll("... 1975", "GMT 1975");
-      assertEquals(dtfmt.parse("Thu May 08 01:01:01 GMT 1975"), dtfmt.parse(natanBDay), "Data de nascimento de Natan Bolderi");
+      assertEquals(dtfmt.parse("Tue Mar 08 01:01:01 UTC 2022"), dtfmt.parse(bDay), "Data de nascimento");
 
       String eventConsentCreatedBy =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('BORGES KALL')).out('Has_Consent')" +
                       ".properties('Event_Consent_Created_By').value().next().toString()").get().toString();
-      assertEquals("DBR0200WK", eventConsentCreatedBy, "Pxxxxxx Employee code");
+      assertEquals("87NJI239", eventConsentCreatedBy, "Employee code");
 
-      String natanBolderiNoConsentCount =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
-                      ".has('Event_Consent_Status', eq('No Consent')).count().next().toString()").get().toString();
-      assertEquals("1", natanBolderiNoConsentCount, "Number of No Consents granted by Natan Bolderi");
-
-      String natanBolderiYesConsentCount =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
+      String ConsentCount =
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('BORGES KALL')).out('Has_Consent')" +
                       ".has('Event_Consent_Status', eq('Consent')).count().next().toString()").get().toString();
-      assertEquals("2", natanBolderiYesConsentCount, "Number of Consents granted by Natan Bolderi");
-
-      String telephoneConsentStatus =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('NATAN BOLDERI')).out('Has_Consent')" +
-                      ".has('Event_Consent_Description', eq('Telephone Consent')).properties('Event_Consent_Status')" +
-                      ".value().next().toString()").get().toString();
-      assertEquals("No Consent", telephoneConsentStatus, "Status for Natan Bolderi's Telephone Consent");
-
-      // Testing for Lucci Gucci
-
-      String lucciGucciYesConsentCount =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('LUCCI GUCCI')).out('Has_Consent')" +
-                      ".count().next().toString()").get().toString();
-      assertEquals("5", lucciGucciYesConsentCount, "Number of Consents granted by Lucci Gucci");
-
-      String lucciGucciBDay =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('LUCCI GUCCI'))" +
-                      ".properties('Person_Natural_Date_Of_Birth').value().next().toString()").get().toString();
-//      lucciGucciBDay = lucciGucciBDay.replaceAll("... 1965", "GMT 1965");
-      assertEquals(dtfmt.parse("Sat Jan 23 01:01:01 GMT 1965"), dtfmt.parse(lucciGucciBDay), "Lucci Gucci's Birthday");
-
-      // testing for Virginia Mars
-
-      String virginiaMarsConsentCount =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('VIRGINIA MARS')).out('Has_Consent')" +
-                      ".has('Event_Consent_Status', eq('No Consent')).count().next().toString()").get().toString();
-      assertEquals("5", virginiaMarsConsentCount, "Number of No Consents given by Virginia Mars");
-
-      String virginiaMarsCustomerID =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('VIRGINIA MARS')).out('Has_Consent')" +
-                      ".properties('Event_Consent_Customer_ID').value().next().toString()").get().toString();
-      assertEquals("23453454354", virginiaMarsCustomerID, "Virginia Mars' Tax Number");
+      assertEquals("5", ConsentCount, "Number of Consents granted");
 
     } catch (ExecutionException | ParseException e) {
       e.printStackTrace();
@@ -195,7 +156,7 @@ public class PVSapCapTest extends AppTest {
       assertEquals("784384", responsibleDealer, "James' responsible dealer");
 
       String respSalesDealer =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FORTUNI JAMES')).in('Is_Responsible')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FORTUNI JAMES')).out('Is_Client')" +
                       ".properties('Person_Organisation_Name').value().next().toString()").get().toString();
       assertEquals("P CENTER CURITIBA", respSalesDealer, "James' responsible dealer");
 
@@ -227,8 +188,8 @@ public class PVSapCapTest extends AppTest {
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
                       ".in('Has_Ingestion_Event').as('person-natural')" +
-                      ".in('Is_Responsible').as('person-org')" +
-                      ".has('Person_Organisation_Name',eq('P CENTER SÃO PAULO')).out('Is_Responsible')" +
+                      ".out('Is_Client').as('person-org')" +
+                      ".has('Person_Organisation_Name',eq('P CENTER SÃO PAULO')).in('Is_Client')" +
                       ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
       assertEquals("LARA CRAFT", getResponsibleOwner, "client");
 
@@ -246,20 +207,19 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/complaint.csv", "cap_complaint");
 
       String getComplaintDescription =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('DORIA MARCONDES')).out('Has_Complaint')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MUSTAFA GHADAS')).out('Has_Complaint')" +
                       ".properties('Event_Complaint_Description').value().next().toString()").get().toString();
-      assertEquals("O carro estava estragado; Resolvido = Sim; Finalizado = Sim.", getComplaintDescription,
-              "Descrição da reclamação de Doria");
+      assertEquals("COMPLAINT MANAGEMENT LTDA.", getComplaintDescription, "Descrição da reclamação");
 
       String getComplaintStatus =
-              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('MEI KELVIN')).in('Works').out('Has_Complaint')" +
+              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('GHADAS DOCES')).in('Works').out('Has_Complaint')" +
                       ".properties('Event_Complaint_Status').value().next().toString()").get().toString();
-      assertEquals("Em analise", getComplaintStatus, "Status do Complaint de Kelvin");
+      assertEquals("M", getComplaintStatus, "Status do Complaint");
 
-      String marcosCountry =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARCOS KELVIN')).out('Is_Located')" +
+      String mustafaCountry =
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MUSTAFA GHADAS')).out('Is_Located')" +
                       ".properties('Location_Address_parser_country').value().next().toString()").get().toString();
-      assertEquals("[brasil]", marcosCountry, "Marcos is located in Brasil");
+      assertEquals("[bairro, br, brace, brae, branch, bridge, brother]", mustafaCountry);
 
 
     } catch (ExecutionException e) {
@@ -276,20 +236,20 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/activity.csv", "cap_activity");
 
       String getQuasimodoMobile =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('QUASIMODO PARIS')).out('Has_Mobile')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('GABRIEL MOSHI')).out('Has_Mobile')" +
                       ".properties('Object_Phone_Number_Raw').value().next().toString()").get().toString();
-      assertEquals("+5549987776575", getQuasimodoMobile, "Quasimodo's mobile");
+      assertEquals("94327596090", getQuasimodoMobile, "Mobile");
 
 
       String alexEmail =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('ALEX KOVAS')).out('Uses_Email')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('GABRIEL MOSHI')).out('Uses_Email')" +
                       ".properties('Object_Email_Address_Email').value().next().toString()").get().toString();
-      assertEquals("alex_kovas_10@gmail.com", alexEmail, "Email de Alex Kovas");
+      assertEquals("foster@mail.com", alexEmail, "Email");
 
       String locationParser =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('QUASIMODO PARIS')).out('Is_Located')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('GABRIEL MOSHI')).out('Is_Located')" +
                       ".properties('Location_Address_parser_city').value().next().toString()").get().toString();
-      assertEquals("[fortaleza]", locationParser, "Quasimodo is located in Fortaleza - Brasil");
+      assertEquals("[salvador]", locationParser);
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -305,15 +265,15 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/workshop-campaigns-and-recalls.csv", "cap_workshop_campaigns_and_recalls");
 
       String getRecallCampaignId =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('CAMILLA FLAVINA')).out('Has_Campaign')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('RODOLFO FIGUEIREDO')).out('Has_Campaign')" +
                       ".properties('Object_Campaign_Id').value().next().toString()").get().toString();
-      assertEquals("7856", getRecallCampaignId, "Id do contrato de Camilla");
+      assertEquals("938987", getRecallCampaignId, "Id do contrato");
 
       String getCampaignDescription =
               App.executor.eval("App.g.V().has('Location_Address_Full_Address'," +
-                      "eq('Rua Germano de Rusky 551 , São Paulo (Região Norte), Marilia - Brasil, 84567-933')).in('Is_Located')" +
+                      "eq('av Maria Mar 99 Apt 61, SC Rebouças, Taio - BR, 18958-980')).in('Is_Located')" +
                       ".out('Has_Campaign').properties('Object_Campaign_Description').value().next().toString()").get().toString();
-      assertEquals("Campanha de Marketing de novo modelo de carro", getCampaignDescription, "Descrição da campanha");
+      assertEquals("Test", getCampaignDescription, "Descrição da campanha");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -329,20 +289,21 @@ public class PVSapCapTest extends AppTest {
       csvTestUtil("SAP/sap-cap/competitor-vehicles.csv", "cap_competitor_vehicles");
 
       String getVehicleLicensePlate =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FABIOLA NAKAMURA')).out('Has_Vehicle')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('EDSON THOMAS')).out('Has_Vehicle')" +
                       ".properties('Object_Vehicle_License_Plate').value().next().toString()").get().toString();
-      assertEquals("A566-T567", getVehicleLicensePlate, "Fabiola's Car's License plate");
+      assertEquals("AJN93248", getVehicleLicensePlate, "License plate");
 
 
       String getVehicleModel =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('URIEL')).out('Has_Vehicle')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('EDSON THOMAS')).out('Has_Vehicle')" +
                       ".properties('Object_Vehicle_Model').value().next().toString()").get().toString();
-      assertEquals("AX45FD", getVehicleModel, "Uriel's Vehicle's Model");
+      assertEquals("Super Sport", getVehicleModel, "Vehicle's Model");
 
       String getMobileNumber =
-              App.executor.eval("App.g.V().has('Object_Phone_Number_Raw',eq('+554130964576')).in('Has_Phone')" +
-                      ".out('Has_Mobile').properties('Object_Phone_Number_Raw').value().next().toString()").get().toString();
-      assertEquals("+55(45)99165-6544", getMobileNumber, "Fabiola's Mobile number");
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('sap/c@p Competitor Vehicles'))" +
+                      ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
+                      ".out('Has_Mobile').properties('Object_Phone_Number_Raw').value().next()").get().toString();
+      assertEquals("098098704", getMobileNumber, "Mobile number");
 
     } catch (ExecutionException e) {
       e.printStackTrace();

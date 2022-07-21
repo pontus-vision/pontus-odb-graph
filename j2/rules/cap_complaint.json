@@ -48,24 +48,24 @@
       {
         "label": "Object_Phone_Number",
         "name": "telephone",
-        "condition": "${Telephone_no_?.replaceAll('[^0-9]', '')?.length() > 0}",
+        "condition": "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
           {
             "name": "Object_Phone_Number_Raw",
-            "val": "${Telephone_no_}",
+            "val": "${Telephone_No_}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telephone_no_?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Telephone_no_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }
@@ -102,13 +102,13 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location_Address_parser",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
