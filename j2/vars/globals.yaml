@@ -463,7 +463,7 @@ schema:
         - name: Status
         - name: Type
 
-    - name: "Object_Campaign"
+    - name: "Event_Campaign"
       partition: false
       useStatic: false
       props:

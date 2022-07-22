@@ -266,13 +266,13 @@ public class PVSapCapTest extends AppTest {
 
       String getRecallCampaignId =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('RODOLFO FIGUEIREDO')).out('Has_Campaign')" +
-                      ".properties('Object_Campaign_Id').value().next().toString()").get().toString();
+                      ".properties('Event_Campaign_Id').value().next().toString()").get().toString();
       assertEquals("938987", getRecallCampaignId, "Id do contrato");
 
       String getCampaignDescription =
               App.executor.eval("App.g.V().has('Location_Address_Full_Address'," +
                       "eq('av Maria Mar 99 Apt 61, SC Rebouças, Taio - BR, 18958-980')).in('Is_Located')" +
-                      ".out('Has_Campaign').properties('Object_Campaign_Description').value().next().toString()").get().toString();
+                      ".out('Has_Campaign').properties('Event_Campaign_Description').value().next().toString()").get().toString();
       assertEquals("Test", getCampaignDescription, "Descrição da campanha");
 
     } catch (ExecutionException e) {

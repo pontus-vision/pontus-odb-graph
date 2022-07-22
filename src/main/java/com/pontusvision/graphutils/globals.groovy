@@ -1926,7 +1926,7 @@ class VisJSGraph {
             'Object_Awareness_Campaign',
             'Object_Biometric',
             'Object_Contract',
-            'Object_Campaign',
+            'Event_Campaign',
             'Object_Credential',
             'Object_Data_Policy',
             'Object_Data_Procedures',

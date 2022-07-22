@@ -994,7 +994,7 @@ rules:
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
-#      - label: Object_Campaign
+#      - label: Event_Campaign
 #        props:
 #          Date: "${Created_On}"
 #          Description: "${Description}"
@@ -1085,7 +1085,7 @@ rules:
 
 #      - label: "Has_Campaign"
 #        fromVertexLabel: "Person_Natural"
-#        toVertexLabel: "Object_Campaign"
+#        toVertexLabel: "Event_Campaign"
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"
@@ -1177,7 +1177,7 @@ rules:
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(Postal_Code)}"
 
-      - label: Object_Campaign
+      - label: Event_Campaign
         props:
           Date:
             val: "${Start_date}"
@@ -1270,7 +1270,7 @@ rules:
 
       - label: "Has_Campaign"
         fromVertexLabel: "Person_Natural"
-        toVertexLabel: "Object_Campaign"
+        toVertexLabel: "Event_Campaign"
 
       - label: "Works"
         fromVertexLabel: "Person_Natural"

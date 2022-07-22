@@ -918,44 +918,44 @@ propertyKeys:
   - name: Object_Contract_Type
     dataType: String
     cardinality: SINGLE
-  - name: Metadata_Type_Object_Campaign
+  - name: Metadata_Type_Event_Campaign
     dataType: String
     cardinality: SINGLE
 
-  - name: Object_Campaign_Type
+  - name: Event_Campaign_Type
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Date
+  - name: Event_Campaign_Date
     dataType: Date
     cardinality: SINGLE
-  - name: Object_Campaign_Description
+  - name: Event_Campaign_Description
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Expiry
+  - name: Event_Campaign_Expiry
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Form_Id
+  - name: Event_Campaign_Form_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Form_Owner_Id
+  - name: Event_Campaign_Form_Owner_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Form_Submission_Id
+  - name: Event_Campaign_Form_Submission_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Form_Submission_Owner_Id
+  - name: Event_Campaign_Form_Submission_Owner_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Id
+  - name: Event_Campaign_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Link
+  - name: Event_Campaign_Link
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Status
+  - name: Event_Campaign_Status
     dataType: String
     cardinality: SINGLE
-  - name: Object_Campaign_Type
+  - name: Event_Campaign_Type
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Credential
@@ -2410,7 +2410,7 @@ vertexLabels:
   - name: Object_Contract
     partition: False
     useStatic: False
-  - name: Object_Campaign
+  - name: Event_Campaign
     partition: False
     useStatic: False
   - name: Object_Credential
@@ -3380,25 +3380,25 @@ vertexIndexes:
     
       {}
     
-  - name: "Object_Campaign_MixedIdx"
+  - name: "Event_Campaign_MixedIdx"
     composite: false
     unique: false
     indexOnly: null
     indexType: UNIQUE
     mixedIndex: "search"
     propertyKeys:
-      - Metadata_Type_Object_Campaign
-      - Object_Campaign_Date
-      - Object_Campaign_Description
-      - Object_Campaign_Expiry
-      - Object_Campaign_Form_Id
-      - Object_Campaign_Form_Owner_Id
-      - Object_Campaign_Form_Submission_Id
-      - Object_Campaign_Form_Submission_Owner_Id
-      - Object_Campaign_Id
-      - Object_Campaign_Link
-      - Object_Campaign_Status
-      - Object_Campaign_Type
+      - Metadata_Type_Event_Campaign
+      - Event_Campaign_Date
+      - Event_Campaign_Description
+      - Event_Campaign_Expiry
+      - Event_Campaign_Form_Id
+      - Event_Campaign_Form_Owner_Id
+      - Event_Campaign_Form_Submission_Id
+      - Event_Campaign_Form_Submission_Owner_Id
+      - Event_Campaign_Id
+      - Event_Campaign_Link
+      - Event_Campaign_Status
+      - Event_Campaign_Type
     propertyKeysMappings:
     
       {}

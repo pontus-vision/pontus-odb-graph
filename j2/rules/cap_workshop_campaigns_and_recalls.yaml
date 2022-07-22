@@ -85,19 +85,19 @@ updatereq:
           val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
           mandatoryInSearch: True
     
-    - label: Object_Campaign
+    - label: Event_Campaign
       props:
-        - name: Object_Campaign_Date
+        - name: Event_Campaign_Date
           val: ${Start_date}
           mandatoryInSearch: True
           type: "java.util.Date"
-        - name: Object_Campaign_Description
+        - name: Event_Campaign_Description
           val: ${Description}
           mandatoryInSearch: True
-        - name: Object_Campaign_Id
+        - name: Event_Campaign_Id
           val: ${Recall_campaign_ID?.trim()}
           mandatoryInSearch: True
-        - name: Object_Campaign_Type
+        - name: Event_Campaign_Type
           val: SAP/C@P Workshop Campaigns and Recalls Campaign
           mandatoryInSearch: False
           excludeFromSearch: True
@@ -176,7 +176,7 @@ updatereq:
     toVertexLabel: Object_Email_Address
   - label: Has_Campaign
     fromVertexLabel: Person_Natural
-    toVertexLabel: Object_Campaign
+    toVertexLabel: Event_Campaign
   - label: Works
     fromVertexLabel: Person_Natural
     toVertexName: own_company
