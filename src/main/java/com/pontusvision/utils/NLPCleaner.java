@@ -66,6 +66,7 @@ public class NLPCleaner
       retVal.add(s.trim());
     });
 
+    stringStream.close();
     JSONArray array = new JSONArray(retVal);
 
     return array.toString();

@@ -34,7 +34,9 @@ public class DrawIOGremlin {
     } finally {
       decompressor.end();
     }
-    return bos.toByteArray();
+    byte[] retVal = bos.toByteArray();
+    bos.close();
+    return retVal
   }
 
   static XmlSlurper slurper = new groovy.util.XmlSlurper();
