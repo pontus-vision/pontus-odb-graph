@@ -1,6 +1,7 @@
 package com.pontusvision.graphutils
 
 import com.google.common.util.concurrent.AtomicDouble
+import com.orientechnologies.common.exception.OException
 import com.orientechnologies.orient.core.id.ORID
 import com.orientechnologies.orient.core.sql.executor.OResultSet
 import com.pontusvision.gdpr.App
@@ -11,7 +12,6 @@ import com.pontusvision.gdpr.mapping.VertexProps
 import org.apache.tinkerpop.gremlin.orientdb.OrientStandardGraph
 import org.apache.tinkerpop.gremlin.process.traversal.P
 import org.apache.tinkerpop.gremlin.process.traversal.Traversal
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Transaction
@@ -106,18 +106,17 @@ class FileNLPRequest implements Serializable {
     vtxPropStatus.val = status
 
 
-
     vtx.props = [vtxProps, vtxPropStatus]
-    if (isStart != null){
+    if (isStart != null) {
       VertexProps vtxPropTime = new VertexProps()
-      vtxPropTime.name = "${vtxLabel}_Ingestion_${isStart?'Start':'Finish'}"
+      vtxPropTime.name = "${vtxLabel}_Ingestion_${isStart ? 'Start' : 'Finish'}"
       vtxPropTime.mandatoryInSearch = false
       vtxPropTime.excludeFromSearch = true
       vtxPropTime.excludeFromUpdate = false
       vtxPropTime.val = Matcher.sdf.format(new Date())
       vtx.props.push(vtxPropTime)
     }
-    if (errorStr != null){
+    if (errorStr != null) {
       VertexProps vtxPropError = new VertexProps()
       vtxPropError.name = "${vtxLabel}_Error"
       vtxPropError.mandatoryInSearch = false
@@ -131,20 +130,19 @@ class FileNLPRequest implements Serializable {
   }
 
 
-  static String getDataSourceName(FileNLPRequest req){
-    return (req.dataSourceName?: "file_server_${req.server}").toUpperCase()
+  static String getDataSourceName(FileNLPRequest req) {
+    return (req.dataSourceName ?: "file_server_${req.server}").toUpperCase()
   }
-  static void upsertFileNLPRequestArray(
-          OrientStandardGraph graph,
-          GraphTraversalSource g,
-          FileNLPRequest[] reqs,
-          String ruleName) {
-    Boolean isSlim = App.useSlim || ruleName?.toLowerCase()?.contains("slim");
-    if (reqs.length == 0){
 
-      return;
+  static void upsertFileNLPRequestArray(OrientStandardGraph graph,
+                                        GraphTraversalSource g,
+                                        FileNLPRequest[] reqs,
+                                        String ruleName) {
+    Boolean isSlim = App.useSlim || ruleName?.toLowerCase()?.contains("slim")
+    if (reqs.length == 0) {
+
+      return
     }
-
 
 
     Transaction trans = App.graph.tx()
@@ -169,11 +167,10 @@ class FileNLPRequest implements Serializable {
   }
 
 
-  static Map<String, Map<ORID, AtomicDouble>> upsertFileNLPRequest(
-          OrientStandardGraph graph,
-          GraphTraversalSource g,
-          FileNLPRequest req,
-          Boolean useSlim) {
+  static Map<String, Map<ORID, AtomicDouble>> upsertFileNLPRequest(OrientStandardGraph graph,
+                                                                   GraphTraversalSource g,
+                                                                   FileNLPRequest req,
+                                                                   Boolean useSlim) {
 
     UpdateReq updateReq = new UpdateReq()
     updateReq.vertices = []
@@ -187,83 +184,84 @@ class FileNLPRequest implements Serializable {
     Vertex eventFileVtx = createEventFileIngestionVtx(req, updateReq)
     createEdge('Has_Ingestion_Event', eventGroupFileIngestionVtx.name, eventFileVtx.name, updateReq)
 
-    if (useSlim){
+    if (useSlim) {
       processUpsertFileNLPRequestSlim(graph, g, req, updateReq)
-    }
-    else {
-      processUpsertFileNLPRequest(graph,g,req,updateReq)
+    } else {
+      processUpsertFileNLPRequest(graph, g, req, updateReq)
 
     }
 
   }
-  static void upsertDataSourceStatus(String dataSourceName, String status, Boolean isStart = null, Long numBytes = null, Long numObjects = null, String errorStr = null){
-    UpdateReq updateReq = new UpdateReq()
-    updateReq.vertices = []
-    updateReq.edges = []
 
-    createObjectDataSourceVtx(updateReq, dataSourceName, PontusJ2ReportingFunctions.translate(status), isStart, errorStr)
-    def (
-    List<MatchReq>            matchReqs,
-    Map<String, AtomicDouble> maxScoresByVertexName,
-    Map<String, Double>       percentageThresholdByVertexName
-    ) = Matcher.getMatchRequests(Collections.EMPTY_MAP, updateReq, 0.0)
-
-    List<MatchReq> mandatoryFields = matchReqs.findAll { it2 -> it2.mandatoryInSearch }
-
-    String whereClause = Matcher.createWhereClauseAttribs(mandatoryFields)
-
-    def (String jsonToMerge, Map<String, Object> sqlParams) = Matcher.createJsonMergeParam(matchReqs,"Object_Data_Source")
-
-    def tx = App.graph.tx();
-    if (!tx.isOpen()){
-      tx.open()
-    }
-    OResultSet retVal = null;
+  static void upsertDataSourceStatus(String dataSourceName, String status, Boolean isStart = null, Long numBytes = null, Long numObjects = null, String errorStr = null) {
+    def tx = null
     try {
-      retVal = App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
-              sqlParams).getRawResultSet()
+      UpdateReq updateReq = new UpdateReq()
+      updateReq.vertices = []
+      updateReq.edges = []
 
-      if (numBytes && numObjects) {
-        def rid = retVal.next().getIdentity().get()
-        if (rid) {
-          App.graph.executeSql("UPDATE ${rid} " +
-                  "SET Object_Data_Source_Total_Bytes += ${numBytes}, " +
-                  "Object_Data_Source_Num_Objects += ${numObjects}", [:]).getRawResultSet().close();
+      createObjectDataSourceVtx(updateReq, dataSourceName, PontusJ2ReportingFunctions.translate(status), isStart, errorStr)
+      def (List<MatchReq>       matchReqs,
+      Map<String, AtomicDouble> maxScoresByVertexName,
+      Map<String, Double>       percentageThresholdByVertexName) = Matcher.getMatchRequests(Collections.EMPTY_MAP, updateReq, 0.0)
+
+      List<MatchReq> mandatoryFields = matchReqs.findAll { it2 -> it2.mandatoryInSearch }
+
+      String whereClause = Matcher.createWhereClauseAttribs(mandatoryFields)
+
+      def (String jsonToMerge, Map<String, Object> sqlParams) = Matcher.createJsonMergeParam(matchReqs, "Object_Data_Source")
+
+
+      tx = App.graph.tx()
+      if (!tx.isOpen()) {
+        tx.open()
+      }
+      OResultSet retVal = null
+      try {
+        retVal = App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
+                sqlParams).getRawResultSet()
+
+        if (numBytes && numObjects) {
+          def rid = retVal.next().getIdentity().get()
+          if (rid) {
+            App.graph.executeSql("UPDATE ${rid} " + "SET Object_Data_Source_Total_Bytes += ${numBytes}, " + "Object_Data_Source_Num_Objects += ${numObjects}", [:]).getRawResultSet().close()
+          }
         }
-      }
 
-      tx.commit()
-    } catch (Exception e){
-      tx.rollback()
-    } finally {
-      if (retVal){
-        retVal.close()
+        tx.commit()
+      } catch (Exception e) {
+        tx.rollback()
+      } finally {
+        if (retVal) {
+          retVal.close()
+        }
+        tx.close()
       }
-      tx.close()
+      Matcher.cleanMaps(null, matchReqs, maxScoresByVertexName, percentageThresholdByVertexName, null, null)
+
+    } catch (OException e2) {
+      System.out.println("ODB Graph Exception; killing the graph" + e2.toString()) {
+        System.exit(-1)
+      }
     }
 
-    Matcher.cleanMaps(null,matchReqs,maxScoresByVertexName,percentageThresholdByVertexName,null,null)
 
   }
 
   static processUpsertFileNLPRequestSlim(OrientStandardGraph graph,
-                                     GraphTraversalSource g,
-                                     FileNLPRequest req,
-                                     UpdateReq updateReq){
+                                         GraphTraversalSource g,
+                                         FileNLPRequest req,
+                                         UpdateReq updateReq) {
 
     StringBuffer sb = new StringBuffer()
     Double pcntThreshold = 1.0
     Map<String, String> item = getMapFromFileNLPRequest(req)
-    def (
-    List<MatchReq>            matchReqs,
+    def (List<MatchReq>       matchReqs,
     Map<String, AtomicDouble> maxScoresByVertexName,
-    Map<String, Double>       percentageThresholdByVertexName
-    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
+    Map<String, Double>       percentageThresholdByVertexName) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
 
-    def (
-    Map<String, List<MatchReq>>            matchReqByVertexName,
-    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName
-    ) = Matcher.matchVerticesSlim(graph, g, matchReqs)
+    def (Map<String, List<MatchReq>>       matchReqByVertexName,
+    Map<String, Map<ORID, List<MatchReq>>> matchReqListByOridByVertexName) = Matcher.matchVerticesSlim(graph, g, matchReqs)
 
     def (Map<String, List<EdgeRequest>> edgeReqsByVertexName, Set<EdgeRequest> edgeReqs) =
     Matcher.parseEdges(updateReq)
@@ -278,8 +276,8 @@ class FileNLPRequest implements Serializable {
       createEventNLPGroups(req, it.key, req.email)
     })
 
-    Matcher.cleanMaps(item,matchReqs,maxScoresByVertexName,percentageThresholdByVertexName,
-            matchReqByVertexName,matchReqListByOridByVertexName)
+    Matcher.cleanMaps(item, matchReqs, maxScoresByVertexName, percentageThresholdByVertexName,
+            matchReqByVertexName, matchReqListByOridByVertexName)
 
 
   }
@@ -287,21 +285,17 @@ class FileNLPRequest implements Serializable {
   static processUpsertFileNLPRequest(OrientStandardGraph graph,
                                      GraphTraversalSource g,
                                      FileNLPRequest req,
-                                     UpdateReq updateReq){
+                                     UpdateReq updateReq) {
 
     StringBuffer sb = new StringBuffer()
     Double pcntThreshold = 1.0
     Map<String, String> item = getMapFromFileNLPRequest(req)
-    def (
-    List<MatchReq>            matchReqs,
+    def (List<MatchReq>       matchReqs,
     Map<String, AtomicDouble> maxScoresByVertexName,
-    Map<String, Double>       percentageThresholdByVertexName
-    ) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
+    Map<String, Double>       percentageThresholdByVertexName) = Matcher.getMatchRequests(item as Map<String, String>, updateReq, pcntThreshold, sb)
 
-    def (
-    Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexNameLocal,
-    Map<String, List<MatchReq>>          matchReqByVertexName
-    ) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
+    def (Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexNameLocal,
+    Map<String, List<MatchReq>>               matchReqByVertexName) = Matcher.matchVertices(graph, g, matchReqs, 100, sb)
 
 //    vertexScoreMapByVertexName = vertexScoreMapByVertexNameLocal
 
@@ -315,20 +309,19 @@ class FileNLPRequest implements Serializable {
       createEventNLPGroups(req, it.key, req.email)
     })
 
-    Matcher.cleanMaps(item,matchReqs,maxScoresByVertexName,percentageThresholdByVertexName,
-            matchReqByVertexName,finalVertexIdByVertexName);
+    Matcher.cleanMaps(item, matchReqs, maxScoresByVertexName, percentageThresholdByVertexName,
+            matchReqByVertexName, finalVertexIdByVertexName)
     Matcher.cleanMaps(vertexScoreMapByVertexNameLocal)
 
   }
 
-  static Map<String, Map<ORID, AtomicDouble>> processUpdateReq(
-          final GraphTraversalSource g,
-          final Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName,
-          final Map<String, List<MatchReq>> matchReqByVertexName,
-          final Map<String, AtomicDouble> maxScoresByVertexName,
-          final Map<String, Double> percentageThresholdByVertexName,
-          final Map<String, List<EdgeRequest>> edgeReqsByVertexName,
-          final Set<EdgeRequest> edgeReqs
+  static Map<String, Map<ORID, AtomicDouble>> processUpdateReq(final GraphTraversalSource g,
+                                                               final Map<String, Map<ORID, AtomicDouble>> vertexScoreMapByVertexName,
+                                                               final Map<String, List<MatchReq>> matchReqByVertexName,
+                                                               final Map<String, AtomicDouble> maxScoresByVertexName,
+                                                               final Map<String, Double> percentageThresholdByVertexName,
+                                                               final Map<String, List<EdgeRequest>> edgeReqsByVertexName,
+                                                               final Set<EdgeRequest> edgeReqs
 
   ) {
 
@@ -399,11 +392,11 @@ class FileNLPRequest implements Serializable {
   static Set<ORID> createEventNLPGroups(FileNLPRequest req, ORID emailBodyOrAttachment, String[] emailAddrs,
                                         minThreshold = 1, Integer maxThreshold = 100) {
 
-    List <Traversal> personOptions = new LinkedList<>()
+    List<Traversal> personOptions = new LinkedList<>()
     if (req.person) {
       String[] person = req.person
       for (int i = 0; i < person.length; i++) {
-        personOptions.add( __.has('Person_Natural_Full_Name', P.eq(person[i]?.toUpperCase())))
+        personOptions.add(__.has('Person_Natural_Full_Name', P.eq(person[i]?.toUpperCase())))
       }
     }
 
@@ -413,11 +406,11 @@ class FileNLPRequest implements Serializable {
     if (req.cpf) {
       String[] cpfs = req.cpf
       for (int i = 0; i < cpfs.length; i++) {
-        String cpf = cpfs[i] != null? cpfs[i].replaceAll("[^0-9]",""): null;
-        if (cpf == null){
-          continue;
+        String cpf = cpfs[i] != null ? cpfs[i].replaceAll("[^0-9]", "") : null
+        if (cpf == null) {
+          continue
         }
-        cpfOptions.push( __.has('Person_Natural_Customer_ID', P.eq(cpf)))
+        cpfOptions.push(__.has('Person_Natural_Customer_ID', P.eq(cpf)))
       }
     }
 
@@ -430,33 +423,31 @@ class FileNLPRequest implements Serializable {
 
     Traversal[] personNameCpfOptions =
             [personOptions.toArray(new Traversal[0]), cpfOptions.toArray(new Traversal[0])]
-            .flatten().toArray(new Traversal[0])
+                    .flatten().toArray(new Traversal[0])
 
-    System.out.println("NLP searching for matches for ${personOptions?.size()?:0} names, ${cpfOptions?.size()?:0} cpfs, ${emailAddrs?.length?:0} emails in file ${req.name}")
+    System.out.println("NLP searching for matches for ${personOptions?.size() ?: 0} names, ${cpfOptions?.size() ?: 0} cpfs, ${emailAddrs?.length ?: 0} emails in file ${req.name}")
 
 
-    def persons = personNameCpfOptions.length> 0?
-            (App.g.V().or(personNameCpfOptions)):
-            null
+    def persons = personNameCpfOptions.length > 0 ? (App.g.V().or(personNameCpfOptions)) : null
 
 
 //    GraphTraversal personsClone =  persons?.clone() as GraphTraversal
 
     Set<ORID> retVal = (persons?.id()?.toSet())
-    if (!retVal){
+    if (!retVal) {
       retVal = []
     }
 
     System.out.println("NLP found ${retVal?.size()} graph person matches on cust id or name from file ${req.name}")
 
-    if (emailOptions.size() > 0){
+    if (emailOptions.size() > 0) {
       def emails = App.g.V().or(emailOptions.toArray(new Traversal[0]) as Traversal<?, ?>[])
 
 
       try {
         Set<ORID> emailSet = emails?.in('Uses_Email')?.id()?.toSet()
-        if (emailSet && emailSet.size() > 0){
-          retVal.addAll(emailSet);
+        if (emailSet && emailSet.size() > 0) {
+          retVal.addAll(emailSet)
           System.out.println("NLP found ${emailSet?.size()} graph person matches on email from file ${req.name}")
         }
 
@@ -470,7 +461,7 @@ class FileNLPRequest implements Serializable {
 
     String currDate = new SimpleDateFormat('yyyy-MM-dd').format(new Date())
 
-    if (!retVal ) {
+    if (!retVal) {
       retVal = []
     }
 
@@ -491,23 +482,22 @@ class FileNLPRequest implements Serializable {
                 .property('Event_NLP_Group_Person_Id', custId)
                 .property('Event_NLP_Group_Ingestion_Date', currDate).id().next()
       }
-      upsertEdge (emailBodyOrAttachment,nlpGroupVtxId,'Has_NLP_Events')
-      upsertEdge (nlpGroupVtxId,orid, 'Has_NLP_Events')
+      upsertEdge(emailBodyOrAttachment, nlpGroupVtxId, 'Has_NLP_Events')
+      upsertEdge(nlpGroupVtxId, orid, 'Has_NLP_Events')
       count++
       if (count >= maxThreshold) {
         break
       }
     }
-    if (retVal.size() == 0){
+    if (retVal.size() == 0) {
       System.out.println("Failed to find any NLP events for file ${req.name}")
-    }
-    else {
+    } else {
       System.out.println("Finished processing ${retVal.size()} NLP events for file ${req.name}")
     }
     return retVal
   }
 
-  static void upsertEdge(ORID fromId, ORID toId, String label){
+  static void upsertEdge(ORID fromId, ORID toId, String label) {
     ORID[] foundIds = App.g.V(toId)
             .both(label)
             .hasId(P.within(fromId)).id()
