@@ -210,7 +210,6 @@ class FileNLPRequest implements Serializable {
 
     List<MatchReq> mandatoryFields = matchReqs.findAll { it2 -> it2.mandatoryInSearch }
 
-
     String whereClause = Matcher.createWhereClauseAttribs(mandatoryFields)
 
     def (String jsonToMerge, Map<String, Object> sqlParams) = Matcher.createJsonMergeParam(matchReqs,"Object_Data_Source")
@@ -219,8 +218,9 @@ class FileNLPRequest implements Serializable {
     if (!tx.isOpen()){
       tx.open()
     }
+    OResultSet retVal = null;
     try {
-      OResultSet retVal = App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
+      retVal = App.graph.executeSql("UPDATE `Object_Data_Source` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER WHERE ${whereClause} LOCK record LIMIT 1 ",
               sqlParams).getRawResultSet()
 
       if (numBytes && numObjects) {
@@ -228,18 +228,17 @@ class FileNLPRequest implements Serializable {
         if (rid) {
           App.graph.executeSql("UPDATE ${rid} " +
                   "SET Object_Data_Source_Total_Bytes += ${numBytes}, " +
-                  "Object_Data_Source_Num_Objects += ${numObjects}", [:]).rawResultSet.close();
+                  "Object_Data_Source_Num_Objects += ${numObjects}", [:]).getRawResultSet().close();
         }
       }
-
-      retVal.close()
-
 
       tx.commit()
     } catch (Exception e){
       tx.rollback()
-    }
-    finally{
+    } finally {
+      if (retVal){
+        retVal.close()
+      }
       tx.close()
     }
 

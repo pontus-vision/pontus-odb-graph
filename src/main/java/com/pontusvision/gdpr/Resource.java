@@ -678,6 +678,7 @@ public class Resource {
 
       );
 
+
 //      List<Map<Object, Object>> notificationTemplates = App.g.V()
 //          .has("Object_Notification_Templates_Types", eq(label))
 //          .valueMap("Object_Notification_Templates_Label",
@@ -708,6 +709,9 @@ public class Resource {
 //        });
       });
       res.close();
+
+
+
       return new NodePropertyNamesReply(props);
 //      return reply;
 
@@ -723,7 +727,7 @@ public class Resource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
 
-  public EdgeLabelsReply edgeLabels(String str) {
+  public EdgeLabelsReply edgeLabels() {
 
     EdgeLabelsReply reply = new EdgeLabelsReply(App.graph.getRawDatabase().getMetadata().getSchema().getClasses());
 
