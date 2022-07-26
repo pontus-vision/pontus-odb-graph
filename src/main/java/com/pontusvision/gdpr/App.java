@@ -198,6 +198,7 @@ public class App // implements RequestStreamHandler
       //      final Settings settings;
       try {
         if ("true".equalsIgnoreCase(System.getenv("PV_USE_LAMBDA_PROPS"))){
+          System.out.println ("USING PV_USE_LAMBDA_PROPS to attempt and write synchronously to DISK.");
           App.setLambdaProps();
         }
         App.init(file);
