@@ -221,7 +221,7 @@ public class Ingestion {
   @Path("csvBase64")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public String csvFile(IngestionCSVFileRequest request) throws ExecutionException, InterruptedException, IOException {
+  public synchronized String csvFile(IngestionCSVFileRequest request) throws ExecutionException, InterruptedException, IOException {
 
 //    Map<String, Object> bindings = new HashMap() {{
 //      put("jsonString", request.jsonString);

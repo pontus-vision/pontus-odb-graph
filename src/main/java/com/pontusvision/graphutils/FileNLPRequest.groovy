@@ -240,9 +240,8 @@ class FileNLPRequest implements Serializable {
       Matcher.cleanMaps(null, matchReqs, maxScoresByVertexName, percentageThresholdByVertexName, null, null)
 
     } catch (OException e2) {
-      System.out.println("ODB Graph Exception; killing the graph" + e2.toString()) {
-        System.exit(-1)
-      }
+      System.out.println("ODB Graph Exception; killing the graph ${e2.toString()}")
+      System.exit(-1)
     }
 
 
