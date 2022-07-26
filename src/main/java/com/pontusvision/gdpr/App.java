@@ -48,6 +48,40 @@ public class App // implements RequestStreamHandler
     App.mainHandler(args);
   }
 
+  public static void setLambdaProps(){
+    System.setProperty("file.encoding", "UTF-8");
+    System.setProperty("distributed","false" );
+    System.setProperty("storage.wal.allowDirectIO","false");
+    System.setProperty("ORIENTDB_HOME","/orientdb" );
+    System.setProperty("orientdb_home","/orientdb" );
+    System.setProperty("java.util.logging.manager","com.orientechnologies.common.log.ShutdownLogManager" );
+    System.setProperty("java.util.logging.config.file","/orientdb/config/orientdb-server-log.properties" );
+    System.setProperty("tx.commit.synch","true" );
+    System.setProperty("tx.log.synch","true" );
+    System.setProperty("tx.log.fileType","mmap" );
+    System.setProperty("index.txMode","FULL" );
+    System.setProperty("nonTX.recordUpdate.synch","true" );
+    System.setProperty("environment.dumpCfgAtStartup","false" );
+
+    System.setProperty("storage.wal.syncOnPageFlush","true");
+    System.setProperty("storage.configuration.syncOnUpdate","true");
+    System.setProperty("storage.diskCache.writeCachePart", "0");
+    System.setProperty("storage.diskCache.writeCacheFlushInactivityInterval","0");
+    System.setProperty("storage.diskCache.writeCachePageTTL", "0");
+    System.setProperty("storage.diskCache.pinnedPages", "1");
+    System.setProperty("storage.compressionMethod","gzip");
+    System.setProperty("storage.useWAL","true");
+    System.setProperty("file.lock",System.getenv("PV_ODB_FILE_LOCK") != null ?
+        System.getenv("PV_ODB_FILE_LOCK"):
+        "true");
+//            file.lock
+
+//            System.setProperty("pv-lambda-base", "/orientdb");
+    System.setProperty("orientdb.config.file","/orientdb/config/orientdb-server-config.xml" );
+    System.setProperty("orientdb.www.path","/orientdb/www" );
+    System.setProperty("orientdb.build.number",
+        "develop@re3b3314d5494363f823331471c31461678d1b734; 2019-10-28 11:33:25+0000");
+  }
   public static void init(String file) throws Exception {
 
     //      final Settings settings;
@@ -163,6 +197,9 @@ public class App // implements RequestStreamHandler
 
       //      final Settings settings;
       try {
+        if ("true".equalsIgnoreCase(System.getenv("PV_USE_LAMBDA_PROPS"))){
+          App.setLambdaProps();
+        }
         App.init(file);
       } catch (Exception ex) {
         logger.error("Configuration file at {} could not be found or parsed properly. [{}]", file, ex.getMessage());
