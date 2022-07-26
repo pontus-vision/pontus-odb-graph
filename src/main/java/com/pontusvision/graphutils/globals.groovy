@@ -112,6 +112,8 @@ class ODBSchemaManager {
         if (idx.name && idx.propertyKeys && (idx.name as String).startsWith(name)) {
 
           if (idx.composite) {
+            System.out.println("COMPOSITE Index ${idx.name} already exists.")
+
             if (!oClass.getClassIndex(idx.name)) {
               oClass.createIndex(idx.name as String, OClass.INDEX_TYPE.FULLTEXT.toString(), idx.propertyKeys as String[])
             } else {
