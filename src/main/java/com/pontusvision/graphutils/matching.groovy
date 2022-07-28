@@ -1566,6 +1566,9 @@ class Matcher {
 
       Transaction trans = graph.tx()
       try {
+        if (!trans.isOpen()){
+          trans.open();
+        }
         def (List<MatchReq> matchReqs, Map<String, AtomicDouble> maxScoresByVertexName,
         Map<String, Double> percentageThresholdByVertexName) =
         getMatchRequests(item as Map<String, String>, rules.updatereq, percentageThreshold, sb)
