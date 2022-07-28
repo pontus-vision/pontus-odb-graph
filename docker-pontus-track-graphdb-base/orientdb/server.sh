@@ -97,8 +97,8 @@ for var in "$@"; do
         ARGS="$ARGS $var"
     fi
 done
-DEBUG_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5007"
-
+#DEBUG_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5007"
+DEBUG_OPTS=${DEBUG_OPTS:-"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5007"}
 # ORIENTDB memory options, default to 2GB of heap.
 
 if [ -z "$ORIENTDB_OPTS_MEMORY" ] ; then
