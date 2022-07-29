@@ -66,15 +66,13 @@
           {
             "name": "Location_Address_Full_Address",
             "val": "${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Location_Address_parser",
             "val": "${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL",
-            "mandatoryInSearch": false,
-            "type": "com.pontusvision.utils.LocationAddress",
-            "excludeFromSearch": true
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
           },
           {
             "name": "Location_Address_Post_Code",

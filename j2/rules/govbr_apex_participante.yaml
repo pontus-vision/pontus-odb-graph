@@ -43,13 +43,11 @@ updatereq:
       props:
         - name: Location_Address_Full_Address
           val: ${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
         - name: Location_Address_parser
           val: ${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL
-          mandatoryInSearch: False
+          mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
-          excludeFromSearch: True
         - name: Location_Address_Post_Code
           val: ${com.pontusvision.utils.PostCode.format(LOTACAO_NR_CLASS)}
           mandatoryInSearch: True
