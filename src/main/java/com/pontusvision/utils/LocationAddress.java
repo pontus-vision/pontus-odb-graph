@@ -60,7 +60,8 @@ public class LocationAddress {
 
       }
       TreeSet<String> sortedVals = new TreeSet<>(vals);
-      retVal.tokens.put(label,sortedVals.toString().substring(0,maxExpansions));
+      String sortValsStr = sortedVals.toString();
+      retVal.tokens.put(label,sortValsStr.substring(0,Math.min(maxExpansions, sortValsStr.length()-1)));
     }
     return retVal;
 
