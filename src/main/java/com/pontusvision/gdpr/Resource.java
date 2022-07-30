@@ -3,6 +3,7 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import com.orientechnologies.orient.core.db.record.ridbag.ORidBag;
 import com.orientechnologies.orient.core.id.ORID;
 import com.orientechnologies.orient.core.id.ORecordId;
@@ -52,6 +53,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.http.HTTPException;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -711,7 +713,6 @@ public class Resource {
       res.close();
 
 
-
       return new NodePropertyNamesReply(props);
 //      return reply;
 
@@ -1089,6 +1090,53 @@ status: "success", message: "Data source is working", title: "Success"
     reply.setRefEntryId(request.getRefEntryId());
 
     return reply;
+
+  }
+
+  @POST
+  @Path("report/pdf/render")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+
+  public PdfReportRenderResponse pdfReportTemplateRender(PdfReportRenderRequest request) {
+
+    if (request.getBase64Report() == null) {
+      return new PdfReportRenderResponse(Response.Status.BAD_REQUEST, "Missing HTML base64 report");
+    }
+
+    PdfRendererBuilder builder = new PdfRendererBuilder();
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+    builder.useFastMode();
+
+    builder.withHtmlContent(new String(Base64.getDecoder().decode(request.getBase64Report())), "/");
+    // set output to an output stream set
+    builder.toStream(baos);
+    try {
+      // Run the XHTML/XML to PDF conversion and
+      builder.run();
+      //prints the message if the PDF is created successfully
+
+
+      System.out.println("PDF created");
+
+      PdfReportRenderResponse resp = new PdfReportRenderResponse();
+
+      resp.setBase64Report(Base64.getEncoder().encodeToString(baos.toByteArray()));
+
+      baos.close();
+      String refId = request.getRefEntryId();
+
+      resp.setRefEntryId(refId);
+
+      return resp;
+    } catch (IOException e) {
+      return new PdfReportRenderResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+    catch (Throwable t){
+      return new PdfReportRenderResponse(Response.Status.INTERNAL_SERVER_ERROR, t.getMessage());
+    }
+
 
   }
 
