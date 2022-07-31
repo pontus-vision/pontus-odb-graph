@@ -46,6 +46,8 @@ import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper;
 import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
 import org.glassfish.jersey.process.internal.RequestScoped;
 import org.glassfish.jersey.server.ContainerRequest;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -1099,20 +1101,23 @@ status: "success", message: "Data source is working", title: "Success"
   @Consumes(MediaType.APPLICATION_JSON)
 
   public PdfReportRenderResponse pdfReportTemplateRender(PdfReportRenderRequest request) {
-
     if (request.getBase64Report() == null) {
       return new PdfReportRenderResponse(Response.Status.BAD_REQUEST, "Missing HTML base64 report");
     }
-
-    PdfRendererBuilder builder = new PdfRendererBuilder();
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-    builder.useFastMode();
-
-    builder.withHtmlContent(new String(Base64.getDecoder().decode(request.getBase64Report())).trim(), "/");
-    // set output to an output stream set
-    builder.toStream(baos);
     try {
+
+      String inputHTML = new String(Base64.getDecoder().decode(request.getBase64Report())).trim();
+
+      PdfRendererBuilder builder = new PdfRendererBuilder();
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      Document document = Jsoup.parse(inputHTML, "/");
+      document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
+
+//    builder.useFastMode();
+
+      builder.withHtmlContent(document.html(), "/");
+      // set output to an output stream set
+      builder.toStream(baos);
       // Run the XHTML/XML to PDF conversion and
       builder.run();
       //prints the message if the PDF is created successfully
@@ -1132,8 +1137,9 @@ status: "success", message: "Data source is working", title: "Success"
       return resp;
     } catch (IOException e) {
       return new PdfReportRenderResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
-    }
-    catch (Throwable t){
+    } catch (IllegalArgumentException e){
+      return new PdfReportRenderResponse(Response.Status.BAD_REQUEST, e.getMessage());
+    } catch (Throwable t) {
       return new PdfReportRenderResponse(Response.Status.INTERNAL_SERVER_ERROR, t.getMessage());
     }
 
