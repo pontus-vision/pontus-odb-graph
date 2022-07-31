@@ -1109,7 +1109,7 @@ status: "success", message: "Data source is working", title: "Success"
 
     builder.useFastMode();
 
-    builder.withHtmlContent(new String(Base64.getDecoder().decode(request.getBase64Report())), "/");
+    builder.withHtmlContent(new String(Base64.getDecoder().decode(request.getBase64Report())).trim(), "/");
     // set output to an output stream set
     builder.toStream(baos);
     try {
