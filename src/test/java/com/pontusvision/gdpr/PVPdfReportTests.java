@@ -106,8 +106,8 @@ public class PVPdfReportTests extends AppTest {
   @Test
   public void test00002Errors() throws IOException {
 
-    sendPdfReqPayload("",500);
-    sendPdfReqPayload("<aha", 500);
+    sendPdfReqPayload("",200);
+    sendPdfReqPayload("<aha", 200);
 
   }
 
