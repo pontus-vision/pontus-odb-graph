@@ -3,13 +3,10 @@ package com.pontusvision.gdpr;
 import com.pontusvision.gdpr.report.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
@@ -18,10 +15,10 @@ import org.junit.jupiter.api.TestMethodOrder;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.Base64;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -31,10 +28,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  */
 @TestClassOrder(AnnotationTestsOrderer.class)
 @TestMethodOrder(MethodOrderer.MethodName.class)
-@TestClassesOrder(6)
+@TestClassesOrder(2034)
 public class PVPdfReportTests extends AppTest {
 
-  public HttpResponse sendPayload(String payload, int expectedHttpStatus) throws IOException {
+  public HttpResponse sendPdfReqPayload(String payload, int expectedHttpStatus) throws IOException {
 
     HttpClient client = HttpClients.createMinimal();
 
@@ -55,6 +52,25 @@ public class PVPdfReportTests extends AppTest {
     assertEquals(expectedHttpStatus, resp.getStatusLine().getStatusCode(), "Expected Error code");
     return resp;
   }
+  public ReportTemplateRenderResponse sendReportReqPayload(String contextId, int expectedHttpStatus) throws IOException {
+
+
+    ReportTemplateRenderRequest reportReq = new ReportTemplateRenderRequest();
+    reportReq.setTemplateId("Object_Data_Procedures/RIPD");
+    reportReq.setRefEntryId(contextId);
+
+    HttpClient client = HttpClients.createMinimal();
+    HttpPost request = new HttpPost(URI.create("http://localhost:3001/home/report/template/render"));
+    request.setHeader("Content-Type", "application/json");
+    request.setHeader("Accept", "application/json");
+    StringEntity data = new StringEntity(gson.toJson(reportReq));
+    request.setEntity(data);
+
+    HttpResponse httpResponse = client.execute(request);
+    assertEquals(expectedHttpStatus, httpResponse.getStatusLine().getStatusCode(), "Expected Error code");
+    String output = IOUtils.toString(httpResponse.getEntity().getContent(),Charset.defaultCharset());
+    return gson.fromJson(output,ReportTemplateRenderResponse.class);
+  }
 
   /**
    * @return the suite of test0000s being test0000ed
@@ -66,7 +82,7 @@ public class PVPdfReportTests extends AppTest {
 
 
     String htmlRep = "<h1>HELLO WORLD</h1>";
-    HttpResponse resp = sendPayload(htmlRep,200);
+    HttpResponse resp = sendPdfReqPayload(htmlRep,200);
 
     InputStream respStreamJson = resp.getEntity().getContent();
     String respJsonStr = IOUtils.toString(respStreamJson, Charset.defaultCharset());
@@ -90,10 +106,38 @@ public class PVPdfReportTests extends AppTest {
   @Test
   public void test00002Errors() throws IOException {
 
-    sendPayload("",500);
-    sendPayload("<aha", 500);
+    sendPdfReqPayload("",200);
+    sendPdfReqPayload("<aha", 200);
 
   }
+
+  @Test
+  public void test00003RIPDPdf() throws IOException, InterruptedException, ExecutionException {
+    jsonTestUtil("budibase/bb-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
+
+    String procId =
+        App.executor.eval("App.g.V().has('Object_Data_Procedures_Interested_Parties_Consulted','joao@mail.com').id().next().toString()").get().toString();
+
+    ReportTemplateRenderResponse resp = sendReportReqPayload(procId,200);
+
+    HttpResponse pdfHttpResp = sendPdfReqPayload(new String(Base64.getDecoder().decode(resp.getBase64Report())),200);
+    InputStream respStreamJson = pdfHttpResp.getEntity().getContent();
+    String respJsonStr = IOUtils.toString(respStreamJson, Charset.defaultCharset());
+    respStreamJson.close();
+    PdfReportRenderResponse respFromJson = gson.fromJson(respJsonStr, PdfReportRenderResponse.class);
+    try (FileOutputStream outputStream = new FileOutputStream("ripd.pdf")) {
+
+      byte[] bytes = Base64.getDecoder().decode(respFromJson.getBase64Report());
+      outputStream.write(bytes, 0, bytes.length);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+
+  }
+
 
 
 }
