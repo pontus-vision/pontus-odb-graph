@@ -58,7 +58,7 @@ public class PVSapCapTest extends AppTest {
 
       String fullName =
               App.executor.eval("App.g.V().has('Location_Address_Full_Address'," +
-                      "eq('test street 1 casa 110, Rio, Rio de Janeiro RJ - BR, 12345')).in('Is_Located')" +
+                      "eq('test street 1 casa 110, Rio, Rio de Janeiro RJ - Brasil, 12345')).in('Is_Located')" +
                       ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
       assertEquals("EMILY VARGAS", fullName, "Full Name de Marcel Molica Araújo");
 
@@ -219,7 +219,7 @@ public class PVSapCapTest extends AppTest {
       String mustafaCountry =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MUSTAFA GHADAS')).out('Is_Located')" +
                       ".properties('Location_Address_parser_country').value().next().toString()").get().toString();
-      assertEquals("[bairro, br, brace, brae, branch, bridge, brother]", mustafaCountry);
+      assertEquals("[brasil]", mustafaCountry);
 
 
     } catch (ExecutionException e) {
@@ -271,7 +271,7 @@ public class PVSapCapTest extends AppTest {
 
       String getCampaignDescription =
               App.executor.eval("App.g.V().has('Location_Address_Full_Address'," +
-                      "eq('av Maria Mar 99 Apt 61, SC Rebouças, Taio - BR, 18958-980')).in('Is_Located')" +
+                      "eq('av Maria Mar 99 Apt 61, SC Rebouças, Taio - Brasil, 18958-980')).in('Is_Located')" +
                       ".out('Has_Campaign').properties('Event_Campaign_Description').value().next().toString()").get().toString();
       assertEquals("Test", getCampaignDescription, "Descrição da campanha");
 

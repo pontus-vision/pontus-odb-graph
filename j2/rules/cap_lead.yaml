@@ -70,11 +70,11 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - Brasil, ${Postal_Code}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location_Address_parser
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - Brasil, ${Postal_Code}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location_Address_Post_Code

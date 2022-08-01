@@ -103,13 +103,13 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - Brasil, ${Postal_Code}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location_Address_parser",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - Brasil, ${Postal_Code}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
