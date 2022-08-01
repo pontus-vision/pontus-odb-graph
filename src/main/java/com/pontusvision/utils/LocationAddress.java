@@ -21,6 +21,8 @@ public class LocationAddress {
   private LocationAddress() {
   }
 
+  static int maxExpansions = Integer.parseInt((System.getenv("PV_LOCATION_MAX_EXPANSION") != null)?
+      System.getenv("PV_LOCATION_MAX_EXPANSION"): "5000" );
 
   public static LocationAddress fromString(String strVal) {
 
@@ -58,7 +60,8 @@ public class LocationAddress {
 
       }
       TreeSet<String> sortedVals = new TreeSet<>(vals);
-      retVal.tokens.put(label,sortedVals.toString());
+      String sortValsStr = sortedVals.toString();
+      retVal.tokens.put(label,sortValsStr.substring(0,Math.min(maxExpansions, sortValsStr.length())));
     }
     return retVal;
 

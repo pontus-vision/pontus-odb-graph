@@ -4,40 +4,32 @@ import com.orientechnologies.orient.core.metadata.schema.OClass;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
 
-//import org.janusgraph.core.EdgeLabel;
-
-/*
+public class EdgeLabelsReply extends VertexLabelsReply
 {
-      from: from
-     ,to: to
-     ,totalAvailable: records.length
-     ,records: records.slice(from, to)
-
-    }
- */
-public class EdgeLabelsReply
-{
-
-  ReactSelectOptions[] labels;
 
   // must have this default constructor to get this class serialized as a reply!!!
 
   public EdgeLabelsReply()
   {
-
+     super();
   }
 
-  public EdgeLabelsReply(Collection<OClass> edgeLabels)
+  public EdgeLabelsReply(Collection<OClass> oClasses)
   {
 
+    super();
     LinkedList<ReactSelectOptions> labelsList = new LinkedList<>();
 
-    for (OClass edgeLabel : edgeLabels)
+    for (OClass oClass : oClasses)
     {
 
-      labelsList.add(new ReactSelectOptions(edgeLabel.getName(),
-          edgeLabel.getName()));
+      if (oClass.isSubClassOf(OClass.EDGE_CLASS_NAME))
+      {
+        labelsList.add(new ReactSelectOptions(oClass.getName().replaceAll(Pattern.quote("."), " "),
+            oClass.getName()));
+      }
 
     }
     labels = new ReactSelectOptions[labelsList.size()];
@@ -45,13 +37,4 @@ public class EdgeLabelsReply
 
   }
 
-  public ReactSelectOptions[] getLabels()
-  {
-    return labels;
-  }
-
-  public void setLabels(ReactSelectOptions[] labels)
-  {
-    this.labels = labels;
-  }
 }

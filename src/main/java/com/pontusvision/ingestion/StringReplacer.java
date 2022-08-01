@@ -73,7 +73,7 @@ public class StringReplacer {
       replaceChars = "";
     }
     final int strLength = str.length();
-    final int searchCharsLength = searchChars.length();
+//    final int searchCharsLength = searchChars.length();
     StringBuilder buf = new StringBuilder(str);
     boolean modified = false;
     int start = 0;

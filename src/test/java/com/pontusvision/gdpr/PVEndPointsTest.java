@@ -191,7 +191,7 @@ public class PVEndPointsTest extends AppTest {
 
       HttpResponse httpResponse = client.execute(request);
       int statusCode = httpResponse.getStatusLine().getStatusCode();
-      String output = IOUtils.toString(httpResponse.getEntity().getContent());
+      String output = IOUtils.toString(httpResponse.getEntity().getContent(),Charset.defaultCharset());
       assertEquals("{\"type\":\"reportTemplateRenderResponse\",\"errorStr\":\"Missing ReportId\"}",
           output, "Error because ReportId is NULL");
       assertEquals(400, statusCode, "Expected to return 400 because ReportId is NULL");

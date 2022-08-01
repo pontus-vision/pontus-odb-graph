@@ -3,6 +3,7 @@ package com.pontusvision.gdpr;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import com.orientechnologies.orient.core.db.record.ridbag.ORidBag;
 import com.orientechnologies.orient.core.id.ORID;
 import com.orientechnologies.orient.core.id.ORecordId;
@@ -45,6 +46,8 @@ import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper;
 import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
 import org.glassfish.jersey.process.internal.RequestScoped;
 import org.glassfish.jersey.server.ContainerRequest;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -52,6 +55,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.http.HTTPException;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -678,6 +682,7 @@ public class Resource {
 
       );
 
+
 //      List<Map<Object, Object>> notificationTemplates = App.g.V()
 //          .has("Object_Notification_Templates_Types", eq(label))
 //          .valueMap("Object_Notification_Templates_Label",
@@ -708,6 +713,8 @@ public class Resource {
 //        });
       });
       res.close();
+
+
       return new NodePropertyNamesReply(props);
 //      return reply;
 
@@ -723,7 +730,7 @@ public class Resource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
 
-  public EdgeLabelsReply edgeLabels(String str) {
+  public EdgeLabelsReply edgeLabels() {
 
     EdgeLabelsReply reply = new EdgeLabelsReply(App.graph.getRawDatabase().getMetadata().getSchema().getClasses());
 
@@ -1085,6 +1092,57 @@ status: "success", message: "Data source is working", title: "Success"
     reply.setRefEntryId(request.getRefEntryId());
 
     return reply;
+
+  }
+
+  @POST
+  @Path("report/pdf/render")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+
+  public PdfReportRenderResponse pdfReportTemplateRender(PdfReportRenderRequest request) {
+    if (request.getBase64Report() == null) {
+      return new PdfReportRenderResponse(Response.Status.BAD_REQUEST, "Missing HTML base64 report");
+    }
+    try {
+
+      String inputHTML = new String(Base64.getDecoder().decode(request.getBase64Report())).trim();
+
+      PdfRendererBuilder builder = new PdfRendererBuilder();
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      Document document = Jsoup.parse(inputHTML, "/");
+      document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
+
+//    builder.useFastMode();
+
+      builder.withHtmlContent(document.html(), "/");
+      // set output to an output stream set
+      builder.toStream(baos);
+      // Run the XHTML/XML to PDF conversion and
+      builder.run();
+      //prints the message if the PDF is created successfully
+
+
+      System.out.println("PDF created");
+
+      PdfReportRenderResponse resp = new PdfReportRenderResponse();
+
+      resp.setBase64Report(Base64.getEncoder().encodeToString(baos.toByteArray()));
+
+      baos.close();
+      String refId = request.getRefEntryId();
+
+      resp.setRefEntryId(refId);
+
+      return resp;
+    } catch (IOException e) {
+      return new PdfReportRenderResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
+    } catch (IllegalArgumentException e){
+      return new PdfReportRenderResponse(Response.Status.BAD_REQUEST, e.getMessage());
+    } catch (Throwable t) {
+      return new PdfReportRenderResponse(Response.Status.INTERNAL_SERVER_ERROR, t.getMessage());
+    }
+
 
   }
 
