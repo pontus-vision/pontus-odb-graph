@@ -23,7 +23,8 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: GOVBR/APEX-PARTICIPANTE
+#          Name: GOVBR/APEX-PARTICIPANTE
+          Name: "SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET"
 
       - label: Object_Email_Address
         condition: "${EMAIL?.trim()?.length() > 0}"

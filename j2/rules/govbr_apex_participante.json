@@ -44,7 +44,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "GOVBR/APEX-PARTICIPANTE",
+            "val": "SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET",
             "mandatoryInSearch": true
           }
         ]
