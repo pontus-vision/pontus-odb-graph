@@ -29,7 +29,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: GOVBR/APEX-PARTICIPANTE
+          val: SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET
           mandatoryInSearch: True
     
     - label: Object_Email_Address

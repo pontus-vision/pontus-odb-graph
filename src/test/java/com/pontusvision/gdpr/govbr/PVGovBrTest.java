@@ -45,7 +45,7 @@ public class PVGovBrTest extends AppTest {
       csvTestUtil("govbr/APEX_SGP_GCOM.PARTICIPANTE.csv", "govbr_apex_participante");
 
       String emailMarcela =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('GOVBR/APEX-PARTICIPANTE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('ingestion-event')" +
                       ".out('Has_Ingestion_Event').as('person-natural')" +
@@ -56,7 +56,7 @@ public class PVGovBrTest extends AppTest {
 
 
       String bereniceLocation =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('GOVBR/APEX-PARTICIPANTE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('ingestion-event')" +
                       ".out('Has_Ingestion_Event').as('person-natural')" +
@@ -67,7 +67,7 @@ public class PVGovBrTest extends AppTest {
 
 
       String jeronimoRole =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('GOVBR/APEX-PARTICIPANTE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('ingestion-event')" +
                       ".out('Has_Ingestion_Event').as('person-natural')" +
