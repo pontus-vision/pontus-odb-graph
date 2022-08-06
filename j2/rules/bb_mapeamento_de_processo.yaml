@@ -22,10 +22,10 @@ updatereq:
     - label: Object_Data_Policy
       props:
         - name: Object_Data_Policy_Type
-          val: ${Referencia}
+          val: ${Referencia?.toUpperCase()?.trim()}
           mandatoryInSearch: True
         - name: Object_Data_Policy_Retention_Period
-          val: ${Periodo_de_retencao}
+          val: ${Periodo_de_retencao?.toUpperCase()?.trim()}
           mandatoryInSearch: True
     
     - label: Object_Policies
@@ -43,51 +43,54 @@ updatereq:
           val: ${_id}
           mandatoryInSearch: True
         - name: Object_Data_Procedures_ID
-          val: ${Referencia}
+          val: ${Referencia?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Name
-          val: ${Processo}
+          val: ${Processo?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Type_Of_Natural_Person
-          val: ${Categoria_dos_Titulares_dos_Dados}
+          val: ${new groovy.json.JsonBuilder(Categoria_dos_Titulares_dos_Dados)}
           mandatoryInSearch: False
+          processAll: True
+          type: "[Ljava.lang.String;"
           excludeFromSearch: True
+          postProcessor: ${it?.toUpperCase()?.trim()}
         - name: Object_Data_Procedures_BusinessAreaResponsible
-          val: ${Area_Responsavel}
+          val: ${Area_Responsavel?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Country_Where_Stored
-          val: ${Pais_Onde_as_Pessoas_Estao_Localizadas}
+          val: ${Pais_Onde_as_Pessoas_Estao_Localizadas?.toUpperCase()?.trim()} - ${Abrangencia_geografica_do_tratamento?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Why_Is_It_Collected
-          val: ${Finalidade_do_Processo}
+          val: ${Finalidade_do_Processo?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Info_Collected
-          val: ${Dados_Pessoais_Utilizados}
+          val: ${Dados_Pessoais_Utilizados?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Description
-          val: ${Fluxo_dos_Dados}
+          val: ${Fluxo_dos_Dados?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Interested_Parties_Consulted
-          val: ${Partes_Interessadas_Consultadas}
+          val: ${Partes_Interessadas_Consultadas?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Info_Shared_With_Third_Parties
-          val: ${Dados_Pessoais_Compartilhados_com_Terceiros}
+          val: ${Dados_Pessoais_Compartilhados_com_Terceiros?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Info_Share_Justification
-          val: ${Finalidade_de_Compartilhamento_com_Terceiros}
+          val: ${Finalidade_de_Compartilhamento_com_Terceiros?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_MacroProcessName
-          val: ${Macroprocesso}
+          val: ${Macroprocesso?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -146,7 +149,7 @@ updatereq:
       condition: ${Justificativa_da_Base_Legal?.trim()?.length() > 0}
       props:
         - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
-          val: ${Justificativa_da_Base_Legal}
+          val: ${Justificativa_da_Base_Legal?.toUpperCase()?.trim()}
           mandatoryInSearch: True
     
     - label: Object_Email_Address

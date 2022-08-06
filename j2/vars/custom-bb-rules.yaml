@@ -233,8 +233,8 @@ rules:
 
       - label: Object_Data_Policy
         props:
-          Type: "${Referencia}"
-          Retention_Period: "${Periodo_de_retencao}"
+          Type: "${Referencia?.toUpperCase()?.trim()}"
+          Retention_Period: "${Periodo_de_retencao?.toUpperCase()?.trim()}"
 
       - label: Object_Policies
         props:
@@ -248,43 +248,47 @@ rules:
         props:
           Form_Id: "${_id}"
           ID:
-            val: "${Referencia}"
+            val: "${Referencia?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           Name:
-            val: "${Processo}"
+            val: "${Processo?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           #          Type:
           #            val: "${Acesso_x002c__x0020_Transfer_x00}"
           #            excludeFromSearch: true
           Type_Of_Natural_Person:
-            val: "${Categoria_dos_Titulares_dos_Dados}"
+            # Changed this type because this coulmn is a multi-select, JSON response is an array
+            val: "${new groovy.json.JsonBuilder(Categoria_dos_Titulares_dos_Dados)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
             excludeFromSearch: true
           BusinessAreaResponsible:
-            val: "${Area_Responsavel}"
+            val: "${Area_Responsavel?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           Country_Where_Stored:
-            val: "${Pais_Onde_as_Pessoas_Estao_Localizadas}"
+            val: "${Pais_Onde_as_Pessoas_Estao_Localizadas?.toUpperCase()?.trim()} - ${Abrangencia_geografica_do_tratamento?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           Why_Is_It_Collected:
-            val: "${Finalidade_do_Processo}"
+            val: "${Finalidade_do_Processo?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           Info_Collected:
-            val: "${Dados_Pessoais_Utilizados}"
+            val: "${Dados_Pessoais_Utilizados?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           Description:
-            val: "${Fluxo_dos_Dados}"
+            val: "${Fluxo_dos_Dados?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           Interested_Parties_Consulted:
-            val: "${Partes_Interessadas_Consultadas}"
+            val: "${Partes_Interessadas_Consultadas?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           Info_Shared_With_Third_Parties:
-            val: "${Dados_Pessoais_Compartilhados_com_Terceiros}"
+            val: "${Dados_Pessoais_Compartilhados_com_Terceiros?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           Info_Share_Justification:
-            val: "${Finalidade_de_Compartilhamento_com_Terceiros}"
+            val: "${Finalidade_de_Compartilhamento_com_Terceiros?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           MacroProcessName:
-            val: "${Macroprocesso}"
+            val: "${Macroprocesso?.toUpperCase()?.trim()}"
             excludeFromSearch: true
 
       - label: Object_Sensitive_Data
@@ -335,7 +339,7 @@ rules:
       - label: Object_Legitimate_Interests_Assessment
         condition: "${Justificativa_da_Base_Legal?.trim()?.length() > 0}"
         props:
-          Lawful_Basis_Justification: "${Justificativa_da_Base_Legal}"
+          Lawful_Basis_Justification: "${Justificativa_da_Base_Legal?.toUpperCase()?.trim()}"
 
       - label: Object_Email_Address
         condition: "${Responsavel?.size() > 0}"
