@@ -45,7 +45,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: govbr/apex-participante
+            val: sistema de gestão por competências-compet
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -64,7 +64,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: govbr/apex-participante
+          Type: sistema de gestão por competências-compet
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
