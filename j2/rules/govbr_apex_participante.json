@@ -86,7 +86,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "govbr/apex-participante",
+            "val": "SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -123,7 +123,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "govbr/apex-participante",
+            "val": "SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET",
             "mandatoryInSearch": true
           },
           {
