@@ -5500,11 +5500,11 @@ the end of the process.
             """
         SELECT 
           count( distinct(@rid)) as ct,
-          out('Has_Ingestion_Event').Event_Ingestion_Type[0] as  Event_Ingestion_Type
+          both('Has_Ingestion_Event').Event_Ingestion_Type[0] as  Event_Ingestion_Type
         
         FROM  Person_Natural 
 
-        GROUP BY out('Has_Ingestion_Event').Event_Ingestion_Type[0]
+        GROUP BY both('Has_Ingestion_Event').Event_Ingestion_Type[0]
        
         """,
             [:]).getRawResultSet().each { it ->

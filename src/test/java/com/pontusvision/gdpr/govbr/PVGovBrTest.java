@@ -90,11 +90,11 @@ public class PVGovBrTest extends AppTest {
       csvTestUtil("govbr/APEX_SGP_GCOM.PARTICIPANTE.csv", "govbr_apex_participante");
 
       String countEventIngestions =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('govbr/apex-participante'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET'))" +
                       ".count().next().toString()").get().toString();
 
       String countDataSources =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('govbr/apex-participante'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET'))" +
                       ".in('Has_Ingestion_Event').as('group-ingestion')" +
                       ".in('Has_Ingestion_Event').as('data-source')" +
                       ".has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))" +
@@ -103,18 +103,18 @@ public class PVGovBrTest extends AppTest {
       csvTestUtil("govbr/APEX_SGP_GCOM.PARTICIPANTE-2.csv", "govbr_apex_participante");
 
       String countEventIngestionsAgain =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('govbr/apex-participante'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET'))" +
                       ".count().next().toString()").get().toString();
 
 //      Test for duplicate data
       String countDataSourcesAgain =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('govbr/apex-participante'))" +
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET'))" +
                       ".in('Has_Ingestion_Event').as('group-ingestion')" +
                       ".in('Has_Ingestion_Event').as('data-source')" +
                       ".has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))" +
                       ".dedup().count().next().toString()").get().toString();
 
-//    This proves that new insertions were made to the govbr/apex-participante Graph part
+//    This proves that new insertions were made to the SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET Graph part
       assertTrue(Integer.parseInt(countEventIngestionsAgain) > Integer.parseInt(countEventIngestions));
 
 //    This proves that data is still the same
