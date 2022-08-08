@@ -41,16 +41,16 @@ public class PVBudibaseTests extends AppTest {
                       "eq('MARLENE')).dedup().count().next().toString()").get().toString();
       assertEquals("1", numParties, "1 registry with same parties interested");
 
-      String legInterestCount=
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
-                      ".out('Has_Ingestion_Event').as('event_group')" +
-                      ".out('Has_Ingestion_Event').as('event_ingestion')" +
-                      ".out('Has_Ingestion_Event').as('data_procs')" +
-                      ".out('Has_Lawful_Basis_On').as('lawful_basis')" +
-                      ".has('Object_Lawful_Basis_Description', eq('LEGÍTIMO INTERESSE DO CONTROLADOR'))" +
-//                      ".valueMap().toList()"
-                      ".count().next().toString()").get().toString();
-      assertEquals("7", legInterestCount, "Jurídico Snowymountain is a Party Interested in these Data Procedures");
+//      String legInterestCount=
+//              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
+//                      ".out('Has_Ingestion_Event').as('event_group')" +
+//                      ".out('Has_Ingestion_Event').as('event_ingestion')" +
+//                      ".out('Has_Ingestion_Event').as('data_procs')" +
+//                      ".out('Has_Lawful_Basis_On').as('lawful_basis')" +
+//                      ".has('Object_Lawful_Basis_Description', eq('LEGÍTIMO INTERESSE DO CONTROLADOR'))" +
+////                      ".valueMap().toList()"
+//                      ".count().next().toString()").get().toString();
+//      assertEquals("7", legInterestCount, "Jurídico Snowymountain is a Party Interested in these Data Procedures");
 
       String LIALawfulBasis =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
