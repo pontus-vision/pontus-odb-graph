@@ -22,10 +22,10 @@ updatereq:
     - label: Object_Data_Policy
       props:
         - name: Object_Data_Policy_Type
-          val: ${Referencia?.toUpperCase()?.trim()}
+          val: ${Referencia}
           mandatoryInSearch: True
         - name: Object_Data_Policy_Retention_Period
-          val: ${Periodo_de_retencao?.toUpperCase()?.trim()}
+          val: ${Periodo_de_retencao}
           mandatoryInSearch: True
     
     - label: Object_Policies
@@ -43,7 +43,7 @@ updatereq:
           val: ${_id}
           mandatoryInSearch: True
         - name: Object_Data_Procedures_ID
-          val: ${Referencia?.toUpperCase()?.trim()}
+          val: ${Referencia}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Name

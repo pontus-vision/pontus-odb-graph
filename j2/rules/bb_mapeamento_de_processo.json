@@ -31,12 +31,12 @@
         "props": [
           {
             "name": "Object_Data_Policy_Type",
-            "val": "${Referencia?.toUpperCase()?.trim()}",
+            "val": "${Referencia}",
             "mandatoryInSearch": true
           },
           {
             "name": "Object_Data_Policy_Retention_Period",
-            "val": "${Periodo_de_retencao?.toUpperCase()?.trim()}",
+            "val": "${Periodo_de_retencao}",
             "mandatoryInSearch": true
           }
         ]
@@ -64,7 +64,7 @@
           },
           {
             "name": "Object_Data_Procedures_ID",
-            "val": "${Referencia?.toUpperCase()?.trim()}",
+            "val": "${Referencia}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

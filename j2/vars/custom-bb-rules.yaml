@@ -234,8 +234,8 @@ rules:
 
       - label: Object_Data_Policy
         props:
-          Type: "${Referencia?.toUpperCase()?.trim()}"
-          Retention_Period: "${Periodo_de_retencao?.toUpperCase()?.trim()}"
+          Type: "${Referencia}"
+          Retention_Period: "${Periodo_de_retencao}"
 
       - label: Object_Policies
         props:
@@ -249,7 +249,7 @@ rules:
         props:
           Form_Id: "${_id}"
           ID:
-            val: "${Referencia?.toUpperCase()?.trim()}"
+            val: "${Referencia}"
             excludeFromSearch: true
           Name:
             val: "${Processo?.toUpperCase()?.trim()}"
