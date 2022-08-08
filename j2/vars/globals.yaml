@@ -518,7 +518,12 @@ schema:
         - name: Description
         - name: MacroProcessName
         - name: Country_Where_Stored
+        - name: Data_Origin
+        - name: Data_Geo_Scope
         - name: Delete_Mechanism
+        - name: Data_Controller
+        - name: Data_Owner
+        - name: Data_Processor
         - name: Delete_URL
         - name: Info_Collected
         - name: Info_Share_Justification

@@ -76,12 +76,9 @@
           },
           {
             "name": "Object_Data_Procedures_Type_Of_Natural_Person",
-            "val": "${new groovy.json.JsonBuilder(Categoria_dos_Titulares_dos_Dados)}",
+            "val": "${Categoria_dos_Titulares_dos_Dados}",
             "mandatoryInSearch": false,
-            "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "excludeFromSearch": true,
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
+            "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_BusinessAreaResponsible",
@@ -92,6 +89,30 @@
           {
             "name": "Object_Data_Procedures_Country_Where_Stored",
             "val": "${Pais_Onde_as_Pessoas_Estao_Localizadas?.toUpperCase()?.trim()} - ${Abrangencia_geografica_do_tratamento?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Origin",
+            "val": "${Origem_de_coleta_dos_dados?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Geo_Scope",
+            "val": "${Abrangencia_geografica_do_tratamento?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Owner",
+            "val": "${Encarregado?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Controller",
+            "val": "${Controlador?.toUpperCase()?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -223,11 +244,27 @@
       },
       {
         "label": "Object_Email_Address",
+        "name": "responsavel",
         "condition": "${Responsavel?.size() > 0}",
         "props": [
           {
             "name": "Object_Email_Address_Form_Id",
             "val": "${new groovy.json.JsonBuilder(Responsavel)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "operador",
+        "condition": "${Operador?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Operador)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.BudibaseRef;",
@@ -356,7 +393,12 @@
       },
       {
         "label": "Is_Responsible",
-        "fromVertexLabel": "Object_Email_Address",
+        "fromVertexName": "responsavel",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexName": "operador",
         "toVertexLabel": "Object_Data_Procedures"
       }
     ]

@@ -1,16 +1,12 @@
 package com.pontusvision.gdpr;
 
 import com.pontusvision.graphutils.gdpr;
-import org.apache.tinkerpop.gremlin.process.traversal.P;
-import org.apache.tinkerpop.gremlin.structure.Transaction;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,7 +46,7 @@ public class PVScoreTestsLawfulBasis extends AppTest {
 
       long score = (long) gdpr.getLawfulBasisScores(retVals);
 
-      assertEquals(100L, score);
+      assertEquals(93L, score);
 
 
     } catch (Exception e) {

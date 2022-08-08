@@ -116,7 +116,7 @@ public class PVPdfReportTests extends AppTest {
     jsonTestUtil("budibase/bb-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
 
     String procId =
-        App.executor.eval("App.g.V().has('Object_Data_Procedures_Interested_Parties_Consulted','joao@mail.com').id().next().toString()").get().toString();
+        App.executor.eval("App.g.V().has('Object_Data_Procedures_Interested_Parties_Consulted','MARLENE').id().next().toString()").get().toString();
 
     ReportTemplateRenderResponse resp = sendReportReqPayload(procId,200);
 

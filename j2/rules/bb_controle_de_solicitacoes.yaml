@@ -3,23 +3,23 @@ updatereq:
   vertices:
     
     - label: Person_Organisation
-      condition: ${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}
+      condition: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}
       props:
         - name: Person_Organisation_Name
           val: ${Razao_Social_Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person_Organisation_Registration_Number
-          val: ${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()}
+          val: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
     
     - label: Person_Natural
-      condition: ${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}
+      condition: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}
       props:
         - name: Person_Natural_Full_Name
           val: ${Razao_Social_Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person_Natural_Customer_ID
-          val: ${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()}
+          val: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
     
     - label: Object_Data_Procedures

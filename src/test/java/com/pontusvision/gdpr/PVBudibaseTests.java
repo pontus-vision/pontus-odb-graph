@@ -27,10 +27,10 @@ public class PVBudibaseTests extends AppTest {
                       ".out('Has_Ingestion_Event').as('data_procs')" +
 //                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b'))" +
                       ".out('Has_Policy').as('data_policy')" +
-                      ".has('Object_Data_Policy_Type', eq('Acesso-Recepção'))" +
+                      ".has('Object_Data_Policy_Type', eq('PS.01.02 - GERENCIAR DESEMPENHO DE PESSOAS'))" +
                       ".in('Has_Policy').as('data_procs_again')" +
                       ".properties('Object_Data_Procedures_Interested_Parties_Consulted').value().next().toString()").get().toString();
-      assertEquals("joao@mail.com", joaoIsInterested, "João id interested in this Process");
+      assertEquals("MARLENE", joaoIsInterested, "Marlene is interested in this Process");
 
       String numParties =
               App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
@@ -38,8 +38,8 @@ public class PVBudibaseTests extends AppTest {
                       ".out('Has_Ingestion_Event').as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
                       ".has('Object_Data_Procedures_Interested_Parties_Consulted', " +
-                      "eq('teste@email.com, teste2@mail.com, teste3@mail.com')).dedup().count().next().toString()").get().toString();
-      assertEquals("3", numParties, "3 registries with same parties interested");
+                      "eq('MARLENE')).dedup().count().next().toString()").get().toString();
+      assertEquals("1", numParties, "1 registry with same parties interested");
 
       String legInterestCount=
               App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
@@ -55,12 +55,35 @@ public class PVBudibaseTests extends AppTest {
       String LIALawfulBasis =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
                       ".out('Has_Ingestion_Event').as('data_procs')" +
-                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b'))" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_2cd7da71e94c491f974680f26bf35a52_f0890f28b5b24f3e862ea651c5601007'))" +
                       ".out('Has_Legitimate_Interests_Assessment').as('lia')" +
                       ".properties('Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification')" +
                       ".value().next().toString()").get().toString();
       assertEquals("Justificativa azerty", LIALawfulBasis, "Lawful Basis Justification for this LIA");
 
+      String getDataOwner =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
+                      ".out('Has_Ingestion_Event').as('data_procs')" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_2cd7da71e94c491f974680f26bf35a52_f0890f28b5b24f3e862ea651c5601007'))" +
+                      ".properties('Object_Data_Procedures_Data_Owner')" +
+                      ".value().next().toString()").get().toString();
+      assertEquals("DR. LEOPOLDO", getDataOwner);
+
+      String getDataController =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
+                      ".out('Has_Ingestion_Event').as('data_procs')" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_2cd7da71e94c491f974680f26bf35a52_f0890f28b5b24f3e862ea651c5601007'))" +
+                      ".properties('Object_Data_Procedures_Data_Controller')" +
+                      ".value().next().toString()").get().toString();
+      assertEquals("GOV", getDataController);
+
+      String getDataGeoScope =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
+                      ".out('Has_Ingestion_Event').as('data_procs')" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_2cd7da71e94c491f974680f26bf35a52_f0890f28b5b24f3e862ea651c5601007'))" +
+                      ".properties('Object_Data_Procedures_Data_Geo_Scope')" +
+                      ".value().next().toString()").get().toString();
+      assertEquals("NACIONAL", getDataGeoScope);
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -520,15 +543,15 @@ public class PVBudibaseTests extends AppTest {
                       ".out('Made_SAR_Request').as('dsar')" +
                       ".out('Has_DSAR').as('dsar-group')" +
                       ".out('Has_DSAR').as('ropa')" +
-                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b'))" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_2cd7da71e94c491f974680f26bf35a52_f0890f28b5b24f3e862ea651c5601007'))" +
                       ".values('Object_Data_Procedures_Description')" +
                       ".next().toString()").get().toString();
-      assertEquals("Necessário para entrada e saída de candidatos a sede da empresa",fromDsarToRopa,
+      assertEquals("- OS DADOS SÃO COLETADOS DIRETAMENTE DO BANCO DE DADOS, DE ACORDO COM A LOTAÇÃO DO SERVIDOR;- OS DADOS SÃO UTILIZADOS PARA QUE O GESTOR DO SERVIDOR POSSA IDENTIFICAR DE QUEM SE TRATA A AVALIAÇÃO EM QUESTÃO;- APÓS A AVALIAÇÃO, O SISTEMA COMPILA OS RESULTADOS POR UNIDADE DE LOTAÇÃO;- OS DADOS SÃO FORNECIDOS À COORDENADORIA DE CAPACITAÇÃO, SEM QUE SEJA POSSÍVEL IDENTIFICAR OS SERVIDORES ENVOLVIDOS, APENAS O RESULTADO MACRO DA UNIDADE DE LOTAÇÃO.",fromDsarToRopa,
               "RoPA's Data Procedures' Description");
 
       String fromRopaToDsar =
               App.executor.eval("App.g.V().has('Object_Data_Procedures_Interested_Parties_Consulted'" +
-                      ",eq('vitor@gmail.com, omar@mail.com')).as('ropa-data-procs')" +
+                      ",eq('MARLENE')).as('ropa-data-procs')" +
                       ".in('Has_DSAR').as('dsar-group')" +
                       ".in('Has_DSAR').as('dsar')" +
                       ".in('Made_SAR_Request').as('person-natural')" +

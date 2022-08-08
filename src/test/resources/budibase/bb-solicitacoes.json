@@ -13,7 +13,7 @@
       "Solicitacao___Tipo": "Read",
       "Solicitacao___Canal": "email",
       "Solicitacao___Data": "2022-02-01T15:00:00.000Z",
-      "CNPJ_CPF": "012.225.543-89",
+      "CNPJ_CPF_ID": "012.225.543-89",
       "Razao_Social_Nome": "Omar Mohamad Abou Ghoche",
       "Referencia": "solicitação 10",
       "tableId": "ta_c638105c80d04cd2a8a73740e1a1d240",
@@ -23,8 +23,8 @@
       "type": "row",
       "ID_do_Processo": [
         {
-          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b",
-          "primaryDisplay": "Acesso-Recepção"
+          "_id": "ro_ta_2cd7da71e94c491f974680f26bf35a52_f0890f28b5b24f3e862ea651c5601007",
+          "primaryDisplay": "PS.01.02 - Gerenciar desempenho de pessoas"
         },
         {
           "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_2994381e08684c4cb09b42f8dfe698c0",
@@ -58,7 +58,7 @@
       "Solicitacao___Tipo": "Delete",
       "Solicitacao___Canal": "sms",
       "Solicitacao___Data": "2022-01-04T15:00:00.000Z",
-      "CNPJ_CPF": "287.985.365-10",
+      "CNPJ_CPF_ID": "287.985.365-10",
       "Razao_Social_Nome": "Amanda Mozena",
       "Referencia": "solicitação Y",
       "tableId": "ta_c638105c80d04cd2a8a73740e1a1d240",
@@ -99,7 +99,7 @@
       "Solicitacao___Tipo": "Delete",
       "Solicitacao___Canal": "teste",
       "Solicitacao___Data": "2022-02-08T15:00:00.000Z",
-      "CNPJ_CPF": "80927892892",
+      "CNPJ_CPF_ID": "80927892892",
       "Razao_Social_Nome": "Leo Martins",
       "Referencia": "teste",
       "tableId": "ta_c638105c80d04cd2a8a73740e1a1d240",
