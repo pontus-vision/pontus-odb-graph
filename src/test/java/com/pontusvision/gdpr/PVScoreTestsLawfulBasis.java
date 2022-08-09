@@ -38,7 +38,7 @@ public class PVScoreTestsLawfulBasis extends AppTest {
     try {
 
       jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
-          "sharepoint_mapeamentos");
+              "sharepoint_mapeamentos");
 
 
 
@@ -46,7 +46,7 @@ public class PVScoreTestsLawfulBasis extends AppTest {
 
       long score = (long) gdpr.getLawfulBasisScores(retVals);
 
-      assertEquals(93L, score);
+      assertEquals(100L, score);
 
 
     } catch (Exception e) {

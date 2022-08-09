@@ -70,7 +70,7 @@
           },
           {
             "name": "Object_Data_Procedures_Name",
-            "val": "${Processo?.toUpperCase()?.trim()}",
+            "val": "${Processo}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -82,13 +82,13 @@
           },
           {
             "name": "Object_Data_Procedures_BusinessAreaResponsible",
-            "val": "${Area_Responsavel?.toUpperCase()?.trim()}",
+            "val": "${Area_Responsavel}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Country_Where_Stored",
-            "val": "${Pais_Onde_as_Pessoas_Estao_Localizadas?.toUpperCase()?.trim()} - ${Abrangencia_geografica_do_tratamento?.toUpperCase()?.trim()}",
+            "val": "${Pais_Onde_as_Pessoas_Estao_Localizadas}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -118,43 +118,43 @@
           },
           {
             "name": "Object_Data_Procedures_Why_Is_It_Collected",
-            "val": "${Finalidade_do_Processo?.toUpperCase()?.trim()}",
+            "val": "${Finalidade_do_Processo}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Info_Collected",
-            "val": "${Dados_Pessoais_Utilizados?.toUpperCase()?.trim()}",
+            "val": "${Dados_Pessoais_Utilizados}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Description",
-            "val": "${Fluxo_dos_Dados?.toUpperCase()?.trim()}",
+            "val": "${Fluxo_dos_Dados}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Interested_Parties_Consulted",
-            "val": "${Partes_Interessadas_Consultadas?.toUpperCase()?.trim()}",
+            "val": "${Partes_Interessadas_Consultadas}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Info_Shared_With_Third_Parties",
-            "val": "${Dados_Pessoais_Compartilhados_com_Terceiros?.toUpperCase()?.trim()}",
+            "val": "${Dados_Pessoais_Compartilhados_com_Terceiros}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Info_Share_Justification",
-            "val": "${Finalidade_de_Compartilhamento_com_Terceiros?.toUpperCase()?.trim()}",
+            "val": "${Finalidade_de_Compartilhamento_com_Terceiros}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_MacroProcessName",
-            "val": "${Macroprocesso?.toUpperCase()?.trim()}",
+            "val": "${Macroprocesso}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -237,7 +237,7 @@
         "props": [
           {
             "name": "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
-            "val": "${Justificativa_da_Base_Legal?.toUpperCase()?.trim()}",
+            "val": "${Justificativa_da_Base_Legal}",
             "mandatoryInSearch": true
           }
         ]

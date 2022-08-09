@@ -41,16 +41,16 @@ public class PVBudibaseTests extends AppTest {
                       "eq('MARLENE')).dedup().count().next().toString()").get().toString();
       assertEquals("1", numParties, "1 registry with same parties interested");
 
-//      String legInterestCount=
-//              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
-//                      ".out('Has_Ingestion_Event').as('event_group')" +
-//                      ".out('Has_Ingestion_Event').as('event_ingestion')" +
-//                      ".out('Has_Ingestion_Event').as('data_procs')" +
-//                      ".out('Has_Lawful_Basis_On').as('lawful_basis')" +
-//                      ".has('Object_Lawful_Basis_Description', eq('LEGÍTIMO INTERESSE DO CONTROLADOR'))" +
-////                      ".valueMap().toList()"
-//                      ".count().next().toString()").get().toString();
-//      assertEquals("7", legInterestCount, "Jurídico Snowymountain is a Party Interested in these Data Procedures");
+      String legInterestCount=
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('BUDIBASE/MAPEAMENTO-DE-PROCESSO')).as('data_source')" +
+                      ".out('Has_Ingestion_Event').as('event_group')" +
+                      ".out('Has_Ingestion_Event').as('event_ingestion')" +
+                      ".out('Has_Ingestion_Event').as('data_procs')" +
+                      ".out('Has_Lawful_Basis_On').as('lawful_basis')" +
+                      ".has('Object_Lawful_Basis_Description', eq('PARA O CUMPRIMENTO DE OBRIGAÇÃO LEGAL OU REGULATÓRIA PELO CONTROLADOR'))" +
+//                      ".valueMap().toList()"
+                      ".count().next().toString()").get().toString();
+      assertEquals("1", legInterestCount);
 
       String LIALawfulBasis =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
@@ -84,6 +84,15 @@ public class PVBudibaseTests extends AppTest {
                       ".properties('Object_Data_Procedures_Data_Geo_Scope')" +
                       ".value().next().toString()").get().toString();
       assertEquals("NACIONAL", getDataGeoScope);
+
+      String getDataOrigin =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
+                      ".out('Has_Ingestion_Event').as('data_procs')" +
+                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_2cd7da71e94c491f974680f26bf35a52_f0890f28b5b24f3e862ea651c5601007'))" +
+                      ".properties('Object_Data_Procedures_Data_Origin')" +
+                      ".value().next().toString()").get().toString();
+      assertEquals("API", getDataOrigin);
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);

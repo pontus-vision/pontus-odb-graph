@@ -252,16 +252,16 @@ rules:
             val: "${Referencia}"
             excludeFromSearch: true
           Name:
-            val: "${Processo?.toUpperCase()?.trim()}"
+            val: "${Processo}"
             excludeFromSearch: true
           Type_Of_Natural_Person:
             val: "${Categoria_dos_Titulares_dos_Dados}"
             excludeFromSearch: true
           BusinessAreaResponsible:
-            val: "${Area_Responsavel?.toUpperCase()?.trim()}"
+            val: "${Area_Responsavel}"
             excludeFromSearch: true
           Country_Where_Stored:
-            val: "${Pais_Onde_as_Pessoas_Estao_Localizadas?.toUpperCase()?.trim()} - ${Abrangencia_geografica_do_tratamento?.toUpperCase()?.trim()}"
+            val: "${Pais_Onde_as_Pessoas_Estao_Localizadas}"
             excludeFromSearch: true
           Data_Origin:
             val: "${Origem_de_coleta_dos_dados?.toUpperCase()?.trim()}"
@@ -276,25 +276,25 @@ rules:
             val: "${Controlador?.toUpperCase()?.trim()}"
             excludeFromSearch: true
           Why_Is_It_Collected:
-            val: "${Finalidade_do_Processo?.toUpperCase()?.trim()}"
+            val: "${Finalidade_do_Processo}"
             excludeFromSearch: true
           Info_Collected:
-            val: "${Dados_Pessoais_Utilizados?.toUpperCase()?.trim()}"
+            val: "${Dados_Pessoais_Utilizados}"
             excludeFromSearch: true
           Description:
-            val: "${Fluxo_dos_Dados?.toUpperCase()?.trim()}"
+            val: "${Fluxo_dos_Dados}"
             excludeFromSearch: true
           Interested_Parties_Consulted:
-            val: "${Partes_Interessadas_Consultadas?.toUpperCase()?.trim()}"
+            val: "${Partes_Interessadas_Consultadas}"
             excludeFromSearch: true
           Info_Shared_With_Third_Parties:
-            val: "${Dados_Pessoais_Compartilhados_com_Terceiros?.toUpperCase()?.trim()}"
+            val: "${Dados_Pessoais_Compartilhados_com_Terceiros}"
             excludeFromSearch: true
           Info_Share_Justification:
-            val: "${Finalidade_de_Compartilhamento_com_Terceiros?.toUpperCase()?.trim()}"
+            val: "${Finalidade_de_Compartilhamento_com_Terceiros}"
             excludeFromSearch: true
           MacroProcessName:
-            val: "${Macroprocesso?.toUpperCase()?.trim()}"
+            val: "${Macroprocesso}"
             excludeFromSearch: true
 
       - label: Object_Sensitive_Data
@@ -345,7 +345,7 @@ rules:
       - label: Object_Legitimate_Interests_Assessment
         condition: "${Justificativa_da_Base_Legal?.trim()?.length() > 0}"
         props:
-          Lawful_Basis_Justification: "${Justificativa_da_Base_Legal?.toUpperCase()?.trim()}"
+          Lawful_Basis_Justification: "${Justificativa_da_Base_Legal}"
 
       - label: Object_Email_Address
         name: responsavel

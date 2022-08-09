@@ -475,84 +475,76 @@ public class PVTemplateTests extends AppTest {
 
   }
 
-//  @Test
-//  public void test00007TemplateGetDsarRopaByLawfulBasis() throws InterruptedException {
-//    try {
+  @Test
+  public void test00007TemplateGetDsarRopaByLawfulBasis() throws InterruptedException {
+    try {
+
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
+          "$.queryResp[*].fields", "sharepoint_mapeamentos");
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-ropa.json",
+          "$.queryResp[*].fields", "sharepoint_ropa");
+
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
+
+      jsonTestUtil("budibase/bb-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
+
+      jsonTestUtil("budibase/bb-solicitacoes.json", "$.rows", "bb_controle_de_solicitacoes");
+
+//      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
 //
-//      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
-//          "$.queryResp[*].fields", "sharepoint_mapeamentos");
-//      jsonTestUtil("sharepoint/pv-extract-sharepoint-ropa.json",
-//          "$.queryResp[*].fields", "sharepoint_ropa");
-//
-//      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
-//
-//      jsonTestUtil("budibase/bb-mapeamentos.json", "$.rows", "bb_mapeamento_de_processo");
-//
-//      jsonTestUtil("budibase/bb-solicitacoes.json", "$.rows", "bb_controle_de_solicitacoes");
-//
-////      def dsarId= App.executor.eval("App.g.V().has('Metadata_Type_Event_Subject_Access_Request', eq('Event_Subject_Access_Request')).id().next()").get().toString()
-////
-////      def lawfulBasis  = "LEGÍTIMO INTERESSE DO CONTROLADOR"
-//
-//      Resource res = new Resource();
-//
-//      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
-//      req.setTemplateName("TEST2");
-//      req.setTemplatePOLEType("Event_Subject_Access_Request");
-//      req.setReportTextBase64(
-//              Base64.getEncoder().encodeToString((
-//                      "{% set ropaContrato = pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}" +
-//                              "{% set ropaLegitimoInteresse = pv:getDsarRopaByLawfulBasis(context.id, 'LEGÍTIMO INTERESSE DO CONTROLADOR') %}" +
-//                              "{% if (ropaLegitimoInteresse.size() + ropaContrato.size()) > 0 %}" +
-//                              "{% for ropa in ropaContrato %}" +
-//                              "{{ ropa.Object_Data_Procedures_Name }}-" +
-//                              "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
-//                              "\n" +
-//                              "{% endfor %}" +
-//                              "{% for ropa in ropaLegitimoInteresse %}" +
-//                              "{{ ropa.Object_Data_Procedures_Name }}-" +
-//                              "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
-//                              "\n" +
-//                              "{% endfor %}" +
-//                              "{% endif %}" +
-//                              "")
-//                      .getBytes()));
-//
-//      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
-//
-//      String templateId = reply.getTemplateId();
-//
-//      String contextId = App.g.V().has("Event_Subject_Access_Request_Form_Id", P.eq("2"))
-//              .id().next().toString();
-//
-//      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
-//      renderReq.setRefEntryId(contextId);
-//      renderReq.setTemplateId(templateId);
-//      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
-//
-//      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-//
-//      String expectedReport = "Gestão de Rede de Distribuidores-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
-//              "Gerenciamento de prestadores de serviços externos-CPF, Nome, RG, Ocupação, E-mail, Endereço\n" +
-//              "Gestão de ferramenta gerencial (PowerBI)-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
-//              "Gestão de acesso (recepção)-RG, Nome\n" +
-//              "Cadastramento de Clientes PJ-E-mail Corporativo, Nome da Empresa, Telefone, Dados Bancários\n" +
-//              "Gestão de Currículos-Endereço, Nome Completo, Data de Nascimento, Estado Civil, E-mail\n" +
-//              "Gerenciamento do E-mail Marketing - clientes-Endereço, Nome, Telefone, Ocupação, E-mail\n" +
-//              "123-Nome do Usuário, E-mail Corporativo\n" +
-//              "Homologação de Fornecedores-Nome, CPF, RG, Telefone, Endereço, E-mail, Responsáveis Legais da Empresa Fornecedora\n" +
-//              "Gestão de Leads - Site-E-mail, Nome Completo, Telefone, Ocupação, Estado Civil\n";
-//      assertEquals(sortLines(expectedReport), sortLines(report), "Expecting ROPA to have a Lawful Basis");
-//
-//
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//      assertNull(e);
-//
-//    }
-//
-//
-//  }
+//      def lawfulBasis  = "LEGÍTIMO INTERESSE DO CONTROLADOR"
+
+      Resource res = new Resource();
+
+      ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
+      req.setTemplateName("TEST2");
+      req.setTemplatePOLEType("Event_Subject_Access_Request");
+      req.setReportTextBase64(
+              Base64.getEncoder().encodeToString((
+                      "{% set ropaContrato = pv:getDsarRopaByLawfulBasis(context.id, 'EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR') %}" +
+                              "{% set ropaLegitimoInteresse = pv:getDsarRopaByLawfulBasis(context.id, 'LEGÍTIMO INTERESSE DO CONTROLADOR') %}" +
+                              "{% if (ropaLegitimoInteresse.size() + ropaContrato.size()) > 0 %}" +
+                              "{% for ropa in ropaContrato %}" +
+                              "{{ ropa.Object_Data_Procedures_Name }}-" +
+                              "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
+                              "\n" +
+                              "{% endfor %}" +
+                              "{% for ropa in ropaLegitimoInteresse %}" +
+                              "{{ ropa.Object_Data_Procedures_Name }}-" +
+                              "{{ pv:removeSquareBrackets(ropa.Object_Data_Procedures_Info_Collected) }}" +
+                              "\n" +
+                              "{% endfor %}" +
+                              "{% endif %}" +
+                              "")
+                      .getBytes()));
+
+      ReportTemplateUpsertResponse reply = res.reportTemplateUpsert(req);
+
+      String templateId = reply.getTemplateId();
+
+      String contextId = App.g.V().has("Event_Subject_Access_Request_Form_Id", P.eq("2"))
+              .id().next().toString();
+
+      ReportTemplateRenderRequest renderReq = new ReportTemplateRenderRequest();
+      renderReq.setRefEntryId(contextId);
+      renderReq.setTemplateId(templateId);
+      ReportTemplateRenderResponse renderReply = res.reportTemplateRender(renderReq);
+
+      String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+
+      String expectedReport = "Gestão de Rede de Distribuidores-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
+              "Gestão de ferramenta gerencial (PowerBI)-Nome, CPF, RG, Endereço, E-mail, Ocupação\n";
+      assertEquals(sortLines(expectedReport), sortLines(report), "Expecting ROPA to have a Lawful Basis");
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
 
 
   @Test
