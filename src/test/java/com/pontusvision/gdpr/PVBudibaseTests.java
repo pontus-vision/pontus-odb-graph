@@ -27,7 +27,7 @@ public class PVBudibaseTests extends AppTest {
                       ".out('Has_Ingestion_Event').as('data_procs')" +
 //                      ".has('Object_Data_Procedures_Form_Id', eq('ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b'))" +
                       ".out('Has_Policy').as('data_policy')" +
-                      ".has('Object_Data_Policy_Type', eq('PS.01.02 - GERENCIAR DESEMPENHO DE PESSOAS'))" +
+                      ".has('Object_Data_Policy_Type', eq('PS.01.02 - Gerenciar desempenho de pessoas'))" +
                       ".in('Has_Policy').as('data_procs_again')" +
                       ".properties('Object_Data_Procedures_Interested_Parties_Consulted').value().next().toString()").get().toString();
       assertEquals("MARLENE", joaoIsInterested, "Marlene is interested in this Process");
@@ -59,7 +59,7 @@ public class PVBudibaseTests extends AppTest {
                       ".out('Has_Legitimate_Interests_Assessment').as('lia')" +
                       ".properties('Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification')" +
                       ".value().next().toString()").get().toString();
-      assertEquals("Justificativa azerty", LIALawfulBasis, "Lawful Basis Justification for this LIA");
+      assertEquals("JUSTIFICATION X", LIALawfulBasis, "Lawful Basis Justification for this LIA");
 
       String getDataOwner =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('budibase/mapeamento-de-processo')).as('event_ingestion')" +
