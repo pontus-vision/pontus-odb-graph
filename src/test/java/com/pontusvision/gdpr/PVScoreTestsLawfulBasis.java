@@ -38,7 +38,7 @@ public class PVScoreTestsLawfulBasis extends AppTest {
     try {
 
       jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields",
-              "sharepoint_mapeamentos");
+          "sharepoint_mapeamentos");
 
 
 

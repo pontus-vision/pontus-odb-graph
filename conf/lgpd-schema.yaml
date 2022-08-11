@@ -2755,6 +2755,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Is_Interested_Party
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Is_Data_Controller
     multiplicity: MULTI
     unidirected: False

@@ -1239,6 +1239,7 @@ schema:
   - name: Impacted_By_Data_Breach
   - name: Is_Alias
   - name: Is_Client
+  - name: Is_Interested_Party
   - name: Is_Data_Controller
   - name: Is_Data_Owner
   - name: Is_Data_Processor

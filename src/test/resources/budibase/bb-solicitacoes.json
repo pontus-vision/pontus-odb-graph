@@ -8,7 +8,7 @@
       "Resposta___Data": "2022-02-18T15:00:00.000Z",
       "Status": "New",
       "Base_Legal___Artigo_e_Inciso": "",
-      "Abrangencia_e_Observacoes": "",
+      "Observacoes": "",
       "Solicitacao___Descricao": "",
       "Solicitacao___Tipo": "Read",
       "Solicitacao___Canal": "email",
@@ -23,8 +23,8 @@
       "type": "row",
       "ID_do_Processo": [
         {
-          "_id": "ro_ta_2cd7da71e94c491f974680f26bf35a52_f0890f28b5b24f3e862ea651c5601007",
-          "primaryDisplay": "PS.01.02 - Gerenciar desempenho de pessoas"
+          "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b",
+          "primaryDisplay": "Acesso-Recepção"
         },
         {
           "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_2994381e08684c4cb09b42f8dfe698c0",
@@ -53,7 +53,7 @@
       "Resposta___Data": "2022-02-02T15:00:00.000Z",
       "Status": "Completed",
       "Base_Legal___Artigo_e_Inciso": "",
-      "Abrangencia_e_Observacoes": "",
+      "Observacoes": "",
       "Solicitacao___Descricao": "Remover conta.",
       "Solicitacao___Tipo": "Delete",
       "Solicitacao___Canal": "sms",
@@ -94,7 +94,7 @@
       "Resposta___Data": "2022-02-08T15:00:00.000Z",
       "Status": "Completed",
       "Base_Legal___Artigo_e_Inciso": "teste",
-      "Abrangencia_e_Observacoes": "teste",
+      "Observacoes": "teste",
       "Solicitacao___Descricao": "teste",
       "Solicitacao___Tipo": "Delete",
       "Solicitacao___Canal": "teste",

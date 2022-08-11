@@ -19,7 +19,7 @@
       },
       {
         "label": "Person_Natural",
-        "condition": "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}",
+        "condition": "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() != 14}",
         "props": [
           {
             "name": "Person_Natural_Full_Name",
