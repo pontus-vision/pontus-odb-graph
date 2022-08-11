@@ -1,9 +1,9 @@
 {
   "rows": [
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_6f4ee283d809446a9fdffe3a42f14dde",
       "_rev": "4-24c5794f4a7724b558335bca7b9adbe3",
+      "Consentimentos": [],
       "Dados_Pessoais_Utilizados": [
         "Nome",
         "CPF",
@@ -16,10 +16,14 @@
       "Aprovado_Juridico": "sim",
       "Aprovado_TI": "sim",
       "Status": "Aprovado",
-      "Partes_Interessadas_Consultadas": "",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "lmartins@pontusnetworks.com"
+        }
+      ],
       "Periodo_de_retencao": "5 anos",
       "Fluxo_dos_Dados": "Recebemos os documentos via e-mail e retemos.",
-      "Justificativa_da_Base_Legal": "Justificativa abc",
       "Lia_Is_Essential": false,
       "Lia_Is_Required": true,
       "Origem_dos_dados": "TERCEIROS",
@@ -34,6 +38,10 @@
       "Created_At": "2022-02-10T20:35:23.384Z",
       "Updated_At": "2022-03-04T17:54:25.453Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Origem_de_coleta_dos_dados": "API",
+      "Abrangencia_geografica_do_tratamento": "Distrital",
       "Base_Legal": [
         "Execução de Contrato ou de procedimentos preliminares a contrato, a pedido do titular"
       ],
@@ -47,7 +55,7 @@
           "primaryDisplay": "test123"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_98c8694c12ef4380bc90113578cd5eb9",
           "primaryDisplay": "lmartins@pontusvision.com"
@@ -75,7 +83,6 @@
       ]
     },
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_7e75c95ef43a4e5ca90fdb4db4209384",
       "_rev": "4-e1a49caf374e8dc0174af89e8d9ba197",
       "Dados_Pessoais_Utilizados": [
@@ -91,7 +98,6 @@
       "Aprovado_Juridico": "sim",
       "Aprovado_TI": "sim",
       "Status": "Aprovado",
-      "Partes_Interessadas_Consultadas": "teste@email.com, teste2@mail.com, teste3@mail.com",
       "Periodo_de_retencao": "10 anos",
       "Fluxo_dos_Dados": "Mensalmente é mapeado quais Questionários e Certificados estão vencendo.",
       "Justificativa_da_Base_Legal": "Justificativa XYZ",
@@ -109,6 +115,9 @@
       "Created_At": "2022-02-11T13:50:03.830Z",
       "Updated_At": "2022-03-04T17:50:49.804Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Abrangencia_geografica_do_tratamento": "Nacional",
       "Base_Legal": [
         "Legítimo Interesse do Controlador"
       ],
@@ -130,7 +139,7 @@
           "primaryDisplay": "oghoche@pontusvision.com"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
           "primaryDisplay": "oghoche@pontusvision.com"
@@ -144,9 +153,9 @@
       ]
     },
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_b7debf0b063947a38074292cfba48d8b",
       "_rev": "4-86e9095fbc89df3d31be72aeaef1276e",
+      "Consentimentos": [],
       "Dados_Pessoais_Utilizados": [
         "E-mail",
         "Nome Completo",
@@ -158,7 +167,12 @@
       "Aprovado_Juridico": "sim",
       "Aprovado_TI": "sim",
       "Status": "Aprovado",
-      "Partes_Interessadas_Consultadas": "teste@email.com, teste2@mail.com, teste3@mail.com",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "lmartins@pontusnetworks.com"
+        }
+      ],
       "Periodo_de_retencao": "36 meses",
       "Fluxo_dos_Dados": "O cliente disponibiliza seu contato no formulário do site. O Marketing encaminha estes dados por e-mail para distribuidor ou p/ consultor de vendas e inseridos no funil de vendas ou CRM.",
       "Justificativa_da_Base_Legal": "Justificativa de Legitimo Interesse",
@@ -176,6 +190,10 @@
       "Created_At": "2022-02-11T13:42:43.564Z",
       "Updated_At": "2022-03-04T17:55:08.884Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Origem_de_coleta_dos_dados": "Fornecidos pelo próprio titular de dados",
+      "Abrangencia_geografica_do_tratamento": "Estadual",
       "Base_Legal": [
         "Legítimo Interesse do Controlador"
       ],
@@ -203,7 +221,7 @@
           "primaryDisplay": "oghoche@pontusvision.com"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "amozena@pontusvision.com"
@@ -211,7 +229,6 @@
       ]
     },
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_d10589f702284ae7847c44fe845fcdfd",
       "_rev": "5-e5c2c268e962e283fd4e84c60974a876",
       "Dados_Pessoais_Utilizados": [
@@ -224,7 +241,12 @@
       "Aprovado_Juridico": "sim",
       "Aprovado_TI": "sim",
       "Status": "Pedido de Aprovação",
-      "Partes_Interessadas_Consultadas": "vitor@gmail.com, omar@mail.com",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "lmartins@pontusnetworks.com"
+        }
+      ],
       "Periodo_de_retencao": "10 anos",
       "Fluxo_dos_Dados": "Recebimento da solicitação de análise de crédito do departamento de vendas/técnico via e-mail , elaboração da análise de crédito do cliente e envio do parecer do financeiro via e-mail.",
       "Justificativa_da_Base_Legal": "Justificativa mno",
@@ -242,6 +264,10 @@
       "Created_At": "2022-02-10T20:31:52.339Z",
       "Updated_At": "2022-03-04T17:54:51.102Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Origem_de_coleta_dos_dados": "Compartilhamento",
+      "Abrangencia_geografica_do_tratamento": "Nacional",
       "Base_Legal": [
         "Legítimo Interesse do Controlador"
       ],
@@ -273,7 +299,7 @@
           "primaryDisplay": "oghoche@pontusvision.com"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "amozena@pontusvision.com"
@@ -281,9 +307,9 @@
       ]
     },
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_0bc5bedfb86547e0b76ff8df063356db",
       "_rev": "5-1ee36f4e1f560c10bee66b2e49f4f340",
+      "Consentimentos": [],
       "Dados_Pessoais_Utilizados": [
         "Endereço",
         "Nome Completo",
@@ -295,10 +321,14 @@
       "Aprovado_Juridico": "",
       "Aprovado_TI": "",
       "Status": "Rascunho",
-      "Partes_Interessadas_Consultadas": "abc@abc.com, xyz@xyz.com",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "lmartins@pontusnetworks.com"
+        }
+      ],
       "Periodo_de_retencao": "10 meses",
       "Fluxo_dos_Dados": "Captamos Curriculos através das Plataformas digitais.",
-      "Justificativa_da_Base_Legal": "Justificativa 123",
       "Lia_Is_Essential": true,
       "Lia_Is_Required": false,
       "Origem_dos_dados": "COLABORADOR",
@@ -313,6 +343,9 @@
       "Created_At": "2022-02-10T20:38:12.981Z",
       "Updated_At": "2022-03-04T17:53:56.333Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Abrangencia_geografica_do_tratamento": "Nacional",
       "Base_Legal": [
         "Legítimo Interesse do Controlador"
       ],
@@ -338,7 +371,7 @@
           "primaryDisplay": "oghoche@pontusvision.com"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
           "primaryDisplay": "oghoche@pontusvision.com"
@@ -352,7 +385,6 @@
       ]
     },
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_1b7526cffd2b4490808ef4527457532a",
       "_rev": "4-4bbeb13ee6ba59ca3ecb96c1289ccc0a",
       "Dados_Pessoais_Utilizados": [
@@ -367,7 +399,6 @@
       "Aprovado_Juridico": "sim",
       "Aprovado_TI": "sim",
       "Status": "Aprovado",
-      "Partes_Interessadas_Consultadas": "aaa@mail.com, bbb@gmail.com, ccc@hotmail.com",
       "Periodo_de_retencao": "10 anos",
       "Fluxo_dos_Dados": "Monitoramento dos pedidos liberados para faturamento (emissão de NF) via sistema digital.",
       "Justificativa_da_Base_Legal": "Justificativa qwerty",
@@ -385,6 +416,10 @@
       "Created_At": "2022-02-10T21:06:18.917Z",
       "Updated_At": "2022-03-04T17:56:05.180Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Origem_de_coleta_dos_dados": "API",
+      "Abrangencia_geografica_do_tratamento": "Estadual",
       "Base_Legal": [
         "Obrigação Legal ou Regulatória"
       ],
@@ -412,7 +447,7 @@
           "primaryDisplay": "oghoche@pontusvision.com"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "amozena@pontusvision.com"
@@ -420,9 +455,9 @@
       ]
     },
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_2994381e08684c4cb09b42f8dfe698c0",
       "_rev": "4-6667cc3494a11fc64354a6d7577412dd",
+      "Consentimentos": [],
       "Dados_Pessoais_Utilizados": [
         "CPF",
         "Nome",
@@ -435,7 +470,12 @@
       "Aprovado_Juridico": "",
       "Aprovado_TI": "",
       "Status": "Pedido de Aprovação",
-      "Partes_Interessadas_Consultadas": "teste@email.com, teste2@mail.com, teste3@mail.com",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "lmartins@pontusnetworks.com"
+        }
+      ],
       "Periodo_de_retencao": "30 meses",
       "Fluxo_dos_Dados": "Recebimento mensal direto enviado pela Area_Responsavel de RH.",
       "Justificativa_da_Base_Legal": "Justificativa ????",
@@ -453,6 +493,10 @@
       "Created_At": "2022-02-11T13:46:38.477Z",
       "Updated_At": "2022-03-04T17:56:32.628Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Origem_de_coleta_dos_dados": "API",
+      "Abrangencia_geografica_do_tratamento": "Nacional",
       "Base_Legal": [
         "Execução de Contrato ou de procedimentos preliminares a contrato, a pedido do titular"
       ],
@@ -468,7 +512,7 @@
           "primaryDisplay": "teste"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_98c8694c12ef4380bc90113578cd5eb9",
           "primaryDisplay": "lmartins@pontusvision.com"
@@ -488,7 +532,6 @@
       ]
     },
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b",
       "_rev": "5-863edaf6598f247174dd1b0344af2c90",
       "Dados_Pessoais_Utilizados": [
@@ -499,7 +542,12 @@
       "Aprovado_Juridico": "sim",
       "Aprovado_TI": "sim",
       "Status": "Pedido de Aprovação",
-      "Partes_Interessadas_Consultadas": "joao@mail.com",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "lmartins@pontusnetworks.com"
+        }
+      ],
       "Periodo_de_retencao": "90 dias",
       "Fluxo_dos_Dados": "Necessário para entrada e saída de candidatos a sede da empresa",
       "Justificativa_da_Base_Legal": "Justificativa azerty",
@@ -517,6 +565,10 @@
       "Created_At": "2022-02-10T20:22:58.266Z",
       "Updated_At": "2022-03-04T17:55:26.507Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Origem_de_coleta_dos_dados": "Compartilhamento",
+      "Abrangencia_geografica_do_tratamento": "Distrital",
       "Base_Legal": [
         "Legítimo Interesse do Controlador"
       ],
@@ -536,7 +588,7 @@
           "primaryDisplay": "solicitação 10"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_98c8694c12ef4380bc90113578cd5eb9",
           "primaryDisplay": "lmartins@pontusvision.com"
@@ -556,9 +608,9 @@
       ]
     },
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5e673a2d7c6e4a1ba4ccd433d8ab1d94",
       "_rev": "4-f027791ca75d15dc568511ad3f52dd30",
+      "Consentimentos": [],
       "Dados_Pessoais_Utilizados": [
         "Endereço",
         "Nome",
@@ -570,7 +622,12 @@
       "Aprovado_Juridico": "",
       "Aprovado_TI": "",
       "Status": "Pedido de Aprovação",
-      "Partes_Interessadas_Consultadas": "omar@pontus.com, amanda@pontus.com, leo@pontus.com",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "lmartins@pontusnetworks.com"
+        }
+      ],
       "Periodo_de_retencao": "6 anos",
       "Fluxo_dos_Dados": "Coletamos informações de possíveis clientes de fornecedores.",
       "Justificativa_da_Base_Legal": "Justificativa jkl",
@@ -588,6 +645,10 @@
       "Created_At": "2022-02-10T20:41:45.785Z",
       "Updated_At": "2022-03-04T17:56:17.058Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Origem_de_coleta_dos_dados": "Fornecidos pelo próprio titular de dados",
+      "Abrangencia_geografica_do_tratamento": "Nacional",
       "Base_Legal": [
         "Legítimo Interesse do Controlador"
       ],
@@ -615,7 +676,7 @@
           "primaryDisplay": "oghoche@pontusvision.com"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "amozena@pontusvision.com"
@@ -623,14 +684,13 @@
       ]
     },
     {
-      "Consentimentos": [],
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5f159c390a0147bfa8fabab9502c2bd3",
       "_rev": "18-66e5af9a41a7cd35783d23743daa2b81",
+      "Consentimentos": [],
       "Aprovado_DPO": "sim",
       "Aprovado_Juridico": "sim",
       "Aprovado_TI": "sim",
       "Status": "Aprovado",
-      "Partes_Interessadas_Consultadas": "abc@abc.com, 123@123.com",
       "Periodo_de_retencao": "90 dias",
       "Fluxo_dos_Dados": "Credencial de acesso é criada na entrada do funcionário na empresa e depois desabilitada no desligamento do funcionário.",
       "Justificativa_da_Base_Legal": "sem justificativa",
@@ -648,6 +708,10 @@
       "Created_At": "2022-01-25T14:56:12.619Z",
       "Updated_At": "2022-03-04T17:55:51.263Z",
       "type": "row",
+      "Controlador": "GOV",
+      "Encarregado": "Dr. Leopoldo",
+      "Origem_de_coleta_dos_dados": "Compartilhamento",
+      "Abrangencia_geografica_do_tratamento": "Nacional",
       "Dados_Pessoais_Utilizados": [
         "Nome do Usuário",
         "E-mail Corporativo"
@@ -679,7 +743,7 @@
           "primaryDisplay": "oghoche@pontusvision.com"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "amozena@pontusvision.com"

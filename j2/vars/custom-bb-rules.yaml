@@ -217,6 +217,7 @@ rules:
 
   bb_mapeamento_de_processo:
     vertices:
+
       - label: Object_Data_Source
         name: budibase
         props:
@@ -253,9 +254,6 @@ rules:
           Name:
             val: "${Processo}"
             excludeFromSearch: true
-          #          Type:
-          #            val: "${Acesso_x002c__x0020_Transfer_x00}"
-          #            excludeFromSearch: true
           Type_Of_Natural_Person:
             val: "${Categoria_dos_Titulares_dos_Dados}"
             excludeFromSearch: true
@@ -265,6 +263,18 @@ rules:
           Country_Where_Stored:
             val: "${Pais_Onde_as_Pessoas_Estao_Localizadas}"
             excludeFromSearch: true
+          Data_Origin:
+            val: "${Origem_de_coleta_dos_dados?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
+          Data_Geo_Scope:
+            val: "${Abrangencia_geografica_do_tratamento?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
+          Data_Owner:
+            val: "${Encarregado?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
+          Data_Controller:
+            val: "${Controlador?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
           Why_Is_It_Collected:
             val: "${Finalidade_do_Processo}"
             excludeFromSearch: true
@@ -273,9 +283,6 @@ rules:
             excludeFromSearch: true
           Description:
             val: "${Fluxo_dos_Dados}"
-            excludeFromSearch: true
-          Interested_Parties_Consulted:
-            val: "${Partes_Interessadas_Consultadas}"
             excludeFromSearch: true
           Info_Shared_With_Third_Parties:
             val: "${Dados_Pessoais_Compartilhados_com_Terceiros}"
@@ -338,12 +345,33 @@ rules:
           Lawful_Basis_Justification: "${Justificativa_da_Base_Legal}"
 
       - label: Object_Email_Address
+        name: responsavel
         condition: "${Responsavel?.size() > 0}"
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(Responsavel)}"
             type: "[Lcom.pontusvision.utils.BudibaseRef;"
-            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupValue()}"
+            processAll: true
+
+      - label: Object_Email_Address
+        name: operador
+        condition: "${Operador?.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Operador)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupValue()}"
+            processAll: true
+
+      - label: Object_Email_Address
+        name: partes_consultadas
+        condition: "${Partes_Interessadas_Consultadas?.size() > 0}"
+        props:
+          Email:
+            val: "${new groovy.json.JsonBuilder(Partes_Interessadas_Consultadas)}"
+            type: "[Lcom.pontusvision.utils.BudibaseRef;"
+            postProcessor: "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupValue()}"
             processAll: true
 
       - label: Event_Ingestion
@@ -421,7 +449,15 @@ rules:
         toVertexLabel: "Object_Legitimate_Interests_Assessment"
 
       - label: "Is_Responsible"
-        fromVertexLabel: "Object_Email_Address"
+        fromVertexName: "responsavel"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Is_Responsible"
+        fromVertexName: "operador"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Is_Interested_Party"
+        fromVertexName: "partes_consultadas"
         toVertexLabel: "Object_Data_Procedures"
 
   bb_riscos:
@@ -589,26 +625,26 @@ rules:
     vertices:
 
       - label: Person_Organisation
-        condition: "${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}"
+        condition: "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}"
         props:
           Name:
             val: "${Razao_Social_Nome?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
             mandatoryInSearch: true
           Registration_Number:
-            val: "${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()}"
+            val: "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromUpdate: true
             mandatoryInSearch: true
 
       - label: Person_Natural
-        condition: "${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
+        condition: "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() != 14}"
         props:
           Full_Name:
             val: "${Razao_Social_Nome?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
             mandatoryInSearch: true
           Customer_ID:
-            val: "${CNPJ_CPF?.replaceAll('[^0-9]', '')?.trim()}"
+            val: "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromUpdate: true
             mandatoryInSearch: true
 

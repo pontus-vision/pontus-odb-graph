@@ -1039,7 +1039,22 @@ propertyKeys:
   - name: Object_Data_Procedures_Country_Where_Stored
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Procedures_Data_Origin
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Data_Geo_Scope
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Procedures_Delete_Mechanism
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Data_Controller
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Data_Owner
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Data_Processor
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Procedures_Delete_URL
@@ -2740,6 +2755,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Is_Interested_Party
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Is_Data_Controller
     multiplicity: MULTI
     unidirected: False
@@ -3454,7 +3473,12 @@ vertexIndexes:
       - Object_Data_Procedures_Description
       - Object_Data_Procedures_MacroProcessName
       - Object_Data_Procedures_Country_Where_Stored
+      - Object_Data_Procedures_Data_Origin
+      - Object_Data_Procedures_Data_Geo_Scope
       - Object_Data_Procedures_Delete_Mechanism
+      - Object_Data_Procedures_Data_Controller
+      - Object_Data_Procedures_Data_Owner
+      - Object_Data_Procedures_Data_Processor
       - Object_Data_Procedures_Delete_URL
       - Object_Data_Procedures_Info_Collected
       - Object_Data_Procedures_Info_Share_Justification

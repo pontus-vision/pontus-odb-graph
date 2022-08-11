@@ -3,15 +3,22 @@
     {
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_6f4ee283d809446a9fdffe3a42f14dde",
       "_rev": "4-24c5794f4a7724b558335bca7b9adbe3",
-      "Dados_Pessoais_Utilizados": ["MODIFIED"],
+      "Consentimentos": [],
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
       "Aprovado_DPO": "MODIFIED",
       "Aprovado_Juridico": "MODIFIED",
       "Aprovado_TI": "MODIFIED",
       "Status": "MODIFIED",
-      "Partes_Interessadas_Consultadas": "MODIFIED",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
       "Periodo_de_retencao": "MODIFIED",
       "Fluxo_dos_Dados": "MODIFIED",
-      "Justificativa_da_Base_Legal": "MODIFIED",
       "Lia_Is_Essential": false,
       "Lia_Is_Required": true,
       "Origem_dos_dados": "MODIFIED",
@@ -20,13 +27,19 @@
       "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
       "Processo": "MODIFIED",
       "Area_Responsavel": "MODIFIED",
-      "Referencia": "MODIFIED",
+      "Referencia": "Contratos-Fornecedores",
       "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
       "Auto_ID": 5,
       "Created_At": "2022-02-10T20:35:23.384Z",
-      "Updated_At": "1970-01-01T01:01:01.000Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
       "type": "row",
-      "Base_Legal": ["MODIFIED"],
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Origem_de_coleta_dos_dados": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Base_Legal": [
+        "MODIFIED"
+      ],
       "Local_de_Armazenamento": [
         {
           "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_cd02aa12d9ca4cc696bb2fb1e882e13d",
@@ -37,7 +50,7 @@
           "primaryDisplay": "MODIFIED"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_98c8694c12ef4380bc90113578cd5eb9",
           "primaryDisplay": "MODIFIED"
@@ -67,12 +80,13 @@
     {
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_7e75c95ef43a4e5ca90fdb4db4209384",
       "_rev": "4-e1a49caf374e8dc0174af89e8d9ba197",
-      "Dados_Pessoais_Utilizados": ["MODIFIED"],
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
       "Aprovado_DPO": "MODIFIED",
       "Aprovado_Juridico": "MODIFIED",
       "Aprovado_TI": "MODIFIED",
       "Status": "MODIFIED",
-      "Partes_Interessadas_Consultadas": "MODIFIED",
       "Periodo_de_retencao": "MODIFIED",
       "Fluxo_dos_Dados": "MODIFIED",
       "Justificativa_da_Base_Legal": "MODIFIED",
@@ -84,13 +98,18 @@
       "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
       "Processo": "MODIFIED",
       "Area_Responsavel": "MODIFIED",
-      "Referencia": "MODIFIED",
+      "Referencia": "Homologação-Fornecedores",
       "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
       "Auto_ID": 13,
       "Created_At": "2022-02-11T13:50:03.830Z",
-      "Updated_At": "1970-01-01T01:01:01.000Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
       "type": "row",
-      "Base_Legal": ["MODIFIED"],
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Base_Legal": [
+        "MODIFIED"
+      ],
       "Local_de_Armazenamento": [
         {
           "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35",
@@ -109,7 +128,7 @@
           "primaryDisplay": "MODIFIED"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
           "primaryDisplay": "MODIFIED"
@@ -125,12 +144,20 @@
     {
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_b7debf0b063947a38074292cfba48d8b",
       "_rev": "4-86e9095fbc89df3d31be72aeaef1276e",
-      "Dados_Pessoais_Utilizados": ["MODIFIED"],
+      "Consentimentos": [],
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
       "Aprovado_DPO": "MODIFIED",
       "Aprovado_Juridico": "MODIFIED",
       "Aprovado_TI": "MODIFIED",
       "Status": "MODIFIED",
-      "Partes_Interessadas_Consultadas": "MODIFIED",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
       "Periodo_de_retencao": "MODIFIED",
       "Fluxo_dos_Dados": "MODIFIED",
       "Justificativa_da_Base_Legal": "MODIFIED",
@@ -142,13 +169,19 @@
       "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
       "Processo": "MODIFIED",
       "Area_Responsavel": "MODIFIED",
-      "Referencia": "MODIFIED",
+      "Referencia": "Gestão-Leads",
       "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
       "Auto_ID": 11,
       "Created_At": "2022-02-11T13:42:43.564Z",
-      "Updated_At": "1970-01-01T01:01:01.000Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
       "type": "row",
-      "Base_Legal": ["MODIFIED"],
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Origem_de_coleta_dos_dados": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Base_Legal": [
+        "MODIFIED"
+      ],
       "Local_de_Armazenamento": [
         {
           "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35",
@@ -173,7 +206,7 @@
           "primaryDisplay": "MODIFIED"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "MODIFIED"
@@ -183,12 +216,19 @@
     {
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_d10589f702284ae7847c44fe845fcdfd",
       "_rev": "5-e5c2c268e962e283fd4e84c60974a876",
-      "Dados_Pessoais_Utilizados": ["MODIFIED"],
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
       "Aprovado_DPO": "MODIFIED",
       "Aprovado_Juridico": "MODIFIED",
       "Aprovado_TI": "MODIFIED",
       "Status": "MODIFIED",
-      "Partes_Interessadas_Consultadas": "MODIFIED",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
       "Periodo_de_retencao": "MODIFIED",
       "Fluxo_dos_Dados": "MODIFIED",
       "Justificativa_da_Base_Legal": "MODIFIED",
@@ -200,13 +240,19 @@
       "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
       "Processo": "MODIFIED",
       "Area_Responsavel": "MODIFIED",
-      "Referencia": "MODIFIED",
+      "Referencia": "Cadastro-Clientes-PJ",
       "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
       "Auto_ID": 4,
       "Created_At": "2022-02-10T20:31:52.339Z",
-      "Updated_At": "1970-01-01T01:01:01.000Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
       "type": "row",
-      "Base_Legal": ["MODIFIED"],
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Origem_de_coleta_dos_dados": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Base_Legal": [
+        "MODIFIED"
+      ],
       "Local_de_Armazenamento": [
         {
           "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_f623bcbc04c646d2943385bd83345fe1",
@@ -235,7 +281,7 @@
           "primaryDisplay": "MODIFIED"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "MODIFIED"
@@ -245,15 +291,22 @@
     {
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_0bc5bedfb86547e0b76ff8df063356db",
       "_rev": "5-1ee36f4e1f560c10bee66b2e49f4f340",
-      "Dados_Pessoais_Utilizados": ["MODIFIED"],
+      "Consentimentos": [],
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
       "Aprovado_DPO": "MODIFIED",
       "Aprovado_Juridico": "MODIFIED",
       "Aprovado_TI": "MODIFIED",
       "Status": "MODIFIED",
-      "Partes_Interessadas_Consultadas": "MODIFIED",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
       "Periodo_de_retencao": "MODIFIED",
       "Fluxo_dos_Dados": "MODIFIED",
-      "Justificativa_da_Base_Legal": "MODIFIED",
       "Lia_Is_Essential": true,
       "Lia_Is_Required": false,
       "Origem_dos_dados": "MODIFIED",
@@ -262,13 +315,18 @@
       "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
       "Processo": "MODIFIED",
       "Area_Responsavel": "MODIFIED",
-      "Referencia": "MODIFIED",
+      "Referencia": "Currículos",
       "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
       "Auto_ID": 6,
       "Created_At": "2022-02-10T20:38:12.981Z",
-      "Updated_At": "1970-01-01T01:01:01.000Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
       "type": "row",
-      "Base_Legal": ["MODIFIED"],
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Base_Legal": [
+        "MODIFIED"
+      ],
       "Local_de_Armazenamento": [
         {
           "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_cd02aa12d9ca4cc696bb2fb1e882e13d",
@@ -291,7 +349,7 @@
           "primaryDisplay": "MODIFIED"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
           "primaryDisplay": "MODIFIED"
@@ -307,12 +365,13 @@
     {
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_1b7526cffd2b4490808ef4527457532a",
       "_rev": "4-4bbeb13ee6ba59ca3ecb96c1289ccc0a",
-      "Dados_Pessoais_Utilizados": ["MODIFIED"],
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
       "Aprovado_DPO": "MODIFIED",
       "Aprovado_Juridico": "MODIFIED",
       "Aprovado_TI": "MODIFIED",
       "Status": "MODIFIED",
-      "Partes_Interessadas_Consultadas": "MODIFIED",
       "Periodo_de_retencao": "MODIFIED",
       "Fluxo_dos_Dados": "MODIFIED",
       "Justificativa_da_Base_Legal": "MODIFIED",
@@ -324,13 +383,19 @@
       "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
       "Processo": "MODIFIED",
       "Area_Responsavel": "MODIFIED",
-      "Referencia": "MODIFIED",
+      "Referencia": "Emissão-NF",
       "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
       "Auto_ID": 8,
       "Created_At": "2022-02-10T21:06:18.917Z",
-      "Updated_At": "1970-01-01T01:01:01.000Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
       "type": "row",
-      "Base_Legal": ["MODIFIED"],
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Origem_de_coleta_dos_dados": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Base_Legal": [
+        "MODIFIED"
+      ],
       "Local_de_Armazenamento": [
         {
           "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35",
@@ -355,7 +420,7 @@
           "primaryDisplay": "MODIFIED"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "MODIFIED"
@@ -365,12 +430,20 @@
     {
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_2994381e08684c4cb09b42f8dfe698c0",
       "_rev": "4-6667cc3494a11fc64354a6d7577412dd",
-      "Dados_Pessoais_Utilizados": ["MODIFIED"],
+      "Consentimentos": [],
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
       "Aprovado_DPO": "MODIFIED",
       "Aprovado_Juridico": "MODIFIED",
       "Aprovado_TI": "MODIFIED",
       "Status": "MODIFIED",
-      "Partes_Interessadas_Consultadas": "MODIFIED",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
       "Periodo_de_retencao": "MODIFIED",
       "Fluxo_dos_Dados": "MODIFIED",
       "Justificativa_da_Base_Legal": "MODIFIED",
@@ -382,13 +455,19 @@
       "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
       "Processo": "MODIFIED",
       "Area_Responsavel": "MODIFIED",
-      "Referencia": "MODIFIED",
+      "Referencia": "Gestão-Prestadores-Externos",
       "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
       "Auto_ID": 12,
       "Created_At": "2022-02-11T13:46:38.477Z",
-      "Updated_At": "1970-01-01T01:01:01.000Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
       "type": "row",
-      "Base_Legal": ["MODIFIED"],
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Origem_de_coleta_dos_dados": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Base_Legal": [
+        "MODIFIED"
+      ],
       "Local_de_Armazenamento": [
         {
           "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35",
@@ -401,7 +480,82 @@
           "primaryDisplay": "MODIFIED"
         }
       ],
-      "Responsavel": [
+      "Operador": [
+        {
+          "_id": "ro_ta_users_us_98c8694c12ef4380bc90113578cd5eb9",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
+      "Created_By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
+      "Updated_By": [
+        {
+          "_id": "ro_ta_users_us_ba3538eb33aa4ddb8f37c3dcca2452f1",
+          "primaryDisplay": "MODIFIED"
+        }
+      ]
+    },
+    {
+      "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5ab07dbd961c41cf90bd55ddfff7869b",
+      "_rev": "5-863edaf6598f247174dd1b0344af2c90",
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
+      "Aprovado_DPO": "MODIFIED",
+      "Aprovado_Juridico": "MODIFIED",
+      "Aprovado_TI": "MODIFIED",
+      "Status": "MODIFIED",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
+      "Periodo_de_retencao": "MODIFIED",
+      "Fluxo_dos_Dados": "MODIFIED",
+      "Justificativa_da_Base_Legal": "MODIFIED",
+      "Lia_Is_Essential": true,
+      "Lia_Is_Required": true,
+      "Origem_dos_dados": "MODIFIED",
+      "Finalidade_do_Processo": "MODIFIED",
+      "Categoria_dos_Titulares_dos_Dados": "MODIFIED",
+      "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
+      "Processo": "MODIFIED",
+      "Area_Responsavel": "MODIFIED",
+      "Referencia": "Acesso-Recepção",
+      "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
+      "Auto_ID": 2,
+      "Created_At": "2022-02-10T20:22:58.266Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
+      "type": "row",
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Origem_de_coleta_dos_dados": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Base_Legal": [
+        "MODIFIED"
+      ],
+      "Local_de_Armazenamento": [
+        {
+          "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_cd02aa12d9ca4cc696bb2fb1e882e13d",
+          "primaryDisplay": "MODIFIED"
+        },
+        {
+          "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
+      "__Controle_de_Solicitacoes": [
+        {
+          "_id": "ro_ta_c638105c80d04cd2a8a73740e1a1d240_ba7ac71f689c42c8a6427daed9e23d43",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
+      "Operador": [
         {
           "_id": "ro_ta_users_us_98c8694c12ef4380bc90113578cd5eb9",
           "primaryDisplay": "MODIFIED"
@@ -423,12 +577,20 @@
     {
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5e673a2d7c6e4a1ba4ccd433d8ab1d94",
       "_rev": "4-f027791ca75d15dc568511ad3f52dd30",
-      "Dados_Pessoais_Utilizados": ["MODIFIED"],
+      "Consentimentos": [],
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
       "Aprovado_DPO": "MODIFIED",
       "Aprovado_Juridico": "MODIFIED",
       "Aprovado_TI": "MODIFIED",
       "Status": "MODIFIED",
-      "Partes_Interessadas_Consultadas": "MODIFIED",
+      "Partes_Interessadas_Consultadas": [
+        {
+          "_id": "ro_ta_users_us_2313f3532b0e49df9912b20d1c3088a7",
+          "primaryDisplay": "MODIFIED"
+        }
+      ],
       "Periodo_de_retencao": "MODIFIED",
       "Fluxo_dos_Dados": "MODIFIED",
       "Justificativa_da_Base_Legal": "MODIFIED",
@@ -440,13 +602,19 @@
       "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
       "Processo": "MODIFIED",
       "Area_Responsavel": "MODIFIED",
-      "Referencia": "MODIFIED",
+      "Referencia": "Email-Mkt-Clientes",
       "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
       "Auto_ID": 7,
       "Created_At": "2022-02-10T20:41:45.785Z",
-      "Updated_At": "1970-01-01T01:01:01.000Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
       "type": "row",
-      "Base_Legal": ["MODIFIED"],
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Origem_de_coleta_dos_dados": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Base_Legal": [
+        "MODIFIED"
+      ],
       "Local_de_Armazenamento": [
         {
           "_id": "ro_ta_0bbb856ebdaf400fb5f8abbc6bff4c08_0d04ac78f65f4b789fa930d294995f35",
@@ -471,7 +639,7 @@
           "primaryDisplay": "MODIFIED"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "MODIFIED"
@@ -481,11 +649,11 @@
     {
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5f159c390a0147bfa8fabab9502c2bd3",
       "_rev": "18-66e5af9a41a7cd35783d23743daa2b81",
+      "Consentimentos": [],
       "Aprovado_DPO": "MODIFIED",
       "Aprovado_Juridico": "MODIFIED",
       "Aprovado_TI": "MODIFIED",
       "Status": "MODIFIED",
-      "Partes_Interessadas_Consultadas": "MODIFIED",
       "Periodo_de_retencao": "MODIFIED",
       "Fluxo_dos_Dados": "MODIFIED",
       "Justificativa_da_Base_Legal": "MODIFIED",
@@ -497,14 +665,22 @@
       "Pais_Onde_as_Pessoas_Estao_Localizadas": "MODIFIED",
       "Processo": "MODIFIED",
       "Area_Responsavel": "MODIFIED",
-      "Referencia": "MODIFIED",
+      "Referencia": "Abertura-Chamados",
       "tableId": "ta_fd0adee5c35840ce9da93a237784885d",
       "Auto_ID": 1,
       "Created_At": "2022-01-25T14:56:12.619Z",
-      "Updated_At": "1970-01-01T01:01:01.000Z",
+      "Updated_At": "2022-08-11T15:15:15.155Z",
       "type": "row",
-      "Dados_Pessoais_Utilizados": ["MODIFIED"],
-      "Base_Legal": ["MODIFIED"],
+      "Controlador": "MODIFIED",
+      "Encarregado": "MODIFIED",
+      "Origem_de_coleta_dos_dados": "MODIFIED",
+      "Abrangencia_geografica_do_tratamento": "MODIFIED",
+      "Dados_Pessoais_Utilizados": [
+        "MODIFIED"
+      ],
+      "Base_Legal": [
+        "MODIFIED"
+      ],
       "__Controle_de_Solicitacoes": [
         {
           "_id": "ro_ta_c638105c80d04cd2a8a73740e1a1d240_1940fe7371ec466a899d01dd57ea720b",
@@ -529,7 +705,7 @@
           "primaryDisplay": "MODIFIED"
         }
       ],
-      "Responsavel": [
+      "Operador": [
         {
           "_id": "ro_ta_users_us_fed1f696e58b41479c5aeefc792d179b",
           "primaryDisplay": "MODIFIED"
