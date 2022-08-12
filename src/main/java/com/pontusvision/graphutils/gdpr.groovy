@@ -4401,7 +4401,7 @@ the end of the process.
 
   static def getMeetingsScores(def scoresMap) {
 
-    long lastTwelveMonths = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 0.5))
+    long lastTwelveMonths = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L))
     def dateThreshold = new java.util.Date(lastTwelveMonths)
 
 
