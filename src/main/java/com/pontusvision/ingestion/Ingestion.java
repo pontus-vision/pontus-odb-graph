@@ -4,29 +4,27 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.spi.json.GsonJsonProvider;
-import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
-import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
-import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
-import com.jayway.jsonpath.spi.mapper.MappingProvider;
 import com.orientechnologies.apache.commons.csv.CSVFormat;
 import com.orientechnologies.apache.commons.csv.CSVRecord;
+import com.pontusvision.gdpr.App;
+import com.pontusvision.gdpr.BaseReply;
+import com.pontusvision.gdpr.VertexLabelsReply;
 import com.pontusvision.graphutils.EmailNLPRequest;
 import com.pontusvision.graphutils.FileNLPRequest;
 import org.apache.commons.math3.util.Pair;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.*;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
@@ -53,7 +51,7 @@ public class Ingestion {
 //    Configuration.setDefaults(conf);
 
     if ("pv_email".equalsIgnoreCase(request.ruleName)) {
-      EmailNLPRequest[] recordList = JsonPath.parse(request.jsonString,conf)
+      EmailNLPRequest[] recordList = JsonPath.parse(request.jsonString, conf)
           .read(request.jsonPath, EmailNLPRequest[].class);
 //      List<EmailNLPRequest> recordList = JsonPath.read(request.jsonString, request.jsonPath);
       for (int i = 0, ilen = recordList.length; i < ilen; i++) {
@@ -65,8 +63,8 @@ public class Ingestion {
       numItems = (long) recordList.length;
 
     } else if ("pv_file".equalsIgnoreCase(request.ruleName)) {
-      FileNLPRequest[] recordList = JsonPath.parse(request.jsonString,conf)
-          .read( request.jsonPath,FileNLPRequest[].class);
+      FileNLPRequest[] recordList = JsonPath.parse(request.jsonString, conf)
+          .read(request.jsonPath, FileNLPRequest[].class);
       for (int i = 0, ilen = recordList.length; i < ilen; i++) {
         FileNLPRequest rec = recordList[i];
         if (rec.getSizeBytes() != null) {
@@ -83,6 +81,21 @@ public class Ingestion {
 
   public Ingestion() {
 
+  }
+
+
+  @GET
+  @Path("liveliness")
+  @Produces(MediaType.APPLICATION_JSON)
+  public BaseReply liveliness() throws ExecutionException, InterruptedException {
+    VertexLabelsReply reply = new VertexLabelsReply(
+        App.graph.getRawDatabase().getMetadata().getSchema().getClasses());
+
+    if (reply.getLabels().length > 5) {
+      BaseReply retVal = new BaseReply(Response.Status.OK,"{ \"status\": \"OK\" }" );
+      return retVal;
+    }
+    return  new BaseReply(Response.Status.PRECONDITION_FAILED,"{ \"status\": \"NOT OK\" }" );
   }
 
   @POST
