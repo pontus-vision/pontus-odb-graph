@@ -56,22 +56,24 @@
         {% for key, value in context.items() %}
             {% if key == "Nome Completo" %}
                 {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (  pv:t(key.replaceAll('_',' ')) , value )}}
-            {{ "</table>" }}
             {% endif %}
         {% endfor %}
+    {{ "</table>" }}
+
 
 
     {% for mainkey in connected_data %}
-    {% if mainkey.Metadata_Type == "Evento de Consentimento" || mainkey.Metadata_Type == "Endereço" || mainkey.Metadata_Type == "Objeto E-mail" || mainkey.Metadata_Type == "Objeto Identidade" %}
-    <h3>{{ pv:t(mainkey.Metadata_Type |replace('.',' ')|replace('_',' ')) }}</h3>
-    {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de dado</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>" }}
-        {% for key, value in mainkey.items() %}
-            {% if key == "Endereço Completo" || key == "Email" || key == "ID Valor" || key == "Dados de Criação dos Metadados" || key == "Estado" %}
-                {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (pv:t(key.replaceAll('_',' ')) , value )}} {% endfor %}
+        {% if mainkey.Metadata_Type == "Evento de Consentimento" || mainkey.Metadata_Type == "Endereço" || mainkey.Metadata_Type == "Objeto E-mail" || mainkey.Metadata_Type == "Objeto Identidade" %}
+            <h3>{{ pv:t(mainkey.Metadata_Type |replace('.',' ')|replace('_',' ')) }}</h3>
+            {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de dado</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>" }}
+                {% for key, value in mainkey.items() %}
+                    {% if key == "Endereço Completo" || key == "Email" || key == "ID Valor" || key == "Dados de Criação dos Metadados" || key == "Estado" %}
+                        {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (pv:t(key.replaceAll('_',' ')) , value )}}
+                    {% endif %}
+                {% endfor %}
             {{ "</table>" }}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+        {% endif %}
+    {% endfor %}
 
 
     {% endif %}
