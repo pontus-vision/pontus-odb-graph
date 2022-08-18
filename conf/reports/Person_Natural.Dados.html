@@ -5,79 +5,167 @@
     <title></title>
 </head>
 
-<body lang=PT-BR>
+<body lang="PT-BR">
 
-<div style='padding: 10px; background: white; color: black;'>
-    {% if context.Person_Natural_Full_Name | default (false, true) %}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-    <hr/>
+    h3 {
+        top: 0;
+    }
 
-    <h1 style="text-align: center"> Relat&oacute;rio de Dados Pessoais </h1>
+    th {
+        top: 0;
+        border: 2px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        background: white;
 
-    <hr/>
+    }
+
+    td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+{% if context.id && pv:neighboursByType(context.id,'Made_SAR_Request') | default (false, true) %} {# context.id = Event_Subject_Access_Request #}
+
+{% set persons = pv:neighboursByType(context.id,'Made_SAR_Request') %}
+{% set person = persons[0] %} {# just go with it! #}
+{% if person.Person_Organisation_Name | default (false, true) %}
+{% elif person.Person_Natural_Full_Name | default(false, true) %}
+{% endif %}
+
+{% set id_cards = pv:neighboursByType(person.id, 'Has_Id_Card') %} {# setting area #}
+{% set consents = pv:neighboursByType(person.id, 'Consent') %}
+{% set addresses = pv:neighboursByType(person.id, 'Is_Located') %}
+{% set addresses = pv:neighboursByType(person.id, 'Is_Located') %}
+{% set emails = pv:neighboursByType(person.id, 'Uses_Email') %}
+{% set phones = pv:neighboursByType(person.id, 'Has_Phone') %}
+{% set occupations = pv:neighboursByType(person.id, 'Is_Alias') %}
+
+<hr>
+<h1 style="text-align: center"> Relatório de Dados Pessoais </h1>
+<hr>
+<p>Segue abaixo um resumo dos seus dados pessoais:</p>
+
+<br>
+<h3> Titular dos dados </h3>
+<table style='margin: 5px'>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome completo</th>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de pessoa</th>
+    </tr>
+    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ person.Person_Natural_Full_Name }} {{ peson.Person_Organisation_Name }} </td>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ pv:t( person.Metadata_Type | replace('.',' ')|replace('_',' ') ) }} </td>
+</tr>"
+    }}
+</table>
+
+<br>
+{% for id_card in id_cards %}
+<h3> Documentos / Identidades </h3>
+<table style='margin: 5px'>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de documento</th>
+    </tr>
+    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Value }} </td>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Type }} </td>
+</tr>"
+    }}
+</table>
+{% endfor %}
 
 
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-        h3 {
-            position:sticky;
-            top: 0;
-        }
-        th {
-            position:sticky;
-            top: 0;
-            border: 2px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-            background: white;
-
-        }
-        td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
+<br>
+{% for consent in consents %}
+<h3> Consentimentos </h3>
+<table style='margin: 5px'>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Data de criação</th>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Status</th>
+    </tr>
+    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ consent.Event_Consent_Metadata_Create_Date }} </td>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ consent.Event_Consent_Status }} </td>
+</tr>"
+    }}
+</table>
+{% endfor %}
 
 
-    Segue abaixo um resumo dos seus dados pessoais:
-
-    <p><br></p><p>
-    <h3>{{pv:t( context.Metadata_Type |replace('.',' ')|replace('_',' ') )}}</h3>
-    {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de dado</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>" }}
-        {% for key, value in context.items() %}
-            {% if key == "Nome Completo" %}
-                {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (  pv:t(key.replaceAll('_',' ')) , value )}}
-            {% endif %}
-        {% endfor %}
-    {{ "</table>" }}
-
-
-
-    {% for mainkey in connected_data %}
-        {% if mainkey.Metadata_Type == "Evento de Consentimento" || mainkey.Metadata_Type == "Endereço" || mainkey.Metadata_Type == "Objeto E-mail" || mainkey.Metadata_Type == "Objeto Identidade" %}
-            <h3>{{ pv:t(mainkey.Metadata_Type |replace('.',' ')|replace('_',' ')) }}</h3>
-            {{ "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de dado</th><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Valor</th></tr>" }}
-                {% for key, value in mainkey.items() %}
-                    {% if key == "Endereço Completo" || key == "Email" || key == "ID Valor" || key == "Dados de Criação dos Metadados" || key == "Estado" %}
-                        {{  "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>%s</td>" | format (pv:t(key.replaceAll('_',' ')) , value )}}
-                    {% endif %}
-                {% endfor %}
-            {{ "</table>" }}
-        {% endif %}
-    {% endfor %}
+<br>
+{% for address in addresses %}
+<h3> Endereços </h3>
+<table style='margin: 5px'>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Endereço completo</th>
+    </tr>
+    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ address.Location_Address_Full_Address }} </td>
+</tr>"
+    }}
+</table>
+{% endfor %}
 
 
-    {% endif %}
-</div>
+<br>
+{% for email in emails %}
+<h3> E-mails </h3>
+<table style='margin: 5px'>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Correio eletrônico</th>
+    </tr>
+    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ email.Object_Email_Address_Email }} </td>
+</tr>"
+    }}
+</table>
+{% endfor %}
+
+<br>
+{% for phone in phones %}
+<h3> Telefones </h3>
+<table style='margin: 5px'>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
+    </tr>
+    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ phone.Object_Phone_Number_Raw }} </td>
+</tr>"
+    }}
+</table>
+{% endfor %}
+<br>
+{% for occupation in occupations %}
+<h3> Empregos </h3>
+<table style='margin: 5px'>
+    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Cargo</th>
+    </tr>
+    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ occupation.Person_Employee_Role }} </td>
+</tr>"
+    }}
+</table>
+{% endfor %}
+
+{% else %}
+<h3> Nenhum Titular/Pessoa Jurídica esta atrelado a este DSAR, favor verifique o caso. </h3>
+{% endif %}
 
 </body>
 
