@@ -64,27 +64,25 @@
                 <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome completo</th>
                 <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de pessoa</th>
             </tr>
-            {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ person.Person_Organisation_Name }} </td>
-            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> Pessoa Jurídica </td>
-        </tr>"
-            }}
+            <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ person.Person_Organisation_Name }} </td>
+                <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> Pessoa Jurídica </td>
+            </tr>
         </table>
 
         {% if id_cards | default (false, true) %}
             <br>
+            <h3> Documentos / Identidades </h3>
             {% for id_card in id_cards %}
-                <h3> Documentos / Identidades </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de documento</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Value }} </td>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Type }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Value }} </td>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Type }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -98,16 +96,15 @@
 
         {% if addresses | default (false, true) %}
             <br>
+            <h3> Endereços </h3>
             {% for address in addresses %}
-                <h3> Endereços </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;paddinb'>
                         <th style='border: 1px solid #dddddd;text-align: left;pab8px;'>Endereço completo</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;pab8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ address.Location_Address_Full_Address }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;pab8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ address.Location_Address_Full_Address }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -121,16 +118,15 @@
 
         {% if emails | default (false, true) %}
             <br>
+            <h3> E-mails </h3>
             {% for email in emails %}
-                <h3> E-mails </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Correio eletrônico</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ email.Object_Email_Address_Email }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ email.Object_Email_Address_Email }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -144,16 +140,15 @@
 
         {% if phones | default (false, true) %}
             <br>
+            <h3> Telefones </h3>
             {% for phone in phones %}
-                <h3> Telefones </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ phone.Object_Phone_Number_Raw }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ phone.Object_Phone_Number_Raw }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -180,27 +175,25 @@
                 <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome completo</th>
                 <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de pessoa</th>
             </tr>
-            {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ person.Person_Natural_Full_Name }} </td>
-            <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> Pessoa Física </td>
-        </tr>"
-            }}
+            <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ person.Person_Natural_Full_Name }} </td>
+                <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> Pessoa Física </td>
+            </tr>
         </table>
 
         {% if id_cards | default (false, true) %}
             <br>
+            <h3> Documentos / Identidades </h3>
             {% for id_card in id_cards %}
-                <h3> Documentos / Identidades </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Tipo de documento</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Value }} </td>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Type }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Value }} </td>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ id_card.Object_Identity_Card_Id_Type }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -214,18 +207,17 @@
 
         {% if consents | default (false, true) %}
             <br>
+            <h3> Consentimentos </h3>
             {% for consent in consents %}
-                <h3> Consentimentos </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Data de criação</th>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Status</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ consent.Event_Consent_Metadata_Create_Date }} </td>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ consent.Event_Consent_Status }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ consent.Event_Consent_Metadata_Create_Date }} </td>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ consent.Event_Consent_Status }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -239,16 +231,15 @@
 
         {% if addresses | default (false, true) %}
             <br>
+            <h3> Endereços </h3>
             {% for address in addresses %}
-                <h3> Endereços </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Endereço completo</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ address.Location_Address_Full_Address }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ address.Location_Address_Full_Address }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -262,16 +253,15 @@
 
         {% if emails | default (false, true) %}
             <br>
+            <h3> E-mails </h3>
             {% for email in emails %}
-                <h3> E-mails </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Correio eletrônico</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ email.Object_Email_Address_Email }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ email.Object_Email_Address_Email }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -285,16 +275,15 @@
 
         {% if phones | default (false, true) %}
             <br>
+            <h3> Telefones </h3>
             {% for phone in phones %}
-                <h3> Telefones </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ phone.Object_Phone_Number_Raw }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ phone.Object_Phone_Number_Raw }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -308,16 +297,15 @@
 
         {% if occupations | default (false, true) %}
             <br>
+            <h3> Ocupações </h3>
             {% for occupation in occupations %}
-                <h3> Ocupações </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Cargo</th>
                     </tr>
-                    {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ occupation.Person_Employee_Role }} </td>
-                </tr>"
-                    }}
+                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
+                        <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ occupation.Person_Employee_Role }} </td>
+                    </tr>
                 </table>
             {% endfor %}
         {% else %}
@@ -333,7 +321,7 @@
     <br>
 {% else %}
     <br>
-    <h3> Nenhum Titular/Pessoa Jurídica esta atrelado a este DSAR, favor verifique o caso. </h3>
+        <h3> Nenhum Titular/Pessoa Jurídica esta atrelado a este DSAR, favor verifique o caso. </h3>
     <br>
 {% endif %}
 
