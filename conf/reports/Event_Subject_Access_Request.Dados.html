@@ -73,8 +73,8 @@
 
         {% if id_cards | default (false, true) %}
             <br>
+            <h3> Documentos / Identidades </h3>
             {% for id_card in id_cards %}
-                <h3> Documentos / Identidades </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
@@ -98,12 +98,9 @@
 
         {% if addresses | default (false, true) %}
             <br>
+            <h3> Endereços </h3>
             {% for address in addresses %}
-                <h3> Endereços </h3>
                 <table style='margin: 5px'>
-                    <tr style='border: 1px solid #dddddd;text-align: left;paddinb'>
-                        <th style='border: 1px solid #dddddd;text-align: left;pab8px;'>Endereço completo</th>
-                    </tr>
                     {{ "<tr style='border: 1px solid #dddddd;text-align: left;pab8px;'>
                     <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ address.Location_Address_Full_Address }} </td>
                 </tr>"
@@ -121,12 +118,9 @@
 
         {% if emails | default (false, true) %}
             <br>
+            <h3> E-mails </h3>
             {% for email in emails %}
-                <h3> E-mails </h3>
                 <table style='margin: 5px'>
-                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Correio eletrônico</th>
-                    </tr>
                     {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                     <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ email.Object_Email_Address_Email }} </td>
                 </tr>"
@@ -144,12 +138,9 @@
 
         {% if phones | default (false, true) %}
             <br>
+            <h3> Telefones </h3>
             {% for phone in phones %}
-                <h3> Telefones </h3>
                 <table style='margin: 5px'>
-                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
-                    </tr>
                     {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                     <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ phone.Object_Phone_Number_Raw }} </td>
                 </tr>"
@@ -189,8 +180,8 @@
 
         {% if id_cards | default (false, true) %}
             <br>
+            <h3> Documentos / Identidades </h3>
             {% for id_card in id_cards %}
-                <h3> Documentos / Identidades </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
@@ -214,8 +205,8 @@
 
         {% if consents | default (false, true) %}
             <br>
+            <h3> Consentimentos </h3>
             {% for consent in consents %}
-                <h3> Consentimentos </h3>
                 <table style='margin: 5px'>
                     <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                         <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Data de criação</th>
@@ -239,12 +230,9 @@
 
         {% if addresses | default (false, true) %}
             <br>
+            <h3> Endereços </h3>
             {% for address in addresses %}
-                <h3> Endereços </h3>
                 <table style='margin: 5px'>
-                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Endereço completo</th>
-                    </tr>
                     {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                     <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ address.Location_Address_Full_Address }} </td>
                 </tr>"
@@ -262,12 +250,9 @@
 
         {% if emails | default (false, true) %}
             <br>
+            <h3> E-mails </h3>
             {% for email in emails %}
-                <h3> E-mails </h3>
                 <table style='margin: 5px'>
-                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Correio eletrônico</th>
-                    </tr>
                     {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                     <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ email.Object_Email_Address_Email }} </td>
                 </tr>"
@@ -285,12 +270,9 @@
 
         {% if phones | default (false, true) %}
             <br>
+            <h3> Telefones </h3>
             {% for phone in phones %}
-                <h3> Telefones </h3>
                 <table style='margin: 5px'>
-                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Número</th>
-                    </tr>
                     {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                     <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ phone.Object_Phone_Number_Raw }} </td>
                 </tr>"
@@ -308,12 +290,9 @@
 
         {% if occupations | default (false, true) %}
             <br>
+            <h3> Ocupações </h3>
             {% for occupation in occupations %}
-                <h3> Ocupações </h3>
                 <table style='margin: 5px'>
-                    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
-                        <th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Cargo</th>
-                    </tr>
                     {{ "<tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>
                     <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'> {{ occupation.Person_Employee_Role }} </td>
                 </tr>"
