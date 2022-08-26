@@ -43,11 +43,11 @@ updatereq:
           val: ${_id}
           mandatoryInSearch: True
         - name: Object_Data_Procedures_ID
-          val: ${Referencia}
+          val: ${Referencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Name
-          val: ${Processo}
+          val: ${Processo?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Type_Of_Natural_Person
