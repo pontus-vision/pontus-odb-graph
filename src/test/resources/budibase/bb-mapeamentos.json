@@ -12,9 +12,9 @@
         "Dados Bancários",
         "Dados Pessoais dos Representantes Legais dos Parceiros"
       ],
-      "Aprovado_DPO": "sim",
-      "Aprovado_Juridico": "sim",
-      "Aprovado_TI": "sim",
+      "Aprovado_DPO": "true",
+      "Aprovado_Juridico": "true",
+      "Aprovado_TI": "true",
       "Status": "Aprovado",
       "Partes_Interessadas_Consultadas": [
         {
@@ -94,9 +94,9 @@
         "E-mail",
         "Responsáveis Legais da Empresa Fornecedora"
       ],
-      "Aprovado_DPO": "sim",
-      "Aprovado_Juridico": "sim",
-      "Aprovado_TI": "sim",
+      "Aprovado_DPO": "true",
+      "Aprovado_Juridico": "true",
+      "Aprovado_TI": "true",
       "Status": "Aprovado",
       "Periodo_de_retencao": "10 anos",
       "Fluxo_dos_Dados": "Mensalmente é mapeado quais Questionários e Certificados estão vencendo.",
@@ -163,9 +163,9 @@
         "Ocupação",
         "Estado Civil"
       ],
-      "Aprovado_DPO": "sim",
-      "Aprovado_Juridico": "sim",
-      "Aprovado_TI": "sim",
+      "Aprovado_DPO": "true",
+      "Aprovado_Juridico": "true",
+      "Aprovado_TI": "true",
       "Status": "Aprovado",
       "Partes_Interessadas_Consultadas": [
         {
@@ -237,9 +237,9 @@
         "Telefone",
         "Dados Bancários"
       ],
-      "Aprovado_DPO": "sim",
-      "Aprovado_Juridico": "sim",
-      "Aprovado_TI": "sim",
+      "Aprovado_DPO": "true",
+      "Aprovado_Juridico": "true",
+      "Aprovado_TI": "true",
       "Status": "Pedido de Aprovação",
       "Partes_Interessadas_Consultadas": [
         {
@@ -317,9 +317,9 @@
         "Estado Civil",
         "E-mail"
       ],
-      "Aprovado_DPO": "",
-      "Aprovado_Juridico": "",
-      "Aprovado_TI": "",
+      "Aprovado_DPO": "false",
+      "Aprovado_Juridico": "false",
+      "Aprovado_TI": "false",
       "Status": "Rascunho",
       "Partes_Interessadas_Consultadas": [
         {
@@ -395,9 +395,9 @@
         "Telefone",
         "E-mail"
       ],
-      "Aprovado_DPO": "sim",
-      "Aprovado_Juridico": "sim",
-      "Aprovado_TI": "sim",
+      "Aprovado_DPO": "true",
+      "Aprovado_Juridico": "true",
+      "Aprovado_TI": "true",
       "Status": "Aprovado",
       "Periodo_de_retencao": "10 anos",
       "Fluxo_dos_Dados": "Monitoramento dos pedidos liberados para faturamento (emissão de NF) via sistema digital.",
@@ -466,9 +466,9 @@
         "E-mail",
         "Endereço"
       ],
-      "Aprovado_DPO": "",
-      "Aprovado_Juridico": "",
-      "Aprovado_TI": "",
+      "Aprovado_DPO": "false",
+      "Aprovado_Juridico": "false",
+      "Aprovado_TI": "false",
       "Status": "Pedido de Aprovação",
       "Partes_Interessadas_Consultadas": [
         {
@@ -538,9 +538,9 @@
         "RG",
         "Nome"
       ],
-      "Aprovado_DPO": "não",
-      "Aprovado_Juridico": "sim",
-      "Aprovado_TI": "sim",
+      "Aprovado_DPO": "false",
+      "Aprovado_Juridico": "true",
+      "Aprovado_TI": "true",
       "Status": "Pedido de Aprovação",
       "Partes_Interessadas_Consultadas": [
         {
@@ -618,9 +618,9 @@
         "Ocupação",
         "E-mail"
       ],
-      "Aprovado_DPO": "",
-      "Aprovado_Juridico": "",
-      "Aprovado_TI": "",
+      "Aprovado_DPO": "false",
+      "Aprovado_Juridico": "false",
+      "Aprovado_TI": "false",
       "Status": "Pedido de Aprovação",
       "Partes_Interessadas_Consultadas": [
         {
@@ -687,9 +687,9 @@
       "_id": "ro_ta_fd0adee5c35840ce9da93a237784885d_5f159c390a0147bfa8fabab9502c2bd3",
       "_rev": "18-66e5af9a41a7cd35783d23743daa2b81",
       "Consentimentos": [],
-      "Aprovado_DPO": "sim",
-      "Aprovado_Juridico": "sim",
-      "Aprovado_TI": "sim",
+      "Aprovado_DPO": "true",
+      "Aprovado_Juridico": "true",
+      "Aprovado_TI": "true",
       "Status": "Aprovado",
       "Periodo_de_retencao": "90 dias",
       "Fluxo_dos_Dados": "Credencial de acesso é criada na entrada do funcionário na empresa e depois desabilitada no desligamento do funcionário.",
