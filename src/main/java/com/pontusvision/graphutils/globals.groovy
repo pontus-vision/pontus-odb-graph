@@ -1188,9 +1188,23 @@ class PontusJ2ReportingFunctions {
                     [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
                   }
                 }
+        def impactedPeople2 = dsTravClone
+                .out("Has_Ingestion_Event")
+                .out("Has_Ingestion_Event")
+                .out("Has_Ingestion_Event")
+                .has("Metadata_Type_Person_Natural", P.eq('Person_Natural'))
+                .dedup()
+                .valueMap()
+                .toList()
+                .collect { item ->
+                  item.collectEntries { key, val ->
+                    [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
+                  }
+                }
+
         allData.put('impacted_data_sources', impactedDataSources)
         allData.put('impacted_servers', impactedServers)
-        allData.put('impacted_people', impactedPeople)
+        allData.put('impacted_people', impactedPeople.addAll(impactedPeople2))
 
       }
     }
