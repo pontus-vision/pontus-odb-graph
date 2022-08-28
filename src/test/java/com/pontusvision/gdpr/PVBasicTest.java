@@ -342,7 +342,7 @@ public class PVBasicTest extends AppTest {
     assertEquals(expectedSqlCount, sqlCount);
 
     String sql = req.getSQL(false);
-    String expectedSql = "SELECT @rid as id,`Event_Data_Breach_Description`,`Event_Data_Breach_Impact`  FROM (SELECT EXPAND(OUT('has_server')) FROM #-1:-1  WHERE (( `Event_Data_Breach_Impact`  containsText  'OS' ) ) ) ORDER BY `Event_Data_Breach_Impact` DESC SKIP 0 LIMIT 100";
+    String expectedSql = "SELECT @rid as id,`Event_Data_Breach_Description`,`Event_Data_Breach_Impact`  FROM (SELECT EXPAND(OUT('has_server')) FROM #-1:-1  WHERE (( `Event_Data_Breach_Impact`.toUpperCase()  containsText  'OS' ) ) ) ORDER BY `Event_Data_Breach_Impact` DESC SKIP 0 LIMIT 100";
     assertEquals(expectedSql, sql);
 
     req.search.direction = "<-";
@@ -357,7 +357,7 @@ public class PVBasicTest extends AppTest {
     sqlCount = req.getSQL(true);
     expectedSqlCount = "SELECT COUNT(*)  FROM `" +
             req.dataType +
-            "`  WHERE (( `Event_Data_Breach_Impact`  containsText  'OS' ) ) ";
+            "`  WHERE (( `Event_Data_Breach_Impact`.toUpperCase()  containsText  'OS' ) ) ";
     assertEquals(expectedSqlCount, sqlCount);
 
 
