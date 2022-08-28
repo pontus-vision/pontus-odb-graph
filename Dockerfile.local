@@ -1,2 +1,2 @@
-FROM pontusvisiongdpr/pontus-track-graphdb-odb-pt:1.14.1
+FROM pontusvisiongdpr/pontus-track-graphdb-odb-pt:1.15.78
 COPY j2 /orientdb/j2

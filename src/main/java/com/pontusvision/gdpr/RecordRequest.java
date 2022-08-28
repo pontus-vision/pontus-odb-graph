@@ -234,13 +234,14 @@ public class RecordRequest
 
     if (type.startsWith("not"))
     {
-      sb.append("( NOT `").append(colId).append("` ");
+      sb.append("( NOT `").append(colId).append("`.toUpperCase() ");
     }
     else
     {
-      sb.append("( `").append(colId).append("` ");
+      sb.append("( `").append(colId).append("`.toUpperCase() ");
 
     }
+    String filterUpperCase = filter.toUpperCase();
 
 
     //    equals, greaterThan, lessThan, inRange, notEqual
@@ -251,32 +252,32 @@ public class RecordRequest
 //    }
     if ("notEqual".equals(type))
     {
-      sb.append(" <> '").append(filter).append("'");;
+      sb.append(" <> '").append(filterUpperCase).append("'");;
     }
     else if ("equals".equals(type))
     {
-      sb.append(" = '").append(filter).append("'");;
+      sb.append(" = '").append(filterUpperCase).append("'");;
     }
     else if ("lessThan".equals(type))
     {
-      sb.append(" < '").append(filter).append("'");;
+      sb.append(" < '").append(filterUpperCase).append("'");;
     }
     else if ("greaterThan".equals(type))
     {
-      sb.append(" >  '").append(filter).append("'");;
+      sb.append(" >  '").append(filterUpperCase).append("'");;
     }
     else if ("contains".equals(type) ||"notContains".equals(type) )
     {
-      sb.append(" containsText  '").append(filter).append("'");
+      sb.append(" containsText  '").append(filterUpperCase).append("'");
     }
     else if ("startsWith".equals(type))
     {
-      sb.append(" LIKE  '").append(filter).append("%'");
+      sb.append(" LIKE  '").append(filterUpperCase).append("%'");
 
     }
     else if ("endsWith".equals(type))
     {
-      sb.append(" LIKE  '%").append(filter).append("'");
+      sb.append(" LIKE  '%").append(filterUpperCase).append("'");
 
     }
     sb.append(" ) ");

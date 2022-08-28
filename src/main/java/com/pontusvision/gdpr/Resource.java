@@ -702,13 +702,26 @@ public class Resource {
           , args).getRawResultSet();
 
       res.forEachRemaining(it -> {
+        StringBuilder buttonsSb = new StringBuilder();
+        buttonsSb.append("@[")
+            .append(it.getProperty("Object_Notification_Templates_Label").toString())
+            .append("]@[")
+        ;
+        if (useNewMode){
+          buttonsSb.append(it.getProperty("Object_Notification_Templates_Id").toString());
+        }
+        else {
+          buttonsSb.append(it.getProperty("Object_Notification_Templates_Text").toString());
+        }
+        buttonsSb.append("]");
+        props.add(buttonsSb.toString());
 
 //        notificationTemplates.forEach(map -> {
-        props.add("@" + it.getProperty("Object_Notification_Templates_Label") + "@" +
-            (useNewMode ?
-                it.getProperty("Object_Notification_Templates_Id") :
-                it.getProperty("Object_Notification_Templates_Text"))
-        );
+//        props.add("@" + it.getProperty("Object_Notification_Templates_Label") + "@" +
+//            (useNewMode ?
+//                it.getProperty("Object_Notification_Templates_Id") :
+//                it.getProperty("Object_Notification_Templates_Text"))
+//        );
 
 //        });
       });
