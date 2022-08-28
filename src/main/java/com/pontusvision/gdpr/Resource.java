@@ -128,8 +128,7 @@ public class Resource {
     if (!isAdminOrDPO(req)) {
       return new BaseReply(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
     }
-    return new BaseReply(Response.Status.OK,
-        gdpr.addRandomDataInit(App.graph, App.g));
+    return new BaseReply(Response.Status.OK, gdpr.addRandomDataInit(App.graph, App.g));
   }
 
   /*
@@ -160,18 +159,14 @@ public class Resource {
   @Consumes(MediaType.APPLICATION_JSON)
   public Md2Reply md2Search(@Context ContainerRequestContext req, Md2Request md2req) throws HTTPException {
     if (!isAdminOrDPO(req)) {
-      return new Md2Reply(Response.Status.UNAUTHORIZED,
-          "Auth Token does not give rights to execute this");
+      return new Md2Reply(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
 
     }
     if (md2req.settings == null || md2req.query == null || md2req.query.name == null) {
-      return new Md2Reply(Response.Status.BAD_REQUEST,
-          "Invalid Request; missing the settings, query, or query.name fields");
+      return new Md2Reply(Response.Status.BAD_REQUEST, "Invalid Request; missing the settings, query, or query.name fields");
     }
 
-    GraphTraversal<Vertex, Vertex> gt =
-        App.g.V().has("Person_Natural_Full_Name",
-            PText.textContains(md2req.query.name.trim().toUpperCase(Locale.ROOT)));
+    GraphTraversal<Vertex, Vertex> gt = App.g.V().has("Person_Natural_Full_Name", PText.textContains(md2req.query.name.trim().toUpperCase(Locale.ROOT)));
 
     if (md2req.query.docCpf != null) {
       gt = gt.has("Person_Natural_Customer_ID", eq(md2req.query.docCpf.replaceAll("[^0-9]", "")));
@@ -187,23 +182,19 @@ public class Resource {
         Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
 
         reply.reqId = md2req.query.reqId;
-        reply.errorStr = "Found more than one person associated with " + md2req.query.name + " (docCpf=" +
-            md2req.query.docCpf + ")";
+        reply.errorStr = "Found more than one person associated with " + md2req.query.name + " (docCpf=" + md2req.query.docCpf + ")";
 
         return reply;
 
       }
       if (md2req.query.email != null) {
-        if (!App.g.V(ids.get(0)).out("Uses_Email").has("Object_Email_Address_Email",
-            eq(md2req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
-          System.out.println("Not found email " + md2req.query.email + " associated with " + ids.size() + " (" +
-              md2req.query.name + ")");
+        if (!App.g.V(ids.get(0)).out("Uses_Email").has("Object_Email_Address_Email", eq(md2req.query.email.toLowerCase(Locale.ROOT).trim())).hasNext()) {
+          System.out.println("Not found email " + md2req.query.email + " associated with " + ids.size() + " (" + md2req.query.name + ")");
 
           Md2Reply reply = new Md2Reply(Response.Status.CONFLICT);
 
           reply.reqId = md2req.query.reqId;
-          reply.errorStr = "Not found email " + md2req.query.email + " associated with " + md2req.query.name + " (docCpf=" +
-              md2req.query.docCpf + ")";
+          reply.errorStr = "Not found email " + md2req.query.email + " associated with " + md2req.query.name + " (docCpf=" + md2req.query.docCpf + ")";
 
           return reply;
 
@@ -215,16 +206,12 @@ public class Resource {
       reply.total = App.g.V(ids.get(0)).in("Has_NLP_Events").in("Has_NLP_Events").dedup().count().next();
       reply.reqId = md2req.query.reqId;
 
-      List<Map<String, Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event_NLP_Group_Ingestion_Date", Order.asc)
-          .in("Has_NLP_Events").dedup().range(md2req.settings.start, md2req.settings.start + md2req.settings.limit).as("EVENTS")
+      List<Map<String, Object>> res = App.g.V(ids.get(0)).in("Has_NLP_Events").order().by("Event_NLP_Group_Ingestion_Date", Order.asc).in("Has_NLP_Events").dedup().range(md2req.settings.start, md2req.settings.start + md2req.settings.limit).as("EVENTS")
 //          .in()
-          .match(
-              __.as("EVENTS").id().as("ID"),
+          .match(__.as("EVENTS").id().as("ID"),
 //              __.as("EVENTS").has("Metadata_Type_Object_Email_Message_Body", P.eq("Object_Email_Message_Body")).valueMap().as("email_body"),
 //              __.as("EVENTS").has("Metadata_Type_Object_Email_Message_Attachment",P.eq ("Object_Email_Message_Attachment")).valueMap().as("email_attachment"),
-              __.as("EVENTS").label().as("eventType"),
-              __.as("EVENTS").valueMap().as("values")
-          )
+              __.as("EVENTS").label().as("eventType"), __.as("EVENTS").valueMap().as("values"))
 //          .select("id","email_body", "email_attachment", "file")
           .select("ID", "eventType", "values")
 //          .has("Metadata_Type_Event_File_Ingestion",P.eq ("Event_File_Ingestion")).valueMap().as("file")
@@ -258,13 +245,10 @@ public class Resource {
           reg.path = sb.toString();
           List<Object> createdDateTime = values.get("Object_Email_Message_Attachment_Created_Date_Time");
 
-          reg.created = getFirstStringItem(
-              values.get("Object_Email_Message_Attachment_Created_Date_Time"),
-              "");
+          reg.created = getFirstStringItem(values.get("Object_Email_Message_Attachment_Created_Date_Time"), "");
 
 
-          GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Attachment")
-              .out("Email_From").values("Event_Email_From_Group_Email");
+          GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Attachment").out("Email_From").values("Event_Email_From_Group_Email");
           reg.owner = trav.hasNext() ? trav.next().toString() : "";
           reg.server = "OFFICE365/EMAIL";
         } else if ("Object_Email_Message_Body".equalsIgnoreCase(eventType)) {
@@ -278,17 +262,12 @@ public class Resource {
           reg.path = sb.toString();
           reg.created = getFirstStringItem(values.get("Object_Email_Message_Body_Created_Date_Time"), "");
 
-          GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Body")
-              .out("Email_From").values("Event_Email_From_Group_Email");
+          GraphTraversal<Vertex, Object> trav = App.g.V(eventId).in("Email_Body").out("Email_From").values("Event_Email_From_Group_Email");
           //.next().toString();
 
           String owner = trav.hasNext() ? trav.next().toString() : "";
 
-          reg.lastAccess = values.get("Object_Email_Message_Body_Received_Date_Time") != null ?
-              values.get("Object_Email_Message_Body_Received_Date_Time").get(0).toString() :
-              (values.get("Object_Email_Message_Body_Sent_Date_Time") != null ?
-                  values.get("Object_Email_Message_Body_Sent_Date_Time").get(0).toString() :
-                  "");
+          reg.lastAccess = values.get("Object_Email_Message_Body_Received_Date_Time") != null ? values.get("Object_Email_Message_Body_Received_Date_Time").get(0).toString() : (values.get("Object_Email_Message_Body_Sent_Date_Time") != null ? values.get("Object_Email_Message_Body_Sent_Date_Time").get(0).toString() : "");
 
 
           reg.owner = owner;
@@ -329,8 +308,7 @@ public class Resource {
   @Consumes(MediaType.APPLICATION_JSON)
   public RecordReply agrecords(@Context ContainerRequestContext req, RecordRequest recordRequest) {
     if (!isAdminOrDPO(req)) {
-      return new RecordReply(Response.Status.UNAUTHORIZED,
-          "Auth Token does not give rights to execute this");
+      return new RecordReply(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
     }
 
     if (recordRequest.cols != null && recordRequest.dataType != null) {
@@ -427,8 +405,7 @@ public class Resource {
   @Consumes(MediaType.APPLICATION_JSON)
   public GraphReply graph(@Context ContainerRequestContext req, GraphRequest greq) {
     if (!isAdminOrDPO(req)) {
-      return new GraphReply(Response.Status.UNAUTHORIZED,
-          "Auth Token does not give rights to execute this");
+      return new GraphReply(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
     }
 
     Set<Vertex> outNodes = App.g.V((greq.graphId)).to(Direction.OUT).toSet();
@@ -446,16 +423,11 @@ public class Resource {
   @GET
   @Path("vertex_prop_values")
   @Produces(MediaType.APPLICATION_JSON)
-  public FormioSelectResults getVertexPropertyValues(
-      @Context ContainerRequestContext req,
-      @QueryParam("search") String search
-      , @QueryParam("limit") Long limit
-      , @QueryParam("skip") Long skip
+  public FormioSelectResults getVertexPropertyValues(@Context ContainerRequestContext req, @QueryParam("search") String search, @QueryParam("limit") Long limit, @QueryParam("skip") Long skip
 
   ) {
     if (!isAdminOrDPO(req)) {
-      return new FormioSelectResults(Response.Status.UNAUTHORIZED,
-          "Auth Token does not give rights to execute this");
+      return new FormioSelectResults(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
     }
     //    final  String bizCtx = "BizCtx";
     //
@@ -482,18 +454,7 @@ public class Resource {
       skip = 0L;
     }
 
-    List<Map<String, Object>> querRes = App
-        .g.V()
-        .has(search, neq(""))
-        .limit(limit + skip)
-        .skip(skip)
-        .as("matches")
-        .match(
-            __.as("matches").values(search).as("val")
-            , __.as("matches").id().as("id")
-        )
-        .select("id", "val")
-        .toList();
+    List<Map<String, Object>> querRes = App.g.V().has(search, neq("")).limit(limit + skip).skip(skip).as("matches").match(__.as("matches").values(search).as("val"), __.as("matches").id().as("id")).select("id", "val").toList();
 
     List<ReactSelectOptions> selectOptions = new ArrayList<>(querRes.size());
 
@@ -519,12 +480,10 @@ public class Resource {
   public VertexLabelsReply vertexLabels(@Context ContainerRequestContext req, String str) {
     try {
       if (!isAdminOrDPO(req)) {
-        return new VertexLabelsReply(Response.Status.UNAUTHORIZED,
-            "Auth Token does not give rights to execute this");
+        return new VertexLabelsReply(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
       }
 
-      VertexLabelsReply reply = new VertexLabelsReply(
-          App.graph.getRawDatabase().getMetadata().getSchema().getClasses());
+      VertexLabelsReply reply = new VertexLabelsReply(App.graph.getRawDatabase().getMetadata().getSchema().getClasses());
 
       return reply;
     } catch (Exception e) {
@@ -551,12 +510,7 @@ public class Resource {
 
         CountryDataReply data = new CountryDataReply();
 
-        List<Map<String, Long>> res =
-            StringUtils.isNotEmpty(searchStr) ?
-                resSet.has("Person_Natural_Full_Name", P.eq(searchStr)).values("Person_Natural_Nationality")
-                    .groupCount()
-                    .toList() :
-                resSet.has("Person_Natural_Nationality").values("Person_Natural_Nationality").groupCount().toList();
+        List<Map<String, Long>> res = StringUtils.isNotEmpty(searchStr) ? resSet.has("Person_Natural_Full_Name", P.eq(searchStr)).values("Person_Natural_Nationality").groupCount().toList() : resSet.has("Person_Natural_Nationality").values("Person_Natural_Nationality").groupCount().toList();
 
         if (res.size() == 1) {
           data.countryData.putAll(res.get(0));
@@ -581,8 +535,7 @@ public class Resource {
 
   public DiscoveryReply discovery(DiscoveryRequest req) {
     List<OProperty> props = new LinkedList<>();
-    Collection<OClass> classes =
-        App.graph.getRawDatabase().getMetadata().getSchema().getClasses();
+    Collection<OClass> classes = App.graph.getRawDatabase().getMetadata().getSchema().getClasses();
 
     Pattern reqPatt = null;
 
@@ -593,8 +546,7 @@ public class Resource {
     final Pattern pattern = reqPatt;
     for (OClass oClass : classes) {
       String lbl = oClass.getName();
-      oClass.properties().forEach(oProperty ->
-      {
+      oClass.properties().forEach(oProperty -> {
         String currLabel = oProperty.getName();
         if (currLabel.startsWith(lbl)) {
           if (pattern != null && pattern.matcher(currLabel).find()) {
@@ -621,8 +573,7 @@ public class Resource {
         if (totalCount > 0) {
           double probability = (double) numHits / (double) totalCount;
           if (probability > req.percentThreshold) {
-            List<ColMatchProbability> probabilitiesList = reply.colMatchPropMap
-                .putIfAbsent(metadata, new LinkedList<>());
+            List<ColMatchProbability> probabilitiesList = reply.colMatchPropMap.putIfAbsent(metadata, new LinkedList<>());
             ColMatchProbability colMatchProbability = new ColMatchProbability(poleProperty.getName(), probability);
             probabilitiesList.add(colMatchProbability);
           }
@@ -637,12 +588,9 @@ public class Resource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
 
-  public NodePropertyNamesReply nodeProperties(
-      @Context ContainerRequestContext req,
-      VertexLabelsReply vlabReq) {
+  public NodePropertyNamesReply nodeProperties(@Context ContainerRequestContext req, VertexLabelsReply vlabReq) {
     if (!isAdminOrDPO(req)) {
-      return new NodePropertyNamesReply(Response.Status.UNAUTHORIZED,
-          "Auth Token does not give rights to execute this");
+      return new NodePropertyNamesReply(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
     }
 
     if (vlabReq == null || vlabReq.labels == null || vlabReq.labels.length == 0 || vlabReq.labels[0].value == null) {
@@ -655,15 +603,13 @@ public class Resource {
 
       OClass oClass = App.graph.getRawDatabase().getMetadata().getSchema().getClass(label);
 
-      oClass.properties().forEach(oProperty ->
-          {
+      oClass.properties().forEach(oProperty -> {
             String currLabel = oProperty.getName();
             if (currLabel.startsWith(label)) {
               String labelPrefix = "#";
               try {
                 final AtomicReference<Boolean> isIndexed = new AtomicReference<>(false);
-                oClass.getClassIndexes().forEach(idx ->
-                {
+                oClass.getClassIndexes().forEach(idx -> {
                   isIndexed.set(isIndexed.get() || idx.getDefinition().getFields().contains(currLabel));
 
                 });
@@ -691,28 +637,22 @@ public class Resource {
 //          .toList();
 
 
-      boolean useNewMode = vlabReq.version != null && vlabReq.version.startsWith("v2.");
+//      boolean useNewMode = vlabReq.version != null && vlabReq.version.startsWith("v2.");
 
       HashMap<String, String> args = new HashMap<>();
       args.put("label", label);
-      OResultSet res = App.graph.executeSql(
-          "SELECT Object_Notification_Templates_Label, Object_Notification_Templates_Text, Object_Notification_Templates_Id      \n" +
-              "      FROM  Object_Notification_Templates \n" +
-              "      WHERE Object_Notification_Templates_Types = :label"
-          , args).getRawResultSet();
+      OResultSet res = App.graph.executeSql("SELECT Object_Notification_Templates_Label, Object_Notification_Templates_Text, Object_Notification_Templates_Id      \n" + "      FROM  Object_Notification_Templates \n" + "      WHERE Object_Notification_Templates_Types = :label", args).getRawResultSet();
 
       res.forEachRemaining(it -> {
         StringBuilder buttonsSb = new StringBuilder();
-        buttonsSb.append("@[")
-            .append(it.getProperty("Object_Notification_Templates_Label").toString())
-            .append("]@[")
-        ;
-        if (useNewMode){
-          buttonsSb.append(it.getProperty("Object_Notification_Templates_Id").toString());
-        }
-        else {
-          buttonsSb.append(it.getProperty("Object_Notification_Templates_Text").toString());
-        }
+        buttonsSb.append("@[").append(it.getProperty("Object_Notification_Templates_Label").toString())
+            .append("]@[");
+//        if (useNewMode){
+        buttonsSb.append(it.getProperty("Object_Notification_Templates_Id").toString());
+//        }
+//        else {
+//          buttonsSb.append(it.getProperty("Object_Notification_Templates_Text").toString());
+//        }
         buttonsSb.append("]");
         props.add(buttonsSb.toString());
 
@@ -753,8 +693,7 @@ public class Resource {
   @GET
   @Path("param")
   @Produces(MediaType.TEXT_PLAIN)
-  public String paramMethod(@QueryParam("name") String name,
-                            @HeaderParam("X-PV-NAME") String auth) {
+  public String paramMethod(@QueryParam("name") String name, @HeaderParam("X-PV-NAME") String auth) {
     return "Hello, " + name + " X-PV-NAME" + auth;
   }
 
@@ -802,8 +741,7 @@ status: "success", message: "Data source is working", title: "Success"
     //    String queryFromGrafanaStr = request.getAnnotation().getQuery();
 
     String sqlQueryData = request.getSQLQuery();
-    OResultSet oResultSet = App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP)
-        .getRawResultSet();
+    OResultSet oResultSet = App.graph.executeSql(sqlQueryData, Collections.EMPTY_MAP).getRawResultSet();
     Long lastTime = 0L;
     Map<Long, List<GrafanaAnnotationReply>> perTimeMap = new HashMap<>();
     while (oResultSet.hasNext()) {
@@ -835,8 +773,7 @@ status: "success", message: "Data source is working", title: "Success"
       reply.setAnnotation(request.getAnnotation());
       reply.setTitle(request.getAnnotation().getQuery());
       sb.setLength(0);
-      grafanaAnnotationReplies.forEach(
-          grafanaAnnotationReply -> sb.append(grafanaAnnotationReply.getText()).append("\n"));
+      grafanaAnnotationReplies.forEach(grafanaAnnotationReply -> sb.append(grafanaAnnotationReply.getText()).append("\n"));
       reply.setText(sb.toString());
       reply.setTime(timestamp);
       retVal.add(reply);
@@ -882,16 +819,14 @@ status: "success", message: "Data source is working", title: "Success"
   @Path("gremlin")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public String gremlinQuery(@Context ContainerRequestContext req,
-                             String requestStr) {
+  public String gremlinQuery(@Context ContainerRequestContext req, String requestStr) {
 
     if (!isAdminOrDPO(req)) {
       return "{\"status\": \"unauthorized\"}";
     }
 
     GremlinRequest request = gson.fromJson(requestStr, GremlinRequest.class);
-    final UUID uuid = request.requestId == null ? UUID.randomUUID() :
-        UUID.fromString(request.requestId);
+    final UUID uuid = request.requestId == null ? UUID.randomUUID() : UUID.fromString(request.requestId);
     if (request.gremlin == null) {
       System.err.println("Failed to find the gremlin query: " + request);
       throw new BadRequestException("Invalid request; missing the gremlin query");
@@ -935,9 +870,7 @@ status: "success", message: "Data source is working", title: "Success"
         res = App.executor.eval(gremlin, request.bindings).get();
       }
 
-      final ResponseMessage msg = ResponseMessage.build(uuid)
-          .result(IteratorUtils.asList(res))
-          .code(ResponseStatusCode.SUCCESS).create();
+      final ResponseMessage msg = ResponseMessage.build(uuid).result(IteratorUtils.asList(res)).code(ResponseStatusCode.SUCCESS).create();
 
       return serializer.serializeResponseAsString(msg);
 
@@ -951,9 +884,7 @@ status: "success", message: "Data source is working", title: "Success"
     } catch (InterruptedException | ExecutionException | SerializationException e) {
       e.printStackTrace();
 
-      final ResponseMessage msg = ResponseMessage.build(uuid)
-          .statusMessage(e.getMessage())
-          .code(ResponseStatusCode.SERVER_ERROR_SCRIPT_EVALUATION).create();
+      final ResponseMessage msg = ResponseMessage.build(uuid).statusMessage(e.getMessage()).code(ResponseStatusCode.SERVER_ERROR_SCRIPT_EVALUATION).create();
 
       try {
         return serializer.serializeResponseAsString(msg);
@@ -978,12 +909,7 @@ status: "success", message: "Data source is working", title: "Success"
   @Consumes(MediaType.APPLICATION_JSON)
 
   public String mappingPost(MappingReq request) {
-    return App.g.V().addV("Object_Data_Src_Mapping_Rule")
-        .property("Name", "")
-        .property("Create_Date", "")
-        .property("Update_Date", "")
-        .property("Business_Rules_JSON", "")
-        .property("", "").next().id().toString();
+    return App.g.V().addV("Object_Data_Src_Mapping_Rule").property("Name", "").property("Create_Date", "").property("Update_Date", "").property("Business_Rules_JSON", "").property("", "").next().id().toString();
 
   }
 
@@ -1007,8 +933,7 @@ status: "success", message: "Data source is working", title: "Success"
     String templateId = gdpr.upsertNotificationTemplate(templatePOLEType, templateName, request.getReportTextBase64());
     System.out.println("Upsert templateId ");
 
-    ReportTemplateUpsertResponse reply = new ReportTemplateUpsertResponse(templatePOLEType,
-        templateName, templateId);
+    ReportTemplateUpsertResponse reply = new ReportTemplateUpsertResponse(templatePOLEType, templateName, templateId);
     return reply;
 
   }
@@ -1036,19 +961,15 @@ status: "success", message: "Data source is working", title: "Success"
 //          templateId);
 //
 //    }
-    OResultSet resSet = App.graph.executeSql(
-        "SELECT Object_Notification_Templates_Text from Object_Notification_Templates where Object_Notification_Templates_Id = :tid ",
-        Collections.singletonMap("tid", templateId)).getRawResultSet();
+    OResultSet resSet = App.graph.executeSql("SELECT Object_Notification_Templates_Text from Object_Notification_Templates where Object_Notification_Templates_Id = :tid ", Collections.singletonMap("tid", templateId)).getRawResultSet();
 
     if ((!resSet.hasNext())) {
-      return new ReportTemplateRenderResponse(Response.Status.NOT_FOUND, "Cannot find template id " +
-          templateId);
+      return new ReportTemplateRenderResponse(Response.Status.NOT_FOUND, "Cannot find template id " + templateId);
     }
 
     ORecordId refId = new ORecordId(request.getRefEntryId());
 
-    String templateTextBase64 =
-        resSet.next().getProperty("Object_Notification_Templates_Text").toString();
+    String templateTextBase64 = resSet.next().getProperty("Object_Notification_Templates_Text").toString();
 
 
 //        App.g.V().has("Object_Notification_Templates_Id", P.eq(templateId))
@@ -1062,8 +983,7 @@ status: "success", message: "Data source is working", title: "Success"
       resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateTextBase64, App.g);
     } catch (Throwable t) {
 
-      resolvedStr = Base64.getEncoder().encodeToString(
-          ("Error resolving template:  " + t.getMessage()).getBytes(StandardCharsets.UTF_8));
+      resolvedStr = Base64.getEncoder().encodeToString(("Error resolving template:  " + t.getMessage()).getBytes(StandardCharsets.UTF_8));
     }
 
     ReportTemplateRenderResponse reply = new ReportTemplateRenderResponse();
@@ -1096,8 +1016,7 @@ status: "success", message: "Data source is working", title: "Success"
       resolvedStr = PontusJ2ReportingFunctions.renderReportInBase64(refId, templateBase64, App.g);
     } catch (Throwable t) {
 
-      resolvedStr = Base64.getEncoder().encodeToString(
-          ("Error resolving template:  " + t.getMessage()).getBytes(StandardCharsets.UTF_8));
+      resolvedStr = Base64.getEncoder().encodeToString(("Error resolving template:  " + t.getMessage()).getBytes(StandardCharsets.UTF_8));
     }
 
     ReportRenderResponse reply = new ReportRenderResponse();
@@ -1150,7 +1069,7 @@ status: "success", message: "Data source is working", title: "Success"
       return resp;
     } catch (IOException e) {
       return new PdfReportRenderResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
-    } catch (IllegalArgumentException e){
+    } catch (IllegalArgumentException e) {
       return new PdfReportRenderResponse(Response.Status.BAD_REQUEST, e.getMessage());
     } catch (Throwable t) {
       return new PdfReportRenderResponse(Response.Status.INTERNAL_SERVER_ERROR, t.getMessage());
@@ -1210,11 +1129,9 @@ status: "success", message: "Data source is working", title: "Success"
       if (comp != null && comp.getName() != null) {
         final String origName = comp.getName();
         final String[] userData = comp.getUserData();
-        if (origName != null && userData != null &&
-            comp.getUserData().length > 0 && (origName.startsWith(">") || origName.startsWith("<"))) {
+        if (origName != null && userData != null && comp.getUserData().length > 0 && (origName.startsWith(">") || origName.startsWith("<"))) {
           final boolean isOut = origName.startsWith(">out_");
-          final String parsedName = isOut ? origName.substring(5) :
-              origName.substring(4);
+          final String parsedName = isOut ? origName.substring(5) : origName.substring(4);
           Map<String, Object> sqlParams = new HashMap<>();
 
           if ("update".equalsIgnoreCase(request.getOperation())) {
@@ -1259,11 +1176,7 @@ status: "success", message: "Data source is working", title: "Success"
 
 
     String operation = request.getOperation();
-    if (!"create".equalsIgnoreCase(operation) &&
-        !"read".equalsIgnoreCase(operation) &&
-        !"update".equalsIgnoreCase(operation) &&
-        !"delete".equalsIgnoreCase(operation)
-    ) {
+    if (!"create".equalsIgnoreCase(operation) && !"read".equalsIgnoreCase(operation) && !"update".equalsIgnoreCase(operation) && !"delete".equalsIgnoreCase(operation)) {
       return new FormDataResponse(Response.Status.BAD_REQUEST, "Invalid operation type:" + operation);
     }
 
@@ -1271,18 +1184,13 @@ status: "success", message: "Data source is working", title: "Success"
 
     String rid = request.getRid();
     if (!"create".equals(operation) && rid == null) {
-      return new FormDataResponse(Response.Status.BAD_REQUEST,
-          "Missing the record id (rid) field for operation " +
-              operation);
+      return new FormDataResponse(Response.Status.BAD_REQUEST, "Missing the record id (rid) field for operation " + operation);
     }
     PVFormData[] components = request.getComponents();
 
     if ("read".equals(operation) || "update".equals(operation)) {
-      if (components == null || components.length == 0 ||
-          Arrays.stream(components).anyMatch((comp) -> comp == null || comp.getName() == null)) {
-        return new FormDataResponse(Response.Status.BAD_REQUEST,
-            "Missing Components array with valid names for operation" +
-                operation);
+      if (components == null || components.length == 0 || Arrays.stream(components).anyMatch((comp) -> comp == null || comp.getName() == null)) {
+        return new FormDataResponse(Response.Status.BAD_REQUEST, "Missing Components array with valid names for operation" + operation);
 
       }
     }
@@ -1291,9 +1199,7 @@ status: "success", message: "Data source is working", title: "Success"
       Map<String, String> args = new HashMap<>();
       args.put("rid", rid);
       args.put("table", request.getDataType());
-      OResultSet oResultSet = App.graph.executeSql(
-          "SELECT * FROM  :table where @rid = :rid"
-          , args).getRawResultSet();
+      OResultSet oResultSet = App.graph.executeSql("SELECT * FROM  :table where @rid = :rid", args).getRawResultSet();
 
       while (oResultSet.hasNext()) {
         OResult oResult = oResultSet.next();
@@ -1349,8 +1255,7 @@ status: "success", message: "Data source is working", title: "Success"
       try {
         sqlParams.put("table", request.getDataType());
         if (isCreate) {
-          OGremlinResultSet resSet = App.graph.executeSql("UPDATE :table MERGE " + jsonToMerge + " UPSERT RETURN AFTER LOCK record LIMIT 1 ",
-              sqlParams);
+          OGremlinResultSet resSet = App.graph.executeSql("UPDATE :table MERGE " + jsonToMerge + " UPSERT RETURN AFTER LOCK record LIMIT 1 ", sqlParams);
           if (resSet.getRawResultSet().hasNext()) {
             ORID newItem = resSet.getRawResultSet().next().getIdentity().get();
             request.setRid(newItem.toString());
@@ -1360,8 +1265,7 @@ status: "success", message: "Data source is working", title: "Success"
         } else {
           sqlParams.put("rid", request.getRid());
 
-          OGremlinResultSet resSet = App.graph.executeSql("UPDATE :table MERGE " + jsonToMerge + " UPSERT WHERE @rid = :rid LOCK record LIMIT 1 ",
-              sqlParams);
+          OGremlinResultSet resSet = App.graph.executeSql("UPDATE :table MERGE " + jsonToMerge + " UPSERT WHERE @rid = :rid LOCK record LIMIT 1 ", sqlParams);
 
           if (resSet.getRawResultSet().hasNext()) {
 
@@ -1395,8 +1299,7 @@ status: "success", message: "Data source is working", title: "Success"
         App.g.V(request.getRid()).drop().iterate();
 
         sqlParams.put("rid", request.getRid());
-        App.graph.executeSql("DELETE VERTEX " + (new ORecordId(request.getRid())).toString(),
-            sqlParams).getRawResultSet().close();
+        App.graph.executeSql("DELETE VERTEX " + (new ORecordId(request.getRid())).toString(), sqlParams).getRawResultSet().close();
 
         tx.commit();
       } catch (Exception e) {
@@ -1418,8 +1321,7 @@ status: "success", message: "Data source is working", title: "Success"
 
 
     if (!isAdminOrDPO(req)) {
-      return new FormDataResponse(Response.Status.UNAUTHORIZED,
-          "Auth Token does not give rights to execute this");
+      return new FormDataResponse(Response.Status.UNAUTHORIZED, "Auth Token does not give rights to execute this");
     }
 
     return getFormDataImpl(request);
