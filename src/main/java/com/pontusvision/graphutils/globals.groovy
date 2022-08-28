@@ -1202,9 +1202,11 @@ class PontusJ2ReportingFunctions {
                   }
                 }
 
+        def impactedPeopleAll  = [];
+        impactedPeopleAll = impactedPeople + impactedPeople2
         allData.put('impacted_data_sources', impactedDataSources)
         allData.put('impacted_servers', impactedServers)
-        allData.put('impacted_people', impactedPeople.addAll(impactedPeople2))
+        allData.put('impacted_people', impactedPeopleAll)
 
       }
     }
