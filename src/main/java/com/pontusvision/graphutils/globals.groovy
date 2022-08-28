@@ -1160,6 +1160,7 @@ class PontusJ2ReportingFunctions {
 
         GraphTraversal dsTravClone = impactedDataSourcesTrav.clone()
         GraphTraversal dsTravClone2 = impactedDataSourcesTrav.clone()
+        GraphTraversal dsTravClone3 = impactedDataSourcesTrav.clone()
 
 
         def impactedServers = dsTravClone2
@@ -1188,7 +1189,7 @@ class PontusJ2ReportingFunctions {
                     [key.replaceAll('[.]', '_'), val.toString().substring(1, val.toString().length() - 1)]
                   }
                 }
-        def impactedPeople2 = dsTravClone
+        def impactedPeople2 = dsTravClone3
                 .out("Has_Ingestion_Event")
                 .out("Has_Ingestion_Event")
                 .out("Has_Ingestion_Event")
