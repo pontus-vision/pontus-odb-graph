@@ -52,7 +52,7 @@
         <jnr-posix.version>3.0.50</jnr-posix.version>
         <openhtmltopdf-core.version>1.0.10</openhtmltopdf-core.version>
         <openhtmltopdf-pdfbox.version>1.0.10</openhtmltopdf-pdfbox.version>
-        <jsoup.version>1.14.3</jsoup.version>
+        <jsoup.version>1.15.3</jsoup.version>
     </properties>
     <!--    <dependencyManagement>-->
     <!--        <dependencies>-->
