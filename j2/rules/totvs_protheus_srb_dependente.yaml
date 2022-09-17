@@ -9,6 +9,10 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${RB_NOME?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Person_Natural
       name: colaborador
@@ -17,6 +21,10 @@ updatereq:
         - name: Person_Natural_Id
           val: ${id?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Event_Ingestion
       props:

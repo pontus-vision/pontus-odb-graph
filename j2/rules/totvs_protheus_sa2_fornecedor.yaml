@@ -23,6 +23,10 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Location_Address
       props:

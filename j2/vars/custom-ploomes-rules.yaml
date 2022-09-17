@@ -9,6 +9,10 @@ rules:
             val: "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
           Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
+          Last_Update_Date:
+            val: "${LastUpdateDate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 #          Type:
 #            val: "Clientes"
 #            excludeFromSearch: true

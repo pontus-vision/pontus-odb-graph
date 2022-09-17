@@ -30,6 +30,10 @@ rules:
 #            val: "Clientes"
 #            excludeFromSearch: true
           Customer_ID: "${A1_CGC?.replaceAll('[^0-9]','')}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 
       - label: Person_Organisation
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
@@ -284,6 +288,10 @@ rules:
           Id:
             val: "${id?.replaceAll('[^0-9]','')}"
             excludeFromSearch: true
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 
       - label: Person_Organisation
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
@@ -318,12 +326,21 @@ rules:
 #            val: "colaborador-pais"
 #            excludeFromSearch: false
 #          Gender: "F"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
+
 
       - label: Person_Natural
         condition: "${RA_PAI?.trim()?.length() > 0}"
         name: pai
         props:
           Full_Name: "${RA_PAI?.trim()?.toUpperCase()}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 #          Type:
 #            val: "colaborador-pais"
 #            excludeFromSearch: false
@@ -507,6 +524,10 @@ rules:
         condition: "${id?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
           Full_Name: "${RB_NOME?.trim()?.toUpperCase()}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 
       - label: Person_Natural
         name: colaborador
@@ -515,6 +536,10 @@ rules:
           Id:
             val: "${id?.replaceAll('[^0-9]','')}"
             excludeFromUpdate: true
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 
       - label: Event_Ingestion
         props:
@@ -620,6 +645,10 @@ rules:
         name: rep
         props:
           Full_Name: "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
           #          Type:
           #            val: "fornecedor"
           #            excludeFromSearch: false

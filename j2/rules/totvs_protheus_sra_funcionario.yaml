@@ -16,6 +16,10 @@ updatereq:
           val: ${id?.replaceAll('[^0-9]','')}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Person_Organisation
       condition: ${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}
@@ -51,6 +55,10 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${RA_MAE?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Person_Natural
       name: pai
@@ -59,6 +67,10 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${RA_PAI?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Object_Phone_Number
       condition: ${RA_TELEFON?.replaceAll('[^0-9]','')?.length() > 0}

@@ -11,6 +11,10 @@ updatereq:
         - name: Person_Natural_Customer_ID
           val: ${A1_CGC?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Person_Organisation
       condition: ${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}

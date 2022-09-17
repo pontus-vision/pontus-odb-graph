@@ -11,6 +11,10 @@ updatereq:
         - name: Person_Natural_Customer_ID
           val: ${CPF?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${LastUpdateDate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Person_Organisation
       condition: ${TypeId == 1 && CNPJ != null}

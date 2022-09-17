@@ -1067,6 +1067,8 @@ schema:
         - name: Gender
         - name: Height
         - name: Last_Name
+        - name: Last_Update_Date
+          dataType: Date
         - name: Marital_Status
         - name: Name_Qualifier
         - name: Nationality
@@ -1087,6 +1089,8 @@ schema:
         - name: Form_Owner_Id
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
+        - name: Last_Update_Date
+          dataType: Date
         - name: Name
         - name: Phone
         - name: Registration_Number
