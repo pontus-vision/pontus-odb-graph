@@ -15,6 +15,10 @@ updatereq:
         - name: Person_Organisation_Registration_Number
           val: ${A2_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
+        - name: Person_Organisation_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Person_Natural
       name: rep

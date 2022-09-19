@@ -28,6 +28,10 @@ updatereq:
         - name: Person_Organisation_Registration_Number
           val: ${A1_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
+        - name: Person_Organisation_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Object_Phone_Number
       condition: ${A1_TEL?.replaceAll('[^0-9]','')?.length() > 0}

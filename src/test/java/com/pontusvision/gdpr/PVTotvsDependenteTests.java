@@ -84,7 +84,8 @@ public class PVTotvsDependenteTests extends AppTest {
                 App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('totvs/protheus/srb_dependente'))" +
                         ".in('Has_Ingestion_Event').has('Person_Natural_Full_Name', eq('JORGE SCHIMELPFENG'))" +
                         ".properties('Person_Natural_Last_Update_Date').value().next().toString()").get().toString();
-        assertEquals(dtfmt.parse("Sat Jan 01 01:00:00 UTC 2022"), dtfmt.parse(jorgeSchimelpfengLastUpdateDate), "Jorge Schimelpfeng Last Update Date");
+        assertEquals(dtfmt.parse("Sat Jan 01 01:00:00 UTC 2022"), dtfmt.parse(jorgeSchimelpfengLastUpdateDate),
+                "Jorge Schimelpfeng Last Update Date");
 
 //    Testing the link between SRA and SRB
 

@@ -28,6 +28,10 @@ updatereq:
         - name: Person_Organisation_Id
           val: ${CNPJ?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
+        - name: Person_Organisation_Last_Update_Date
+          val: ${LastUpdateDate}
+          mandatoryInSearch: True
+          type: "java.util.Date"
     
     - label: Object_Identity_Card
       name: cpf

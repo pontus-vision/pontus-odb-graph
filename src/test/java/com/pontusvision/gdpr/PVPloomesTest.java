@@ -49,6 +49,14 @@ public class PVPloomesTest extends AppTest {
         assertEquals(dtfmt.parse("Sat May 29 11:47:29 UTC 2021"), dtfmt.parse(getPersonNaturalLastUpdateDate),
                 "A data de atualização de COMIDAS 2 é Sat May 29 11:47:29 UTC 2021");
 
+      // test Person_Organisation_Last_Update_Date for Pessoa Nova5
+        String getPersonOrganisationLastUpdateDate =
+                App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('ploomes/clientes'))" +
+                        ".in('Has_Ingestion_Event').has('Person_Organisation_Name', eq('PESSOA NOVA5'))" +
+                        ".properties('Person_Organisation_Last_Update_Date').value().next().toString()").get().toString();
+        assertEquals(dtfmt.parse("Sat May 29 11:47:46 UTC 2021"), dtfmt.parse(getPersonOrganisationLastUpdateDate),
+                "A data de atualização de Pessoa Nova5 é Sat May 29 11:47:46 UTC 2021");
+
 //      String getNullAddress =
 //              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('PESSOA NOVA3'))" +
 //                      ".bothE().otherV().path().toList()").get().toString();

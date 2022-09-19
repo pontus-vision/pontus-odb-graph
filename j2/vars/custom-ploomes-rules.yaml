@@ -25,6 +25,10 @@ rules:
             val: "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
           Id: "${CNPJ?.replaceAll('[^0-9]', '')}"
+          Last_Update_Date:
+            val: "${LastUpdateDate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 #          Email:
 #            val: "${Email?.trim()?.toLowerCase()}"
 #            excludeFromUpdate: true

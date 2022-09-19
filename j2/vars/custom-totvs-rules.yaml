@@ -45,6 +45,10 @@ rules:
           Id: "${A1_CGC.replaceAll('[^0-9]','')}"
           Registration_Number: "${A1_CGC.replaceAll('[^0-9]','')}"
 #          Contact: "${A1_CONTATO?.trim()}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 
       - label: Object_Phone_Number
         condition: "${A1_TEL?.replaceAll('[^0-9]','')?.length() > 0}"
@@ -302,6 +306,10 @@ rules:
 #            excludeFromSearch: true
           Id: "${RA_CIC.replaceAll('[^0-9]','')}"
           Registration_Number: "${RA_CIC.replaceAll('[^0-9]','')}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 
       - label: Location_Address
         props:
@@ -639,6 +647,10 @@ rules:
           Id: "${A2_CGC.replaceAll('[^0-9]','')}"
           Registration_Number: "${A2_CGC.replaceAll('[^0-9]','')}"
 #          Contact: "${A2_CONTATO?.trim()}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromUpdate: true
+            type: java.util.Date
 
       - label: Person_Natural
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}"

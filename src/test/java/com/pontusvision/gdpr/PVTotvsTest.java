@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -58,15 +59,13 @@ public class PVTotvsTest extends AppTest {
       assertEquals("DOCES JOINVILLE LTDA", docesJoinvilleContactPerson, "Noma da empresa de CNPJ 85647243000154 é Doces Joinville");
 
       String totvsPersonNaturalCount =
-              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('85647243000154'))" +
-                      ".in('Has_Id_Card')" +
-                      ".out('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event')" +
-                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name',eq('TOTVS/PROTHEUS/SA1_CLIENTES'))" +
+                      ".out('Has_Ingestion_Event').as('event-group')" +
+                      ".out('Has_Ingestion_Event').as('event')" +
+                      ".in('Has_Ingestion_Event').as('persons')" +
                       ".has('Metadata_Type_Person_Natural', eq('Person_Natural')).dedup()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("4", totvsPersonNaturalCount, "Count for Person_Natural Vertices from Data_Source TOTVS_SA1_CLIENTES");
+      assertEquals("2", totvsPersonNaturalCount, "Count for Person_Natural Vertices from Data_Source TOTVS/PROTHEUS/SA1_CLIENTES");
 
       String totvsPersonOrgCount =
               App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('85647243000154'))" +
@@ -78,7 +77,24 @@ public class PVTotvsTest extends AppTest {
                       ".has('Metadata_Type_Person_Organisation', eq('Person_Organisation')).dedup()" +
                       ".count().next().toString()").get().toString();
       assertEquals("4", totvsPersonOrgCount, "Count for Person_Organisation Vertices from Data_Source TOTVS_SA1_CLIENTES");
-    } catch (ExecutionException e) {
+
+      // Test Person_Natural_Last_Update_Date Matheus Rocha
+      String matheusRochaLastUpdateDate =
+              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('totvs/protheus/sa1_clientes'))" +
+                      ".in('Has_Ingestion_Event').has('Person_Natural_Full_Name', eq('MATHEUS ROCHA'))" +
+                      ".properties('Person_Natural_Last_Update_Date').value().next().toString()").get().toString();
+      assertEquals(dtfmt.parse("Fri Nov 19 07:59:59 UTC 2021"), dtfmt.parse(matheusRochaLastUpdateDate),
+              "Matheus Rocha Last Update Date");
+
+      // Test Person_Organisation_Last_Update_Date Doces Joinville
+        String docesJoinvilleLastUpdateDate =
+                App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('totvs/protheus/sa1_clientes'))" +
+                        ".in('Has_Ingestion_Event').has('Person_Organisation_Name', eq('DOCES JOINVILLE LTDA'))" +
+                        ".properties('Person_Organisation_Last_Update_Date').value().next().toString()").get().toString();
+        assertEquals(dtfmt.parse("Fri Nov 19 07:59:59 UTC 2021"), dtfmt.parse(docesJoinvilleLastUpdateDate),
+                "Doces Joinville Last Update Date");
+
+    } catch (ExecutionException | ParseException e) {
       e.printStackTrace();
       assertNull(e);
 
