@@ -32,7 +32,7 @@ rules:
           Customer_ID: "${A1_CGC?.replaceAll('[^0-9]','')}"
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 
       - label: Person_Organisation
@@ -47,7 +47,7 @@ rules:
 #          Contact: "${A1_CONTATO?.trim()}"
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 
       - label: Object_Phone_Number
@@ -294,7 +294,7 @@ rules:
             excludeFromSearch: true
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 
       - label: Person_Organisation
@@ -308,7 +308,7 @@ rules:
           Registration_Number: "${RA_CIC.replaceAll('[^0-9]','')}"
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 
       - label: Location_Address
@@ -336,7 +336,7 @@ rules:
 #          Gender: "F"
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 
 
@@ -347,7 +347,7 @@ rules:
           Full_Name: "${RA_PAI?.trim()?.toUpperCase()}"
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 #          Type:
 #            val: "colaborador-pais"
@@ -534,7 +534,7 @@ rules:
           Full_Name: "${RB_NOME?.trim()?.toUpperCase()}"
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 
       - label: Person_Natural
@@ -546,7 +546,7 @@ rules:
             excludeFromUpdate: true
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 
       - label: Event_Ingestion
@@ -649,7 +649,7 @@ rules:
 #          Contact: "${A2_CONTATO?.trim()}"
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 
       - label: Person_Natural
@@ -659,7 +659,7 @@ rules:
           Full_Name: "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}"
           Last_Update_Date:
             val: "${lastUpdate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
           #          Type:
           #            val: "fornecedor"

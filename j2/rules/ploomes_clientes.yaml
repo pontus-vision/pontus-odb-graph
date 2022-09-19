@@ -13,8 +13,9 @@ updatereq:
           mandatoryInSearch: True
         - name: Person_Natural_Last_Update_Date
           val: ${LastUpdateDate}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Person_Organisation
       condition: ${TypeId == 1 && CNPJ != null}
@@ -30,8 +31,9 @@ updatereq:
           mandatoryInSearch: True
         - name: Person_Organisation_Last_Update_Date
           val: ${LastUpdateDate}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Object_Identity_Card
       name: cpf

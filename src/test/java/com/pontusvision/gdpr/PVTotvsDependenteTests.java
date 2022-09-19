@@ -91,7 +91,8 @@ public class PVTotvsDependenteTests extends AppTest {
 
       String fromSRBtoSRA =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('totvs/protheus/srb_dependente'))" +
-                      ".as('srb-ingestion').in('Has_Ingestion_Event').as('dependente').out('Is_Dependant')" +
+                      ".as('srb-ingestion').in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
+                      ".as('dependente').out('Is_Dependant')" +
                       ".as('colaborador').out('Has_Ingestion_Event').as('sra-ingestion').values('Event_Ingestion_Type')" +
                       ".next().toString()").get().toString();
       assertEquals("totvs/protheus/sra_funcionario", fromSRBtoSRA,

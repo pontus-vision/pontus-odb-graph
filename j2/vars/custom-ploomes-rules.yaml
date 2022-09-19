@@ -11,7 +11,7 @@ rules:
           Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
           Last_Update_Date:
             val: "${LastUpdateDate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 #          Type:
 #            val: "Clientes"
@@ -27,7 +27,7 @@ rules:
           Id: "${CNPJ?.replaceAll('[^0-9]', '')}"
           Last_Update_Date:
             val: "${LastUpdateDate}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
             type: java.util.Date
 #          Email:
 #            val: "${Email?.trim()?.toLowerCase()}"

@@ -18,8 +18,9 @@
           {
             "name": "Person_Natural_Last_Update_Date",
             "val": "${lastUpdate}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -45,8 +46,9 @@
           {
             "name": "Person_Organisation_Last_Update_Date",
             "val": "${lastUpdate}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },

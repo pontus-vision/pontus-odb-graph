@@ -18,8 +18,9 @@ updatereq:
           excludeFromSearch: True
         - name: Person_Natural_Last_Update_Date
           val: ${lastUpdate}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Person_Organisation
       condition: ${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}
@@ -35,8 +36,9 @@ updatereq:
           mandatoryInSearch: True
         - name: Person_Organisation_Last_Update_Date
           val: ${lastUpdate}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Location_Address
       props:
@@ -61,8 +63,9 @@ updatereq:
           mandatoryInSearch: True
         - name: Person_Natural_Last_Update_Date
           val: ${lastUpdate}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Person_Natural
       name: pai
@@ -73,8 +76,9 @@ updatereq:
           mandatoryInSearch: True
         - name: Person_Natural_Last_Update_Date
           val: ${lastUpdate}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Object_Phone_Number
       condition: ${RA_TELEFON?.replaceAll('[^0-9]','')?.length() > 0}
