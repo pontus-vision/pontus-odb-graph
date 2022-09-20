@@ -3654,6 +3654,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Person_Natural_Last_Update_Date",
+      "dataType": "Date",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Person_Natural_Marital_Status",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -3736,6 +3741,11 @@
     {
       "name": "Person_Organisation_Form_Submission_Owner_Id",
       "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Person_Organisation_Last_Update_Date",
+      "dataType": "Date",
       "cardinality": "SINGLE"
     },
     {
@@ -5839,6 +5849,7 @@
         "Person_Natural_Gender",
         "Person_Natural_Height",
         "Person_Natural_Last_Name",
+        "Person_Natural_Last_Update_Date",
         "Person_Natural_Marital_Status",
         "Person_Natural_Name_Qualifier",
         "Person_Natural_Nationality",
@@ -5874,6 +5885,7 @@
         "Person_Organisation_Form_Owner_Id",
         "Person_Organisation_Form_Submission_Id",
         "Person_Organisation_Form_Submission_Owner_Id",
+        "Person_Organisation_Last_Update_Date",
         "Person_Organisation_Name",
         "Person_Organisation_Phone",
         "Person_Organisation_Registration_Number",

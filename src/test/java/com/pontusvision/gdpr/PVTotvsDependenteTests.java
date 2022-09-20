@@ -1,17 +1,11 @@
 package com.pontusvision.gdpr;
 
-import com.pontusvision.graphutils.gdpr;
-import org.apache.tinkerpop.gremlin.process.traversal.P;
-import org.apache.tinkerpop.gremlin.structure.Transaction;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -85,18 +79,27 @@ public class PVTotvsDependenteTests extends AppTest {
                       ".bothE().dedup().count().next().toString()").get().toString();
       assertEquals("0", xavierHasNoId, "No vertices were created for Xavier, because there is no Id");
 
+      // Teste para Person_Natural_Last_Update_Date Jorge Schimelpfeng
+        String jorgeSchimelpfengLastUpdateDate =
+                App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('totvs/protheus/srb_dependente'))" +
+                        ".in('Has_Ingestion_Event').has('Person_Natural_Full_Name', eq('JORGE SCHIMELPFENG'))" +
+                        ".properties('Person_Natural_Last_Update_Date').value().next().toString()").get().toString();
+        assertEquals(dtfmt.parse("Sat Jan 01 01:00:00 UTC 2022"), dtfmt.parse(jorgeSchimelpfengLastUpdateDate),
+                "Jorge Schimelpfeng Last Update Date");
+
 //    Testing the link between SRA and SRB
 
       String fromSRBtoSRA =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('totvs/protheus/srb_dependente'))" +
-                      ".as('srb-ingestion').in('Has_Ingestion_Event').as('dependente').out('Is_Dependant')" +
+                      ".as('srb-ingestion').in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
+                      ".as('dependente').out('Is_Dependant')" +
                       ".as('colaborador').out('Has_Ingestion_Event').as('sra-ingestion').values('Event_Ingestion_Type')" +
                       ".next().toString()").get().toString();
       assertEquals("totvs/protheus/sra_funcionario", fromSRBtoSRA,
               "Going from srb_dependente and getting to sra_funcionario");
 
 
-    } catch (ExecutionException e) {
+    } catch (ExecutionException | ParseException e) {
       e.printStackTrace();
       assertNull(e);
 

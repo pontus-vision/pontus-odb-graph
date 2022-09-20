@@ -14,6 +14,13 @@
             "name": "Person_Natural_Customer_ID",
             "val": "${A1_CGC?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -35,6 +42,13 @@
             "name": "Person_Organisation_Registration_Number",
             "val": "${A1_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },

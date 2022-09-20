@@ -20,6 +20,13 @@
             "name": "Person_Organisation_Registration_Number",
             "val": "${A2_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -32,6 +39,13 @@
             "name": "Person_Natural_Full_Name",
             "val": "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },

@@ -304,7 +304,7 @@ public class PVBasicTest extends AppTest {
       String userId4 =
               App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('jonas@comida1.com.br'))" +
                       ".next().id().toString()").get().toString();
-      String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().count().next().toString()";
+      String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().dedup().count().next().toString()";
       String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
       assertEquals("1", emailConnections);
 

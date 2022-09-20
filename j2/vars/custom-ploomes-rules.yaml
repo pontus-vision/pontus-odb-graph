@@ -9,6 +9,10 @@ rules:
             val: "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
           Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
+          Last_Update_Date:
+            val: "${LastUpdateDate}"
+            excludeFromSearch: true
+            type: java.util.Date
 #          Type:
 #            val: "Clientes"
 #            excludeFromSearch: true
@@ -21,6 +25,10 @@ rules:
             val: "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
           Id: "${CNPJ?.replaceAll('[^0-9]', '')}"
+          Last_Update_Date:
+            val: "${LastUpdateDate}"
+            excludeFromSearch: true
+            type: java.util.Date
 #          Email:
 #            val: "${Email?.trim()?.toLowerCase()}"
 #            excludeFromUpdate: true

@@ -15,6 +15,11 @@ updatereq:
         - name: Person_Organisation_Registration_Number
           val: ${A2_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
+        - name: Person_Organisation_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Person_Natural
       name: rep
@@ -23,6 +28,11 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Location_Address
       props:
