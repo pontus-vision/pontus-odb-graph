@@ -1,0 +1,123 @@
+rules:
+
+  sharepoint_pbr_fontes_de_dados:
+    vertices:
+      - label: Object_Data_Source
+        name: sharepoint_pbr
+        props:
+          Name: SHAREPOINT/PBR/FONTES-DE-DADOS
+
+      - label: Object_Data_Source
+        condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}" # why we are using the description field as condition?
+        name: fontes_de_dados
+        props:
+          Form_Id: "${id}"
+          Name:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Description:
+            val: "${Descri_x00e7__x00e3_o?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Engine:
+            val: "${Sistema}"
+            excludeFromSearch: true
+          Type:
+            val: "${TipoSistema}"
+            excludeFromSearch: true
+          Domain:
+            val: "${Tabela}"
+            excludeFromSearch: true
+          URI_Delete:
+            val: "${URLPrefixoDelete}"
+            excludeFromSearch: true
+          URI_Update:
+            val: "${URLPrefixoUpdate}"
+            excludeFromSearch: true
+          URI_Read:
+            val: "${URLPrefixoRead}"
+            excludeFromSearch: true
+
+      - label: Object_System
+        props:
+          Name: "${Sistema?.trim()?.toUpperCase()}"
+
+      - label: Object_Subsystem
+        props:
+          Name: "${TipoSistema?.trim()?.toUpperCase()}"
+
+      - label: Object_Module
+        props:
+          Name: "${Tabela?.trim()?.toLowerCase()}"
+
+      - label: Object_Sensitive_Data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(DadosPessoais)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Data_Policy
+        props:
+          Update_Frequency: "${Frequ_x00ea_nciadeAtualiza_x00e7}"
+          Retention_Period: "${Pol_x00ed_ticadeReten_x00e7__x00}"
+          Type: "${Title}"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: sharepoint/pbr/fontes-de-dados
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${new Date()}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: sharepoint/pbr/fontes-de-dados
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "sharepoint_pbr"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexName: "fontes_de_dados"
+
+      - label: "Has_Policy"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Data_Policy"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Sensitive_Data"
+
+      - label: "Has_Module"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Module"
+
+      - label: "Has_Subsystem"
+        fromVertexLabel: "Object_Module"
+        toVertexLabel: "Object_Subsystem"
+
+      - label: "Has_System"
+        fromVertexLabel: "Object_Subsystem"
+        toVertexLabel: "Object_System"
