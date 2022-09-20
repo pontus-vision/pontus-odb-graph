@@ -21,6 +21,13 @@
             "val": "${id?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Natural_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -42,6 +49,13 @@
             "name": "Person_Organisation_Registration_Number",
             "val": "${RA_CIC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -76,6 +90,13 @@
             "name": "Person_Natural_Full_Name",
             "val": "${RA_MAE?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -88,6 +109,13 @@
             "name": "Person_Natural_Full_Name",
             "val": "${RA_PAI?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
