@@ -108,7 +108,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Ingestion_Metadata_Update_Date
-          val: ${new Date()}
+          val: ${Modified}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True

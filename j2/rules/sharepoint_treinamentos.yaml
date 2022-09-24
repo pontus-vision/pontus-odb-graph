@@ -27,12 +27,22 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${Nome0?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Person_Employee
       props:
         - name: Person_Employee_Full_Name
           val: ${Nome0?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person_Employee_Last_Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Event_Ingestion
       props:
@@ -54,7 +64,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Ingestion_Metadata_Update_Date
-          val: ${new Date()}
+          val: ${Modified}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True

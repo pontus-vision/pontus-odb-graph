@@ -62,7 +62,7 @@
           },
           {
             "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${new Date()}",
+            "val": "${Modified}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true

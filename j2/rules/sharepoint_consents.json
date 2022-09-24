@@ -64,6 +64,13 @@
             "val": "${name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Natural_Last_Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
           }
         ]
       },
@@ -107,7 +114,7 @@
           },
           {
             "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${new Date()}",
+            "val": "${Modified}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
