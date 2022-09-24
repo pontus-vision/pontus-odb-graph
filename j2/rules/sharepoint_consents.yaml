@@ -45,6 +45,11 @@ updatereq:
           val: ${name?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Object_Data_Source
       props:
@@ -72,7 +77,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Ingestion_Metadata_Update_Date
-          val: ${new Date()}
+          val: ${Modified}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
