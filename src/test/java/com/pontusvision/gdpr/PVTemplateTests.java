@@ -680,6 +680,8 @@ public class PVTemplateTests extends AppTest {
               "    \n" +
               "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>lyyyy</td></tr>\n" +
               "    \n" +
+              "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>tabela</td></tr>\n" +
+              "    \n" +
               "</table>\n";
       assertEquals(expectedReport, report, "Lista de Módulos' HTML Table");
 
