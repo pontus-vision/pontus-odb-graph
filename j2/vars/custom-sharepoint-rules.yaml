@@ -83,7 +83,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -224,7 +224,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -295,11 +295,19 @@ rules:
       - label: Person_Natural
         props:
           Full_Name: "${Nome0?.trim()?.toUpperCase()}"
+          Last_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
       #          Role: "${Departamento0}"
 
       - label: Person_Employee
         props:
           Full_Name: "${Nome0?.trim()?.toUpperCase()}"
+          Last_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
       #          Role: "${Departamento0}"
 
       - label: Event_Ingestion
@@ -318,7 +326,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -469,7 +477,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -610,7 +618,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -742,7 +750,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -822,7 +830,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -866,6 +874,10 @@ rules:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromUpdate: true
             mandatoryInSearch: true
+          Last_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
 
       - label: Person_Natural
         condition: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
@@ -878,6 +890,10 @@ rules:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromUpdate: true
             mandatoryInSearch: true
+          Last_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
 
       - label: Object_Data_Procedures
         props:
@@ -938,7 +954,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -1059,7 +1075,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -1129,7 +1145,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -1217,7 +1233,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -1289,6 +1305,10 @@ rules:
           Full_Name:
             val: "${name?.trim()?.toUpperCase()}"
             excludeFromSearch: true
+          Last_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
 
       - label: Object_Data_Source
         props:
@@ -1310,7 +1330,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -1403,7 +1423,7 @@ rules:
           excludeFromSearch: true
           type: java.util.Date
         Metadata_Update_Date:
-          val: "${new Date()}"
+          val: "${Modified}"
           excludeFromSearch: true
           type: java.util.Date
 
@@ -1472,7 +1492,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
@@ -1544,7 +1564,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${new Date()}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
