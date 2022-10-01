@@ -22,15 +22,11 @@ updatereq:
       props:
         - name: Person_Natural_Full_Name
           val: ${Raz_x00e3_oSocial?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Person_Natural_Customer_ID
           val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
-        - name: Person_Natural_Last_Update_Date
-          val: ${Modified}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
     
     - label: Object_Data_Procedures
       props:

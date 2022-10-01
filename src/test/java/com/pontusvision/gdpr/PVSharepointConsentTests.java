@@ -65,6 +65,14 @@ public class PVSharepointConsentTests extends AppTest {
                       ".properties('Person_Natural_Customer_ID').value().next().toString()").get().toString();
       assertEquals("123", getPersonNaturalCustomerID, "Karla's Customer Id Number");
 
+      // Testing new prop Event_Consent_Description [pontus-odb-graph v.1.15.90]
+        String getLakshmiEventConsentDescription =
+                App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('Consent')).as('event-ingestion')" +
+                        ".in('Has_Ingestion_Event').has('Person_Natural_Full_Name', eq('LAKSHMI')).as('person')" +
+                        ".out('Consent').has('Event_Consent_Form_Id', eq('7')).as('consent')" +
+                        ".properties('Event_Consent_Description').value().next().toString()").get().toString();
+        assertEquals("stuvw", getLakshmiEventConsentDescription, "Consent Description");
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
@@ -96,7 +104,7 @@ public class PVSharepointConsentTests extends AppTest {
       String consentEventStatusCount =
           App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('Consent'))" +
               ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
-              ".out('Consent').dedup().has('Event_Consent_Status', eq('Consent')).count().next().toString()").get().toString();
+               ".out('Consent').dedup().has('Event_Consent_Status', eq('Consent')).count().next().toString()").get().toString();
 
       assertEquals("7", consentEventStatusCount, "Consent event status count");
 

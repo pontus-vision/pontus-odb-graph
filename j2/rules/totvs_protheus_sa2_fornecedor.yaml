@@ -27,6 +27,10 @@ updatereq:
       props:
         - name: Person_Natural_Full_Name
           val: ${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Natural_Customer_Id
+          val: ${A2_CGC.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Person_Natural_Last_Update_Date
           val: ${lastUpdate}

@@ -884,16 +884,15 @@ rules:
         props:
           Full_Name:
             val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
-            excludeFromUpdate: true
-            mandatoryInSearch: true
+            excludeFromSearch: true
           Customer_ID:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromUpdate: true
             mandatoryInSearch: true
-          Last_Update_Date:
-            val: "${Modified}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Last_Update_Date:
+#            val: "${Modified}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Object_Data_Procedures
         props:
@@ -1285,10 +1284,12 @@ rules:
             val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
+          Description:
+            val: "${Descri_x00e7__x00e3_o}"
+            excludeFromSearch: true
 #          Created_By: "${Author}"
 #          Changed_By: "${Editor}"
 #          Status:
-#          Description:
 
       - label: Object_Privacy_Notice
         condition: "${privacy_notice.size() > 0}"
