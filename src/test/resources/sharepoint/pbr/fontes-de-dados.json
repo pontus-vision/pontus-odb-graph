@@ -1,0 +1,215 @@
+{
+  "queryResp": [
+    {
+      "@odata.etag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "createdDateTime": "2021-07-27T19: 18: 05Z",
+      "eTag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "id": "1",
+      "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "1243b42e-1243-3acbe3456-abbf-cbertey,4",
+        "Title": "ADP",
+        "Sistema": "ADP",
+        "TipoSistema": "SFTP",
+        "Tabela": "tabela",
+        "Descri_x00e7__x00e3_o": "Sistema de RH - Novos colaboradores e folha de pagamento",
+        "Frequ_x00ea_nciadeAtualiza_x00e7": "1 semana",
+        "Pol_x00ed_ticadeReten_x00e7__x00": "politica 398",
+        "DadosPessoais": [
+          "Primeiro Nome",
+          "Nacionalidade do Pai",
+          "Sofreu Cirurgia",
+          "Matrícula",
+          "Possui Cláusula Assecuratória",
+          "Ocorrência Sefip"
+        ],
+        "URLPrefixoDelete": "https://delete",
+        "URLPrefixoRead": "https://read",
+        "URLPrefixoUpdate": "https://update",
+        "LinkTitleNoMenu": "pbr",
+        "LinkTitle": "pbr",
+        "Modified": "2022-09-20T11:00:38Z",
+        "id": "1",
+        "ContentType": "Item",
+        "Created": "2022-09-20T10:18:05Z"
+      }
+    },
+    {
+      "@odata.etag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
+      "createdDateTime": "2021-07-27T19:18:05Z",
+      "eTag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
+      "id": "2",
+      "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/2_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('2')/fields/$entity",
+      "fields": {
+        "@odata.etag": "f6a26a07-8321-492a-8dde-fa74e792d6f1,5",
+        "Title": "Equipamentos",
+        "Sistema": "C@P",
+        "TipoSistema": "SaaS",
+        "Tabela": "EPI",
+        "Descri_x00e7__x00e3_o": "Equipamentos de Proteção Individual",
+        "Frequ_x00ea_nciadeAtualiza_x00e7": "1 mês",
+        "Pol_x00ed_ticadeReten_x00e7__x00": "politica LGPD",
+        "DadosPessoais": [
+          "Apelido",
+          "Data da Aposentadoria",
+          "Situação no CIPA",
+          "Classificação do visto",
+          "PIS/PASEP/NIT"
+        ],
+        "URLPrefixoDelete": "https://delete",
+        "URLPrefixoRead": "https://read",
+        "URLPrefixoUpdate": "https://update",
+        "LinkTitleNoMenu": "pbr",
+        "LinkTitle": "pbr",
+        "Modified": "2022-09-20T11:01:12Z",
+        "id": "two",
+        "ContentType": "Item",
+        "Created": "2022-09-20T11:01:12Z"
+      }
+    },
+    {
+      "@odata.etag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
+      "createdDateTime": "2021-07-27T19:18:05Z",
+      "eTag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
+      "id": "3",
+      "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/3_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('3')/fields/$entity",
+      "fields": {
+        "@odata.etag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
+        "Title": "Marketing",
+        "Sistema": "Email",
+        "TipoSistema": "Email",
+        "Tabela": "MKT",
+        "Descri_x00e7__x00e3_o": "Marketing",
+        "Frequ_x00ea_nciadeAtualiza_x00e7": "1 semana",
+        "Pol_x00ed_ticadeReten_x00e7__x00": "politica de propaganda",
+        "DadosPessoais": [
+          "Nome do Meio",
+          "Cargo",
+          "Escala"
+        ],
+        "URLPrefixoDelete": "https://delete",
+        "URLPrefixoRead": "https://read",
+        "URLPrefixoUpdate": "https://update",
+        "LinkTitleNoMenu": "pbr",
+        "LinkTitle": "pbr",
+        "Modified": "2022-09-20T10:11:11Z",
+        "id": "3",
+        "ContentType": "Item",
+        "Created": "2022-09-20T10:11:11Z"
+      }
+    },
+    {
+      "@odata.etag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
+      "createdDateTime": "2021-07-27T19:18:05Z",
+      "eTag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
+      "id": "4",
+      "lastModifiedDateTime": "2021-09-17T18:33:03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/4_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('4')/fields/$entity",
+      "fields": {
+        "@odata.etag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
+        "Title": "Polaris",
+        "Sistema": "Polaris",
+        "TipoSistema": "Onprem",
+        "Tabela": "Fixa",
+        "Descri_x00e7__x00e3_o": "Polaris",
+        "Frequ_x00ea_nciadeAtualiza_x00e7": "1 mês",
+        "Pol_x00ed_ticadeReten_x00e7__x00": "politica de retenção",
+        "DadosPessoais": [
+          "Município de Votação",
+          "Grupo Sanguíneo",
+          "Identidade",
+          "Hipersuficiente",
+          "Quadro de Substituição de Chefias"
+        ],
+        "URLPrefixoDelete": "https://delete",
+        "URLPrefixoRead": "https://read",
+        "URLPrefixoUpdate": "https://update",
+        "LinkTitleNoMenu": "pbr",
+        "LinkTitle": "pbr",
+        "Modified": "2022-09-20T10:54:22Z",
+        "id": "four",
+        "ContentType": "Item",
+        "Created": "2022-09-20T10:54:22Z"
+      }
+    }
+  ]
+}
