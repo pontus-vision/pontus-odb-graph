@@ -543,7 +543,7 @@ rules:
         props:
           Id:
             val: "${id?.replaceAll('[^0-9]','')}"
-            excludeFromUpdate: true
+            excludeFromUpdate: true # or should it be excludeFromSearch?
           Last_Update_Date:
             val: "${lastUpdate}"
             excludeFromSearch: true
