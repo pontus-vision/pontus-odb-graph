@@ -659,7 +659,7 @@ rules:
           Full_Name:
             val: "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-          Customer_Id: "${A2_CGC.replaceAll('[^0-9]','')}"
+          Customer_ID: "${A2_CGC.replaceAll('[^0-9]','')}"
           Last_Update_Date:
             val: "${lastUpdate}"
             excludeFromSearch: true

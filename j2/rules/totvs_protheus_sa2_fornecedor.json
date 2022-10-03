@@ -42,7 +42,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Person_Natural_Customer_Id",
+            "name": "Person_Natural_Customer_ID",
             "val": "${A2_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
