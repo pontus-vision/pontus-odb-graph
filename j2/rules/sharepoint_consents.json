@@ -34,6 +34,12 @@
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Consent_Description",
+            "val": "${Descri_x00e7__x00e3_o}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },

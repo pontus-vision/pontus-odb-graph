@@ -25,6 +25,10 @@ updatereq:
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
+        - name: Event_Consent_Description
+          val: ${Descri_x00e7__x00e3_o}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_Privacy_Notice
       condition: ${privacy_notice.size() > 0}

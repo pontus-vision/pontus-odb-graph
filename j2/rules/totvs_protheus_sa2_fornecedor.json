@@ -38,6 +38,12 @@
           {
             "name": "Person_Natural_Full_Name",
             "val": "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
