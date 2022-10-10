@@ -1301,6 +1301,7 @@ rules:
             processAll: true
 
       - label: Person_Natural
+        condition: "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() > 0}"
         props:
           Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
           Full_Name:
