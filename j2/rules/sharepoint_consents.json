@@ -59,6 +59,7 @@
       },
       {
         "label": "Person_Natural",
+        "condition": "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Person_Natural_Customer_ID",
@@ -67,7 +68,7 @@
           },
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${name?.trim()?.toUpperCase()}",
+            "val": "${com.pontusvision.utils.NLPCleaner.normalizeName(name)}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

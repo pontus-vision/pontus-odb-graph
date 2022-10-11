@@ -1301,10 +1301,12 @@ rules:
             processAll: true
 
       - label: Person_Natural
+        condition: "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() > 0}"
         props:
           Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
           Full_Name:
-            val: "${name?.trim()?.toUpperCase()}"
+            val: "${com.pontusvision.utils.NLPCleaner.normalizeName(name)}"
+            excludeFromUpdate: true
             excludeFromSearch: true
           Last_Update_Date:
             val: "${Modified}"

@@ -750,7 +750,7 @@ class Matcher {
     long counter = 0
     sb.append("(")
     mandatoryFields.each { field ->
-      if (field.attribNativeVal) {
+      if ("".equals(field.attribNativeVal) || field.attribNativeVal) {
         if (counter > 0) {
           sb.append(" AND ")
         }
@@ -772,7 +772,7 @@ class Matcher {
     long counter = 0
     sb.append("(")
     mandatoryFields.each { field ->
-      if (field.attribNativeVal) {
+      if ("".equals(field.attribNativeVal) || field.attribNativeVal) {
         if (counter > 0) {
           sb.append(" AND ")
         }

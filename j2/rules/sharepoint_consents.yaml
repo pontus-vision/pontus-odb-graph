@@ -41,14 +41,15 @@ updatereq:
           postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
     
     - label: Person_Natural
+      condition: ${identity?.replaceAll('[^0-9]', '')?.trim()?.length() > 0}
       props:
         - name: Person_Natural_Customer_ID
           val: ${identity?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
         - name: Person_Natural_Full_Name
-          val: ${name?.trim()?.toUpperCase()}
+          val: ${com.pontusvision.utils.NLPCleaner.normalizeName(name)}
           mandatoryInSearch: False
-          excludeFromSearch: True
+          excludeFromUpdate: True
         - name: Person_Natural_Last_Update_Date
           val: ${Modified}
           mandatoryInSearch: False

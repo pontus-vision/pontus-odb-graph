@@ -1,10 +1,12 @@
 package com.pontusvision.gdpr;
 
+import com.orientechnologies.orient.core.sql.executor.OResultSet;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -175,5 +177,145 @@ public class PVSharepointConsentTests extends AppTest {
     }
 
   }
+
+  @Test
+  public void test00004ConsentsSameNum() throws InterruptedException {
+    try {
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-consentimentos-same-num.json",
+              "$.queryResp[*].fields", "sharepoint_consents");
+
+      OResultSet resultSet =
+              App.graph.executeSql("SELECT count(*) as ct FROM Person_Natural", Collections.EMPTY_MAP).getRawResultSet();
+      String countPersonNatural  = resultSet.next().getProperty("ct").toString();
+      resultSet.close();
+      assertEquals("1", countPersonNatural,
+              "There should be only one Person Natural in the graph, because Customer_ID, which is the main key, is same number.");
+
+//      TODO: check excludeFromUpdate, it doesn't seem to be working.
+      String getPersonNaturalCustomerID =
+              App.executor.eval("App.g.V().has('Event_Group_Ingestion_Type', eq('sharepoint/consent')).as('group_ingestion')" +
+                      ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('Consent')).as('event_ingestion')" +
+                      ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
+//          Person_Natural_Full_Name = MODIFIED because it's the last registry and excludeFromUpdate seems to not be working.
+                      ".has('Person_Natural_Full_Name', eq('MODIFIED'))" +
+                      ".values('Person_Natural_Customer_ID').next().toString()").get().toString();
+      assertEquals("12345", getPersonNaturalCustomerID, "MODIFIED's Customer ID");
+
+      // Count Event_Consent SQL
+        resultSet =
+                App.graph.executeSql("SELECT count(*) as ct FROM Event_Consent", Collections.EMPTY_MAP).getRawResultSet();
+        String countEventConsent  = resultSet.next().getProperty("ct").toString();
+        resultSet.close();
+        assertEquals("8", countEventConsent, "counting Event_Consent");
+
+      // test empty Event_Consent_Customer_ID with SQL
+        resultSet =
+                App.graph.executeSql("SELECT count(*) as ct " +
+                                "FROM Event_Consent " +
+                                "WHERE Event_Consent_Customer_ID = ''",
+                        Collections.EMPTY_MAP).getRawResultSet();
+
+        String countEventConsentCustomerIDEmpty  = resultSet.next().getProperty("ct").toString();
+        resultSet.close();
+        assertEquals("0", countEventConsentCustomerIDEmpty,"Customer_ID is not empty");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
+  @Test
+  public void test00005ConsentsLetters() throws InterruptedException {
+    try {
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-consentimentos-letters.json",
+        "$.queryResp[*].fields", "sharepoint_consents");
+
+      OResultSet resultSet =
+        App.graph.executeSql("SELECT count(*) as ct FROM Person_Natural", Collections.EMPTY_MAP).getRawResultSet();
+      String countPersonNatural  = resultSet.next().getProperty("ct").toString();
+      resultSet.close();
+      assertEquals("0", countPersonNatural,
+        "There should no Person_Natural in the graph, because Customer_ID, which is the main key, is empty. It doesn't satisfy the condition.");
+
+      String getEventIngestionType =
+        App.executor.eval("App.g.V().has('Event_Group_Ingestion_Type', eq('sharepoint/consent')).as('group_ingestion')" +
+          ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('Consent')).as('event_ingestion')" +
+          ".values('Event_Ingestion_Type').next().toString()").get().toString();
+      assertEquals("Consent", getEventIngestionType,"Event_Ingestion_Type should be Consent");
+
+      // Count Event_Consent SQL
+        resultSet =
+                App.graph.executeSql("SELECT count(*) as ct FROM Event_Consent", Collections.EMPTY_MAP).getRawResultSet();
+        String countEventConsent  = resultSet.next().getProperty("ct").toString();
+        resultSet.close();
+        assertEquals("8", countEventConsent, "counting Event_Consent");
+//        Even though there's only one Person_Natural, there are 8 Event_Consent because Event_Consents are keyed by Form_Id,
+//      not by Customer_ID. In this example, there are 8 different Form_Id's, but only one Customer_ID.
+
+
+      // test empty Event_Consent_Customer_ID with SQL
+        resultSet =
+                App.graph.executeSql("SELECT count(*) as ct " +
+                                "FROM Event_Consent " +
+                                "WHERE Event_Consent_Customer_ID = ''",
+                        Collections.EMPTY_MAP).getRawResultSet();
+
+        String countEventConsentCustomerIDEmpty  = resultSet.next().getProperty("ct").toString();
+        resultSet.close();
+        assertEquals("8", countEventConsentCustomerIDEmpty,
+                "All 8 Event_Consents have empty Customer_ID");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
+  @Test
+  public void test00006NormalizeNames() throws InterruptedException {
+    try {
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-consentimentos-names.json",
+              "$.queryResp[*].fields", "sharepoint_consents");
+
+      String getEventIngestionType =
+        App.executor.eval("App.g.V().has('Event_Group_Ingestion_Type', eq('sharepoint/consent')).as('group_ingestion')" +
+          ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('Consent')).as('event_ingestion')" +
+          ".values('Event_Ingestion_Type').next().toString()").get().toString();
+      assertEquals("Consent", getEventIngestionType,"Event_Ingestion_Type should be Consent");
+
+      StringBuffer sb = new StringBuffer();
+      OResultSet resultSet =
+        App.graph.executeSql("SELECT Person_Natural_Full_Name as ct " +
+          "FROM Person_Natural", Collections.EMPTY_MAP).getRawResultSet();
+      while (resultSet.hasNext()) {
+        sb.append(resultSet.next().getProperty("ct").toString());
+      }
+      resultSet.close();
+      assertEquals("VITORIA JULIA\n" +
+        "MARCIA ELIS\n" +
+        "SZSZYAAAAAACEEEEIIIINOOOOOUUUUYAAAAAACEEEEIIIINOOOOOUUUUYY\n" +
+        "GLRIA FERNANDES\n" +
+        "JANOS GABOR\n" +
+        "FATIMA BERNARDES" +
+        "", resultSet, "Person_Natural_Full_Name should be normalized");
+
+      String normalizeTest =
+        com.pontusvision.utils.NLPCleaner.normalizeName("ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðñòóôõöùúûüýÿ");
+      assertEquals("SZSZYAAAAAACEEEEIIIINOOOOOUUUUYAAAAAACEEEEIIIINOOOOOUUUUYY", normalizeTest);
+
+      String returnEmptyString =
+        com.pontusvision.utils.NLPCleaner.normalizeName("`~^´¨àãâ");
+      assertEquals("", returnEmptyString, "Should return empty string");
+
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
 
 }
