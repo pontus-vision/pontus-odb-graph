@@ -295,22 +295,24 @@ public class PVSharepointConsentTests extends AppTest {
       assertEquals("JANOS GABOR", getJanosGaborWithouAccents,
         "JANOS GABOR should be normalized. Uppercased and without accents.");
 
-//      StringBuffer sb = new StringBuffer();
-//      OResultSet resultSet =
-//        App.graph.executeSql("SELECT Person_Natural_Full_Name as name " +
-//          "FROM Person_Natural", Collections.EMPTY_MAP).getRawResultSet();
-//      while (resultSet.hasNext()) {
-//        sb.append(resultSet.next().getProperty("name").toString());
-//      }
-//      resultSet.close();
-//      assertEquals("VITORIA JULIA\n" +
-//        "MARCIA ELIS\n" +
-//        "SZSZYAAAAAACEEEEIIIINOOOOOUUUUYAAAAAACEEEEIIIINOOOOOUUUUYY\n" +
-//        "GLORIA FERNANDES\n" +
-//        "JANOS GABOR\n" +
-//        "FATIMA BERNARDES" +
-//        "", sb, "Person_Natural_Full_Name should be normalized");
+      // nao consegue retornar (JavaNullPointerException)
+      StringBuffer sb = new StringBuffer();
+      OResultSet resultSet =
+        App.graph.executeSql("SELECT Person_Natural_Full_Name as name " +
+          "FROM Person_Natural WHERE Person_Natural_Full_Name = 'SZSZYAAAAAACEEEEIIIINOOOOOUUUUYAAAAAACEEEEIIIINOOOOOUUUUYY'", Collections.EMPTY_MAP).getRawResultSet();
+      while (resultSet.hasNext()) {
+        sb.append(resultSet.next().getProperty("name").toString());
+      }
+      resultSet.close();
+      assertEquals("VITORIA JULIA\n" +
+        "MARCIA ELIS\n" +
+        "SZSZYAAAAAACEEEEIIIINOOOOOUUUUYAAAAAACEEEEIIIINOOOOOUUUUYY\n" +
+        "GLORIA FERNANDES\n" +
+        "JANOS GABOR\n" +
+        "FATIMA BERNARDES" +
+        "", sb, "Person_Natural_Full_Name should be normalized");
 
+      //Funciona, porem temos que converter para Java
 //      Groovy easier and better version of SQL query
 
 //      StringBuffer sb = new StringBuffer();
