@@ -70,6 +70,7 @@
             "name": "Person_Natural_Full_Name",
             "val": "${com.pontusvision.utils.NLPCleaner.normalizeName(name)}",
             "mandatoryInSearch": false,
+            "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {

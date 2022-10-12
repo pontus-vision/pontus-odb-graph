@@ -49,7 +49,8 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${com.pontusvision.utils.NLPCleaner.normalizeName(name)}
           mandatoryInSearch: False
-          excludeFromUpdate: True
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
         - name: Person_Natural_Last_Update_Date
           val: ${Modified}
           mandatoryInSearch: False

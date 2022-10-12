@@ -68,10 +68,10 @@ public class NLPCleaner {
     if (str == null) {
       return str;
     }
-    String retVal = str.trim().toUpperCase();
+    String retVal = str.trim().toUpperCase(); // '  a   ' && '  a   ' -> 'A'
     retVal = java.text.Normalizer.normalize(retVal, java.text.Normalizer.Form.NFD);
-    retVal = retVal.replaceAll("\\p{M}", "");
-    retVal = retVal.replaceAll("[^\\p{ASCII}]", "");
+    retVal = retVal.replaceAll("\\p{M}", "");// á -> a | ´
+    retVal = retVal.replaceAll("[^\\p{ASCII}]", ""); // deletes all non-ascii chars
     return retVal;
   }
 
