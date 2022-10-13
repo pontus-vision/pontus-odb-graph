@@ -53,6 +53,7 @@
         <openhtmltopdf-core.version>1.0.10</openhtmltopdf-core.version>
         <openhtmltopdf-pdfbox.version>1.0.10</openhtmltopdf-pdfbox.version>
         <jsoup.version>1.15.3</jsoup.version>
+        <jaxb-api.version>2.3.0</jaxb-api.version>
     </properties>
     <!--    <dependencyManagement>-->
     <!--        <dependencies>-->
@@ -67,6 +68,11 @@
     <!--    </dependencyManagement>-->
 
     <dependencies>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api.version}</version>
+        </dependency>
         <!--        <dependency>-->
         <!--            <groupId>org.apache.commons</groupId>-->
         <!--            <artifactId>commons-csv</artifactId>-->

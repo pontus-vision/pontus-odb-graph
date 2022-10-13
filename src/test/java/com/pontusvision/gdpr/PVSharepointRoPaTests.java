@@ -193,12 +193,12 @@ public class PVSharepointRoPaTests extends AppTest {
       assertEquals("0", lakshmiPrivacyNotices, "Lakshmi has NO Privacy notices.");
 
       String janosPrivacyNotices =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GÁBOR')).out('Consent')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GABOR')).out('Consent')" +
                       ".out('Has_Privacy_Notice').count().next().toString()").get().toString();
       assertEquals("2", janosPrivacyNotices, "Janos has 2 Privacy notices.");
 
       String janosDataProcedures =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GÁBOR')).out('Consent')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GABOR')).out('Consent')" +
                       ".out('Consent').count().next().toString()").get().toString();
       assertEquals("1", janosDataProcedures, "Janos has 1 Data procedure linked to its Consent.");
 
