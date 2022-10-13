@@ -147,6 +147,7 @@ updatereq:
         - name: Object_Privacy_Notice_Who_Is_Collecting
           val: [CRM System]
           mandatoryInSearch: True
+          excludeFromUpdate: True
 
   edges:
   - label: Uses_Email

@@ -59,17 +59,12 @@
       },
       {
         "label": "Person_Natural",
+        "condition": "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}",
         "props": [
           {
             "name": "Person_Natural_Customer_ID",
             "val": "${identity?.replaceAll('[^0-9]', '')?.trim()}",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Natural_Full_Name",
-            "val": "${name?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           },
           {
             "name": "Person_Natural_Last_Update_Date",
