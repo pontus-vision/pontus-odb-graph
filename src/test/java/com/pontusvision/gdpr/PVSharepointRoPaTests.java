@@ -186,6 +186,8 @@ public class PVSharepointRoPaTests extends AppTest {
     try {
       jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
+//      jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos2.json",
+//              "$.queryResp[*].fields", "sharepoint_consents");
 
       String lakshmiPrivacyNotices =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('LAKSHMI')).out('Consent')" +

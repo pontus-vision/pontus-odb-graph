@@ -26,6 +26,7 @@ public class PVSharepointConsentTests extends AppTest {
   @Test
   public void test00001SharepointConsents() throws InterruptedException {
     try {
+      jsonTestUtil("totvs/totvs-consent-base.json", "$.objs", "totvs_protheus_sa1_clientes"); //just adding some people
       jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
@@ -35,12 +36,12 @@ public class PVSharepointConsentTests extends AppTest {
       assertEquals("0", lakshmiPrivacyNotices, "Lakshmi has NO Privacy notices.");
 
       String janosPrivacyNotices =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GABOR')).out('Consent')" +
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GÁBOR')).out('Consent')" +
                       ".out('Has_Privacy_Notice').count().next().toString()").get().toString();
       assertEquals("2", janosPrivacyNotices, "Janos has 2 Privacy notices.");
 
       String janosDataProcedures =
-          App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GABOR'))" +
+          App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GÁBOR'))" +
               ".out('Consent').as('eventconsent')" +
               ".out('Consent').dedup().as('dataprocs')" +
               ".count().next().toString()").get().toString();
@@ -60,12 +61,12 @@ public class PVSharepointConsentTests extends AppTest {
               App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
                       ".in('Consent').out('Has_Ingestion_Event').in('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
                       ".properties('Object_Data_Source_Name').value().next().toString()").get().toString();
-      assertEquals("SHAREPOINT/CONSENT", getObjectDataSourceName, "Data Source Name.");
+      assertEquals("TOTVS/PROTHEUS/SA1_CLIENTES", getObjectDataSourceName, "Data Source Name.");
 
       String getPersonNaturalCustomerID =
               App.executor.eval("App.g.V().has('Event_Consent_Form_Id', eq('1')).in('Consent')" +
                       ".properties('Person_Natural_Customer_ID').value().next().toString()").get().toString();
-      assertEquals("123", getPersonNaturalCustomerID, "Karla's Customer Id Number");
+      assertEquals("12389256473", getPersonNaturalCustomerID, "Karla's Customer Id Number");
 
       // Testing new prop Event_Consent_Description [pontus-odb-graph v.1.15.90]
         String getLakshmiEventConsentDescription =
@@ -86,6 +87,7 @@ public class PVSharepointConsentTests extends AppTest {
   @Test
   public void test00002UpsertSharepointConsents() throws InterruptedException {
     try {
+      jsonTestUtil("totvs/totvs-consent-base.json", "$.objs", "totvs_protheus_sa1_clientes"); //just adding some people
       jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
@@ -181,11 +183,12 @@ public class PVSharepointConsentTests extends AppTest {
   @Test
   public void test00004ConsentsSameNum() throws InterruptedException {
     try {
+      jsonTestUtil("totvs/totvs-consent-same-num-base.json", "$.objs", "totvs_protheus_sa1_clientes");
       jsonTestUtil("sharepoint/pv-extract-sharepoint-consentimentos-same-num.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
       OResultSet resultSet =
-              App.graph.executeSql("SELECT count(*) as ct FROM Person_Natural WHERE Person_Natural_Customer_ID = '12345'", Collections.EMPTY_MAP).getRawResultSet();
+              App.graph.executeSql("SELECT count(*) as ct FROM Person_Natural WHERE Person_Natural_Customer_ID = '12345678912'", Collections.EMPTY_MAP).getRawResultSet();
       String countPersonNatural  = resultSet.next().getProperty("ct").toString();
       resultSet.close();
       assertEquals("1", countPersonNatural,
@@ -199,11 +202,11 @@ public class PVSharepointConsentTests extends AppTest {
 //          Person_Natural_Full_Name = MODIFIED because it's the last registry and excludeFromUpdate seems to not be working.
                       ".has('Person_Natural_Full_Name', eq('MODIFIED'))" +
                       ".values('Person_Natural_Customer_ID').next().toString()").get().toString();
-      assertEquals("12345", getPersonNaturalCustomerID, "MODIFIED's Customer ID");
+      assertEquals("12345678912", getPersonNaturalCustomerID, "MODIFIED's Customer ID");
 
       // Count Event_Consent SQL
         resultSet =
-                App.graph.executeSql("SELECT count(*) as ct FROM Event_Consent WHERE Event_Consent_Customer_ID = '12345'", Collections.EMPTY_MAP).getRawResultSet();
+                App.graph.executeSql("SELECT count(*) as ct FROM Event_Consent WHERE Event_Consent_Customer_ID = '12345678912'", Collections.EMPTY_MAP).getRawResultSet();
         String countEventConsent  = resultSet.next().getProperty("ct").toString();
         resultSet.close();
         assertEquals("8", countEventConsent, "counting Event_Consent");
@@ -229,6 +232,7 @@ public class PVSharepointConsentTests extends AppTest {
   @Test
   public void test00005ConsentsLetters() throws InterruptedException {
     try {
+      jsonTestUtil("totvs/totvs-consent-letters-base.json", "$.objs", "totvs_protheus_sa1_clientes");
       jsonTestUtil("sharepoint/pv-extract-sharepoint-consentimentos-letters.json",
         "$.queryResp[*].fields", "sharepoint_consents");
 
@@ -274,76 +278,70 @@ public class PVSharepointConsentTests extends AppTest {
 
   }
 
-  @Test
-  public void test00006NormalizeNames() throws InterruptedException {
-    try {
-//      jsonTestUtil("totvs/totvs-sa1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
-      jsonTestUtil("sharepoint/pv-extract-sharepoint-consentimentos-names.json",
-              "$.queryResp[*].fields", "sharepoint_consents");
+//  @Test
+//  public void test00006NormalizeNames() throws InterruptedException {
+//    try {
+////      jsonTestUtil("totvs/totvs-sa1-real.json", "$.objs", "totvs_protheus_sa1_clientes");
+//      jsonTestUtil("sharepoint/pv-extract-sharepoint-consentimentos-names.json",
+//              "$.queryResp[*].fields", "sharepoint_consents");
+////
+////      String getEventIngestionType =
+////        App.executor.eval("App.g.V().has('Event_Group_Ingestion_Type', eq('sharepoint/consent')).as('group_ingestion')" +
+////          ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('Consent')).as('event_ingestion')" +
+////          ".values('Event_Ingestion_Type').next().toString()").get().toString();
+////      assertEquals("Consent", getEventIngestionType,"Event_Ingestion_Type should be Consent");
+////
+////      String getJanosGaborWithouAccents =
+////        App.executor.eval("App.g.V().has('Event_Group_Ingestion_Type', eq('sharepoint/consent')).as('group_ingestion')" +
+////          ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('Consent')).as('event_ingestion')" +
+////          ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
+////          ".has('Person_Natural_Customer_ID', eq('6'))" +
+////          ".values('Person_Natural_Full_Name').next().toString()").get().toString();
+////      assertEquals("JANOS GABOR", getJanosGaborWithouAccents,
+////        "JANOS GABOR should be normalized. Uppercased and without accents.");
 //
-//      String getEventIngestionType =
-//        App.executor.eval("App.g.V().has('Event_Group_Ingestion_Type', eq('sharepoint/consent')).as('group_ingestion')" +
-//          ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('Consent')).as('event_ingestion')" +
-//          ".values('Event_Ingestion_Type').next().toString()").get().toString();
-//      assertEquals("Consent", getEventIngestionType,"Event_Ingestion_Type should be Consent");
-//
-//      String getJanosGaborWithouAccents =
-//        App.executor.eval("App.g.V().has('Event_Group_Ingestion_Type', eq('sharepoint/consent')).as('group_ingestion')" +
-//          ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('Consent')).as('event_ingestion')" +
-//          ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
-//          ".has('Person_Natural_Customer_ID', eq('6'))" +
-//          ".values('Person_Natural_Full_Name').next().toString()").get().toString();
-//      assertEquals("JANOS GABOR", getJanosGaborWithouAccents,
-//        "JANOS GABOR should be normalized. Uppercased and without accents.");
-
-      // nao consegue retornar (JavaNullPointerException)
+//      // nao consegue retornar (JavaNullPointerException)
 //      StringBuffer sb = new StringBuffer();
 //      OResultSet resultSet =
 //        App.graph.executeSql("SELECT Person_Natural_Full_Name as name " +
-//          "FROM Person_Natural WHERE Person_Natural_Full_Name = 'SZSZYAAAAAACEEEEIIIINOOOOOUUUUYAAAAAACEEEEIIIINOOOOOUUUUYY'", Collections.EMPTY_MAP).getRawResultSet();
+//          "FROM Person_Natural WHERE Person_Natural_Full_Name = 'JANOS GÁBOR'", Collections.EMPTY_MAP).getRawResultSet();
 //      while (resultSet.hasNext()) {
 //        sb.append(resultSet.next().getProperty("name").toString());
 //      }
 //      resultSet.close();
-//      assertEquals("VITORIA JULIA\n" +
-//        "MARCIA ELIS\n" +
-//        "SZSZYAAAAAACEEEEIIIINOOOOOUUUUYAAAAAACEEEEIIIINOOOOOUUUUYY\n" +
-//        "GLORIA FERNANDES\n" +
-//        "JANOS GABOR\n" +
-//        "FATIMA BERNARDES" +
-//        "", sb, "Person_Natural_Full_Name should be normalized");
-
-      //Funciona, porem temos que converter para Java
-//      Groovy easier and better version of SQL query
-
-//      StringBuffer sb = new StringBuffer();
-//      def results = App.graph.executeSql(
-//        """
-//        SELECT Person_Natural_Full_Name as name
-//        FROM Person_Natural
-//        """, [:]);
-//      for (def result : results) {
-//        String name = result.getProperty('name');
-//        sb.append(name).append('\n')
-//      }
-//      sb.toString();
-
-
-      String normalizeTest =
-        com.pontusvision.utils.NLPCleaner.normalizeName("ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðñòóôõöùúûüýÿ");
-      assertEquals("SZSZYAAAAAACEEEEIIIINOOOOOUUUUYAAAAAACEEEEIIIINOOOOOUUUUYY", normalizeTest,
-        "The resulting string is 2 chars shorter than the original string, because the letters Ð and ð could not be normalized.");
-
-//      String returnEmptyString =
-//        com.pontusvision.utils.NLPCleaner.normalizeName("`~^´¨àãâ"); // doesn't work for ` , ~ and ^
-//      assertEquals("", returnEmptyString, "Should return empty string");
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      assertNull(e);
-    }
-
-  }
+//      assertEquals("JANOS GÁBOR", sb.toString(), "Person_Natural_Full_Name should be normalized");
+//
+//      //Funciona, porem temos que converter para Java
+////      Groovy easier and better version of SQL query
+//
+////      StringBuffer sb = new StringBuffer();
+////      def results = App.graph.executeSql(
+////        """
+////        SELECT Person_Natural_Full_Name as name
+////        FROM Person_Natural
+////        """, [:]);
+////      for (def result : results) {
+////        String name = result.getProperty('name');
+////        sb.append(name).append('\n')
+////      }
+////      sb.toString();
+//
+//
+//      String normalizeTest =
+//        com.pontusvision.utils.NLPCleaner.normalizeName("ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðñòóôõöùúûüýÿ");
+//      assertEquals("SZSZYAAAAAACEEEEIIIINOOOOOUUUUYAAAAAACEEEEIIIINOOOOOUUUUYY", normalizeTest,
+//        "The resulting string is 2 chars shorter than the original string, because the letters Ð and ð could not be normalized.");
+//
+////      String returnEmptyString =
+////        com.pontusvision.utils.NLPCleaner.normalizeName("`~^´¨àãâ"); // doesn't work for ` , ~ and ^
+////      assertEquals("", returnEmptyString, "Should return empty string");
+//
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      assertNull(e);
+//    }
+//
+//  }
 
 
 }

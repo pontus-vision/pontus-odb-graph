@@ -21,7 +21,7 @@ scriptEngines: {
               org.apache.tinkerpop.gremlin.jsr223.ScriptFileGremlinPlugin: { files: [ /orientdb/conf/bootstrap.groovy ] }
 
 #               org.apache.tinkerpop.gremlin.jsr223.ImportGremlinPlugin: {classImports: [java.lang.Math, com.pontusvision.gdpr.CIDRUtils, com.joestelmach.natty.DateGroup, com.joestelmach.natty.Parser, com.pontusvision.jpostal.AddressParser ,com.pontusvision.jpostal.ParsedComponent, com.pontusvision.utils.PostCode], methodImports: [java.lang.Math#*]},
-#               org.apache.tinkerpop.gremlin.jsr223.ScriptFileGremlinPlugin: {files: [/orientdb/conf/globals.groovy,/orientdb/conf/matching.groovy,/orientdb/conf/formio.groovy   ,  /orientdb/conf/gdpr.groovy, /orientdb/conf/bootstrap.groovy]}
+#               org.apache.tinkerpop.gremlin.jsr223.ScriptFileGremlinPlugin: {files: [/orientdb/conf/globals.groovy,/orientdb/conf/matchin'g.groovy,/orientdb/conf/formio.groovy   ,  /orientdb/conf/gdpr.groovy, /orientdb/conf/bootstrap.groovy]}
                }}}
 
 serializers:

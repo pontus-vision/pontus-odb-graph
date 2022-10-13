@@ -1301,14 +1301,15 @@ rules:
             processAll: true
 
       - label: Person_Natural
-        condition: "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() > 0}"
+        condition: "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
         props:
           Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
-          Full_Name:
-            val: "${com.pontusvision.utils.NLPCleaner.normalizeName(name)}"
-            type: "[Ljava.lang.String;"
-#            postProcessor: "${it?.toUpperCase()?.trim()}"
-            excludeFromSearch: true
+#          Full_Name:
+#            val: "${com.pontusvision.utils.NLPCleaner.normalizeName(name)}"
+#            type: "[Ljava.lang.String;"
+##            postProcessor: "${it?.toUpperCase()?.trim()}"
+#            excludeFromUpdate: true
+#            excludeFromSearch: true
           Last_Update_Date:
             val: "${Modified}"
             excludeFromSearch: true

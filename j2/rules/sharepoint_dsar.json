@@ -8,12 +8,14 @@
           {
             "name": "Person_Organisation_Name",
             "val": "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
             "val": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           },
           {
             "name": "Person_Organisation_Last_Update_Date",
@@ -37,7 +39,8 @@
           {
             "name": "Person_Natural_Customer_ID",
             "val": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },
