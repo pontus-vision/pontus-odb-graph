@@ -159,9 +159,10 @@ public class PVSharepointConsentTests extends AppTest {
           ".has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
           ".has('Event_Consent_Customer_ID', eq('45637846571'))" +
           ".in('Consent').has('Person_Natural_Customer_ID', eq('45637846571'))" +
-          ".values('Person_Natural_Full_Name').next().toString()").get().toString();
-      assertEquals("BOB NAKAMURA", getPersonNaturalByPrivacyNotice,
-        "This Privacy Notice POLE Graph path leads to Bob Nakamura");
+          ".out('Has_Ingestion_Event').in('Has_Ingestion_Event')"+
+                ".values('Event_Group_Ingestion_Type').next().toString()").get().toString();
+      assertEquals("sharepoint/consent", getPersonNaturalByPrivacyNotice,
+        "From privacy notice to consent");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
