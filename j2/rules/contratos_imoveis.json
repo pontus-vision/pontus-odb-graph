@@ -11,7 +11,6 @@
             "predicate": "textContainsFuzzy",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
-            "excludeFromUpdate": true,
             "postProcessor": "${it?.toUpperCase()?.trim()}"
           },
           {
@@ -20,7 +19,6 @@
             "predicate": "textContainsFuzzy",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
-            "excludeFromUpdate": true,
             "postProcessor": "${it?.toUpperCase()?.trim()}"
           }
         ]
@@ -33,7 +31,6 @@
             "val": "${pg_nlp_res_post_code}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;",
-            "excludeFromUpdate": true,
             "postProcessor": "${com.pontusvision.utils.PostCode.format(eachPostCode)}",
             "postProcessorVar": "eachPostCode"
           }
@@ -46,8 +43,7 @@
             "name": "Object_Email_Address_Email",
             "val": "${pg_nlp_res_emailaddress?.trim()?.toLowerCase()}",
             "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;",
-            "excludeFromUpdate": true
+            "type": "[Ljava.lang.String;"
           }
         ]
       },

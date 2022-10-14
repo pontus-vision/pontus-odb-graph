@@ -14,11 +14,9 @@ updatereq:
         - name: Object_Policies_Text
           val: ${Texto}
           mandatoryInSearch: True
-          excludeFromUpdate: True
         - name: Object_Policies_Type
           val: ${Tipo_de_Politica}
           mandatoryInSearch: True
-          excludeFromUpdate: True
     
     - label: Object_Data_Source
       props:

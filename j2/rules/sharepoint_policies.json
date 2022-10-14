@@ -12,14 +12,12 @@
           {
             "name": "Object_Policies_Text",
             "val": "${text}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Object_Policies_Type",
             "val": "${Title}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           }
         ]
       },

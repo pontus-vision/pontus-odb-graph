@@ -10,11 +10,9 @@ updatereq:
         - name: Object_Policies_Text
           val: ${text}
           mandatoryInSearch: True
-          excludeFromUpdate: True
         - name: Object_Policies_Type
           val: ${Title}
           mandatoryInSearch: True
-          excludeFromUpdate: True
     
     - label: Object_Data_Source
       name: sharepoint

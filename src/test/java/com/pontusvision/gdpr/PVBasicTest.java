@@ -282,8 +282,8 @@ public class PVBasicTest extends AppTest {
   public void test00005TotvsPloomes() throws InterruptedException {
     try {
 
-      jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
       jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+      jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
 
 //    t'est0000 for Object_Data_Source_Name
       String userId2 =

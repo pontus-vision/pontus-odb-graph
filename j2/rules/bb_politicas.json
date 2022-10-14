@@ -18,14 +18,12 @@
           {
             "name": "Object_Policies_Text",
             "val": "${Texto}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Object_Policies_Type",
             "val": "${Tipo_de_Politica}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           }
         ]
       },

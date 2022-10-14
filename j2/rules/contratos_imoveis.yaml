@@ -10,14 +10,12 @@ updatereq:
           predicate: textContainsFuzzy
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
-          excludeFromUpdate: True
           postProcessor: ${it?.toUpperCase()?.trim()}
         - name: Person_Natural_Full_Name
           val: ${pg_nlp_res_person}
           predicate: textContainsFuzzy
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
-          excludeFromUpdate: True
           postProcessor: ${it?.toUpperCase()?.trim()}
     
     - label: Location_Address
@@ -26,7 +24,6 @@ updatereq:
           val: ${pg_nlp_res_post_code}
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
-          excludeFromUpdate: True
           postProcessor: ${com.pontusvision.utils.PostCode.format(eachPostCode)}
           postProcessorVar: eachPostCode
     
@@ -36,7 +33,6 @@ updatereq:
           val: ${pg_nlp_res_emailaddress?.trim()?.toLowerCase()}
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
-          excludeFromUpdate: True
     
     - label: Event_Ingestion
       props:
