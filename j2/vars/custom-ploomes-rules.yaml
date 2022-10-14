@@ -7,6 +7,7 @@ rules:
         props:
           Full_Name:
             val: "${Name?.trim()?.toUpperCase()}"
+            excludeFromUpdate: true
             excludeFromSearch: true
             # excludeFromUpdate cannot be used because it will not allow to fill the property, not even in the first run
             # a condition to check first run is needed ... if first time set excludeFromUpdate to false, otherwise true
@@ -25,6 +26,7 @@ rules:
           Registration_Number: "${CNPJ?.replaceAll('[^0-9]', '')}"
           Name:
             val: "${LegalName?.trim()?.toUpperCase()}"
+            excludeFromUpdate: true
             excludeFromSearch: true
           Id: "${CNPJ?.replaceAll('[^0-9]', '')}"
           Last_Update_Date:

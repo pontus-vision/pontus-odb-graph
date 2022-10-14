@@ -25,6 +25,7 @@ rules:
       - label: Person_Natural
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 11}"
         props:
+#         better to keep Full_Name excluded from search, because it is not a good search field since it is not unique
           Full_Name:
             val: "${A1_NOME?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -40,6 +41,7 @@ rules:
       - label: Person_Organisation
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
+#         better to keep Name excluded from search, because it is not a good search field since it isn't unique
           Name:
             val: "${A1_NOME?.trim()?.toUpperCase()}"
             excludeFromSearch: true
