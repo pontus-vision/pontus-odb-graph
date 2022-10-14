@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${Name?.trim()?.toUpperCase()}",
+            "val": "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -36,7 +36,7 @@
           },
           {
             "name": "Person_Organisation_Name",
-            "val": "${LegalName?.trim()?.toUpperCase()}",
+            "val": "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

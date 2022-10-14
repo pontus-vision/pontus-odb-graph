@@ -298,7 +298,7 @@ public class PVBasicTest extends AppTest {
                       ".next().id().toString()").get().toString();
       String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 + "\").bothE().count().next().toString()";
       String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
-      assertEquals("4", comidas2Connections);
+      assertEquals("9", comidas2Connections, "COMIDAS 2 has 6 edges comming from TOTVS and 3 from PLOOMES");
 
 //    test0000 COUNT(Edges) for Object_Email_Address
       String userId4 =
@@ -407,8 +407,8 @@ public class PVBasicTest extends AppTest {
   // A new version of this Test can be found @ PVTotvsTest.java
   @Test
   public void test00009TotvsProtheusSa1Clientes() throws InterruptedException {
-    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
     jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
 //    jsonTestUtil("totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
 //    jsonTestUtil("totvs-sa2-real.json", "$.objs", "totvs_protheus_sa1_clientes");
 

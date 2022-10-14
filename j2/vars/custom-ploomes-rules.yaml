@@ -6,7 +6,7 @@ rules:
         condition: "${TypeId == 2 && LegalName != null}"
         props:
           Full_Name:
-            val: "${Name?.trim()?.toUpperCase()}"
+            val: "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
             excludeFromSearch: true
             # excludeFromUpdate cannot be used because it will not allow to fill the property, not even in the first run
@@ -25,7 +25,7 @@ rules:
         props:
           Registration_Number: "${CNPJ?.replaceAll('[^0-9]', '')}"
           Name:
-            val: "${LegalName?.trim()?.toUpperCase()}"
+            val: "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
             excludeFromSearch: true
           Id: "${CNPJ?.replaceAll('[^0-9]', '')}"

@@ -22,56 +22,49 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PVSharepointConsentTests extends AppTest {
 
   @Test
-  public void test00001SharepointConsents() throws InterruptedException {
+  public void test0001SharepointConsents() throws InterruptedException {
     try {
+//      jsonTestUtil("totvs/totvs-consent-base.json",
+//              "$.queryResp[*].fields", "sharepoint_consents");
       jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
-              "$.queryResp[*].fields", "sharepoint_consents");
+        "$.queryResp[*].fields", "sharepoint_consents");
 
+//    POLE Sharepoint Consent doesn't have Person_Natural_Full_Name property anymore, we use Person_Natural_Customer_ID instead
       String lakshmiPrivacyNotices =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('LAKSHMI')).out('Consent')" +
-                      ".out('Has_Privacy_Notice').count().next().toString()").get().toString();
-      assertEquals("0", lakshmiPrivacyNotices, "Lakshmi has NO Privacy notices.");
+        App.executor.eval("App.g.V().has('Person_Natural_Customer_ID', eq('78391192021')).out('Consent')" +
+          ".out('Has_Privacy_Notice').count().next().toString()").get().toString();
+      assertEquals("0", lakshmiPrivacyNotices, "Lakshmi has NO Privacy notices."); // 78391192021 is Lakshmi's ID
 
       String janosPrivacyNotices =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GÁBOR')).out('Consent')" +
-                      ".out('Has_Privacy_Notice').count().next().toString()").get().toString();
-      assertEquals("2", janosPrivacyNotices, "Janos has 2 Privacy notices.");
+        App.executor.eval("App.g.V().has('Person_Natural_Customer_ID', eq('12343161718')).out('Consent')" +
+          ".out('Has_Privacy_Notice').count().next().toString()").get().toString();
+      assertEquals("2", janosPrivacyNotices, "Janos has 2 Privacy notices."); // 12343161718 is Janos' ID
 
       String janosDataProcedures =
-          App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('JANOS GÁBOR'))" +
-              ".out('Consent').as('eventconsent')" +
-              ".out('Consent').dedup().as('dataprocs')" +
-              ".count().next().toString()").get().toString();
-      assertEquals("1", janosDataProcedures, "Janos has 1 Data procedure linked to its Consent.");
+        App.executor.eval("App.g.V().has('Person_Natural_Customer_ID', eq('12343161718')).out('Consent')" +
+          ".out('Consent').count().next().toString()").get().toString();
+      assertEquals("1", janosDataProcedures, "Janos has 1 Data procedure linked to its Consent."); // 12343161718 is Janos' ID
 
       String petrusDataProcedures =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('PETRUS PAPASTATHOPOULOS')).out('Consent')" +
-                      ".out('Consent').count().next().toString()").get().toString();
-      assertEquals("0", petrusDataProcedures, "Petrus has NO Data procedures linked to its Consent.");
+        App.executor.eval("App.g.V().has('Person_Natural_Customer_ID', eq('67481131415')).out('Consent')" +
+          ".out('Consent').count().next().toString()").get().toString();
+      assertEquals("0", petrusDataProcedures, "Petrus has NO Data procedures linked to its Consent."); // 67481131415 is Janos' ID
 
       String laraPrivacyNotices =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('LARA CROFT')).out('Consent')" +
-                      ".out('Has_Privacy_Notice').count().next().toString()").get().toString();
-      assertEquals("1", laraPrivacyNotices, "Lara has one Privacy notices.");
+        App.executor.eval("App.g.V().has('Person_Natural_Customer_ID', eq('73841101112')).out('Consent')" +
+          ".out('Has_Privacy_Notice').count().next().toString()").get().toString();
+      assertEquals("1", laraPrivacyNotices, "Lara has one Privacy notices.");  // 73841101112 is Lara's ID
 
       String getObjectDataSourceName =
-              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
-                      ".in('Consent').out('Has_Ingestion_Event').in('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
-                      ".properties('Object_Data_Source_Name').value().next().toString()").get().toString();
+        App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
+          ".in('Consent').out('Has_Ingestion_Event').in('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+          ".properties('Object_Data_Source_Name').value().next().toString()").get().toString();
       assertEquals("SHAREPOINT/CONSENT", getObjectDataSourceName, "Data Source Name.");
 
       String getPersonNaturalCustomerID =
-              App.executor.eval("App.g.V().has('Event_Consent_Form_Id', eq('1')).in('Consent')" +
-                      ".properties('Person_Natural_Customer_ID').value().next().toString()").get().toString();
-      assertEquals("123", getPersonNaturalCustomerID, "Karla's Customer Id Number");
-
-      // Testing new prop Event_Consent_Description [pontus-odb-graph v.1.15.90]
-        String getLakshmiEventConsentDescription =
-                App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('Consent')).as('event-ingestion')" +
-                        ".in('Has_Ingestion_Event').has('Person_Natural_Full_Name', eq('LAKSHMI')).as('person')" +
-                        ".out('Consent').has('Event_Consent_Form_Id', eq('7')).as('consent')" +
-                        ".properties('Event_Consent_Description').value().next().toString()").get().toString();
-        assertEquals("stuvw", getLakshmiEventConsentDescription, "Consent Description");
+        App.executor.eval("App.g.V().has('Event_Consent_Form_Id', eq('1')).in('Consent')" +
+          ".properties('Person_Natural_Customer_ID').value().next().toString()").get().toString();
+      assertEquals("12389256473", getPersonNaturalCustomerID, "Karla's Customer Id Number");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -141,33 +134,34 @@ public class PVSharepointConsentTests extends AppTest {
 
   }
 
+  // next test might not work if ran isolated
   @Test
   public void test00003SharepointConsentPlusPrivacyNotice() throws InterruptedException {
     try {
       jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
-              "$.queryResp[*].fields", "sharepoint_privacy_notice");
+        "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
       jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
-              "$.queryResp[*].fields", "sharepoint_consents");
+        "$.queryResp[*].fields", "sharepoint_consents");
 
       String consentDataSourceName = "SHAREPOINT/CONSENT";
 
       String privacyNoticeDataSourceName =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq(\"" + consentDataSourceName + "\"))" +
-                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event').out('Consent')" +
-                      ".out('Has_Privacy_Notice').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event').values('Object_Data_Source_Name').next().toString()").get().toString();
+        App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq(\"" + consentDataSourceName + "\"))" +
+          ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event').out('Consent')" +
+          ".out('Has_Privacy_Notice').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+          ".in('Has_Ingestion_Event').values('Object_Data_Source_Name').next().toString()").get().toString();
       assertEquals("SHAREPOINT/PRIVACY-NOTICE", privacyNoticeDataSourceName, "Data Source Name for Privacy Notice POLE.");
 
       String getPersonNaturalByPrivacyNotice =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq(\"" + privacyNoticeDataSourceName + "\"))" +
-                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
-                      ".has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
-                      ".has('Event_Consent_Customer_ID', eq('456'))" +
-                      ".in('Consent').has('Person_Natural_Customer_ID', eq('456'))" +
-                      ".values('Person_Natural_Full_Name').next().toString()").get().toString();
+        App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq(\"" + privacyNoticeDataSourceName + "\"))" +
+          ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+          ".has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
+          ".has('Event_Consent_Customer_ID', eq('45637846571'))" +
+          ".in('Consent').has('Person_Natural_Customer_ID', eq('45637846571'))" +
+          ".values('Person_Natural_Full_Name').next().toString()").get().toString();
       assertEquals("BOB NAKAMURA", getPersonNaturalByPrivacyNotice,
-              "This Privacy Notice POLE Graph path leads to Bob Nakamura");
+        "This Privacy Notice POLE Graph path leads to Bob Nakamura");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
