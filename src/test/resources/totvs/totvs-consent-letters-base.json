@@ -1,0 +1,47 @@
+{
+  "numEntries": 60,
+  "hasnext": false,
+  "nPage": 1,
+  "objs": [
+    {
+      "A1_CGC": "watermelon",
+      "A1_NOME": "Janos Gábor",
+      "id": "74987319843749831"
+    },
+    {
+      "A1_CGC": "texto",
+      "A1_NOME": "Karla Giulia",
+      "id": "98765876487654356435"
+    },
+    {
+      "A1_CGC": "bananas",
+      "A1_NOME": "Bob Nakamura",
+      "id": "87346324876328643274"
+    },
+    {
+      "A1_CGC": "bloodyblah",
+      "A1_NOME": "Ziad Silva",
+      "id": "3246328463287468732"
+    },
+    {
+      "A1_CGC": "applesauce",
+      "A1_NOME": "Lara Croft",
+      "id": "2345932658763287532"
+    },
+    {
+      "A1_CGC": "pineapple",
+      "A1_NOME": "Petrus Papastathopoulos",
+      "id": "234328658658773324"
+    },
+    {
+      "A1_CGC": "kiwi",
+      "A1_NOME": "Lakshmi",
+      "id": "8729634873264872634"
+    },
+    {
+      "A1_CGC": "pear",
+      "A1_NOME": "MODIFIED",
+      "id": "918324098144300334"
+    }
+  ]
+}
