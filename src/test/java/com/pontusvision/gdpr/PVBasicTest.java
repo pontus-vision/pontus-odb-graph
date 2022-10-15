@@ -293,12 +293,16 @@ public class PVBasicTest extends AppTest {
       String rootConnections = App.executor.eval(rootConnectionsQuery).get().toString();
 
 //    test0000 COUNT(Edges) for COMIDAS 2
-//      String userId3 =
-//              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('COMIDAS 2'))" +
-//                      ".next().id().toString()").get().toString();
-//      String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 + "\").bothE().count().next().toString()";
-//      String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
-//      assertEquals("9", comidas2Connections, "COMIDAS 2 has 6 edges comming from TOTVS and ");
+      String userId3 =
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('COMIDAS 2'))" +
+                      ".next().id().toString()").get().toString();
+      String comidas2ConnectionsQuery = "App.g.V(\"" + userId3 + "\").bothE().count().next().toString()";
+      String comidas2Connections = App.executor.eval(comidas2ConnectionsQuery).get().toString();
+      assertEquals("4", comidas2Connections,
+        "COMIDAS 2 has 4 edges, which are Event_Igestion, Location_Address, Object_Email and Id_Card");
+//      for some reason, when ingesting one registry (COMIDAS 2) as Person_Organisation using totvs_protheus_sa1_clientes
+//      and then ingesting the same registry as Person_Natural using ploomes_clientes, we noticed that the vertex Id_Card_Type RG
+//      gets isolated from the rest of the graph. This is not the expected behavior. The edge Has_Id_Card is not being created
 
 //    test0000 COUNT(Edges) for Object_Email_Address
       String userId4 =
