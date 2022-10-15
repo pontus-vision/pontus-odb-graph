@@ -8,6 +8,9 @@ rules:
           Full_Name:
             val: "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
+            excludeFromSearch: true
+            # excludeFromUpdate cannot be used because it will not allow to fill the property, not even in the first run
+            # a condition to check first run is needed ... if first time set excludeFromUpdate to false, otherwise true
           Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
           Last_Update_Date:
             val: "${LastUpdateDate}"
@@ -24,6 +27,7 @@ rules:
           Name:
             val: "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}"
             excludeFromUpdate: true
+            excludeFromSearch: true
           Id: "${CNPJ?.replaceAll('[^0-9]', '')}"
           Last_Update_Date:
             val: "${LastUpdateDate}"

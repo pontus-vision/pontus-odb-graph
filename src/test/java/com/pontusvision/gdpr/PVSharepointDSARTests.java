@@ -1,6 +1,5 @@
 package com.pontusvision.gdpr;
 
-import com.pontusvision.graphutils.gdpr;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
@@ -11,7 +10,6 @@ import java.util.Date;
 import static com.pontusvision.graphutils.gdpr.DSARStats.getDSARStatsPerOrganisation;
 import static com.pontusvision.graphutils.gdpr.DSARStats.getDSARStatsPerRequestType;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -112,10 +110,10 @@ public class PVSharepointDSARTests extends AppTest {
             "sharepoint_fontes_de_dados");
     jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
             "$.queryResp[*].fields", "sharepoint_mapeamentos");
-    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
     jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
     jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
     jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+    jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
     jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar.json", "$.queryResp[*].fields", "sharepoint_dsar");
     jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
             "$.queryResp[*].fields", "sharepoint_consents");

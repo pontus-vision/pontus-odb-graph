@@ -1301,11 +1301,12 @@ rules:
             processAll: true
 
       - label: Person_Natural
+        condition: "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
         props:
           Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
-          Full_Name:
-            val: "${name?.trim()?.toUpperCase()}"
-            excludeFromSearch: true
+#          Full_Name:
+#            val: "${name?.trim()?.toUpperCase()}"
+#            excludeFromUpdate: true
           Last_Update_Date:
             val: "${Modified}"
             excludeFromSearch: true
