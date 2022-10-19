@@ -20,7 +20,7 @@
         <jersey-version>2.33</jersey-version>
         <tinkerpop-version>3.4.7</tinkerpop-version>
         <slf4j.version>1.7.25</slf4j.version>
-        <jackson2.version>2.13.3</jackson2.version>
+        <jackson2.version>2.13.4.1</jackson2.version>
         <hadoop2.version>2.7.2</hadoop2.version>
 
         <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
