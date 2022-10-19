@@ -201,6 +201,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Identity_Card
+        condition: "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}"
         name: cpf
         props:
           Id_Value: "${Tax_Number?.replaceAll('[^0-9]','')}"

@@ -63,6 +63,10 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Request_Type
+          val: ${RequestType}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Description
           val: ${Solicita_x00e7__x00e3_o_x002d_De}
           mandatoryInSearch: False
           excludeFromSearch: True
@@ -100,7 +104,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Metadata_Create_Date
-          val: ${new Date()}
+          val: ${Created}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
