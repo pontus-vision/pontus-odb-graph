@@ -502,6 +502,7 @@ schema:
         - name: Form_Submission_Owner_Id
         - name: Name
         - name: Retention_Period
+        - name: Retention_Justification
         - name: Text
         - name: Type
         - name: Update_Date
@@ -513,10 +514,10 @@ schema:
       useStatic: false
       props:
         - name: ID
-        - name: BusinessAreaResponsible
+        - name: Business_Area_Responsible
         - name: Type
         - name: Description
-        - name: MacroProcessName
+        - name: Macro_Process_Name
         - name: Country_Where_Stored
         - name: Data_Origin
         - name: Data_Geo_Scope
@@ -530,7 +531,10 @@ schema:
         - name: Info_Shared_With_Third_Parties
         - name: Name
         - name: Number_Of_Records_Monthly
+        - name: Number_Of_Natural_Person
         - name: Property
+        - name: Participants
+        - name: Secondary_Purpose_Of_Collection
         - name: Type_Of_Natural_Person
         - name: Update_Mechanism
         - name: Update_URL
@@ -934,6 +938,7 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Agreements
         - name: Country_Where_Stored
         - name: Delivery_Date
           dataType: Date

@@ -419,7 +419,7 @@ rules:
           Type_Of_Natural_Person:
             val: "${Categoria_x0020_dos_x0020_titula}"
             excludeFromSearch: true
-          BusinessAreaResponsible:
+          Business_Area_Responsible:
             val: "${_x00c1_rea} - ${Respons_x00e1_velLookupId}"
             excludeFromSearch: true
           Country_Where_Stored:
@@ -573,7 +573,7 @@ rules:
           Type_Of_Natural_Person:
             val: "${field_Data_x0020_subject_x0020_category}"
             excludeFromSearch: true
-          BusinessAreaResponsible:
+          Business_Area_Responsible:
             val: "${field_Area} - ${field_Responsible}"
             excludeFromSearch: true
           Country_Where_Stored:

@@ -76,12 +76,12 @@
           },
           {
             "name": "Object_Data_Procedures_Type_Of_Natural_Person",
-            "val": "${Categoria_dos_Titulares_dos_Dados}",
+            "val": "Colaborador",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_BusinessAreaResponsible",
+            "name": "Object_Data_Procedures_Business_Area_Responsible",
             "val": "${Area_Responsavel}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -147,7 +147,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_MacroProcessName",
+            "name": "Object_Data_Procedures_Macro_Process_Name",
             "val": "${Macroprocesso}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true

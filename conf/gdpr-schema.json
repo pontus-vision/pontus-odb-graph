@@ -1614,6 +1614,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Data_Policy_Retention_Justification",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object_Data_Policy_Text",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1649,7 +1654,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object_Data_Procedures_BusinessAreaResponsible",
+      "name": "Object_Data_Procedures_Business_Area_Responsible",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1664,7 +1669,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object_Data_Procedures_MacroProcessName",
+      "name": "Object_Data_Procedures_Macro_Process_Name",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1734,7 +1739,22 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Data_Procedures_Number_Of_Natural_Person",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object_Data_Procedures_Property",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Procedures_Participants",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Procedures_Secondary_Purpose_Of_Collection",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3180,6 +3200,11 @@
     },
     {
       "name": "Object_Privacy_Notice_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Privacy_Notice_Agreements",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -5119,6 +5144,7 @@
         "Object_Data_Policy_Form_Submission_Owner_Id",
         "Object_Data_Policy_Name",
         "Object_Data_Policy_Retention_Period",
+        "Object_Data_Policy_Retention_Justification",
         "Object_Data_Policy_Text",
         "Object_Data_Policy_Type",
         "Object_Data_Policy_Update_Date",
@@ -5136,10 +5162,10 @@
       "propertyKeys": [
         "Metadata_Type_Object_Data_Procedures",
         "Object_Data_Procedures_ID",
-        "Object_Data_Procedures_BusinessAreaResponsible",
+        "Object_Data_Procedures_Business_Area_Responsible",
         "Object_Data_Procedures_Type",
         "Object_Data_Procedures_Description",
-        "Object_Data_Procedures_MacroProcessName",
+        "Object_Data_Procedures_Macro_Process_Name",
         "Object_Data_Procedures_Country_Where_Stored",
         "Object_Data_Procedures_Data_Origin",
         "Object_Data_Procedures_Data_Geo_Scope",
@@ -5153,7 +5179,10 @@
         "Object_Data_Procedures_Info_Shared_With_Third_Parties",
         "Object_Data_Procedures_Name",
         "Object_Data_Procedures_Number_Of_Records_Monthly",
+        "Object_Data_Procedures_Number_Of_Natural_Person",
         "Object_Data_Procedures_Property",
+        "Object_Data_Procedures_Participants",
+        "Object_Data_Procedures_Secondary_Purpose_Of_Collection",
         "Object_Data_Procedures_Type_Of_Natural_Person",
         "Object_Data_Procedures_Update_Mechanism",
         "Object_Data_Procedures_Update_URL",
@@ -5667,6 +5696,7 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Privacy_Notice",
+        "Object_Privacy_Notice_Agreements",
         "Object_Privacy_Notice_Country_Where_Stored",
         "Object_Privacy_Notice_Delivery_Date",
         "Object_Privacy_Notice_Description",

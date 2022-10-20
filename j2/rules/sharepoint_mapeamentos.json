@@ -74,7 +74,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_BusinessAreaResponsible",
+            "name": "Object_Data_Procedures_Business_Area_Responsible",
             "val": "${_x00c1_rea} - ${Respons_x00e1_velLookupId}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
