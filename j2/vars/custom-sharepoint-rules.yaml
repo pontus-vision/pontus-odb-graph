@@ -79,7 +79,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -220,7 +220,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -322,7 +322,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -473,7 +473,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -614,7 +614,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -746,7 +746,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -826,7 +826,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -921,6 +921,9 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Request_Type:
+            val: "${RequestType}"
+            excludeFromSearch: true
+          Description:
             val: "${Solicita_x00e7__x00e3_o_x002d_De}"
             excludeFromSearch: true
           Request_Channel:
@@ -949,7 +952,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -1070,7 +1073,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -1140,7 +1143,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}" # Date COLUMN
+            val: "${Created}" # Date COLUMN
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -1228,7 +1231,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}"
+            val: "${Created}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -1328,7 +1331,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}"
+            val: "${Created}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -1421,7 +1424,7 @@ rules:
           val: "${original_request?.bytes?.encodeBase64()?.toString()}"
           excludeFromSearch: true
         Metadata_Create_Date:
-          val: "${new Date()}"
+          val: "${Created}"
           excludeFromSearch: true
           type: java.util.Date
         Metadata_Update_Date:
@@ -1490,7 +1493,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}"
+            val: "${Created}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
@@ -1562,7 +1565,7 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${new Date()}"
+            val: "${Created}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:

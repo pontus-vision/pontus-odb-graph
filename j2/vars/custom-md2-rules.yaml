@@ -12,7 +12,7 @@ rules:
           Customer_ID: "${document?.replaceAll('[^0-9]', '')}"
 
       - label: Object_Identity_Card
-        condition: "${document?.replaceAll('[^0-9]','')?.length() > 0}"
+        condition: "${document?.replaceAll('[^0-9]','')?.length() == 11}"
         props:
           Id_Value: "${document?.replaceAll('[^0-9]','')}"
           Id_Type:
@@ -89,7 +89,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Identity_Card
-        condition: "${document?.replaceAll('[^0-9]','')?.length() > 0}"
+        condition: "${document?.replaceAll('[^0-9]','')?.length() == 11}"
         props:
           Id_Value:
             val: "${document?.replaceAll('[^0-9]','')}"
