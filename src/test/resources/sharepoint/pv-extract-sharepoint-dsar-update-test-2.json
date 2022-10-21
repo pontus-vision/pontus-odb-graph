@@ -1,0 +1,57 @@
+{
+  "queryResp": [
+    {
+      "@odata.etag": "546456565-ac452367-de3456a-234563456d-1237",
+      "createdDateTime": "2021-07-10T20:59:14Z",
+      "eTag": "1546456565-ac452367-de3456a-234563456d-1237",
+      "id": "19874373249732",
+      "lastModifiedDateTime": "2019-01-22T15:33:56Z",
+      "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/Controle%20de%20Registros/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "ac545d87b-0956de-23ad76c-23987d-ac657bce",
+          "displayName": "Ayyyyyy Mzzzzzz"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "quxxxxxxx.onedrive@Sxxxxxxxx.com.br",
+          "id": "985465ea-376bac-abcdd-1238dc-acc87b",
+          "displayName": "Qxxxxxx OneDrive"
+        }
+      },
+      "parentReference": {
+        "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,ffc546-a565eed2-30927-64765-bc54676acdd0,acdc23-aa33-112ac-b345-fdc746587122"
+      },
+      "contentType": {
+        "id": "addc65478839-ccbad576ee443888371-aa7873-2321",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%734765734-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('bbccc44-cccc-231233-1233-123321a')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "ecacc3459-3aaec5432-3aaeccc1-1199845-1aaa",
+        "Title": "xxxxxxx",
+        "Modified": "2022-10-20T10:10:00Z",
+        "Created": "2022-10-19T07:09:15Z",
+        "Raz_x00e3_oSocial": "Lauro Jiacôbo",
+        "CustomerId": "904.647.064-11",
+        "Solicita_x00e7__x00e3_o_x002d_Da": "20/10/2022 - 10:10",
+        "Solicita_x00e7__x00e3_o_x002d_Ca": "e-mail",
+        "Solicita_x00e7__x00e3_o_x002d_De": "modificação de e-mail",
+        "RequestType": "MODIFIED",
+        "Abrang_x00ea_nciaeObserva_x00e7_": "Atualizar e-mail",
+        "BaseLegal_x002d_ArtigoeInciso": "Art. 1 - Inciso I",
+        "Status": "MODIFIED",
+        "Resposta_x002d_DataeHor_x00e1_ri": "20/10/2022 - 07:10",
+        "Resposta_x002d_Canal": "e-mail",
+        "working_days": "1",
+        "id": "19874373249732",
+        "RoPA": [],
+        "naturalPersonType": "CLIENTE",
+        "Author": "Oxxxxxx@pontusvision.com",
+        "Editor": "Oxxxxxx@pontusvision.com"
+      }
+    }
+  ]
+}
