@@ -176,7 +176,7 @@ public class PVSharepointDSARTests extends AppTest {
       sb.setLength(0);
 
       boolean output2 = getDSARStatsPerRequestType(nowThreshold, oneYearDateThreshold, firstTime, "0-365d", sb);
-      assertTrue(sb.toString().contains("{\"dsar_source_type\":\"Bloqueio de Conta (0-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(sb.toString().contains("{\"dsar_source_type\":\"Bloqueio (0-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
 
     } catch (Exception e) {
       e.printStackTrace();
