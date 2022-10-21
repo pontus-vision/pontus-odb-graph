@@ -154,10 +154,10 @@ public class PVSharepointDSARTests extends AppTest {
 
       String output = getDSARStatsPerOrganisation(App.g);
 
-      assertTrue(output.contains("{\"dsar_source_type\":\"Exclusão de e-mail (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
-      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio de Conta (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
-      assertTrue(output.contains("{\"dsar_source_type\":\"Atualização de Endereço (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
-      assertTrue(output.contains("{\"dsar_source_type\":\"Exclusão de Contrato (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Delete (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Update (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Read (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"Completed (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"New (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"Acknowledged (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
@@ -166,7 +166,7 @@ public class PVSharepointDSARTests extends AppTest {
       assertTrue(output.contains("{\"dsar_source_type\":\"Read (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"Read (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"Read (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
-      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio de Conta (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"New (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"New (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"New (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
