@@ -130,6 +130,7 @@ rules:
           Name: "SHAREPOINT/PBR/ROPA"
 
       - label: Object_Data_Procedures
+        name: personal_data
         props:
           Form_Id: "${id}"
           ID:
@@ -153,11 +154,120 @@ rules:
           Type_Of_Natural_Person:
             val: "${Quems_x00e3_oostitularesdosdados}"
             excludeFromSearch: true
+          Data_Provider:
+            val: "${Quemforneceuosdados_x003f_}"
+            excludeFromSearch: true
+          Why_Is_It_Collected:
+            val: "${Qual_x00e9_afinalidadedotratamen}"
+            excludeFromSearch: true
+          Secondary_Purpose_Of_Collection:
+            val: "${Paraqualfinalidadesecund_x00e1_r}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Procedures
+        name: sensitive_data
+        props:
+          Form_Id: "${id}"
+          ID:
+            val: "${Title}"
+            excludeFromSearch: true
+          Business_Area_Responsible:
+            val: "${_x00c1_readeNeg_x00f3_cio}"
+            excludeFromSearch: true
+          Type:
+            val: "${RoPA_x0020_0_x0020__x002d__x0020}"
+            excludeFromSearch: true
+          Macro_Process_Name:
+            val: "${Processo}"
+            excludeFromSearch: true
+          Description:
+            val: "${Descri_x00e7__x00e3_odoProcesso}"
+            excludeFromSearch: true
+          Info_Collected:
+            val: "${}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person:
+            val: "${Quems_x00e3_oostitularesdosdados0}"
+            excludeFromSearch: true
+          Data_Provider:
+            val: "${Quemforneceuosdados_x003f_}"
+            excludeFromSearch: true
+          Why_Is_It_Collected:
+            val: "${Qual_x00e9_afinalidadedotratamen}"
+            excludeFromSearch: true
+          Secondary_Purpose_Of_Collection:
+            val: "${Paraqualfinalidadesecund_x00e1_r}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Procedures
+        name: children_data
+        props:
+          Form_Id: "${id}"
+          ID:
+            val: "${Title}"
+            excludeFromSearch: true
+          Business_Area_Responsible:
+            val: "${_x00c1_readeNeg_x00f3_cio}"
+            excludeFromSearch: true
+          Type:
+            val: "${RoPA_x0020_0_x0020__x002d__x0020}"
+            excludeFromSearch: true
+          Macro_Process_Name:
+            val: "${Processo}"
+            excludeFromSearch: true
+          Description:
+            val: "${Descri_x00e7__x00e3_odoProcesso}"
+            excludeFromSearch: true
+          Info_Collected:
+            val: "${Quaiss_x00e3_oosdadosdecrian_x00}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person:
+            val: "${Quems_x00e3_oostitularesdosdados1}"
+            excludeFromSearch: true
+          Data_Provider:
+            val: "${Quemforneceuosdados_x003f_}"
+            excludeFromSearch: true
+          Why_Is_It_Collected:
+            val: "${Qual_x00e9_afinalidadedotratamen}"
+            excludeFromSearch: true
+          Secondary_Purpose_Of_Collection:
+            val: "${Paraqualfinalidadesecund_x00e1_r}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Procedures # = RoPA = Mapeamento de Dados
+        name: internal_data
+        props:
+          Form_Id: "${id}"
+          Participants:
+            vals: "${Sesim_x002c_especificarquaisoutr}"
+            excludeFromSearch: true
+          Number_Of_Natural_Person:
+            val: "${Qual_x00e9_quantidadedetitulares} / por ano"
+            excludeFromSearch: true
 
       - label: Object_Sensitive_Data
+        name: personal_data
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadospessoaistra)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: sensitive_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadossens_x00ed_)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: children_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadosdecrian_x00)}"
             type: "[Ljava.lang.String;"
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true

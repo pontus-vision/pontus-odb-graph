@@ -39,7 +39,7 @@
         "Respons_x00e1_velAlternativo": [
           {
             "LookupId": 324324324532,
-            "LookupValue": "VICTOR, PAULO (BRL)"
+            "LookupValue": "VITOR, PAULO (BRL)"
           }
         ],
         "_x00c1_readeNeg_x00f3_cio": "Tecnologia da Informação",
@@ -90,7 +90,7 @@
         "Estesdadosforamfornecidospormeio2": "Sim",
         "Estesdadosforamfornecidospormeio0": "Não",
         "Descrevercomofoiobtidoessesconse": "Consentimento obtido por meio de informativo.",
-        "Qual_x00e9_afinalidadedotratamen": "Atendimento de damandas de suporte técnico",
+        "Qual_x00e9_afinalidadedotratamen": "Atendimento de demandas de suporte técnico",
         "Paraqualfinalidadesecund_x00e1_r": "Finalidade secundária",
         "Sesim_x002c_especificarquaisoutr": "Várias áreas participam do processo",
         "Qual_x00e9_quantidadedetitulares": "Acima de 500",
@@ -154,11 +154,13 @@
         "Nome_x0020_do_x0020_Champion_x00": [
             {
                 "LookupId": 1,
-                "LookupValue": "Champion 1"
+                "LookupValue": "Champion 1",
+                "Email": "champ1@gmail.com"
             },
             {
                 "LookupId": 2,
-                "LookupValue": "Champion 2"
+                "LookupValue": "Champion 2",
+                "Email": "champ2@gmail.com"
             }
         ],
         "LinkTitle": "pbr",
