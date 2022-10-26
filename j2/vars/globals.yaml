@@ -515,6 +515,7 @@ schema:
       props:
         - name: ID
         - name: Business_Area_Responsible
+#        - name: Business_Sub_Area_Responsible
         - name: Type
         - name: Description
         - name: Macro_Process_Name
@@ -525,6 +526,7 @@ schema:
         - name: Data_Controller
         - name: Data_Owner
         - name: Data_Processor
+        - name: Data_Provider
         - name: Delete_URL
         - name: Info_Collected
         - name: Info_Share_Justification

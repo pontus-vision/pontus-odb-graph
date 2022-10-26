@@ -11,7 +11,7 @@ rules:
         condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}" # why we are using the description field as condition?
         name: fontes_de_dados
         props:
-          Form_Id: "${id}"
+          Form_Id: 2
           Name:
             val: "${Title?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -122,18 +122,43 @@ rules:
         fromVertexLabel: "Object_Subsystem"
         toVertexLabel: "Object_System"
 
-#  sharepoint_pbr_ropa:
-#
-#    vertices:
-#      - label: Object_Privacy_Notice
-#        condition: "${ropa96 == 'Sim'}"
-#        props:
-#          Description: "${ropa97}"
-#          Agreements: "${ropa98 != 'Não'?ropa98:'Não tem acordo/direito com o titular'}"
-#
-#      mapeamentos:
-#      solicitação titulares:
-#      cosentimentos:
-#      incidente de segurança:
-#      Object_Privacy_Notice:
+  sharepoint_pbr_ropa:
+
+    vertices:
+      - label: Object_Data_Source
+        props:
+          Name: "SHAREPOINT/PBR/ROPA"
+
+      - label: Object_Data_Procedures
+        props:
+          Form_Id: "${id}"
+          ID:
+            val: "${Title}"
+            excludeFromSearch: true
+          Business_Area_Responsible:
+            val: "${_x00c1_readeNeg_x00f3_cio}"
+            excludeFromSearch: true
+          Type:
+            val: "${RoPA_x0020_0_x0020__x002d__x0020}"
+            excludeFromSearch: true
+          Macro_Process_Name:
+            val: "${Processo}"
+            excludeFromSearch: true
+          Description:
+            val: "${Descri_x00e7__x00e3_odoProcesso}"
+            excludeFromSearch: true
+          Info_Collected:
+            val: "${Quaiss_x00e3_oosdadospessoaistra}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person:
+            val: "${Quems_x00e3_oostitularesdosdados}"
+            excludeFromSearch: true
+
+      - label: Object_Sensitive_Data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadospessoaistra)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
 

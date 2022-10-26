@@ -1,0 +1,172 @@
+{
+  "queryResp": [
+    {
+      "@odata.etag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "createdDateTime": "2021-07-27T19: 18: 05Z",
+      "eTag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "id": "1",
+      "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "4675ace2-4432-7762cc1289-a11f-323a21,3",
+        "LinkTitleNoMenu": "pbr",
+        "Title": "FINANCEIRO 01",
+        "Respons_x00e1_vel": [
+          {
+            "LookupId": 838473834324,
+            "LookupValue": "GHOCHE, OMAR (LBN)"
+          }
+        ],
+        "Respons_x00e1_velAlternativo": [
+          {
+            "LookupId": 324324324532,
+            "LookupValue": "VICTOR, PAULO (BRL)"
+          }
+        ],
+        "_x00c1_readeNeg_x00f3_cio": "Tecnologia da Informação",
+        "Descri_x00e7__x00e3_odoProcesso": "Processo de criação de POLE do RoPA",
+        "Processo": "Suporte Técnico",
+        "RoPA_x0020_0_x0020__x002d__x0020": "Novo Processo",
+        "Quaiss_x00e3_oosdadospessoaistra": [
+          "Cargo/Psoição",
+          "Data de Nascimento",
+          "E-mail Comercial",
+          "RG",
+          "E-mail Particular",
+          "CPF",
+          "Endereço",
+          "Telefone Comercial",
+          "Telefone Particular",
+          "Dados Bancários",
+          "Nome Social"
+        ],
+        "Quems_x00e3_oostitularesdosdados": [
+          "Funcionário",
+          "Terceiro",
+          "Cliente"
+        ],
+        "Quaiss_x00e3_oosdadossens_x00ed_": [
+          "Dados Biométricos",
+          "Raça",
+          "Religião"
+        ],
+        "Quems_x00e3_oostitularesdosdados0": [
+          "Funcionário"
+        ],
+        "Quaiss_x00e3_oosdadosdecrian_x00": [
+          "Nome da Mãe",
+          "Nome do Pai",
+          "Nacionalidade"
+        ],
+        "Quems_x00e3_oostitularesdosdados1": [
+          "Crianças",
+          "Adolescentes"
+        ],
+        "Quemforneceuosdados_x003f_": [
+          "Base compartilhada de outra área",
+          "O dado foi coletado por meio de terceiro"
+        ],
+        "Estesdadosforamfornecidospormeio": "Sim",
+        "Estesdadosforamfornecidospormeio1": "Sim",
+        "Estesdadosforamfornecidospormeio2": "Sim",
+        "Estesdadosforamfornecidospormeio0": "Não",
+        "Descrevercomofoiobtidoessesconse": "Consentimento obtido por meio de informativo.",
+        "Qual_x00e9_afinalidadedotratamen": "Atendimento de damandas de suporte técnico",
+        "Paraqualfinalidadesecund_x00e1_r": "Finalidade secundária",
+        "Sesim_x002c_especificarquaisoutr": "Várias áreas participam do processo",
+        "Qual_x00e9_quantidadedetitulares": "Acima de 500",
+        "Comquemosdadoss_x00e3_ocompartil": [
+          "Entre empresas",
+          "Dealer",
+          "Outro"
+        ],
+        "Quaiss_x00e3_oostiposdedadospess": [
+          "Dados Pessoais",
+          "Dados Sensíveis",
+          "Dados de Crianças e Adolescentes"
+        ],
+        "Quems_x00e3_oostitularesdestesda": [
+          "Colaborador",
+          "Expatriado",
+          "Consumidor Final"
+        ],
+        "VolumetriadosTitularesDados": "1 - 100",
+        "Qual_x00e9_afinalidadedocomparti": "Criar o POLE do RoPA",
+        "Especificarparaonde_x00e9_feitoa": [
+          "In Company",
+          "Entre empresas do mesmo grupo",
+          "Outro"
+        ],
+        "Transfer_x00ea_nciainternacional": [
+          "Líbano",
+          "Finlândia",
+          "Japão",
+          "Estados Unidos",
+          "Singapura"
+        ],
+        "Quaiss_x00e3_oostiposdedadospess0": [
+          "Dados Pessoais"
+        ],
+        "Quems_x00e3_oostitularesdestesda0": [
+          "Lead",
+          "Fornecedor"
+        ],
+        "VolumetriadosTitularesDados_x002": "101 - 499",
+        "Qual_x00e9_afinalidadedatransfer": "Criar o POLE do RoPA Internacional",
+        "RoPA_x0020_84_x0020__x002d__x002": [
+          {
+            "LookupId": 1,
+            "LookupValue": "ADP"
+          },
+          {
+            "LookupId": 3,
+            "LookupValue": "Marketing"
+          }
+        ],
+        "Qualoper_x00ed_ododereten_x00e7_": "Indeterminado",
+        "Qualajustificativaparaoper_x00ed": "Prática de Mercado",
+        "Emcasopositivo_x002c_fornecerosd": "Incidente de Segurança de Dados do RoPA",
+        "Qual_x00e9_omeioadotadoparainfor": [
+          "Disclaimer",
+          "Termos e Condições"
+        ],
+        "Fornecerosdetalhes_x002c_casopos": "Notificação ANPD",
+        "Emcasopositivo_x002c_fornecerosd0": "Notificação outros órgãos",
+        "Nome_x0020_do_x0020_Champion_x00": [
+            {
+                "LookupId": 1,
+                "LookupValue": "Champion 1"
+            },
+            {
+                "LookupId": 2,
+                "LookupValue": "Champion 2"
+            }
+        ],
+        "LinkTitle": "pbr",
+        "Modified": "2022-10-25T10:07:22Z",
+        "id": "9542",
+        "ContentType": "Task",
+        "Created": "2022-10-24T15:46:23Z"
+      }
+    }
+  ]
+}
