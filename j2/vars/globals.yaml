@@ -281,6 +281,7 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
         - name: Natural_Person_Type
+        - name: Description
 
     - name: "Event_Training"
       partition: false

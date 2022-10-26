@@ -13,7 +13,7 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Object_Identity_Card
-      condition: ${document?.replaceAll('[^0-9]','')?.length() > 0}
+      condition: ${document?.replaceAll('[^0-9]','')?.length() == 11}
       props:
         - name: Object_Identity_Card_Id_Value
           val: ${document?.replaceAll('[^0-9]','')}

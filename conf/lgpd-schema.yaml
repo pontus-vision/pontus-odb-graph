@@ -507,6 +507,9 @@ propertyKeys:
   - name: Event_Subject_Access_Request_Natural_Person_Type
     dataType: String
     cardinality: SINGLE
+  - name: Event_Subject_Access_Request_Description
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata_Type_Event_Training
     dataType: String
     cardinality: SINGLE
@@ -3163,6 +3166,7 @@ vertexIndexes:
       - Event_Subject_Access_Request_Form_Submission_Id
       - Event_Subject_Access_Request_Form_Submission_Owner_Id
       - Event_Subject_Access_Request_Natural_Person_Type
+      - Event_Subject_Access_Request_Description
     propertyKeysMappings:
     
       {}

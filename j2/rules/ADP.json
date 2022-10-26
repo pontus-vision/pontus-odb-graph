@@ -98,7 +98,7 @@
       {
         "label": "Object_Identity_Card",
         "name": "cpf",
-        "condition": "${CPF?.replaceAll('[^0-9]','')?.length() > 0}",
+        "condition": "${CPF?.replaceAll('[^0-9]','')?.length() == 11}",
         "props": [
           {
             "name": "Object_Identity_Card_Id_Value",

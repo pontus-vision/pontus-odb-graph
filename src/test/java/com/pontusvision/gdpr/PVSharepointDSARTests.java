@@ -1,10 +1,12 @@
 package com.pontusvision.gdpr;
 
+import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.util.Collections;
 import java.util.Date;
 
 import static com.pontusvision.graphutils.gdpr.DSARStats.getDSARStatsPerOrganisation;
@@ -35,7 +37,7 @@ public class PVSharepointDSARTests extends AppTest {
 
       String palmitosSARType =
               App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('PALMITOS SA'))" +
-                      ".out('Made_SAR_Request').properties('Event_Subject_Access_Request_Request_Type')" +
+                      ".out('Made_SAR_Request').properties('Event_Subject_Access_Request_Description')" +
                       ".value().next().toString()").get().toString();
       assertEquals("Exclusão de e-mail", palmitosSARType, "DSAR Request type made by Palmitos SA");
 
@@ -59,7 +61,7 @@ public class PVSharepointDSARTests extends AppTest {
 
       String angeleBxlDSARType =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('ANGÈLE BRUXÈLE'))" +
-                      ".out('Made_SAR_Request').properties('Event_Subject_Access_Request_Request_Type')" +
+                      ".out('Made_SAR_Request').properties('Event_Subject_Access_Request_Description')" +
                       ".value().next().toString()").get().toString();
       assertEquals("Atualização de Endereço", angeleBxlDSARType,
               "Angèle Bruxèle wants to update her Address");
@@ -94,6 +96,16 @@ public class PVSharepointDSARTests extends AppTest {
                               ".values('Object_Data_Procedures_Interested_Parties_Consulted').next().toString()")
                       .get().toString();
       assertEquals("Jurídico Snowymountain", fromDsarToRopa2,"RoPA's Interested Parties");
+
+      // testing for DSAR Request_Type in SQL
+      OGremlinResultSet resSet = App.graph.executeSql(
+        "SELECT Event_Subject_Access_Request_Request_Type as type " +
+          "FROM Event_Subject_Access_Request " +
+          "WHERE Event_Subject_Access_Request_Form_Id = 4", Collections.EMPTY_MAP);
+
+      String dsarType = resSet.iterator().next().getRawResult().getProperty("type");
+      resSet.close();
+      assertEquals("Read", dsarType, "DSAR Type is of Read");
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -142,10 +154,10 @@ public class PVSharepointDSARTests extends AppTest {
 
       String output = getDSARStatsPerOrganisation(App.g);
 
-      assertTrue(output.contains("{\"dsar_source_type\":\"Exclusão de e-mail (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
-      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio de Conta (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
-      assertTrue(output.contains("{\"dsar_source_type\":\"Atualização de Endereço (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
-      assertTrue(output.contains("{\"dsar_source_type\":\"Exclusão de Contrato (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Delete (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Update (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Read (Total)\",\"dsar_source_name\":\"TOTAL_TYPE\", \"dsar_count\": 1 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"Completed (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"New (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"Acknowledged (Total)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 1 }"));
@@ -154,7 +166,7 @@ public class PVSharepointDSARTests extends AppTest {
       assertTrue(output.contains("{\"dsar_source_type\":\"Read (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (5-10d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"Read (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (10-15d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"Read (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Update (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Delete (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Bloqueio (15-30d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 0 }"));
-      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio de Conta (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(output.contains("{\"dsar_source_type\":\"Bloqueio (30-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"New (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (0-5d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"New (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (5-10d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
       assertTrue(output.contains("{\"dsar_source_type\":\"New (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Acknowledged (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 },{\"dsar_source_type\":\"Completed (10-15d)\",\"dsar_source_name\":\"TOTAL_STATUS\", \"dsar_count\": 0 }"));
@@ -164,7 +176,67 @@ public class PVSharepointDSARTests extends AppTest {
       sb.setLength(0);
 
       boolean output2 = getDSARStatsPerRequestType(nowThreshold, oneYearDateThreshold, firstTime, "0-365d", sb);
-      assertTrue(sb.toString().contains("{\"dsar_source_type\":\"Bloqueio de Conta (0-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
+      assertTrue(sb.toString().contains("{\"dsar_source_type\":\"Bloqueio (0-365d)\",\"dsar_source_name\":\"TOTAL_REQ_TYPE\", \"dsar_count\": 1 }"));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
+  @Test
+  public void test00003SARUpdates() throws InterruptedException {
+
+    //simple unit test, focusing only on the DSAR part of the Graph (no Peron_Natural, no RoPA, no Data_Source, etc)
+    try {
+      // first ingestion, DSAR 0
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar-update-test-0.json","$.queryResp[*].fields", "sharepoint_dsar");
+
+        OGremlinResultSet resSet = App.graph.executeSql(
+        "SELECT Event_Subject_Access_Request_Request_Type as type " +
+          "FROM Event_Subject_Access_Request " +
+          "WHERE Event_Subject_Access_Request_Form_Id = 19874373249732", Collections.EMPTY_MAP);
+
+      String dsarType = resSet.iterator().next().getRawResult().getProperty("type");
+      resSet.close();
+      assertEquals("Read", dsarType, "DSAR Type is of Update at DSAR 0");
+
+      // second ingestion [first update], DSAR 1, with a different request type = MODIFIED
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar-update-test-1.json","$.queryResp[*].fields", "sharepoint_dsar");
+
+      resSet = App.graph.executeSql(
+        "SELECT Event_Subject_Access_Request_Request_Type as type " +
+          "FROM Event_Subject_Access_Request " +
+          "WHERE Event_Subject_Access_Request_Form_Id = 19874373249732", Collections.EMPTY_MAP);
+
+      dsarType = resSet.iterator().next().getRawResult().getProperty("type");
+      resSet.close();
+      assertEquals("MODIFIED", dsarType, "DSAR Type has been updated to MODIFIED at DSAR 1");
+
+      // third ingestion [second update], DSAR 2, with a different status = MODIFIED
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar-update-test-2.json","$.queryResp[*].fields", "sharepoint_dsar");
+
+      resSet = App.graph.executeSql(
+        "SELECT Event_Subject_Access_Request_Status as status " +
+          "FROM Event_Subject_Access_Request " +
+          "WHERE Event_Subject_Access_Request_Form_Id = 19874373249732", Collections.EMPTY_MAP);
+
+      String dsarStatus = resSet.iterator().next().getRawResult().getProperty("status");
+      resSet.close();
+      assertEquals("MODIFIED", dsarStatus, "DSAR Status has been updated to MODIFIED at DSAR 2");
+
+      // fourth ingestion [third update], DSAR 3, with a different Natural_Person_Type = MODIFIED
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-dsar-update-test-3.json","$.queryResp[*].fields", "sharepoint_dsar");
+
+      resSet = App.graph.executeSql(
+        "SELECT Event_Subject_Access_Request_Natural_Person_Type as person " +
+          "FROM Event_Subject_Access_Request " +
+          "WHERE Event_Subject_Access_Request_Form_Id = 19874373249732", Collections.EMPTY_MAP);
+
+      String dsarUpdateDate = resSet.iterator().next().getRawResult().getProperty("person");
+      resSet.close();
+      assertEquals("MODIFIED", dsarUpdateDate, "DSAR Natural_Person_Type has been updated to MODIFIED at DSAR 3");
 
     } catch (Exception e) {
       e.printStackTrace();

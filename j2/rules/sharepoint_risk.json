@@ -121,7 +121,7 @@
           },
           {
             "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${new Date()}",
+            "val": "${Created}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
