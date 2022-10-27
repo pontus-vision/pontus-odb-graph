@@ -255,7 +255,7 @@ rules:
             val: "${Processo?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Type_Of_Natural_Person:
-            val: "Colaborador"
+            val: "${Categoria_dos_Titulares_dos_Dados}"
             excludeFromSearch: true
           Business_Area_Responsible:
             val: "${Area_Responsavel}"
