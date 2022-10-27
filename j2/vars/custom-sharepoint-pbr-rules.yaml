@@ -245,6 +245,9 @@ rules:
             val: "${Qual_x00e9_quantidadedetitulares} / por ano"
             excludeFromSearch: true
 
+      - label: Object_Data_Procedures
+        name:
+
       - label: Object_Sensitive_Data
         name: personal_data
         props:
@@ -272,3 +275,21 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
+      - label: Object_Sensitive_Data
+        name: shared_data_national
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oostiposdedadospess)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+
+      - label: Object_Sensitive_Data
+        name: shared_data_international
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oostiposdedadospess0)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
