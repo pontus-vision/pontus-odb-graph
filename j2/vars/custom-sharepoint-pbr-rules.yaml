@@ -163,81 +163,46 @@ rules:
           Secondary_Purpose_Of_Collection:
             val: "${Paraqualfinalidadesecund_x00e1_r}"
             excludeFromSearch: true
+#         Should this prop 👇 be here or @ shared_data_national ?!
+          Country_Where_Stored:
+            val: "Brasil"
+            excludeFromSearch: true
 
       - label: Object_Data_Procedures
+        condition: "${ropa16 == 'Sim'}"
         name: sensitive_data
         props:
-          Form_Id: "${id}"
-          ID:
-            val: "${Title}"
-            excludeFromSearch: true
-          Business_Area_Responsible:
-            val: "${_x00c1_readeNeg_x00f3_cio}"
-            excludeFromSearch: true
-          Type:
-            val: "${RoPA_x0020_0_x0020__x002d__x0020}"
-            excludeFromSearch: true
-          Macro_Process_Name:
-            val: "${Processo}"
-            excludeFromSearch: true
-          Description:
-            val: "${Descri_x00e7__x00e3_odoProcesso}"
-            excludeFromSearch: true
+#          Form_Id:
+#            val: "${id}"
+#            excludeFromSearch: true
           Info_Collected:
             val: "${}"
             excludeFromSearch: true
           Type_Of_Natural_Person:
             val: "${Quems_x00e3_oostitularesdosdados0}"
             excludeFromSearch: true
-          Data_Provider:
-            val: "${Quemforneceuosdados_x003f_}"
-            excludeFromSearch: true
-          Why_Is_It_Collected:
-            val: "${Qual_x00e9_afinalidadedotratamen}"
-            excludeFromSearch: true
-          Secondary_Purpose_Of_Collection:
-            val: "${Paraqualfinalidadesecund_x00e1_r}"
-            excludeFromSearch: true
 
       - label: Object_Data_Procedures
+        condition: "${ropa19 == 'Sim'}"
         name: children_data
         props:
-          Form_Id: "${id}"
-          ID:
-            val: "${Title}"
-            excludeFromSearch: true
-          Business_Area_Responsible:
-            val: "${_x00c1_readeNeg_x00f3_cio}"
-            excludeFromSearch: true
-          Type:
-            val: "${RoPA_x0020_0_x0020__x002d__x0020}"
-            excludeFromSearch: true
-          Macro_Process_Name:
-            val: "${Processo}"
-            excludeFromSearch: true
-          Description:
-            val: "${Descri_x00e7__x00e3_odoProcesso}"
-            excludeFromSearch: true
+#          Form_Id:
+#            val: "${id}"
+#            excludeFromSearch: true
           Info_Collected:
             val: "${Quaiss_x00e3_oosdadosdecrian_x00}"
             excludeFromSearch: true
           Type_Of_Natural_Person:
             val: "${Quems_x00e3_oostitularesdosdados1}"
             excludeFromSearch: true
-          Data_Provider:
-            val: "${Quemforneceuosdados_x003f_}"
-            excludeFromSearch: true
-          Why_Is_It_Collected:
-            val: "${Qual_x00e9_afinalidadedotratamen}"
-            excludeFromSearch: true
-          Secondary_Purpose_Of_Collection:
-            val: "${Paraqualfinalidadesecund_x00e1_r}"
-            excludeFromSearch: true
 
       - label: Object_Data_Procedures # = RoPA = Mapeamento de Dados
+        condition: "${ropa50 == 'Sim'}"
         name: internal_data
         props:
-          Form_Id: "${id}"
+#          Form_Id:
+#            val: "${id}"
+#            excludeFromSearch: true
           Participants:
             vals: "${Sesim_x002c_especificarquaisoutr}"
             excludeFromSearch: true
@@ -245,11 +210,57 @@ rules:
             val: "${Qual_x00e9_quantidadedetitulares} / por ano"
             excludeFromSearch: true
 
-      - label: Object_Data_Procedures
-        name:
+      - label: Object_Data_Procedures # = RoPA = Mapeamento de Dados
+        condition: "${ropa59 == 'Sim'}"
+        name: shared_data_national
+        props:
+#          Form_Id:
+#            val: "${id}"
+#            excludeFromSearch: true
+          Info_Shared_With_Third_Parties:
+            vals: "${Quaiss_x00e3_oostiposdedadospess}"
+            excludeFromSearch: true
+          Participants:
+            val: "${Comquemosdadoss_x00e3_ocompartil}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person:
+            val: "${Quems_x00e3_oostitularesdestesda}"
+            excludeFromSearch: true
+          Number_Of_Natural_Person:
+            val: "${VolumetriadosTitularesDados}"
+            excludeFromSearch: true
+          Info_Share_Justification:
+            val: "${Qual_x00e9_afinalidadedocomparti}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Procedures # = RoPA = Mapeamento de Dados
+        condition: "${ropa59 == 'Sim'}"
+        name: shared_data_international
+        props:
+#          Form_Id:
+#            val: "${id}"
+#            excludeFromSearch: true
+          Participants:
+            vals: "${Especificarparaonde_x00e9_feitoa}"
+            excludeFromSearch: true
+          Info_Shared_With_Third_Parties:
+            val: "${Quaiss_x00e3_oostiposdedadospess0}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person:
+            val: "${Quems_x00e3_oostitularesdestesda0}"
+            excludeFromSearch: true
+          Number_Of_Natural_Person:
+            val: "${VolumetriadosTitularesDados_x002}"
+            excludeFromSearch: true
+          Info_Share_Justification:
+            val: "${Qual_x00e9_afinalidadedatransfer}"
+            excludeFromSearch: true
+          Country_Where_Stored:
+            val: "${Transfer_x00ea_nciainternacional}"
+            excludeFromSearch: true
 
       - label: Object_Sensitive_Data
-        name: personal_data
+        name: personal_data_1
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadospessoaistra)}"
@@ -258,7 +269,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        name: sensitive_data
+        name: sensitive_data_1
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadossens_x00ed_)}"
@@ -267,7 +278,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        name: children_data
+        name: children_data_1
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadosdecrian_x00)}"
@@ -275,21 +286,47 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-      - label: Object_Sensitive_Data
-        name: shared_data_national
-        props:
-          Description:
-            val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oostiposdedadospess)}"
-            type: "[Ljava.lang.String;"
-            postProcessor: "${it?.toUpperCase()?.trim()}"
-            processAll: true
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
 
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
 
-      - label: Object_Sensitive_Data
-        name: shared_data_international
-        props:
-          Description:
-            val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oostiposdedadospess0)}"
-            type: "[Ljava.lang.String;"
-            postProcessor: "${it?.toUpperCase()?.trim()}"
-            processAll: true
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexName: "personal_data"
+
+      - label: "Has_Sub_Category"
+        fromVertexName: "personal_data"
+        toVertexName: "children_data"
+
+      - label: "Has_Sub_Category"
+        fromVertexName: "personal_data"
+        toVertexName: "shared_data_national"
+
+      - label: "Has_Sub_Category"
+        fromVertexName: "personal_data"
+        toVertexName: "sensitive_data"
+
+      - label: "Has_Sub_Category"
+        fromVertexName: "personal_data"
+        toVertexName: "internal_data"
+
+      - label: "Has_Sub_Category"
+        fromVertexName: "personal_data"
+        toVertexName: "shared_data_international"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "personal_data"
+        toVertexName: "children_data_1"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "personal_data"
+        toVertexName: "sensitive_data_1"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "personal_data"
+        toVertexName: "personal_data_1"

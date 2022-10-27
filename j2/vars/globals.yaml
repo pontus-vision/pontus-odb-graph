@@ -1244,6 +1244,7 @@ schema:
     unidirected: false
   - name: Has_Server
   - name: Has_Subsystem
+  - name: Has_Sub_Category
   - name: Has_System
   - name: Has_Table
   - name: Has_Transaction
