@@ -76,7 +76,7 @@
           },
           {
             "name": "Object_Data_Procedures_Type_Of_Natural_Person",
-            "val": "Colaborador",
+            "val": "${Categoria_dos_Titulares_dos_Dados}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

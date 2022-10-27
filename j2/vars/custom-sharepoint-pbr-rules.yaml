@@ -11,7 +11,7 @@ rules:
         condition: "${Descri_x00e7__x00e3_o?.trim()?.length() > 0}" # why we are using the description field as condition?
         name: fontes_de_dados
         props:
-          Form_Id: 2
+          Form_Id: "${id}"
           Name:
             val: "${Title?.trim()?.toUpperCase()}"
             excludeFromSearch: true
