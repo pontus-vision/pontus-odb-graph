@@ -33,13 +33,15 @@
         "Respons_x00e1_vel": [
           {
             "LookupId": 838473834324,
-            "LookupValue": "GHOCHE, OMAR (LBN)"
+            "LookupValue": "ghoche, omar (lbn)",
+            "Email": "oghoche@pontusvision.com"
           }
         ],
         "Respons_x00e1_velAlternativo": [
           {
             "LookupId": 324324324532,
-            "LookupValue": "VITOR, PAULO (BRL)"
+            "LookupValue": "vitor, paulo (brl)",
+            "Email": "pmartins@pontusvision.com"
           }
         ],
         "_x00c1_readeNeg_x00f3_cio": "Tecnologia da Informação",
@@ -163,6 +165,18 @@
                 "Email": "champ2@gmail.com"
             }
         ],
+        "Comoosdadospessoaiss_x00e3_ocole": [
+          "Aplicativo",
+          "Formulário Eletrônico",
+          "E-mail"
+        ],
+        "Quaisdestesdireitospodemseratend": [
+          "Correção",
+          "Exclusão",
+          "Anonimização"
+        ],
+        "H_x00e1_informa_x00e7__x00e3_oao": "Sim",
+        "Identifiqueouespecifiqueomeio_x0": "Outro meio não especificado",
         "LinkTitle": "pbr",
         "Modified": "2022-10-25T10:07:22Z",
         "id": "9542",

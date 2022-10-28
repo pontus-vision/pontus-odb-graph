@@ -1,0 +1,155 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Natural",
+        "name": "responsible",
+        "props": [
+          {
+            "name": "Person_Natural_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+          },
+          {
+            "name": "Person_Natural_Email",
+            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "name": "alternative_responsible",
+        "props": [
+          {
+            "name": "Person_Natural_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+          },
+          {
+            "name": "Person_Natural_Email",
+            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "SHAREPOINT/PBR/USERS",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "sharepoint/pbr/users",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "sharepoint/pbr/users",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexName": "responsible"
+      },
+      {
+        "label": "Is_Alias",
+        "fromVertexName": "responsible",
+        "toVertexName": "alternative_responsible"
+      }
+    ]
+  }
+}

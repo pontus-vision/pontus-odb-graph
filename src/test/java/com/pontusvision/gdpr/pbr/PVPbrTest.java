@@ -4,10 +4,13 @@ import com.pontusvision.gdpr.AnnotationTestsOrderer;
 import com.pontusvision.gdpr.App;
 import com.pontusvision.gdpr.AppTest;
 import com.pontusvision.gdpr.TestClassesOrder;
+import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,7 +37,7 @@ public class PVPbrTest extends AppTest {
    */
 
   @Test
-  public void test00001PbrTest() throws InterruptedException {
+  public void test00001FontesDeDados() throws InterruptedException {
 
     try {
 
@@ -76,4 +79,52 @@ public class PVPbrTest extends AppTest {
 
 
   }
+
+  // Testing new method/function SharepointUserRef
+  @Test
+  public void test00002SharepointUserRef() throws InterruptedException {
+
+    try {
+
+      jsonTestUtil("sharepoint/pbr/ropa.json", "$.queryResp[*].fields", "sharepoint_pbr_ropa");
+
+      OGremlinResultSet resSet = App.graph.executeSql(
+        "SELECT Person_Natural_Email as email " +
+          "FROM Person_Natural " +
+          "WHERE Person_Natural_Full_Name = 'GHOCHE, OMAR (LBN)'", Collections.EMPTY_MAP);
+
+      String responsibleEmail = resSet.iterator().next().getRawResult().getProperty("email");
+      resSet.close();
+      assertEquals("oghoche@pontusvision.com", responsibleEmail, "Responsible email");
+
+      resSet = App.graph.executeSql(
+        "SELECT Person_Natural_Form_ID as form_id " +
+          "FROM Person_Natural " +
+          "WHERE Person_Natural_Full_Name = 'VITOR, PAULO (BRL)'", Collections.EMPTY_MAP);
+
+      String alternativeResponsibleFormId = resSet.iterator().next().getRawResult().getProperty("form_id");
+      resSet.close();
+      assertEquals("324324324532", alternativeResponsibleFormId, "Alternative Responsible form id");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Data_Source_Name as data_source " +
+          "FROM Object_Data_Source", Collections.EMPTY_MAP);
+      String dataSourceName = resSet.iterator().next().getRawResult().getProperty("data_source");
+      resSet.close();
+      assertEquals("SHAREPOINT/PBR/USERS", dataSourceName, "Data source name");
+
+      resSet = App.graph.executeSql(
+        "SELECT Person_Natural_Full_Name as name " +
+          "FROM Person_Natural " +
+          "WHERE Person_Natural_Form_ID = 838473834324", Collections.EMPTY_MAP);
+      String personNaturalName = resSet.iterator().next().getRawResult().getProperty("name");
+      resSet.close();
+      assertEquals("GHOCHE, OMAR (LBN)", personNaturalName, "Person natural name");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+  }
+
 }

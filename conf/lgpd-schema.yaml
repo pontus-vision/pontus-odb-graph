@@ -135,6 +135,9 @@ propertyKeys:
   - name: Event_Data_Breach_Authority_Notified
     dataType: String
     cardinality: SINGLE
+  - name: Event_Data_Breach_Authority_Notified_Others
+    dataType: String
+    cardinality: SINGLE
   - name: Event_Data_Breach_Description
     dataType: String
     cardinality: SINGLE
@@ -1063,6 +1066,9 @@ propertyKeys:
   - name: Object_Data_Procedures_Data_Processor
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Procedures_Data_Provider
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Procedures_Delete_URL
     dataType: String
     cardinality: SINGLE
@@ -1072,7 +1078,13 @@ propertyKeys:
   - name: Object_Data_Procedures_Info_Share_Justification
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Procedures_Info_Share_Justification_International
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Procedures_Info_Shared_With_Third_Parties
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Info_Shared_With_Third_Parties_International
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Procedures_Name
@@ -1084,16 +1096,40 @@ propertyKeys:
   - name: Object_Data_Procedures_Number_Of_Natural_Person
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Procedures_Number_Of_Natural_Person_National
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Number_Of_Natural_Person_International
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Procedures_Property
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Procedures_Participants
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Procedures_Participants_National
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Participants_International
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Procedures_Secondary_Purpose_Of_Collection
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Procedures_Type_Of_Natural_Person
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Type_Of_Natural_Person_National
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Type_Of_Natural_Person_International
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Type_Of_Natural_Person_Sensitive_Data
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Type_Of_Natural_Person_Minors
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Procedures_Update_Mechanism
@@ -2707,6 +2743,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Personal_Data
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Policy
     multiplicity: MULTI
     unidirected: False
@@ -2748,6 +2788,10 @@ edgeLabels:
     unidirected: False
 
   - name: Has_Subsystem
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Sub_Category
     multiplicity: MULTI
     unidirected: False
 
@@ -2905,6 +2949,7 @@ vertexIndexes:
     propertyKeys:
       - Metadata_Type_Event_Data_Breach
       - Event_Data_Breach_Authority_Notified
+      - Event_Data_Breach_Authority_Notified_Others
       - Event_Data_Breach_Description
       - Event_Data_Breach_Id
       - Event_Data_Breach_Impact
@@ -3505,17 +3550,28 @@ vertexIndexes:
       - Object_Data_Procedures_Data_Controller
       - Object_Data_Procedures_Data_Owner
       - Object_Data_Procedures_Data_Processor
+      - Object_Data_Procedures_Data_Provider
       - Object_Data_Procedures_Delete_URL
       - Object_Data_Procedures_Info_Collected
       - Object_Data_Procedures_Info_Share_Justification
+      - Object_Data_Procedures_Info_Share_Justification_International
       - Object_Data_Procedures_Info_Shared_With_Third_Parties
+      - Object_Data_Procedures_Info_Shared_With_Third_Parties_International
       - Object_Data_Procedures_Name
       - Object_Data_Procedures_Number_Of_Records_Monthly
       - Object_Data_Procedures_Number_Of_Natural_Person
+      - Object_Data_Procedures_Number_Of_Natural_Person_National
+      - Object_Data_Procedures_Number_Of_Natural_Person_International
       - Object_Data_Procedures_Property
       - Object_Data_Procedures_Participants
+      - Object_Data_Procedures_Participants_National
+      - Object_Data_Procedures_Participants_International
       - Object_Data_Procedures_Secondary_Purpose_Of_Collection
       - Object_Data_Procedures_Type_Of_Natural_Person
+      - Object_Data_Procedures_Type_Of_Natural_Person_National
+      - Object_Data_Procedures_Type_Of_Natural_Person_International
+      - Object_Data_Procedures_Type_Of_Natural_Person_Sensitive_Data
+      - Object_Data_Procedures_Type_Of_Natural_Person_Minors
       - Object_Data_Procedures_Update_Mechanism
       - Object_Data_Procedures_Update_URL
       - Object_Data_Procedures_Why_Is_It_Collected

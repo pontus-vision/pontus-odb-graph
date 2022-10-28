@@ -125,12 +125,39 @@ rules:
   sharepoint_pbr_ropa:
 
     vertices:
+#      - label: Person_Natural
+#        name: responsible
+#        props:
+#          Full_Name:
+#            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
+#            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+#            processAll: true
+#
+#      - label: Person_Natural
+#        name: alternative_responsible
+#        props:
+#          Full_Name:
+#            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
+#            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+#            processAll: true
+
       - label: Object_Data_Source
+        name: sharepoint
         props:
           Name: "SHAREPOINT/PBR/ROPA"
 
-      - label: Object_Data_Procedures
-        name: personal_data
+      - label: Object_Data_Source
+        name: attached_data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(RoPA_x0020_84_x0020__x002d__x002)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Object_Data_Procedures # = RoPA = Mapeamento de Dados
         props:
           Form_Id: "${id}"
           ID:
@@ -149,10 +176,22 @@ rules:
             val: "${Descri_x00e7__x00e3_odoProcesso}"
             excludeFromSearch: true
           Info_Collected:
-            val: "${Quaiss_x00e3_oosdadospessoaistra}"
+            val: "${Quaiss_x00e3_oosdadospessoaistra + Quaiss_x00e3_oosdadossens_x00ed_ + Quaiss_x00e3_oosdadosdecrian_x00}"
             excludeFromSearch: true
           Type_Of_Natural_Person:
             val: "${Quems_x00e3_oostitularesdosdados}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person_Sensitive_Data:
+            val: "${Quems_x00e3_oostitularesdosdados0}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person_Minors:
+            val: "${Quems_x00e3_oostitularesdosdados1}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person_International:
+            val: "${Quems_x00e3_oostitularesdestesda0}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person_National:
+            val: "${Quems_x00e3_oostitularesdestesda}"
             excludeFromSearch: true
           Data_Provider:
             val: "${Quemforneceuosdados_x003f_}"
@@ -163,104 +202,42 @@ rules:
           Secondary_Purpose_Of_Collection:
             val: "${Paraqualfinalidadesecund_x00e1_r}"
             excludeFromSearch: true
-#         Should this prop 👇 be here or @ shared_data_national ?!
           Country_Where_Stored:
-            val: "Brasil"
+            val: "${Transfer_x00ea_nciainternacional}"
             excludeFromSearch: true
-
-      - label: Object_Data_Procedures
-        condition: "${ropa16 == 'Sim'}"
-        name: sensitive_data
-        props:
-#          Form_Id:
-#            val: "${id}"
-#            excludeFromSearch: true
-          Info_Collected:
-            val: "${}"
-            excludeFromSearch: true
-          Type_Of_Natural_Person:
-            val: "${Quems_x00e3_oostitularesdosdados0}"
-            excludeFromSearch: true
-
-      - label: Object_Data_Procedures
-        condition: "${ropa19 == 'Sim'}"
-        name: children_data
-        props:
-#          Form_Id:
-#            val: "${id}"
-#            excludeFromSearch: true
-          Info_Collected:
-            val: "${Quaiss_x00e3_oosdadosdecrian_x00}"
-            excludeFromSearch: true
-          Type_Of_Natural_Person:
-            val: "${Quems_x00e3_oostitularesdosdados1}"
-            excludeFromSearch: true
-
-      - label: Object_Data_Procedures # = RoPA = Mapeamento de Dados
-        condition: "${ropa50 == 'Sim'}"
-        name: internal_data
-        props:
-#          Form_Id:
-#            val: "${id}"
-#            excludeFromSearch: true
           Participants:
             vals: "${Sesim_x002c_especificarquaisoutr}"
             excludeFromSearch: true
-          Number_Of_Natural_Person:
-            val: "${Qual_x00e9_quantidadedetitulares} / por ano"
+          Participants_National:
+            val: "${Comquemosdadoss_x00e3_ocompartil}"
             excludeFromSearch: true
-
-      - label: Object_Data_Procedures # = RoPA = Mapeamento de Dados
-        condition: "${ropa59 == 'Sim'}"
-        name: shared_data_national
-        props:
-#          Form_Id:
-#            val: "${id}"
-#            excludeFromSearch: true
+          Participants_International:
+            vals: "${Especificarparaonde_x00e9_feitoa}"
+            excludeFromSearch: true
           Info_Shared_With_Third_Parties:
             vals: "${Quaiss_x00e3_oostiposdedadospess}"
             excludeFromSearch: true
-          Participants:
-            val: "${Comquemosdadoss_x00e3_ocompartil}"
-            excludeFromSearch: true
-          Type_Of_Natural_Person:
-            val: "${Quems_x00e3_oostitularesdestesda}"
-            excludeFromSearch: true
-          Number_Of_Natural_Person:
-            val: "${VolumetriadosTitularesDados}"
+          Info_Shared_With_Third_Parties_International:
+            vals: "${Quaiss_x00e3_oostiposdedadospess0}"
             excludeFromSearch: true
           Info_Share_Justification:
             val: "${Qual_x00e9_afinalidadedocomparti}"
             excludeFromSearch: true
-
-      - label: Object_Data_Procedures # = RoPA = Mapeamento de Dados
-        condition: "${ropa59 == 'Sim'}"
-        name: shared_data_international
-        props:
-#          Form_Id:
-#            val: "${id}"
-#            excludeFromSearch: true
-          Participants:
-            vals: "${Especificarparaonde_x00e9_feitoa}"
-            excludeFromSearch: true
-          Info_Shared_With_Third_Parties:
-            val: "${Quaiss_x00e3_oostiposdedadospess0}"
-            excludeFromSearch: true
-          Type_Of_Natural_Person:
-            val: "${Quems_x00e3_oostitularesdestesda0}"
-            excludeFromSearch: true
-          Number_Of_Natural_Person:
-            val: "${VolumetriadosTitularesDados_x002}"
-            excludeFromSearch: true
-          Info_Share_Justification:
+          Info_Share_Justification_International:
             val: "${Qual_x00e9_afinalidadedatransfer}"
             excludeFromSearch: true
-          Country_Where_Stored:
-            val: "${Transfer_x00ea_nciainternacional}"
+          Number_Of_Natural_Person:
+            val: "${Qual_x00e9_quantidadedetitulares} / por ano"
+            excludeFromSearch: true
+          Number_Of_Natural_Person_National:
+            val: "${VolumetriadosTitularesDados}"
+            excludeFromSearch: true
+          Number_Of_Natural_Person_International:
+            val: "${VolumetriadosTitularesDados_x002}"
             excludeFromSearch: true
 
       - label: Object_Sensitive_Data
-        name: personal_data_1
+        name: personal_data
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadospessoaistra)}"
@@ -269,7 +246,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        name: sensitive_data_1
+        name: sensitive_data
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadossens_x00ed_)}"
@@ -278,13 +255,218 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        name: children_data_1
+        name: minors_data
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadosdecrian_x00)}"
             type: "[Ljava.lang.String;"
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
+
+      - label: Object_Data_Policy
+        props:
+          Form_Id: "${id}"
+          Type:
+            val: "${Title}"
+            excludeFromSearch: true
+          Retention_Period:
+            val: "${Qualoper_x00ed_ododereten_x00e7_}"
+            excludeFromSearch: true
+          Retention_Justification:
+            val: "${Qualajustificativaparaoper_x00ed}"
+            excludeFromSearch: true
+
+# TODO: work on the conditions!
+#      - label: Object_Privacy_Notice
+#        condition: "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}"
+#        name: personal_data_1
+#        props:
+#          Form_Id: "${id}"
+#          Metadata_Update_Date:
+#            val: "${Modified}"
+#            type: "java.util.Date"
+#            excludeFromSearch: true
+#          Metadata_Create_Date:
+#            val: "${Created}"
+#            type: "java.util.Date"
+#            excludeFromSearch: true
+#          How_Is_It_Collected:
+#            val: "${Comoosdadospessoaiss_x00e3_ocole} + '\\n' + ${Identifiqueouespecifiqueomeio_x0 != null ? 'Outros: ' + Identifiqueouespecifiqueomeio_x0 : ''}"
+#            excludeFromSearch: true
+#          Description:
+#            val: "${Qual_x00e9_omeioadotadoparainfor}"
+#            excludeFromSearch: true
+##         TODO: Test if sharepoint returns empty string when an array field is empty
+#          Agreements:
+#            val: "${Quaisdestesdireitospodemseratend}"
+#            excludeFromSearch: true
+
+      - label: Event_Data_Breach
+        condition: "${ropa94 == 'Sim'}"
+        props:
+          Form_Id: "${id}"
+          Id:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+#         ternary operator has to have spaces or can it be all glued?
+          Authority_Notified:
+            val: "${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos:''}"
+            excludeFromSearch: true
+          Authority_Notified_Others:
+            val: "${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0:''}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Metadata_Update_Date:
+            val: "${Modified}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Description:
+            val: "${Emcasopositivo_x002c_fornecerosd}"
+            excludeFromSearch: true
+#          Source:
+#          Status:
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "sharepoint/pbr/ropa"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}" # Date COLUMN
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "sharepoint/pbr/ropa"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+#      Event_Privacy_Notice and Event_Consent have no connection with RoPA, so we can't make much use of them here
+#      - label: Event_Consent
+#        props:
+#          Status: "${Estesdadosforamfornecidospormeio}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexName: "Object_Data_Procedures"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "personal_data"
+        toVertexName: "minors_data"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "personal_data"
+        toVertexName: "personal_data"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "personal_data"
+        toVertexName: "sensitive_data"
+
+      - label: "Has_Data_Source"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "attached_data_sources"
+
+      - label: "Has_Data_Policy"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Data_Policy"
+
+      - label: "Impacted_By_Data_Breach"
+        fromVertexLabel: "Event_Data_Breach"
+        toVertexName: "attached_data_sources"
+
+# the below rule is used only for testing purposes (testing SharepointUSerRef class)
+  sharepoint_pbr_users:
+    vertices:
+      - label: Person_Natural
+        name: responsible
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Full_Name:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            processAll: true
+          Email:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
+
+      - label: Person_Natural
+        name: alternative_responsible
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Full_Name:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            processAll: true
+          Email:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "SHAREPOINT/PBR/USERS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "sharepoint/pbr/users"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "sharepoint/pbr/users"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
     edges:
       - label: "Has_Ingestion_Event"
@@ -297,36 +479,8 @@ rules:
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Group_Ingestion"
-        toVertexName: "personal_data"
+        toVertexName: "responsible"
 
-      - label: "Has_Sub_Category"
-        fromVertexName: "personal_data"
-        toVertexName: "children_data"
-
-      - label: "Has_Sub_Category"
-        fromVertexName: "personal_data"
-        toVertexName: "shared_data_national"
-
-      - label: "Has_Sub_Category"
-        fromVertexName: "personal_data"
-        toVertexName: "sensitive_data"
-
-      - label: "Has_Sub_Category"
-        fromVertexName: "personal_data"
-        toVertexName: "internal_data"
-
-      - label: "Has_Sub_Category"
-        fromVertexName: "personal_data"
-        toVertexName: "shared_data_international"
-
-      - label: "Has_Sensitive_Data"
-        fromVertexName: "personal_data"
-        toVertexName: "children_data_1"
-
-      - label: "Has_Sensitive_Data"
-        fromVertexName: "personal_data"
-        toVertexName: "sensitive_data_1"
-
-      - label: "Has_Sensitive_Data"
-        fromVertexName: "personal_data"
-        toVertexName: "personal_data_1"
+      - label: "Is_Alias"
+        fromVertexName: "responsible"
+        toVertexName: "alternative_responsible"

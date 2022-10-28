@@ -85,6 +85,7 @@ schema:
       useStatic: false
       props:
         - name: Authority_Notified
+        - name: Authority_Notified_Others
         - name: Description
         - name: Id
         - name: Impact
@@ -531,14 +532,24 @@ schema:
         - name: Delete_URL
         - name: Info_Collected
         - name: Info_Share_Justification
+        - name: Info_Share_Justification_International
         - name: Info_Shared_With_Third_Parties
+        - name: Info_Shared_With_Third_Parties_International
         - name: Name
         - name: Number_Of_Records_Monthly
         - name: Number_Of_Natural_Person
+        - name: Number_Of_Natural_Person_National
+        - name: Number_Of_Natural_Person_International
         - name: Property
         - name: Participants
+        - name: Participants_National
+        - name: Participants_International
         - name: Secondary_Purpose_Of_Collection
         - name: Type_Of_Natural_Person
+        - name: Type_Of_Natural_Person_National
+        - name: Type_Of_Natural_Person_International
+        - name: Type_Of_Natural_Person_Sensitive_Data
+        - name: Type_Of_Natural_Person_Minors
         - name: Update_Mechanism
         - name: Update_URL
         - name: Why_Is_It_Collected
@@ -1230,7 +1241,7 @@ schema:
   - name: Has_Other_Lawful_Basis
   - name: Has_Parent_Or_Guardian
   - name: Has_Phone
-#  - name: Has_Personal_Data
+  - name: Has_Personal_Data
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice
