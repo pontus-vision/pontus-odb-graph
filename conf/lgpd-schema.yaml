@@ -1023,6 +1023,21 @@ propertyKeys:
   - name: Object_Data_Policy_Update_Frequency
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Policy_Uses_Automation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Updated
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Deleted
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Essential
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Anonymized
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata_Type_Object_Data_Procedures
     dataType: String
     cardinality: SINGLE
@@ -3526,6 +3541,11 @@ vertexIndexes:
       - Object_Data_Policy_Type
       - Object_Data_Policy_Update_Date
       - Object_Data_Policy_Update_Frequency
+      - Object_Data_Policy_Uses_Automation
+      - Object_Data_Policy_Is_Updated
+      - Object_Data_Policy_Is_Deleted
+      - Object_Data_Policy_Is_Essential
+      - Object_Data_Policy_Is_Anonymized
     propertyKeysMappings:
     
       {}

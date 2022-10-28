@@ -2,6 +2,36 @@
 updatereq:
   vertices:
     
+    - label: Person_Natural
+      name: responsible
+      props:
+        - name: Person_Natural_Full_Name
+          val: ${new groovy.json.JsonBuilder(Respons_x00e1_vel)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}
+    
+    - label: Person_Natural
+      name: alt_responsible
+      props:
+        - name: Person_Natural_Full_Name
+          val: ${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}
+    
+    - label: Person_Natural
+      name: champion
+      props:
+        - name: Person_Natural_Full_Name
+          val: ${new groovy.json.JsonBuilder(Nome_x0020_do_x0020_Champion_x00)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}
+    
     - label: Object_Data_Source
       name: sharepoint
       props:
@@ -172,6 +202,56 @@ updatereq:
           val: ${Qualajustificativaparaoper_x00ed}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Object_Data_Policy_Uses_Automation
+          val: ${Osdadoss_x00e3_osubmetidos_x00e0}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Policy_Is_Updated
+          val: ${Osdadoss_x00e3_oatualizadosnotra}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Policy_Is_Deleted
+          val: ${Ap_x00f3_satingirasfinalidades_x}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Policy_Is_Essential
+          val: ${Osdadospessoaisidentificadoss_x0}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Policy_Is_Anonymized
+          val: ${Osdadoss_x00e3_oanonimizadosnotr}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Privacy_Notice
+      name: personal_data_1
+      condition: ${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}
+      props:
+        - name: Object_Privacy_Notice_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Object_Privacy_Notice_Metadata_Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Object_Privacy_Notice_Metadata_Create_Date
+          val: ${Created}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Object_Privacy_Notice_How_Is_It_Collected
+          val: ${Comoosdadospessoaiss_x00e3_ocole}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Privacy_Notice_Description
+          val: ${Qual_x00e9_omeioadotadoparainfor}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Privacy_Notice_Agreements
+          val: ${Quaisdestesdireitospodemseratend}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event_Data_Breach
       condition: ${ropa94 == 'Sim'}
@@ -271,4 +351,16 @@ updatereq:
   - label: Impacted_By_Data_Breach
     fromVertexLabel: Event_Data_Breach
     toVertexName: attached_data_sources
+  - label: Has_Privacy_Notice
+    fromVertexLabel: Object_Privacy_Notice
+    toVertexLabel: Object_Data_Procedures
+  - label: Is_Responsible
+    fromVertexName: responsible
+    toVertexLabel: Object_Data_Procedures
+  - label: Is_Responsible
+    fromVertexName: alt_responsible
+    toVertexLabel: Object_Data_Procedures
+  - label: Is_Interested_Party
+    fromVertexName: champion
+    toVertexLabel: Object_Data_Procedures
 

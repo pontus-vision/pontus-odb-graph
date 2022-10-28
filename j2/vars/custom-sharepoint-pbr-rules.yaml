@@ -125,23 +125,32 @@ rules:
   sharepoint_pbr_ropa:
 
     vertices:
-#      - label: Person_Natural
-#        name: responsible
-#        props:
-#          Full_Name:
-#            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
-#            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-#            processAll: true
-#
-#      - label: Person_Natural
-#        name: alternative_responsible
-#        props:
-#          Full_Name:
-#            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
-#            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-#            processAll: true
+      - label: Person_Natural
+        name: responsible
+        props:
+          Full_Name:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Person_Natural
+        name: alt_responsible
+        props:
+          Full_Name:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Person_Natural
+        name: champion
+        props:
+          Full_Name:
+            val: "${new groovy.json.JsonBuilder(Nome_x0020_do_x0020_Champion_x00)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            processAll: true
 
       - label: Object_Data_Source
         name: sharepoint
@@ -157,7 +166,7 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
 
-      - label: Object_Data_Procedures # = RoPA = Mapeamento de Dados
+      - label: Object_Data_Procedures # = RoPA = Mapeamento de Processos
         props:
           Form_Id: "${id}"
           ID:
@@ -275,31 +284,48 @@ rules:
           Retention_Justification:
             val: "${Qualajustificativaparaoper_x00ed}"
             excludeFromSearch: true
+#         PBR não tem campo para Update_Frequency ?!?!
+          Uses_Automation:
+            val: "${Osdadoss_x00e3_osubmetidos_x00e0}"
+            excludeFromSearch: true
+          Is_Updated:
+            val: "${Osdadoss_x00e3_oatualizadosnotra}"
+            excludeFromSearch: true
+          Is_Deleted:
+            val: "${Ap_x00f3_satingirasfinalidades_x}"
+            excludeFromSearch: true
+          Is_Essential:
+            val: "${Osdadospessoaisidentificadoss_x0}"
+            excludeFromSearch: true
+          Is_Anonymized:
+            val: "${Osdadoss_x00e3_oanonimizadosnotr}"
+            excludeFromSearch: true
 
 # TODO: work on the conditions!
-#      - label: Object_Privacy_Notice
-#        condition: "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}"
-#        name: personal_data_1
-#        props:
-#          Form_Id: "${id}"
-#          Metadata_Update_Date:
-#            val: "${Modified}"
-#            type: "java.util.Date"
-#            excludeFromSearch: true
-#          Metadata_Create_Date:
-#            val: "${Created}"
-#            type: "java.util.Date"
-#            excludeFromSearch: true
-#          How_Is_It_Collected:
-#            val: "${Comoosdadospessoaiss_x00e3_ocole} + '\\n' + ${Identifiqueouespecifiqueomeio_x0 != null ? 'Outros: ' + Identifiqueouespecifiqueomeio_x0 : ''}"
-#            excludeFromSearch: true
-#          Description:
-#            val: "${Qual_x00e9_omeioadotadoparainfor}"
-#            excludeFromSearch: true
-##         TODO: Test if sharepoint returns empty string when an array field is empty
-#          Agreements:
-#            val: "${Quaisdestesdireitospodemseratend}"
-#            excludeFromSearch: true
+      - label: Object_Privacy_Notice
+        condition: "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}"
+        name: personal_data_1
+        props:
+          Form_Id: "${id}"
+          Metadata_Update_Date:
+            val: "${Modified}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}"
+            type: "java.util.Date"
+            excludeFromSearch: true
+          How_Is_It_Collected:
+            val: "${Comoosdadospessoaiss_x00e3_ocole}"
+#            + '\\\\n' + Identifiqueouespecifiqueomeio_x0 != null ? Identifiqueouespecifiqueomeio_x0 : ''
+            excludeFromSearch: true
+          Description:
+            val: "${Qual_x00e9_omeioadotadoparainfor}"
+            excludeFromSearch: true
+#         TODO: Test if sharepoint returns empty string when an array field is empty
+          Agreements:
+            val: "${Quaisdestesdireitospodemseratend}"
+            excludeFromSearch: true
 
       - label: Event_Data_Breach
         condition: "${ropa94 == 'Sim'}"
@@ -355,11 +381,6 @@ rules:
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
-#      Event_Privacy_Notice and Event_Consent have no connection with RoPA, so we can't make much use of them here
-#      - label: Event_Consent
-#        props:
-#          Status: "${Estesdadosforamfornecidospormeio}"
-
     edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "sharepoint"
@@ -396,6 +417,22 @@ rules:
       - label: "Impacted_By_Data_Breach"
         fromVertexLabel: "Event_Data_Breach"
         toVertexName: "attached_data_sources"
+
+      - label: "Has_Privacy_Notice"
+        fromVertexLabel: "Object_Privacy_Notice"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Is_Responsible"
+        fromVertexName: "responsible"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Is_Responsible"
+        fromVertexName: "alt_responsible"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Is_Interested_Party"
+        fromVertexName: "champion"
+        toVertexLabel: "Object_Data_Procedures"
 
 # the below rule is used only for testing purposes (testing SharepointUSerRef class)
   sharepoint_pbr_users:

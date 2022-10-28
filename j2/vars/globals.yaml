@@ -510,6 +510,11 @@ schema:
         - name: Update_Date
           dataType: Date
         - name: Update_Frequency
+        - name: Uses_Automation
+        - name: Is_Updated
+        - name: Is_Deleted
+        - name: Is_Essential
+        - name: Is_Anonymized
 
     - name: "Object_Data_Procedures"
       partition: false
@@ -864,7 +869,7 @@ schema:
         - name: Start_Date
           dataType: Date
 
-    - name: "Object_Legitimate_Interests_Assessment"
+    - name: "Object_Legitimate_Interests_Assessment" # LIA
       partition: false
       useStatic: false
       props:
