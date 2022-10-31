@@ -158,25 +158,36 @@ public class PVPbrTest extends AppTest {
       String dataSourceCount = App.executor.eval("App.g.V().has('Object_Data_Procedures_Form_Id', eq('9542'))" +
         ".as('ropa-9542').out('Has_Data_Source').as('attached_data_sources')dedup().count().next().toString()").get().toString();
       assertEquals("2", dataSourceCount, "Two data sources found attached to this RoPA - ADP and Marketing");
-//
-//      String alternativeResponsibleFormId = resSet.iterator().next().getRawResult().getProperty("form_id");
-//      resSet.close();
-//      assertEquals("324324324532", alternativeResponsibleFormId, "Alternative Responsible form id");
-//
-//      resSet = App.graph.executeSql(
-//        "SELECT Object_Data_Source_Name as data_source " +
-//          "FROM Object_Data_Source", Collections.EMPTY_MAP);
-//      String dataSourceName = resSet.iterator().next().getRawResult().getProperty("data_source");
-//      resSet.close();
-//      assertEquals("SHAREPOINT/PBR/USERS", dataSourceName, "Data source name");
-//
-//      resSet = App.graph.executeSql(
-//        "SELECT Person_Natural_Full_Name as name " +
-//          "FROM Person_Natural " +
-//          "WHERE Person_Natural_Form_ID = 83829", Collections.EMPTY_MAP);
-//      String personNaturalName = resSet.iterator().next().getRawResult().getProperty("name");
-//      resSet.close();
-//      assertEquals("GHOCHE, OMAR (LBN)", personNaturalName, "Person natural name");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Data_Source_Name as ds_name " +
+          "FROM Object_Data_Source " +
+          "WHERE out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event').Object_Data_Procedures_ID " +
+          "LIKE '%- PBR'", Collections.EMPTY_MAP);
+
+      String dsName = resSet.iterator().next().getRawResult().getProperty("ds_name");
+      resSet.close();
+      assertEquals("SHAREPOINT/PBR/ROPA", dsName, "Data source name");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Data_Procedures_Business_Area_Responsible as BAR, Object_Data_Procedures_Macro_Process_Name as MPN, " +
+          "Object_Data_Procedures_Type_Of_Natural_Person as TNP, Object_Data_Procedures_Why_Is_It_Collected as WIC, " +
+          "Object_Data_Procedures_Country_Where_Stored as CWS " +
+          "FROM Object_Data_Procedures WHERE Object_Data_Procedures_Form_Id = 9542", Collections.EMPTY_MAP);
+
+      String BAR = resSet.iterator().next().getRawResult().getProperty("BAR");
+      String MPN = resSet.iterator().next().getRawResult().getProperty("MPN");
+      String TNP = resSet.iterator().next().getRawResult().getProperty("TNP");
+      String WIC = resSet.iterator().next().getRawResult().getProperty("WIC");
+      String CWS = resSet.iterator().next().getRawResult().getProperty("CWS");
+
+      resSet.close();
+
+      assertEquals("Tecnologia da Informação", BAR, "Business Area Responsible");
+      assertEquals("Suporte Técnico", MPN, "Macro Process Name");
+      assertEquals("[Funcionário, Terceiro, Cliente]", TNP, "Type of Natural Person");
+      assertEquals("Atendimento de demandas de suporte técnico", WIC, "Why is it collected");
+      assertEquals("[Líbano, Finlândia, Japão, Estados Unidos, Singapura]", CWS, "Country where stored");
 
     } catch (Exception e) {
       e.printStackTrace();
