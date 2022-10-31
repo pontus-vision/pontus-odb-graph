@@ -257,6 +257,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "sensitive_data",
+        "condition": "${_x00c9_realizadotratamentodedado0 == 'Sim'}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -271,6 +272,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "minors_data",
+        "condition": "${_x00c9_realizadotratamentodedado2 == 'Sim'}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -386,7 +388,7 @@
       },
       {
         "label": "Event_Data_Breach",
-        "condition": "${ropa94 == 'Sim'}",
+        "condition": "${Houvealgumincidentedeseguran_x00 == 'Sim'}",
         "props": [
           {
             "name": "Event_Data_Breach_Form_Id",

@@ -4,7 +4,7 @@
       "@odata.etag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
       "createdDateTime": "2021-07-27T19: 18: 05Z",
       "eTag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
-      "id": "1",
+      "id": "9542",
       "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
       "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/1_.000",
       "createdBy": {
@@ -29,17 +29,17 @@
       "fields": {
         "@odata.etag": "4675ace2-4432-7762cc1289-a11f-323a21,3",
         "LinkTitleNoMenu": "pbr",
-        "Title": "FINANCEIRO 01",
+        "Title": "FINANCEIRO 01 - PBR",
         "Respons_x00e1_vel": [
           {
-            "LookupId": 838473834324,
+            "LookupId": 83829,
             "LookupValue": "ghoche, omar (lbn)",
             "Email": "oghoche@pontusvision.com"
           }
         ],
         "Respons_x00e1_velAlternativo": [
           {
-            "LookupId": 324324324532,
+            "LookupId": 32192,
             "LookupValue": "vitor, paulo (brl)",
             "Email": "pmartins@pontusvision.com"
           }
@@ -71,6 +71,7 @@
           "Raça",
           "Religião"
         ],
+        "_x00c9_realizadotratamentodedado0": "Sim",
         "Quems_x00e3_oostitularesdosdados0": [
           "Funcionário"
         ],
@@ -79,6 +80,7 @@
           "Nome do Pai",
           "Nacionalidade"
         ],
+        "_x00c9_realizadotratamentodedado2": "Sim",
         "Quems_x00e3_oostitularesdosdados1": [
           "Crianças",
           "Adolescentes"
@@ -136,16 +138,17 @@
         "Qual_x00e9_afinalidadedatransfer": "Criar o POLE do RoPA Internacional",
         "RoPA_x0020_84_x0020__x002d__x002": [
           {
-            "LookupId": 1,
+            "LookupId": 13247,
             "LookupValue": "ADP"
           },
           {
-            "LookupId": 3,
+            "LookupId": 33457,
             "LookupValue": "Marketing"
           }
         ],
         "Qualoper_x00ed_ododereten_x00e7_": "Indeterminado",
         "Qualajustificativaparaoper_x00ed": "Prática de Mercado",
+        "Houvealgumincidentedeseguran_x00": "Sim",
         "Emcasopositivo_x002c_fornecerosd": "Incidente de Segurança de Dados do RoPA",
         "Qual_x00e9_omeioadotadoparainfor": [
           "Disclaimer",
@@ -155,14 +158,14 @@
         "Emcasopositivo_x002c_fornecerosd0": "Notificação outros órgãos",
         "Nome_x0020_do_x0020_Champion_x00": [
             {
-                "LookupId": 1,
-                "LookupValue": "Champion 1",
-                "Email": "champ1@gmail.com"
+                "LookupId": 12845,
+                "LookupValue": "Champion 12845",
+                "Email": "champ12845@gmail.com"
             },
             {
-                "LookupId": 2,
-                "LookupValue": "Champion 2",
-                "Email": "champ2@gmail.com"
+                "LookupId": 28755,
+                "LookupValue": "Champion 28755",
+                "Email": "champ28755@gmail.com"
             }
         ],
         "Comoosdadospessoaiss_x00e3_ocole": [
@@ -187,6 +190,281 @@
         "LinkTitle": "pbr",
         "Modified": "2022-10-25T10:07:22Z",
         "id": "9542",
+        "ContentType": "Task",
+        "Created": "2022-10-24T15:46:23Z"
+      }
+    },
+    {
+      "@odata.etag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "createdDateTime": "2021-07-27T19: 18: 05Z",
+      "eTag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "id": "8739",
+      "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "4675ace2-4432-7762cc1289-a11f-323a21,3",
+        "LinkTitleNoMenu": "pbr",
+        "Title": "MARKETING 99 - PBR",
+        "Respons_x00e1_vel": [
+          {
+            "LookupId": 83473,
+            "LookupValue": "James, Bond (UK)",
+            "Email": "jbond@pontusvision.com"
+          }
+        ],
+        "Respons_x00e1_velAlternativo": [
+          {
+            "LookupId": 18321,
+            "LookupValue": "Ditri, Ferdinand (RU)",
+            "Email": "fdimitri@ru.com"
+          }
+        ],
+        "_x00c1_readeNeg_x00f3_cio": "Marketing",
+        "Descri_x00e7__x00e3_odoProcesso": "Processo de Marketing",
+        "Processo": "Processo de Marketing",
+        "RoPA_x0020_0_x0020__x002d__x0020": "Descontinuação de RoPA",
+        "Quaiss_x00e3_oosdadospessoaistra": [
+          "Cargo/Psoição",
+          "Data de Nascimento",
+          "E-mail Comercial",
+          "RG",
+          "CPF",
+          "Nome"
+        ],
+        "Quems_x00e3_oostitularesdosdados": [
+          "Cliente"
+        ],
+        "Quaiss_x00e3_oosdadossens_x00ed_": [
+          "Religião",
+          "Opinião Política"
+        ],
+        "_x00c9_realizadotratamentodedado0": "Sim",
+        "Quems_x00e3_oostitularesdosdados0": [
+          "Funcionário"
+        ],
+        "Quems_x00e3_oostitularesdosdados1": [
+          "Crianças"
+        ],
+        "Quemforneceuosdados_x003f_": [
+          "O dado foi coletado por meio de terceiro"
+        ],
+        "Qual_x00e9_afinalidadedotratamen": "Marketing",
+        "Paraqualfinalidadesecund_x00e1_r": "Para propaganda",
+        "Sesim_x002c_especificarquaisoutr": "Outra finalidade não especificada",
+        "Qual_x00e9_quantidadedetitulares": "1 a 100",
+        "Comquemosdadoss_x00e3_ocompartil": [
+          "Entre empresas de marketing"
+        ],
+        "Quaiss_x00e3_oostiposdedadospess": [
+          "Dados Sensíveis"
+        ],
+        "Quems_x00e3_oostitularesdestesda": [
+          "Colaborador"
+        ],
+        "VolumetriadosTitularesDados": "1 - 100",
+        "Qual_x00e9_afinalidadedocomparti": "Criar o POLE do RoPA",
+        "Especificarparaonde_x00e9_feitoa": [
+          "Empresas de Marketing"
+        ],
+        "Transfer_x00ea_nciainternacional": [
+          "Argentina",
+          "Paraguai"
+        ],
+        "Quaiss_x00e3_oostiposdedadospess0": [
+          "Dados Pessoais"
+        ],
+        "Quems_x00e3_oostitularesdestesda0": [
+          "Prospect"
+        ],
+        "VolumetriadosTitularesDados_x002": "1 - 100",
+        "Qual_x00e9_afinalidadedatransfer": "Marketing Internacional",
+        "RoPA_x0020_84_x0020__x002d__x002": [
+          {
+            "LookupId": 33457,
+            "LookupValue": "Marketing"
+          }
+        ],
+        "Qualoper_x00ed_ododereten_x00e7_": "20 anos",
+        "Qualajustificativaparaoper_x00ed": "Marketing",
+        "Emcasopositivo_x002c_fornecerosd": "",
+        "Houvealgumincidentedeseguran_x00": "Não",
+        "Qual_x00e9_omeioadotadoparainfor": [
+          "Aviso de Privacidade"
+        ],
+        "Fornecerosdetalhes_x002c_casopos": "Notificação ANPD",
+        "Emcasopositivo_x002c_fornecerosd0": "",
+        "Nome_x0020_do_x0020_Champion_x00": [
+          {
+            "LookupId": 75746,
+            "LookupValue": "Champion 75746",
+            "Email": "champ75746@yahoo.com"
+          }
+        ],
+        "Comoosdadospessoaiss_x00e3_ocole": [
+          "E-mail"
+        ],
+        "Quaisdestesdireitospodemseratend": [
+          "Correção",
+          "Atualização"
+        ],
+        "H_x00e1_informa_x00e7__x00e3_oao": "Sim",
+        "Identifiqueouespecifiqueomeio_x0": "",
+        "Estedado_x00e9_tratadoforadesist": "Sim",
+        "Especificarosmeiosutilizadospara": "",
+        "Osdadoss_x00e3_osubmetidos_x00e0": "Não",
+        "Osdadoss_x00e3_oatualizadosnotra": "Sim",
+        "Ap_x00f3_satingirasfinalidades_x00": "Não",
+        "Osdadospessoaisidentificadoss_x00": "Não",
+        "Osdadoss_x00e3_oanonimizadosnotra": "Não",
+        "LinkTitle": "pbr",
+        "Modified": "2022-10-25T10:07:22Z",
+        "id": "8739",
+        "ContentType": "Task",
+        "Created": "2022-10-24T15:46:23Z"
+      }
+    },
+    {
+      "@odata.etag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "createdDateTime": "2021-07-27T19: 18: 05Z",
+      "eTag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "id": "5493",
+      "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "4675ace2-4432-7762cc1289-a11f-323a21,3",
+        "LinkTitleNoMenu": "pbr",
+        "Title": "RH 43 - PBR",
+        "Respons_x00e1_vel": [
+          {
+            "LookupId": 83847,
+            "LookupValue": "Mendes, Aline (US)",
+            "Email": "amendes@pontusvision.com"
+          }
+        ],
+        "Respons_x00e1_velAlternativo": [
+          {
+            "LookupId": 32432,
+            "LookupValue": "Zelda, Mario (JP)",
+            "Email": "mzelda@pontusvision.com"
+          }
+        ],
+        "_x00c1_readeNeg_x00f3_cio": "Recursos Humanos",
+        "Descri_x00e7__x00e3_odoProcesso": "Processo de recrutamento e seleção de candidatos",
+        "Processo": "Recrutamento e Seleção",
+        "RoPA_x0020_0_x0020__x002d__x0020": "Novo Processo",
+        "Quaiss_x00e3_oosdadospessoaistra": [
+          "Nome",
+          "E-mail",
+          "Telefone"
+        ],
+        "Quems_x00e3_oostitularesdosdados": [
+          "Colaboradores"
+        ],
+        "Quaiss_x00e3_oosdadossens_x00ed_": [
+        ],
+        "_x00c9_realizadotratamentodedado0": "Não",
+        "Quems_x00e3_oostitularesdosdados0": [
+          "Funcionário"
+        ],
+        "Quaiss_x00e3_oosdadosdecrian_x00": "",
+        "_x00c9_realizadotratamentodedado2": "Não",
+        "Quems_x00e3_oostitularesdosdados1": "",
+        "Quemforneceuosdados_x003f_": "",
+        "Descrevercomofoiobtidoessesconse": "",
+        "Qual_x00e9_afinalidadedotratamen": "Recrutamento e Seleção",
+        "Paraqualfinalidadesecund_x00e1_r": "Finalidade de recrutamento secundária",
+        "Sesim_x002c_especificarquaisoutr": "Várias áreas participam do processo",
+        "Qual_x00e9_quantidadedetitulares": "Acima de 500",
+        "Comquemosdadoss_x00e3_ocompartil": [
+          "Entre empresas"
+        ],
+        "Quaiss_x00e3_oostiposdedadospess": [
+          "Dados Pessoais",
+          "Dados Sensíveis"
+        ],
+        "Quems_x00e3_oostitularesdestesda": [
+          "Colaborador"
+        ],
+        "VolumetriadosTitularesDados": "1 - 100",
+        "Qual_x00e9_afinalidadedocomparti": "Criar o POLE do RoPA",
+        "Especificarparaonde_x00e9_feitoa": [
+          "In Company"
+        ],
+        "Transfer_x00ea_nciainternacional": [],
+        "Quaiss_x00e3_oostiposdedadospess0": [
+          "Dados Pessoais"
+        ],
+        "Quems_x00e3_oostitularesdestesda0": [
+          "Lead"
+        ],
+        "VolumetriadosTitularesDados_x002": "1 - 100",
+        "Qual_x00e9_afinalidadedatransfer": "",
+        "RoPA_x0020_84_x0020__x002d__x002": [
+        ],
+        "Qualoper_x00ed_ododereten_x00e7_": "10 anos",
+        "Qualajustificativaparaoper_x00ed": "Ajuste de acordo com a LGPD",
+        "Emcasopositivo_x002c_fornecerosd": "",
+        "Houvealgumincidentedeseguran_x00": "Não",
+        "Qual_x00e9_omeioadotadoparainfor": [
+        ],
+        "Fornecerosdetalhes_x002c_casopos": "",
+        "Emcasopositivo_x002c_fornecerosd0": "",
+        "Nome_x0020_do_x0020_Champion_x00": [
+          {
+            "LookupId": 92950,
+            "LookupValue": "Champion 92950",
+            "Email": "champ92950@outlook.com"
+          }
+        ],
+        "Comoosdadospessoaiss_x00e3_ocole": [
+          "Formulário de RH"
+        ],
+        "Quaisdestesdireitospodemseratend": [
+          "Correção",
+          "Exclusão",
+          "Anonimização"
+        ],
+        "LinkTitle": "pbr",
+        "Modified": "2022-10-25T10:07:22Z",
+        "id": "5493",
         "ContentType": "Task",
         "Created": "2022-10-24T15:46:23Z"
       }

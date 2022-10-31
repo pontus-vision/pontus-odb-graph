@@ -255,6 +255,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${_x00c9_realizadotratamentodedado0 == 'Sim'}"
         name: sensitive_data
         props:
           Description:
@@ -264,6 +265,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${_x00c9_realizadotratamentodedado2 == 'Sim'}"
         name: minors_data
         props:
           Description:
@@ -328,7 +330,7 @@ rules:
             excludeFromSearch: true
 
       - label: Event_Data_Breach
-        condition: "${ropa94 == 'Sim'}"
+        condition: "${Houvealgumincidentedeseguran_x00 == 'Sim'}"
         props:
           Form_Id: "${id}"
           Id:
@@ -438,42 +440,14 @@ rules:
   sharepoint_pbr_users:
     vertices:
       - label: Person_Natural
-        name: responsible
         props:
-          Form_Id:
-            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupId()}"
-            processAll: true
+          Form_Id: "${id}"
           Full_Name:
-            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-            processAll: true
+            val: "${name?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
           Email:
-            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
-            processAll: true
-
-      - label: Person_Natural
-        name: alternative_responsible
-        props:
-          Form_Id:
-            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupId()}"
-            processAll: true
-          Full_Name:
-            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-            processAll: true
-          Email:
-            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
-            processAll: true
+            val: "${email?.toLowerCase()?.trim()}"
+            excludeFromSearch: true
 
       - label: Object_Data_Source
         props:
@@ -516,8 +490,4 @@ rules:
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Group_Ingestion"
-        toVertexName: "responsible"
-
-      - label: "Is_Alias"
-        fromVertexName: "responsible"
-        toVertexName: "alternative_responsible"
+        toVertexName: "Person_Natural"

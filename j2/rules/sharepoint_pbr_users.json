@@ -3,61 +3,23 @@
     "vertices": [
       {
         "label": "Person_Natural",
-        "name": "responsible",
         "props": [
           {
             "name": "Person_Natural_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupId()}"
+            "val": "${id}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
+            "val": "${name?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Person_Natural_Email",
-            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
-          }
-        ]
-      },
-      {
-        "label": "Person_Natural",
-        "name": "alternative_responsible",
-        "props": [
-          {
-            "name": "Person_Natural_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupId()}"
-          },
-          {
-            "name": "Person_Natural_Full_Name",
-            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-          },
-          {
-            "name": "Person_Natural_Email",
-            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            "val": "${email?.toLowerCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -143,12 +105,7 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Group_Ingestion",
-        "toVertexName": "responsible"
-      },
-      {
-        "label": "Is_Alias",
-        "fromVertexName": "responsible",
-        "toVertexName": "alternative_responsible"
+        "toVertexName": "Person_Natural"
       }
     ]
   }
