@@ -150,7 +150,7 @@ public class PVPbrTest extends AppTest {
         "SELECT Person_Natural_Full_Name as responsible " +
           "FROM Person_Natural " +
           "WHERE Person_Natural_Form_Id = 83847", Collections.EMPTY_MAP);
-
+//    Important note: all ids from Sharepoint come as type String "" (double quotes) and not as type Integer !!!
       String responsibleName = resSet.iterator().next().getRawResult().getProperty("responsible");
       resSet.close();
       assertEquals("MENDES, ALINE (US)", responsibleName, "Mendes is responsible for this RoPA");
@@ -228,8 +228,8 @@ public class PVPbrTest extends AppTest {
       resSet = App.graph.executeSql(
         "SELECT Object_Privacy_Notice_Agreements as agreements, Object_Privacy_Notice_Description as description, Object_Privacy_Notice_How_Is_It_Collected as HIC " +
           "FROM Object_Privacy_Notice " +
-          "WHERE Object_Data_Procedures_Form_Id = 5493", Collections.EMPTY_MAP);
-
+          "WHERE out('Has_Privacy_Notice').Object_Data_Procedures_Form_Id = '5493'", Collections.EMPTY_MAP);
+//    Important note: all ids from Sharepoint come as type String "" (double quotes) and not as type Integer !!!
       String agreements = resSet.iterator().next().getRawResult().getProperty("agreements");
       String description = resSet.iterator().next().getRawResult().getProperty("description");
       String HIC = resSet.iterator().next().getRawResult().getProperty("HIC");
