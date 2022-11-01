@@ -98,7 +98,7 @@ public class PVPbrTest extends AppTest {
       assertEquals("oghoche@pontusvision.com", responsibleEmail, "Responsible email");
 
       resSet = App.graph.executeSql(
-        "SELECT Person_Natural_Form_ID as form_id " +
+        "SELECT Person_Natural_Form_Id as form_id " +
           "FROM Person_Natural " +
           "WHERE Person_Natural_Full_Name = 'VITOR, PAULO (BRL)'", Collections.EMPTY_MAP);
 
@@ -156,17 +156,12 @@ public class PVPbrTest extends AppTest {
       assertEquals("MENDES, ALINE (US)", responsibleName, "Mendes is responsible for this RoPA");
 
       String dataSourceCount = App.executor.eval("App.g.V().has('Object_Data_Procedures_Form_Id', eq('9542'))" +
-        ".as('ropa-9542').out('Has_Data_Source').as('attached_data_sources')dedup().count().next().toString()").get().toString();
-      assertEquals("2", dataSourceCount, "Two data sources found attached to this RoPA - ADP and Marketing");
+        ".as('ropa-9542').out('Has_Data_Source').as('attached_data_sources').dedup().count().next().toString()").get().toString();
+      assertEquals("2", dataSourceCount, "Two Data_Sources found attached to this RoPA - ADP and Marketing");
 
-      resSet = App.graph.executeSql(
-        "SELECT Object_Data_Source_Name as ds_name " +
-          "FROM Object_Data_Source " +
-          "WHERE out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event').Object_Data_Procedures_ID " +
-          "LIKE '%- PBR'", Collections.EMPTY_MAP);
-
-      String dsName = resSet.iterator().next().getRawResult().getProperty("ds_name");
-      resSet.close();
+      String dsName = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', endingWith(' - PBR'))" +
+        ".in('Has_Ingestion_Event').as('event_ingestion').in('Has_Ingestion_Event').as('event_group')" +
+        ".in('Has_Ingestion_Event').as('data_source').values('Object_Data_Source_Name').next().toString()").get().toString();
       assertEquals("SHAREPOINT/PBR/ROPA", dsName, "Data source name");
 
       resSet = App.graph.executeSql(
@@ -185,9 +180,65 @@ public class PVPbrTest extends AppTest {
 
       assertEquals("Tecnologia da Informação", BAR, "Business Area Responsible");
       assertEquals("Suporte Técnico", MPN, "Macro Process Name");
-      assertEquals("[Funcionário, Terceiro, Cliente]", TNP, "Type of Natural Person");
+      assertEquals("[Funcionário, Terceiro, Cliente]", TNP, "Types of Natural People");
       assertEquals("Atendimento de demandas de suporte técnico", WIC, "Why is it collected");
-      assertEquals("[Líbano, Finlândia, Japão, Estados Unidos, Singapura]", CWS, "Country where stored");
+      assertEquals("[Líbano, Finlândia, Japão, Estados Unidos, Singapura]", CWS, "Countries where stored");
+
+      String incidentsCount = App.executor.eval("App.g.V().where(" +
+                                          "has('Metadata_Type_Event_Data_Breach', P.eq('Event_Data_Breach'))" +
+                                            ".and().out('Impacted_By_Data_Breach').in('Has_Data_Source')" +
+                                            ".has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
+                                          ").dedup().count().next().toString()").get().toString();
+      assertEquals("1", incidentsCount, "Only one of PBR's RoPA was breached");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Data_Policy_Retention_Period as policy_period, Object_Data_Policy_Retention_Justification as policy_justification " +
+          "FROM Object_Data_Policy " +
+          "WHERE in('Has_Data_Policy').Object_Data_Procedures_ID = 'RH 43 - PBR'", Collections.EMPTY_MAP);
+
+      String policyPeriod = resSet.iterator().next().getRawResult().getProperty("policy_period");
+      String policyJustification = resSet.iterator().next().getRawResult().getProperty("policy_justification");
+      resSet.close();
+      assertEquals("10 anos", policyPeriod, "This RoPA has a 10 year retention policy");
+      assertEquals("Ajuste de acordo com a LGPD", policyJustification, "Policy justification");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Data_Procedures_Info_Collected as info " +
+          "FROM Object_Data_Procedures " +
+          "WHERE Object_Data_Procedures_ID = 'FINANCEIRO 01 - PBR'", Collections.EMPTY_MAP);
+
+      String info = resSet.iterator().next().getRawResult().getProperty("info");
+      resSet.close();
+      assertEquals("[Cargo/Posição, Data de Nascimento, E-mail Comercial, RG, E-mail Particular, CPF, Endereço, " +
+        "Telefone Comercial, Telefone Particular, Dados Bancários, Nome Social, Dados Biométricos, Raça, Religião, " +
+        "Nome da Mãe, Nome do Pai, Nacionalidade]", info, "This RoPA collects a lot of information in one string block");
+
+      String countSensitiveData = App.executor.eval("App.g.V().where(" +
+                                                              "has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
+                                                          ").as('ropa_pbr').out('Has_Sensitive_Data').as('sensitive_data')" +
+                                                          ".dedup().count().next().toString()").get().toString();
+      assertEquals("4", countSensitiveData, "Four types of sensitive data found in the PBR RoPA: Dados Biométricos, Raça, Religião and Opinião Política");
+
+      String countPersonalData = App.executor.eval("App.g.V().where(" +
+                                                             "has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
+                                                         ").as('ropa_pbr').out('Has_Personal_Data').as('personal_data')" +
+                                                         ".dedup().count().next().toString()").get().toString();
+      assertEquals("17", countPersonalData, "17 types of personal data found within three of PBR's RoPA");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Privacy_Notice_Agreements as agreements, Object_Privacy_Notice_Description as description, Object_Privacy_Notice_How_Is_It_Collected as HIC " +
+          "FROM Object_Privacy_Notice " +
+          "WHERE Object_Data_Procedures_Form_Id = 5493", Collections.EMPTY_MAP);
+
+      String agreements = resSet.iterator().next().getRawResult().getProperty("agreements");
+      String description = resSet.iterator().next().getRawResult().getProperty("description");
+      String HIC = resSet.iterator().next().getRawResult().getProperty("HIC");
+
+      resSet.close();
+
+      assertEquals("[Correção, Exclusão, Anonimização]", agreements, "This privacy notice has three agreements");
+      assertEquals("[Privacy Notice]", description, "Description");
+      assertEquals("[Formulário de RH]", HIC, "How is it collected");
 
     } catch (Exception e) {
       e.printStackTrace();

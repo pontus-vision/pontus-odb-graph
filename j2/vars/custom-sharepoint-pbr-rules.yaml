@@ -306,7 +306,6 @@ rules:
 # TODO: work on the conditions!
       - label: Object_Privacy_Notice
         condition: "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}"
-        name: personal_data_1
         props:
           Form_Id: "${id}"
           Metadata_Update_Date:
@@ -393,19 +392,19 @@ rules:
         toVertexLabel: "Event_Ingestion"
 
       - label: "Has_Ingestion_Event"
-        fromVertexLabel: "Event_Group_Ingestion"
+        fromVertexLabel: "Event_Ingestion"
         toVertexName: "Object_Data_Procedures"
 
       - label: "Has_Personal_Data"
-        fromVertexName: "personal_data"
+        fromVertexName: "Object_Data_Procedures"
         toVertexName: "minors_data"
 
       - label: "Has_Personal_Data"
-        fromVertexName: "personal_data"
+        fromVertexName: "Object_Data_Procedures"
         toVertexName: "personal_data"
 
       - label: "Has_Sensitive_Data"
-        fromVertexName: "personal_data"
+        fromVertexName: "Object_Data_Procedures"
         toVertexName: "sensitive_data"
 
       - label: "Has_Data_Source"

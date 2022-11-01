@@ -49,7 +49,7 @@
         "Processo": "Suporte Técnico",
         "RoPA_x0020_0_x0020__x002d__x0020": "Novo Processo",
         "Quaiss_x00e3_oosdadospessoaistra": [
-          "Cargo/Psoição",
+          "Cargo/Posição",
           "Data de Nascimento",
           "E-mail Comercial",
           "RG",
@@ -243,7 +243,7 @@
         "Processo": "Processo de Marketing",
         "RoPA_x0020_0_x0020__x002d__x0020": "Descontinuação de RoPA",
         "Quaiss_x00e3_oosdadospessoaistra": [
-          "Cargo/Psoição",
+          "Cargo/Posição",
           "Data de Nascimento",
           "E-mail Comercial",
           "RG",
@@ -326,7 +326,6 @@
           "Correção",
           "Atualização"
         ],
-        "H_x00e1_informa_x00e7__x00e3_oao": "Sim",
         "Identifiqueouespecifiqueomeio_x0": "",
         "Estedado_x00e9_tratadoforadesist": "Sim",
         "Especificarosmeiosutilizadospara": "",
@@ -404,7 +403,8 @@
         "Quems_x00e3_oostitularesdosdados0": [
           "Funcionário"
         ],
-        "Quaiss_x00e3_oosdadosdecrian_x00": "",
+        "Quaiss_x00e3_oosdadosdecrian_x00": [],
+        "H_x00e1_informa_x00e7__x00e3_oao": "Sim",
         "_x00c9_realizadotratamentodedado2": "Não",
         "Quems_x00e3_oostitularesdosdados1": "",
         "Quemforneceuosdados_x003f_": "",
@@ -444,6 +444,7 @@
         "Emcasopositivo_x002c_fornecerosd": "",
         "Houvealgumincidentedeseguran_x00": "Não",
         "Qual_x00e9_omeioadotadoparainfor": [
+          "Privacy Notice"
         ],
         "Fornecerosdetalhes_x002c_casopos": "",
         "Emcasopositivo_x002c_fornecerosd0": "",
