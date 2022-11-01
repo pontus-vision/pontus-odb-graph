@@ -108,7 +108,8 @@ public class PVPbrTest extends AppTest {
 
       resSet = App.graph.executeSql(
         "SELECT Object_Data_Source_Name as data_source " +
-          "FROM Object_Data_Source", Collections.EMPTY_MAP);
+          "FROM Object_Data_Source " +
+          "WHERE out('Has_Ingestion_Event').Event_Group_Ingestion_Type = 'sharepoint/pbr/users'", Collections.EMPTY_MAP);
       String dataSourceName = resSet.iterator().next().getRawResult().getProperty("data_source");
       resSet.close();
       assertEquals("SHAREPOINT/PBR/USERS", dataSourceName, "Data source name");

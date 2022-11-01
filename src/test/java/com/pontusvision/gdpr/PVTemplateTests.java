@@ -671,18 +671,17 @@ public class PVTemplateTests extends AppTest {
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
+//    expectedReport has changed due to an id change @ resources pbr/fontes-de-dados ADP
       expectedReport = "\n" +
-              "<hr/>\n" +
-              "<h2> Lista de Módulos </h2>\n" +
-              "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
-              "    \n" +
-              "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>leads</td></tr>\n" +
-              "    \n" +
-              "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>lyyyy</td></tr>\n" +
-              "    \n" +
-              "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>tabela</td></tr>\n" +
-              "    \n" +
-              "</table>\n";
+        "<hr/>\n" +
+        "<h2> Lista de Módulos </h2>\n" +
+        "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
+        "    \n" +
+        "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>leads</td></tr>\n" +
+        "    \n" +
+        "    <td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>lyyyy</td></tr>\n" +
+        "    \n" +
+        "</table>\n";
       assertEquals(expectedReport, report, "Lista de Módulos' HTML Table");
 
 
