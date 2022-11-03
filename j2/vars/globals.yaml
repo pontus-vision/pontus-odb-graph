@@ -85,6 +85,7 @@ schema:
       useStatic: false
       props:
         - name: Authority_Notified
+        - name: Authority_Notified_Others
         - name: Description
         - name: Id
         - name: Impact
@@ -503,21 +504,28 @@ schema:
         - name: Form_Submission_Owner_Id
         - name: Name
         - name: Retention_Period
+        - name: Retention_Justification
         - name: Text
         - name: Type
         - name: Update_Date
           dataType: Date
         - name: Update_Frequency
+        - name: Uses_Automation
+        - name: Is_Updated
+        - name: Is_Deleted
+        - name: Is_Essential
+        - name: Is_Anonymized
 
     - name: "Object_Data_Procedures"
       partition: false
       useStatic: false
       props:
         - name: ID
-        - name: BusinessAreaResponsible
+        - name: Business_Area_Responsible
+#        - name: Business_Sub_Area_Responsible
         - name: Type
         - name: Description
-        - name: MacroProcessName
+        - name: Macro_Process_Name
         - name: Country_Where_Stored
         - name: Data_Origin
         - name: Data_Geo_Scope
@@ -525,14 +533,28 @@ schema:
         - name: Data_Controller
         - name: Data_Owner
         - name: Data_Processor
+        - name: Data_Provider
         - name: Delete_URL
         - name: Info_Collected
         - name: Info_Share_Justification
+        - name: Info_Share_Justification_International
         - name: Info_Shared_With_Third_Parties
+        - name: Info_Shared_With_Third_Parties_International
         - name: Name
         - name: Number_Of_Records_Monthly
+        - name: Number_Of_Natural_Person
+        - name: Number_Of_Natural_Person_National
+        - name: Number_Of_Natural_Person_International
         - name: Property
+        - name: Participants
+        - name: Participants_National
+        - name: Participants_International
+        - name: Secondary_Purpose_Of_Collection
         - name: Type_Of_Natural_Person
+        - name: Type_Of_Natural_Person_National
+        - name: Type_Of_Natural_Person_International
+        - name: Type_Of_Natural_Person_Sensitive_Data
+        - name: Type_Of_Natural_Person_Minors
         - name: Update_Mechanism
         - name: Update_URL
         - name: Why_Is_It_Collected
@@ -847,7 +869,7 @@ schema:
         - name: Start_Date
           dataType: Date
 
-    - name: "Object_Legitimate_Interests_Assessment"
+    - name: "Object_Legitimate_Interests_Assessment" # LIA
       partition: false
       useStatic: false
       props:
@@ -935,6 +957,7 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Agreements
         - name: Country_Where_Stored
         - name: Delivery_Date
           dataType: Date
@@ -1223,7 +1246,7 @@ schema:
   - name: Has_Other_Lawful_Basis
   - name: Has_Parent_Or_Guardian
   - name: Has_Phone
-#  - name: Has_Personal_Data
+  - name: Has_Personal_Data
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice
@@ -1237,6 +1260,7 @@ schema:
     unidirected: false
   - name: Has_Server
   - name: Has_Subsystem
+  - name: Has_Sub_Category
   - name: Has_System
   - name: Has_Table
   - name: Has_Transaction

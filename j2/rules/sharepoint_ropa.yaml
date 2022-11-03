@@ -53,7 +53,7 @@ updatereq:
           val: ${field_Data_x0020_subject_x0020_category}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Procedures_BusinessAreaResponsible
+        - name: Object_Data_Procedures_Business_Area_Responsible
           val: ${field_Area} - ${field_Responsible}
           mandatoryInSearch: False
           excludeFromSearch: True

@@ -135,6 +135,9 @@ propertyKeys:
   - name: Event_Data_Breach_Authority_Notified
     dataType: String
     cardinality: SINGLE
+  - name: Event_Data_Breach_Authority_Notified_Others
+    dataType: String
+    cardinality: SINGLE
   - name: Event_Data_Breach_Description
     dataType: String
     cardinality: SINGLE
@@ -1005,6 +1008,9 @@ propertyKeys:
   - name: Object_Data_Policy_Retention_Period
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Policy_Retention_Justification
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Policy_Text
     dataType: String
     cardinality: SINGLE
@@ -1017,6 +1023,21 @@ propertyKeys:
   - name: Object_Data_Policy_Update_Frequency
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Policy_Uses_Automation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Updated
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Deleted
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Essential
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Anonymized
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata_Type_Object_Data_Procedures
     dataType: String
     cardinality: SINGLE
@@ -1027,7 +1048,7 @@ propertyKeys:
   - name: Object_Data_Procedures_ID
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Procedures_BusinessAreaResponsible
+  - name: Object_Data_Procedures_Business_Area_Responsible
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Procedures_Type
@@ -1036,7 +1057,7 @@ propertyKeys:
   - name: Object_Data_Procedures_Description
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Procedures_MacroProcessName
+  - name: Object_Data_Procedures_Macro_Process_Name
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Procedures_Country_Where_Stored
@@ -1060,6 +1081,9 @@ propertyKeys:
   - name: Object_Data_Procedures_Data_Processor
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Procedures_Data_Provider
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Procedures_Delete_URL
     dataType: String
     cardinality: SINGLE
@@ -1069,7 +1093,13 @@ propertyKeys:
   - name: Object_Data_Procedures_Info_Share_Justification
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Procedures_Info_Share_Justification_International
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Procedures_Info_Shared_With_Third_Parties
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Info_Shared_With_Third_Parties_International
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Procedures_Name
@@ -1078,10 +1108,43 @@ propertyKeys:
   - name: Object_Data_Procedures_Number_Of_Records_Monthly
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Procedures_Number_Of_Natural_Person
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Number_Of_Natural_Person_National
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Number_Of_Natural_Person_International
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Procedures_Property
     dataType: String
     cardinality: SINGLE
+  - name: Object_Data_Procedures_Participants
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Participants_National
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Participants_International
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Secondary_Purpose_Of_Collection
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Data_Procedures_Type_Of_Natural_Person
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Type_Of_Natural_Person_National
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Type_Of_Natural_Person_International
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Type_Of_Natural_Person_Sensitive_Data
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Procedures_Type_Of_Natural_Person_Minors
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Procedures_Update_Mechanism
@@ -1971,6 +2034,9 @@ propertyKeys:
   - name: Object_Privacy_Notice_Type
     dataType: String
     cardinality: SINGLE
+  - name: Object_Privacy_Notice_Agreements
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Privacy_Notice_Country_Where_Stored
     dataType: String
     cardinality: SINGLE
@@ -2692,6 +2758,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Personal_Data
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Policy
     multiplicity: MULTI
     unidirected: False
@@ -2733,6 +2803,10 @@ edgeLabels:
     unidirected: False
 
   - name: Has_Subsystem
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Has_Sub_Category
     multiplicity: MULTI
     unidirected: False
 
@@ -2890,6 +2964,7 @@ vertexIndexes:
     propertyKeys:
       - Metadata_Type_Event_Data_Breach
       - Event_Data_Breach_Authority_Notified
+      - Event_Data_Breach_Authority_Notified_Others
       - Event_Data_Breach_Description
       - Event_Data_Breach_Id
       - Event_Data_Breach_Impact
@@ -3461,10 +3536,16 @@ vertexIndexes:
       - Object_Data_Policy_Form_Submission_Owner_Id
       - Object_Data_Policy_Name
       - Object_Data_Policy_Retention_Period
+      - Object_Data_Policy_Retention_Justification
       - Object_Data_Policy_Text
       - Object_Data_Policy_Type
       - Object_Data_Policy_Update_Date
       - Object_Data_Policy_Update_Frequency
+      - Object_Data_Policy_Uses_Automation
+      - Object_Data_Policy_Is_Updated
+      - Object_Data_Policy_Is_Deleted
+      - Object_Data_Policy_Is_Essential
+      - Object_Data_Policy_Is_Anonymized
     propertyKeysMappings:
     
       {}
@@ -3478,10 +3559,10 @@ vertexIndexes:
     propertyKeys:
       - Metadata_Type_Object_Data_Procedures
       - Object_Data_Procedures_ID
-      - Object_Data_Procedures_BusinessAreaResponsible
+      - Object_Data_Procedures_Business_Area_Responsible
       - Object_Data_Procedures_Type
       - Object_Data_Procedures_Description
-      - Object_Data_Procedures_MacroProcessName
+      - Object_Data_Procedures_Macro_Process_Name
       - Object_Data_Procedures_Country_Where_Stored
       - Object_Data_Procedures_Data_Origin
       - Object_Data_Procedures_Data_Geo_Scope
@@ -3489,14 +3570,28 @@ vertexIndexes:
       - Object_Data_Procedures_Data_Controller
       - Object_Data_Procedures_Data_Owner
       - Object_Data_Procedures_Data_Processor
+      - Object_Data_Procedures_Data_Provider
       - Object_Data_Procedures_Delete_URL
       - Object_Data_Procedures_Info_Collected
       - Object_Data_Procedures_Info_Share_Justification
+      - Object_Data_Procedures_Info_Share_Justification_International
       - Object_Data_Procedures_Info_Shared_With_Third_Parties
+      - Object_Data_Procedures_Info_Shared_With_Third_Parties_International
       - Object_Data_Procedures_Name
       - Object_Data_Procedures_Number_Of_Records_Monthly
+      - Object_Data_Procedures_Number_Of_Natural_Person
+      - Object_Data_Procedures_Number_Of_Natural_Person_National
+      - Object_Data_Procedures_Number_Of_Natural_Person_International
       - Object_Data_Procedures_Property
+      - Object_Data_Procedures_Participants
+      - Object_Data_Procedures_Participants_National
+      - Object_Data_Procedures_Participants_International
+      - Object_Data_Procedures_Secondary_Purpose_Of_Collection
       - Object_Data_Procedures_Type_Of_Natural_Person
+      - Object_Data_Procedures_Type_Of_Natural_Person_National
+      - Object_Data_Procedures_Type_Of_Natural_Person_International
+      - Object_Data_Procedures_Type_Of_Natural_Person_Sensitive_Data
+      - Object_Data_Procedures_Type_Of_Natural_Person_Minors
       - Object_Data_Procedures_Update_Mechanism
       - Object_Data_Procedures_Update_URL
       - Object_Data_Procedures_Why_Is_It_Collected
@@ -4009,6 +4104,7 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Privacy_Notice
+      - Object_Privacy_Notice_Agreements
       - Object_Privacy_Notice_Country_Where_Stored
       - Object_Privacy_Notice_Delivery_Date
       - Object_Privacy_Notice_Description

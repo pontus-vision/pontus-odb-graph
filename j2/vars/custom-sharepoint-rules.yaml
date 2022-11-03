@@ -53,6 +53,7 @@ rules:
 
       - label: Object_Data_Policy
         props:
+#          TODO: Check Obj_Data_Policies ... lots of them have props that are mandatoryInSearch !!
           Update_Frequency: "${field_Frequ_x0020_ncia_x0020_de_x0020_Atualiza_x0020__x0020_o}"
           Retention_Period: "${field_Per_x0020_odo_x0020_de_x0020_Reten_x0020__x0020_o}"
 #          Type:
@@ -419,7 +420,7 @@ rules:
           Type_Of_Natural_Person:
             val: "${Categoria_x0020_dos_x0020_titula}"
             excludeFromSearch: true
-          BusinessAreaResponsible:
+          Business_Area_Responsible:
             val: "${_x00c1_rea} - ${Respons_x00e1_velLookupId}"
             excludeFromSearch: true
           Country_Where_Stored:
@@ -573,7 +574,7 @@ rules:
           Type_Of_Natural_Person:
             val: "${field_Data_x0020_subject_x0020_category}"
             excludeFromSearch: true
-          BusinessAreaResponsible:
+          Business_Area_Responsible:
             val: "${field_Area} - ${field_Responsible}"
             excludeFromSearch: true
           Country_Where_Stored:

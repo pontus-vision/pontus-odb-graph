@@ -257,7 +257,7 @@ rules:
           Type_Of_Natural_Person:
             val: "${Categoria_dos_Titulares_dos_Dados}"
             excludeFromSearch: true
-          BusinessAreaResponsible:
+          Business_Area_Responsible:
             val: "${Area_Responsavel}"
             excludeFromSearch: true
           Country_Where_Stored:
@@ -290,7 +290,7 @@ rules:
           Info_Share_Justification:
             val: "${Finalidade_de_Compartilhamento_com_Terceiros}"
             excludeFromSearch: true
-          MacroProcessName:
+          Macro_Process_Name:
             val: "${Macroprocesso}"
             excludeFromSearch: true
 

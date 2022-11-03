@@ -4,10 +4,13 @@ import com.pontusvision.gdpr.AnnotationTestsOrderer;
 import com.pontusvision.gdpr.App;
 import com.pontusvision.gdpr.AppTest;
 import com.pontusvision.gdpr.TestClassesOrder;
+import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
+
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,7 +37,7 @@ public class PVPbrTest extends AppTest {
    */
 
   @Test
-  public void test00001PbrTest() throws InterruptedException {
+  public void test00001FontesDeDados() throws InterruptedException {
 
     try {
 
@@ -76,4 +79,172 @@ public class PVPbrTest extends AppTest {
 
 
   }
+
+  // Testing new method/function SharepointUserRef
+  @Test
+  public void test00002SharepointUserRef() throws InterruptedException {
+
+    try {
+
+      jsonTestUtil("sharepoint/pbr/users.json", "$.queryResp[*]", "sharepoint_pbr_users");
+
+      OGremlinResultSet resSet = App.graph.executeSql(
+        "SELECT Person_Natural_Email as email " +
+          "FROM Person_Natural " +
+          "WHERE Person_Natural_Full_Name = 'GHOCHE, OMAR (LBN)'", Collections.EMPTY_MAP);
+
+      String responsibleEmail = resSet.iterator().next().getRawResult().getProperty("email");
+      resSet.close();
+      assertEquals("oghoche@pontusvision.com", responsibleEmail, "Responsible email");
+
+      resSet = App.graph.executeSql(
+        "SELECT Person_Natural_Form_Id as form_id " +
+          "FROM Person_Natural " +
+          "WHERE Person_Natural_Full_Name = 'VITOR, PAULO (BRL)'", Collections.EMPTY_MAP);
+
+      String alternativeResponsibleFormId = resSet.iterator().next().getRawResult().getProperty("form_id");
+      resSet.close();
+      assertEquals("32192", alternativeResponsibleFormId, "Alternative Responsible form id");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Data_Source_Name as data_source " +
+          "FROM Object_Data_Source " +
+          "WHERE out('Has_Ingestion_Event').Event_Group_Ingestion_Type = 'sharepoint/pbr/users'", Collections.EMPTY_MAP);
+      String dataSourceName = resSet.iterator().next().getRawResult().getProperty("data_source");
+      resSet.close();
+      assertEquals("SHAREPOINT/PBR/USERS", dataSourceName, "Data source name");
+
+      resSet = App.graph.executeSql(
+        "SELECT Person_Natural_Full_Name as name " +
+          "FROM Person_Natural " +
+          "WHERE Person_Natural_Form_ID = 83829", Collections.EMPTY_MAP);
+      String personNaturalName = resSet.iterator().next().getRawResult().getProperty("name");
+      resSet.close();
+      assertEquals("GHOCHE, OMAR (LBN)", personNaturalName, "Person natural name");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+  }
+
+  @Test
+  public void test00003SharepointRoPA() throws InterruptedException {
+
+    jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields","sharepoint_pbr_fontes_de_dados");
+    jsonTestUtil("sharepoint/pbr/users.json", "$.queryResp[*]", "sharepoint_pbr_users");
+    jsonTestUtil("sharepoint/pbr/ropa.json", "$.queryResp[*].fields", "sharepoint_pbr_ropa");
+
+    try {
+
+      OGremlinResultSet resSet = App.graph.executeSql(
+        "SELECT count(*) as ropa " +
+          "FROM Object_Data_Procedures " +
+          "WHERE Object_Data_Procedures_ID LIKE '%- PBR'", Collections.EMPTY_MAP);
+
+      String ropaCount = resSet.iterator().next().getRawResult().getProperty("ropa").toString();
+      resSet.close();
+      assertEquals("3", ropaCount, "Three RoPA procedures found in PBR");
+
+      // test linked users to the RoPAs
+      resSet = App.graph.executeSql(
+        "SELECT Person_Natural_Full_Name as responsible " +
+          "FROM Person_Natural " +
+          "WHERE Person_Natural_Form_Id = 83847", Collections.EMPTY_MAP);
+//    Important note: all ids from Sharepoint come as type String "" (double quotes) and not as type Integer !!!
+      String responsibleName = resSet.iterator().next().getRawResult().getProperty("responsible");
+      resSet.close();
+      assertEquals("MENDES, ALINE (US)", responsibleName, "Mendes is responsible for this RoPA");
+
+      String dataSourceCount = App.executor.eval("App.g.V().has('Object_Data_Procedures_Form_Id', eq('9542'))" +
+        ".as('ropa-9542').out('Has_Data_Source').as('attached_data_sources').dedup().count().next().toString()").get().toString();
+      assertEquals("2", dataSourceCount, "Two Data_Sources found attached to this RoPA - ADP and Marketing");
+
+      String dsName = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', endingWith(' - PBR'))" +
+        ".in('Has_Ingestion_Event').as('event_ingestion').in('Has_Ingestion_Event').as('event_group')" +
+        ".in('Has_Ingestion_Event').as('data_source').values('Object_Data_Source_Name').next().toString()").get().toString();
+      assertEquals("SHAREPOINT/PBR/ROPA", dsName, "Data source name");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Data_Procedures_Business_Area_Responsible as BAR, Object_Data_Procedures_Macro_Process_Name as MPN, " +
+          "Object_Data_Procedures_Type_Of_Natural_Person as TNP, Object_Data_Procedures_Why_Is_It_Collected as WIC, " +
+          "Object_Data_Procedures_Country_Where_Stored as CWS " +
+          "FROM Object_Data_Procedures WHERE Object_Data_Procedures_Form_Id = 9542", Collections.EMPTY_MAP);
+
+      String BAR = resSet.iterator().next().getRawResult().getProperty("BAR");
+      String MPN = resSet.iterator().next().getRawResult().getProperty("MPN");
+      String TNP = resSet.iterator().next().getRawResult().getProperty("TNP");
+      String WIC = resSet.iterator().next().getRawResult().getProperty("WIC");
+      String CWS = resSet.iterator().next().getRawResult().getProperty("CWS");
+
+      resSet.close();
+
+      assertEquals("Tecnologia da Informação", BAR, "Business Area Responsible");
+      assertEquals("Suporte Técnico", MPN, "Macro Process Name");
+      assertEquals("[Funcionário, Terceiro, Cliente]", TNP, "Types of Natural People");
+      assertEquals("Atendimento de demandas de suporte técnico", WIC, "Why is it collected");
+      assertEquals("[Líbano, Finlândia, Japão, Estados Unidos, Singapura]", CWS, "Countries where stored");
+
+      String incidentsCount = App.executor.eval("App.g.V().where(" +
+                                          "has('Metadata_Type_Event_Data_Breach', P.eq('Event_Data_Breach'))" +
+                                            ".and().out('Impacted_By_Data_Breach').in('Has_Data_Source')" +
+                                            ".has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
+                                          ").dedup().count().next().toString()").get().toString();
+      assertEquals("1", incidentsCount, "Only one of PBR's RoPA was breached");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Data_Policy_Retention_Period as policy_period, Object_Data_Policy_Retention_Justification as policy_justification " +
+          "FROM Object_Data_Policy " +
+          "WHERE in('Has_Data_Policy').Object_Data_Procedures_ID = 'RH 43 - PBR'", Collections.EMPTY_MAP);
+
+      String policyPeriod = resSet.iterator().next().getRawResult().getProperty("policy_period");
+      String policyJustification = resSet.iterator().next().getRawResult().getProperty("policy_justification");
+      resSet.close();
+      assertEquals("10 anos", policyPeriod, "This RoPA has a 10 year retention policy");
+      assertEquals("Ajuste de acordo com a LGPD", policyJustification, "Policy justification");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Data_Procedures_Info_Collected as info " +
+          "FROM Object_Data_Procedures " +
+          "WHERE Object_Data_Procedures_ID = 'FINANCEIRO 01 - PBR'", Collections.EMPTY_MAP);
+
+      String info = resSet.iterator().next().getRawResult().getProperty("info");
+      resSet.close();
+      assertEquals("[Cargo/Posição, Data de Nascimento, E-mail Comercial, RG, E-mail Particular, CPF, Endereço, " +
+        "Telefone Comercial, Telefone Particular, Dados Bancários, Nome Social, Dados Biométricos, Raça, Religião, " +
+        "Nome da Mãe, Nome do Pai, Nacionalidade]", info, "This RoPA collects a lot of information in one string block");
+
+      String countSensitiveData = App.executor.eval("App.g.V().where(" +
+                                                              "has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
+                                                          ").as('ropa_pbr').out('Has_Sensitive_Data').as('sensitive_data')" +
+                                                          ".dedup().count().next().toString()").get().toString();
+      assertEquals("4", countSensitiveData, "Four types of sensitive data found in the PBR RoPA: Dados Biométricos, Raça, Religião and Opinião Política");
+
+      String countPersonalData = App.executor.eval("App.g.V().where(" +
+                                                             "has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
+                                                         ").as('ropa_pbr').out('Has_Personal_Data').as('personal_data')" +
+                                                         ".dedup().count().next().toString()").get().toString();
+      assertEquals("17", countPersonalData, "17 types of personal data found within three of PBR's RoPA");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Privacy_Notice_Agreements as agreements, Object_Privacy_Notice_Description as description, Object_Privacy_Notice_How_Is_It_Collected as HIC " +
+          "FROM Object_Privacy_Notice " +
+          "WHERE out('Has_Privacy_Notice').Object_Data_Procedures_Form_Id = '5493'", Collections.EMPTY_MAP);
+//    Important note: all ids from Sharepoint come as type String "" (double quotes) and not as type Integer !!!
+      String agreements = resSet.iterator().next().getRawResult().getProperty("agreements");
+      String description = resSet.iterator().next().getRawResult().getProperty("description");
+      String HIC = resSet.iterator().next().getRawResult().getProperty("HIC");
+
+      resSet.close();
+
+      assertEquals("[Correção, Exclusão, Anonimização]", agreements, "This privacy notice has three agreements");
+      assertEquals("[Privacy Notice]", description, "Description");
+      assertEquals("[Formulário de RH]", HIC, "How is it collected");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+  }
+
 }

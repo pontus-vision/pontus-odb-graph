@@ -63,7 +63,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Request_Type
-          val: ${Solicita_x00e7__x00e3_o_x002d_De}
+          val: ${RequestType}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Description

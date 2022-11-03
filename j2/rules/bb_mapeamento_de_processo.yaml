@@ -54,7 +54,7 @@ updatereq:
           val: ${Categoria_dos_Titulares_dos_Dados}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Procedures_BusinessAreaResponsible
+        - name: Object_Data_Procedures_Business_Area_Responsible
           val: ${Area_Responsavel}
           mandatoryInSearch: False
           excludeFromSearch: True
@@ -98,7 +98,7 @@ updatereq:
           val: ${Finalidade_de_Compartilhamento_com_Terceiros}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Data_Procedures_MacroProcessName
+        - name: Object_Data_Procedures_Macro_Process_Name
           val: ${Macroprocesso}
           mandatoryInSearch: False
           excludeFromSearch: True

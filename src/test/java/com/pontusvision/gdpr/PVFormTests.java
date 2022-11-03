@@ -111,7 +111,7 @@ public class PVFormTests extends AppTest {
 //      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);
 
       /*
-            "Object_Data_Procedures_BusinessAreaResponsible" -> "Compras - 19"
+            "Object_Data_Procedures_Business_Area_Responsible" -> "Compras - 19"
         "out_Has_Policy" -> {ORidBag@14463} "[#1102:0]"
         "out_Has_Data_Source" -> {ORidBag@14465} "[#1122:0, #1123:0]"
         "Object_Data_Procedures_Type" -> "Recebimento / Transferência"
@@ -128,7 +128,7 @@ public class PVFormTests extends AppTest {
       components2[++idx] = new PVFormData().setName(">out_Has_Legitimate_Interests_Assessment").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName(">out_Has_Policy").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName(">out_Has_Data_Source").setUserData(orig.getComponents()[idx].getUserData());
-      components2[++idx] = new PVFormData().setName("Object_Data_Procedures_BusinessAreaResponsible").setUserData(new String[]{"Compras - 19"});
+      components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Business_Area_Responsible").setUserData(new String[]{"Compras - 19"});
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Type").setUserData(new String[]{"Recebimento / Transferência"});
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Type").setUserData(new String[]{"Recebimento / Transferência"});
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Form_Id").setUserData(new String[]{"406"});
