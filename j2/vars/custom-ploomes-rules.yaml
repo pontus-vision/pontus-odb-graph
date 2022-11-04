@@ -3,6 +3,7 @@ rules:
   ploomes_clientes:
     vertices:
       - label: Person_Natural
+#        instead of LegalName as condition, shouldn't it be CPF?
         condition: "${TypeId == 2 && LegalName != null}"
         props:
           Full_Name:
