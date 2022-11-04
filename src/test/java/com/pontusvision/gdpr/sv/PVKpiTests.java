@@ -32,10 +32,12 @@ public class PVKpiTests extends AppTest {
             "sharepoint_fontes_de_dados");
     jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
             "$.queryResp[*].fields", "sharepoint_mapeamentos");
-//    total count Person_Natural ingested = 16
+//    total count Person_Natural ingested = 24
     jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
     jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
     jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+    jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
+      "$.queryResp[*].fields", "sharepoint_consents");
     jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
 
     try {
