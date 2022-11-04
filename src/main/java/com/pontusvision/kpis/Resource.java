@@ -72,6 +72,13 @@ public class Resource {
   }
 
   @GET
+  @Path("kpi/getDataRetentionKpis")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getDataRetentionKpis() {
+    return gdpr.getDataRetentionKpis().toString();
+  }
+
+  @GET
   @Path("kpi/getNumSensitiveDataPerDataSource")
   @Produces(MediaType.TEXT_PLAIN)
   public String getNumSensitiveDataPerDataSource() {
