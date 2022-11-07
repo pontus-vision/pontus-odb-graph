@@ -490,3 +490,89 @@ rules:
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Group_Ingestion"
         toVertexName: "Person_Natural"
+
+  sharepoint_pbr_juridico:
+    vertices:
+
+#     TODO: Check data formating toUpperCase and others!
+
+      - label: Object_Data_Source
+        props:
+          Name: "SHAREPOINT/PBR/JURÍDICO"
+
+#     Connecting to my RoPA Vertex and adding 2 new props Data_Processor and Data_Controller
+      - label: Object_Data_Procedures
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(ID_x0020_do_x0020_RoPA)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Data_Processor:
+            val:  "${JUR_x0020_6_x0020__x002d__x0020_.contains('Operador')?'Porsche Brasil':''}"
+            excludeFromSearch: true
+          Data_Controller:
+            val: "${JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador Conjunto')||JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador')?'Porsche Brasil':''}"
+            excludeFromSearch: true
+
+      - label: Object_Lawful_Basis
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(JUR_x0020_8_x0020__x002d__x0020_)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Legitimate_Interests_Assessment
+        props:
+          Is_Required: "${JUR_x0020_12_x0020__x002d__x0020}"
+          Is_Essential: "${JUR_x0020_13_x0020__x002d__x0020}"
+          Lawful_Basis_Justification: "${JUR_x0020_14_x0020__x002d__x0020}"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "sharepoint/pbr/jurídico"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "sharepoint/pbr/jurídico"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Has_Lawful_Basis_On"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Lawful_Basis"
+
+      - label: "Has_Legitimate_Interests_Assessment"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
