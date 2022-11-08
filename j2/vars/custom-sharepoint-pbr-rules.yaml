@@ -1,5 +1,5 @@
 rules:
-
+# TODO: add more ? operator to handle empty/null values
   sharepoint_pbr_fontes_de_dados:
     vertices:
       - label: Object_Data_Source
@@ -494,11 +494,24 @@ rules:
   sharepoint_pbr_juridico:
     vertices:
 
-#     TODO: Check data formating toUpperCase and others!
+#     TODO: Check data formatting toUpperCase and others!
 
       - label: Object_Data_Source
         props:
           Name: "SHAREPOINT/PBR/JURÍDICO"
+
+      - label: Object_Legal_Actions
+        props:
+          Form_Id: "${id}"
+          Title:
+            val: "${Title?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
+          Description:
+            val: "${JUR_x0020_10_x0020__x002d__x0020}"
+            excludeFromSearch: true
+          Details:
+            val: "${JUR_x0020_11_x0020__x002d__x0020}"
+            excludeFromSearch: true
 
 #     Connecting to my RoPA Vertex and adding 2 new props Data_Processor and Data_Controller
       - label: Object_Data_Procedures
@@ -509,10 +522,10 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
           Data_Processor:
-            val:  "${JUR_x0020_6_x0020__x002d__x0020_.contains('Operador')?'Porsche Brasil':''}"
+            val:  "${JUR_x0020_6_x0020__x002d__x0020_.contains('Operador')?'PBR':''}"
             excludeFromSearch: true
           Data_Controller:
-            val: "${JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador Conjunto')||JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador')?'Porsche Brasil':''}"
+            val: "${JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador Conjunto')||JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador')?'PBR':''}"
             excludeFromSearch: true
 
       - label: Object_Lawful_Basis
@@ -523,11 +536,22 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
+#     All props of LIA are mandatoryInSearch ... is that right?
       - label: Object_Legitimate_Interests_Assessment
         props:
           Is_Required: "${JUR_x0020_12_x0020__x002d__x0020}"
           Is_Essential: "${JUR_x0020_13_x0020__x002d__x0020}"
           Lawful_Basis_Justification: "${JUR_x0020_14_x0020__x002d__x0020}"
+
+      - label: Object_Risk_Data_Procedures
+        props:
+          Form_Id: "${id}"
+          Has_Risk_Evaluation:
+            val: "${JUR_x0020_1_x0020__x002d__x0020_}"
+            excludeFromSearch: true
+          Justification:
+            val: "${JUR_x0020_2_x0020__x002d__x0020_}"
+            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
@@ -566,7 +590,11 @@ rules:
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Ingestion"
-        toVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Legal_Actions"
+
+      - label: "Has_Legal_Actions"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Legal_Actions"
 
       - label: "Has_Lawful_Basis_On"
         fromVertexLabel: "Object_Data_Procedures"
@@ -575,4 +603,8 @@ rules:
       - label: "Has_Legitimate_Interests_Assessment"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
+      - label: "Has_Risk" # Or "Has_Risk_Data_Procedures"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Risk_Data_Procedures"
 

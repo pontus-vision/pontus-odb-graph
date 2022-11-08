@@ -247,4 +247,85 @@ public class PVPbrTest extends AppTest {
 
   }
 
+  @Test
+  public void test00004SharepointJuridico() throws InterruptedException {
+
+    jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields","sharepoint_pbr_fontes_de_dados");
+    jsonTestUtil("sharepoint/pbr/users.json", "$.queryResp[*]", "sharepoint_pbr_users");
+    jsonTestUtil("sharepoint/pbr/ropa.json", "$.queryResp[*].fields", "sharepoint_pbr_ropa");
+    jsonTestUtil("sharepoint/pbr/juridico.json", "$.queryResp[*].fields", "sharepoint_pbr_juridico");
+
+    try {
+
+      String dsName = App.executor.eval("App.g.V().has('Object_Legal_Actions_Title', endingWith('PBR-JUR')).as('pbr-legal-actions')" +
+        ".in('Has_Ingestion_Event').as('event_ingestion').in('Has_Ingestion_Event').as('event_group')" +
+        ".in('Has_Ingestion_Event').as('data_source').values('Object_Data_Source_Name').next().toString()").get().toString();
+      assertEquals("SHAREPOINT/PBR/JURÍDICO", dsName, "Data source name");
+
+//    checking if RoPA got the 2 new props Data_Processor and Data_Controller
+      OGremlinResultSet resSet = App.graph.executeSql(
+        "SELECT Object_Data_Procedures_Data_Controller as ropa_controller, Object_Data_Procedures_Data_Processor as ropa_processor " +
+          "FROM Object_Data_Procedures " +
+          "WHERE Object_Data_Procedures_Form_Id = 8739", Collections.EMPTY_MAP);
+
+      String ropaController = resSet.iterator().next().getRawResult().getProperty("ropa_controller");
+      String ropaProcessor = resSet.iterator().next().getRawResult().getProperty("ropa_processor");
+      resSet.close();
+      assertEquals("PBR", ropaController, "PBR is the data controller");
+      assertEquals("PBR", ropaProcessor, "PBR is the data processor");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Legal_Actions_Description as legal_action_description, Object_Legal_Actions_Details as legal_action_details " +
+          "FROM Object_Legal_Actions " +
+          "WHERE Object_Legal_Actions_Title = 'RH 43 - PBR-JUR'", Collections.EMPTY_MAP);
+
+      String legalActionDescription = resSet.iterator().next().getRawResult().getProperty("legal_action_description");
+      String legalActionDetails = resSet.iterator().next().getRawResult().getProperty("legal_action_details");
+      resSet.close();
+
+      assertEquals("legislações e regulamentos", legalActionDescription, "Legal action description");
+      assertEquals("informações adicionais", legalActionDetails, "Legal action details");
+
+      String countLawfulBasis = App.executor.eval("App.g.V().has('Object_Legal_Actions_Title', endingWith('PBR-JUR')).as('pbr-legal-actions')" +
+        ".in('Has_Legal_Actions').as('pbr-ropas').out('Has_Lawful_Basis_On').as('pbr-lawful-basis')" +
+        ".dedup().count().next().toString()").get().toString();
+      assertEquals("4", countLawfulBasis,
+        "Four types of lawful basis found: CONSENTIMENTO, LEGÍTIMO INTERESSE,PROTEÇÃO DO CRÉDITO and TUTELA DA SAÚDE");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Legitimate_Interests_Assessment_Is_Requerid as LIA_is_required," +
+          "Object_Legitimate_Interests_Assessment_Is_Essential as LIA_is_essential," +
+          "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification as LIA_justification " +
+          "FROM Object_Legitimate_Interests_Assessment " +
+          "WHERE Object_Legitimate_Interests_Assessment_Is_Requerid = 'Sim' AND Object_Legitimate_Interests_Assessment_Is_Essential = 'Sim'", Collections.EMPTY_MAP);
+
+      String LIAisRequired = resSet.iterator().next().getRawResult().getProperty("LIA_is_required");
+      String LIAisEssential = resSet.iterator().next().getRawResult().getProperty("LIA_is_essential");
+      String LIAjustification = resSet.iterator().next().getRawResult().getProperty("LIA_justification");
+      Long countLIA = resSet.iterator().next().getRawResult().getProperty("count(*)");
+      resSet.close();
+
+      assertEquals("Sim", LIAisRequired, "LIA is required");
+      assertEquals("Sim", LIAisEssential, "LIA is essential");
+      assertEquals("", LIAjustification, "LIA justification is empty when LIA is required and essential");
+      assertEquals("1", countLIA, "1 of 3 RoPAs needs LIA");
+
+      resSet = App.graph.executeSql(
+        "SELECT Object_Risk_Data_Procedures_Has_Risk_Evaluation as ropa_risk_eval, Object_Risk_Data_Procedures_Justification as ropa_risk_justification " +
+          "FROM Object_Risk_Data_Procedures " +
+          "WHERE in('Has_Risk').out('Has_Legal_Actions').Object_Legal_Actions_Form_Id = '63720'", Collections.EMPTY_MAP);
+
+      String ropaRiskEval = resSet.iterator().next().getRawResult().getProperty("ropa_risk_eval");
+      String ropaRiskJustification = resSet.iterator().next().getRawResult().getProperty("ropa_risk_justification");
+      resSet.close();
+
+      assertEquals("Não", ropaRiskEval, "RoPA has risk evaluation");
+      assertEquals("Criticidade do RoPA é baixo", ropaRiskJustification, "RoPA risk justification");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+  }
+
 }
