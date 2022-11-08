@@ -293,22 +293,22 @@ public class PVPbrTest extends AppTest {
         "Four types of lawful basis found: CONSENTIMENTO, LEGÍTIMO INTERESSE,PROTEÇÃO DO CRÉDITO and TUTELA DA SAÚDE");
 
       resSet = App.graph.executeSql(
-        "SELECT Object_Legitimate_Interests_Assessment_Is_Requerid as LIA_is_required," +
+        "SELECT Object_Legitimate_Interests_Assessment_Is_Required as LIA_is_required," +
           "Object_Legitimate_Interests_Assessment_Is_Essential as LIA_is_essential," +
-          "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification as LIA_justification " +
+          "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification as LIA_justification, count(*) as ct " +
           "FROM Object_Legitimate_Interests_Assessment " +
-          "WHERE Object_Legitimate_Interests_Assessment_Is_Requerid = 'Sim' AND Object_Legitimate_Interests_Assessment_Is_Essential = 'Sim'", Collections.EMPTY_MAP);
+          "WHERE Object_Legitimate_Interests_Assessment_Is_Required = 'Sim' AND Object_Legitimate_Interests_Assessment_Is_Essential = 'Sim'", Collections.EMPTY_MAP);
 
       String LIAisRequired = resSet.iterator().next().getRawResult().getProperty("LIA_is_required");
       String LIAisEssential = resSet.iterator().next().getRawResult().getProperty("LIA_is_essential");
       String LIAjustification = resSet.iterator().next().getRawResult().getProperty("LIA_justification");
-      Long countLIA = resSet.iterator().next().getRawResult().getProperty("count(*)");
+      Long countLIA = resSet.iterator().next().getRawResult().getProperty("ct");
       resSet.close();
 
       assertEquals("Sim", LIAisRequired, "LIA is required");
       assertEquals("Sim", LIAisEssential, "LIA is essential");
       assertEquals("", LIAjustification, "LIA justification is empty when LIA is required and essential");
-      assertEquals("1", countLIA, "1 of 3 RoPAs needs LIA");
+      assertEquals("1", countLIA, "1 of 3 PBR RoPAs needs LIA");
 
       resSet = App.graph.executeSql(
         "SELECT Object_Risk_Data_Procedures_Has_Risk_Evaluation as ropa_risk_eval, Object_Risk_Data_Procedures_Justification as ropa_risk_justification " +

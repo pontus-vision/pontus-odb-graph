@@ -1,0 +1,186 @@
+{
+  "queryResp": [
+    {
+      "@odata.etag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "createdDateTime": "2021-07-27T19: 18: 05Z",
+      "eTag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "id": "82935",
+      "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "1243b42e-1243-3acbe3456-abbf-cbertey,4",
+        "Title": "RH 43 - PBR-JUR",
+        "ID_x0020_do_x0020_RoPA": [
+          {
+            "LookupId": 5493,
+            "LookupValue": "RH 43 - PBR"
+          }
+        ],
+        "JUR_x0020_1_x0020__x002d__x0020_": "Sim",
+        "JUR_x0020_2_x0020__x002d__x0020_": "",
+        "JUR_x0020_5_x0020__x002d__x0020_": "Não",
+        "JUR_x0020_6_x0020__x002d__x0020_": ["Controlador"],
+        "JUR_x0020_7_x0020__x002d__x0020_": "Sim",
+        "JUR_x0020_8_x0020__x002d__x0020_": [
+          "Consentimento",
+          "Tutela da saúde"
+        ],
+        "JUR_x0020_9_x0020__x002d__x0020_": "Consentimento: fundamentos; Saúde: fundamentos",
+        "JUR_x0020_10_x0020__x002d__x0020": "legislações e regulamentos",
+        "JUR_x0020_11_x0020__x002d__x0020": "informações adicionais",
+        "JUR_x0020_12_x0020__x002d__x0020": "Não",
+        "JUR_x0020_13_x0020__x002d__x0020": "Não",
+        "JUR_x0020_14_x0020__x002d__x0020": "Justificativa de o porquê o LIA não ser necessário",
+        "JUR_x0020_3_x0020__x002d__x0020_": "Sim",
+        "JUR_x0020_4_x0020__x002d__x0020_": "",
+        "LinkTitleNoMenu": "pbr",
+        "LinkTitle": "pbr",
+        "Modified": "2022-09-20T11:00:38Z",
+        "id": "82935",
+        "ContentType": "Item",
+        "Created": "2022-09-20T10:18:05Z"
+      }
+    },
+    {
+      "@odata.etag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "createdDateTime": "2021-07-27T19: 18: 05Z",
+      "eTag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "id": "63720",
+      "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "1243b42e-1243-3acbe3456-abbf-cbertey,4",
+        "Title": "MARKETING 99 - PBR-JUR",
+        "ID_x0020_do_x0020_RoPA": [
+          {
+            "LookupId": 8739,
+            "LookupValue": "MARKETING 99 - PBR"
+          }
+        ],
+        "JUR_x0020_1_x0020__x002d__x0020_": "Não",
+        "JUR_x0020_2_x0020__x002d__x0020_": "Criticidade do RoPA é baixo",
+        "JUR_x0020_5_x0020__x002d__x0020_": "Sim",
+        "JUR_x0020_6_x0020__x002d__x0020_": [
+          "Controlador",
+          "Operador"
+        ],
+        "JUR_x0020_7_x0020__x002d__x0020_": "Não",
+        "JUR_x0020_8_x0020__x002d__x0020_": [
+          "Proteção do Crédito"
+        ],
+        "JUR_x0020_9_x0020__x002d__x0020_": "Proteção do Crédito: fundamentos",
+        "JUR_x0020_10_x0020__x002d__x0020": "dispositivos legislativos",
+        "JUR_x0020_11_x0020__x002d__x0020": "detalhes",
+        "JUR_x0020_12_x0020__x002d__x0020": "Não",
+        "JUR_x0020_13_x0020__x002d__x0020": "Não",
+        "JUR_x0020_14_x0020__x002d__x0020": "não há Legítimo Interesse",
+        "JUR_x0020_3_x0020__x002d__x0020_": "Não",
+        "JUR_x0020_4_x0020__x002d__x0020_": "Criticidade do RoPA é baixo",
+        "LinkTitleNoMenu": "pbr",
+        "LinkTitle": "pbr",
+        "Modified": "2022-09-20T11:00:38Z",
+        "id": "63720",
+        "ContentType": "Item",
+        "Created": "2022-09-20T10:18:05Z"
+      }
+    },
+    {
+      "@odata.etag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "createdDateTime": "2021-07-27T19: 18: 05Z",
+      "eTag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "id": "30563",
+      "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "1243b42e-1243-3acbe3456-abbf-cbertey,4",
+        "Title": "FINANCEIRO 01 - PBR-JUR",
+        "ID_x0020_do_x0020_RoPA": [
+          {
+            "LookupId": 9542,
+            "LookupValue": "FINANCEIRO 01 - PBR"
+          }
+        ],
+        "JUR_x0020_1_x0020__x002d__x0020_": "Sim",
+        "JUR_x0020_2_x0020__x002d__x0020_": "",
+        "JUR_x0020_5_x0020__x002d__x0020_": "Sim",
+        "JUR_x0020_6_x0020__x002d__x0020_": ["Operador"],
+        "JUR_x0020_7_x0020__x002d__x0020_": "Sim",
+        "JUR_x0020_8_x0020__x002d__x0020_": [
+          "Consentimento",
+          "Legítimo Interesse"
+        ],
+        "JUR_x0020_9_x0020__x002d__x0020_": "Consentimento: fundamentos; Legítimo Interesse: fundamentos",
+        "JUR_x0020_10_x0020__x002d__x0020": "texto jurídico",
+        "JUR_x0020_11_x0020__x002d__x0020": "detalhes",
+        "JUR_x0020_12_x0020__x002d__x0020": "Sim",
+        "JUR_x0020_13_x0020__x002d__x0020": "Sim",
+        "JUR_x0020_14_x0020__x002d__x0020": "",
+        "JUR_x0020_3_x0020__x002d__x0020_": "Sim",
+        "JUR_x0020_4_x0020__x002d__x0020_": "",
+        "LinkTitleNoMenu": "pbr",
+        "LinkTitle": "pbr",
+        "Modified": "2022-09-20T11:00:38Z",
+        "id": "30563",
+        "ContentType": "Item",
+        "Created": "2022-09-20T10:18:05Z"
+      }
+    }
+  ]
+}
