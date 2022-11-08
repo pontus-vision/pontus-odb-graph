@@ -540,6 +540,8 @@ schema:
         - name: Info_Share_Justification_International
         - name: Info_Shared_With_Third_Parties
         - name: Info_Shared_With_Third_Parties_International
+        - name: Lawful_Basis_Justification
+          index: false
         - name: Name
         - name: Number_Of_Records_Monthly
         - name: Number_Of_Natural_Person
@@ -932,36 +934,6 @@ schema:
         - name: Update_Date
           dataType: Date
 
-    - name: "Object_Risk_Data_Procedures" # Or "Object_Risk_RoPA" Or "Object_Risk_Mitigation_"
-      partition: false
-      useStatic: false
-      props:
-#        - name: Approved_By_DPO
-#        - name: Approved_By_Security
-        - name: Description
-        - name: Form_Id
-        - name: Form_Owner_Id
-        - name: Form_Submission_Id
-        - name: Form_Submission_Owner_Id
-        - name: Has_Risk_Evaluation # Or Risk_Evaluation_On_Medium_Or_High_Criticality
-        - name: Impact
-        - name: Impact_Risk_Of_Reputational_Damage
-        - name: Impact_Risk_To_Corporation
-        - name: Impact_Risk_To_Individuals
-        - name: Intrusion_On_Privacy
-        - name: Justification
-        - name: Probability
-        - name: Probability_Risk_Of_Reputational_Damage
-        - name: Probability_Risk_To_Corporation
-        - name: Probability_Risk_To_Individuals
-        - name: Residual_Probability
-        - name: Residual_Impact
-#        - name: Risk_Id
-        - name: Start_Date
-          dataType: Date
-        - name: Update_Date
-          dataType: Date
-
     - name: "Object_Privacy_Docs"
       partition: false
       useStatic: false
@@ -978,7 +950,6 @@ schema:
       useStatic: false
       props:
         - name: Form_Id
-        - name: Title
         - name: Date
           dataType: Date
         - name: Description
@@ -1270,7 +1241,6 @@ schema:
   - name: Has_Ingress_Peering
   - name: Has_Lawful_Basis_On
   - name: Has_Legitimate_Interests_Assessment
-  - name: Has_Legal_Actions
   - name: Has_Link
   - name: Has_NLP_Events
   - name: Has_Mobile

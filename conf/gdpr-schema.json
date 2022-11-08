@@ -1779,6 +1779,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Data_Procedures_Lawful_Basis_Justification",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object_Data_Procedures_Name",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -3219,116 +3224,6 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Metadata_Type_Object_Risk_Data_Procedures",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Type",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Form_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Form_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Form_Submission_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Form_Submission_Owner_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Has_Risk_Evaluation",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Impact",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Impact_Risk_Of_Reputational_Damage",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Impact_Risk_To_Corporation",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Impact_Risk_To_Individuals",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Intrusion_On_Privacy",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Justification",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Probability",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Probability_Risk_Of_Reputational_Damage",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Probability_Risk_To_Corporation",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Probability_Risk_To_Individuals",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Residual_Probability",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Residual_Impact",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Start_Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Risk_Data_Procedures_Update_Date",
-      "dataType": "Date",
-      "cardinality": "SINGLE"
-    },
-    {
       "name": "Metadata_Type_Object_Privacy_Docs",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -3375,11 +3270,6 @@
     },
     {
       "name": "Object_Legal_Actions_Form_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Legal_Actions_Title",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -4291,11 +4181,6 @@
       "useStatic": false
     },
     {
-      "name": "Object_Risk_Data_Procedures",
-      "partition": false,
-      "useStatic": false
-    },
-    {
       "name": "Object_Privacy_Docs",
       "partition": false,
       "useStatic": false
@@ -4504,11 +4389,6 @@
     },
     {
       "name": "Has_Legitimate_Interests_Assessment",
-      "multiplicity": "MULTI",
-      "unidirected": false
-    },
-    {
-      "name": "Has_Legal_Actions",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -5898,38 +5778,6 @@
       "propertyKeysMappings": {}
     },
     {
-      "name": "Object_Risk_Data_Procedures_MixedIdx",
-      "composite": false,
-      "unique": false,
-      "indexOnly": null,
-      "indexType": "UNIQUE",
-      "mixedIndex": "search",
-      "propertyKeys": [
-        "Metadata_Type_Object_Risk_Data_Procedures",
-        "Object_Risk_Data_Procedures_Description",
-        "Object_Risk_Data_Procedures_Form_Id",
-        "Object_Risk_Data_Procedures_Form_Owner_Id",
-        "Object_Risk_Data_Procedures_Form_Submission_Id",
-        "Object_Risk_Data_Procedures_Form_Submission_Owner_Id",
-        "Object_Risk_Data_Procedures_Has_Risk_Evaluation",
-        "Object_Risk_Data_Procedures_Impact",
-        "Object_Risk_Data_Procedures_Impact_Risk_Of_Reputational_Damage",
-        "Object_Risk_Data_Procedures_Impact_Risk_To_Corporation",
-        "Object_Risk_Data_Procedures_Impact_Risk_To_Individuals",
-        "Object_Risk_Data_Procedures_Intrusion_On_Privacy",
-        "Object_Risk_Data_Procedures_Justification",
-        "Object_Risk_Data_Procedures_Probability",
-        "Object_Risk_Data_Procedures_Probability_Risk_Of_Reputational_Damage",
-        "Object_Risk_Data_Procedures_Probability_Risk_To_Corporation",
-        "Object_Risk_Data_Procedures_Probability_Risk_To_Individuals",
-        "Object_Risk_Data_Procedures_Residual_Probability",
-        "Object_Risk_Data_Procedures_Residual_Impact",
-        "Object_Risk_Data_Procedures_Start_Date",
-        "Object_Risk_Data_Procedures_Update_Date"
-      ],
-      "propertyKeysMappings": {}
-    },
-    {
       "name": "Object_Privacy_Docs_MixedIdx",
       "composite": false,
       "unique": false,
@@ -5956,7 +5804,6 @@
       "propertyKeys": [
         "Metadata_Type_Object_Legal_Actions",
         "Object_Legal_Actions_Form_Id",
-        "Object_Legal_Actions_Title",
         "Object_Legal_Actions_Date",
         "Object_Legal_Actions_Description",
         "Object_Legal_Actions_Details"

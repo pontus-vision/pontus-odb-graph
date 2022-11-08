@@ -500,19 +500,6 @@ rules:
         props:
           Name: "SHAREPOINT/PBR/JURÍDICO"
 
-      - label: Object_Legal_Actions
-        props:
-          Form_Id: "${id}"
-          Title:
-            val: "${Title?.toUpperCase()?.trim()}"
-            excludeFromSearch: true
-          Description:
-            val: "${JUR_x0020_10_x0020__x002d__x0020}"
-            excludeFromSearch: true
-          Details:
-            val: "${JUR_x0020_11_x0020__x002d__x0020}"
-            excludeFromSearch: true
-
 #     Connecting to my RoPA Vertex and adding 2 new props Data_Processor and Data_Controller
       - label: Object_Data_Procedures
         props:
@@ -527,6 +514,9 @@ rules:
           Data_Controller:
             val: "${JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador Conjunto')||JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador')?'PBR':''}"
             excludeFromSearch: true
+          Lawful_Basis_Justification:
+            val: "${JUR_x0020_11_x0020__x002d__x0020}"
+            excludeFromSearch: true
 
       - label: Object_Lawful_Basis
         props:
@@ -535,23 +525,6 @@ rules:
             type: "[Ljava.lang.String;"
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
-
-#     All props of LIA are mandatoryInSearch ... is that right?
-      - label: Object_Legitimate_Interests_Assessment
-        props:
-          Is_Required: "${JUR_x0020_12_x0020__x002d__x0020}"
-          Is_Essential: "${JUR_x0020_13_x0020__x002d__x0020}"
-          Lawful_Basis_Justification: "${JUR_x0020_14_x0020__x002d__x0020}"
-
-      - label: Object_Risk_Data_Procedures
-        props:
-          Form_Id: "${id}"
-          Has_Risk_Evaluation:
-            val: "${JUR_x0020_1_x0020__x002d__x0020_}"
-            excludeFromSearch: true
-          Justification:
-            val: "${JUR_x0020_2_x0020__x002d__x0020_}"
-            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
@@ -590,21 +563,8 @@ rules:
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Ingestion"
-        toVertexLabel: "Object_Legal_Actions"
-
-      - label: "Has_Legal_Actions"
-        fromVertexLabel: "Object_Data_Procedures"
-        toVertexLabel: "Object_Legal_Actions"
+        toVertexLabel: "Object_Data_Procedures"
 
       - label: "Has_Lawful_Basis_On"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Lawful_Basis"
-
-      - label: "Has_Legitimate_Interests_Assessment"
-        fromVertexLabel: "Object_Data_Procedures"
-        toVertexLabel: "Object_Legitimate_Interests_Assessment"
-
-      - label: "Has_Risk" # Or "Has_Risk_Data_Procedures"
-        fromVertexLabel: "Object_Data_Procedures"
-        toVertexLabel: "Object_Risk_Data_Procedures"
-

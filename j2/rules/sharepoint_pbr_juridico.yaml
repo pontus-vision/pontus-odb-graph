@@ -8,24 +8,6 @@ updatereq:
           val: SHAREPOINT/PBR/JURÍDICO
           mandatoryInSearch: True
     
-    - label: Object_Legal_Actions
-      props:
-        - name: Object_Legal_Actions_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Object_Legal_Actions_Title
-          val: ${Title?.toUpperCase()?.trim()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Legal_Actions_Description
-          val: ${JUR_x0020_10_x0020__x002d__x0020}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Legal_Actions_Details
-          val: ${JUR_x0020_11_x0020__x002d__x0020}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
     - label: Object_Data_Procedures
       props:
         - name: Object_Data_Procedures_Form_Id
@@ -42,6 +24,10 @@ updatereq:
           val: ${JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador Conjunto')||JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador')?'PBR':''}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Object_Data_Procedures_Lawful_Basis_Justification
+          val: ${JUR_x0020_11_x0020__x002d__x0020}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_Lawful_Basis
       props:
@@ -51,32 +37,6 @@ updatereq:
           processAll: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
-    
-    - label: Object_Legitimate_Interests_Assessment
-      props:
-        - name: Object_Legitimate_Interests_Assessment_Is_Required
-          val: ${JUR_x0020_12_x0020__x002d__x0020}
-          mandatoryInSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Is_Essential
-          val: ${JUR_x0020_13_x0020__x002d__x0020}
-          mandatoryInSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
-          val: ${JUR_x0020_14_x0020__x002d__x0020}
-          mandatoryInSearch: True
-    
-    - label: Object_Risk_Data_Procedures
-      props:
-        - name: Object_Risk_Data_Procedures_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Object_Risk_Data_Procedures_Has_Risk_Evaluation
-          val: ${JUR_x0020_1_x0020__x002d__x0020_}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Risk_Data_Procedures_Justification
-          val: ${JUR_x0020_2_x0020__x002d__x0020_}
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Event_Ingestion
       props:
@@ -124,17 +84,8 @@ updatereq:
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
-    toVertexLabel: Object_Legal_Actions
-  - label: Has_Legal_Actions
-    fromVertexLabel: Object_Data_Procedures
-    toVertexLabel: Object_Legal_Actions
+    toVertexLabel: Object_Data_Procedures
   - label: Has_Lawful_Basis_On
     fromVertexLabel: Object_Data_Procedures
     toVertexLabel: Object_Lawful_Basis
-  - label: Has_Legitimate_Interests_Assessment
-    fromVertexLabel: Object_Data_Procedures
-    toVertexLabel: Object_Legitimate_Interests_Assessment
-  - label: Has_Risk
-    fromVertexLabel: Object_Data_Procedures
-    toVertexLabel: Object_Risk_Data_Procedures
 
