@@ -302,60 +302,38 @@ public class PVPbrTest extends AppTest {
         "  }\n" +
         "]", "Object_Data_Procedures",
         new String[] {"Object_Data_Procedures_Data_Controller", "Object_Data_Procedures_Data_Processor", "Object_Data_Procedures_Form_Id"});
-
       String replyStr = reply.getRecords()[0];
 
       assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Processor\":\"PBR\""), "PBR is the data processor");
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Controller\":\"PBR\""), "PBR is the data controller");
 
-      OGremlinResultSet resSet = App.graph.executeSql(
-        "SELECT Object_Legal_Actions_Description as legal_action_description, Object_Legal_Actions_Details as legal_action_details " +
-          "FROM Object_Legal_Actions " +
-          "WHERE Object_Legal_Actions_Title = 'RH 43 - PBR-JUR'", Collections.EMPTY_MAP);
+      String pbrRopaRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', eq('FINANCEIRO 01 - PBR'))" +
+        ".id().next().toString()").get().toString();
 
-      String legalActionDescription = resSet.iterator().next().getRawResult().getProperty("legal_action_description");
-      String legalActionDetails = resSet.iterator().next().getRawResult().getProperty("legal_action_details");
-      resSet.close();
-
-      assertEquals("legislações e regulamentos", legalActionDescription, "Legal action description");
-      assertEquals("informações adicionais", legalActionDetails, "Legal action details");
-
-      String countLawfulBasis = App.executor.eval("App.g.V().has('Object_Legal_Actions_Title', endingWith('PBR-JUR')).as('pbr-legal-actions')" +
-        ".in('Has_Legal_Actions').as('pbr-ropas').out('Has_Lawful_Basis_On').as('pbr-lawful-basis')" +
-        ".dedup().count().next().toString()").get().toString();
-      assertEquals("4", countLawfulBasis,
-        "Four types of lawful basis found: CONSENTIMENTO, LEGÍTIMO INTERESSE,PROTEÇÃO DO CRÉDITO and TUTELA DA SAÚDE");
-
-      resSet = App.graph.executeSql(
-        "SELECT Object_Legitimate_Interests_Assessment_Is_Required as LIA_is_required," +
-          "Object_Legitimate_Interests_Assessment_Is_Essential as LIA_is_essential," +
-          "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification as LIA_justification, count(*) as ct " +
-          "FROM Object_Legitimate_Interests_Assessment " +
-          "WHERE Object_Legitimate_Interests_Assessment_Is_Required = 'Sim' AND Object_Legitimate_Interests_Assessment_Is_Essential = 'Sim'", Collections.EMPTY_MAP);
-
-      String LIAisRequired = resSet.iterator().next().getRawResult().getProperty("LIA_is_required");
-      String LIAisEssential = resSet.iterator().next().getRawResult().getProperty("LIA_is_essential");
-      String LIAjustification = resSet.iterator().next().getRawResult().getProperty("LIA_justification");
-      Long countLIA = resSet.iterator().next().getRawResult().getProperty("ct");
-      resSet.close();
-
-      assertEquals("Sim", LIAisRequired, "LIA is required");
-      assertEquals("Sim", LIAisEssential, "LIA is essential");
-      assertEquals("", LIAjustification, "LIA justification is empty when LIA is required and essential");
-      assertEquals("1", countLIA, "1 of 3 PBR RoPAs needs LIA");
-
-      resSet = App.graph.executeSql(
-        "SELECT Object_Risk_Data_Procedures_Has_Risk_Evaluation as ropa_risk_eval, Object_Risk_Data_Procedures_Justification as ropa_risk_justification " +
-          "FROM Object_Risk_Data_Procedures " +
-          "WHERE in('Has_Risk').out('Has_Legal_Actions').Object_Legal_Actions_Form_Id = '63720'", Collections.EMPTY_MAP);
-
-      String ropaRiskEval = resSet.iterator().next().getRawResult().getProperty("ropa_risk_eval");
-      String ropaRiskJustification = resSet.iterator().next().getRawResult().getProperty("ropa_risk_justification");
-      resSet.close();
-
-      assertEquals("Não", ropaRiskEval, "RoPA has risk evaluation");
-      assertEquals("Criticidade do RoPA é baixo", ropaRiskJustification, "RoPA risk justification");
+      reply = gridWrapper("{\n" +
+          "  \"searchStr\": \"\",\n" +
+          "  \"searchExact\": true,\n" +
+          "  \"cols\": [\n" +
+          "    {\n" +
+          "      \"field\": \"Object_Lawful_Basis_Description\",\n" +
+          "      \"id\": \"Object_Lawful_Basis_Description\",\n" +
+          "      \"name\": \"Descrição\",\n" +
+          "      \"sortable\": true,\n" +
+          "      \"headerName\": \"Descrição\",\n" +
+          "      \"filter\": true\n" +
+          "    }\n" +
+          "  ],\n" +
+          "  \"extraSearch\": {\n" +
+          "    \"label\": \"Object_Lawful_Basis\",\n" +
+          "    \"value\": \"Object_Lawful_Basis\"\n" +
+          "  }\n" +
+          "}",
+        null,
+        "Object_Lawful_Basis",
+        new String[] {"Object_Lawful_Basis_Description"}, "hasNeighbourId:" + pbrRopaRid);
+      assertEquals(2, reply.getTotalAvailable(),
+        "Two types of lawful basis found: CONSENTIMENTO and LEGÍTIMO INTERESSE");
 
     } catch (Exception e) {
       e.printStackTrace();

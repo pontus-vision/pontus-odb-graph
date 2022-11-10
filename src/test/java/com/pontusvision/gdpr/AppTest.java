@@ -169,6 +169,11 @@ public class AppTest {
 
     return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, null,  0L, 1L);
   }
+
+  public RecordReply gridWrapper (String search,  String filters, String table, String[] cols, String customFilter) {
+
+    return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter,  0L, 1L);
+  }
   public RecordReply gridWrapper (PVGridSearch search, PVGridFilters[] filters, String table, String[] cols, String customFilter, Long fromVal, Long toVal) {
 
     PVGridColumn[] columns = new PVGridColumn[cols.length];
