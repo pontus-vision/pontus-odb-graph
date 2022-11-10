@@ -1,9 +1,6 @@
 package com.pontusvision.gdpr.pbr;
 
-import com.pontusvision.gdpr.AnnotationTestsOrderer;
-import com.pontusvision.gdpr.App;
-import com.pontusvision.gdpr.AppTest;
-import com.pontusvision.gdpr.TestClassesOrder;
+import com.pontusvision.gdpr.*;
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -13,6 +10,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -75,6 +73,7 @@ public class PVPbrTest extends AppTest {
 
     } catch (Exception e) {
       e.printStackTrace();
+      assertEquals(null, e, e.getMessage());
     }
 
 
@@ -124,6 +123,7 @@ public class PVPbrTest extends AppTest {
 
     } catch (Exception e) {
       e.printStackTrace();
+      assertEquals(null, e, e.getMessage());
     }
 
   }
@@ -243,6 +243,7 @@ public class PVPbrTest extends AppTest {
 
     } catch (Exception e) {
       e.printStackTrace();
+      assertEquals(null, e, e.getMessage());
     }
 
   }
@@ -257,24 +258,58 @@ public class PVPbrTest extends AppTest {
 
     try {
 
-      String dsName = App.executor.eval("App.g.V().has('Object_Legal_Actions_Title', endingWith('PBR-JUR')).as('pbr-legal-actions')" +
-        ".in('Has_Ingestion_Event').as('event_ingestion').in('Has_Ingestion_Event').as('event_group')" +
-        ".in('Has_Ingestion_Event').as('data_source').values('Object_Data_Source_Name').next().toString()").get().toString();
-      assertEquals("SHAREPOINT/PBR/JURÍDICO", dsName, "Data source name");
-
 //    checking if RoPA got the 2 new props Data_Processor and Data_Controller
+//    Trying new AGgrid API function "gridWrapper"
+      RecordReply reply = gridWrapper("{\n" +
+          "  \"searchStr\": \"\",\n" +
+          "  \"searchExact\": true,\n" +
+          "  \"cols\": [\n" +
+          "    {\n" +
+          "      \"field\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "      \"id\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "      \"name\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "      \"sortable\": true,\n" +
+          "      \"headerName\": \"ID\",\n" +
+          "      \"filter\": true\n" +
+          "    },\n" +
+          "    {\n" +
+          "      \"field\": \"Object_Data_Procedures_Data_Processor\",\n" +
+          "      \"id\": \"Object_Data_Procedures_Data_Processor\",\n" +
+          "      \"name\": \"Object_Data_Procedures_Data_Processor\",\n" +
+          "      \"sortable\": true,\n" +
+          "      \"headerName\": \"Descrição\",\n" +
+          "      \"filter\": true\n" +
+          "    },\n" +
+          "    {\n" +
+          "      \"field\": \"Object_Data_Procedures_Data_Controller\",\n" +
+          "      \"id\": \"Object_Data_Procedures_Data_Controller\",\n" +
+          "      \"name\": \"Dados Object_Data_Procedures_Data_Controller\",\n" +
+          "      \"sortable\": true,\n" +
+          "      \"headerName\": \"Dados Coletados\",\n" +
+          "      \"filter\": true\n" +
+          "    }\n" +
+          "  ],\n" +
+          "  \"extraSearch\": {\n" +
+          "    \"label\": \"Object_Data_Procedures\",\n" +
+          "    \"value\": \"Object_Data_Procedures\"\n" +
+          "  }\n" +
+          "}", "[\n" +
+        "  {\n" +
+        "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+        "    \"filterType\": \"text\",\n" +
+        "    \"type\": \"equals\",\n" +
+        "    \"filter\": \"8739\"\n" +
+        "  }\n" +
+        "]", "Object_Data_Procedures",
+        new String[] {"Object_Data_Procedures_Data_Controller", "Object_Data_Procedures_Data_Processor", "Object_Data_Procedures_Form_Id"});
+
+      String replyStr = reply.getRecords()[0];
+
+      assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Processor\":\"PBR\""), "PBR is the data processor");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Controller\":\"PBR\""), "PBR is the data controller");
+
       OGremlinResultSet resSet = App.graph.executeSql(
-        "SELECT Object_Data_Procedures_Data_Controller as ropa_controller, Object_Data_Procedures_Data_Processor as ropa_processor " +
-          "FROM Object_Data_Procedures " +
-          "WHERE Object_Data_Procedures_Form_Id = 8739", Collections.EMPTY_MAP);
-
-      String ropaController = resSet.iterator().next().getRawResult().getProperty("ropa_controller");
-      String ropaProcessor = resSet.iterator().next().getRawResult().getProperty("ropa_processor");
-      resSet.close();
-      assertEquals("PBR", ropaController, "PBR is the data controller");
-      assertEquals("PBR", ropaProcessor, "PBR is the data processor");
-
-      resSet = App.graph.executeSql(
         "SELECT Object_Legal_Actions_Description as legal_action_description, Object_Legal_Actions_Details as legal_action_details " +
           "FROM Object_Legal_Actions " +
           "WHERE Object_Legal_Actions_Title = 'RH 43 - PBR-JUR'", Collections.EMPTY_MAP);
@@ -324,6 +359,7 @@ public class PVPbrTest extends AppTest {
 
     } catch (Exception e) {
       e.printStackTrace();
+      assertEquals(null, e, e.getMessage());
     }
 
   }
