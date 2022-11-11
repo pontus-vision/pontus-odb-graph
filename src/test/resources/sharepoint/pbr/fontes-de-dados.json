@@ -188,7 +188,7 @@
         "@odata.etag": "4b94c8fe-0b8a-4029-9764-e619181841ba,5",
         "Title": "Polaris",
         "Sistema": "Polaris",
-        "TipoSistema": "Onprem",
+        "TipoSistema": "Onprem-PBR",
         "Tabela": "Fixa",
         "Descri_x00e7__x00e3_o": "Polaris",
         "Frequ_x00ea_nciadeAtualiza_x00e7": "1 mês",
