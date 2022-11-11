@@ -380,4 +380,67 @@ public class PVPbrTest extends AppTest {
 
   }
 
+  @Test
+  public void test00005SharepointLIA() throws InterruptedException {
+
+    jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields","sharepoint_pbr_fontes_de_dados");
+    jsonTestUtil("sharepoint/pbr/users.json", "$.queryResp[*]", "sharepoint_pbr_users");
+    jsonTestUtil("sharepoint/pbr/ropa.json", "$.queryResp[*].fields", "sharepoint_pbr_ropa");
+    jsonTestUtil("sharepoint/pbr/lia.json", "$.queryResp[*].fields", "sharepoint_pbr_lia");
+
+    try {
+
+//    checking if RoPA got the 2 new props Data_Processor and Data_Controller
+//    Trying new AGgrid API function "gridWrapper"
+      RecordReply reply = gridWrapper("{\n" +
+          "  \"searchStr\": \"\",\n" +
+          "  \"searchExact\": true,\n" +
+          "  \"cols\": [\n" +
+          "    {\n" +
+          "      \"field\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "      \"id\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "      \"name\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "      \"sortable\": true,\n" +
+          "      \"headerName\": \"ID\",\n" +
+          "      \"filter\": true\n" +
+          "    },\n" +
+          "    {\n" +
+          "      \"field\": \"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\",\n" +
+          "      \"id\": \"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\",\n" +
+          "      \"name\": \"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\",\n" +
+          "      \"sortable\": true,\n" +
+          "      \"headerName\": \"LIA\",\n" +
+          "      \"filter\": true\n" +
+          "    },\n" +
+          "  ],\n" +
+          "  \"extraSearch\": {\n" +
+          "    \"label\": \"Object_Data_Procedures\",\n" +
+          "    \"value\": \"Object_Data_Procedures\"\n" +
+          "  }\n" +
+          "}", "[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"5493\"\n" +
+          "  }\n" +
+          "]", "Has_Legitimate_Interests_Assessment",
+        new String[] {"Object_Data_Procedures_Form_Id", "Object_Legitimate_Interests_Assessment_How_Data_Is_Collected"});
+
+      String replyStr = reply.getRecords()[0];
+
+      assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Processor\":\"PBR\""), "PBR is the data processor");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Controller\":\"PBR\""), "PBR is the data controller");
+
+      String pbrRopaRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', eq('FINANCEIRO 01 - PBR'))" +
+        ".id().next().toString()").get().toString();
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertEquals(null, e, e.getMessage());
+    }
+
+  }
+
 }

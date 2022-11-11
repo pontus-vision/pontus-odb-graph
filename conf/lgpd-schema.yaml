@@ -1846,13 +1846,64 @@ propertyKeys:
   - name: Object_Legitimate_Interests_Assessment_Type
     dataType: String
     cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Benefits
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Benefits_Score
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Consequences
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Customer_Service
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Data_Processing_Justification
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Data_Processing_Protection_Laws
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Has_Minors_Data
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Has_Sensitive_Data
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_How_Data_Is_Collected
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_How_Long_Data_Was_Collected
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Legitimate_Interests_Assessment_Is_Essential
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Info_Shared_With_Third_Parties
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Is_Required
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Justification_Of_Subject_Data_Rights_Injury
     dataType: String
     cardinality: SINGLE
   - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
     dataType: String
     cardinality: SINGLE
-  - name: Object_Legitimate_Interests_Assessment_Is_Required
+  - name: Object_Legitimate_Interests_Assessment_Purpose
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Only_Essential_Data
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Relationship_With_Data_Subject
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Unethical_Aspects
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Risk_Data_Source
@@ -3995,9 +4046,26 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Legitimate_Interests_Assessment
+      - Object_Legitimate_Interests_Assessment_Form_Id
+      - Object_Legitimate_Interests_Assessment_Benefits
+      - Object_Legitimate_Interests_Assessment_Benefits_Score
+      - Object_Legitimate_Interests_Assessment_Consequences
+      - Object_Legitimate_Interests_Assessment_Customer_Service
+      - Object_Legitimate_Interests_Assessment_Data_Processing_Justification
+      - Object_Legitimate_Interests_Assessment_Data_Processing_Protection_Laws
+      - Object_Legitimate_Interests_Assessment_Has_Minors_Data
+      - Object_Legitimate_Interests_Assessment_Has_Sensitive_Data
+      - Object_Legitimate_Interests_Assessment_How_Data_Is_Collected
+      - Object_Legitimate_Interests_Assessment_How_Long_Data_Was_Collected
       - Object_Legitimate_Interests_Assessment_Is_Essential
-      - Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
+      - Object_Legitimate_Interests_Assessment_Info_Shared_With_Third_Parties
       - Object_Legitimate_Interests_Assessment_Is_Required
+      - Object_Legitimate_Interests_Assessment_Justification_Of_Subject_Data_Rights_Injury
+      - Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
+      - Object_Legitimate_Interests_Assessment_Purpose
+      - Object_Legitimate_Interests_Assessment_Only_Essential_Data
+      - Object_Legitimate_Interests_Assessment_Relationship_With_Data_Subject
+      - Object_Legitimate_Interests_Assessment_Unethical_Aspects
     propertyKeysMappings:
     
       {}

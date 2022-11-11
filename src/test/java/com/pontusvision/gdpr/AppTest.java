@@ -163,17 +163,18 @@ public class AppTest {
     }
   }
 
-//  [["key":"val","key2":"val2"], ["key":"val","key2":"val2"], ["key":"val","key2":"val2"]]
-//  customFilter can be one of three: "unmatchedEvents" or "hasNeighbourId:<rid>" or "children"
+//  signature with customFiler null, isn't used. fromVal and toVal are used to limit the number of events returned
   public RecordReply gridWrapper (String search,  String filters, String table, String[] cols) {
-
+//  customFilter can be one of three: "unmatchedEvents" or "hasNeighbourId:<rid>" or "children"
     return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, null,  0L, 1L);
   }
 
+  // signature with fromVal and toVal constant, returning only one value
   public RecordReply gridWrapper (String search,  String filters, String table, String[] cols, String customFilter) {
 
     return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter,  0L, 1L);
   }
+  //  [["key":"val","key2":"val2"], ["key":"val","key2":"val2"], ["key":"val","key2":"val2"]]
   public RecordReply gridWrapper (PVGridSearch search, PVGridFilters[] filters, String table, String[] cols, String customFilter, Long fromVal, Long toVal) {
 
     PVGridColumn[] columns = new PVGridColumn[cols.length];
