@@ -573,8 +573,6 @@ public class PVTemplateTests extends AppTest {
 
       jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
 
-      jsonTestUtil("sharepoint/pbr/users.json", "$.queryResp[*]", "sharepoint_pbr_users");
-
       jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json",
               "$.queryResp[*].fields", "sharepoint_data_breaches");
 
@@ -609,7 +607,7 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      String expectedReport = "People: 5\nData Sources: 2\nServers: 2\n";
+      String expectedReport = "People: 4\nData Sources: 2\nServers: 2\n";
       assertEquals(expectedReport, report, "Data Breache's statistics/numbers");
 
       req.setReportTextBase64(
