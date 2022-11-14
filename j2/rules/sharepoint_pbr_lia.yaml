@@ -1,0 +1,148 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: SHAREPOINT/PBR/LIA
+          mandatoryInSearch: True
+    
+    - label: Object_Legitimate_Interests_Assessment
+      props:
+        - name: Object_Legitimate_Interests_Assessment_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Benefits
+          val: ${Sesim_x002c_detalharosbenef_x00e}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Benefits_Score
+          val: ${Qualarelev_x00e2_nciadosbenef_x0}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Consequences
+          val: ${Quaisasconsequ_x00ea_nciasdan_x0}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Customer_Service
+          val: ${Se_x0020_sim_x002c__x0020_descre2}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Data_Processing_Justification
+          val: ${Se_x0020_sim_x0020_descrever}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Data_Processing_Protection_Laws
+          val: ${Se_x0020_sim_x002c__x0020_descre1}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Has_Minors_Data
+          val: ${Osdadospessoaisaseremtratadosper}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Has_Sensitive_Data
+          val: ${Osdadospessoaisaseremtratadoss_x}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_How_Data_Is_Collected
+          val: ${if(Osdadospessoaisforamcoletadosdir == 'Sim' && Seosdadospessoaisforamcoletadosp == 'Sim'){Sesim_x002c_paraqualfinalidade_x0 + '\\n' + Sesim_x002c_qualaprovadessaci_x0}else if(Osdadospessoaisforamcoletadosdir == 'Sim'){Sesim_x002c_paraqualfinalidade_x0}else if(Seosdadospessoaisforamcoletadosp == 'Sim'){Sesim_x002c_qualaprovadessaci_x0}else{''}}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_How_Long_Data_Was_Collected
+          val: ${H_x00e1_quantotempoosdadospessoa}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Is_Essential
+          val: Sim
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Info_Shared_With_Third_Parties
+          val: ${Nocasodecompartilhamentodosdados}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Is_Required
+          val: Sim
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Justification_Of_Subject_Data_Rights_Injury
+          val: ${Se_x0020_sim_x0020__x002d__x0020}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Purpose
+          val: ${Se_x0020_sim_x002c__x0020_descre}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Only_Essential_Data
+          val: ${Emcasopositivo_x002c_favorinform}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Relationship_With_Data_Subject
+          val: ${Sesim_x002c_dequalnatureza_x003f}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Unethical_Aspects
+          val: ${Sesim_x002c_descrevadequemaneira}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Data_Procedures
+      props:
+        - name: Object_Data_Procedures_Form_Id
+          val: ${new groovy.json.JsonBuilder(ID_x0020_do_x0020_Processo)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
+    
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: sharepoint/pbr/lia
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${Created}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: sharepoint/pbr/lia
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object_Data_Source
+    toVertexLabel: Event_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Object_Legitimate_Interests_Assessment
+  - label: Has_Legitimate_Interests_Assessment
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Legitimate_Interests_Assessment
+
