@@ -44,6 +44,8 @@ public class PVKpiTests extends AppTest {
 
       String output = (String) getDataRetentionKpis();
 
+      assertTrue(output.contains("{ \"metricname\": \"6 Months\", \"metricvalue\": 17, \"metrictype\": \"Data Retention\" }"));
+      assertTrue(output.contains("{ \"metricname\": \"1 Year\", \"metricvalue\": 17, \"metrictype\": \"Data Retention\" }"));
       assertTrue(output.contains("{ \"metricname\": \"2 years\", \"metricvalue\": 8, \"metrictype\": \"Data Retention\" }"));
       assertTrue(output.contains("{ \"metricname\": \"3 years\", \"metricvalue\": 7, \"metrictype\": \"Data Retention\" }"));
       assertTrue(output.contains("{ \"metricname\": \"5 years\", \"metricvalue\": 7, \"metrictype\": \"Data Retention\" }"));
