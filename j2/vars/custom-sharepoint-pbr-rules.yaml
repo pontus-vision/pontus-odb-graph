@@ -47,7 +47,7 @@ rules:
 
       - label: Object_Module
         props:
-          Name: "${Tabela?.trim()?.toLowerCase()}"
+          Name: "${Tabela?.trim()?.toUpperCase()}"
 
       - label: Object_Sensitive_Data
         props:
@@ -621,9 +621,9 @@ rules:
           Justification_Of_Subject_Data_Rights_Injury:
             val: "${Se_x0020_sim_x0020__x002d__x0020}"
             excludeFromSearch: true
-          Lawful_Basis_Justification:
-            val: "${?}" # ?!
-            excludeFromSearch: true
+#          Lawful_Basis_Justification:
+#            val: "${?}" # ?!
+#            excludeFromSearch: true
           Purpose: # Or Goal
             val: "${Se_x0020_sim_x002c__x0020_descre}"
             excludeFromSearch: true

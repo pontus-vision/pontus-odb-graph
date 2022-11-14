@@ -47,7 +47,7 @@ rules:
 
       - label: Object_Module
         props:
-          Name: "${Modulo?.trim()?.toLowerCase()}"
+          Name: "${Modulo?.trim()?.toUpperCase()}"
 
       - label: Object_Sensitive_Data
         props:

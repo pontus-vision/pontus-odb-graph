@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.net.URISyntaxException;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,33 +43,33 @@ public class PVPbrTest extends AppTest {
       jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields", "sharepoint_pbr_fontes_de_dados");
 
       String countFontesDeDados =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados'))" +
-                      ".as('event-ingestions').dedup().count().next().toString()").get().toString();
-      assertEquals("4",countFontesDeDados, "number of fontes de dados");
+        App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados'))" +
+          ".as('event-ingestions').dedup().count().next().toString()").get().toString();
+      assertEquals("4", countFontesDeDados, "number of fontes de dados");
 
       String countDadosFontes2 =
-              App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados'))" +
-                      ".as('event-ingestions').out('Has_Ingestion_Event').has('Object_Data_Source_Form_Id', eq('two'))" +
-                      ".as('fontes-de-dados-two').out('Has_Sensitive_Data').dedup().count().next().toString()").get().toString();
-        assertEquals("5",countDadosFontes2,
-                "Apelido, Data da Aposentadoria, Situação no CIPA, Classificação do visto, PIS/PASEP/NIT");
+        App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados'))" +
+          ".as('event-ingestions').out('Has_Ingestion_Event').has('Object_Data_Source_Form_Id', eq('two'))" +
+          ".as('fontes-de-dados-two').out('Has_Sensitive_Data').dedup().count().next().toString()").get().toString();
+      assertEquals("5", countDadosFontes2,
+        "Apelido, Data da Aposentadoria, Situação no CIPA, Classificação do visto, PIS/PASEP/NIT");
 
-        String getFontesEquipamentosDescription =
-                App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados'))" +
-                        ".as('event-ingestions').out('Has_Ingestion_Event').has('Object_Data_Source_Name', eq('EQUIPAMENTOS'))" +
-                        ".as('fontes-de-dados').values('Object_Data_Source_Description').next().toString()").get().toString();
-        assertEquals("EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL", getFontesEquipamentosDescription, "Description of EQUIPAMENTOS");
+      String getFontesEquipamentosDescription =
+        App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados'))" +
+          ".as('event-ingestions').out('Has_Ingestion_Event').has('Object_Data_Source_Name', eq('EQUIPAMENTOS'))" +
+          ".as('fontes-de-dados').values('Object_Data_Source_Description').next().toString()").get().toString();
+      assertEquals("EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL", getFontesEquipamentosDescription, "Description of EQUIPAMENTOS");
 
-        String getFontes4System =
-                App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SHAREPOINT/PBR/FONTES-DE-DADOS')).as('root')" +
-                        ".out('Has_Ingestion_Event').has('Event_Group_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados')).as('group-ingestion')" +
-                        ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados')).as('event-ingestion')" +
-                        ".out('Has_Ingestion_Event').has('Object_Data_Source_Form_Id', eq('four')).as('fontes-de-dados')" +
-                        ".out('Has_Module').has('Object_Module_Name', eq('fixa')).as('tabela')" +
-                        ".out('Has_Subsystem').has('Object_Subsystem_Name', eq('ONPREM-PBR')).as('onPrem')" +
-                        ".out('Has_System').as('system')" +
-                        ".values('Object_System_Name').next().toString()").get().toString();
-        assertEquals("POLARIS", getFontes4System, "System of fontes-de-dados 4");
+      String getFontes4System =
+        App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SHAREPOINT/PBR/FONTES-DE-DADOS')).as('root')" +
+          ".out('Has_Ingestion_Event').has('Event_Group_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados')).as('group-ingestion')" +
+          ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('sharepoint/pbr/fontes-de-dados')).as('event-ingestion')" +
+          ".out('Has_Ingestion_Event').has('Object_Data_Source_Form_Id', eq('four')).as('fontes-de-dados')" +
+          ".out('Has_Module').has('Object_Module_Name', eq('fixa')).as('tabela')" +
+          ".out('Has_Subsystem').has('Object_Subsystem_Name', eq('ONPREM-PBR')).as('onPrem')" +
+          ".out('Has_System').as('system')" +
+          ".values('Object_System_Name').next().toString()").get().toString();
+      assertEquals("POLARIS", getFontes4System, "System of fontes-de-dados 4");
 
 
     } catch (Exception e) {
@@ -131,7 +132,7 @@ public class PVPbrTest extends AppTest {
   @Test
   public void test00003SharepointRoPA() throws InterruptedException {
 
-    jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields","sharepoint_pbr_fontes_de_dados");
+    jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields", "sharepoint_pbr_fontes_de_dados");
     jsonTestUtil("sharepoint/pbr/users.json", "$.queryResp[*]", "sharepoint_pbr_users");
     jsonTestUtil("sharepoint/pbr/ropa.json", "$.queryResp[*].fields", "sharepoint_pbr_ropa");
 
@@ -203,10 +204,10 @@ public class PVPbrTest extends AppTest {
       }
 
       String incidentsCount = App.executor.eval("App.g.V().where(" +
-                                          "has('Metadata_Type_Event_Data_Breach', P.eq('Event_Data_Breach'))" +
-                                            ".and().out('Impacted_By_Data_Breach').in('Has_Data_Source')" +
-                                            ".has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
-                                          ").dedup().count().next().toString()").get().toString();
+        "has('Metadata_Type_Event_Data_Breach', P.eq('Event_Data_Breach'))" +
+        ".and().out('Impacted_By_Data_Breach').in('Has_Data_Source')" +
+        ".has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
+        ").dedup().count().next().toString()").get().toString();
       assertEquals("1", incidentsCount, "Only one of PBR's RoPA was breached");
 
       for (int i = 0; i < 2; i++) {
@@ -242,15 +243,15 @@ public class PVPbrTest extends AppTest {
         "Nome da Mãe, Nome do Pai, Nacionalidade]", info, "This RoPA collects a lot of information in one string block");
 
       String countSensitiveData = App.executor.eval("App.g.V().where(" +
-                                                              "has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
-                                                          ").as('ropa_pbr').out('Has_Sensitive_Data').as('sensitive_data')" +
-                                                          ".dedup().count().next().toString()").get().toString();
+        "has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
+        ").as('ropa_pbr').out('Has_Sensitive_Data').as('sensitive_data')" +
+        ".dedup().count().next().toString()").get().toString();
       assertEquals("4", countSensitiveData, "Four types of sensitive data found in the PBR RoPA: Dados Biométricos, Raça, Religião and Opinião Política");
 
       String countPersonalData = App.executor.eval("App.g.V().where(" +
-                                                             "has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
-                                                         ").as('ropa_pbr').out('Has_Personal_Data').as('personal_data')" +
-                                                         ".dedup().count().next().toString()").get().toString();
+        "has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
+        ").as('ropa_pbr').out('Has_Personal_Data').as('personal_data')" +
+        ".dedup().count().next().toString()").get().toString();
       assertEquals("17", countPersonalData, "17 types of personal data found within three of PBR's RoPA");
 
       for (int i = 0; i < 3; i++) {
@@ -289,7 +290,7 @@ public class PVPbrTest extends AppTest {
   @Test
   public void test00004SharepointJuridico() throws InterruptedException {
 
-    jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields","sharepoint_pbr_fontes_de_dados");
+    jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields", "sharepoint_pbr_fontes_de_dados");
     jsonTestUtil("sharepoint/pbr/users.json", "$.queryResp[*]", "sharepoint_pbr_users");
     jsonTestUtil("sharepoint/pbr/ropa.json", "$.queryResp[*].fields", "sharepoint_pbr_ropa");
     jsonTestUtil("sharepoint/pbr/juridico.json", "$.queryResp[*].fields", "sharepoint_pbr_juridico");
@@ -332,14 +333,14 @@ public class PVPbrTest extends AppTest {
           "    \"value\": \"Object_Data_Procedures\"\n" +
           "  }\n" +
           "}", "[\n" +
-        "  {\n" +
-        "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
-        "    \"filterType\": \"text\",\n" +
-        "    \"type\": \"equals\",\n" +
-        "    \"filter\": \"8739\"\n" +
-        "  }\n" +
-        "]", "Object_Data_Procedures",
-        new String[] {"Object_Data_Procedures_Data_Controller", "Object_Data_Procedures_Data_Processor", "Object_Data_Procedures_Form_Id"});
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"8739\"\n" +
+          "  }\n" +
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_Data_Controller", "Object_Data_Procedures_Data_Processor", "Object_Data_Procedures_Form_Id"});
       String replyStr = reply.getRecords()[0];
 
       assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
@@ -369,7 +370,7 @@ public class PVPbrTest extends AppTest {
           "}",
         null,
         "Object_Lawful_Basis",
-        new String[] {"Object_Lawful_Basis_Description"}, "hasNeighbourId:" + pbrRopaRid);
+        new String[]{"Object_Lawful_Basis_Description"}, "hasNeighbourId:" + pbrRopaRid);
       assertEquals(2, reply.getTotalAvailable(),
         "Two types of lawful basis found: CONSENTIMENTO and LEGÍTIMO INTERESSE");
 
@@ -381,29 +382,46 @@ public class PVPbrTest extends AppTest {
   }
 
   @Test
-  public void test00005SharepointLIA() throws InterruptedException {
+  public void test00005SharepointLIA() throws InterruptedException, URISyntaxException {
 
-    jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields","sharepoint_pbr_fontes_de_dados");
+    jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields", "sharepoint_pbr_fontes_de_dados");
     jsonTestUtil("sharepoint/pbr/users.json", "$.queryResp[*]", "sharepoint_pbr_users");
     jsonTestUtil("sharepoint/pbr/ropa.json", "$.queryResp[*].fields", "sharepoint_pbr_ropa");
     jsonTestUtil("sharepoint/pbr/lia.json", "$.queryResp[*].fields", "sharepoint_pbr_lia");
 
     try {
 
-//    checking if RoPA got the 2 new props Data_Processor and Data_Controller
-//    Trying new AGgrid API function "gridWrapper"
+//      Resource res = new Resource();
+//      Gson gson = new Gson();
+//      GremlinRequest gremlinReq = new GremlinRequest();
+//      ContainerRequest fakeContainerReqContext;
+//      fakeContainerReqContext = new ContainerRequest(new URI("http://localhost:18443"),
+//        new URI("http://localhost:18443"), "POST", null, new MapPropertiesDelegate(), null);
+//      fakeContainerReqContext.setProperty("pvDecodedJWT", JWTTokenNeededFilter.createDummyDecodedJWT());
+//      gremlinReq.setGremlin(
+//        "App.g.V().has('Object_Data_Procedures_ID', eq('RH 43 - PBR')).id().next().toString()");
+//      JsonObject obj = JsonParser.parseString(res.gremlinQuery(fakeContainerReqContext, gson.toJson(gremlinReq))).getAsJsonObject();
+//      String stringifiedOutput = gson.toJson(obj);
+//      HttpClient client = HttpClients.createMinimal();
+//
+//      HttpPost request = new HttpPost(URI.create("http://localhost:3001/home/gremlin"));
+//
+//      request.setHeader("Content-Type", "application/json");
+//      request.setHeader("Accept", "application/json");
+//
+//      StringEntity data = new StringEntity(gson.toJson(gremlinReq));
+//
+//      request.setEntity(data);
+//
+//     String pbrRopaRid = IOUtils.toString(client.execute(request).getEntity().getContent());
+
+      String pbrRopaRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', eq('RH 43 - PBR'))" +
+        ".id().next().toString()").get().toString();
+
       RecordReply reply = gridWrapper("{\n" +
           "  \"searchStr\": \"\",\n" +
           "  \"searchExact\": true,\n" +
           "  \"cols\": [\n" +
-          "    {\n" +
-          "      \"field\": \"Object_Data_Procedures_Form_Id\",\n" +
-          "      \"id\": \"Object_Data_Procedures_Form_Id\",\n" +
-          "      \"name\": \"Object_Data_Procedures_Form_Id\",\n" +
-          "      \"sortable\": true,\n" +
-          "      \"headerName\": \"ID\",\n" +
-          "      \"filter\": true\n" +
-          "    },\n" +
           "    {\n" +
           "      \"field\": \"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\",\n" +
           "      \"id\": \"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\",\n" +
@@ -411,30 +429,81 @@ public class PVPbrTest extends AppTest {
           "      \"sortable\": true,\n" +
           "      \"headerName\": \"LIA\",\n" +
           "      \"filter\": true\n" +
-          "    },\n" +
+          "    }\n" +
           "  ],\n" +
           "  \"extraSearch\": {\n" +
-          "    \"label\": \"Object_Data_Procedures\",\n" +
-          "    \"value\": \"Object_Data_Procedures\"\n" +
+          "    \"label\": \"Object_Legitimate_Interests_Assessment\",\n" +
+          "    \"value\": \"Object_Legitimate_Interests_Assessment\"\n" +
           "  }\n" +
-          "}", "[\n" +
-          "  {\n" +
-          "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
-          "    \"filterType\": \"text\",\n" +
-          "    \"type\": \"equals\",\n" +
-          "    \"filter\": \"5493\"\n" +
-          "  }\n" +
-          "]", "Has_Legitimate_Interests_Assessment",
-        new String[] {"Object_Data_Procedures_Form_Id", "Object_Legitimate_Interests_Assessment_How_Data_Is_Collected"});
+          "}", null, "Object_Legitimate_Interests_Assessment",
+        new String[]{"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected"}, "hasNeighbourId:" + pbrRopaRid);
 
       String replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\":\"Contratos assinados entre a empresa e os titulares\""),
+        "Description on how the data is collected");
 
-      assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Processor\":\"PBR\""), "PBR is the data processor");
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Controller\":\"PBR\""), "PBR is the data controller");
+      String pbrGroupEventRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', endingWith(' - PBR')).as('ropa-pbr')" +
+        ".out('Has_Legitimate_Interests_Assessment').as('pbr-lia').in('Has_Ingestion_Event').as('pbr-event')" +
+        ".in('Has_Ingestion_Event').as('pbr-group-event').id().next().toString()").get().toString();
 
-      String pbrRopaRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', eq('FINANCEIRO 01 - PBR'))" +
+      reply = gridWrapper("{\n" +
+        "  \"searchStr\": \"\",\n" +
+        "  \"searchExact\": true,\n" +
+        "  \"cols\": [\n" +
+        "    {\n" +
+        "      \"field\": \"Object_Data_Source_Name\",\n" +
+        "      \"id\": \"Object_Data_Source_Name\",\n" +
+        "      \"name\": \"Object_Data_Source_Name\",\n" +
+        "      \"sortable\": true,\n" +
+        "      \"headerName\": \"Fonte de Dados\",\n" +
+        "      \"filter\": true\n" +
+        "    }\n" +
+        "  ],\n" +
+        "  \"extraSearch\": {\n" +
+        "    \"label\": \"Object_Data_Source\",\n" +
+        "    \"value\": \"Object_Data_Source\"\n" +
+        "  }\n" +
+        "}", null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"}, "hasNeighbourId:" + pbrGroupEventRid);
+
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"SHAREPOINT/PBR/LIA\""),
+        "PBR is the data source");
+
+      pbrRopaRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', eq('RH 43 - PBR'))" +
         ".id().next().toString()").get().toString();
+
+      reply = gridWrapper("{\n" +
+          "  \"searchStr\": \"\",\n" +
+          "  \"searchExact\": true,\n" +
+          "  \"cols\": [\n" +
+          "    {\n" +
+          "      \"field\": \"Object_Legitimate_Interests_Assessment_Is_Essential\",\n" +
+          "      \"id\": \"Object_Legitimate_Interests_Assessment_Is_Essential\",\n" +
+          "      \"name\": \"Object_Legitimate_Interests_Assessment_Is_Essential\",\n" +
+          "      \"sortable\": true,\n" +
+          "      \"headerName\": \"Essential\",\n" +
+          "      \"filter\": true\n" +
+          "    },\n" +
+          "    {\n" +
+          "      \"field\": \"Object_Legitimate_Interests_Assessment_Is_Required\",\n" +
+          "      \"id\": \"Object_Legitimate_Interests_Assessment_Is_Required\",\n" +
+          "      \"name\": \"Object_Legitimate_Interests_Assessment_Is_Required\",\n" +
+          "      \"sortable\": true,\n" +
+          "      \"headerName\": \"Required\",\n" +
+          "      \"filter\": true\n" +
+          "    }\n" +
+          "  ],\n" +
+          "  \"extraSearch\": {\n" +
+          "    \"label\": \"Object_Legitimate_Interests_Assessment\",\n" +
+          "    \"value\": \"Object_Legitimate_Interests_Assessment\"\n" +
+          "  }\n" +
+          "}", null, "Object_Legitimate_Interests_Assessment",
+        new String[]{"Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Is_Required"},
+        "hasNeighbourId:" + pbrRopaRid);
+
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"Sim\""), "LIA is essential");
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Required\":\"Sim\""), "LIA is required");
 
     } catch (Exception e) {
       e.printStackTrace();
