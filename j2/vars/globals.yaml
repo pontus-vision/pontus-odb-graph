@@ -880,24 +880,14 @@ schema:
         #        - name: Form_Submission_Id
         #        - name: Form_Submission_Owner_Id
         - name: Benefits
-        - name: Benefits_Score
-        - name: Consequences
-        - name: Customer_Service # Or Contact
+        - name: Benefits_Relevance
+        - name: Strategic_Impact # LIA 5 and 6 + LIA  32
         - name: Data_Processing_Justification
-        - name: Data_Processing_Protection_Laws
-        - name: Has_Minors_Data
-        - name: Has_Sensitive_Data
-        - name: How_Data_Is_Collected # Or How_Data_Was_Collected
-        - name: How_Long_Data_Was_Collected # Or When_Data_Was_Collected
         - name: Is_Essential
-        - name: Info_Shared_With_Third_Parties
+#        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
         - name: Is_Required
-        - name: Justification_Of_Subject_Data_Rights_Injury
+        - name: Breach_Of_Subject_Rights_Justification
         - name: Lawful_Basis_Justification
-        - name: Purpose # Or Goal
-        - name: Only_Essential_Data # Or Only_Necessary_Data
-        - name: Relationship_With_Data_Subject
-        - name: Unethical_Aspects
 
     - name: "Object_Risk_Data_Source"
       partition: false
