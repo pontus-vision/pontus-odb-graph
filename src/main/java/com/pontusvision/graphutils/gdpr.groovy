@@ -5631,7 +5631,9 @@ the end of the process.
     boolean firstTime = true;
 
     def retentionPeriods = [
-        "2 years"  : 3600000L * 24L * 365L * 2L
+        "6 Months" : 3600000L * 24L * 180L,
+        "1 Year"   : 3600000L * 24L * 365L  * 1L
+        ,"2 years"  : 3600000L * 24L * 365L * 2L
         , "3 years": 3600000L * 24L * 365L * 3L
         , "5 years": 3600000L * 24L * 365L * 5L
         , "7 years": 3600000L * 24L * 365L * 7L
