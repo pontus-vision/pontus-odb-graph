@@ -78,6 +78,7 @@ schema:
           dataType: Date
         - name: Status
         - name: Description
+          index: false
         - name: Customer_ID
 
     - name: "Event_Data_Breach"
@@ -87,6 +88,7 @@ schema:
         - name: Authority_Notified
         - name: Authority_Notified_Others
         - name: Description
+          index: false
         - name: Id
         - name: Impact
         - name: Metadata_Create_Date
@@ -283,6 +285,7 @@ schema:
         - name: Form_Submission_Owner_Id
         - name: Natural_Person_Type
         - name: Description
+          index: false
 
     - name: "Event_Training"
       partition: false
@@ -303,6 +306,7 @@ schema:
           dataType: Date
 
         - name: Description
+          index: false
         - name: Status
         - name: Type
         - name: Value
@@ -314,6 +318,7 @@ schema:
         - name: Date
           dataType: Date
         - name: Description
+          index: false
         - name: Expiry
         - name: Form_Id
         - name: Form_Owner_Id
@@ -331,6 +336,7 @@ schema:
         - name: City
         - name: Code
         - name: Description
+          index: false
         - name: Full_Address
         - name: Neighborhood
         - name: Post_Code
@@ -382,6 +388,7 @@ schema:
       props:
         - name: AttachTime
         - name: Description
+          index: false
         - name: MacAddress
         - name: NetworkInterfaceId
         - name: PrivateDnsName
@@ -407,6 +414,7 @@ schema:
       useStatic: false
       props:
         - name: Description
+          index: false
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -424,6 +432,7 @@ schema:
       useStatic: false
       props:
         - name: Description
+          index: false
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -455,6 +464,7 @@ schema:
           dataType: Date
 
         - name: Description
+          index: false
         - name: Expiry
         - name: Form_Id
         - name: Form_Owner_Id
@@ -472,6 +482,7 @@ schema:
         - name: Date
           dataType: Date
         - name: Description
+          index: false
         - name: Expiry
         - name: Form_Id
         - name: Form_Owner_Id
@@ -498,6 +509,7 @@ schema:
         - name: Create_Date
           dataType: Date
         - name: Description
+          index: false
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -505,6 +517,7 @@ schema:
         - name: Name
         - name: Retention_Period
         - name: Retention_Justification
+          index: false
         - name: Text
         - name: Type
         - name: Update_Date
@@ -525,6 +538,7 @@ schema:
 #        - name: Business_Sub_Area_Responsible
         - name: Type
         - name: Description
+          index: false
         - name: Macro_Process_Name
         - name: Country_Where_Stored
         - name: Data_Origin
@@ -537,7 +551,9 @@ schema:
         - name: Delete_URL
         - name: Info_Collected
         - name: Info_Share_Justification
+          index: false
         - name: Info_Share_Justification_International
+          index: false
         - name: Info_Shared_With_Third_Parties
         - name: Info_Shared_With_Third_Parties_International
         - name: Lawful_Basis_Justification
@@ -552,6 +568,7 @@ schema:
         - name: Participants_National
         - name: Participants_International
         - name: Secondary_Purpose_Of_Collection
+          index: false
         - name: Type_Of_Natural_Person
         - name: Type_Of_Natural_Person_National
         - name: Type_Of_Natural_Person_International
@@ -560,6 +577,7 @@ schema:
         - name: Update_Mechanism
         - name: Update_URL
         - name: Why_Is_It_Collected
+          index: false
         - name: Is_SubProcess
           dataType: Boolean
         - name: Interested_Parties_Consulted
@@ -580,6 +598,7 @@ schema:
         - name: Credential_Principal
         - name: Credential_Secret
         - name: Description
+          index: false
         - name: Domain
         - name: Domain_Frequency
         - name: Engine
@@ -722,6 +741,7 @@ schema:
         - name: Metadata_GUID
         - name: Metadata_Owner
         - name: Text
+          index: false
         - name: URL
         - name: Vertex_Label
 
@@ -775,6 +795,7 @@ schema:
       useStatic: false
       props:
         - name: Description
+          index: false
         - name: Id
         - name: Short_Description
 
@@ -792,6 +813,7 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
         - name: Description
+          index: false
         - name: Credential_Principal
         - name: Credential_Secret
         - name: Credential_ApiKey
@@ -860,6 +882,7 @@ schema:
           dataType: Date
 
         - name: Description
+          index: false
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -880,14 +903,19 @@ schema:
         #        - name: Form_Submission_Id
         #        - name: Form_Submission_Owner_Id
         - name: Benefits
+          index: false
         - name: Benefits_Relevance
         - name: Strategic_Impact # LIA 5 and 6 + LIA  32
+          index: false
         - name: Data_Processing_Justification
+          index: false
         - name: Is_Essential
 #        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
         - name: Is_Required
         - name: Breach_Of_Subject_Rights_Justification
+          index: false
         - name: Lawful_Basis_Justification # TODO: check SV's LIA
+          index: false
 
     - name: "Object_Risk_Data_Source"
       partition: false
@@ -897,6 +925,7 @@ schema:
         - name: Approved_By_Security
         - name: Risk_Id
         - name: Description
+          index: false
         - name: Probability
         - name: Impact
         - name: Residual_Probability
@@ -924,6 +953,7 @@ schema:
       props:
         - name: Mitigation_Id
         - name: Description
+          index: false
         - name: Probability_Reduction
         - name: Impact_Reduction
         - name: Form_Id
@@ -953,6 +983,7 @@ schema:
         - name: Date
           dataType: Date
         - name: Description
+          index: false
         - name: URL
 
     - name: "Object_Legal_Actions"
@@ -963,6 +994,7 @@ schema:
         - name: Date
           dataType: Date
         - name: Description
+          index: false
         - name: Details
 
     - name: "Object_Privacy_Notice"
@@ -975,6 +1007,7 @@ schema:
           dataType: Date
 
         - name: Description
+          index: false
         - name: Effect_On_Individuals
         - name: Expiry_Date
           dataType: Date
@@ -983,7 +1016,9 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
         - name: How_Is_It_Collected
+          index: false
         - name: How_Will_It_Be_Used
+          index: false
         - name: Id
         - name: Info_Collected
         - name: Likely_To_Complain
@@ -993,10 +1028,14 @@ schema:
           dataType: Date
         - name: Number_Of_Records_Monthly
         - name: Text
+          index: false
         - name: URL
         - name: Who_Is_Collecting
+          index: false
         - name: Who_Will_It_Be_Shared
+          index: false
         - name: Why_Is_It_Collected
+          index: false
 
     - name: "Object_Salary"
       partition: false
@@ -1018,6 +1057,7 @@ schema:
         - name: Sexual_Orientation
         - name: Union_Membership
         - name: Description
+          index: false
 
     - name: "Object_Subsystem"
       partition: false

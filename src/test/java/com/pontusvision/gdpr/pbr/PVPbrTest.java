@@ -165,42 +165,55 @@ public class PVPbrTest extends AppTest {
         ".in('Has_Ingestion_Event').as('data_source').values('Object_Data_Source_Name').next().toString()").get().toString();
       assertEquals("SHAREPOINT/PBR/ROPA", dsName, "Data source name");
 
-      for (int i = 0; i < 5; i++) {
+//    new AGgrid test style ------------------------------------------------------------------------------------------------------------
+      RecordReply reply = gridWrapper("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"9542\"\n" +
+          "  }\n" +
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_Business_Area_Responsible", "Object_Data_Procedures_Macro_Process_Name",
+          "Object_Data_Procedures_Type_Of_Natural_Person", "Object_Data_Procedures_Why_Is_It_Collected","Object_Data_Procedures_Country_Where_Stored"});
+      String replyStr = reply.getRecords()[0];
 
-        resSet = App.graph.executeSql(
-          "SELECT Object_Data_Procedures_Business_Area_Responsible as BAR, Object_Data_Procedures_Macro_Process_Name as MPN, " +
-            "Object_Data_Procedures_Type_Of_Natural_Person as TNP, Object_Data_Procedures_Why_Is_It_Collected as WIC, " +
-            "Object_Data_Procedures_Country_Where_Stored as CWS " +
-            "FROM Object_Data_Procedures WHERE Object_Data_Procedures_Form_Id = 9542", Collections.EMPTY_MAP);
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Business_Area_Responsible\": \"Tecnologia da Informação\""), "Business Area Responsible");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Macro_Process_Name\": \"Suporte Técnico\""), "Macro Process Name");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Type_Of_Natural_Person\": \"[Funcionário, Terceiro, Cliente]\""), "Types of Natural People");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Why_Is_It_Collected\": \"Atendimento de demandas de suporte técnico\""), "Why is it collected");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Country_Where_Stored\": \"[Líbano, Finlândia, Japão, Estados Unidos, Singapura]\""), "Countries where stored");
 
-        switch (i) {
-          case 0:
-            String BAR = resSet.iterator().next().getRawResult().getProperty("BAR");
-            resSet.close();
-            assertEquals("Tecnologia da Informação", BAR, "Business Area Responsible");
-            break;
-          case 1:
-            String MPN = resSet.iterator().next().getRawResult().getProperty("MPN");
-            resSet.close();
-            assertEquals("Suporte Técnico", MPN, "Macro Process Name");
-            break;
-          case 2:
-            String TNP = resSet.iterator().next().getRawResult().getProperty("TNP");
-            resSet.close();
-            assertEquals("[Funcionário, Terceiro, Cliente]", TNP, "Types of Natural People");
-            break;
-          case 3:
-            String WIC = resSet.iterator().next().getRawResult().getProperty("WIC");
-            resSet.close();
-            assertEquals("Atendimento de demandas de suporte técnico", WIC, "Why is it collected");
-            break;
-          case 4:
-            String CWS = resSet.iterator().next().getRawResult().getProperty("CWS");
-            resSet.close();
-            assertEquals("[Líbano, Finlândia, Japão, Estados Unidos, Singapura]", CWS, "Countries where stored");
-            break;
-        }
-      }
+      reply = gridWrapper("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"RH 43 - PBR\"\n" +
+          "  }\n" +
+          "]", "Object_Data_Policy",
+        new String[]{"Object_Data_Policy_Retention_Period", "Object_Data_Policy_Retention_Justification"});
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Data_Policy_Retention_Period\": \"10 anos\""), "This RoPA has a 10 year retention policy");
+      assertTrue(replyStr.contains("\"Object_Data_Policy_Retention_Justification\": \"Ajuste de acordo com a LGPD\""), "Policy justification");
+
+      reply = gridWrapper("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"5493\"\n" +
+          "  }\n" +
+          "]", "Object_Privacy_Notice",
+        new String[]{"Object_Privacy_Notice_Agreements", "Object_Privacy_Notice_Description", "Object_Privacy_Notice_How_Is_It_Collected"});
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Agreements\": \"[Correção, Exclusão, Anonimização]\""), "This privacy notice has three agreements");
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\": \"[Privacy Notice]\""), "Description");
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_How_Is_It_Collected\": \"[Formulário de RH]\""), "How is it collected");
+
+// -------------------------------------------------------------------------------------------------------------------------------------
 
       String incidentsCount = App.executor.eval("App.g.V().where(" +
         "has('Metadata_Type_Event_Data_Breach', P.eq('Event_Data_Breach'))" +
@@ -208,27 +221,6 @@ public class PVPbrTest extends AppTest {
         ".has('Object_Data_Procedures_ID', TextP.endingWith(' - PBR'))" +
         ").dedup().count().next().toString()").get().toString();
       assertEquals("1", incidentsCount, "Only one of PBR's RoPA was breached");
-
-      for (int i = 0; i < 2; i++) {
-
-        resSet = App.graph.executeSql(
-          "SELECT Object_Data_Policy_Retention_Period as policy_period, Object_Data_Policy_Retention_Justification as policy_justification " +
-            "FROM Object_Data_Policy " +
-            "WHERE in('Has_Data_Policy').Object_Data_Procedures_ID = 'RH 43 - PBR'", Collections.EMPTY_MAP);
-
-        switch (i) {
-          case 0:
-            String policyPeriod = resSet.iterator().next().getRawResult().getProperty("policy_period");
-            resSet.close();
-            assertEquals("10 anos", policyPeriod, "This RoPA has a 10 year retention policy");
-            break;
-          case 1:
-            String policyJustification = resSet.iterator().next().getRawResult().getProperty("policy_justification");
-            resSet.close();
-            assertEquals("Ajuste de acordo com a LGPD", policyJustification, "Policy justification");
-            break;
-        }
-      }
 
       resSet = App.graph.executeSql(
         "SELECT Object_Data_Procedures_Info_Collected as info " +
@@ -253,31 +245,7 @@ public class PVPbrTest extends AppTest {
         ".dedup().count().next().toString()").get().toString();
       assertEquals("17", countPersonalData, "17 types of personal data found within three of PBR's RoPA");
 
-      for (int i = 0; i < 3; i++) {
 
-        resSet = App.graph.executeSql(
-          "SELECT Object_Privacy_Notice_Agreements as agreements, Object_Privacy_Notice_Description as description, Object_Privacy_Notice_How_Is_It_Collected as HIC " +
-            "FROM Object_Privacy_Notice " +
-            "WHERE out('Has_Privacy_Notice').Object_Data_Procedures_Form_Id = '5493'", Collections.EMPTY_MAP);
-//    Important note: all ids from Sharepoint come as type String "" (double quotes) and not as type Integer !!!
-        switch (i) {
-          case 0:
-            String agreements = resSet.iterator().next().getRawResult().getProperty("agreements");
-            resSet.close();
-            assertEquals("[Correção, Exclusão, Anonimização]", agreements, "This privacy notice has three agreements");
-            break;
-          case 1:
-            String description = resSet.iterator().next().getRawResult().getProperty("description");
-            resSet.close();
-            assertEquals("[Privacy Notice]", description, "Description");
-            break;
-          case 2:
-            String HIC = resSet.iterator().next().getRawResult().getProperty("HIC");
-            resSet.close();
-            assertEquals("[Formulário de RH]", HIC, "How is it collected");
-            break;
-        }
-      }
 
     } catch (Exception e) {
       e.printStackTrace();

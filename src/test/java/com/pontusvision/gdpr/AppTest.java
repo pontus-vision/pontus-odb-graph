@@ -118,18 +118,17 @@ public class AppTest {
 
     StringBuilder sb = new StringBuilder();
 
-    for (int i = 0, ilen = lineList.size(); i < ilen; i++) {
+    for (int i = 0, ilen = lineList.size(); i < ilen; i++){
       sb.append(lineList.get(i)).append("\n");
     }
 
     return sb.toString();
   }
 
-  public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName) throws InterruptedException {
-    jsonTestUtil(jsonFile, jsonPath, ruleName, null);
+  public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName ) throws InterruptedException {
+    jsonTestUtil(jsonFile,jsonPath,ruleName,null);
   }
-
-  public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName, String dataSourceName) throws InterruptedException {
+    public void jsonTestUtil(String jsonFile, String jsonPath, String ruleName, String dataSourceName ) throws InterruptedException {
 
     String res;
     try {
