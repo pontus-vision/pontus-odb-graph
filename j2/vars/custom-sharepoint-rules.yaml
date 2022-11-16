@@ -49,7 +49,7 @@ rules:
 
       - label: Object_Module
         props:
-          Name: "${field_Tabela?.trim()?.toUpperCase()}"
+          Name: "${field_Tabela?.trim()?.toLowerCase()}"
 
       - label: Object_Data_Policy
         props:
@@ -193,7 +193,7 @@ rules:
 
       - label: Object_Module
         props:
-          Name: "${Tabela?.trim()?.toUpperCase()}"
+          Name: "${Tabela?.trim()?.toLowerCase()}"
 
       - label: Object_Sensitive_Data
         props:

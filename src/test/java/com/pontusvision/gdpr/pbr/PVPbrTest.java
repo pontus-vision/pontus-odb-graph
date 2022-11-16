@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.net.URISyntaxException;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -299,40 +298,7 @@ public class PVPbrTest extends AppTest {
 
 //    checking if RoPA got the 2 new props Data_Processor and Data_Controller
 //    Trying new AGgrid API function "gridWrapper"
-      RecordReply reply = gridWrapper("{\n" +
-          "  \"searchStr\": \"\",\n" +
-          "  \"searchExact\": true,\n" +
-          "  \"cols\": [\n" +
-          "    {\n" +
-          "      \"field\": \"Object_Data_Procedures_Form_Id\",\n" +
-          "      \"id\": \"Object_Data_Procedures_Form_Id\",\n" +
-          "      \"name\": \"Object_Data_Procedures_Form_Id\",\n" +
-          "      \"sortable\": true,\n" +
-          "      \"headerName\": \"ID\",\n" +
-          "      \"filter\": true\n" +
-          "    },\n" +
-          "    {\n" +
-          "      \"field\": \"Object_Data_Procedures_Data_Processor\",\n" +
-          "      \"id\": \"Object_Data_Procedures_Data_Processor\",\n" +
-          "      \"name\": \"Object_Data_Procedures_Data_Processor\",\n" +
-          "      \"sortable\": true,\n" +
-          "      \"headerName\": \"Descrição\",\n" +
-          "      \"filter\": true\n" +
-          "    },\n" +
-          "    {\n" +
-          "      \"field\": \"Object_Data_Procedures_Data_Controller\",\n" +
-          "      \"id\": \"Object_Data_Procedures_Data_Controller\",\n" +
-          "      \"name\": \"Dados Object_Data_Procedures_Data_Controller\",\n" +
-          "      \"sortable\": true,\n" +
-          "      \"headerName\": \"Dados Coletados\",\n" +
-          "      \"filter\": true\n" +
-          "    }\n" +
-          "  ],\n" +
-          "  \"extraSearch\": {\n" +
-          "    \"label\": \"Object_Data_Procedures\",\n" +
-          "    \"value\": \"Object_Data_Procedures\"\n" +
-          "  }\n" +
-          "}", "[\n" +
+      RecordReply reply = gridWrapper("[\n" +
           "  {\n" +
           "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
           "    \"filterType\": \"text\",\n" +
@@ -347,30 +313,17 @@ public class PVPbrTest extends AppTest {
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Processor\":\"PBR\""), "PBR is the data processor");
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Controller\":\"PBR\""), "PBR is the data controller");
 
-      String pbrRopaRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', eq('FINANCEIRO 01 - PBR'))" +
-        ".id().next().toString()").get().toString();
-
-      reply = gridWrapper("{\n" +
-          "  \"searchStr\": \"\",\n" +
-          "  \"searchExact\": true,\n" +
-          "  \"cols\": [\n" +
-          "    {\n" +
-          "      \"field\": \"Object_Lawful_Basis_Description\",\n" +
-          "      \"id\": \"Object_Lawful_Basis_Description\",\n" +
-          "      \"name\": \"Descrição\",\n" +
-          "      \"sortable\": true,\n" +
-          "      \"headerName\": \"Descrição\",\n" +
-          "      \"filter\": true\n" +
-          "    }\n" +
-          "  ],\n" +
-          "  \"extraSearch\": {\n" +
-          "    \"label\": \"Object_Lawful_Basis\",\n" +
-          "    \"value\": \"Object_Lawful_Basis\"\n" +
+      String pbrRopaRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"FINANCEIRO 01 - PBR\"\n" +
           "  }\n" +
-          "}",
-        null,
-        "Object_Lawful_Basis",
-        new String[]{"Object_Lawful_Basis_Description"}, "hasNeighbourId:" + pbrRopaRid);
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_ID"});
+
+      reply = gridWrapper(null, "Object_Lawful_Basis", new String[]{"Object_Lawful_Basis_Description"}, "hasNeighbourId:" + pbrRopaRid);
       assertEquals(2, reply.getTotalAvailable(),
         "Two types of lawful basis found: CONSENTIMENTO and LEGÍTIMO INTERESSE");
 
@@ -382,7 +335,7 @@ public class PVPbrTest extends AppTest {
   }
 
   @Test
-  public void test00005SharepointLIA() throws InterruptedException, URISyntaxException {
+  public void test00005SharepointLIA() throws InterruptedException {
 
     jsonTestUtil("sharepoint/pbr/fontes-de-dados.json", "$.queryResp[*].fields", "sharepoint_pbr_fontes_de_dados");
     jsonTestUtil("sharepoint/pbr/users.json", "$.queryResp[*]", "sharepoint_pbr_users");
@@ -391,113 +344,40 @@ public class PVPbrTest extends AppTest {
 
     try {
 
-//      Resource res = new Resource();
-//      Gson gson = new Gson();
-//      GremlinRequest gremlinReq = new GremlinRequest();
-//      ContainerRequest fakeContainerReqContext;
-//      fakeContainerReqContext = new ContainerRequest(new URI("http://localhost:18443"),
-//        new URI("http://localhost:18443"), "POST", null, new MapPropertiesDelegate(), null);
-//      fakeContainerReqContext.setProperty("pvDecodedJWT", JWTTokenNeededFilter.createDummyDecodedJWT());
-//      gremlinReq.setGremlin(
-//        "App.g.V().has('Object_Data_Procedures_ID', eq('RH 43 - PBR')).id().next().toString()");
-//      JsonObject obj = JsonParser.parseString(res.gremlinQuery(fakeContainerReqContext, gson.toJson(gremlinReq))).getAsJsonObject();
-//      String stringifiedOutput = gson.toJson(obj);
-//      HttpClient client = HttpClients.createMinimal();
-//
-//      HttpPost request = new HttpPost(URI.create("http://localhost:3001/home/gremlin"));
-//
-//      request.setHeader("Content-Type", "application/json");
-//      request.setHeader("Accept", "application/json");
-//
-//      StringEntity data = new StringEntity(gson.toJson(gremlinReq));
-//
-//      request.setEntity(data);
-//
-//     String pbrRopaRid = IOUtils.toString(client.execute(request).getEntity().getContent());
-
-      String pbrRopaRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', eq('RH 43 - PBR'))" +
-        ".id().next().toString()").get().toString();
-
-      RecordReply reply = gridWrapper("{\n" +
-          "  \"searchStr\": \"\",\n" +
-          "  \"searchExact\": true,\n" +
-          "  \"cols\": [\n" +
-          "    {\n" +
-          "      \"field\": \"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\",\n" +
-          "      \"id\": \"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\",\n" +
-          "      \"name\": \"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\",\n" +
-          "      \"sortable\": true,\n" +
-          "      \"headerName\": \"LIA\",\n" +
-          "      \"filter\": true\n" +
-          "    }\n" +
-          "  ],\n" +
-          "  \"extraSearch\": {\n" +
-          "    \"label\": \"Object_Legitimate_Interests_Assessment\",\n" +
-          "    \"value\": \"Object_Legitimate_Interests_Assessment\"\n" +
+      String pbrGroupEventRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Event_Group_Ingestion_Type\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"sharepoint/pbr/lia\"\n" +
           "  }\n" +
-          "}", null, "Object_Legitimate_Interests_Assessment",
-        new String[]{"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected"}, "hasNeighbourId:" + pbrRopaRid);
+          "]", "Event_Group_Ingestion",
+        new String[]{"Event_Group_Ingestion_Type"});
+
+      RecordReply reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"}, "hasNeighbourId:" + pbrGroupEventRid);
 
       String replyStr = reply.getRecords()[0];
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_How_Data_Is_Collected\":\"Contratos assinados entre a empresa e os titulares\""),
-        "Description on how the data is collected");
-
-      String pbrGroupEventRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', endingWith(' - PBR')).as('ropa-pbr')" +
-        ".out('Has_Legitimate_Interests_Assessment').as('pbr-lia').in('Has_Ingestion_Event').as('pbr-event')" +
-        ".in('Has_Ingestion_Event').as('pbr-group-event').id().next().toString()").get().toString();
-
-      reply = gridWrapper("{\n" +
-        "  \"searchStr\": \"\",\n" +
-        "  \"searchExact\": true,\n" +
-        "  \"cols\": [\n" +
-        "    {\n" +
-        "      \"field\": \"Object_Data_Source_Name\",\n" +
-        "      \"id\": \"Object_Data_Source_Name\",\n" +
-        "      \"name\": \"Object_Data_Source_Name\",\n" +
-        "      \"sortable\": true,\n" +
-        "      \"headerName\": \"Fonte de Dados\",\n" +
-        "      \"filter\": true\n" +
-        "    }\n" +
-        "  ],\n" +
-        "  \"extraSearch\": {\n" +
-        "    \"label\": \"Object_Data_Source\",\n" +
-        "    \"value\": \"Object_Data_Source\"\n" +
-        "  }\n" +
-        "}", null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"}, "hasNeighbourId:" + pbrGroupEventRid);
-
-      replyStr = reply.getRecords()[0];
       assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"SHAREPOINT/PBR/LIA\""),
         "PBR is the data source");
 
-      pbrRopaRid = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', eq('RH 43 - PBR'))" +
-        ".id().next().toString()").get().toString();
-
-      reply = gridWrapper("{\n" +
-          "  \"searchStr\": \"\",\n" +
-          "  \"searchExact\": true,\n" +
-          "  \"cols\": [\n" +
-          "    {\n" +
-          "      \"field\": \"Object_Legitimate_Interests_Assessment_Is_Essential\",\n" +
-          "      \"id\": \"Object_Legitimate_Interests_Assessment_Is_Essential\",\n" +
-          "      \"name\": \"Object_Legitimate_Interests_Assessment_Is_Essential\",\n" +
-          "      \"sortable\": true,\n" +
-          "      \"headerName\": \"Essential\",\n" +
-          "      \"filter\": true\n" +
-          "    },\n" +
-          "    {\n" +
-          "      \"field\": \"Object_Legitimate_Interests_Assessment_Is_Required\",\n" +
-          "      \"id\": \"Object_Legitimate_Interests_Assessment_Is_Required\",\n" +
-          "      \"name\": \"Object_Legitimate_Interests_Assessment_Is_Required\",\n" +
-          "      \"sortable\": true,\n" +
-          "      \"headerName\": \"Required\",\n" +
-          "      \"filter\": true\n" +
-          "    }\n" +
-          "  ],\n" +
-          "  \"extraSearch\": {\n" +
-          "    \"label\": \"Object_Legitimate_Interests_Assessment\",\n" +
-          "    \"value\": \"Object_Legitimate_Interests_Assessment\"\n" +
+      String pbrRopaRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"RH 43 - PBR\"\n" +
           "  }\n" +
-          "}", null, "Object_Legitimate_Interests_Assessment",
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_ID"});
+
+      reply = gridWrapper(null, "Object_Legitimate_Interests_Assessment",
+        new String[]{"Object_Legitimate_Interests_Assessment_Strategic_Impact"}, "hasNeighbourId:" + pbrRopaRid);
+
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Strategic_Impact\":\"Sim, pois é estratégico para a empresa; Consequências legais; \""),
+        "text for strategic impact");
+
+      reply = gridWrapper(null, "Object_Legitimate_Interests_Assessment",
         new String[]{"Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Is_Required"},
         "hasNeighbourId:" + pbrRopaRid);
 

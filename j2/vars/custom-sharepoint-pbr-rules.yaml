@@ -47,7 +47,7 @@ rules:
 
       - label: Object_Module
         props:
-          Name: "${Tabela?.trim()?.toUpperCase()}"
+          Name: "${Tabela?.trim()?.toLowerCase()}"
 
       - label: Object_Sensitive_Data
         props:
@@ -582,59 +582,23 @@ rules:
           Benefits:
             val: "${Sesim_x002c_detalharosbenef_x00e}"
             excludeFromSearch: true
-          Benefits_Score:
+          Benefits_Relevance:
             val: "${Qualarelev_x00e2_nciadosbenef_x0}"
             excludeFromSearch: true
-          Consequences:
-            val: "${Quaisasconsequ_x00ea_nciasdan_x0}"
-            excludeFromSearch: true
-          Customer_Service: # Or Contact
-            val: "${Se_x0020_sim_x002c__x0020_descre2}"
+          Strategic_Impact:
+            val: "${ (Se_x0020_sim_x002c__x0020_descre?Se_x0020_sim_x002c__x0020_descre + '; ':'') + (Quaisasconsequ_x00ea_nciasdan_x0?Quaisasconsequ_x00ea_nciasdan_x0 + '; ':'') + (Sesim_x002c_descrever?:'') }"
             excludeFromSearch: true
           Data_Processing_Justification:
             val: "${Se_x0020_sim_x0020_descrever}"
             excludeFromSearch: true
-          Data_Processing_Protection_Laws:
-            val: "${Se_x0020_sim_x002c__x0020_descre1}"
-            excludeFromSearch: true
-          Has_Minors_Data:
-            val: "${Osdadospessoaisaseremtratadosper}"
-            excludeFromSearch: true
-          Has_Sensitive_Data:
-            val: "${Osdadospessoaisaseremtratadoss_x}"
-            excludeFromSearch: true
-          How_Data_Is_Collected: # Or How_Data_Was_Collected
-            val: "${if(Osdadospessoaisforamcoletadosdir == 'Sim' && Seosdadospessoaisforamcoletadosp == 'Sim'){Sesim_x002c_paraqualfinalidade_x0 + '\\\\n' + Sesim_x002c_qualaprovadessaci_x0}else if(Osdadospessoaisforamcoletadosdir == 'Sim'){Sesim_x002c_paraqualfinalidade_x0}else if(Seosdadospessoaisforamcoletadosp == 'Sim'){Sesim_x002c_qualaprovadessaci_x0}else{''}}"
-            excludeFromSearch: true
-          How_Long_Data_Was_Collected: # Or When_Data_Was_Collected
-            val: "${H_x00e1_quantotempoosdadospessoa}"
-            excludeFromSearch: true
           Is_Essential:
             val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
-            excludeFromSearch: true
-          Info_Shared_With_Third_Parties:
-            val: "${Nocasodecompartilhamentodosdados}"
             excludeFromSearch: true
           Is_Required:
             val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
             excludeFromSearch: true
-          Justification_Of_Subject_Data_Rights_Injury:
+          Breach_Of_Subject_Rights_Justification:
             val: "${Se_x0020_sim_x0020__x002d__x0020}"
-            excludeFromSearch: true
-#          Lawful_Basis_Justification:
-#            val: "${?}" # ?!
-#            excludeFromSearch: true
-          Purpose: # Or Goal
-            val: "${Se_x0020_sim_x002c__x0020_descre}"
-            excludeFromSearch: true
-          Only_Essential_Data: # Or Only_Necessary_Data
-            val: "${Emcasopositivo_x002c_favorinform}"
-            excludeFromSearch: true
-          Relationship_With_Data_Subject:
-            val: "${Sesim_x002c_dequalnatureza_x003f}"
-            excludeFromSearch: true
-          Unethical_Aspects:
-            val: "${Sesim_x002c_descrevadequemaneira}"
             excludeFromSearch: true
 
       - label: Object_Data_Procedures

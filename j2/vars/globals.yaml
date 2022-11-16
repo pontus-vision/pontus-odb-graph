@@ -887,7 +887,7 @@ schema:
 #        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
         - name: Is_Required
         - name: Breach_Of_Subject_Rights_Justification
-        - name: Lawful_Basis_Justification
+        - name: Lawful_Basis_Justification # TODO: check SV's LIA
 
     - name: "Object_Risk_Data_Source"
       partition: false

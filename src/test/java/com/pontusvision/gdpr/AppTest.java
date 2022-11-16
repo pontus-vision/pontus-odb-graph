@@ -163,10 +163,42 @@ public class AppTest {
     }
   }
 
+  // signature with String search defaulted to {"searchStr": ""}; filters = null; customFilter = null; fromVal = 0L; toVal = 1L;
+  public RecordReply gridWrapper (String table, String[] cols) {
+    String search = "{\"searchStr\": \"\"}";
+    return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), null, table, cols, null,  0L, 1L);
+  }
+
+  // signature with String search defaulted to {"searchStr": ""}; customFilter = null; fromVal = 0L; toVal = 1L;
+  public RecordReply gridWrapper (String filters, String table, String[] cols) {
+    String search = "{\"searchStr\": \"\"}";
+    return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, null,  0L, 1L);
+  }
+
+// method / function to retrieve a vertex's @rid as a string
+  public String gridWrapperGetRid (String filters, String table, String[] cols) {
+    String search = "{\"searchStr\": \"\"}";
+    RecordReply reply = this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, null,  0L, 1L);
+    return (String) gson.fromJson(reply.records[0], Map.class).get("id");
+  }
+
+// method / function to retrieve a vertex's @rid as a Map
+  public Map<String, Object> gridWrapperGetMap (String filters, String table, String[] cols) {
+    String search = "{\"searchStr\": \"\"}";
+    RecordReply reply = this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, null,  0L, 1L);
+    return gson.fromJson(reply.records[0], Map.class);
+  }
+
 //  signature with customFiler null, isn't used. fromVal and toVal are used to limit the number of events returned
   public RecordReply gridWrapper (String search,  String filters, String table, String[] cols) {
 //  customFilter can be one of three: "unmatchedEvents" or "hasNeighbourId:<rid>" or "children"
     return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, null,  0L, 1L);
+  }
+
+  // signature with String search default; fromVal = 0L and toVal = 1L;
+  public RecordReply gridWrapper (String filters, String table, String[] cols, String customFilter) {
+    String search = "{\"searchStr\": \"\"}";
+    return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter,  0L, 1L);
   }
 
   // signature with fromVal and toVal constant, returning only one value
