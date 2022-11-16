@@ -178,40 +178,47 @@ public class PVPbrTest extends AppTest {
           "Object_Data_Procedures_Type_Of_Natural_Person", "Object_Data_Procedures_Why_Is_It_Collected","Object_Data_Procedures_Country_Where_Stored"});
       String replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Business_Area_Responsible\": \"Tecnologia da Informação\""), "Business Area Responsible");
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Macro_Process_Name\": \"Suporte Técnico\""), "Macro Process Name");
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Type_Of_Natural_Person\": \"[Funcionário, Terceiro, Cliente]\""), "Types of Natural People");
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Why_Is_It_Collected\": \"Atendimento de demandas de suporte técnico\""), "Why is it collected");
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Country_Where_Stored\": \"[Líbano, Finlândia, Japão, Estados Unidos, Singapura]\""), "Countries where stored");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"Tecnologia da Informação\""), "Business Area Responsible");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Macro_Process_Name\":\"Suporte Técnico\""), "Macro Process Name");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Type_Of_Natural_Person\":\"[Funcionário, Terceiro, Cliente]\""), "Types of Natural People");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Why_Is_It_Collected\":\"Atendimento de demandas de suporte técnico\""), "Why is it collected");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Country_Where_Stored\":\"[Líbano, Finlândia, Japão, Estados Unidos, Singapura]\""), "Countries where stored");
 
-      reply = gridWrapper("[\n" +
+      String pbrRopaRid = gridWrapperGetRid("[\n" +
           "  {\n" +
           "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
           "    \"filterType\": \"text\",\n" +
           "    \"type\": \"equals\",\n" +
           "    \"filter\": \"RH 43 - PBR\"\n" +
           "  }\n" +
-          "]", "Object_Data_Policy",
-        new String[]{"Object_Data_Policy_Retention_Period", "Object_Data_Policy_Retention_Justification"});
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_ID"});
+
+      reply = gridWrapper(null, "Object_Data_Policy", new String[]{"Object_Data_Policy_Retention_Period",
+        "Object_Data_Policy_Retention_Justification"}, "hasNeighbourId:" + pbrRopaRid);
       replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Object_Data_Policy_Retention_Period\": \"10 anos\""), "This RoPA has a 10 year retention policy");
-      assertTrue(replyStr.contains("\"Object_Data_Policy_Retention_Justification\": \"Ajuste de acordo com a LGPD\""), "Policy justification");
+      assertTrue(replyStr.contains("\"Object_Data_Policy_Retention_Period\":\"10 anos\""), "This RoPA has a 10 year retention policy");
+      assertTrue(replyStr.contains("\"Object_Data_Policy_Retention_Justification\":\"Ajuste de acordo com a LGPD\""), "Policy justification");
 
-      reply = gridWrapper("[\n" +
+      pbrRopaRid = gridWrapperGetRid("[\n" +
           "  {\n" +
           "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
           "    \"filterType\": \"text\",\n" +
           "    \"type\": \"equals\",\n" +
           "    \"filter\": \"5493\"\n" +
           "  }\n" +
-          "]", "Object_Privacy_Notice",
-        new String[]{"Object_Privacy_Notice_Agreements", "Object_Privacy_Notice_Description", "Object_Privacy_Notice_How_Is_It_Collected"});
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_ID"});
+
+      reply = gridWrapper(null, "Object_Privacy_Notice",
+        new String[]{"Object_Privacy_Notice_Agreements", "Object_Privacy_Notice_Description", "Object_Privacy_Notice_How_Is_It_Collected"},
+        "hasNeighbourId:" + pbrRopaRid);
       replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Agreements\": \"[Correção, Exclusão, Anonimização]\""), "This privacy notice has three agreements");
-      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\": \"[Privacy Notice]\""), "Description");
-      assertTrue(replyStr.contains("\"Object_Privacy_Notice_How_Is_It_Collected\": \"[Formulário de RH]\""), "How is it collected");
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Agreements\":\"[Correção, Exclusão, Anonimização]\""), "This privacy notice has three agreements");
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\":\"[Privacy Notice]\""), "Description");
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_How_Is_It_Collected\":\"[Formulário de RH]\""), "How is it collected");
 
 // -------------------------------------------------------------------------------------------------------------------------------------
 
