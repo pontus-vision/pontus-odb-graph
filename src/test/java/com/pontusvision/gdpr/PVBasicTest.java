@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.glassfish.jersey.internal.MapPropertiesDelegate;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.junit.jupiter.api.MethodOrderer;
@@ -746,7 +747,6 @@ public class PVBasicTest extends AppTest {
   public void test00015TotvsProtheusRaFuncionario() throws InterruptedException {
 
     try {
-
       jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
 
       String martaEmailsCount =
@@ -765,6 +765,18 @@ public class PVBasicTest extends AppTest {
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('DONA SABRINA')).out('Is_Family')" +
                       ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
       assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta");
+
+//    testing Object_Phone_Number mandatoryInSearch
+      OGremlinResultSet resSet = App.graph.executeSql(
+        "SELECT COUNT(*) as ct " +
+          "FROM Object_Phone_Number " +
+          "WHERE in('Has_Phone').out('Has_Ingestion_Event').Event_Ingestion_Type CONTAINS 'totvs/protheus/sra_funcionario'", Collections.EMPTY_MAP);
+
+      Long countPhoneNumbers = resSet.iterator().next().getRawResult().getProperty("ct");
+      assertEquals(1, countPhoneNumbers,
+        "There should be only 1 phone number ingested @ sra_funcionario even though there are 3 numbers registered in the .json," +
+          "because these numbers are the same, only typed differently => 3025-1495 / +55(45)3025-1495 / 00550154530251495");
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);

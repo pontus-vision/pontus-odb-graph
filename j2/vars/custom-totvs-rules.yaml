@@ -59,16 +59,18 @@ rules:
       - label: Object_Phone_Number
         condition: "${A1_TEL?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
-          Raw: "${A1_TEL}"
+          Raw:
+            val: "${A1_TEL}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Office"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(A1_TEL?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((A1_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((A1_TEL?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       #RG
@@ -363,16 +365,18 @@ rules:
       - label: Object_Phone_Number
         condition: "${RA_TELEFON?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
-          Raw: "${RA_TELEFON}"
+          Raw:  # num1 => "3025-1495" ...................... num2 => "+55 (45) 3025-1495"
+            val: "${RA_TELEFON}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Office"
 #            excludeFromSubsequenceSearch: true
-          Numbers_Only:
-            val: "${(RA_TELEFON?.replaceAll('[^0-9]', '')?:'00000000')}"
+          Numbers_Only: # num1 => "30251495" ...................... num2 => "554530251495"
+            val: "${(RA_TELEFON?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
-          Last_7_Digits:
-            val: "${(((RA_TELEFON?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+          Last_7_Digits: # num1 => "251495" ...................... num2 => "251495" leading zeros are removed !!
+            val: "${(((RA_TELEFON?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Identity_Card
@@ -711,16 +715,18 @@ rules:
         condition: "${A2_TEL?.replaceAll('[^0-9]','')?.length() > 0}"
         name: phone
         props:
-          Raw: "${A2_TEL}"
+          Raw:
+            val: "${A2_TEL}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Telefone 2"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(A2_TEL?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((A2_TEL?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((A2_TEL?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Email_Address

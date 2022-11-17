@@ -82,19 +82,20 @@ rules:
         props:
           Raw:
             val: "${Phone}"
-            mandatoryInSearch: false
+            excludeFromSearch: true
 
           Type:
             val: "Work"
-            excludeFromSubsequenceSearch: true
+#            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
 
           Numbers_Only:
-            val: "${(Phone?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Phone?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
 
           Last_7_Digits:
-            val: "${(((Phone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Phone?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 

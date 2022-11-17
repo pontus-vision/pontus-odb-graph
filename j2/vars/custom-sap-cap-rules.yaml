@@ -41,11 +41,11 @@ rules:
 #            val: "Leads"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -59,11 +59,11 @@ rules:
 #            val: "Leads"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -230,11 +230,11 @@ rules:
             val: "${Telephone_No_}"
             excludeFromSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -245,11 +245,11 @@ rules:
             val: "${Mobile_Number}"
             excludeFromSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -556,17 +556,18 @@ rules:
         condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: mobile
         props:
-          Raw: "${Mobile_Number}"
-          excludeFromSearch: true
+          Raw:
+            val: "${Mobile_Number}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Pxxxxxx Connect Mandatory Fields"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Email_Address
@@ -767,11 +768,11 @@ rules:
 #            val: "SAP/C@P Complaint"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -785,11 +786,11 @@ rules:
 #            val: "CAP/S@P Complaint"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -957,11 +958,11 @@ rules:
 #            val: "SAP/C@P Activity"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -975,11 +976,11 @@ rules:
 #            val: "CAP/S@P Activity"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -1140,11 +1141,11 @@ rules:
 #            val: "SAP/C@P Workshop Campaigns and Recalls"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1158,11 +1159,11 @@ rules:
 #            val: "CAP/S@P Workshop Campaigns and Recalls"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -1322,11 +1323,11 @@ rules:
 #            val: "SAP/C@P Competitor Vehicles"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1340,11 +1341,11 @@ rules:
 #            val: "CAP/S@P Competitor Vehicles"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -1515,11 +1516,11 @@ rules:
 #            val: "SAP/C@P Vehicle"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1533,11 +1534,11 @@ rules:
 #            val: "CAP/S@P Vehicle"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -1719,11 +1720,11 @@ rules:
 #            val: "Data Quality"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1737,11 +1738,11 @@ rules:
 #            val: "Data Quality"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address

@@ -79,18 +79,19 @@
           {
             "name": "Object_Phone_Number_Raw",
             "val": "${Telephone_1}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Telephone_1?.replaceAll('[^0-9]', '')?:'11111111')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }
@@ -104,18 +105,19 @@
           {
             "name": "Object_Phone_Number_Raw",
             "val": "${Telephone_2}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Telephone_2?.replaceAll('[^0-9]', '')?:'11111111')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }

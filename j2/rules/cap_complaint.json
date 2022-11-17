@@ -58,14 +58,14 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'11111111')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }
@@ -84,14 +84,14 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'11111111')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }
