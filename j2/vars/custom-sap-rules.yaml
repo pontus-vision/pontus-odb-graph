@@ -51,18 +51,13 @@ rules:
         props:
           Raw:
             val: "${Telephone_1}"
-            mandatoryInSearch: false
-#          Type:
-#            val: "Cliente"
-#            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
           Numbers_Only:
             val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
-
           Last_7_Digits:
             val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -71,18 +66,13 @@ rules:
         props:
           Raw:
             val: "${Telephone_2}"
-            mandatoryInSearch: false
-#          Type:
-#            val: "Cliente"
-#            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
           Numbers_Only:
             val: "${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
-
           Last_7_Digits:
             val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -234,18 +224,13 @@ rules:
         props:
           Raw:
             val: "${Telephone_1}"
-            mandatoryInSearch: false
-#          Type:
-#            val: "Fornecedor"
-#            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
           Numbers_Only:
             val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
-
           Last_7_Digits:
             val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -254,18 +239,13 @@ rules:
         props:
           Raw:
             val: "${Telephone_2}"
-            mandatoryInSearch: false
-#          Type:
-#            val: "Fornecedor"
-#            excludeFromSubsequenceSearch: true
+            excludeFromSearch: true
           Numbers_Only:
             val: "${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
-
           Last_7_Digits:
             val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
-            mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
       - label: Location_Address

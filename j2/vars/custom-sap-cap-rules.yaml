@@ -556,8 +556,9 @@ rules:
         condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: mobile
         props:
-          Raw: "${Mobile_Number}"
-          excludeFromSearch: true
+          Raw:
+            val: "${Mobile_Number}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Pxxxxxx Connect Mandatory Fields"
 #            excludeFromSubsequenceSearch: true

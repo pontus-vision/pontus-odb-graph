@@ -75,7 +75,7 @@
           },
           {
             "name": "Object_Data_Procedures_Business_Area_Responsible",
-            "val": "${_x00c1_rea} - ${Respons_x00e1_velLookupId}",
+            "val": "${_x00c1_rea}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -108,6 +108,19 @@
             "val": "${PartesInteressadasConsultadas}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${new groovy.json.JsonBuilder()}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
           }
         ]
       },
@@ -256,6 +269,11 @@
         "label": "Has_Legitimate_Interests_Assessment",
         "fromVertexLabel": "Object_Data_Procedures",
         "toVertexLabel": "Object_Legitimate_Interests_Assessment"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexLabel": "Object_Email_Address",
+        "toVertexLabel": "Object_Data_Procedures"
       }
     ]
   }

@@ -421,7 +421,7 @@ rules:
             val: "${Categoria_x0020_dos_x0020_titula}"
             excludeFromSearch: true
           Business_Area_Responsible:
-            val: "${_x00c1_rea} - ${Respons_x00e1_velLookupId}"
+            val: "${_x00c1_rea}"
             excludeFromSearch: true
           Country_Where_Stored:
             val: "${Pa_x00ed_s_x0020_onde_x0020_as_x}"
@@ -438,6 +438,14 @@ rules:
           Interested_Parties_Consulted:
             val: "${PartesInteressadasConsultadas}"
             excludeFromSearch: true
+
+      - label: Object_Email_Address
+        props:
+          Email:
+            val: "${new groovy.json.JsonBuilder()}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
 
       - label: Object_Sensitive_Data
         props:
@@ -527,6 +535,10 @@ rules:
       - label: "Has_Legitimate_Interests_Assessment"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
+      - label: "Is_Responsible"
+        fromVertexLabel: "Object_Email_Address"
+        toVertexLabel: "Object_Data_Procedures"
 
   sharepoint_ropa:
     vertices:

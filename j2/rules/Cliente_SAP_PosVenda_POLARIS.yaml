@@ -52,7 +52,8 @@ updatereq:
       props:
         - name: Object_Phone_Number_Raw
           val: ${Telephone_1}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
           val: ${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
@@ -69,7 +70,8 @@ updatereq:
       props:
         - name: Object_Phone_Number_Raw
           val: ${Telephone_2}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
           val: ${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False

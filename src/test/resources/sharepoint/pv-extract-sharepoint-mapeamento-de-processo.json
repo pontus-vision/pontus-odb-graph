@@ -32,6 +32,13 @@
         "fields": {
           "@odata.etag": "123456234-ac452367-ca5161234-g234778-1237",
           "Title": "1",
+          "Respons_x00e1_vel": [
+            {
+              "LookupId": ,
+              "LookupValue": "",
+              "Email": ""
+            }
+          ],
           "Respons_x00e1_velLookupId": "31",
           "_x00c1_rea": "Distribuidores",
           "Processo": "Gestão de Rede de Distribuidores",

@@ -100,10 +100,7 @@ rules:
         props:
           Raw:
             val: "${Telefone}"
-            mandatoryInSearch: false
-#          Type:
-#            val: "Telefone"
-#            excludeFromSearch: true
+            excludeFromSearch: true
           Numbers_Only:
             val: "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true

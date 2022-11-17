@@ -50,7 +50,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Business_Area_Responsible
-          val: ${_x00c1_rea} - ${Respons_x00e1_velLookupId}
+          val: ${_x00c1_rea}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Country_Where_Stored
@@ -73,6 +73,15 @@ updatereq:
           val: ${PartesInteressadasConsultadas}
           mandatoryInSearch: False
           excludeFromSearch: True
+    
+    - label: Object_Email_Address
+      props:
+        - name: Object_Email_Address_Email
+          val: ${new groovy.json.JsonBuilder()}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
     
     - label: Object_Sensitive_Data
       props:
@@ -167,4 +176,7 @@ updatereq:
   - label: Has_Legitimate_Interests_Assessment
     fromVertexLabel: Object_Data_Procedures
     toVertexLabel: Object_Legitimate_Interests_Assessment
+  - label: Is_Responsible
+    fromVertexLabel: Object_Email_Address
+    toVertexLabel: Object_Data_Procedures
 

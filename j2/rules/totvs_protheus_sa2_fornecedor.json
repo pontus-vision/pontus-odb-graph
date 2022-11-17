@@ -121,7 +121,8 @@
           {
             "name": "Object_Phone_Number_Raw",
             "val": "${A2_TEL}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
