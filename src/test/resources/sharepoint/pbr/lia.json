@@ -1,0 +1,85 @@
+{
+  "queryResp": [
+    {
+      "@odata.etag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "createdDateTime": "2021-07-27T19: 18: 05Z",
+      "eTag": "c34dfs-a2r4dsf-36it65635-1ac-1b986rds67qb,4",
+      "id": "67301",
+      "lastModifiedDateTime": "2021-09-17T18: 33: 03Z",
+      "webUrl": "https: //pxx.sharepoint.com/sites/PlxxxxxxLGPD/Lists/Daxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxdos/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "axxxxxxx@pontusvision.com",
+          "id": "sdae25-086e-6e89-3ia676-8093ce6ae4",
+          "displayName": "Axxxxxx Mxxxxxx"
+        }
+      },
+      "contentType": {
+        "id": "0x01AEC5723F67AEC3416747FGHFGHFA34EC1",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('xxxxxxxxxxxxxxxx.sharepoint.com%2Cfgsdfg787-dfgdf789-jjkh343-scfgc%2Cf456374-3467437-63456563c-3477a-34765')/lists('73be1ac834-8ae75a-31ecc34987c-9ec7aec42d-ae43')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "1243b42e-1243-3acbe3456-abbf-cbertey,4",
+        "Title": "",
+        "ID_x0020_do_x0020_Processo": [
+          {
+            "LookupId": 5493,
+            "LookupValue": "RH 43 - PBR"
+          }
+        ],
+        "Existembenef_x00ed_ciosaseremauf": "Sim",
+        "Sesim_x002c_detalharosbenef_x00e": "Muitos Beneficios",
+        "Qualarelev_x00e2_nciadosbenef_x0": "Alto",
+        "Otratamentodedadospessoais_x00e9": "Sim",
+        "Se_x0020_sim_x002c__x0020_descre": "Sim, pois é estratégico para a empresa",
+        "Quaisasconsequ_x00ea_nciasdan_x0": "Consequências legais",
+        "Existealgumaspectodotratamentodo": "Não",
+        "Sesim_x002c_descrevadequemaneira": "",
+        "Otratamentodosdadospessoais_x00e": "Sim",
+        "Se_x0020_sim_x0020_descrever": "descrição tratamento",
+        "Afinalidadepoderiaseralcan_x00e70": "Não",
+        "Afinalidadepoderiaseralcan_x00e71": "Não",
+        "Se_x0020_sim_x0020__x002d__x0020": "",
+        "Nocasodecompartilhamentodosdados": "Porque é bom compatilhar",
+        "LIA_x0020_15_x0020__x002d__x0020": "Sim",
+        "Osdadospessoaisaseremtratadoss_x": "Não",
+        "Osdadospessoaisaseremtratadosper": "Não",
+        "Existeumarela_x00e7__x00e3_oform": "Não",
+        "Sesim_x002c_dequalnatureza_x003f": "",
+        "J_x00e1_foramtratadosdadospessoa": "Não",
+        "Sesim_x002c_paraqualfinalidade_x": "",
+        "Osdadospessoaisforamcoletadosdir": "Não",
+        "Sesim_x002c_paraqualfinalidade_x0": "",
+        "Seosdadospessoaisforamcoletadosp": "Sim",
+        "Sesim_x002c_qualaprovadessaci_x0": "Contratos assinados entre a empresa e os titulares",
+        "H_x00e1_quantotempoosdadospessoa": "10 anos",
+        "Desdeacoletadosdadospessoais_x00": "Não",
+        "Ast_x00e9_cnicasqueser_x00e3_out": "Sim",
+        "Se_x0020_sim_x002c__x0020_descre1": "GDPR da União Europeia",
+        "Osdadospessoaisser_x00e3_otratad": "Não",
+        "Sesim_x002c_descrever": "",
+        "Existealgumregistroaptoacomprova": "Não",
+        "Descrever_x002c_sesim": "",
+        "Algumacomunica_x00e7__x00e3_osob": "Sim",
+        "Se_x0020_sim_x002c__x0020_descre2": "E-mail, Telefones e Whatsapp",
+        "S_x00e3_otratadosdadospessoaisem": "Não",
+        "Se_x0020_sim_x002c__x0020_descre3": "",
+        "lia_result": 23,
+        "LinkTitleNoMenu": "pbr",
+        "LinkTitle": "pbr",
+        "Modified": "2022-09-20T11:00:38Z",
+        "id": "67301",
+        "ContentType": "Item",
+        "Created": "2022-09-20T10:18:05Z"
+      }
+    }
+  ]
+}

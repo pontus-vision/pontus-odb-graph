@@ -87,6 +87,7 @@ schema:
         - name: Authority_Notified
         - name: Authority_Notified_Others
         - name: Description
+          index: false
         - name: Id
         - name: Impact
         - name: Metadata_Create_Date
@@ -283,6 +284,7 @@ schema:
         - name: Form_Submission_Owner_Id
         - name: Natural_Person_Type
         - name: Description
+          index: false
 
     - name: "Event_Training"
       partition: false
@@ -303,6 +305,7 @@ schema:
           dataType: Date
 
         - name: Description
+          index: false
         - name: Status
         - name: Type
         - name: Value
@@ -314,6 +317,7 @@ schema:
         - name: Date
           dataType: Date
         - name: Description
+          index: false
         - name: Expiry
         - name: Form_Id
         - name: Form_Owner_Id
@@ -455,6 +459,8 @@ schema:
           dataType: Date
 
         - name: Description
+          index: false
+        - name: Short_Description
         - name: Expiry
         - name: Form_Id
         - name: Form_Owner_Id
@@ -472,6 +478,7 @@ schema:
         - name: Date
           dataType: Date
         - name: Description
+          index: false
         - name: Expiry
         - name: Form_Id
         - name: Form_Owner_Id
@@ -498,6 +505,7 @@ schema:
         - name: Create_Date
           dataType: Date
         - name: Description
+          index: false
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -505,6 +513,7 @@ schema:
         - name: Name
         - name: Retention_Period
         - name: Retention_Justification
+          index: false
         - name: Text
         - name: Type
         - name: Update_Date
@@ -525,6 +534,7 @@ schema:
 #        - name: Business_Sub_Area_Responsible
         - name: Type
         - name: Description
+          index: false
         - name: Macro_Process_Name
         - name: Country_Where_Stored
         - name: Data_Origin
@@ -537,9 +547,13 @@ schema:
         - name: Delete_URL
         - name: Info_Collected
         - name: Info_Share_Justification
+          index: false
         - name: Info_Share_Justification_International
+          index: false
         - name: Info_Shared_With_Third_Parties
         - name: Info_Shared_With_Third_Parties_International
+        - name: Lawful_Basis_Justification
+          index: false
         - name: Name
         - name: Number_Of_Records_Monthly
         - name: Number_Of_Natural_Person
@@ -550,6 +564,7 @@ schema:
         - name: Participants_National
         - name: Participants_International
         - name: Secondary_Purpose_Of_Collection
+          index: false
         - name: Type_Of_Natural_Person
         - name: Type_Of_Natural_Person_National
         - name: Type_Of_Natural_Person_International
@@ -558,6 +573,7 @@ schema:
         - name: Update_Mechanism
         - name: Update_URL
         - name: Why_Is_It_Collected
+          index: false
         - name: Is_SubProcess
           dataType: Boolean
         - name: Interested_Parties_Consulted
@@ -720,6 +736,7 @@ schema:
         - name: Metadata_GUID
         - name: Metadata_Owner
         - name: Text
+          index: false
         - name: URL
         - name: Vertex_Label
 
@@ -790,6 +807,7 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
         - name: Description
+          index: false
         - name: Credential_Principal
         - name: Credential_Secret
         - name: Credential_ApiKey
@@ -858,6 +876,7 @@ schema:
           dataType: Date
 
         - name: Description
+          index: false
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -873,9 +892,24 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Form_Id
+        #        - name: Form_Owner_Id
+        #        - name: Form_Submission_Id
+        #        - name: Form_Submission_Owner_Id
+        - name: Benefits
+          index: false
+        - name: Benefits_Relevance
+        - name: Strategic_Impact # LIA 5 and 6 + LIA  32
+          index: false
+        - name: Data_Processing_Justification
+          index: false
         - name: Is_Essential
-        - name: Lawful_Basis_Justification
+#        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
         - name: Is_Required
+        - name: Breach_Of_Subject_Rights_Justification
+          index: false
+        - name: Lawful_Basis_Justification # TODO: check SV's LIA
+          index: false
 
     - name: "Object_Risk_Data_Source"
       partition: false
@@ -963,6 +997,7 @@ schema:
           dataType: Date
 
         - name: Description
+          index: false # maintained because the sample data seems to have lots of words !
         - name: Effect_On_Individuals
         - name: Expiry_Date
           dataType: Date
