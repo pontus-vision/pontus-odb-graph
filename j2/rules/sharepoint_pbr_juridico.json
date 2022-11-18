@@ -1,0 +1,139 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "SHAREPOINT/PBR/JURÍDICO",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Procedures",
+        "props": [
+          {
+            "name": "Object_Data_Procedures_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(ID_x0020_do_x0020_RoPA)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Processor",
+            "val": "${JUR_x0020_6_x0020__x002d__x0020_.contains('Operador')?'PBR':''}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Controller",
+            "val": "${JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador Conjunto')||JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador')?'PBR':''}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Lawful_Basis_Justification",
+            "val": "${JUR_x0020_11_x0020__x002d__x0020}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Lawful_Basis",
+        "props": [
+          {
+            "name": "Object_Lawful_Basis_Description",
+            "val": "${new groovy.json.JsonBuilder(JUR_x0020_8_x0020__x002d__x0020_)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "sharepoint/pbr/jurídico",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "sharepoint/pbr/jurídico",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Has_Lawful_Basis_On",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Lawful_Basis"
+      }
+    ]
+  }
+}

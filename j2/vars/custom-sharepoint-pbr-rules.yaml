@@ -1,5 +1,5 @@
 rules:
-
+# TODO: add more ? operator to handle empty/null values
   sharepoint_pbr_fontes_de_dados:
     vertices:
       - label: Object_Data_Source
@@ -490,3 +490,166 @@ rules:
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Group_Ingestion"
         toVertexName: "Person_Natural"
+
+  sharepoint_pbr_juridico:
+    vertices:
+
+#     TODO: Check data formatting toUpperCase and others!
+
+      - label: Object_Data_Source
+        props:
+          Name: "SHAREPOINT/PBR/JURÍDICO"
+
+#     Connecting to my RoPA Vertex and adding 2 new props Data_Processor and Data_Controller
+      - label: Object_Data_Procedures
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(ID_x0020_do_x0020_RoPA)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Data_Processor:
+            val:  "${JUR_x0020_6_x0020__x002d__x0020_.contains('Operador')?'PBR':''}"
+            excludeFromSearch: true
+          Data_Controller:
+            val: "${JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador Conjunto')||JUR_x0020_6_x0020__x002d__x0020_.contains('Controlador')?'PBR':''}"
+            excludeFromSearch: true
+          Lawful_Basis_Justification:
+            val: "${JUR_x0020_11_x0020__x002d__x0020}"
+            excludeFromSearch: true
+
+      - label: Object_Lawful_Basis
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(JUR_x0020_8_x0020__x002d__x0020_)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "sharepoint/pbr/jurídico"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "sharepoint/pbr/jurídico"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Has_Lawful_Basis_On"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Lawful_Basis"
+
+  sharepoint_pbr_lia:
+    vertices:
+
+      - label: Object_Data_Source
+        props:
+          Name: "SHAREPOINT/PBR/LIA"
+
+      - label: Object_Legitimate_Interests_Assessment
+        props:
+          Form_Id: "${id}"
+          Benefits:
+            val: "${Sesim_x002c_detalharosbenef_x00e}"
+            excludeFromSearch: true
+          Benefits_Relevance:
+            val: "${Qualarelev_x00e2_nciadosbenef_x0}"
+            excludeFromSearch: true
+          Strategic_Impact:
+            val: "${ (Se_x0020_sim_x002c__x0020_descre?Se_x0020_sim_x002c__x0020_descre + '; ':'') + (Quaisasconsequ_x00ea_nciasdan_x0?Quaisasconsequ_x00ea_nciasdan_x0 + '; ':'') + (Sesim_x002c_descrever?:'') }"
+            excludeFromSearch: true
+          Data_Processing_Justification:
+            val: "${Se_x0020_sim_x0020_descrever}"
+            excludeFromSearch: true
+          Is_Essential:
+            val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
+            excludeFromSearch: true
+          Is_Required:
+            val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
+            excludeFromSearch: true
+          Breach_Of_Subject_Rights_Justification:
+            val: "${Se_x0020_sim_x0020__x002d__x0020}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Procedures
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(ID_x0020_do_x0020_Processo)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "sharepoint/pbr/lia"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "sharepoint/pbr/lia"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
+      - label: "Has_Legitimate_Interests_Assessment"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
