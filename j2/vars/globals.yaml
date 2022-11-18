@@ -594,7 +594,6 @@ schema:
         - name: Credential_Principal
         - name: Credential_Secret
         - name: Description
-          index: false
         - name: Domain
         - name: Domain_Frequency
         - name: Engine
