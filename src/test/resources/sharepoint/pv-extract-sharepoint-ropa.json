@@ -49,7 +49,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Leandro Lima",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Distributors",
         "field_Process": "Distributor Network Management -",
         "field_Personal_x0020_data_x0020_used": [
@@ -126,7 +132,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Juno da Silva",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Business",
         "field_Process": "Management tooling (PowerBI)",
         "field_Personal_x0020_data_x0020_used": [
@@ -202,7 +214,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Finance-admin",
         "field_Process": "Strategic Contracts",
         "field_Personal_x0020_data_x0020_used": [
@@ -277,7 +295,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Finance-admin",
         "field_Process": "Confidentiality Terms",
         "field_Personal_x0020_data_x0020_used": [
@@ -352,7 +376,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Employee medical record",
         "field_Personal_x0020_data_x0020_used": [
@@ -433,7 +463,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Paiva",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Supply Chain",
         "field_Process": "Service Providers and Suppliers",
         "field_Personal_x0020_data_x0020_used": [
@@ -513,7 +549,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Paiva",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Accounting",
         "field_Process": "Management of the Employee Admission process for the Accounting area",
         "field_Personal_x0020_data_x0020_used": [
@@ -595,7 +637,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Paiva",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Accounting",
         "field_Process": "Management of the Dismissal process of employees in the Accounting area",
         "field_Personal_x0020_data_x0020_used": [
@@ -670,7 +718,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Paiva",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Accounting",
         "field_Process": "Authority inspections",
         "field_Personal_x0020_data_x0020_used": [
@@ -744,7 +798,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Omar Pereira",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Sales",
         "field_Process": "Sales - Indirect Channel",
         "field_Personal_x0020_data_x0020_used": [
@@ -820,7 +880,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "John Holmes",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Sales",
         "field_Process": "Sales - Direct Channel (Specials)",
         "field_Personal_x0020_data_x0020_used": [
@@ -896,7 +962,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "John Holmes",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Sales",
         "field_Process": "Sales - Retail Segmentation",
         "field_Personal_x0020_data_x0020_used": [
@@ -980,7 +1052,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "John Holmes",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Sales",
         "field_Process": "Resale - Inputs and Parts",
         "field_Personal_x0020_data_x0020_used": [
@@ -1060,7 +1138,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Hector Campos",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Tech Support",
         "field_Process": "Technical Assistance to Customers",
         "field_Personal_x0020_data_x0020_used": [
@@ -1134,7 +1218,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Technical Training Controls",
         "field_Personal_x0020_data_x0020_used": [
@@ -1208,7 +1298,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Formalization of Distribution Agreements",
         "field_Personal_x0020_data_x0020_used": [
@@ -1289,7 +1385,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Sending marketing and sales material",
         "field_Personal_x0020_data_x0020_used": [
@@ -1365,7 +1467,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Paiva",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Supply Chain",
         "field_Process": "Communication via WhatsApp with distributors and sales representatives",
         "field_Personal_x0020_data_x0020_used": [
@@ -1438,7 +1546,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Mailing List",
         "field_Personal_x0020_data_x0020_used": [
@@ -1514,7 +1628,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Facilities",
         "field_Process": "reception sign-in sheets",
         "field_Personal_x0020_data_x0020_used": [
@@ -1588,7 +1708,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Logistics",
         "field_Process": "Drivers Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -1662,7 +1788,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Facilities",
         "field_Process": "Construction Contracts and Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -1735,7 +1867,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Facilities",
         "field_Process": "Management of external builders",
         "field_Personal_x0020_data_x0020_used": [
@@ -1811,7 +1949,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Paycheck settlement",
         "field_Personal_x0020_data_x0020_used": [
@@ -1889,7 +2033,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 78374,
+            "LookupValue": "Samira Parvarti",
+            "Email": "samira.parvarti@yahoo.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Sending payroll to the paying bank (members)",
         "field_Personal_x0020_data_x0020_used": [
@@ -1967,7 +2117,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Payment to suppliers",
         "field_Personal_x0020_data_x0020_used": [
@@ -2047,7 +2203,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Credit analysis",
         "field_Personal_x0020_data_x0020_used": [
@@ -2119,7 +2281,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Registration of rural producers / farmers",
         "field_Personal_x0020_data_x0020_used": [
@@ -2198,7 +2366,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Legal proceedings",
         "field_Personal_x0020_data_x0020_used": [
@@ -2279,7 +2453,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Registration of Legal Clients",
         "field_Personal_x0020_data_x0020_used": [
@@ -2354,7 +2534,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Submission of Tax Obligations to Authorities",
         "field_Personal_x0020_data_x0020_used": [
@@ -2431,7 +2617,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Issuance of invoices (Natural Person)",
         "field_Personal_x0020_data_x0020_used": [
@@ -2511,7 +2703,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Issuance of invoices (ONational Identityanisations)",
         "field_Personal_x0020_data_x0020_used": [
@@ -2587,7 +2785,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Import/Export",
         "field_Process": "Foreign Supplier Registry",
         "field_Personal_x0020_data_x0020_used": [
@@ -2666,7 +2870,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Import/Export",
         "field_Process": "Custom and Excise Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -2742,7 +2952,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Preparation of Corporate Documents",
         "field_Personal_x0020_data_x0020_used": [
@@ -2819,7 +3035,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Preparation of Powers of Attorney",
         "field_Personal_x0020_data_x0020_used": [
@@ -2900,7 +3122,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Judicial Processes",
         "field_Personal_x0020_data_x0020_used": [
@@ -2976,7 +3204,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Support in negotiations",
         "field_Personal_x0020_data_x0020_used": [
@@ -3054,7 +3288,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Formalization of Distribution / Representation Agreements",
         "field_Personal_x0020_data_x0020_used": [
@@ -3130,7 +3370,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Formalization of Service Provision Agreements and Other Suppliers",
         "field_Personal_x0020_data_x0020_used": [
@@ -3206,7 +3452,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Notifications and Billings",
         "field_Personal_x0020_data_x0020_used": [
@@ -3282,7 +3534,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Authority inspections",
         "field_Personal_x0020_data_x0020_used": [
@@ -3356,7 +3614,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Interaction with authorities",
         "field_Personal_x0020_data_x0020_used": [
@@ -3430,7 +3694,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Lead Management - Website",
         "field_Personal_x0020_data_x0020_used": [
@@ -3505,7 +3775,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Follower Management | LinkedIn",
         "field_Personal_x0020_data_x0020_used": [
@@ -3584,7 +3860,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Contacts with rural producers",
         "field_Personal_x0020_data_x0020_used": [
@@ -3659,7 +3941,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Luis Martins",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Sales",
         "field_Process": "retail sale",
         "field_Personal_x0020_data_x0020_used": [
@@ -3736,7 +4024,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Omar Pereira",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Sales",
         "field_Process": "Sales to individuals",
         "field_Personal_x0020_data_x0020_used": [
@@ -3819,7 +4113,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Retail Action | Instagram",
         "field_Personal_x0020_data_x0020_used": [
@@ -3893,7 +4193,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Paula Avorado",
+        "field_Responsible": [
+          {
+            "LookupId": 89463,
+            "LookupValue": "Bill Gates",
+            "Email": "bill@outlook.com"
+          }
+        ],
         "field_Area": "Sales",
         "field_Process": "Billing Request and Sales Communication (Specials)",
         "field_Personal_x0020_data_x0020_used": [
@@ -3970,7 +4276,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Finance",
         "field_Process": "Credit withdrawal (PF)",
         "field_Personal_x0020_data_x0020_used": [
@@ -4051,7 +4363,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Management of Commercial Representatives and Distributors Contracts",
         "field_Personal_x0020_data_x0020_used": [
@@ -4132,7 +4450,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Roberta  Fonseca",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing-Sales",
         "field_Process": "Customer Information Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -4206,7 +4530,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Alex San Bernard",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Legal Team",
         "field_Process": "Handling of corporate and personal documents of the partners' legal representatives (commercial representatives and distributors)",
         "field_Personal_x0020_data_x0020_used": [
@@ -4283,7 +4613,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing-Sales",
         "field_Process": "Communication via WhatsApp with customers, distributors and rural producers",
         "field_Personal_x0020_data_x0020_used": [
@@ -4364,7 +4700,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Conducting internal communication for employees",
         "field_Personal_x0020_data_x0020_used": [
@@ -4438,7 +4780,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "badge management",
         "field_Personal_x0020_data_x0020_used": [
@@ -4513,7 +4861,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Information management at events and fairs",
         "field_Personal_x0020_data_x0020_used": [
@@ -4589,7 +4943,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Creation of badges and credentials at events",
         "field_Personal_x0020_data_x0020_used": [
@@ -4670,7 +5030,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Email Marketing Management - Customers",
         "field_Personal_x0020_data_x0020_used": [
@@ -4753,7 +5119,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Content management on social media",
         "field_Personal_x0020_data_x0020_used": [
@@ -4833,7 +5205,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Press office",
         "field_Personal_x0020_data_x0020_used": [
@@ -4915,7 +5293,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Relationship with Employer Unions and Associations",
         "field_Personal_x0020_data_x0020_used": [
@@ -4989,7 +5373,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "Showroom visitation",
         "field_Personal_x0020_data_x0020_used": [
@@ -5068,7 +5458,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Cabral",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "ConcieNational Identitye management (showroom visits)",
         "field_Personal_x0020_data_x0020_used": [
@@ -5143,7 +5539,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Marco Polo",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Quality Assurance",
         "field_Process": "Interaction with customers",
         "field_Personal_x0020_data_x0020_used": [
@@ -5217,7 +5619,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Marco Polo",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Quality Assurance",
         "field_Process": "Customer satisfaction survey",
         "field_Personal_x0020_data_x0020_used": [
@@ -5291,7 +5699,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Marco Polo",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Quality Assurance",
         "field_Process": "Production Equipment Calibration",
         "field_Personal_x0020_data_x0020_used": [
@@ -5365,7 +5779,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Marco Polo",
+        "field_Responsible": [
+          {
+            "LookupId": 93481,
+            "LookupValue": "Steve Jobs",
+            "Email": "jobs@icloud.com"
+          }
+        ],
         "field_Area": "Quality Assurance",
         "field_Process": "Approval of Suppliers",
         "field_Personal_x0020_data_x0020_used": [
@@ -5445,7 +5865,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Marco Polo",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "Quality Assurance",
         "field_Process": "New hires",
         "field_Personal_x0020_data_x0020_used": [
@@ -5518,7 +5944,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "Facilities",
         "field_Process": "Use of vehicle fleet and Fuel Card",
         "field_Personal_x0020_data_x0020_used": [
@@ -5591,7 +6023,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "Facilities",
         "field_Process": "Disclaimer (Cell Phone Usage)",
         "field_Personal_x0020_data_x0020_used": [
@@ -5669,7 +6107,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "Facilities",
         "field_Process": "Vehicle fine management",
         "field_Personal_x0020_data_x0020_used": [
@@ -5743,7 +6187,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "Quality Assurance",
         "field_Process": "Relationship with city halls (permits)",
         "field_Personal_x0020_data_x0020_used": [
@@ -5816,7 +6266,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "Quality Assurance",
         "field_Process": "Interaction with authorities",
         "field_Personal_x0020_data_x0020_used": [
@@ -5890,7 +6346,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Marco Polo",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "Quality Assurance",
         "field_Process": "Customer Complaint Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -5965,7 +6427,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Admission",
         "field_Personal_x0020_data_x0020_used": [
@@ -6046,7 +6514,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Payroll Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -6119,7 +6593,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Labor obligations",
         "field_Personal_x0020_data_x0020_used": [
@@ -6198,7 +6678,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Sensitive Data Management (Race | E-Social and Union Membership)",
         "field_Personal_x0020_data_x0020_used": [
@@ -6270,7 +6756,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Relationship with Unions",
         "field_Personal_x0020_data_x0020_used": [
@@ -6344,7 +6836,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Recruitment & Selection",
         "field_Personal_x0020_data_x0020_used": [
@@ -6425,7 +6923,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Carrying out Specific Exams",
         "field_Personal_x0020_data_x0020_used": [
@@ -6500,7 +7004,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Medical / Psychological Data Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -6575,7 +7085,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Information on medical and dental insurance",
         "field_Personal_x0020_data_x0020_used": [
@@ -6650,7 +7166,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Scholarship",
         "field_Personal_x0020_data_x0020_used": [
@@ -6729,7 +7251,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Curriculum Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -6808,7 +7336,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Benefits Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -6883,7 +7417,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Work Tools Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -6954,7 +7494,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Resignation",
         "field_Personal_x0020_data_x0020_used": [
@@ -7029,7 +7575,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Authority inspections",
         "field_Personal_x0020_data_x0020_used": [
@@ -7103,7 +7655,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Check Point",
         "field_Personal_x0020_data_x0020_used": [
@@ -7182,7 +7740,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "Facilities",
         "field_Process": "Access Management (Reception)",
         "field_Personal_x0020_data_x0020_used": [
@@ -7254,7 +7818,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Leave Management - INSS",
         "field_Personal_x0020_data_x0020_used": [
@@ -7329,7 +7899,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Status moves and changes",
         "field_Personal_x0020_data_x0020_used": [
@@ -7405,7 +7981,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Sending Data to Legal Team | Labor Processes",
         "field_Personal_x0020_data_x0020_used": [
@@ -7486,7 +8068,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 65392,
+            "LookupValue": "Santa Claus",
+            "Email": "papa.noel@krampous.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Trainings",
         "field_Personal_x0020_data_x0020_used": [
@@ -7560,7 +8148,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Performance evaluations",
         "field_Personal_x0020_data_x0020_used": [
@@ -7634,7 +8228,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Training & Work Safety",
         "field_Personal_x0020_data_x0020_used": [
@@ -7708,7 +8308,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Occupational Safety (PCMSO)",
         "field_Personal_x0020_data_x0020_used": [
@@ -7782,7 +8388,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Access to the HR Portal",
         "field_Personal_x0020_data_x0020_used": [
@@ -7853,7 +8465,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Insurance Contracting (Guarantee and Life / Payroll)",
         "field_Personal_x0020_data_x0020_used": [
@@ -7937,7 +8555,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Mark Chapman",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "IT",
         "field_Process": "Creation of Access Credentials",
         "field_Personal_x0020_data_x0020_used": [
@@ -8012,7 +8636,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Mark Chapman",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "IT",
         "field_Process": "Disclaimer (Use of Equipment)",
         "field_Personal_x0020_data_x0020_used": [
@@ -8083,7 +8713,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Mark Chapman",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "IT",
         "field_Process": "Opening calls",
         "field_Personal_x0020_data_x0020_used": [
@@ -8154,7 +8790,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Facilities",
         "field_Process": "Input and Output Control",
         "field_Personal_x0020_data_x0020_used": [
@@ -8234,7 +8876,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Mark Chapman",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "IT",
         "field_Process": "Access to Systems",
         "field_Personal_x0020_data_x0020_used": [
@@ -8311,7 +8959,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Fiscal",
         "field_Process": "Issuance of Invoices",
         "field_Personal_x0020_data_x0020_used": [
@@ -8386,7 +9040,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Jessica Parker",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Facilities",
         "field_Process": "Control and management of security camera images",
         "field_Personal_x0020_data_x0020_used": [
@@ -8457,7 +9117,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Mark Chapman",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "IT",
         "field_Process": "Document Storage Management",
         "field_Personal_x0020_data_x0020_used": [
@@ -8534,7 +9200,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Mark Chapman",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "IT",
         "field_Process": "Corporate email management",
         "field_Personal_x0020_data_x0020_used": [
@@ -8607,7 +9279,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Mark Chapman",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "IT",
         "field_Process": "Email Management and Archiving",
         "field_Personal_x0020_data_x0020_used": [
@@ -8684,7 +9362,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Dominic Carter",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Assist�ncia T�cnica",
         "field_Process": "Technical support to distributors",
         "field_Personal_x0020_data_x0020_used": [
@@ -8759,7 +9443,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Systems Integration | HR and Finance",
         "field_Personal_x0020_data_x0020_used": [
@@ -8839,7 +9529,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Roberta  Fonseca",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Marketing",
         "field_Process": "CRM system management",
         "field_Personal_x0020_data_x0020_used": [
@@ -8912,7 +9608,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Finance-Auditoria",
         "field_Process": "Espresso system management",
         "field_Personal_x0020_data_x0020_used": [
@@ -8987,7 +9689,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "THR Software Management | Check Point",
         "field_Personal_x0020_data_x0020_used": [
@@ -9066,7 +9774,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "William Cox",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Administrativo-Finance",
         "field_Process": "Management Reports",
         "field_Personal_x0020_data_x0020_used": [
@@ -9145,7 +9859,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Leaf Handling (Pharmacy**)",
         "field_Personal_x0020_data_x0020_used": [
@@ -9222,7 +9942,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Payroll Handling (Bank - Payroll Credit)",
         "field_Personal_x0020_data_x0020_used": [
@@ -9294,7 +10020,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Cinthia Junior",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Armazenagem",
         "field_Process": "Goods Collection",
         "field_Personal_x0020_data_x0020_used": [
@@ -9372,7 +10104,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Maria Soares",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "HR",
         "field_Process": "Customer Portal",
         "field_Personal_x0020_data_x0020_used": [
@@ -9443,7 +10181,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Renata  Fonseca",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Sales",
         "field_Process": "Billing request and sales communication (Coding)",
         "field_Personal_x0020_data_x0020_used": [
@@ -9524,7 +10268,13 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "field_Responsible": "Renato Foxton",
+        "field_Responsible": [
+          {
+            "LookupId": 19253,
+            "LookupValue": "Cleopatra",
+            "Email": "cleo@queen.com"
+          }
+        ],
         "field_Area": "Assist�ncia T�cnica",
         "field_Process": "Billing request and sales communication (Parts)",
         "field_Personal_x0020_data_x0020_used": [

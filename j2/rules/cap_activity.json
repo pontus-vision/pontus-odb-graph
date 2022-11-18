@@ -66,7 +66,7 @@
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}",
+            "val": "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }
@@ -92,7 +92,7 @@
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}",
+            "val": "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }

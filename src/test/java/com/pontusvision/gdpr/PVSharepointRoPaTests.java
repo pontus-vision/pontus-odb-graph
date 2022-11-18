@@ -1,11 +1,13 @@
 package com.pontusvision.gdpr;
 
+import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,6 +78,16 @@ public class PVSharepointRoPaTests extends AppTest {
                       ".properties('Object_Legitimate_Interests_Assessment_Is_Essential')" +
                       ".value().next().toString()").get().toString();
       assertEquals("Sim, é indispensável - processo 1", LIAPersonalDataTreatment, "Personal Data Treatment for this LIA is => Sim, é indispensável");
+
+
+      OGremlinResultSet resSet = App.graph.executeSql(
+        "SELECT Object_Email_Address_Email as email " +
+          "FROM Object_Email_Address " +
+          "WHERE out('Is_Responsible').Object_Data_Procedures_Form_Id = '401'", Collections.EMPTY_MAP);
+
+      String responsibleEmail = resSet.iterator().next().getRawResult().getProperty("email");
+      resSet.close();
+      assertEquals("gio.boccaccio@gmail.com.it", responsibleEmail, "Responsible email");
 
     } catch (ExecutionException e) {
       e.printStackTrace();

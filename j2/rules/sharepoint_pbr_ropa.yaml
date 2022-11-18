@@ -2,36 +2,6 @@
 updatereq:
   vertices:
     
-    - label: Person_Natural
-      name: responsible
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${new groovy.json.JsonBuilder(Respons_x00e1_vel)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}
-    
-    - label: Person_Natural
-      name: alt_responsible
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}
-    
-    - label: Person_Natural
-      name: champion
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${new groovy.json.JsonBuilder(Nome_x0020_do_x0020_Champion_x00)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}
-    
     - label: Object_Data_Source
       name: sharepoint
       props:
@@ -154,6 +124,36 @@ updatereq:
           val: ${VolumetriadosTitularesDados_x002}
           mandatoryInSearch: False
           excludeFromSearch: True
+    
+    - label: Object_Email_Address
+      name: responsible
+      props:
+        - name: Object_Email_Address_Email
+          val: ${new groovy.json.JsonBuilder(Respons_x00e1_vel)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
+    
+    - label: Object_Email_Address
+      name: alt_responsible
+      props:
+        - name: Object_Email_Address_Email
+          val: ${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
+    
+    - label: Object_Email_Address
+      name: champion
+      props:
+        - name: Object_Email_Address_Email
+          val: ${new groovy.json.JsonBuilder(Nome_x0020_do_x0020_Champion_x00)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
     
     - label: Object_Sensitive_Data
       name: personal_data

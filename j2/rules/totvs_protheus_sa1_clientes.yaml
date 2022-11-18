@@ -50,7 +50,7 @@ updatereq:
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
         - name: Object_Phone_Number_Last_7_Digits
-          val: ${(((A1_TEL?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}
+          val: ${(((A1_TEL?.replaceAll('[^0-9]', ''))?.length()>=7?(A1_TEL?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
     

@@ -138,7 +138,7 @@
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((RA_TELEFON?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}",
+            "val": "${(((RA_TELEFON?.replaceAll('[^0-9]', ''))?.length()>=7?(RA_TELEFON?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }
