@@ -60,9 +60,9 @@ rules:
             val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
-
+#         We forgot to check if the Phone number had at least 7 digits [?.length()>=7]
           Last_7_Digits:
-            val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
+            val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_1?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
@@ -83,7 +83,7 @@ rules:
             type: "[Ljava.lang.String;"
 
           Last_7_Digits:
-            val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
+            val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_2?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
@@ -247,7 +247,7 @@ rules:
             type: "[Ljava.lang.String;"
 
           Last_7_Digits:
-            val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
+            val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_1?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
@@ -268,7 +268,7 @@ rules:
             type: "[Ljava.lang.String;"
 
           Last_7_Digits:
-            val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
+            val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_2?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 

@@ -108,7 +108,7 @@ rules:
             val: "${(Telefone?.replaceAll('[^0-9]', '')?:'11111111')}"
             excludeFromSearch: true
           Last_7_Digits:
-            val: "${(((Telefone?.replaceAll('[^0-9]', ''))?:'1111111')[-7..-1])}"
+            val: "${(((Telefone?.replaceAll('[^0-9]', ''))?.length()>=7?(Telefone?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}"
             mandatoryInSearch: true
 
       - label: Event_Ingestion
