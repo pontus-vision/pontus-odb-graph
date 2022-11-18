@@ -78,7 +78,6 @@ schema:
           dataType: Date
         - name: Status
         - name: Description
-          index: false
         - name: Customer_ID
 
     - name: "Event_Data_Breach"
@@ -336,7 +335,6 @@ schema:
         - name: City
         - name: Code
         - name: Description
-          index: false
         - name: Full_Address
         - name: Neighborhood
         - name: Post_Code
@@ -388,7 +386,6 @@ schema:
       props:
         - name: AttachTime
         - name: Description
-          index: false
         - name: MacAddress
         - name: NetworkInterfaceId
         - name: PrivateDnsName
@@ -414,7 +411,6 @@ schema:
       useStatic: false
       props:
         - name: Description
-          index: false
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -432,7 +428,6 @@ schema:
       useStatic: false
       props:
         - name: Description
-          index: false
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -465,6 +460,7 @@ schema:
 
         - name: Description
           index: false
+        - name: Short_Description
         - name: Expiry
         - name: Form_Id
         - name: Form_Owner_Id
@@ -795,7 +791,6 @@ schema:
       useStatic: false
       props:
         - name: Description
-          index: false
         - name: Id
         - name: Short_Description
 
@@ -925,7 +920,6 @@ schema:
         - name: Approved_By_Security
         - name: Risk_Id
         - name: Description
-          index: false
         - name: Probability
         - name: Impact
         - name: Residual_Probability
@@ -953,7 +947,6 @@ schema:
       props:
         - name: Mitigation_Id
         - name: Description
-          index: false
         - name: Probability_Reduction
         - name: Impact_Reduction
         - name: Form_Id
@@ -983,7 +976,6 @@ schema:
         - name: Date
           dataType: Date
         - name: Description
-          index: false
         - name: URL
 
     - name: "Object_Legal_Actions"
@@ -994,7 +986,6 @@ schema:
         - name: Date
           dataType: Date
         - name: Description
-          index: false
         - name: Details
 
     - name: "Object_Privacy_Notice"
@@ -1007,7 +998,7 @@ schema:
           dataType: Date
 
         - name: Description
-          index: false
+          index: false # maintained because the sample data seems to have lots of words !
         - name: Effect_On_Individuals
         - name: Expiry_Date
           dataType: Date
@@ -1016,9 +1007,7 @@ schema:
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
         - name: How_Is_It_Collected
-          index: false
         - name: How_Will_It_Be_Used
-          index: false
         - name: Id
         - name: Info_Collected
         - name: Likely_To_Complain
@@ -1028,14 +1017,10 @@ schema:
           dataType: Date
         - name: Number_Of_Records_Monthly
         - name: Text
-          index: false
         - name: URL
         - name: Who_Is_Collecting
-          index: false
         - name: Who_Will_It_Be_Shared
-          index: false
         - name: Why_Is_It_Collected
-          index: false
 
     - name: "Object_Salary"
       partition: false
@@ -1057,7 +1042,6 @@ schema:
         - name: Sexual_Orientation
         - name: Union_Membership
         - name: Description
-          index: false
 
     - name: "Object_Subsystem"
       partition: false
