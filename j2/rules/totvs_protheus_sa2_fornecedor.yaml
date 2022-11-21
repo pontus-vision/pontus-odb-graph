@@ -85,12 +85,12 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(A2_TEL?.replaceAll('[^0-9]', '')?:'11111111')}
+          val: ${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
         - name: Object_Phone_Number_Last_7_Digits
-          val: ${(((A2_TEL?.replaceAll('[^0-9]', ''))?.length()>=7?(A2_TEL?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}
+          val: ${(((A2_TEL?.replaceAll('[^0-9]', ''))?.length()>=7?(A2_TEL?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
     

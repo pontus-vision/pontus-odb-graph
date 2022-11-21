@@ -183,13 +183,13 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telefone?.replaceAll('[^0-9]', '')?:'11111111')}",
+            "val": "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Telefone?.replaceAll('[^0-9]', ''))?.length()>=7?(Telefone?.replaceAll('[^0-9]', '')):'1111111')[-7..-1])}",
+            "val": "${(((Telefone?.replaceAll('[^0-9]', ''))?.length()>=7?(Telefone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
             "mandatoryInSearch": true
           }
         ]
