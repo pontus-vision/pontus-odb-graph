@@ -909,7 +909,6 @@ schema:
         - name: Breach_Of_Subject_Rights_Justification
           index: false
         - name: Lawful_Basis_Justification # TODO: check SV's LIA
-          index: false
 
     - name: "Object_Risk_Data_Source"
       partition: false
