@@ -67,16 +67,16 @@ public class PVSharepointTests extends AppTest {
         new String[]{"Event_Meeting_Form_Id"});
 
       RecordReply reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
-        "hasNeighbourId:" + svMeetingRid, 0L, 10L);
+        "hasNeighbourId:" + svMeetingRid, 0L, 10L, "Object_Email_Address_Email", "ASC");
 
 //    The number of participants should be:
       assertEquals(4, reply.getTotalAvailable());
 
 //    The participant's email's are:
-      assertTrue(reply.getRecords()[3].contains("\"Object_Email_Address_Email\":\"monica@gibi.com\""));
-      assertTrue(reply.getRecords()[2].contains("\"Object_Email_Address_Email\":\"cebolinha@gibi.com\""));
-      assertTrue(reply.getRecords()[1].contains("\"Object_Email_Address_Email\":\"magali@gibi.com\""));
       assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"cascao@gibi.com\""));
+      assertTrue(reply.getRecords()[1].contains("\"Object_Email_Address_Email\":\"cebolinha@gibi.com\""));
+      assertTrue(reply.getRecords()[2].contains("\"Object_Email_Address_Email\":\"magali@gibi.com\""));
+      assertTrue(reply.getRecords()[3].contains("\"Object_Email_Address_Email\":\"monica@gibi.com\""));
 
 // ---------------------------------------------------------------------------------------------------------------------
 

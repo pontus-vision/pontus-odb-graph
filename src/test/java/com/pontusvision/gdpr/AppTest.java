@@ -213,13 +213,25 @@ public class AppTest {
     return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter, fromVal, toVal);
   }
 
+  public RecordReply gridWrapper (String filters, String table, String[] cols, String customFilter, Long fromVal, Long toVal, String sortCol, String sortDir) {
+    String search = "{\"searchStr\": \"\"}";
+    return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter, fromVal, toVal, sortCol, sortDir);
+  }
+
   // signature with fromVal and toVal constant, returning only one value
   public RecordReply gridWrapper (String search,  String filters, String table, String[] cols, String customFilter) {
 
     return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter,  0L, 1L);
   }
+
+
   //  [["key":"val","key2":"val2"], ["key":"val","key2":"val2"], ["key":"val","key2":"val2"]]
-  public RecordReply gridWrapper (PVGridSearch search, PVGridFilters[] filters, String table, String[] cols, String customFilter, Long fromVal, Long toVal) {
+  public RecordReply gridWrapper (PVGridSearch search, PVGridFilters[] filters, String table, String[] cols, String customFilter, Long fromVal, Long toVal){
+    return this.gridWrapper(search, filters, table, cols, customFilter, fromVal, toVal, null, null);
+  }
+
+// main signature with sortDir and sortCol
+  public RecordReply gridWrapper (PVGridSearch search, PVGridFilters[] filters, String table, String[] cols, String customFilter, Long fromVal, Long toVal, String sortCol, String sortDir) {
 
     PVGridColumn[] columns = new PVGridColumn[cols.length];
     int i = 0;
@@ -362,6 +374,8 @@ public class AppTest {
     };
     RecordRequest recordRequest = new RecordRequest();
 
+    recordRequest.setSortCol(sortCol);
+    recordRequest.setSortDir(sortDir);
     recordRequest.setDataType(table);
     recordRequest.setCols(columns);
     recordRequest.setFilters(filters);
