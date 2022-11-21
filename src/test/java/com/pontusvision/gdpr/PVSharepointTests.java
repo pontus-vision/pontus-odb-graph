@@ -67,7 +67,7 @@ public class PVSharepointTests extends AppTest {
         new String[]{"Event_Meeting_Form_Id"});
 
       RecordReply reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
-        "hasNeighbourId:" + svMeetingRid, 0L, 10L, "Object_Email_Address_Email", "ASC");
+        "hasNeighbourId:" + svMeetingRid, 0L, 10L, "Object_Email_Address_Email", "+asc");
 
 //    The number of participants should be:
       assertEquals(4, reply.getTotalAvailable());
