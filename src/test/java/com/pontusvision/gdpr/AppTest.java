@@ -181,6 +181,13 @@ public class AppTest {
     return (String) gson.fromJson(reply.records[0], Map.class).get("id");
   }
 
+// method / function to retrieve a vertex's @rid as a string accounting the neighbor vertex (customFilter)
+  public String gridWrapperGetRid (String filters, String table, String[] cols, String customFilter) {
+    String search = "{\"searchStr\": \"\"}";
+    RecordReply reply = this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter,  0L, 1L);
+    return (String) gson.fromJson(reply.records[0], Map.class).get("id");
+  }
+
 // method / function to retrieve a vertex's @rid as a Map
   public Map<String, Object> gridWrapperGetMap (String filters, String table, String[] cols) {
     String search = "{\"searchStr\": \"\"}";
@@ -198,6 +205,12 @@ public class AppTest {
   public RecordReply gridWrapper (String filters, String table, String[] cols, String customFilter) {
     String search = "{\"searchStr\": \"\"}";
     return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter,  0L, 1L);
+  }
+
+  // signature same as above except fromVal and toVal are used to adjust the number of events returned
+  public RecordReply gridWrapper (String filters, String table, String[] cols, String customFilter, Long fromVal, Long toVal) {
+    String search = "{\"searchStr\": \"\"}";
+    return this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter, fromVal, toVal);
   }
 
   // signature with fromVal and toVal constant, returning only one value

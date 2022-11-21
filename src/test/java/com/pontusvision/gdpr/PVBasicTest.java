@@ -11,7 +11,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.glassfish.jersey.internal.MapPropertiesDelegate;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.junit.jupiter.api.MethodOrderer;
@@ -26,11 +25,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -767,15 +768,61 @@ public class PVBasicTest extends AppTest {
       assertEquals("MARTA MARILIA MARCÔNDES", findingTheSonOfAMother, "A filha de Dona Sabrina é a Marta");
 
 //    testing Object_Phone_Number mandatoryInSearch
-      OGremlinResultSet resSet = App.graph.executeSql(
-        "SELECT COUNT(*) as ct " +
-          "FROM Object_Phone_Number " +
-          "WHERE in('Has_Phone').out('Has_Ingestion_Event').Event_Ingestion_Type CONTAINS 'totvs/protheus/sra_funcionario'", Collections.EMPTY_MAP);
+//      OGremlinResultSet resSet = App.graph.executeSql(
+//        "SELECT COUNT(*) as ct " +
+//          "FROM  " +
+//          "WHERE in('Has_Phone').out('Has_Ingestion_Event').Event_Ingestion_Type CONTAINS 'totvs/protheus/sra_funcionario'", Collections.EMPTY_MAP);
+//
+//      Long countPhoneNumbers = resSet.iterator().next().getRawResult().getProperty("ct");
+//      assertEquals(1, countPhoneNumbers,
+//        "There should be only 1 phone number ingested @ sra_funcionario even though there are 3 numbers registered in the .json," +
+//          "because these numbers are the same, only typed differently => 3025-1495 / +55(45)3025-1495 / 00550154530251495");
 
-      Long countPhoneNumbers = resSet.iterator().next().getRawResult().getProperty("ct");
-      assertEquals(1, countPhoneNumbers,
-        "There should be only 1 phone number ingested @ sra_funcionario even though there are 3 numbers registered in the .json," +
-          "because these numbers are the same, only typed differently => 3025-1495 / +55(45)3025-1495 / 00550154530251495");
+//    testing mandatoryInSearch Object_Phone_Number_Last_7_Digits ------------------------------------------------------
+      String totvsZildaRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"ZILDA\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Full_Name"});
+
+      String zildaPhoneId = gridWrapperGetRid(null, "Object_Phone_Number",
+        new String[]{"Object_Phone_Number_Last_7_Digits"}, "hasNeighbourId:" + totvsZildaRid);;
+
+      String totvsMartaRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"MARTA MARILIA MARCÔNDES\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Full_Name"});
+
+      String martaPhoneId = gridWrapperGetRid(null, "Object_Phone_Number",
+        new String[]{"Object_Phone_Number_Last_7_Digits"}, "hasNeighbourId:" + totvsMartaRid);
+
+      String totvsBrenoRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"BRENO DA SILVA\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Full_Name"});
+
+      String brenoPhoneId = gridWrapperGetRid(null, "Object_Phone_Number",
+        new String[]{"Object_Phone_Number_Last_7_Digits"}, "hasNeighbourId:" + totvsBrenoRid);
+
+      assertFalse(totvsZildaRid.equals(totvsMartaRid) && (totvsMartaRid.equals(totvsBrenoRid)), "Zilda, Marta and Breno are different people");
+      assertTrue(zildaPhoneId.equals(martaPhoneId) && (martaPhoneId.equals(brenoPhoneId)), "Zilda, Marta and Breno have the same phone number");
+//        "There should be only 1 phone number ingested @ sra_funcionario even though there are 3 numbers registered in the .json," +
+//        "because these numbers are the same, only typed differently => 3025-1495 / +55(45)3025-1495 / 00550154530251495");
+// ---------------------------------------------------------------------------------------------------------------------
 
     } catch (ExecutionException e) {
       e.printStackTrace();

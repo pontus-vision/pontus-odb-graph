@@ -50,10 +50,35 @@ public class PVSharepointTests extends AppTest {
                       ".next().toString()").get().toString();
       assertEquals("SHAREPOINT/P-AND-PD-COMMITTEE-MEETINGS", getObjectDataSourceName, "Data Source Name.");
 
-      String meeting3Participants =
-              App.executor.eval("App.g.V().has('Event_Meeting_Form_Id', eq('3')).values('Event_Meeting_Participants')" +
-                      ".next().toString()").get().toString();
-      assertEquals("MÔNICA; CEBOLINHA; MAGALI; CASCÃO", meeting3Participants, "The participants of Meeting #3.");
+//      String meeting3Participants =
+//              App.executor.eval("App.g.V().has('Event_Meeting_Form_Id', eq('3')).values('Event_Meeting_Participants')" +
+//                      ".next().toString()").get().toString();
+//      assertEquals("MÔNICA; CEBOLINHA; MAGALI; CASCÃO", meeting3Participants, "The participants of Meeting #3.");
+
+//    testing new edge between Object_Email ------- Is_Participant ------- > Event_Meeting
+      String svMeetingRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Event_Meeting_Form_Id\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"3\"\n" +
+          "  }\n" +
+          "]", "Event_Meeting",
+        new String[]{"Event_Meeting_Form_Id"});
+
+      RecordReply reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
+        "hasNeighbourId:" + svMeetingRid, 0L, 10L);
+
+//    The number of participants should be:
+      assertEquals(4, reply.getTotalAvailable());
+
+//    The participant's email's are:
+      assertTrue(reply.getRecords()[3].contains("\"Object_Email_Address_Email\":\"monica@gibi.com\""));
+      assertTrue(reply.getRecords()[2].contains("\"Object_Email_Address_Email\":\"cebolinha@gibi.com\""));
+      assertTrue(reply.getRecords()[1].contains("\"Object_Email_Address_Email\":\"magali@gibi.com\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"cascao@gibi.com\""));
+
+// ---------------------------------------------------------------------------------------------------------------------
 
       String meetingSubject =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('P & PD Committee Meetings')).out('Has_Ingestion_Event')" +

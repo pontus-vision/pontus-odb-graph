@@ -81,7 +81,7 @@
           },
           {
             "name": "Object_Data_Procedures_Business_Area_Responsible",
-            "val": "${field_Area}",
+            "val": "${field_Area} - ${field_Responsible}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -102,19 +102,6 @@
             "val": "${field_Personal_x0020_data_x0020_used}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Email_Address",
-        "props": [
-          {
-            "name": "Object_Email_Address_Email",
-            "val": "${new groovy.json.JsonBuilder(field_Responsible)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
           }
         ]
       },
@@ -237,11 +224,6 @@
         "label": "Has_Data_Source",
         "fromVertexLabel": "Object_Data_Procedures",
         "toVertexName": "attached_data_sources"
-      },
-      {
-        "label": "Is_Responsible",
-        "fromVertexLabel": "Object_Email_Address",
-        "toVertexLabel": "Object_Data_Procedures"
       }
     ]
   }

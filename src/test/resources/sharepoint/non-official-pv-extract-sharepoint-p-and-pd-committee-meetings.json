@@ -34,7 +34,28 @@
           "Title": "abc",
           "subject": "Primeira reunião sobre LGPD.",
           "date": "2022-01-12",
-          "person": "Joãozinho; Maria; Gigante; Bruxinha",
+          "person": [
+            {
+              "LookupId": 36476,
+              "LookupValue": "Bruxinha",
+              "Email": "bruxinha@disney.com"
+            },
+            {
+              "LookupId": 17453,
+              "LookupValue": "Maria",
+              "Email": "maria@disney.com"
+            },
+            {
+              "LookupId": 74564,
+              "LookupValue": "Gigante",
+              "Email": "gigante@disney.com"
+            },
+            {
+              "LookupId": 38765,
+              "LookupValue": "Joãozinho",
+              "Email": "joao@disney.com"
+            }
+          ],
           "topics": "LGPD na Empresa; O impacto da nova lei LGPD",
           "Modified": "2021-09-17T18:33:03Z",
           "id": "1",
@@ -89,7 +110,33 @@
           "Title": "def",
           "subject": "Como salvar o Universo?",
           "date": "2021-12-07",
-          "person": "Iron Man; Thor; Captain America; Black Widow; Hulk",
+          "person": [
+            {
+              "LookupId": 30956,
+              "LookupValue": "Iron Man",
+              "Email": "iron-man@marvel.com"
+            },
+            {
+              "LookupId": 23654,
+              "LookupValue": "Thor",
+              "Email": "thor@marvel.com"
+            },
+            {
+              "LookupId": 15748,
+              "LookupValue": "Captain America",
+              "Email": "a.captain@marvel.com"
+            },
+            {
+              "LookupId": 29485,
+              "LookupValue": "Hulk",
+              "Email": "hulk@marvel.com"
+            },
+            {
+              "LookupId": 94673,
+              "LookupValue": "Black Widow",
+              "Email": "widow@marvel.com"
+            }
+          ],
           "topics": "Como vencer o Thanos?; Como estalar os dedos?",
           "Modified": "2021-09-17T18:33:03Z",
           "id": "2",
@@ -144,7 +191,28 @@
           "Title": "ghi",
           "subject": "Lançar nova história de HQ.",
           "date": "2021-11-27",
-          "person": "Mônica; Cebolinha; Magali; Cascão",
+          "person": [
+            {
+              "LookupId": 84003,
+              "LookupValue": "Mônica",
+              "Email": "monica@gibi.com"
+            },
+            {
+              "LookupId": 10007,
+              "LookupValue": "Cebolinha",
+              "Email": "cebolinha@gibi.com"
+            },
+            {
+              "LookupId": 39054,
+              "LookupValue": "Magali",
+              "Email": "magali@gibi.com"
+            },
+            {
+              "LookupId": 85322,
+              "LookupValue": "Cascão",
+              "Email": "cascao@gibi.com"
+            }
+          ],
           "topics": "HQ digital; HQ interativo",
           "Modified": "2021-09-17T18:33:03Z",
           "id": "3",

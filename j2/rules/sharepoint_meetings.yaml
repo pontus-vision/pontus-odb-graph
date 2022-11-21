@@ -20,10 +20,15 @@ updatereq:
           val: ${topics?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event_Meeting_Participants
-          val: ${person?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+    
+    - label: Object_Email_Address
+      props:
+        - name: Object_Email_Address_Email
+          val: ${new groovy.json.JsonBuilder(person)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
     
     - label: Object_Data_Source
       props:
@@ -77,5 +82,8 @@ updatereq:
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
+    toVertexLabel: Event_Meeting
+  - label: Is_Participant
+    fromVertexLabel: Object_Email_Address
     toVertexLabel: Event_Meeting
 

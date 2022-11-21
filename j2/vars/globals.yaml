@@ -1311,6 +1311,7 @@ schema:
   - name: Is_Family
   - name: Is_Lead
   - name: Is_Located
+  - name: Is_Participant
   - name: Is_Relative
   - name: Is_Subordinate
   - name: Is_Responsible

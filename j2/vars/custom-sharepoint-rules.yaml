@@ -587,7 +587,7 @@ rules:
             val: "${field_Data_x0020_subject_x0020_category}"
             excludeFromSearch: true
           Business_Area_Responsible:
-            val: "${field_Area}"
+            val: "${field_Area} - ${field_Responsible}"
             excludeFromSearch: true
           Country_Where_Stored:
             val: "${field_Country_x0020_where_x0020_people_x0020_are_x0020_located}"
@@ -598,14 +598,6 @@ rules:
           Info_Collected:
             val: "${field_Personal_x0020_data_x0020_used}"
             excludeFromSearch: true
-
-      - label: Object_Email_Address
-        props:
-          Email:
-            val: "${new groovy.json.JsonBuilder(field_Responsible)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
-            processAll: true
 
       - label: Object_Sensitive_Data
         props:
@@ -684,10 +676,6 @@ rules:
       - label: "Has_Data_Source"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "attached_data_sources"
-
-      - label: "Is_Responsible"
-        fromVertexLabel: "Object_Email_Address"
-        toVertexLabel: "Object_Data_Procedures"
 
   sharepoint_risk:
     vertices:
@@ -1570,9 +1558,17 @@ rules:
           Discussed_Topics:
             val: "${topics?.trim()?.toUpperCase()}"  # Should it be upperCase or not ?!
             excludeFromSearch: true
-          Participants:
-            val: "${person?.trim()?.toUpperCase()}"  # Should it be upperCase or not ?!
-            excludeFromSearch: true
+#          Participants:
+#            val: "${person?.trim()?.toUpperCase()}"  # Should it be upperCase or not ?!
+#            excludeFromSearch: true
+
+      - label: Object_Email_Address
+        props:
+          Email:
+            val: "${new groovy.json.JsonBuilder(person)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
 
       - label: Object_Data_Source
         props:
@@ -1616,4 +1612,8 @@ rules:
 
       - label: Has_Ingestion_Event
         fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Meeting"
+
+      - label: Is_Participant
+        fromVertexLabel: "Object_Email_Address"
         toVertexLabel: "Event_Meeting"

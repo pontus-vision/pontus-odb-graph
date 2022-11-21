@@ -173,7 +173,7 @@ public class PVTotvsTest extends AppTest {
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('ZILDA')).out('Has_Phone')" +
                       ".properties('Object_Phone_Number_Raw').value().next().toString()").get().toString();
       // because RA_TELEFON has less than 7 digits number ... it just prints/saves 7 zeros (0000000)
-      assertEquals("12345", zildaPhoneNumber, "Zilda's phone registry has less than 7 digits");
+      assertEquals("00550154530251495", zildaPhoneNumber, "Zilda's phone registry has less than 7 digits");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
