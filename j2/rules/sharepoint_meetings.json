@@ -27,12 +27,19 @@
             "val": "${topics?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
-          },
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "props": [
           {
-            "name": "Event_Meeting_Participants",
-            "val": "${person?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "name": "Object_Email_Address_Email",
+            "val": "${new groovy.json.JsonBuilder(person)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
           }
         ]
       },
@@ -118,6 +125,11 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Event_Meeting"
+      },
+      {
+        "label": "Is_Participant",
+        "fromVertexLabel": "Object_Email_Address",
         "toVertexLabel": "Event_Meeting"
       }
     ]

@@ -439,6 +439,14 @@ rules:
             val: "${PartesInteressadasConsultadas}"
             excludeFromSearch: true
 
+      - label: Object_Email_Address
+        props:
+          Email:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
+
       - label: Object_Sensitive_Data
         props:
           Description:
@@ -527,6 +535,10 @@ rules:
       - label: "Has_Legitimate_Interests_Assessment"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
+      - label: "Is_Responsible"
+        fromVertexLabel: "Object_Email_Address"
+        toVertexLabel: "Object_Data_Procedures"
 
   sharepoint_ropa:
     vertices:
@@ -1546,9 +1558,17 @@ rules:
           Discussed_Topics:
             val: "${topics?.trim()?.toUpperCase()}"  # Should it be upperCase or not ?!
             excludeFromSearch: true
-          Participants:
-            val: "${person?.trim()?.toUpperCase()}"  # Should it be upperCase or not ?!
-            excludeFromSearch: true
+#          Participants:
+#            val: "${person?.trim()?.toUpperCase()}"  # Should it be upperCase or not ?!
+#            excludeFromSearch: true
+
+      - label: Object_Email_Address
+        props:
+          Email:
+            val: "${new groovy.json.JsonBuilder(person)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
 
       - label: Object_Data_Source
         props:
@@ -1592,4 +1612,8 @@ rules:
 
       - label: Has_Ingestion_Event
         fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Meeting"
+
+      - label: Is_Participant
+        fromVertexLabel: "Object_Email_Address"
         toVertexLabel: "Event_Meeting"

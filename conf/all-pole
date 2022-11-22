@@ -204,6 +204,7 @@ Object_Biometric_Retinal_scans
 Object_Biometric_Weight_kg
 Object_Contract_Date
 Object_Contract_Description
+Object_Contract_Short_Description
 Object_Contract_Expiry
 Object_Contract_Form_Id
 Object_Contract_Form_Owner_Id

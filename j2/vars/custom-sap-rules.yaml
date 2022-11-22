@@ -51,7 +51,8 @@ rules:
         props:
           Raw:
             val: "${Telephone_1}"
-            mandatoryInSearch: false
+#            mandatoryInSearch: false  --> doesnt work
+            excludeFromSearch: true
 #          Type:
 #            val: "Cliente"
 #            excludeFromSubsequenceSearch: true
@@ -59,9 +60,9 @@ rules:
             val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
-
+#         We forgot to check if the Phone number had at least 7 digits [?.length()>=7]
           Last_7_Digits:
-            val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_1?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
@@ -71,7 +72,8 @@ rules:
         props:
           Raw:
             val: "${Telephone_2}"
-            mandatoryInSearch: false
+#            mandatoryInSearch: false --> doesnt work
+            excludeFromSearch: true
 #          Type:
 #            val: "Cliente"
 #            excludeFromSubsequenceSearch: true
@@ -81,7 +83,7 @@ rules:
             type: "[Ljava.lang.String;"
 
           Last_7_Digits:
-            val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_2?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
@@ -234,7 +236,8 @@ rules:
         props:
           Raw:
             val: "${Telephone_1}"
-            mandatoryInSearch: false
+#            mandatoryInSearch: false --> doesnt work
+            excludeFromSearch: true
 #          Type:
 #            val: "Fornecedor"
 #            excludeFromSubsequenceSearch: true
@@ -244,7 +247,7 @@ rules:
             type: "[Ljava.lang.String;"
 
           Last_7_Digits:
-            val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_1?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_1?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 
@@ -254,7 +257,8 @@ rules:
         props:
           Raw:
             val: "${Telephone_2}"
-            mandatoryInSearch: false
+#            mandatoryInSearch: false
+            excludeFromSearch: true
 #          Type:
 #            val: "Fornecedor"
 #            excludeFromSubsequenceSearch: true
@@ -264,7 +268,7 @@ rules:
             type: "[Ljava.lang.String;"
 
           Last_7_Digits:
-            val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_2?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_2?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             mandatoryInSearch: true
             type: "[Ljava.lang.String;"
 

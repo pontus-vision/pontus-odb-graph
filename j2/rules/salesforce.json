@@ -116,13 +116,14 @@
           {
             "name": "Object_Phone_Number_Raw",
             "val": "${Phone}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Type",
             "val": "Work",
-            "mandatoryInSearch": true,
-            "excludeFromSubsequenceSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
@@ -133,7 +134,7 @@
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Phone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((Phone?.replaceAll('[^0-9]', ''))?.length()>=7?(Phone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }

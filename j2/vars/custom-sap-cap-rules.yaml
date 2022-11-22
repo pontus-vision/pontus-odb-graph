@@ -44,8 +44,9 @@ rules:
             val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
+#         We forgot to check if the Phone number had at least 7 digits [?.length()>=7]
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -63,7 +64,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -234,7 +235,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -249,7 +250,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -556,8 +557,9 @@ rules:
         condition: "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}"
         name: mobile
         props:
-          Raw: "${Mobile_Number}"
-          excludeFromSearch: true
+          Raw:
+            val: "${Mobile_Number}"
+            excludeFromSearch: true
 #          Type:
 #            val: "Pxxxxxx Connect Mandatory Fields"
 #            excludeFromSubsequenceSearch: true
@@ -566,7 +568,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Email_Address
@@ -771,7 +773,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -789,7 +791,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -961,7 +963,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -979,7 +981,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -1144,7 +1146,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1162,7 +1164,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -1326,7 +1328,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1344,7 +1346,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -1519,7 +1521,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1537,7 +1539,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address
@@ -1723,7 +1725,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Object_Phone_Number
@@ -1741,7 +1743,7 @@ rules:
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
-            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}"
+            val: "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
             type: "[Ljava.lang.String;"
 
       - label: Location_Address

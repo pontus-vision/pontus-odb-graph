@@ -1444,6 +1444,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Contract_Short_Description",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object_Contract_Expiry",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -4598,6 +4603,11 @@
       "unidirected": false
     },
     {
+      "name": "Is_Participant",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Is_Relative",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -4710,7 +4720,6 @@
         "Metadata_Type_Event_Data_Breach",
         "Event_Data_Breach_Authority_Notified",
         "Event_Data_Breach_Authority_Notified_Others",
-        "Event_Data_Breach_Description",
         "Event_Data_Breach_Id",
         "Event_Data_Breach_Impact",
         "Event_Data_Breach_Metadata_Create_Date",
@@ -4970,8 +4979,7 @@
         "Event_Subject_Access_Request_Form_Owner_Id",
         "Event_Subject_Access_Request_Form_Submission_Id",
         "Event_Subject_Access_Request_Form_Submission_Owner_Id",
-        "Event_Subject_Access_Request_Natural_Person_Type",
-        "Event_Subject_Access_Request_Description"
+        "Event_Subject_Access_Request_Natural_Person_Type"
       ],
       "propertyKeysMappings": {}
     },
@@ -5003,7 +5011,6 @@
         "Metadata_Type_Event_Transaction",
         "Event_Transaction_Currency",
         "Event_Transaction_Date",
-        "Event_Transaction_Description",
         "Event_Transaction_Status",
         "Event_Transaction_Type",
         "Event_Transaction_Value"
@@ -5020,7 +5027,6 @@
       "propertyKeys": [
         "Metadata_Type_Event_Complaint",
         "Event_Complaint_Date",
-        "Event_Complaint_Description",
         "Event_Complaint_Expiry",
         "Event_Complaint_Form_Id",
         "Event_Complaint_Form_Owner_Id",
@@ -5215,7 +5221,7 @@
       "propertyKeys": [
         "Metadata_Type_Object_Contract",
         "Object_Contract_Date",
-        "Object_Contract_Description",
+        "Object_Contract_Short_Description",
         "Object_Contract_Expiry",
         "Object_Contract_Form_Id",
         "Object_Contract_Form_Owner_Id",
@@ -5238,7 +5244,6 @@
       "propertyKeys": [
         "Metadata_Type_Object_Campaign",
         "Object_Campaign_Date",
-        "Object_Campaign_Description",
         "Object_Campaign_Expiry",
         "Object_Campaign_Form_Id",
         "Object_Campaign_Form_Owner_Id",
@@ -5274,14 +5279,12 @@
       "propertyKeys": [
         "Metadata_Type_Object_Data_Policy",
         "Object_Data_Policy_Create_Date",
-        "Object_Data_Policy_Description",
         "Object_Data_Policy_Form_Id",
         "Object_Data_Policy_Form_Owner_Id",
         "Object_Data_Policy_Form_Submission_Id",
         "Object_Data_Policy_Form_Submission_Owner_Id",
         "Object_Data_Policy_Name",
         "Object_Data_Policy_Retention_Period",
-        "Object_Data_Policy_Retention_Justification",
         "Object_Data_Policy_Text",
         "Object_Data_Policy_Type",
         "Object_Data_Policy_Update_Date",
@@ -5306,7 +5309,6 @@
         "Object_Data_Procedures_ID",
         "Object_Data_Procedures_Business_Area_Responsible",
         "Object_Data_Procedures_Type",
-        "Object_Data_Procedures_Description",
         "Object_Data_Procedures_Macro_Process_Name",
         "Object_Data_Procedures_Country_Where_Stored",
         "Object_Data_Procedures_Data_Origin",
@@ -5318,8 +5320,6 @@
         "Object_Data_Procedures_Data_Provider",
         "Object_Data_Procedures_Delete_URL",
         "Object_Data_Procedures_Info_Collected",
-        "Object_Data_Procedures_Info_Share_Justification",
-        "Object_Data_Procedures_Info_Share_Justification_International",
         "Object_Data_Procedures_Info_Shared_With_Third_Parties",
         "Object_Data_Procedures_Info_Shared_With_Third_Parties_International",
         "Object_Data_Procedures_Name",
@@ -5331,7 +5331,6 @@
         "Object_Data_Procedures_Participants",
         "Object_Data_Procedures_Participants_National",
         "Object_Data_Procedures_Participants_International",
-        "Object_Data_Procedures_Secondary_Purpose_Of_Collection",
         "Object_Data_Procedures_Type_Of_Natural_Person",
         "Object_Data_Procedures_Type_Of_Natural_Person_National",
         "Object_Data_Procedures_Type_Of_Natural_Person_International",
@@ -5339,7 +5338,6 @@
         "Object_Data_Procedures_Type_Of_Natural_Person_Minors",
         "Object_Data_Procedures_Update_Mechanism",
         "Object_Data_Procedures_Update_URL",
-        "Object_Data_Procedures_Why_Is_It_Collected",
         "Object_Data_Procedures_Is_SubProcess",
         "Object_Data_Procedures_Interested_Parties_Consulted",
         "Object_Data_Procedures_Form_Id",
@@ -5514,7 +5512,6 @@
         "Object_Form_Metadata_Create_Date",
         "Object_Form_Metadata_GUID",
         "Object_Form_Metadata_Owner",
-        "Object_Form_Text",
         "Object_Form_URL",
         "Object_Form_Vertex_Label"
       ],
@@ -5620,7 +5617,6 @@
         "Object_Metadata_Source_Form_Owner_Id",
         "Object_Metadata_Source_Form_Submission_Id",
         "Object_Metadata_Source_Form_Submission_Owner_Id",
-        "Object_Metadata_Source_Description",
         "Object_Metadata_Source_Credential_Principal",
         "Object_Metadata_Source_Credential_Secret",
         "Object_Metadata_Source_Credential_ApiKey",
@@ -5715,7 +5711,6 @@
         "Object_Privacy_Impact_Assessment_Compliance_Check_Passed",
         "Object_Privacy_Impact_Assessment_Country_Where_Data_Is_Stored",
         "Object_Privacy_Impact_Assessment_Delivery_Date",
-        "Object_Privacy_Impact_Assessment_Description",
         "Object_Privacy_Impact_Assessment_Form_Id",
         "Object_Privacy_Impact_Assessment_Form_Owner_Id",
         "Object_Privacy_Impact_Assessment_Form_Submission_Id",
@@ -5738,13 +5733,9 @@
       "propertyKeys": [
         "Metadata_Type_Object_Legitimate_Interests_Assessment",
         "Object_Legitimate_Interests_Assessment_Form_Id",
-        "Object_Legitimate_Interests_Assessment_Benefits",
         "Object_Legitimate_Interests_Assessment_Benefits_Relevance",
-        "Object_Legitimate_Interests_Assessment_Strategic_Impact",
-        "Object_Legitimate_Interests_Assessment_Data_Processing_Justification",
         "Object_Legitimate_Interests_Assessment_Is_Essential",
         "Object_Legitimate_Interests_Assessment_Is_Required",
-        "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification",
         "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification"
       ],
       "propertyKeysMappings": {}
@@ -5858,7 +5849,6 @@
         "Object_Privacy_Notice_Agreements",
         "Object_Privacy_Notice_Country_Where_Stored",
         "Object_Privacy_Notice_Delivery_Date",
-        "Object_Privacy_Notice_Description",
         "Object_Privacy_Notice_Effect_On_Individuals",
         "Object_Privacy_Notice_Expiry_Date",
         "Object_Privacy_Notice_Form_Id",

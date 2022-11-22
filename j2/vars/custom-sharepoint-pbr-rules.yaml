@@ -125,32 +125,6 @@ rules:
   sharepoint_pbr_ropa:
 
     vertices:
-      - label: Person_Natural
-        name: responsible
-        props:
-          Full_Name:
-            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-            processAll: true
-
-      - label: Person_Natural
-        name: alt_responsible
-        props:
-          Full_Name:
-            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-            processAll: true
-
-      - label: Person_Natural
-        name: champion
-        props:
-          Full_Name:
-            val: "${new groovy.json.JsonBuilder(Nome_x0020_do_x0020_Champion_x00)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getLookupValue()?.toUpperCase()?.trim()}"
-            processAll: true
 
       - label: Object_Data_Source
         name: sharepoint
@@ -244,6 +218,33 @@ rules:
           Number_Of_Natural_Person_International:
             val: "${VolumetriadosTitularesDados_x002}"
             excludeFromSearch: true
+
+      - label: Object_Email_Address
+        name: responsible
+        props:
+          Email:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Email_Address
+        name: alt_responsible
+        props:
+          Email:
+            val: "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Email_Address
+        name: champion
+        props:
+          Email:
+            val: "${new groovy.json.JsonBuilder(Nome_x0020_do_x0020_Champion_x00)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
 
       - label: Object_Sensitive_Data
         name: personal_data
@@ -423,6 +424,7 @@ rules:
         fromVertexLabel: "Object_Privacy_Notice"
         toVertexLabel: "Object_Data_Procedures"
 
+#     3 below were changed from Person_Natural to Object_Email
       - label: "Is_Responsible"
         fromVertexName: "responsible"
         toVertexLabel: "Object_Data_Procedures"

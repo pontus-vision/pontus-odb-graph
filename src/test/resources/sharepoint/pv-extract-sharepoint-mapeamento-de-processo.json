@@ -32,6 +32,13 @@
         "fields": {
           "@odata.etag": "123456234-ac452367-ca5161234-g234778-1237",
           "Title": "1",
+          "Respons_x00e1_vel": [
+            {
+              "LookupId": 18564,
+              "LookupValue": "Bill Gates",
+              "Email": "BILL@OUTLOOK.COM"
+            }
+          ],
           "Respons_x00e1_velLookupId": "31",
           "_x00c1_rea": "Distribuidores",
           "Processo": "Gestão de Rede de Distribuidores",
@@ -120,6 +127,13 @@
         "fields": {
           "@odata.etag": "g5467238f-6118-4139-645-57823764a",
           "Title": "2",
+          "Respons_x00e1_vel": [
+            {
+              "LookupId": 547435,
+              "LookupValue": "Cleopatra",
+              "Email": "cleo@queen.com"
+            }
+          ],
           "Respons_x00e1_velLookupId": "21",
           "_x00c1_rea": "Business",
           "Processo": "Gestão de ferramenta gerencial (PowerBI)",
@@ -205,6 +219,13 @@
         "fields": {
           "@odata.etag": "5cc80060-24a9-4ec9-a19a-a1f1f246733c,6",
           "Title": "3",
+          "Respons_x00e1_vel": [
+            {
+              "LookupId": 49267,
+              "LookupValue": "Paulo Vitor",
+              "Email": "pmartins@pontusvision.com"
+            }
+          ],
           "Respons_x00e1_velLookupId": "32",
           "_x00c1_rea": "Administrativo-Financeiro",
           "Processo": "Contratos Estratégicos",
@@ -289,6 +310,13 @@
         "fields": {
           "@odata.etag": "70c81ab2-6f10-4eb8-a553-4d0cd0dc28b4,6",
           "Title": "4",
+          "Respons_x00e1_vel": [
+            {
+              "LookupId": 29756,
+              "LookupValue": "Leonardo Martins",
+              "Email": "lmartins@pontusvision.com"
+            }
+          ],
           "Respons_x00e1_velLookupId": "32",
           "_x00c1_rea": "Administrativo-Financeiro",
           "Processo": "Termos de Confidencialidade ",
@@ -376,6 +404,13 @@
         "fields": {
           "@odata.etag": "4585bd0b-6b3c-4387-8cad-f536dc4e1fa7,7",
           "Title": "5",
+          "Respons_x00e1_vel": [
+            {
+              "LookupId": 84592,
+              "LookupValue": "Amanda Mozena",
+              "Email": "amozena@pontusvision.com"
+            }
+          ],
           "Respons_x00e1_velLookupId": "30",
           "_x00c1_rea": "Recursos Humanos",
           "Processo": "Prontuário do colaborador",
@@ -467,6 +502,13 @@
         "fields": {
           "@odata.etag": "0123-abcd-4567-acbd-89ij",
           "Title": "6",
+          "Respons_x00e1_vel": [
+            {
+              "LookupId": 20649,
+              "LookupValue": "Steve Jobs",
+              "Email": "jobs@icloud.com"
+            }
+          ],
           "Respons_x00e1_velLookupId": "19",
           "_x00c1_rea": "Compras",
           "Processo": "Prestadores de Serviços e Fornecedores",

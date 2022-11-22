@@ -126,7 +126,8 @@
           {
             "name": "Object_Phone_Number_Raw",
             "val": "${RA_TELEFON}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
@@ -137,7 +138,7 @@
           },
           {
             "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((RA_TELEFON?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "val": "${(((RA_TELEFON?.replaceAll('[^0-9]', ''))?.length()>=7?(RA_TELEFON?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
           }

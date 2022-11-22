@@ -77,18 +77,19 @@ updatereq:
       props:
         - name: Object_Phone_Number_Raw
           val: ${Phone}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Phone_Number_Type
           val: Work
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
           val: ${(Phone?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
         - name: Object_Phone_Number_Last_7_Digits
-          val: ${(((Phone?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
+          val: ${(((Phone?.replaceAll('[^0-9]', ''))?.length()>=7?(Phone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
     

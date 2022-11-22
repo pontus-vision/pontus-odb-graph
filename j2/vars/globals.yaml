@@ -909,7 +909,6 @@ schema:
         - name: Breach_Of_Subject_Rights_Justification
           index: false
         - name: Lawful_Basis_Justification # TODO: check SV's LIA
-          index: false
 
     - name: "Object_Risk_Data_Source"
       partition: false
@@ -1311,6 +1310,7 @@ schema:
   - name: Is_Family
   - name: Is_Lead
   - name: Is_Located
+  - name: Is_Participant
   - name: Is_Relative
   - name: Is_Subordinate
   - name: Is_Responsible

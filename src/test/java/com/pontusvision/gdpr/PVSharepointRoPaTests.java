@@ -77,6 +77,23 @@ public class PVSharepointRoPaTests extends AppTest {
                       ".value().next().toString()").get().toString();
       assertEquals("Sim, é indispensável - processo 1", LIAPersonalDataTreatment, "Personal Data Treatment for this LIA is => Sim, é indispensável");
 
+//    testing new edge between Object_Email ------- Is_Responsible ------- > RoPA
+      String svRopaRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"401\"\n" +
+          "  }\n" +
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_ID"});
+
+      RecordReply reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
+        "hasNeighbourId:" + svRopaRid);
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Email_Address_Email\":\"bill@outlook.com\""), "Responsible for RoPA 401");
+
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
