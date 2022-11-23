@@ -238,7 +238,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("SAP/sap-cap/activity-reporting.csv", "cap_activity");
+      csvTestUtil("SAP/sap-cap/activity-reporting.csv", "cap_activity_reporting");
 
       String getQuasimodoMobile =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('GABRIEL MOSHI')).out('Has_Mobile')" +
@@ -305,7 +305,7 @@ public class PVSapCapTest extends AppTest {
 
       String getMobileNumber =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('sap/c@p Competitor Vehicles'))" +
-                      ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
+                      ".out('Has_Ingestion_Event').in('Has_Vehicle').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
                       ".out('Has_Mobile').properties('Object_Phone_Number_Raw').value().next()").get().toString();
       assertEquals("098098704", getMobileNumber, "Mobile number");
 
@@ -322,14 +322,14 @@ public class PVSapCapTest extends AppTest {
 
       csvTestUtil("SAP/sap-cap/vehicle-reporting.csv", "cap_vehicle_reporting");
 
-      String getVehicleLicensePlate =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE REPORTING'))" +
-                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
-                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
-                      ".out('Has_Ingestion_Event').as('vehicle')" +
-                      ".in('Has_Vehicle').as(person-natural)" +
-                      ".has('Person_Natural_Full_Name', eq('THOMAS THAMES')).out('Has_Vehicle')" +
-                      ".properties('Object_Vehicle_License_Plate').value().next().toString()").get().toString();
+      String getVehicleLicensePlate = App.executor.eval(
+        "App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE REPORTING'))" +
+          ".out('Has_Ingestion_Event').as('group-ingestion')" +
+          ".out('Has_Ingestion_Event').as('event-ingestion')" +
+          ".out('Has_Ingestion_Event').as('vehicle')" +
+          ".in('Has_Vehicle')" +
+          ".has('Person_Natural_Full_Name', eq('THOMAS THAMES')).out('Has_Vehicle')" +
+          ".values('Object_Vehicle_License_Plate').next().toString()").get().toString();
       assertEquals("JHFU7857", getVehicleLicensePlate, "Thomas' Car's License plate");
 
       String getVehicleModel =
@@ -553,10 +553,10 @@ public class PVSapCapTest extends AppTest {
       assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Name\":\"PBR CENTER SÃO PAULO\""), "other_company [Is_Client] edge");
       assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Name\":\"ROCHEFOUCAULD FONDUE\""), "own_client [Works] edge");
 
-      reply = gridWrapper(null, "Object_Email", new String[]{"Object_Email_Address"},"hasNeighbourId:" + capPersonRid);
+      reply = gridWrapper(null, "Object_Email", new String[]{"Object_Email_Address_Email"},"hasNeighbourId:" + capPersonRid);
       replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Object_Email_Address\":\"rochelle@test.com\""), "Email address");
+      assertTrue(replyStr.contains("\"Object_Email_Address_Email\":\"rochelle@test.com\""), "Email address");
 
       reply = gridWrapper(null, "Object_Phone_Number", new String[]{"Object_Phone_Number_Last_7_Digits"},
         "hasNeighbourId:" + capPersonRid, 0L, 2L, "Object_Phone_Number_Last_7_Digits", "+asc");
