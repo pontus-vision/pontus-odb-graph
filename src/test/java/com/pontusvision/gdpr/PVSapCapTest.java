@@ -553,7 +553,7 @@ public class PVSapCapTest extends AppTest {
       assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Name\":\"PBR CENTER SÃO PAULO\""), "other_company [Is_Client] edge");
       assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Name\":\"ROCHEFOUCAULD FONDUE\""), "own_client [Works] edge");
 
-      reply = gridWrapper(null, "Object_Email", new String[]{"Object_Email_Address_Email"},"hasNeighbourId:" + capPersonRid);
+      reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},"hasNeighbourId:" + capPersonRid);
       replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Object_Email_Address_Email\":\"rochelle@test.com\""), "Email address");
