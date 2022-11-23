@@ -77,7 +77,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}
+          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
@@ -95,7 +95,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
+          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
@@ -268,7 +268,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Data Quality
+          val: sap/c@p Data Quality Reporting
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -293,7 +293,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Data Quality
+          val: sap/c@p Data Quality Reporting
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -305,7 +305,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: SAP/C@P DATA QUALITY
+          val: SAP/C@P DATA QUALITY REPORTING
           mandatoryInSearch: True
 
   edges:

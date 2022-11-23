@@ -21,7 +21,6 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Person_Organisation
-      name: other_company
       props:
         - name: Person_Organisation_Form_Id
           val: ${Responsible_Dealer?.replaceAll('[^0-9]', '')}
@@ -40,7 +39,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}
+          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
@@ -58,7 +57,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
+          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
@@ -70,16 +69,43 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location_Address_parser
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location_Address_Post_Code
           val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
           mandatoryInSearch: True
+    
+    - label: Event_Complaint
+      props:
+        - name: Event_Complaint_Id
+          val: ${Transaction_Number}
+          mandatoryInSearch: True
+        - name: Event_Complaint_Date
+          val: ${Opened}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Complaint_Description
+          val: ${Description}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Complaint_Status
+          val: ${Status}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Complaint_Type
+          val: SAP/C@P Complaint Reporting
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Complaint_Expiry
+          val: ${Due_Date}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_Email_Address
       condition: ${E_Mail_Address?.trim()?.length() > 0}
@@ -91,7 +117,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Lead
+          val: sap/c@p Complaint Reporting
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -116,7 +142,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Lead
+          val: sap/c@p Complaint Reporting
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -128,7 +154,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: SAP/C@P LEAD
+          val: SAP/C@P COMPLAINT REPORTING
           mandatoryInSearch: True
 
   edges:
@@ -139,20 +165,23 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Event_Ingestion
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Event_Complaint
   - label: Is_Located
     fromVertexLabel: Person_Natural
     toVertexLabel: Location_Address
   - label: Has_Phone
     fromVertexLabel: Person_Natural
     toVertexName: telephone
-  - label: Has_Phone
+  - label: Has_Mobile
     fromVertexLabel: Person_Natural
     toVertexName: mobile
   - label: Uses_Email
     fromVertexLabel: Person_Natural
     toVertexLabel: Object_Email_Address
+  - label: Has_Complaint
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Event_Complaint
   - label: Works
     fromVertexLabel: Person_Natural
     toVertexName: own_company

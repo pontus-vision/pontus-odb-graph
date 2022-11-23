@@ -45,7 +45,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}
+          val: ${(A1_TEL?.replaceAll('[^0-9]', '')?.length()>=7?A1_TEL?.replaceAll('[^0-9]', ''):'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True

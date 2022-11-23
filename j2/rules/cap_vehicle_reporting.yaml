@@ -5,7 +5,7 @@ updatereq:
     - label: Person_Natural
       props:
         - name: Person_Natural_Full_Name
-          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
+          val: ${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person_Natural_Title
           val: ${Title}
@@ -19,14 +19,41 @@ updatereq:
         - name: Person_Organisation_Name
           val: ${Company_Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+        - name: Person_Organisation_Id
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Registration_Number
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
     
     - label: Person_Organisation
+      name: other_company
       props:
-        - name: Person_Organisation_Form_Id
-          val: ${Responsible_Dealer?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
         - name: Person_Organisation_Name
           val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    
+    - label: Object_Identity_Card
+      name: cnpj
+      condition: ${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CNPJ
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Identity_Card
+      name: cpf
+      condition: ${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CPF
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -39,7 +66,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}
+          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
@@ -57,7 +84,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
+          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
@@ -69,43 +96,28 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location_Address_parser
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location_Address_Post_Code
           val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
           mandatoryInSearch: True
     
-    - label: Event_Complaint
+    - label: Object_Vehicle
       props:
-        - name: Event_Complaint_Id
-          val: ${Transaction_Number}
+        - name: Object_Vehicle_License_Plate
+          val: ${Vehicle_License_Plat}
           mandatoryInSearch: True
-        - name: Event_Complaint_Date
-          val: ${Opened}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Complaint_Description
-          val: ${Description}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Complaint_Status
-          val: ${Status}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Complaint_Type
-          val: SAP/C@P Complaint
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Complaint_Expiry
-          val: ${Due_Date}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+        - name: Object_Vehicle_Model
+          val: ${Model}
+          mandatoryInSearch: True
+        - name: Object_Vehicle_Model_Year
+          val: ${Model_Year_of_Vehicl}
+          mandatoryInSearch: True
     
     - label: Object_Email_Address
       condition: ${E_Mail_Address?.trim()?.length() > 0}
@@ -117,7 +129,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Complaint
+          val: sap/c@p Vehicle Reporting
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -142,7 +154,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Complaint
+          val: sap/c@p Vehicle Reporting
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -154,7 +166,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: SAP/C@P COMPLAINT
+          val: SAP/C@P VEHICLE REPORTING
           mandatoryInSearch: True
 
   edges:
@@ -165,8 +177,8 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Event_Ingestion
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Object_Vehicle
   - label: Is_Located
     fromVertexLabel: Person_Natural
     toVertexLabel: Location_Address
@@ -179,13 +191,19 @@ updatereq:
   - label: Uses_Email
     fromVertexLabel: Person_Natural
     toVertexLabel: Object_Email_Address
-  - label: Has_Complaint
+  - label: Has_Vehicle
     fromVertexLabel: Person_Natural
-    toVertexLabel: Event_Complaint
+    toVertexLabel: Object_Vehicle
   - label: Works
     fromVertexLabel: Person_Natural
     toVertexName: own_company
   - label: Is_Client
     fromVertexLabel: Person_Natural
     toVertexName: other_company
+  - label: Has_Id_Card
+    fromVertexLabel: Person_Natural
+    toVertexName: cnpj
+  - label: Has_Id_Card
+    fromVertexLabel: Person_Natural
+    toVertexName: cpf
 

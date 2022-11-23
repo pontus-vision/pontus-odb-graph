@@ -44,7 +44,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}
+          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
@@ -62,7 +62,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
+          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}
           mandatoryInSearch: False
           type: "[Ljava.lang.String;"
           excludeFromSearch: True
@@ -93,7 +93,8 @@ updatereq:
           type: "java.util.Date"
         - name: Object_Campaign_Description
           val: ${Description}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Campaign_Id
           val: ${Recall_campaign_ID?.trim()}
           mandatoryInSearch: True
@@ -160,8 +161,8 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Event_Ingestion
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Object_Campaign
   - label: Is_Located
     fromVertexLabel: Person_Natural
     toVertexLabel: Location_Address

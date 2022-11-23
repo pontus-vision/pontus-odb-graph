@@ -57,7 +57,7 @@ rules:
 #            val: "Cliente"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_1?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_1?.replaceAll('[^0-9]', ''):'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
 #         We forgot to check if the Phone number had at least 7 digits [?.length()>=7]
@@ -78,7 +78,7 @@ rules:
 #            val: "Cliente"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_2?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_2?.replaceAll('[^0-9]', ''):'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
 
@@ -242,7 +242,7 @@ rules:
 #            val: "Fornecedor"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_1?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_1?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_1?.replaceAll('[^0-9]', ''):'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
 
@@ -263,7 +263,7 @@ rules:
 #            val: "Fornecedor"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_2?.replaceAll('[^0-9]', '')?:'00000000')}"
+            val: "${(Telephone_2?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_2?.replaceAll('[^0-9]', ''):'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
 

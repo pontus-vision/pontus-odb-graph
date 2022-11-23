@@ -19,19 +19,6 @@
       },
       {
         "label": "Person_Organisation",
-        "name": "own_company",
-        "condition": "${Company_Name_1?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Person_Organisation_Name",
-            "val": "${Company_Name_1?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Person_Organisation",
-        "name": "other_company",
         "props": [
           {
             "name": "Person_Organisation_Form_Id",
@@ -48,32 +35,6 @@
       },
       {
         "label": "Object_Phone_Number",
-        "name": "telephone",
-        "condition": "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Phone_Number_Raw",
-            "val": "${Telephone_No_}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "type": "[Ljava.lang.String;",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
-          }
-        ]
-      },
-      {
-        "label": "Object_Phone_Number",
         "name": "mobile",
         "condition": "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}",
         "props": [
@@ -85,7 +46,7 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
@@ -95,28 +56,6 @@
             "val": "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
             "mandatoryInSearch": true,
             "type": "[Ljava.lang.String;"
-          }
-        ]
-      },
-      {
-        "label": "Location_Address",
-        "props": [
-          {
-            "name": "Location_Address_Full_Address",
-            "val": "${Street} ${House_Number}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Location_Address_parser",
-            "val": "${Street} ${House_Number}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-          },
-          {
-            "name": "Location_Address_Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
-            "mandatoryInSearch": true
           }
         ]
       },
@@ -136,7 +75,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sap/c@p Activity",
+            "val": "sap/c@p PBR Connect Mandatory Fields",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -173,7 +112,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p Activity",
+            "val": "sap/c@p PBR Connect Mandatory Fields",
             "mandatoryInSearch": true
           },
           {
@@ -193,7 +132,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P ACTIVITY",
+            "val": "SAP/C@P PBR CONNECT MANDATORY FIELDS",
             "mandatoryInSearch": true
           }
         ]
@@ -216,17 +155,7 @@
         "toVertexLabel": "Event_Ingestion"
       },
       {
-        "label": "Is_Located",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Location_Address"
-      },
-      {
         "label": "Has_Phone",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "telephone"
-      },
-      {
-        "label": "Has_Mobile",
         "fromVertexLabel": "Person_Natural",
         "toVertexName": "mobile"
       },
@@ -236,14 +165,9 @@
         "toVertexLabel": "Object_Email_Address"
       },
       {
-        "label": "Works",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "own_company"
-      },
-      {
         "label": "Is_Client",
         "fromVertexLabel": "Person_Natural",
-        "toVertexName": "other_company"
+        "toVertexLabel": "Person_Organisation"
       }
     ]
   }

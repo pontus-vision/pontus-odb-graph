@@ -131,7 +131,7 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(RA_TELEFON?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(RA_TELEFON?.replaceAll('[^0-9]', '')?.length()>=7?RA_TELEFON?.replaceAll('[^0-9]', ''):'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true

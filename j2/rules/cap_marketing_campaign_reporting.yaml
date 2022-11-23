@@ -4,9 +4,13 @@ updatereq:
     
     - label: Person_Natural
       props:
-        - name: Person_Natural_Full_Name
-          val: ${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}
+        - name: Person_Natural_Customer_ID
+          val: ${ID?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
+        - name: Person_Natural_Full_Name
+          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Person_Natural_Title
           val: ${Title}
           mandatoryInSearch: False
@@ -30,6 +34,36 @@ updatereq:
           val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
+    
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: SAP/C@P MARKETING CAMPAIGN REPORTING
+          mandatoryInSearch: True
+    
+    - label: Object_Campaign
+      props:
+        - name: Object_Campaign_Id
+          val: ${Campaign_ID?.trim()}
+          mandatoryInSearch: True
+        - name: Object_Campaign_Date
+          val: ${Created_On}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Object_Campaign_Status
+          val: ${Status}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Campaign_Type
+          val: SAP/C@P Marketing Campaign Reporting
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Email_Address
+      props:
+        - name: Object_Email_Address_Email
+          val: ${E_Mail_Address?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
     
     - label: Object_Phone_Number
       name: telephone
@@ -70,43 +104,21 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location_Address_parser
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location_Address_Post_Code
           val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
           mandatoryInSearch: True
     
-    - label: Object_Vehicle
-      props:
-        - name: Object_Vehicle_Brand
-          val: ${Make}
-          mandatoryInSearch: True
-        - name: Object_Vehicle_License_Plate
-          val: ${License_Plate}
-          mandatoryInSearch: True
-        - name: Object_Vehicle_Model
-          val: ${Model}
-          mandatoryInSearch: True
-        - name: Object_Vehicle_Model_Year
-          val: ${Model_Year}
-          mandatoryInSearch: True
-    
-    - label: Object_Email_Address
-      condition: ${E_Mail_Address?.trim()?.length() > 0}
-      props:
-        - name: Object_Email_Address_Email
-          val: ${E_Mail_Address?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
-    
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Competitor Vehicles
+          val: sap/c@p Marketing Campaign Reporting
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -131,19 +143,13 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Competitor Vehicles
+          val: sap/c@p Marketing Campaign Reporting
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-    
-    - label: Object_Data_Source
-      props:
-        - name: Object_Data_Source_Name
-          val: SAP/C@P COMPETITOR VEHICLES
           mandatoryInSearch: True
 
   edges:
@@ -155,7 +161,16 @@ updatereq:
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
-    toVertexLabel: Object_Vehicle
+    toVertexLabel: Object_Campaign
+  - label: Has_Campaign
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Object_Campaign
+  - label: Works
+    fromVertexLabel: Person_Natural
+    toVertexName: own_company
+  - label: Is_Client
+    fromVertexLabel: Person_Natural
+    toVertexName: other_company
   - label: Is_Located
     fromVertexLabel: Person_Natural
     toVertexLabel: Location_Address
@@ -168,13 +183,4 @@ updatereq:
   - label: Uses_Email
     fromVertexLabel: Person_Natural
     toVertexLabel: Object_Email_Address
-  - label: Has_Vehicle
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Object_Vehicle
-  - label: Works
-    fromVertexLabel: Person_Natural
-    toVertexName: own_company
-  - label: Is_Client
-    fromVertexLabel: Person_Natural
-    toVertexName: other_company
 

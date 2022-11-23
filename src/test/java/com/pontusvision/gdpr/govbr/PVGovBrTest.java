@@ -38,7 +38,7 @@ public class PVGovBrTest extends AppTest {
 
   @Test
   public void test00001GovBr() throws InterruptedException {
-    // updated to real style data lead.csv
+    // updated to real style data lead-reporting.csv
 
     try {
 

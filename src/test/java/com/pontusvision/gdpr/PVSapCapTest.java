@@ -9,8 +9,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -36,7 +35,7 @@ public class PVSapCapTest extends AppTest {
 
   @Test
   public void test00001SapCapLead() throws InterruptedException {
-    // updated to real style data lead.csv
+    // updated to real style data lead-reporting.csv
 
     try {
 
@@ -47,7 +46,7 @@ public class PVSapCapTest extends AppTest {
               cleanHdr,
               "check clean headers is OK");
 
-      csvTestUtil("SAP/sap-cap/lead.csv", "cap_lead");
+      csvTestUtil("SAP/sap-cap/lead-reporting.csv", "cap_lead_reporting");
 
       String marcelPhoneCount =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('EMILY VARGAS'))" +
@@ -113,7 +112,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("SAP/sap-cap/my-p-change-report.csv", "cap_my_p_change_report");
+      csvTestUtil("SAP/sap-cap/my-pbr-change-report.csv", "cap_my_pbr_change_report");
 
       String ingestionOperationType =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('FELIPE MAGNOLI')).out('Has_Ingestion_Event')" +
@@ -124,7 +123,7 @@ public class PVSapCapTest extends AppTest {
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MÔNICA COELHO'))" +
                       ".out('Has_Ingestion_Event').in('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
                       ".properties('Object_Data_Source_Name').value().next().toString()").get().toString();
-      assertEquals("SAP/C@P MY PXXXXXX CHANGE REPORT", DataSourceName, "The source for Mônica's data");
+      assertEquals("SAP/C@P MY PBR CHANGE REPORT", DataSourceName, "The source for Mônica's data");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -137,7 +136,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("SAP/sap-cap/p-connect-mandatory-fields.csv", "cap_p_connect_mandatory_fields");
+      csvTestUtil("SAP/sap-cap/pbr-connect-mandatory-fields.csv", "cap_pbr_connect_mandatory_fields");
 
       String jamesEmail =
               App.executor.eval("App.g.V().has('Object_Email_Address_Email', eq('hollywood@movies.com')).in('Uses_Email')" +
@@ -171,27 +170,33 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("SAP/sap-cap/ownership-change.csv", "cap_ownership_change");
-
-      String getResponsibleDealer =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P PXXXXXX OWNERSHIP CHANGE'))" +
-                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
-                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
-                      ".in('Has_Ingestion_Event').as('person-natural')" +
-                      ".has('Person_Natural_Full_Name', eq('LARA CRAFT')).out('Is_Client')" +
-                      ".properties('Person_Organisation_Name').value().next().toString()").get().toString();
-      assertEquals("P CENTER SÃO PAULO", getResponsibleDealer, "Responsible Dealer");
-
+      csvTestUtil("SAP/sap-cap/ownership-reporting.csv", "cap_ownership_reporting");
 
       String getResponsibleOwner =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P PXXXXXX OWNERSHIP CHANGE'))" +
-                      ".out('Has_Ingestion_Event').as('group-ingestion')" +
-                      ".out('Has_Ingestion_Event').as('event-ingestion')" +
-                      ".in('Has_Ingestion_Event').as('person-natural')" +
-                      ".out('Is_Client').as('person-org')" +
-                      ".has('Person_Organisation_Name',eq('P CENTER SÃO PAULO')).in('Is_Client')" +
-                      ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
+        App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P PBR OWNERSHIP REPORTING'))" +
+          ".out('Has_Ingestion_Event').as('group-ingestion')" +
+          ".out('Has_Ingestion_Event').as('event-ingestion')" +
+          ".in('Has_Ingestion_Event').as('person-natural')" +
+          ".out('Is_Client').as('person-org')" +
+          ".has('Person_Organisation_Name',eq('P CENTER SÃO PAULO')).in('Is_Client')" +
+          ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
       assertEquals("LARA CRAFT", getResponsibleOwner, "client");
+
+      String capPersonRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"" + getResponsibleOwner + "\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Full_Name"});
+
+      RecordReply reply = gridWrapper(null, "Person_Organisation", new String[]{"Person_Organisation_Name"},
+        "hasNeighbourId:" + capPersonRid);
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Person_Organisation_Name\":\"P CENTER SÃO PAULO\""), "Responsible Dealer");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -204,7 +209,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("SAP/sap-cap/complaint.csv", "cap_complaint");
+      csvTestUtil("SAP/sap-cap/complaint-reporting.csv", "cap_complaint_reporting");
 
       String getComplaintDescription =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MUSTAFA GHADAS')).out('Has_Complaint')" +
@@ -233,7 +238,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("SAP/sap-cap/activity.csv", "cap_activity");
+      csvTestUtil("SAP/sap-cap/activity-reporting.csv", "cap_activity");
 
       String getQuasimodoMobile =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('GABRIEL MOSHI')).out('Has_Mobile')" +
@@ -293,7 +298,6 @@ public class PVSapCapTest extends AppTest {
                       ".properties('Object_Vehicle_License_Plate').value().next().toString()").get().toString();
       assertEquals("AJN93248", getVehicleLicensePlate, "License plate");
 
-
       String getVehicleModel =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('EDSON THOMAS')).out('Has_Vehicle')" +
                       ".properties('Object_Vehicle_Model').value().next().toString()").get().toString();
@@ -316,31 +320,34 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("SAP/sap-cap/vehicle.csv", "cap_vehicle");
+      csvTestUtil("SAP/sap-cap/vehicle-reporting.csv", "cap_vehicle_reporting");
 
       String getVehicleLicensePlate =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE REPORTING'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
-                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".out('Has_Ingestion_Event').as('vehicle')" +
+                      ".in('Has_Vehicle').as(person-natural)" +
                       ".has('Person_Natural_Full_Name', eq('THOMAS THAMES')).out('Has_Vehicle')" +
                       ".properties('Object_Vehicle_License_Plate').value().next().toString()").get().toString();
       assertEquals("JHFU7857", getVehicleLicensePlate, "Thomas' Car's License plate");
 
       String getVehicleModel =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE REPORTING'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
-                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".out('Has_Ingestion_Event').as('vehicle')" +
+                      ".in('Has_Vehicle').as('person-natural')" +
                       ".has('Person_Natural_Full_Name', eq('THOMAS THAMES')).out('Has_Vehicle')" +
                       ".properties('Object_Vehicle_Model').value().next().toString()").get().toString();
       assertEquals("766", getVehicleModel, "Thomas' Vehicle's Model");
 
       String getEmailAddress =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE REPORTING'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
-                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".out('Has_Ingestion_Event').as('vehicle')" +
+                      ".in('Has_Vehicle').as('person-natural')" +
                       ".out('Has_Mobile').as('mobile-phone')" +
                       ".has('Object_Phone_Number_Last_7_Digits',eq('6453545'))" +
                       ".in('Has_Mobile')" +
@@ -348,20 +355,22 @@ public class PVSapCapTest extends AppTest {
       assertEquals("colchoes.thames@hotmail.com", getEmailAddress, "Thomas' job Email");
 
       String thomasIsClient =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE REPORTING'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
-                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".out('Has_Ingestion_Event').as('vehicle')" +
+                      ".in('Has_Vehicle').as('person-natural')" +
                       ".out('Is_Client').as('p-company')" +
                       ".properties('Person_Organisation_Name').value().next().toString()").get().toString();
       assertEquals("P CENTER SÃO PAULO", thomasIsClient, "Thomas is P's client");
 
 
       String thomasId =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE'))" +
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SAP/C@P VEHICLE REPORTING'))" +
                       ".out('Has_Ingestion_Event').as('group-ingestion')" +
                       ".out('Has_Ingestion_Event').as('event-ingestion')" +
-                      ".in('Has_Ingestion_Event').as('person-natural')" +
+                      ".out('Has_Ingestion_Event').as('vehicle')" +
+                      ".in('Has_Vehicle').as('person-natural')" +
                       ".out('Has_Id_Card').as('cnpj')" +
                       ".properties('Object_Identity_Card_Id_Value').value().next().toString()").get().toString();
       assertEquals("28938923809747", thomasId, "Thomas' company Tax ID");
@@ -376,7 +385,7 @@ public class PVSapCapTest extends AppTest {
 
     try {
 
-      csvTestUtil("SAP/sap-cap/data-quality.csv", "cap_data_quality");
+      csvTestUtil("SAP/sap-cap/data-quality-reporting.csv", "cap_data_quality_reporting");
 
       String kumaCompany =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('KUMA CASTRO'))" +
@@ -409,5 +418,161 @@ public class PVSapCapTest extends AppTest {
     }
   }
 
+  @Test
+  public void test00012SapCapComplaintsWorklist() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("SAP/sap-cap/complaints-worklist.csv", "cap_complaints_worklist");
+
+      String capGroupEventRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Event_Group_Ingestion_Type\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"sap/c@p Complaints Worklist\"\n" +
+          "  }\n" +
+          "]", "Event_Group_Ingestion",
+        new String[]{"Event_Group_Ingestion_Type"});
+
+      RecordReply reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"},
+        "hasNeighbourId:" + capGroupEventRid);
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"SAP/C@P COMPLAINTS WORKLIST\""),
+        "Data source name");
+
+      reply = gridWrapper("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Event_Complaint_Type\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"SAP/C@P Complaints Worklist\"\n" +
+          "  }\n" +
+          "]", "Event_Complaint",
+        new String[]{"Event_Complaint_Type", "Event_Complaint_Description", "Event_Complaint_Status"});
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Event_Complaint_Description\":\"Test PBR\""), "Complaint description");
+      assertTrue(replyStr.contains("\"Event_Complaint_Status\":\"Work in Progress\""), "Complaint status");
+
+      String capComplaintRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Event_Complaint_Type\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"SAP/C@P Complaints Worklist\"\n" +
+          "  }\n" +
+          "]", "Event_Complaint",
+        new String[]{"Event_Complaint_Type"});
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Full_Name", "Person_Natural_Customer_ID"},
+        "hasNeighbourId:" + capComplaintRid);
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Person_Natural_Full_Name\":\"MORGANA ADDAMS\""), "Person name");
+      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"94562\""), "Morgana's customer ID");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
+
+  @Test
+  public void test00013SapCapMarketingCampaignReporting() throws InterruptedException {
+
+    try {
+
+      csvTestUtil("SAP/sap-cap/marketing-campaign-reporting.csv", "cap_marketing_campaign_reporting");
+
+      String capGroupEventRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Event_Group_Ingestion_Type\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"sap/c@p Marketing Campaign Reporting\"\n" +
+          "  }\n" +
+          "]", "Event_Group_Ingestion",
+        new String[]{"Event_Group_Ingestion_Type"});
+
+      RecordReply reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"},
+        "hasNeighbourId:" + capGroupEventRid);
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"SAP/C@P MARKETING CAMPAIGN REPORTING\""),
+        "Data source name");
+
+      reply = gridWrapper("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Campaign_Type\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"SAP/C@P Marketing Campaign Reporting\"\n" +
+          "  }\n" +
+          "]", "Object_Campaign",
+        new String[]{"Object_Campaign_Type", "Object_Campaign_Status", "Object_Campaign_Date", "Object_Campaign_Id"});
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Campaign_Status\":\"P\""), "Campaign status");
+      assertTrue(replyStr.contains("\"Object_Campaign_Date\":\"Wed Nov 23 11:05:20 UTC 2022\""), "Campaign date");
+      assertTrue(replyStr.contains("\"Object_Campaign_Id\":\"QS99 PBR MM1\""), "Campaign ID");
+
+      String capCampaignRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Campaign_Type\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"SAP/C@P Marketing Campaign Reporting\"\n" +
+          "  }\n" +
+          "]", "Object_Campaign",
+        new String[]{"Object_Campaign_Type"});
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Full_Name",
+          "Person_Natural_Customer_ID", "Person_Natural_Title"}, "hasNeighbourId:" + capCampaignRid);
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Person_Natural_Full_Name\":\"ROCHELLE DE LA ROCHEFOUCAULD\""), "Person name");
+      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"782297\""), "Rochelle's customer ID");
+      assertTrue(replyStr.contains("\"Person_Natural_Title\":\"Mme.\""), "Rochelle's title");
+
+
+      String capPersonRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Customer_ID\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"782297\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Customer_ID"});
+
+      reply = gridWrapper(null, "Person_Organisation", new String[]{"Person_Organisation_Name"},
+        "hasNeighbourId:" + capPersonRid, 0L, 2L, "Person_Organisation_Name", "+asc");
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Name\":\"PBR CENTER SÃO PAULO\""), "other_company [Is_Client] edge");
+      assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Name\":\"ROCHEFOUCAULD FONDUE\""), "own_client [Works] edge");
+
+      reply = gridWrapper(null, "Object_Email", new String[]{"Object_Email_Address"},"hasNeighbourId:" + capPersonRid);
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Email_Address\":\"rochelle@test.com\""), "Email address");
+
+      reply = gridWrapper(null, "Object_Phone_Number", new String[]{"Object_Phone_Number_Last_7_Digits"},
+        "hasNeighbourId:" + capPersonRid, 0L, 2L, "Object_Phone_Number_Last_7_Digits", "+asc");
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Phone_Number_Numbers_Only\":\"00000000\""), "Phone number");
+      assertTrue(reply.getRecords()[1].contains("\"Object_Phone_Number_Numbers_Only\":\"551545982435653\""), "Mobile number");
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address"},"hasNeighbourId:" + capPersonRid);
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"Rua Paris 287, São Paulo, Centro SP - BR, 87862-943\""), "Location Address");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+  }
 
 }

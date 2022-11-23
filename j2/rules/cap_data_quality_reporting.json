@@ -116,7 +116,7 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
@@ -142,7 +142,7 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
@@ -413,7 +413,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sap/c@p Data Quality",
+            "val": "sap/c@p Data Quality Reporting",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -450,7 +450,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p Data Quality",
+            "val": "sap/c@p Data Quality Reporting",
             "mandatoryInSearch": true
           },
           {
@@ -470,7 +470,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P DATA QUALITY",
+            "val": "SAP/C@P DATA QUALITY REPORTING",
             "mandatoryInSearch": true
           }
         ]

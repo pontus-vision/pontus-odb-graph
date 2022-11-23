@@ -5,9 +5,60 @@
         "label": "Person_Natural",
         "props": [
           {
-            "name": "Person_Natural_Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
+            "name": "Person_Natural_Customer_ID",
+            "val": "${Customer}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${Ticket_owner?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "SAP/C@P COMPLAINTS WORKLIST",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Complaint",
+        "props": [
+          {
+            "name": "Event_Complaint_Id",
+            "val": "${ID_number}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Complaint_Date",
+            "val": "${Opened}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Complaint_Description",
+            "val": "${Description}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Complaint_Status",
+            "val": "${Status}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Complaint_Type",
+            "val": "SAP/C@P Complaints Worklist",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -16,7 +67,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p Complaints Worklist",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -53,7 +104,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p Complaints Worklist",
             "mandatoryInSearch": true
           },
           {
@@ -64,16 +115,6 @@
           {
             "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P MY PXXXXXX CHANGE REPORT",
             "mandatoryInSearch": true
           }
         ]
@@ -92,8 +133,13 @@
       },
       {
         "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Event_Complaint"
+      },
+      {
+        "label": "Has_Complaint",
         "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Ingestion"
+        "toVertexLabel": "Event_Complaint"
       }
     ]
   }

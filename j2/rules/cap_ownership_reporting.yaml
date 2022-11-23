@@ -7,10 +7,6 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person_Natural_Title
-          val: ${Title}
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Person_Organisation
       props:
@@ -18,39 +14,14 @@ updatereq:
           val: ${Responsible_Dealer?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person_Organisation_Name
-          val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
+          val: ${Name_1?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-    
-    - label: Object_Phone_Number
-      name: mobile
-      condition: ${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}
-      props:
-        - name: Object_Phone_Number_Raw
-          val: ${Mobile_Number}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Phone_Number_Numbers_Only
-          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
-          mandatoryInSearch: False
-          type: "[Ljava.lang.String;"
-          excludeFromSearch: True
-        - name: Object_Phone_Number_Last_7_Digits
-          val: ${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
-          mandatoryInSearch: True
-          type: "[Ljava.lang.String;"
-    
-    - label: Object_Email_Address
-      condition: ${E_Mail_Address?.trim()?.length() > 0}
-      props:
-        - name: Object_Email_Address_Email
-          val: ${E_Mail_Address?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Pxxxxxx Connect Mandatory Fields
+          val: sap/c@p PBR Ownership Reporting
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -75,7 +46,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Pxxxxxx Connect Mandatory Fields
+          val: sap/c@p PBR Ownership Reporting
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -87,7 +58,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: SAP/C@P PXXXXXX CONNECT MANDATORY FIELDS
+          val: SAP/C@P PBR OWNERSHIP REPORTING
           mandatoryInSearch: True
 
   edges:
@@ -98,14 +69,8 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Person_Natural
+    fromVertexName: Person_Natural
     toVertexLabel: Event_Ingestion
-  - label: Has_Phone
-    fromVertexLabel: Person_Natural
-    toVertexName: mobile
-  - label: Uses_Email
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Object_Email_Address
   - label: Is_Client
     fromVertexLabel: Person_Natural
     toVertexLabel: Person_Organisation

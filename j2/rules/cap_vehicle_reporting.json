@@ -6,7 +6,7 @@
         "props": [
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
+            "val": "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
@@ -26,6 +26,16 @@
             "name": "Person_Organisation_Name",
             "val": "${Company_Name_1?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Id",
+            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -34,13 +44,43 @@
         "name": "other_company",
         "props": [
           {
-            "name": "Person_Organisation_Form_Id",
-            "val": "${Responsible_Dealer?.replaceAll('[^0-9]', '')}",
+            "name": "Person_Organisation_Name",
+            "val": "${Resp__Sales_Dealer?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "name": "cnpj",
+        "condition": "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person_Organisation_Name",
-            "val": "${Resp__Sales_Dealer?.trim()?.toUpperCase()}",
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "CNPJ",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "name": "cpf",
+        "condition": "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "CPF",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -59,7 +99,7 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
@@ -85,7 +125,7 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
@@ -103,19 +143,39 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location_Address_parser",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
           {
             "name": "Location_Address_Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Vehicle",
+        "props": [
+          {
+            "name": "Object_Vehicle_License_Plate",
+            "val": "${Vehicle_License_Plat}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Vehicle_Model",
+            "val": "${Model}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Vehicle_Model_Year",
+            "val": "${Model_Year_of_Vehicl}",
             "mandatoryInSearch": true
           }
         ]
@@ -136,7 +196,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sap/c@p Lead",
+            "val": "sap/c@p Vehicle Reporting",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -173,7 +233,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p Lead",
+            "val": "sap/c@p Vehicle Reporting",
             "mandatoryInSearch": true
           },
           {
@@ -193,7 +253,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P LEAD",
+            "val": "SAP/C@P VEHICLE REPORTING",
             "mandatoryInSearch": true
           }
         ]
@@ -212,8 +272,8 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Ingestion"
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Object_Vehicle"
       },
       {
         "label": "Is_Located",
@@ -226,7 +286,7 @@
         "toVertexName": "telephone"
       },
       {
-        "label": "Has_Phone",
+        "label": "Has_Mobile",
         "fromVertexLabel": "Person_Natural",
         "toVertexName": "mobile"
       },
@@ -234,6 +294,11 @@
         "label": "Uses_Email",
         "fromVertexLabel": "Person_Natural",
         "toVertexLabel": "Object_Email_Address"
+      },
+      {
+        "label": "Has_Vehicle",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Object_Vehicle"
       },
       {
         "label": "Works",
@@ -244,6 +309,16 @@
         "label": "Is_Client",
         "fromVertexLabel": "Person_Natural",
         "toVertexName": "other_company"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexName": "cnpj"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexName": "cpf"
       }
     ]
   }

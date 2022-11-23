@@ -126,7 +126,7 @@
           },
           {
             "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "val": "${(A2_TEL?.replaceAll('[^0-9]', '')?.length()>=7?A2_TEL?.replaceAll('[^0-9]', ''):'00000000')}",
             "mandatoryInSearch": false,
             "type": "[Ljava.lang.String;",
             "excludeFromSearch": true
