@@ -86,7 +86,7 @@ updatereq:
           val: ${Transaction_Number}
           mandatoryInSearch: True
         - name: Event_Complaint_Date
-          val: ${Opened}
+          val: ${Opened?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True

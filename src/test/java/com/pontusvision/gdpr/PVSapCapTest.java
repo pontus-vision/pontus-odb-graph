@@ -515,7 +515,7 @@ public class PVSapCapTest extends AppTest {
       replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Object_Campaign_Status\":\"P\""), "Campaign status");
-      assertTrue(replyStr.contains("\"Object_Campaign_Date\":\"Wed Nov 23 11:05:20 UTC 2022\""), "Campaign date");
+      assertTrue(replyStr.contains("\"Object_Campaign_Date\":\"Tue May 11 01:01:01 UTC 2021\""), "Campaign date");
       assertTrue(replyStr.contains("\"Object_Campaign_Id\":\"QS99 PBR MM1\""), "Campaign ID");
 
       String capCampaignRid = gridWrapperGetRid("[\n" +

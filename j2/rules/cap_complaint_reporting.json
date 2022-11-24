@@ -129,7 +129,7 @@
           },
           {
             "name": "Event_Complaint_Date",
-            "val": "${Opened}",
+            "val": "${Opened?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true

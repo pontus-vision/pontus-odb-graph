@@ -47,7 +47,7 @@ updatereq:
           val: ${Campaign_ID?.trim()}
           mandatoryInSearch: True
         - name: Object_Campaign_Date
-          val: ${Created_On}
+          val: ${Created_On?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
           mandatoryInSearch: True
           type: "java.util.Date"
         - name: Object_Campaign_Status

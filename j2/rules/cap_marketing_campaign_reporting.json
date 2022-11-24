@@ -72,7 +72,7 @@
           },
           {
             "name": "Object_Campaign_Date",
-            "val": "${Created_On}",
+            "val": "${Created_On?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
           },

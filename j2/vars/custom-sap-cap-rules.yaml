@@ -810,7 +810,7 @@ rules:
         props:
           Id: "${Transaction_Number}"
           Date:
-            val: "${Opened}"
+            val: "${Opened?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: java.util.Date
             excludeFromSearch: true
           Description:
@@ -1182,7 +1182,7 @@ rules:
       - label: Object_Campaign
         props:
           Date:
-            val: "${Start_date}"
+            val: "${Start_date?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: java.util.Date
           Description:
             val: "${Description}"
@@ -1991,7 +1991,7 @@ rules:
           props:
             Id: "${ID_number}"
             Date:
-              val: "${Opened}"
+              val: "${Opened?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
               type: java.util.Date
               excludeFromSearch: true
             Description:
@@ -2086,7 +2086,7 @@ rules:
         props:
           Id: "${Campaign_ID?.trim()}"
           Date:
-            val: "${Created_On}"
+            val: "${Created_On?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: java.util.Date
           Status:
             val: "${Status}"

@@ -131,7 +131,7 @@
         "props": [
           {
             "name": "Object_Campaign_Date",
-            "val": "${Start_date}",
+            "val": "${Start_date?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
             "mandatoryInSearch": true,
             "type": "java.util.Date"
           },

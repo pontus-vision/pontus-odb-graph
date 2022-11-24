@@ -88,7 +88,7 @@ updatereq:
     - label: Object_Campaign
       props:
         - name: Object_Campaign_Date
-          val: ${Start_date}
+          val: ${Start_date?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
           mandatoryInSearch: True
           type: "java.util.Date"
         - name: Object_Campaign_Description
