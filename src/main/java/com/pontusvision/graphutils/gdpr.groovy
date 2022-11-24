@@ -5631,7 +5631,7 @@ the end of the process.
     boolean firstTime = true;
 
 //  today fixed for testing purpuses 1667569252000L = 2022-11-04T13:40:52Z [Friday, 4 November 2022 13:40:52]
-    def today = test?1667569252000L:"SYSDATE().asLong()"
+    long today = test?1667569252000L:(new Date()).getTime();
 
     def retentionPeriods = [
         "6 Months" : 3600000L * 24L * 180L,
