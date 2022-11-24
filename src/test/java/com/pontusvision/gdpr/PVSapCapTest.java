@@ -558,10 +558,10 @@ public class PVSapCapTest extends AppTest {
 
       assertTrue(replyStr.contains("\"Object_Email_Address_Email\":\"rochelle@test.com\""), "Email address");
 
-      reply = gridWrapper(null, "Object_Phone_Number", new String[]{"Object_Phone_Number_Last_7_Digits"},
-        "hasNeighbourId:" + capPersonRid, 0L, 2L, "Object_Phone_Number_Last_7_Digits", "+asc");
+      reply = gridWrapper(null, "Object_Phone_Number", new String[]{"Object_Phone_Number_Numbers_Only"},
+        "hasNeighbourId:" + capPersonRid, 0L, 2L, "Object_Phone_Number_Numbers_Only", "+asc");
 
-      assertTrue(reply.getRecords()[0].contains("\"Object_Phone_Number_Numbers_Only\":\"00000000\""), "Phone number");
+      assertTrue(reply.getRecords()[0].contains("\"Object_Phone_Number_Numbers_Only\":\"0\""), "Phone number");
       assertTrue(reply.getRecords()[1].contains("\"Object_Phone_Number_Numbers_Only\":\"551545982435653\""), "Mobile number");
 
       reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address"},"hasNeighbourId:" + capPersonRid);
