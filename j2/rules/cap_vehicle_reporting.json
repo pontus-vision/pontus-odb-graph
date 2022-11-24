@@ -18,39 +18,6 @@
         ]
       },
       {
-        "label": "Person_Organisation",
-        "name": "own_company",
-        "condition": "${Company_Name_1?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Person_Organisation_Name",
-            "val": "${Company_Name_1?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Id",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Registration_Number",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Person_Organisation",
-        "name": "other_company",
-        "props": [
-          {
-            "name": "Person_Organisation_Name",
-            "val": "${Resp__Sales_Dealer?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
         "label": "Object_Identity_Card",
         "name": "cnpj",
         "condition": "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}",
@@ -272,8 +239,8 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Object_Vehicle"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Is_Located",
@@ -299,16 +266,6 @@
         "label": "Has_Vehicle",
         "fromVertexLabel": "Person_Natural",
         "toVertexLabel": "Object_Vehicle"
-      },
-      {
-        "label": "Works",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "own_company"
-      },
-      {
-        "label": "Is_Client",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "other_company"
       },
       {
         "label": "Has_Id_Card",

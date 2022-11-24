@@ -18,29 +18,6 @@ updatereq:
           val: SAP/C@P COMPLAINTS WORKLIST
           mandatoryInSearch: True
     
-    - label: Event_Complaint
-      props:
-        - name: Event_Complaint_Id
-          val: ${ID_number}
-          mandatoryInSearch: True
-        - name: Event_Complaint_Date
-          val: ${Opened?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Complaint_Description
-          val: ${Description}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Complaint_Status
-          val: ${Status}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Complaint_Type
-          val: SAP/C@P Complaints Worklist
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
@@ -86,9 +63,6 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event_Ingestion
-    toVertexLabel: Event_Complaint
-  - label: Has_Complaint
     fromVertexLabel: Person_Natural
-    toVertexLabel: Event_Complaint
+    toVertexLabel: Event_Ingestion
 

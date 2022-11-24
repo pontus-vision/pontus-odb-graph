@@ -28,41 +28,6 @@
         ]
       },
       {
-        "label": "Event_Complaint",
-        "props": [
-          {
-            "name": "Event_Complaint_Id",
-            "val": "${ID_number}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Complaint_Date",
-            "val": "${Opened?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Complaint_Description",
-            "val": "${Description}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Complaint_Status",
-            "val": "${Status}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Complaint_Type",
-            "val": "SAP/C@P Complaints Worklist",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
         "label": "Event_Ingestion",
         "props": [
           {
@@ -133,13 +98,8 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Event_Complaint"
-      },
-      {
-        "label": "Has_Complaint",
         "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Complaint"
+        "toVertexLabel": "Event_Ingestion"
       }
     ]
   }

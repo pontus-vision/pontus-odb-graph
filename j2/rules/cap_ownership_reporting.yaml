@@ -8,16 +8,6 @@ updatereq:
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
     
-    - label: Person_Organisation
-      props:
-        - name: Person_Organisation_Form_Id
-          val: ${Responsible_Dealer?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
-        - name: Person_Organisation_Name
-          val: ${Name_1?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
@@ -71,7 +61,4 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexName: Person_Natural
     toVertexLabel: Event_Ingestion
-  - label: Is_Client
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Person_Organisation
 

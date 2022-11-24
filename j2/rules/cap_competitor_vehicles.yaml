@@ -12,25 +12,6 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
     
-    - label: Person_Organisation
-      name: own_company
-      condition: ${Company_Name_1?.trim()?.length() > 0}
-      props:
-        - name: Person_Organisation_Name
-          val: ${Company_Name_1?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    
-    - label: Person_Organisation
-      name: other_company
-      props:
-        - name: Person_Organisation_Form_Id
-          val: ${Responsible_Dealer?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
-        - name: Person_Organisation_Name
-          val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
     - label: Object_Phone_Number
       name: telephone
       condition: ${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}
@@ -154,8 +135,8 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Event_Ingestion
-    toVertexLabel: Object_Vehicle
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Event_Ingestion
   - label: Is_Located
     fromVertexLabel: Person_Natural
     toVertexLabel: Location_Address
@@ -171,10 +152,4 @@ updatereq:
   - label: Has_Vehicle
     fromVertexLabel: Person_Natural
     toVertexLabel: Object_Vehicle
-  - label: Works
-    fromVertexLabel: Person_Natural
-    toVertexName: own_company
-  - label: Is_Client
-    fromVertexLabel: Person_Natural
-    toVertexName: other_company
 

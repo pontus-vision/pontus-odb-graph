@@ -18,34 +18,6 @@
         ]
       },
       {
-        "label": "Person_Organisation",
-        "name": "own_company",
-        "condition": "${Company_Name_1?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Person_Organisation_Name",
-            "val": "${Company_Name_1?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Person_Organisation",
-        "props": [
-          {
-            "name": "Person_Organisation_Form_Id",
-            "val": "${Responsible_Dealer?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Name",
-            "val": "${Resp__Sales_Dealer?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
         "label": "Object_Phone_Number",
         "name": "telephone",
         "condition": "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}",
@@ -116,47 +88,6 @@
             "name": "Location_Address_Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
             "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Complaint",
-        "props": [
-          {
-            "name": "Event_Complaint_Id",
-            "val": "${Transaction_Number}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Complaint_Date",
-            "val": "${Opened?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Complaint_Description",
-            "val": "${Description}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Complaint_Status",
-            "val": "${Status}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Complaint_Type",
-            "val": "SAP/C@P Complaint Reporting",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Complaint_Expiry",
-            "val": "${Due_Date}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
@@ -252,8 +183,8 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Event_Complaint"
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Ingestion"
       },
       {
         "label": "Is_Located",
@@ -274,21 +205,6 @@
         "label": "Uses_Email",
         "fromVertexLabel": "Person_Natural",
         "toVertexLabel": "Object_Email_Address"
-      },
-      {
-        "label": "Has_Complaint",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Complaint"
-      },
-      {
-        "label": "Works",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "own_company"
-      },
-      {
-        "label": "Is_Client",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "other_company"
       }
     ]
   }
