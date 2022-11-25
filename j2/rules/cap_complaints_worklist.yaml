@@ -4,24 +4,24 @@ updatereq:
     
     - label: Person_Natural
       props:
+        - name: Person_Natural_Customer_ID
+          val: ${Customer}
+          mandatoryInSearch: True
         - name: Person_Natural_Full_Name
-          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    
-    - label: Person_Organisation
-      props:
-        - name: Person_Organisation_Form_Id
-          val: ${Responsible_Dealer?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
-        - name: Person_Organisation_Name
-          val: ${Name_1?.trim()?.toUpperCase()}
+          val: ${Ticket_owner?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
+    
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: SAP/C@P COMPLAINTS WORKLIST
+          mandatoryInSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Pxxxxxx Ownership Change
+          val: sap/c@p Complaints Worklist
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -46,19 +46,13 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Pxxxxxx Ownership Change
+          val: sap/c@p Complaints Worklist
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-    
-    - label: Object_Data_Source
-      props:
-        - name: Object_Data_Source_Name
-          val: SAP/C@P PXXXXXX OWNERSHIP CHANGE
           mandatoryInSearch: True
 
   edges:
@@ -69,9 +63,6 @@ updatereq:
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexName: Person_Natural
-    toVertexLabel: Event_Ingestion
-  - label: Is_Client
     fromVertexLabel: Person_Natural
-    toVertexLabel: Person_Organisation
+    toVertexLabel: Event_Ingestion
 

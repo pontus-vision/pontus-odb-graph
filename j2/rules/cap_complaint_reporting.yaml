@@ -5,55 +5,10 @@ updatereq:
     - label: Person_Natural
       props:
         - name: Person_Natural_Full_Name
-          val: ${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}
+          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
         - name: Person_Natural_Title
           val: ${Title}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
-    - label: Person_Organisation
-      name: own_company
-      condition: ${Company_Name_1?.trim()?.length() > 0}
-      props:
-        - name: Person_Organisation_Name
-          val: ${Company_Name_1?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person_Organisation_Id
-          val: ${Tax_Number?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Person_Organisation_Registration_Number
-          val: ${Tax_Number?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-    
-    - label: Person_Organisation
-      name: other_company
-      props:
-        - name: Person_Organisation_Name
-          val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    
-    - label: Object_Identity_Card
-      name: cnpj
-      condition: ${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}
-      props:
-        - name: Object_Identity_Card_Id_Value
-          val: ${Tax_Number?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object_Identity_Card_Id_Type
-          val: CNPJ
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
-    - label: Object_Identity_Card
-      name: cpf
-      condition: ${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}
-      props:
-        - name: Object_Identity_Card_Id_Value
-          val: ${Tax_Number?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object_Identity_Card_Id_Type
-          val: CPF
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -96,27 +51,15 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location_Address_parser
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location_Address_Post_Code
           val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
-          mandatoryInSearch: True
-    
-    - label: Object_Vehicle
-      props:
-        - name: Object_Vehicle_License_Plate
-          val: ${Vehicle_License_Plat}
-          mandatoryInSearch: True
-        - name: Object_Vehicle_Model
-          val: ${Model}
-          mandatoryInSearch: True
-        - name: Object_Vehicle_Model_Year
-          val: ${Model_Year_of_Vehicl}
           mandatoryInSearch: True
     
     - label: Object_Email_Address
@@ -129,7 +72,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Vehicle
+          val: sap/c@p Complaint Reporting
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -154,7 +97,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Vehicle
+          val: sap/c@p Complaint Reporting
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -166,7 +109,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: SAP/C@P VEHICLE
+          val: SAP/C@P COMPLAINT REPORTING
           mandatoryInSearch: True
 
   edges:
@@ -191,19 +134,4 @@ updatereq:
   - label: Uses_Email
     fromVertexLabel: Person_Natural
     toVertexLabel: Object_Email_Address
-  - label: Has_Vehicle
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Object_Vehicle
-  - label: Works
-    fromVertexLabel: Person_Natural
-    toVertexName: own_company
-  - label: Is_Client
-    fromVertexLabel: Person_Natural
-    toVertexName: other_company
-  - label: Has_Id_Card
-    fromVertexLabel: Person_Natural
-    toVertexName: cnpj
-  - label: Has_Id_Card
-    fromVertexLabel: Person_Natural
-    toVertexName: cpf
 

@@ -7,32 +7,10 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-        - name: Person_Natural_Full_Name_fuzzy
-          val: ${Name_at_Birth?:''}
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Person_Natural_Title
           val: ${Title}
           mandatoryInSearch: False
           excludeFromSearch: True
-    
-    - label: Object_Phone_Number
-      name: telephone
-      condition: ${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}
-      props:
-        - name: Object_Phone_Number_Raw
-          val: ${Telephone_No_}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Phone_Number_Numbers_Only
-          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}
-          mandatoryInSearch: False
-          type: "[Ljava.lang.String;"
-          excludeFromSearch: True
-        - name: Object_Phone_Number_Last_7_Digits
-          val: ${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
-          mandatoryInSearch: True
-          type: "[Ljava.lang.String;"
     
     - label: Object_Phone_Number
       name: mobile
@@ -52,20 +30,6 @@ updatereq:
           mandatoryInSearch: True
           type: "[Ljava.lang.String;"
     
-    - label: Location_Address
-      props:
-        - name: Location_Address_Full_Address
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Location_Address_parser
-          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
-          mandatoryInSearch: True
-          type: "com.pontusvision.utils.LocationAddress"
-        - name: Location_Address_Post_Code
-          val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
-          mandatoryInSearch: True
-    
     - label: Object_Email_Address
       condition: ${E_Mail_Address?.trim()?.length() > 0}
       props:
@@ -76,7 +40,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Workshop Campaigns and Recalls
+          val: sap/c@p PBR Connect Mandatory Fields
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -101,7 +65,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Workshop Campaigns and Recalls
+          val: sap/c@p PBR Connect Mandatory Fields
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -113,7 +77,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: SAP/C@P WORKSHOP CAMPAIGNS AND RECALLS
+          val: SAP/C@P PBR CONNECT MANDATORY FIELDS
           mandatoryInSearch: True
 
   edges:
@@ -126,19 +90,10 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Person_Natural
     toVertexLabel: Event_Ingestion
-  - label: Is_Located
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Location_Address
   - label: Has_Phone
-    fromVertexLabel: Person_Natural
-    toVertexName: telephone
-  - label: Has_Mobile
     fromVertexLabel: Person_Natural
     toVertexName: mobile
   - label: Uses_Email
     fromVertexLabel: Person_Natural
     toVertexLabel: Object_Email_Address
-  - label: Has_Campaign
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Object_Campaign
 

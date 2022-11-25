@@ -5,9 +5,15 @@
         "label": "Person_Natural",
         "props": [
           {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${ID?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Person_Natural_Full_Name",
             "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Person_Natural_Title",
@@ -18,31 +24,50 @@
         ]
       },
       {
-        "label": "Person_Organisation",
-        "name": "own_company",
-        "condition": "${Company_Name_1?.trim()?.length() > 0}",
+        "label": "Object_Data_Source",
         "props": [
           {
-            "name": "Person_Organisation_Name",
-            "val": "${Company_Name_1?.trim()?.toUpperCase()}",
+            "name": "Object_Data_Source_Name",
+            "val": "SAP/C@P MARKETING CAMPAIGN REPORTING",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Person_Organisation",
-        "name": "other_company",
+        "label": "Object_Campaign",
         "props": [
           {
-            "name": "Person_Organisation_Form_Id",
-            "val": "${Responsible_Dealer?.replaceAll('[^0-9]', '')}",
+            "name": "Object_Campaign_Id",
+            "val": "${Campaign_ID?.trim()}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person_Organisation_Name",
-            "val": "${Resp__Sales_Dealer?.trim()?.toUpperCase()}",
+            "name": "Object_Campaign_Date",
+            "val": "${Created_On?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
+          },
+          {
+            "name": "Object_Campaign_Status",
+            "val": "${Status}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Campaign_Type",
+            "val": "SAP/C@P Marketing Campaign Reporting",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${E_Mail_Address?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -103,13 +128,13 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-            "val": "${Street} ${House_Number}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location_Address_parser",
-            "val": "${Street} ${House_Number}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${City}, ${Region_Desc_} ${Region} - ${Country}, ${Postal_Code}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
@@ -121,22 +146,11 @@
         ]
       },
       {
-        "label": "Object_Email_Address",
-        "condition": "${E_Mail_Address?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Email_Address_Email",
-            "val": "${E_Mail_Address?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
         "label": "Event_Ingestion",
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sap/c@p Activity",
+            "val": "sap/c@p Marketing Campaign Reporting",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -173,7 +187,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p Activity",
+            "val": "sap/c@p Marketing Campaign Reporting",
             "mandatoryInSearch": true
           },
           {
@@ -184,16 +198,6 @@
           {
             "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P ACTIVITY",
             "mandatoryInSearch": true
           }
         ]
@@ -216,6 +220,11 @@
         "toVertexLabel": "Event_Ingestion"
       },
       {
+        "label": "Has_Campaign",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Object_Campaign"
+      },
+      {
         "label": "Is_Located",
         "fromVertexLabel": "Person_Natural",
         "toVertexLabel": "Location_Address"
@@ -234,16 +243,6 @@
         "label": "Uses_Email",
         "fromVertexLabel": "Person_Natural",
         "toVertexLabel": "Object_Email_Address"
-      },
-      {
-        "label": "Works",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "own_company"
-      },
-      {
-        "label": "Is_Client",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "other_company"
       }
     ]
   }

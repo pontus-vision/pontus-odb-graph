@@ -6,7 +6,7 @@
         "props": [
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
+            "val": "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           },
           {
@@ -18,18 +18,64 @@
         ]
       },
       {
-        "label": "Person_Organisation",
+        "label": "Object_Identity_Card",
+        "name": "cnpj",
+        "condition": "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}",
         "props": [
           {
-            "name": "Person_Organisation_Form_Id",
-            "val": "${Responsible_Dealer?.replaceAll('[^0-9]', '')}",
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Person_Organisation_Name",
-            "val": "${Resp__Sales_Dealer?.trim()?.toUpperCase()}",
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "CNPJ",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "name": "cpf",
+        "condition": "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "CPF",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Phone_Number",
+        "name": "telephone",
+        "condition": "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}",
+        "props": [
+          {
+            "name": "Object_Phone_Number_Raw",
+            "val": "${Telephone_No_}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Phone_Number_Numbers_Only",
+            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
+            "type": "[Ljava.lang.String;",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Phone_Number_Last_7_Digits",
+            "val": "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
           }
         ]
       },
@@ -60,6 +106,48 @@
         ]
       },
       {
+        "label": "Location_Address",
+        "props": [
+          {
+            "name": "Location_Address_Full_Address",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location_Address_parser",
+            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region_Desc_} (${District?:''}), ${City} - ${Country}, ${Postal_Code}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location_Address_Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Vehicle",
+        "props": [
+          {
+            "name": "Object_Vehicle_License_Plate",
+            "val": "${Vehicle_License_Plat}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Vehicle_Model",
+            "val": "${Model}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Vehicle_Model_Year",
+            "val": "${Model_Year_of_Vehicl}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
         "label": "Object_Email_Address",
         "condition": "${E_Mail_Address?.trim()?.length() > 0}",
         "props": [
@@ -75,7 +163,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
+            "val": "sap/c@p Vehicle Reporting",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -112,7 +200,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p Pxxxxxx Connect Mandatory Fields",
+            "val": "sap/c@p Vehicle Reporting",
             "mandatoryInSearch": true
           },
           {
@@ -132,7 +220,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P PXXXXXX CONNECT MANDATORY FIELDS",
+            "val": "SAP/C@P VEHICLE REPORTING",
             "mandatoryInSearch": true
           }
         ]
@@ -155,7 +243,17 @@
         "toVertexLabel": "Event_Ingestion"
       },
       {
+        "label": "Is_Located",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Location_Address"
+      },
+      {
         "label": "Has_Phone",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexName": "telephone"
+      },
+      {
+        "label": "Has_Mobile",
         "fromVertexLabel": "Person_Natural",
         "toVertexName": "mobile"
       },
@@ -165,9 +263,19 @@
         "toVertexLabel": "Object_Email_Address"
       },
       {
-        "label": "Is_Client",
+        "label": "Has_Vehicle",
         "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Person_Organisation"
+        "toVertexLabel": "Object_Vehicle"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexName": "cnpj"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexName": "cpf"
       }
     ]
   }

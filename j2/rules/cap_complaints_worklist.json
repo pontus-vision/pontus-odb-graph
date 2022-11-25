@@ -5,8 +5,24 @@
         "label": "Person_Natural",
         "props": [
           {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${Customer}",
+            "mandatoryInSearch": true
+          },
+          {
             "name": "Person_Natural_Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
+            "val": "${Ticket_owner?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "SAP/C@P COMPLAINTS WORKLIST",
             "mandatoryInSearch": true
           }
         ]
@@ -16,7 +32,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p Complaints Worklist",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -53,7 +69,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p My Pxxxxxx Change Report",
+            "val": "sap/c@p Complaints Worklist",
             "mandatoryInSearch": true
           },
           {
@@ -64,16 +80,6 @@
           {
             "name": "Event_Group_Ingestion_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P MY PXXXXXX CHANGE REPORT",
             "mandatoryInSearch": true
           }
         ]

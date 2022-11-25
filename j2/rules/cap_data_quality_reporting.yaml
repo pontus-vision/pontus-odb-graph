@@ -47,27 +47,6 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
     
-    - label: Person_Organisation
-      name: other_company
-      props:
-        - name: Person_Organisation_Name
-          val: ${Resp__Sales_Dealer?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    
-    - label: Person_Organisation
-      name: own_company
-      condition: ${Company_Name_1?.trim()?.length() > 0}
-      props:
-        - name: Person_Organisation_Name
-          val: ${Company_Name_1?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person_Organisation_Id
-          val: ${Tax_Number?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Person_Organisation_Registration_Number
-          val: ${Tax_Number?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-    
     - label: Object_Phone_Number
       name: telephone
       condition: ${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}
@@ -268,7 +247,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sap/c@p Data Quality
+          val: sap/c@p Data Quality Reporting
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -293,7 +272,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sap/c@p Data Quality
+          val: sap/c@p Data Quality Reporting
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -305,7 +284,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: SAP/C@P DATA QUALITY
+          val: SAP/C@P DATA QUALITY REPORTING
           mandatoryInSearch: True
 
   edges:
@@ -330,12 +309,6 @@ updatereq:
   - label: Uses_Email
     fromVertexLabel: Person_Natural
     toVertexLabel: Object_Email_Address
-  - label: Works
-    fromVertexLabel: Person_Natural
-    toVertexName: own_company
-  - label: Is_Client
-    fromVertexLabel: Person_Natural
-    toVertexName: other_company
   - label: Has_Id_Card
     fromVertexLabel: Person_Natural
     toVertexName: cnpj
