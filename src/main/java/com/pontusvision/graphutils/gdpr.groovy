@@ -5624,11 +5624,14 @@ the end of the process.
 
   }
 
-  static def getDataRetentionKpis() {
+  static def getDataRetentionKpis(boolean test = false) {
 
     StringBuffer sb = new StringBuffer("[")
 
     boolean firstTime = true;
+
+//  today fixed for testing purpuses 1667569252000L = 2022-11-04T13:40:52Z [Friday, 4 November 2022 13:40:52]
+    long today = test?1667569252000L:(new Date()).getTime();
 
     def retentionPeriods = [
         "6 Months" : 3600000L * 24L * 180L,
@@ -5648,9 +5651,9 @@ the end of the process.
           """
         SELECT count(1) as rid 
         FROM Person_Natural
-        WHERE Person_Natural_Last_Update_Date.asLong() <= (SYSDATE().asLong() - :threshold)
+        WHERE Person_Natural_Last_Update_Date.asLong() <= (:today - :threshold)
         LIMIT 1
-        """, ["threshold": retVal])
+        """, ["threshold": retVal, "today": today])
 
 
       for (def result : results) {
