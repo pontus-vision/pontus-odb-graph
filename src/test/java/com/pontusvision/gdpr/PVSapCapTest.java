@@ -173,7 +173,7 @@ public class PVSapCapTest extends AppTest {
 
       String capPersonRid = gridWrapperGetRid("[\n" +
           "  {\n" +
-          "    \"colId\": \"Person_Natural_Customer_ID\",\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
           "    \"filterType\": \"text\",\n" +
           "    \"type\": \"equals\",\n" +
           "    \"filter\": \"" + getPersonNatural + "\"\n" +
@@ -266,8 +266,8 @@ public class PVSapCapTest extends AppTest {
       reply = gridWrapper(null, "Object_Phone_Number", new String[]{"Object_Phone_Number_Numbers_Only"},
         "hasNeighbourId:" + capPersonRid, 0L, 2L, "Object_Phone_Number_Numbers_Only", "+asc");
 
-      assertTrue(reply.getRecords()[0].contains("\"Object_Phone_Number_Raw\":\"91349783749879\""), "Mustafa's mobile number");
-      assertTrue(reply.getRecords()[1].contains("\"Object_Phone_Number_Raw\":\"983479865088\""), "Mustafa's phone number");
+      assertTrue(reply.getRecords()[0].contains("\"Object_Phone_Number_Numbers_Only\":\"91349783749879\""), "Mustafa's mobile number");
+      assertTrue(reply.getRecords()[1].contains("\"Object_Phone_Number_Numbers_Only\":\"983479865088\""), "Mustafa's phone number");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
@@ -383,7 +383,7 @@ public class PVSapCapTest extends AppTest {
 
       String getMobileNumber =
               App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('sap/c@p Competitor Vehicles'))" +
-                      ".out('Has_Ingestion_Event').in('Has_Vehicle').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
+                      ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural'))" +
                       ".out('Has_Mobile').properties('Object_Phone_Number_Raw').value().next()").get().toString();
       assertEquals("098098704", getMobileNumber, "Mobile number");
 
@@ -620,7 +620,7 @@ public class PVSapCapTest extends AppTest {
       reply = gridWrapper(null, "Object_Phone_Number", new String[]{"Object_Phone_Number_Numbers_Only"},
         "hasNeighbourId:" + capPersonRid, 0L, 2L, "Object_Phone_Number_Numbers_Only", "+asc");
 
-      assertTrue(reply.getRecords()[0].contains("\"Object_Phone_Number_Numbers_Only\":\"0\""), "Phone number");
+      assertTrue(reply.getRecords()[0].contains("\"Object_Phone_Number_Numbers_Only\":\"55\""), "Phone number");
       assertTrue(reply.getRecords()[1].contains("\"Object_Phone_Number_Numbers_Only\":\"551545982435653\""), "Mobile number");
 
       reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address"},"hasNeighbourId:" + capPersonRid);
