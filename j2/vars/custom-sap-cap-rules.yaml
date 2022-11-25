@@ -41,7 +41,7 @@ rules:
 #            val: "Leads"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
 #         We forgot to check if the Phone number had at least 7 digits [?.length()>=7]
@@ -60,7 +60,7 @@ rules:
 #            val: "Leads"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -231,7 +231,7 @@ rules:
             val: "${Telephone_No_}"
             excludeFromSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -246,7 +246,7 @@ rules:
             val: "${Mobile_Number}"
             excludeFromSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -564,7 +564,7 @@ rules:
 #            val: "PBR Connect Mandatory Fields"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -768,7 +768,7 @@ rules:
 #            val: "SAP/C@P Complaint"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -786,7 +786,7 @@ rules:
 #            val: "CAP/S@P Complaint"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -958,7 +958,7 @@ rules:
 #            val: "SAP/C@P Activity"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -976,7 +976,7 @@ rules:
 #            val: "CAP/S@P Activity"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -1141,7 +1141,7 @@ rules:
 #            val: "SAP/C@P Workshop Campaigns and Recalls"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -1159,7 +1159,7 @@ rules:
 #            val: "CAP/S@P Workshop Campaigns and Recalls"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -1325,7 +1325,7 @@ rules:
 #            val: "SAP/C@P Competitor Vehicles"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -1343,7 +1343,7 @@ rules:
 #            val: "CAP/S@P Competitor Vehicles"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -1518,7 +1518,7 @@ rules:
 #            val: "SAP/C@P Vehicle"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -1536,7 +1536,7 @@ rules:
 #            val: "CAP/S@P Vehicle"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -1722,7 +1722,7 @@ rules:
 #            val: "Data Quality"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -1740,7 +1740,7 @@ rules:
 #            val: "Data Quality"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -2107,7 +2107,7 @@ rules:
             val: "${Telephone_No_}"
             excludeFromSearch: true
           Numbers_Only:
-            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?.length()>=7?Telephone_No_?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
@@ -2122,7 +2122,7 @@ rules:
             val: "${Mobile_Number}"
             excludeFromSearch: true
           Numbers_Only:
-            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?.length()>=7?Mobile_Number?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:
