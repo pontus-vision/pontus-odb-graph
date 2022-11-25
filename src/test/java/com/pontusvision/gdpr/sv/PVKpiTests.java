@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import static com.pontusvision.graphutils.gdpr.getDataRetentionKpis;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -41,14 +42,8 @@ public class PVKpiTests extends AppTest {
 
     try {
 
-//      results had to be handwritten because as time goes by, the number of records will change, and this test would eventually fail
-//      String output = (String) getDataRetentionKpis();
-      String expectedOutput = "[ { \"metricname\": \"6 Months\", \"metricvalue\": 30, \"metrictype\": \"Data Retention\" }" +
-        ", { \"metricname\": \"1 Year\", \"metricvalue\": 25, \"metrictype\": \"Data Retention\" }," +
-        " { \"metricname\": \"2 years\", \"metricvalue\": 8, \"metrictype\": \"Data Retention\" }," +
-        " { \"metricname\": \"3 years\", \"metricvalue\": 7, \"metrictype\": \"Data Retention\" }," +
-        " { \"metricname\": \"5 years\", \"metricvalue\": 7, \"metrictype\": \"Data Retention\" }," +
-        " { \"metricname\": \"7 years\", \"metricvalue\": 3, \"metrictype\": \"Data Retention\" }]";
+//    fixed @ 1667569252000L = 2022-11-04T13:40:52Z [Friday, 4 November 2022 13:40:52] for testing purposes
+      String expectedOutput = (String) getDataRetentionKpis(true);
 
       assertTrue(expectedOutput.contains("{ \"metricname\": \"6 Months\", \"metricvalue\": 30, \"metrictype\": \"Data Retention\" }"));
       assertTrue(expectedOutput.contains("{ \"metricname\": \"1 Year\", \"metricvalue\": 25, \"metrictype\": \"Data Retention\" }"));
