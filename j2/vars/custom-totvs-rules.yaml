@@ -66,7 +66,7 @@ rules:
 #            val: "Office"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(A1_TEL?.replaceAll('[^0-9]', '')?.length()>=7?A1_TEL?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(A1_TEL?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
 #         We forgot to check if the Phone number had at least 7 digits [?.length()>=7]
@@ -373,7 +373,7 @@ rules:
 #            val: "Office"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only: # num1 => "30251495" ...................... num2 => "554530251495"
-            val: "${(RA_TELEFON?.replaceAll('[^0-9]', '')?.length()>=7?RA_TELEFON?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(RA_TELEFON?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits: # num1 => "251495" ...................... num2 => "251495" leading zeros are removed !!
@@ -723,7 +723,7 @@ rules:
 #            val: "Telefone 2"
 #            excludeFromSubsequenceSearch: true
           Numbers_Only:
-            val: "${(A2_TEL?.replaceAll('[^0-9]', '')?.length()>=7?A2_TEL?.replaceAll('[^0-9]', ''):'00000000')}"
+            val: "${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
             type: "[Ljava.lang.String;"
           Last_7_Digits:

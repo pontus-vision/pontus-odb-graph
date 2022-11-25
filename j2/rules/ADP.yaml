@@ -122,7 +122,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Numbers_Only
-          val: ${(Telefone?.replaceAll('[^0-9]', '')?.length()>=7?Telefone?.replaceAll('[^0-9]', ''):'00000000')}
+          val: ${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Phone_Number_Last_7_Digits
