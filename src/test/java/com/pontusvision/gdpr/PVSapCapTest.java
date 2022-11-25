@@ -345,14 +345,24 @@ public class PVSapCapTest extends AppTest {
       assertTrue(replyStr.contains("\"Person_Natural_Full_Name\":\"RODOLFO FIGUEIREDO\""), "Person name");
       assertTrue(replyStr.contains("\"Person_Natural_Title\":\"Mr.\""), "Rodolfo's Title");
 
+      String capPersonRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"RODOLFO FIGUEIREDO\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Customer_ID"});
+
       reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
-        "hasNeighbourId:" + capEventRid);
+        "hasNeighbourId:" + capPersonRid);
       replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Object_Email_Address_Email\":\"rod@calcados.br\""), "Rodolfo's email");
 
       reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address"},
-        "hasNeighbourId:" + capEventRid);
+        "hasNeighbourId:" + capPersonRid);
       replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"av Maria Mar 99 Apt 61, SC Rebouças, Taio - BR, 18958-980\""),
