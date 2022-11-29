@@ -304,7 +304,7 @@ public class PVTemplateTests extends AppTest {
       renderReply = res.reportTemplateRender(renderReq);
 
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      assertEquals("Consentimento", report);
+      assertEquals("Legitimo interesse", report);
 
 
 //    Testing for LIA's Processing Purpose
