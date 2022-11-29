@@ -135,7 +135,7 @@ public class PVFormTests extends AppTest {
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Why_Is_It_Collected").setUserData(new String[]{"Necessário para contratação de prestadores de serviços e/ou fornecedores pessoas físicas"});
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Country_Where_Stored").setUserData(new String[]{"Bxxxx"});
 
-      components2[++idx] = new PVFormData().setName("Object_Data_Procedures_ID").setUserData(new String[]{"6"});
+      components2[++idx] = new PVFormData().setName("Object_Data_Procedures_ID").setUserData(new String[]{"4"});
 //      components2[++idx] = new PVFormData().setName("Metadata_Type_Object_Data_Procedures").setUserData(new String[]{"Object_Data_Procedures"});
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Name").setUserData(new String[]{"Prestadores de Serviços e Fornecedores"});
 //      components2[++idx] = new PVFormData().setName("Metadata_Type").setUserData(new String[]{"Object_Data_Procedures"});
