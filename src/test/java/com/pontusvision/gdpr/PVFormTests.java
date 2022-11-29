@@ -48,7 +48,7 @@ public class PVFormTests extends AppTest {
           "]", "Object_Data_Policy",
         new String[]{"Object_Data_Policy_Type"});
 
-      String rid = gridWrapperGetRid(null, "Object_Data_Procedures", null, "hasNeighbourId:" + dataPolicyRid);
+      String rid = gridWrapperGetRid(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_ID"}, "hasNeighbourId:" + dataPolicyRid);
 
 // -------------------------------------------------------------------------------------------------------------------------------------
 
