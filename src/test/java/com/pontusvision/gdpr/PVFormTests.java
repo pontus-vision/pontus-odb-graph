@@ -33,9 +33,24 @@ public class PVFormTests extends AppTest {
       jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
               "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
-      String rid =
-              App.executor.eval("App.g.V().has('Object_Data_Policy_Type', eq('4')).in('Has_Policy')" +
-                      ".id().next().toString()").get().toString();
+//      String rid =
+//              App.executor.eval("App.g.V().has('Object_Data_Policy_Type', eq('4')).in('Has_Policy')" +
+//                      ".id().next().toString()").get().toString();
+
+//    new AGgrid test style ------------------------------------------------------------------------------------------------------------
+      String dataPolicyRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Policy_Type\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"4\"\n" +
+          "  }\n" +
+          "]", "Object_Data_Policy",
+        new String[]{"Object_Data_Policy_Type"});
+
+      String rid = gridWrapperGetRid(null, "Object_Data_Procedures", null, "hasNeighbourId:" + dataPolicyRid);
+
+// -------------------------------------------------------------------------------------------------------------------------------------
 
       FormDataRequest req = new FormDataRequest();
       int idx = -1;
@@ -161,7 +176,7 @@ public class PVFormTests extends AppTest {
       assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);
 
 
-    } catch (ExecutionException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);
     }
