@@ -264,7 +264,7 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("1"))
+      String contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
               .id().next().toString();
 
 //      MockedStatic<PontusJ2ReportingFunctions> mocked = mockStatic(PontusJ2ReportingFunctions.class);
@@ -281,7 +281,7 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      assertEquals("Sim, é indispensável - processo 1", report);
+      assertEquals("Sim, é indispensável - processo 4", report);
 
 
 //    Testing for LIA's Lawful Basis

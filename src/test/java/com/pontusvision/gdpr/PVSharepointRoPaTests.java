@@ -74,7 +74,7 @@ public class PVSharepointRoPaTests extends AppTest {
                       "eq('LEGÍTIMO INTERESSE')).in('Has_Lawful_Basis_On').out('Has_Legitimate_Interests_Assessment')" +
                       ".properties('Object_Legitimate_Interests_Assessment_Is_Essential')" +
                       ".value().next().toString()").get().toString();
-      assertEquals("Sim, é indispensável", LIAPersonalDataTreatment, "Personal Data Treatment for this LIA is => Sim, é indispensável");
+      assertEquals("Sim, é indispensável - processo 4", LIAPersonalDataTreatment, "Personal Data Treatment for this LIA is => Sim, é indispensável");
 
 //    testing new edge between Object_Email ------- Is_Responsible ------- > RoPA
       String svRopaRid = gridWrapperGetRid("[\n" +
