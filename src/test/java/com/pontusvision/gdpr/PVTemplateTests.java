@@ -264,8 +264,20 @@ public class PVTemplateTests extends AppTest {
 
       String templateId = reply.getTemplateId();
 
-      String contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
-              .id().next().toString();
+//      String contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
+//              .id().next().toString();
+
+//    new AGgrid test style ------------------------------------------------------------------------------------------------------------
+      String contextId = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"4\"\n" +
+          "  }\n" +
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_ID"});
+// -------------------------------------------------------------------------------------------------------------------------------------
 
 //      MockedStatic<PontusJ2ReportingFunctions> mocked = mockStatic(PontusJ2ReportingFunctions.class);
 //
@@ -297,8 +309,21 @@ public class PVTemplateTests extends AppTest {
 
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
-      contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
-              .id().next().toString();
+//      contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
+//              .id().next().toString();
+
+//    new AGgrid test style ------------------------------------------------------------------------------------------------------------
+      contextId = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"4\"\n" +
+          "  }\n" +
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_ID"});
+// -------------------------------------------------------------------------------------------------------------------------------------
+
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
       renderReply = res.reportTemplateRender(renderReq);
