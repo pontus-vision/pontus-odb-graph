@@ -34,7 +34,7 @@ public class PVFormTests extends AppTest {
               "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
       String rid =
-              App.executor.eval("App.g.V().has('Object_Data_Policy_Type', eq('6')).in('Has_Policy')" +
+              App.executor.eval("App.g.V().has('Object_Data_Policy_Type', eq('4')).in('Has_Policy')" +
                       ".id().next().toString()").get().toString();
 
       FormDataRequest req = new FormDataRequest();
