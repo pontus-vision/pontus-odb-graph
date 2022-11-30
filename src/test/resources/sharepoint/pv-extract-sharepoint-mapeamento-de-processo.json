@@ -72,9 +72,9 @@
           "Base_x0020_legal": [
             "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
           ],
-          "Essetratamentodedadospessoais_x0": "Sim, é indispensável - processo 1",
-          "N_x00e3_oh_x00e1_outrabaselegalp": "Legitimo interesse",
-          "Esse_x0020_processamento_x0020_d": "Sim",
+          "Essetratamentodedadospessoais_x0": "",
+          "N_x00e3_oh_x00e1_outrabaselegalp": "",
+          "Esse_x0020_processamento_x0020_d": "",
           "PartesInteressadasConsultadas": "Jurídico Snowymountain",
           "LinkTitleNoMenu": "1",
           "LinkTitle": "1",
@@ -348,8 +348,9 @@
           ],
           "Base_x0020_legal": [
             "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
+            "Legítimo interesse"
           ],
-          "Essetratamentodedadospessoais_x0": "Sim, é indispensável",
+          "Essetratamentodedadospessoais_x0": "Sim, é indispensável - processo 4",
           "N_x00e3_oh_x00e1_outrabaselegalp": "Legitimo interesse",
           "Esse_x0020_processamento_x0020_d": "Sim",
           "PartesInteressadasConsultadas": "EPG Advogados",
@@ -546,9 +547,9 @@
           "Base_x0020_legal": [
             "Execução de contrato ou de procedimentos preliminares a contrato, a pedido do titular"
           ],
-          "Essetratamentodedadospessoais_x0": "Sim",
-          "N_x00e3_oh_x00e1_outrabaselegalp": "Consentimento",
-          "Esse_x0020_processamento_x0020_d": "Sim",
+          "Essetratamentodedadospessoais_x0": "",
+          "N_x00e3_oh_x00e1_outrabaselegalp": "",
+          "Esse_x0020_processamento_x0020_d": "",
           "PartesInteressadasConsultadas": "EPG Advogados",
           "LinkTitleNoMenu": "6",
           "LinkTitle": "6",

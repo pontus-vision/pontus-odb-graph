@@ -60,25 +60,42 @@ public class PVSharepointRoPaTests extends AppTest {
                       ".value().next().toString()").get().toString();
       assertEquals("Legitimo interesse", LIALawfulBasis, "Lawful Basis Justification for this LIA is => Legitimo interesse");
 
-      String LIAProcessingPurpose =
-              App.executor.eval("App.g.V().has('Object_Data_Procedures_Form_Id', eq('406'))" +
-                      ".out('Has_Legitimate_Interests_Assessment')" +
-                      ".properties('Object_Legitimate_Interests_Assessment_Is_Required').value()" +
-                      ".next().toString()").get().toString();
-      assertEquals("Sim", LIAProcessingPurpose, "Processing Purpose for this LIA is => SIM");
+//      String LIAProcessingPurpose =
+//              App.executor.eval("App.g.V().has('Object_Data_Procedures_Form_Id', eq('406'))" +
+//                      ".out('Has_Legitimate_Interests_Assessment')" +
+//                      ".properties('Object_Legitimate_Interests_Assessment_Is_Required').value()" +
+//                      ".next().toString()").get().toString();
+//      assertFalse(true,"Processing Purpose for this LIA is empty because this RoPA has no Legítimo interesse as a lawful basis");
 
-      String LIAPersonalDataTreatment =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', " +
-                      "eq('SHAREPOINT/MAPEAMENTO-DE-PROCESSOS')).out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
-                      ".out('Has_Ingestion_Event').out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', " +
-                      "eq('EXECUÇÃO DE CONTRATO OU DE PROCEDIMENTOS PRELIMINARES A CONTRATO, A PEDIDO DO TITULAR'))" +
-                      ".in('Has_Lawful_Basis_On').out('Has_Legitimate_Interests_Assessment')" +
-                      ".properties('Object_Legitimate_Interests_Assessment_Is_Essential')" +
-                      ".value().next().toString()").get().toString();
-      assertEquals("Sim, é indispensável - processo 1", LIAPersonalDataTreatment, "Personal Data Treatment for this LIA is => Sim, é indispensável");
+//      String LIAPersonalDataTreatment =
+//              App.executor.eval("App.g.V().has('Object_Data_Source_Name', " +
+//                      "eq('SHAREPOINT/MAPEAMENTO-DE-PROCESSOS')).out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
+//                      ".out('Has_Ingestion_Event').out('Has_Lawful_Basis_On').has('Object_Lawful_Basis_Description', " +
+//                      "eq('LEGÍTIMO INTERESSE')).in('Has_Lawful_Basis_On').out('Has_Legitimate_Interests_Assessment')" +
+//                      ".properties('Object_Legitimate_Interests_Assessment_Is_Essential')" +
+//                      ".value().next().toString()").get().toString();
+//      assertEquals("Sim, é indispensável - processo 4", LIAPersonalDataTreatment, " is => Sim, é indispensável");
+
+//    new AGgrid test style ------------------------------------------------------------------------------------------------------------
+      String svRopaRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"4\"\n" +
+          "  }\n" +
+          "]", "Object_Data_Procedures",
+        new String[]{"Object_Data_Procedures_ID"});
+
+      RecordReply reply = gridWrapper(null, "Object_Legitimate_Interests_Assessment", new String[]{"Object_Legitimate_Interests_Assessment_Is_Essential",
+        "Object_Data_Policy_Retention_Justification"}, "hasNeighbourId:" + svRopaRid);
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"Sim, é indispensável - processo 4\""));
+// -------------------------------------------------------------------------------------------------------------------------------------
 
 //    testing new edge between Object_Email ------- Is_Responsible ------- > RoPA
-      String svRopaRid = gridWrapperGetRid("[\n" +
+      svRopaRid = gridWrapperGetRid("[\n" +
           "  {\n" +
           "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
           "    \"filterType\": \"text\",\n" +
@@ -88,9 +105,9 @@ public class PVSharepointRoPaTests extends AppTest {
           "]", "Object_Data_Procedures",
         new String[]{"Object_Data_Procedures_ID"});
 
-      RecordReply reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
+      reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
         "hasNeighbourId:" + svRopaRid);
-      String replyStr = reply.getRecords()[0];
+      replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Object_Email_Address_Email\":\"bill@outlook.com\""), "Responsible for RoPA 401");
 

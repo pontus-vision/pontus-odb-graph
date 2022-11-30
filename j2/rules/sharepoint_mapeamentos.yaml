@@ -102,17 +102,23 @@ updatereq:
           postProcessor: ${it?.toUpperCase()?.trim()}
     
     - label: Object_Legitimate_Interests_Assessment
-      condition: ${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d}
+      condition: ${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d && Base_x0020_legal?.collect{ it.toUpperCase() }?.contains('LEGÍTIMO INTERESSE')}
       props:
+        - name: Object_Legitimate_Interests_Assessment_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Essential
           val: ${Essetratamentodedadospessoais_x0}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
           val: ${N_x00e3_oh_x00e1_outrabaselegalp}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Required
           val: ${Esse_x0020_processamento_x0020_d}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event_Ingestion
       props:
