@@ -23,6 +23,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Edge
+import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONVersion
 
@@ -2335,44 +2336,92 @@ class VisJSGraph {
 
 class Utils {
 
-  static mergeVertices(GraphTraversalSource g, ORID vid, ORID vid2, boolean removeRid1Edge) {
-  //Inputs:
-  //  rid1(source),
-  //  rid2(target),
-  //  removeRid1Edge(boolean)
-  //
-  //Algorithm:
-  //  for each edge in bothdirs (to/from) rid1:
-  //    get the edge label + the neighbour id to / from
-  //    if (to is the same as Rid1):
-  //      create a new edge from rid2 to the neighbour
-  //    else
-  //      create a new edge from neighbour to rid2
-  //    endif
-  //    if (removeRid1Edge):
-  //      delete edge
-  //    endif
-  //  endfor
-  //output:
-  //  numberOfEdges moved/copied
+  static Long mergeVertices(String srcVid1, String targetVid2, boolean removeRid1Edge) {
+    return mergeVertices(new ORecordId(srcVid1), new ORecordId(targetVid2), removeRid1Edge);
 
-    App.g.V(vid).bothE().each {
-      Edge e = it.get().get(0)
-      Vertex v = it.get().get(1)
-      if (v.id().equals(vid)) {
-        g.addE(e.label()).from(vid2).to(e.inVertex().id()).iterate()
-      } else {
-        g.addE(e.label()).from(v.id()).to(vid2).iterate()
+  }
+  static Long mergeVertices(ORID srcVid1, ORID targetVid2, boolean removeRid1Edge) {
+    //Inputs:
+    //  rid1(source),
+    //  rid2(target),
+    //  removeRid1Edge(boolean)
+    //
+    /*
+          A1            B1====B2
+          |\____A2
+          |
+          A3
+
+          A1, B1, remove=true
+
+          B1=====B2
+          |\______A2
+          |
+          A3
+
+   */
+
+    //Algorithm:
+    //  for each edge in bothdirs (to/from) rid1:
+    //    get the edge label + the neighbour id to / from
+    //    if (to is the same as Rid1):
+    //      create a new edge from rid2 to the neighbour
+    //    else
+    //      create a new edge from neighbour to rid2
+    //    endif
+    //    if (removeRid1Edge):
+    //      delete edge
+    //    endif
+    //  endfor
+    //output:
+    //  numberOfEdges moved/copied
+
+    def tx = App.g.tx();
+
+    if (!tx.isOpen()) {
+      tx.open()
+    }
+    Long counter = 0;
+    try {
+      def delEdges = [];
+      App.g.V(srcVid1).bothE().each { Edge e ->
+        Vertex fromInV = e.inVertex()
+        Vertex toOutV = e.outVertex()
+        String label = e.label()
+        counter++;
+        ORID fromInVRid = fromInV.id();
+        ORID toOutVRid = toOutV.id();
+
+        if (toOutVRid.equals(srcVid1)) {
+          Vertex neigh = fromInV;
+          App.g.addE(label).from(targetVid2.toString()).to(neigh)
+        } else {
+          Vertex neigh = toOutV;
+          App.g.addE(label).from(neigh).to(targetVid2.toString())
+
+        }
+
+        if (removeRid1Edge) {
+          delEdges.add(e);
+        }
       }
-      if (removeRid1Edge) {
-        e.remove()
+
+      for (def e : delEdges) {
+        App.g.E(e).drop().iterate()
       }
+      tx.commit()
+    }
+    catch (Throwable e){
+      tx.rollback()
+    }finally {
+      tx.close()
     }
 
-    StringBuilder sb = new StringBuilder()
-    sb.append(new JsonBuilder(g.V(vid).valueMap().next()).toString())
-    return sb.toString().bytes.encodeBase64()
+
+    return counter;
+
   }
+
 
 }
 
