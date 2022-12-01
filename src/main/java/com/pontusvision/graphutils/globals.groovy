@@ -2333,6 +2333,49 @@ class VisJSGraph {
 
 }
 
+class Utils {
+
+  static mergeVertices(GraphTraversalSource g, ORID vid, ORID vid2, boolean removeRid1Edge) {
+  //Inputs:
+  //  rid1(source),
+  //  rid2(target),
+  //  removeRid1Edge(boolean)
+  //
+  //Algorithm:
+  //  for each edge in bothdirs (to/from) rid1:
+  //    get the edge label + the neighbour id to / from
+  //    if (to is the same as Rid1):
+  //      create a new edge from rid2 to the neighbour
+  //    else
+  //      create a new edge from neighbour to rid2
+  //    endif
+  //    if (removeRid1Edge):
+  //      delete edge
+  //    endif
+  //  endfor
+  //output:
+  //  numberOfEdges moved/copied
+
+    App.g.V(vid).bothE().each {
+      Edge e = it.get().get(0)
+      Vertex v = it.get().get(1)
+      if (v.id().equals(vid)) {
+        g.addE(e.label()).from(vid2).to(e.inVertex().id()).iterate()
+      } else {
+        g.addE(e.label()).from(v.id()).to(vid2).iterate()
+      }
+      if (removeRid1Edge) {
+        e.remove()
+      }
+    }
+
+    StringBuilder sb = new StringBuilder()
+    sb.append(new JsonBuilder(g.V(vid).valueMap().next()).toString())
+    return sb.toString().bytes.encodeBase64()
+  }
+
+}
+
 /*
 Event_Group_Ingestion
 Event_Ingestion
