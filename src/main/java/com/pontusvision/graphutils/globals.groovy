@@ -2336,16 +2336,16 @@ class VisJSGraph {
 
 class Utils {
 
-  static Long mergeVertices(String srcVid1, String targetVid2, boolean removeRid1Edge) {
-    return mergeVertices(new ORecordId(srcVid1), new ORecordId(targetVid2), removeRid1Edge);
+  // signature with Strings as params
+  static Long mergeVertices(String srcVid1, String targetVid2,  boolean removeRid1Vertex, boolean removeRid1Edge) {
+    return mergeVertices(new ORecordId(srcVid1), new ORecordId(targetVid2), removeRid1Vertex, removeRid1Edge);
 
   }
-  static Long mergeVertices(ORID srcVid1, ORID targetVid2, boolean removeRid1Edge) {
+
+  // main method
+  static Long mergeVertices(ORID srcVid1, ORID targetVid2,  boolean removeRid1Vertex, boolean removeRid1Edge) {
     //Inputs:
-    //  rid1(source),
-    //  rid2(target),
-    //  removeRid1Edge(boolean)
-    //
+    //  rid1(source); rid2(target); removeRid1Edge(boolean)
     /*
           A1            B1====B2
           |\____A2
@@ -2362,7 +2362,7 @@ class Utils {
    */
 
     //Algorithm:
-    //  for each edge in bothdirs (to/from) rid1:
+    //  for each edge in bothrids (to/from) rid1:
     //    get the edge label + the neighbour id to / from
     //    if (to is the same as Rid1):
     //      create a new edge from rid2 to the neighbour
@@ -2381,23 +2381,29 @@ class Utils {
     if (!tx.isOpen()) {
       tx.open()
     }
-    Long counter = 0;
+
+    Long numberOfEdges = 0;
+
     try {
+
       def delEdges = [];
+
       App.g.V(srcVid1).bothE().each { Edge e ->
         Vertex fromInV = e.inVertex()
         Vertex toOutV = e.outVertex()
         String label = e.label()
-        counter++;
+
+        numberOfEdges++;
+
         ORID fromInVRid = fromInV.id();
         ORID toOutVRid = toOutV.id();
 
         if (toOutVRid.equals(srcVid1)) {
-          Vertex neigh = fromInV;
-          App.g.addE(label).from(targetVid2.toString()).to(neigh)
+          Vertex neighbour = fromInV;
+          App.g.addE(label).from(targetVid2.toString()).to(neighbour)
         } else {
-          Vertex neigh = toOutV;
-          App.g.addE(label).from(neigh).to(targetVid2.toString())
+          Vertex neighbour = toOutV;
+          App.g.addE(label).from(neighbour).to(targetVid2.toString())
 
         }
 
@@ -2409,6 +2415,11 @@ class Utils {
       for (def e : delEdges) {
         App.g.E(e).drop().iterate()
       }
+
+      if (removeRid1Vertex) {
+        App.g.V(srcVid1).drop().iterate()
+      }
+
       tx.commit()
     }
     catch (Throwable e){
@@ -2417,8 +2428,7 @@ class Utils {
       tx.close()
     }
 
-
-    return counter;
+    return numberOfEdges;
 
   }
 

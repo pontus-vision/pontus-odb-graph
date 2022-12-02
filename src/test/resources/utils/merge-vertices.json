@@ -1,0 +1,64 @@
+{
+  "value": [
+    {
+      "company_id": "845309",
+      "company_name": "Matinhos Empresa Alimenticia LTDA [merge vertex]",
+      "company_street": "Rua das Margaridas, 493",
+      "company_city": "Londrina",
+      "company_district": "Centro",
+      "company_state": "Paraná",
+      "company_zip": "86010-000",
+      "company_email": "matinhos-alimentos@gmail.com"
+    },
+    {
+      "company_id": "845309",
+      "company_name": "Matinhos EMP AL LTDA [merge vertex]",
+      "company_street": "Rua das Marg, 493, próximo a escola das Freiras",
+      "company_city": "Londrina",
+      "company_district": "Centro",
+      "company_state": "Paraná",
+      "company_zip": "86010-001",
+      "company_email": "matinhos-alimentos@gmail.com"
+    },
+    {
+      "company_id": "459317",
+      "company_name": "Monsters S/A Electronics [merge vertex]",
+      "company_street": "Ave das Sombras, 666",
+      "company_city": "Caxias do Sul",
+      "company_district": "Cemitério B13",
+      "company_state": "Rio Grande do Sul",
+      "company_zip": "95002-291",
+      "company_email": "monsters-electronics@yahoo.com"
+    },
+    {
+      "company_id": "459317",
+      "company_name": "Monstros ELEC SA [merge vertex]",
+      "company_street": "Ave das Sombras, 666",
+      "company_city": "Caxias do Sul",
+      "company_district": "Cemitério B13",
+      "company_state": "Rio Grande do Sul",
+      "company_zip": "95002-291",
+      "company_email": "monsters-electronics@yahoo.com"
+    },
+    {
+      "company_id": "382054",
+      "company_name": "Pear Inc [merge vertex]",
+      "company_street": "alameda Jacu, 100",
+      "company_city": "São Paulo",
+      "company_district": "Vila Olímpia",
+      "company_state": "São Paulo",
+      "company_zip": "04551-000",
+      "company_email": "pear@isun.com"
+    },
+    {
+      "company_id": "382054",
+      "company_name": "Pear Incorporated [merge vertex]",
+      "company_street": "alameda Jacu, 100, Apt 23",
+      "company_city": "São Paulo",
+      "company_district": "Vila Olímpia",
+      "company_state": "São Paulo",
+      "company_zip": "04551-000",
+      "company_email": "pear@isun.com"
+    }
+  ]
+}
