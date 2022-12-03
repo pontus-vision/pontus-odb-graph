@@ -3,22 +3,23 @@
     "vertices": [
       {
         "label": "Person_Organisation",
+        "condition": "${company_id?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Person_Organisation_Id",
-            "val": "${company_id}",
+            "val": "${company_id?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
-            "val": "${company_id}",
+            "val": "${company_id?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Person_Organisation_Name",
-            "val": "${company_name}",
+            "val": "${company_name?.toUpperCase()?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -36,10 +37,11 @@
       },
       {
         "label": "Object_Identity_Card",
+        "condition": "${company_id?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Object_Identity_Card_Id_Value",
-            "val": "${company_id}",
+            "val": "${company_id?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
@@ -55,9 +57,8 @@
         "props": [
           {
             "name": "Object_Email_Address_Email",
-            "val": "${company_email}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "val": "${company_email?.toLowerCase()?.trim()}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -73,8 +74,9 @@
           {
             "name": "Location_Address_parser",
             "val": "${company_street?.trim()?.toUpperCase()}, ${company_district?.trim()?.toUpperCase()}, ${company_city?.trim()?.toUpperCase()} - ${company_state?.trim()?.toUpperCase()}, ${company_zip}, ${company_country?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
+            "mandatoryInSearch": false,
+            "type": "com.pontusvision.utils.LocationAddress",
+            "excludeFromSearch": true
           },
           {
             "name": "Location_Address_Post_Code",

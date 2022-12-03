@@ -43,7 +43,7 @@ public class PVUtilsTest extends AppTest {
 
       String countIdentityEdges =
         App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('merge vertices'))" +
-          ".out('Has_Ingestion_Event').has('Person_Organisation_Name',TextP.endingWith('[merge vertex]'))" +
+          ".out('Has_Ingestion_Event').has('Person_Organisation_Name',TextP.endingWith('[MERGE VERTEX]'))" +
           ".out('Has_Id_Card').count().next().toString()").get().toString();
 
       OGremlinResultSet resSet = App.graph.executeSql(
@@ -65,7 +65,7 @@ public class PVUtilsTest extends AppTest {
 
       String countIdentityEdgesAgain =
         App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('merge vertices'))" +
-          ".out('Has_Ingestion_Event').has('Person_Organisation_Name',TextP.endingWith('[merge vertex]'))" +
+          ".out('Has_Ingestion_Event').has('Person_Organisation_Name',TextP.endingWith('[MERGE VERTEX]'))" +
           ".out('Has_Id_Card').count().next().toString()").get().toString();
 
       assertFalse(countPersonOrganisation.equals(countPersonOrganisationAgain), "Person_Organisation vertices are merged from 6 to 3");

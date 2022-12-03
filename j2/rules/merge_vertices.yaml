@@ -3,17 +3,18 @@ updatereq:
   vertices:
     
     - label: Person_Organisation
+      condition: ${company_id?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Person_Organisation_Id
-          val: ${company_id}
+          val: ${company_id?.replaceAll('[^0-9]','')}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person_Organisation_Registration_Number
-          val: ${company_id}
+          val: ${company_id?.replaceAll('[^0-9]','')}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person_Organisation_Name
-          val: ${company_name}
+          val: ${company_name?.toUpperCase()?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -24,9 +25,10 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Object_Identity_Card
+      condition: ${company_id?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Object_Identity_Card_Id_Value
-          val: ${company_id}
+          val: ${company_id?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Object_Identity_Card_Id_Type
           val: CNPJ
@@ -36,9 +38,8 @@ updatereq:
     - label: Object_Email_Address
       props:
         - name: Object_Email_Address_Email
-          val: ${company_email}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          val: ${company_email?.toLowerCase()?.trim()}
+          mandatoryInSearch: True
     
     - label: Location_Address
       props:
@@ -48,8 +49,9 @@ updatereq:
           excludeFromSearch: True
         - name: Location_Address_parser
           val: ${company_street?.trim()?.toUpperCase()}, ${company_district?.trim()?.toUpperCase()}, ${company_city?.trim()?.toUpperCase()} - ${company_state?.trim()?.toUpperCase()}, ${company_zip}, ${company_country?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "com.pontusvision.utils.LocationAddress"
+          excludeFromSearch: True
         - name: Location_Address_Post_Code
           val: ${com.pontusvision.utils.PostCode.format(company_zip)}
           mandatoryInSearch: True

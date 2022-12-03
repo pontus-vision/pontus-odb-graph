@@ -5,15 +5,16 @@ rules:
     vertices:
 
       - label: Person_Organisation
+        condition: "${company_id?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
           Id:
-            val: "${company_id}"
+            val: "${company_id?.replaceAll('[^0-9]','')}"
             excludeFromSearch: true
           Registration_Number:
-            val: "${company_id}"
+            val: "${company_id?.replaceAll('[^0-9]','')}"
             excludeFromSearch: true
           Name:
-            val: "${company_name}"
+            val: "${company_name?.toUpperCase()?.trim()}"
             excludeFromSearch: true
 
       - label: Object_Data_Source
@@ -21,17 +22,16 @@ rules:
           Name: "MERGE VERTICES"
 
       - label: Object_Identity_Card
+        condition: "${company_id?.replaceAll('[^0-9]','')?.length() == 14}"
         props:
-          Id_Value: "${company_id}"
+          Id_Value: "${company_id?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CNPJ"
             excludeFromSearch: true
 
       - label: Object_Email_Address
         props:
-          Email:
-            val: "${company_email}"
-            excludeFromSearch: true
+          Email: "${company_email?.toLowerCase()?.trim()}"
 
       - label: Location_Address
         props:
@@ -41,6 +41,7 @@ rules:
           parser:
             val: "${company_street?.trim()?.toUpperCase()}, ${company_district?.trim()?.toUpperCase()}, ${company_city?.trim()?.toUpperCase()} - ${company_state?.trim()?.toUpperCase()}, ${company_zip}, ${company_country?.trim()?.toUpperCase()}"
             type: "com.pontusvision.utils.LocationAddress"
+            excludeFromSearch: true
           Post_Code: "${com.pontusvision.utils.PostCode.format(company_zip)}"
 
       - label: Event_Ingestion

@@ -2399,12 +2399,13 @@ class Utils {
         ORID toOutVRid = toOutV.id();
 
         if (toOutVRid.equals(srcVid1)) {
-          Vertex neighbour = fromInV;
-          App.g.addE(label).from(targetVid2.toString()).to(neighbour)
+          GraphTraversal neighbour = App.g.V(fromInVRid).as('neighbour');
+          GraphTraversal target = App.g.V(targetVid2).as('target');
+          App.g.addE(label).from(target).to(neighbour).iterate();
         } else {
-          Vertex neighbour = toOutV;
-          App.g.addE(label).from(neighbour).to(targetVid2.toString())
-
+          GraphTraversal neighbour = App.g.V(toOutV).as('neighbour');
+          GraphTraversal target = App.g.V(targetVid2).as('target');
+          App.g.addE(label).from(neighbour).to(target).iterate();
         }
 
         if (removeRid1Edge) {
