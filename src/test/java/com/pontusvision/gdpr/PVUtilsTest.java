@@ -103,7 +103,7 @@ public class PVUtilsTest extends AppTest {
       assertTrue( Integer.parseInt(countMonstersOutEdgesDedupedAgain) == 4,
         "Monsters edges are dedupped to 4 because 4 edges of it's edges are duplicated, 2 point to Object_Identity_Card and 2 point to Object_Email_Address");
       assertTrue( Integer.parseInt(countPearOutEdgesDedupedAgain) == 3,
-        "Pear edges are dedupped to 3 because all of it's edges are duplicated, 2 point to Object_Identity_Card and 2 point to Object_Email_Address are 2 are pointing to Location_Address");
+        "Pear edges are dedupped to 3 because all of it's edges are duplicated, 2 point to Object_Identity_Card, 2 point to Object_Email_Address and the last 2 are pointing to Location_Address");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
