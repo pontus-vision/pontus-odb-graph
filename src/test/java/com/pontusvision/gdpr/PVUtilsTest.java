@@ -95,9 +95,9 @@ public class PVUtilsTest extends AppTest {
           ".dedup().count().next().toString()").get().toString();
 
       assertTrue( Integer.parseInt(countPersonOrganisation) > Integer.parseInt(countPersonOrganisationAgain), "Person_Organisation vertices are merged from 6 to 3");
-      assertTrue( Integer.parseInt(countMatinhosOutEdges) > Integer.parseInt(countMatinhosOutEdgesAgain), "Matinhos edges are merged from 3 to 6");
-      assertTrue( Integer.parseInt(countMonstersOutEdges) > Integer.parseInt(countMonstersOutEdgesAgain), "Monsters edges are merged from 3 to 6");
-      assertTrue( Integer.parseInt(countPearOutEdges) > Integer.parseInt(countPearOutEdgesAgain), "Pear edges are merged from 3 to 6");
+      assertTrue( Integer.parseInt(countMatinhosOutEdges) < Integer.parseInt(countMatinhosOutEdgesAgain), "Matinhos edges are merged from 3 to 6");
+      assertTrue( Integer.parseInt(countMonstersOutEdges) < Integer.parseInt(countMonstersOutEdgesAgain), "Monsters edges are merged from 3 to 6");
+      assertTrue( Integer.parseInt(countPearOutEdges) < Integer.parseInt(countPearOutEdgesAgain), "Pear edges are merged from 3 to 6");
 //    asserting dedupped edges
       assertTrue( Integer.parseInt(countMatinhosOutEdgesDedupedAgain) == 5, "Matinhos edges are dedupped to 5 because 2 edges point to Object_Identity_Card");
       assertTrue( Integer.parseInt(countMonstersOutEdgesDedupedAgain) == 4,
