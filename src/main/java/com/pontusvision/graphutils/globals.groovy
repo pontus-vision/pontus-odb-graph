@@ -2389,8 +2389,9 @@ class Utils {
       def delEdges = [];
 
       App.g.V(srcVid1).bothE().each { Edge e ->
-        Vertex fromInV = e.inVertex()
-        Vertex toOutV = e.outVertex()
+//      from the Edge's perspective, the OUT is IN and the IN turns to be OUT (just go with it) ...
+        Vertex toOutV = e.inVertex()
+        Vertex fromInV = e.outVertex()
         String label = e.label()
 
         numberOfEdges++;
@@ -2399,14 +2400,12 @@ class Utils {
         ORID toOutVRid = toOutV.id();
 
         if (toOutVRid.equals(srcVid1)) {
-          GraphTraversal neighbour = App.g.V(fromInVRid).as('neighbour');
-          GraphTraversal target = App.g.V(targetVid2).as('target');
-          App.g.addE(label).from(target).to(neighbour).iterate();
+          FileNLPRequest.upsertEdge(fromInVRid, targetVid2, label);
         } else {
-          GraphTraversal neighbour = App.g.V(toOutV).as('neighbour');
-          GraphTraversal target = App.g.V(targetVid2).as('target');
-          App.g.addE(label).from(neighbour).to(target).iterate();
+          FileNLPRequest.upsertEdge(targetVid2, toOutVRid, label);
         }
+
+//        TODO: maybe we'll need to add 2 else if() statements to account for the edge's direction
 
         if (removeRid1Edge) {
           delEdges.add(e);
@@ -2414,11 +2413,11 @@ class Utils {
       }
 
       for (def e : delEdges) {
-        App.g.E(e).drop().iterate()
+        App.g.E(e).drop().iterate();
       }
 
       if (removeRid1Vertex) {
-        App.g.V(srcVid1).drop().iterate()
+        App.g.V(srcVid1).drop().iterate();
       }
 
       tx.commit()

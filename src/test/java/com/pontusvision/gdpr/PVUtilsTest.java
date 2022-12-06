@@ -53,6 +53,10 @@ public class PVUtilsTest extends AppTest {
         App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('PEAR INCORPORATED [MERGE VERTEX]')).out()" +
           ".count().next().toString()").get().toString();
 
+      assertEquals(3, Integer.parseInt(countMatinhosOutEdges));
+      assertEquals(3, Integer.parseInt(countMonstersOutEdges));
+      assertEquals(3, Integer.parseInt(countPearOutEdges));
+
       OGremlinResultSet resSet = App.graph.executeSql(
         "SELECT both('Has_Id_Card') as rid " +
           "FROM Object_Identity_Card " +
@@ -62,7 +66,8 @@ public class PVUtilsTest extends AppTest {
           ORID sourceVRids = ((OVertexDocument) ((ArrayList) (it.getProperty("rid"))).get(0)).getIdentity();
           ORID targetVRids = ((OVertexDocument) ((ArrayList) (it.getProperty("rid"))).get(1)).getIdentity();
 
-          mergeVertices(sourceVRids, targetVRids, true, true);
+          long edgesCreated = mergeVertices(sourceVRids, targetVRids, true, true);
+          assertEquals(4, edgesCreated);
         }
       );
 
@@ -74,36 +79,18 @@ public class PVUtilsTest extends AppTest {
         App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('MATINHOS EMP AL LTDA [MERGE VERTEX]')).out()" +
           ".count().next().toString()").get().toString();
 
-      String countMatinhosOutEdgesDedupedAgain =
-        App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('MATINHOS EMP AL LTDA [MERGE VERTEX]')).out()" +
-          ".dedup().count().next().toString()").get().toString();
-
       String countMonstersOutEdgesAgain =
         App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('MONSTROS ELEC SA [MERGE VERTEX]')).out()" +
           ".count().next().toString()").get().toString();
-
-      String countMonstersOutEdgesDedupedAgain =
-        App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('MONSTROS ELEC SA [MERGE VERTEX]')).out()" +
-          ".dedup().count().next().toString()").get().toString();
 
       String countPearOutEdgesAgain =
         App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('PEAR INCORPORATED [MERGE VERTEX]')).out()" +
           ".count().next().toString()").get().toString();
 
-      String countPearOutEdgesDedupedAgain =
-        App.executor.eval("App.g.V().has('Person_Organisation_Name', eq('PEAR INCORPORATED [MERGE VERTEX]')).out()" +
-          ".dedup().count().next().toString()").get().toString();
-
       assertTrue( Integer.parseInt(countPersonOrganisation) > Integer.parseInt(countPersonOrganisationAgain), "Person_Organisation vertices are merged from 6 to 3");
-      assertTrue( Integer.parseInt(countMatinhosOutEdges) < Integer.parseInt(countMatinhosOutEdgesAgain), "Matinhos edges are merged from 3 to 6");
-      assertTrue( Integer.parseInt(countMonstersOutEdges) < Integer.parseInt(countMonstersOutEdgesAgain), "Monsters edges are merged from 3 to 6");
-      assertTrue( Integer.parseInt(countPearOutEdges) < Integer.parseInt(countPearOutEdgesAgain), "Pear edges are merged from 3 to 6");
-//    asserting dedupped edges
-      assertTrue( Integer.parseInt(countMatinhosOutEdgesDedupedAgain) == 5, "Matinhos edges are dedupped to 5 because 2 edges point to Object_Identity_Card");
-      assertTrue( Integer.parseInt(countMonstersOutEdgesDedupedAgain) == 4,
-        "Monsters edges are dedupped to 4 because 4 edges of it's edges are duplicated, 2 point to Object_Identity_Card and 2 point to Object_Email_Address");
-      assertTrue( Integer.parseInt(countPearOutEdgesDedupedAgain) == 3,
-        "Pear edges are dedupped to 3 because all of it's edges are duplicated, 2 point to Object_Identity_Card, 2 point to Object_Email_Address and the last 2 are pointing to Location_Address");
+      assertTrue( Integer.parseInt(countMatinhosOutEdgesAgain) == 5, "Matinhos edges are 5");
+      assertTrue( Integer.parseInt(countMonstersOutEdgesAgain) == 4, "Monsters edges are 4");
+      assertTrue( Integer.parseInt(countPearOutEdgesAgain) == 3, "Pear edges are 3");
 
     } catch (ExecutionException e) {
       e.printStackTrace();
