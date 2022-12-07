@@ -23,6 +23,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import org.apache.tinkerpop.gremlin.structure.Edge
+import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONMapper
 import org.apache.tinkerpop.gremlin.structure.io.graphson.GraphSONVersion
 
@@ -2330,6 +2331,107 @@ class VisJSGraph {
   static def getPropsNonMetadataAsHTMLTableRows(GraphTraversalSource g, String vid, String origLabel) {
     return VisJSGraph.getPropsNonMetadataAsHTMLTableRows(g, new ORecordId(vid), origLabel)
   }
+
+}
+
+class Utils {
+
+  // signature with Strings as params
+  static Long mergeVertices(String srcVid1, String targetVid2,  boolean removeRid1Vertex, boolean removeRid1Edge) {
+    return mergeVertices(new ORecordId(srcVid1), new ORecordId(targetVid2), removeRid1Vertex, removeRid1Edge);
+
+  }
+
+  // main method
+  static Long mergeVertices(ORID srcVid1, ORID targetVid2,  boolean removeRid1Vertex, boolean removeRid1Edge) {
+    //Inputs:
+    //  rid1(source); rid2(target); removeRid1Edge(boolean)
+    /*
+          A1            B1====B2
+          |\____A2
+          |
+          A3
+
+          A1, B1, remove=true
+
+          B1=====B2
+          |\______A2
+          |
+          A3
+
+   */
+
+    //Algorithm:
+    //  for each edge in bothrids (to/from) rid1:
+    //    get the edge label + the neighbour id to / from
+    //    if (to is the same as Rid1):
+    //      create a new edge from rid2 to the neighbour
+    //    else
+    //      create a new edge from neighbour to rid2
+    //    endif
+    //    if (removeRid1Edge):
+    //      delete edge
+    //    endif
+    //  endfor
+    //output:
+    //  numberOfEdges moved/copied
+
+    def tx = App.g.tx();
+
+    if (!tx.isOpen()) {
+      tx.open()
+    }
+
+    Long numberOfEdges = 0;
+
+    try {
+
+      def delEdges = [];
+
+      App.g.V(srcVid1).bothE().each { Edge e ->
+//      from the Edge's perspective, the OUT is IN and the IN turns to be OUT (just go with it) ...
+        Vertex toOutV = e.inVertex()
+        Vertex fromInV = e.outVertex()
+        String label = e.label()
+
+        numberOfEdges++;
+
+        ORID fromInVRid = fromInV.id();
+        ORID toOutVRid = toOutV.id();
+
+        if (toOutVRid.equals(srcVid1)) {
+          FileNLPRequest.upsertEdge(fromInVRid, targetVid2, label);
+        } else {
+          FileNLPRequest.upsertEdge(targetVid2, toOutVRid, label);
+        }
+
+//        TODO: maybe we'll need to add 2 else if() statements to account for the edge's direction
+
+        if (removeRid1Edge) {
+          delEdges.add(e);
+        }
+      }
+
+      for (def e : delEdges) {
+        App.g.E(e).drop().iterate();
+      }
+
+      if (removeRid1Vertex) {
+        App.g.V(srcVid1).drop().iterate();
+      }
+
+      tx.commit()
+    }
+    catch (Throwable e){
+      tx.rollback()
+    }finally {
+      tx.close()
+    }
+
+    return numberOfEdges;
+
+  }
+
 
 }
 

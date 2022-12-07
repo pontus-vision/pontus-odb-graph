@@ -37,7 +37,7 @@ public class PVScoreTests extends AppTest {
   public void test00001TemplateUpsert() throws InterruptedException {
     try {
 
-      // TODO: the file pv-extract-treinamentos.json has static dates; we need to update them
+//    TODO: the file pv-extract-treinamentos.json has static dates; we need to update them
       // periodically; otherwise, the tests will start failing.
 
 
