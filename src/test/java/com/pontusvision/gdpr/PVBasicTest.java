@@ -670,8 +670,8 @@ public class PVBasicTest extends AppTest {
       reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
         "hasNeighbourId:" + adpPersonRid, 0L, 2L, "Object_Email_Address_Email", "+asc");
 
-      assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"maria@pbr.com.br\""), "Maria's email");
-      assertTrue(reply.getRecords()[1].contains("\"Object_Email_Address_Email\":\"maria@gmail.com\""), "Maria's email");
+      assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"maria@gmail.com\""), "Maria's email");
+      assertTrue(reply.getRecords()[1].contains("\"Object_Email_Address_Email\":\"maria@pbr.com.br\""), "Maria's email");
 
       String adpBossRid = gridWrapperGetRid("[\n" +
           "  {\n" +
@@ -683,12 +683,12 @@ public class PVBasicTest extends AppTest {
           "]", "Person_Natural",
         new String[]{"Person_Natural_Full_Name"});
 
-      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address", "Location_Address_Postal_Code"},
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address", "Location_Address_Post_Code"},
         "hasNeighbourId:" + adpBossRid);
 
       replyStr = reply.getRecords()[0];
-      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"\""), "José's address");
-      assertTrue(replyStr.contains("\"Location_Address_Postal_Code\":\"\""), "José's postal code");
+      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"AVENIDA DAS ROSAS 345 , VISCONTI - FORTALEZA, 86758-557, BRASIL\""), "José's address");
+      assertTrue(replyStr.contains("\"Location_Address_Post_Code\":\"86758-557\""), "José's post code");
 
 // ---------------------------------------------------------------------------------------------------------------------
 
