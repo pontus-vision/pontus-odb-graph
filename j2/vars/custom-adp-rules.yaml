@@ -1,20 +1,23 @@
 ---
 rules:
-  ADP:
+  ADP_pole:
     vertices:
       - label: Person_Natural
+        condition: "${CPF != null}"
         name: titular
         props:
-          Full_Name: "${Nome?.trim()?.toUpperCase()}"
+          Full_Name:
+            val: "${Nome?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 #          Type:
 #            val: "colaborador"
 #            excludeFromSearch: true
           Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
           Date_Of_Birth:
-            val: "${Data_de_Nascimento_Idade?.trim()}"
+            val: "${Data_de_Nascimento_Idade?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}"
             type: "java.util.Date"
-            mandatoryInSearch: true
-            predicate: "eq"
+            excludeFromSearch: true
+            predicate: "eq" # equal to what ?!?!?
 
       - label: Person_Natural
         condition: "${Nome_da_Mae?.trim()?.length() > 0}"
@@ -29,11 +32,19 @@ rules:
           Full_Name: "${Nome_do_Pai?.trim()?.toUpperCase()}"
 
       - label: Person_Employee
+        condition: "${Matricula != null}"
         name: colaborador
         props:
           ID: "${Matricula?.replaceAll('[^0-9]', '')}"
+          Full_Name:
+            val: "${Nome?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Role:
-            val: "${Cargo?.trim()}/${Funcao?.trim()}"
+            val: "${Funcao?.trim()?.toUpperCase()} ${Cargo?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Date_Of_Birth:
+            val: "${Data_de_Nascimento_Idade?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}}"
+            type: "java.util.Date"
             excludeFromSearch: true
 
       - label: Person_Employee
@@ -43,7 +54,7 @@ rules:
           ID: "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}"
 
       - label: Object_Identity_Card
-        condition: "${RNE?.replaceAll('[^0-9]', '')?.length() > 0 }"
+        condition: "${RNE != null}" # since the field is expected to have an RNE value, we just check if it is empty or not
         name: rne
         props:
           Id_Value:
@@ -54,7 +65,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Identity_Card
-        condition: "${CPF?.replaceAll('[^0-9]','')?.length() == 11}"
+        condition: "${CPF != null}" # since the field is expected to have an RNE value, we just check if it is empty or not
         name: cpf
         props:
           Id_Value:
@@ -65,12 +76,12 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Identity_Card
-        condition: "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')?.length() > 0}"
+        condition: "${Identidade___Orgao_Emissor___UF != null}" # same comment as the above
         name: rg
         props:
           Id_Value: "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')}"
           Id_Text:
-            val: "${Identidade___Orgao_Emissor___UF}"
+            val: "${Identidade___Orgao_Emissor___UF?.replaceAll('[^A-Za-z]','')}"
             excludeFromSearch: true
           Id_Type:
             val: "RG"
@@ -90,10 +101,17 @@ rules:
 
       - label: Location_Address
         props:
-          Full_Address: "${Tipo___Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}"
+#         simplifying ... no ternary operator
+          Full_Address:
+            val: "${Tipo___Endereco?.trim()?.toUpperCase()} ${N_?.trim()} ${Complemento?.trim()?.toUpperCase()}, ${Bairro?.trim()?.toUpperCase()} - ${Municipio02?.trim()?.toUpperCase()}, ${CEP?.trim()?.toUpperCase()}, BRASIL"
+            excludeFromSearch: true
 #          Type:
 #            val: "${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}"
 #            excludeFromSearch: true
+          parser:
+            val: "${Tipo___Endereco?.trim()?.toUpperCase()} ${N_?.trim()} ${Complemento?.trim()?.toUpperCase()}, ${Bairro?.trim()?.toUpperCase()} - ${Municipio02?.trim()?.toUpperCase()}, ${CEP?.trim()?.toUpperCase()}, BRASIL"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(CEP)}"
 
       - label: Object_Phone_Number
         condition: "${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}"
@@ -107,9 +125,7 @@ rules:
           Numbers_Only:
             val: "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}"
             excludeFromSearch: true
-          Last_7_Digits:
-            val: "${(((Telefone?.replaceAll('[^0-9]', ''))?.length()>=7?(Telefone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
-            mandatoryInSearch: true
+          Last_7_Digits: "${(((Telefone?.replaceAll('[^0-9]', ''))?.length()>=7?(Telefone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
 
       - label: Event_Ingestion
         props:
@@ -193,10 +209,10 @@ rules:
         fromVertexName: "titular"
         toVertexLabel: "Object_Phone_Number"
 
-      - label: "Has_Parent_Or_Guardian"
+      - label: "Is_Family"
         fromVertexName: "titular"
         toVertexName: "mae"
 
-      - label: "Has_Parent_Or_Guardian"
+      - label: "Is_Family" # it was Has_Parent_Or_Guardian
         fromVertexName: "titular"
         toVertexName: "pai"

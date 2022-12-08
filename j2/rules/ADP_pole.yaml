@@ -4,18 +4,21 @@ updatereq:
     
     - label: Person_Natural
       name: titular
+      condition: ${CPF != null}
       props:
         - name: Person_Natural_Full_Name
           val: ${Nome?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Person_Natural_Customer_ID
           val: ${CPF?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person_Natural_Date_Of_Birth
           val: ${Data_de_Nascimento_Idade?.trim()}
           predicate: eq
-          mandatoryInSearch: True
+          mandatoryInSearch: False
           type: "java.util.Date"
+          excludeFromSearch: True
     
     - label: Person_Natural
       name: mae
@@ -35,13 +38,23 @@ updatereq:
     
     - label: Person_Employee
       name: colaborador
+      condition: ${Matricula != null}
       props:
         - name: Person_Employee_ID
           val: ${Matricula?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
-        - name: Person_Employee_Role
-          val: ${Cargo?.trim()}/${Funcao?.trim()}
+        - name: Person_Employee_Full_Name
+          val: ${Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Employee_Role
+          val: ${Funcao?.trim()?.toUpperCase()} ${Cargo?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Employee_Date_Of_Birth
+          val: ${Data_de_Nascimento_Idade?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}}
+          mandatoryInSearch: False
+          type: "java.util.Date"
           excludeFromSearch: True
     
     - label: Person_Employee
@@ -54,7 +67,7 @@ updatereq:
     
     - label: Object_Identity_Card
       name: rne
-      condition: ${RNE?.replaceAll('[^0-9]', '')?.length() > 0 }
+      condition: ${RNE != null}
       props:
         - name: Object_Identity_Card_Id_Value
           val: ${RNE.replaceAll('[^0-9]','')}
@@ -66,7 +79,7 @@ updatereq:
     
     - label: Object_Identity_Card
       name: cpf
-      condition: ${CPF?.replaceAll('[^0-9]','')?.length() == 11}
+      condition: ${CPF != null}
       props:
         - name: Object_Identity_Card_Id_Value
           val: ${CPF?.replaceAll('[^0-9]','')}
@@ -78,13 +91,13 @@ updatereq:
     
     - label: Object_Identity_Card
       name: rg
-      condition: ${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')?.length() > 0}
+      condition: ${Identidade___Orgao_Emissor___UF != null}
       props:
         - name: Object_Identity_Card_Id_Value
           val: ${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Object_Identity_Card_Id_Text
-          val: ${Identidade___Orgao_Emissor___UF}
+          val: ${Identidade___Orgao_Emissor___UF?.replaceAll('[^A-Za-z]','')}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Identity_Card_Id_Type
@@ -111,7 +124,15 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${Tipo___Endereco}${N?', ' + N + ' ':''}${Complemento?:''} ${Bairro?', ' + Bairro + ' ':''}${Municipio02?:''}${CEP?' '+CEP:''}
+          val: ${Tipo___Endereco?.trim()?.toUpperCase()} ${N_?.trim()} ${Complemento?.trim()?.toUpperCase()}, ${Bairro?.trim()?.toUpperCase()} - ${Municipio02?.trim()?.toUpperCase()}, ${CEP?.trim()?.toUpperCase()}, BRASIL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location_Address_parser
+          val: ${Tipo___Endereco?.trim()?.toUpperCase()} ${N_?.trim()} ${Complemento?.trim()?.toUpperCase()}, ${Bairro?.trim()?.toUpperCase()} - ${Municipio02?.trim()?.toUpperCase()}, ${CEP?.trim()?.toUpperCase()}, BRASIL
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location_Address_Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(CEP)}
           mandatoryInSearch: True
     
     - label: Object_Phone_Number
@@ -200,10 +221,10 @@ updatereq:
   - label: Has_Phone
     fromVertexName: titular
     toVertexLabel: Object_Phone_Number
-  - label: Has_Parent_Or_Guardian
+  - label: Is_Family
     fromVertexName: titular
     toVertexName: mae
-  - label: Has_Parent_Or_Guardian
+  - label: Is_Family
     fromVertexName: titular
     toVertexName: pai
 
