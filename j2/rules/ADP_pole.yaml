@@ -97,7 +97,7 @@ updatereq:
           val: ${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Object_Identity_Card_Id_Text
-          val: ${Identidade___Orgao_Emissor___UF?.trim()}
+          val: ${Identidade___Orgao_Emissor___UF}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Identity_Card_Id_Type

@@ -142,7 +142,7 @@
           },
           {
             "name": "Object_Identity_Card_Id_Text",
-            "val": "${Identidade___Orgao_Emissor___UF?.trim()}",
+            "val": "${Identidade___Orgao_Emissor___UF}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
