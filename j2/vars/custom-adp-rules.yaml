@@ -81,7 +81,7 @@ rules:
         props:
           Id_Value: "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')}"
           Id_Text:
-            val: "${Identidade___Orgao_Emissor___UF?.replaceAll('[^A-Za-z]','')}"
+            val: "${Identidade___Orgao_Emissor___UF?.trim()}"
             excludeFromSearch: true
           Id_Type:
             val: "RG"
@@ -213,6 +213,6 @@ rules:
         fromVertexName: "titular"
         toVertexName: "mae"
 
-      - label: "Is_Family" # it was Has_Parent_Or_Guardian
+      - label: "Is_Family"
         fromVertexName: "titular"
         toVertexName: "pai"
