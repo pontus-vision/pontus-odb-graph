@@ -14,7 +14,7 @@ updatereq:
           val: ${CPF?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person_Natural_Date_Of_Birth
-          val: ${Data_de_Nascimento_Idade?.trim()}
+          val: ${Data_de_Nascimento_Idade?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
           predicate: eq
           mandatoryInSearch: False
           type: "java.util.Date"
@@ -97,7 +97,7 @@ updatereq:
           val: ${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Object_Identity_Card_Id_Text
-          val: ${Identidade___Orgao_Emissor___UF?.replaceAll('[^A-Za-z]','')}
+          val: ${Identidade___Orgao_Emissor___UF?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Identity_Card_Id_Type

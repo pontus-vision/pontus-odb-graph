@@ -19,7 +19,7 @@
           },
           {
             "name": "Person_Natural_Date_Of_Birth",
-            "val": "${Data_de_Nascimento_Idade?.trim()}",
+            "val": "${Data_de_Nascimento_Idade?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
             "predicate": "eq",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
@@ -142,7 +142,7 @@
           },
           {
             "name": "Object_Identity_Card_Id_Text",
-            "val": "${Identidade___Orgao_Emissor___UF?.replaceAll('[^A-Za-z]','')}",
+            "val": "${Identidade___Orgao_Emissor___UF?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
