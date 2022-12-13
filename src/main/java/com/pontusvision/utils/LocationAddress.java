@@ -98,4 +98,43 @@ public class LocationAddress {
     return tokens.toString();
   }
 
+  public static String formatAddress(String address, String number, String complement, String disctrict, String city, String country, String post_code) {
+
+    StringBuffer sb = new StringBuffer();
+
+    if (!address.isEmpty()) {
+      sb.append(address.trim().toUpperCase());
+    }
+
+    if (!number.isEmpty() && !address.isEmpty()) {
+      sb.append(" ").append(number.trim());
+    } else if (!number.isEmpty() && address.isEmpty()) {
+      sb.append(number.trim());
+    } else {
+      sb.append(" ").append("S/N");
+    }
+
+    if (!complement.isEmpty()) {
+      sb.append(" ").append(complement.trim().toUpperCase());
+    }
+
+    if (!disctrict.isEmpty()) {
+      sb.append(", ").append(disctrict.trim().toUpperCase());
+    }
+
+    if (!city.isEmpty()) {
+      sb.append(" - ").append(city.trim().toUpperCase());
+    }
+
+    if (!post_code.isEmpty()) {
+      sb.append(", ").append(post_code.trim());
+    }
+
+    if (!country.isEmpty()) {
+      sb.append(", ").append(country.trim().toUpperCase());
+    }
+
+    return sb.toString();
+  }
+
 }

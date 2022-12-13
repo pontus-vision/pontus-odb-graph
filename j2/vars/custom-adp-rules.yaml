@@ -103,7 +103,7 @@ rules:
         props:
 #         simplifying ... no ternary operator
           Full_Address:
-            val: "${Tipo___Endereco?.trim()?.toUpperCase()} ${N_?.trim()} ${Complemento?.trim()?.toUpperCase()}, ${Bairro?.trim()?.toUpperCase()} - ${Municipio02?.trim()?.toUpperCase()}, ${CEP?.trim()?.toUpperCase()}, BRASIL"
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, 'Brasil', CEP)}"
             excludeFromSearch: true
 #          Type:
 #            val: "${(Domiciliado_no_Exterior=='Não')?'Endereço Brasil':'Endereço Exterior'}"

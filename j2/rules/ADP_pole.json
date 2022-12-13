@@ -183,7 +183,7 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-            "val": "${Tipo___Endereco?.trim()?.toUpperCase()} ${N_?.trim()} ${Complemento?.trim()?.toUpperCase()}, ${Bairro?.trim()?.toUpperCase()} - ${Municipio02?.trim()?.toUpperCase()}, ${CEP?.trim()?.toUpperCase()}, BRASIL",
+            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, 'Brasil', CEP)}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
