@@ -8,7 +8,7 @@
         "props": [
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${Nome?.trim()?.toUpperCase()}",
+            "val": "${com.pontusvision.utils.Person.formatName(Nome, null, null)}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -34,7 +34,7 @@
         "props": [
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${Nome_da_Mae?.trim()?.toUpperCase()}",
+            "val": "${com.pontusvision.utils.Person.formatName(Nome_da_Mae, null, null)}",
             "mandatoryInSearch": true
           }
         ]
@@ -46,7 +46,7 @@
         "props": [
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${Nome_do_Pai?.trim()?.toUpperCase()}",
+            "val": "${com.pontusvision.utils.Person.formatName(Nome_do_Pai, null, null)}",
             "mandatoryInSearch": true
           }
         ]
@@ -63,7 +63,7 @@
           },
           {
             "name": "Person_Employee_Full_Name",
-            "val": "${Nome?.trim()?.toUpperCase()}",
+            "val": "${com.pontusvision.utils.Person.formatName(Nome, null, null)}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

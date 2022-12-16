@@ -7,7 +7,7 @@ rules:
         name: titular
         props:
           Full_Name:
-            val: "${Nome?.trim()?.toUpperCase()}"
+            val: "${com.pontusvision.utils.Person.formatName(Nome, null, null)}"
             excludeFromSearch: true
 #          Type:
 #            val: "colaborador"
@@ -23,13 +23,13 @@ rules:
         condition: "${Nome_da_Mae?.trim()?.length() > 0}"
         name: mae
         props:
-          Full_Name: "${Nome_da_Mae?.trim()?.toUpperCase()}"
+          Full_Name: "${com.pontusvision.utils.Person.formatName(Nome_da_Mae, null, null)}"
 
       - label: Person_Natural
         condition: "${Nome_do_Pai?.trim()?.length() > 0}"
         name: pai
         props:
-          Full_Name: "${Nome_do_Pai?.trim()?.toUpperCase()}"
+          Full_Name: "${com.pontusvision.utils.Person.formatName(Nome_do_Pai, null, null)}"
 
       - label: Person_Employee
         condition: "${Matricula != null}"
@@ -37,7 +37,7 @@ rules:
         props:
           ID: "${Matricula?.replaceAll('[^0-9]', '')}"
           Full_Name:
-            val: "${Nome?.trim()?.toUpperCase()}"
+            val: "${com.pontusvision.utils.Person.formatName(Nome, null, null)}"
             excludeFromSearch: true
           Role:
             val: "${Funcao?.trim()?.toUpperCase()} ${Cargo?.trim()?.toUpperCase()}"

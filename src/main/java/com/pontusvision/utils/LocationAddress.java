@@ -98,39 +98,53 @@ public class LocationAddress {
     return tokens.toString();
   }
 
-  public static String formatAddress(String address, String number, String complement, String disctrict, String city, String country, String post_code) {
+  public static String formatAddress(String address, String number, String complement, String disctrict, String city, String country, String postCode) {
 
-    StringBuffer sb = new StringBuffer();
+    StringBuilder sb = new StringBuilder();
 
-    if (!address.isEmpty()) {
+    boolean addressBool = address != null && !address.isEmpty();
+
+    if (addressBool) {
       sb.append(address.trim().toUpperCase());
     }
 
-    if (!number.isEmpty() && !address.isEmpty()) {
+    boolean numberBool = number != null && !number.isEmpty();
+
+    if (numberBool && addressBool) {
       sb.append(" ").append(number.trim());
-    } else if (!number.isEmpty() && address.isEmpty()) {
+    } else if (numberBool && !addressBool) {
       sb.append(number.trim());
     } else {
       sb.append(" ").append("S/N");
     }
 
-    if (!complement.isEmpty()) {
+    boolean complementBool = complement != null && !complement.isEmpty();
+
+    if (complementBool) {
       sb.append(" ").append(complement.trim().toUpperCase());
     }
 
-    if (!disctrict.isEmpty()) {
+    boolean disctrictBool = disctrict != null && !disctrict.isEmpty();
+
+    if (disctrictBool) {
       sb.append(", ").append(disctrict.trim().toUpperCase());
     }
 
-    if (!city.isEmpty()) {
+    boolean cityBool = city != null && !city.isEmpty();
+
+    if (cityBool) {
       sb.append(" - ").append(city.trim().toUpperCase());
     }
 
-    if (!post_code.isEmpty()) {
-      sb.append(", ").append(post_code.trim());
+    boolean postCodeBool = postCode != null && !postCode.isEmpty();
+
+    if (postCodeBool) {
+      sb.append(", ").append(postCode.trim());
     }
 
-    if (!country.isEmpty()) {
+    boolean countryBool = country != null && !country.isEmpty();
+
+    if (countryBool) {
       sb.append(", ").append(country.trim().toUpperCase());
     }
 
