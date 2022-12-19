@@ -687,7 +687,7 @@ public class PVBasicTest extends AppTest {
         "hasNeighbourId:" + adpBossRid);
 
       replyStr = reply.getRecords()[0];
-      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"AVENIDA DAS ROSAS 345 , VISCONTI - FORTALEZA, 86758-557, BRASIL\""), "José's address");
+      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"AVENIDA DAS ROSAS 345, VISCONTI - FORTALEZA, 86758-557, BRASIL\""), "José's address");
       assertTrue(replyStr.contains("\"Location_Address_Post_Code\":\"86758-557\""), "José's postal code");
 
 // ---------------------------------------------------------------------------------------------------------------------
