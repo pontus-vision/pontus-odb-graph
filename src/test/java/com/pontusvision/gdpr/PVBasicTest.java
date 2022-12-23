@@ -690,8 +690,51 @@ public class PVBasicTest extends AppTest {
       assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"AVENIDA DAS ROSAS 345, VISCONTI - FORTALEZA, 86758-557, BRASIL\""), "José's address");
       assertTrue(replyStr.contains("\"Location_Address_Post_Code\":\"86758-557\""), "José's postal code");
 
+      String moeId = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"MOE ASSAF\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Full_Name"});
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address"}, "hasNeighbourId:" + moeId);
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"BERLINALE STRASSE 931, ROTWEIN - MÜNCHEN, 80331\""),
+        "Moe's address has no country (Brasil) because it is International");
+
+      String shairilId = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"SHAIRIL PUNJABI\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Full_Name"});
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address"}, "hasNeighbourId:" + shairilId);
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"PAHARI DHIRAJ STREET S/N BLOCK Z, NAULAKHA, 110005\""),
+        "Shairil's address has no number and country (Brasil) because it is International");
+
 // ---------------------------------------------------------------------------------------------------------------------
 
+//    formatAddress(street, number, complement, district, city, country, zip)}"
+//    Address with no street
+      String noStreet =
+        com.pontusvision.utils.LocationAddress.formatAddress(null, "312", "Casa sobre lojas", "KLP", "Foz do Iguaçu", "Brasil", "85868-000");
+      assertEquals("312 CASA SOBRE LOJAS, KLP - FOZ DO IGUAÇU, 85868-000, BRASIL", noStreet);
+//    Address with no number nor district
+      String noNumNoDistrict =
+        com.pontusvision.utils.LocationAddress.formatAddress("avenida das julias", null, "apartamento 6", null, "Capanema", "Brasil", "81639-764");
+      assertEquals("AVENIDA DAS JULIAS S/N APARTAMENTO 6 - CAPANEMA, 81639-764, BRASIL", noNumNoDistrict);
+//    Address without city
+      String noCity =
+        com.pontusvision.utils.LocationAddress.formatAddress("rua minerva dias", "209", "andar 9", "bairro ferraz", null, "Brasil", "87842-091");
+      assertEquals("RUA MINERVA DIAS 209 ANDAR 9, BAIRRO FERRAZ, 87842-091, BRASIL", noCity);
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);

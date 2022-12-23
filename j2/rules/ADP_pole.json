@@ -183,13 +183,13 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, 'Brasil', CEP)}",
+            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':null, CEP)}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location_Address_parser",
-            "val": "${Tipo___Endereco?.trim()?.toUpperCase()} ${N_?.trim()} ${Complemento?.trim()?.toUpperCase()}, ${Bairro?.trim()?.toUpperCase()} - ${Municipio02?.trim()?.toUpperCase()}, ${CEP?.trim()?.toUpperCase()}, BRASIL",
+            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':null, CEP)}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },
