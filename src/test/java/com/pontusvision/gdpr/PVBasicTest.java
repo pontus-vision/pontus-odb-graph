@@ -725,15 +725,15 @@ public class PVBasicTest extends AppTest {
 //    formatAddress(street, number, complement, district, city, country, zip)}"
 //    Address with no street
       String noStreet =
-        com.pontusvision.utils.LocationAddress.formatAddress(null, "312", "Casa sobre lojas", "KLP", "Foz do Iguaçu", "Brasil", "85868-000");
+        com.pontusvision.utils.LocationAddress.formatAddress("", "312", "Casa sobre lojas", "KLP", "Foz do Iguaçu", "Brasil", "85868-000");
       assertEquals("312 CASA SOBRE LOJAS, KLP - FOZ DO IGUAÇU, 85868-000, BRASIL", noStreet);
 //    Address with no number nor district
       String noNumNoDistrict =
-        com.pontusvision.utils.LocationAddress.formatAddress("avenida das julias", null, "apartamento 6", null, "Capanema", "Brasil", "81639-764");
+        com.pontusvision.utils.LocationAddress.formatAddress("avenida das julias", "", "apartamento 6", "", "Capanema", "Brasil", "81639-764");
       assertEquals("AVENIDA DAS JULIAS S/N APARTAMENTO 6 - CAPANEMA, 81639-764, BRASIL", noNumNoDistrict);
 //    Address without city
       String noCity =
-        com.pontusvision.utils.LocationAddress.formatAddress("rua minerva dias", "209", "andar 9", "bairro ferraz", null, "Brasil", "87842-091");
+        com.pontusvision.utils.LocationAddress.formatAddress("rua minerva dias", "209", "andar 9", "bairro ferraz", "", "Brasil", "87842-091");
       assertEquals("RUA MINERVA DIAS 209 ANDAR 9, BAIRRO FERRAZ, 87842-091, BRASIL", noCity);
     } catch (Exception e) {
       e.printStackTrace();

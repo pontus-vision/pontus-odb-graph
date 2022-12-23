@@ -8,7 +8,7 @@
         "props": [
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${com.pontusvision.utils.Person.formatName(Nome, null, null)}",
+            "val": "${Nome?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -34,7 +34,7 @@
         "props": [
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${com.pontusvision.utils.Person.formatName(Nome_da_Mae, null, null)}",
+            "val": "${Nome_da_Mae?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]
@@ -46,7 +46,7 @@
         "props": [
           {
             "name": "Person_Natural_Full_Name",
-            "val": "${com.pontusvision.utils.Person.formatName(Nome_do_Pai, null, null)}",
+            "val": "${Nome_do_Pai?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]
@@ -63,7 +63,7 @@
           },
           {
             "name": "Person_Employee_Full_Name",
-            "val": "${com.pontusvision.utils.Person.formatName(Nome, null, null)}",
+            "val": "${Nome?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -183,13 +183,13 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':null, CEP)}",
+            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location_Address_parser",
-            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':null, CEP)}",
+            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
           },

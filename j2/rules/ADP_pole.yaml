@@ -7,7 +7,7 @@ updatereq:
       condition: ${CPF != null}
       props:
         - name: Person_Natural_Full_Name
-          val: ${com.pontusvision.utils.Person.formatName(Nome, null, null)}
+          val: ${Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person_Natural_Customer_ID
@@ -25,7 +25,7 @@ updatereq:
       condition: ${Nome_da_Mae?.trim()?.length() > 0}
       props:
         - name: Person_Natural_Full_Name
-          val: ${com.pontusvision.utils.Person.formatName(Nome_da_Mae, null, null)}
+          val: ${Nome_da_Mae?.trim()?.toUpperCase()}
           mandatoryInSearch: True
     
     - label: Person_Natural
@@ -33,7 +33,7 @@ updatereq:
       condition: ${Nome_do_Pai?.trim()?.length() > 0}
       props:
         - name: Person_Natural_Full_Name
-          val: ${com.pontusvision.utils.Person.formatName(Nome_do_Pai, null, null)}
+          val: ${Nome_do_Pai?.trim()?.toUpperCase()}
           mandatoryInSearch: True
     
     - label: Person_Employee
@@ -44,7 +44,7 @@ updatereq:
           val: ${Matricula?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
         - name: Person_Employee_Full_Name
-          val: ${com.pontusvision.utils.Person.formatName(Nome, null, null)}
+          val: ${Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Person_Employee_Role
@@ -124,11 +124,11 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':null, CEP)}
+          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location_Address_parser
-          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':null, CEP)}
+          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location_Address_Post_Code
