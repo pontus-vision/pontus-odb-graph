@@ -5925,12 +5925,13 @@ the end of the process.
     }
 
 
-    static String getDSARStatsPerOrganisation(GraphTraversalSource g) {
+    static String getDSARStatsPerOrganisation(GraphTraversalSource g, boolean test = false) {
 
       StringBuffer sb = new StringBuffer("[")
       boolean firstTime = true
 
-      long nowMs = System.currentTimeMillis()
+      //  nowMs fixed for testing purposes 1659348000000L = Aug 1st 2022 T10:00:00
+      long nowMs = test?1659348000000L:System.currentTimeMillis()
       def nowThreshold = new Date(nowMs)
 
       long oneYearThresholdMs = (long) (nowMs - (3600000L * 24L * 365L))
