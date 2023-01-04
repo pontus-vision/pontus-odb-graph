@@ -717,7 +717,7 @@ public class PVBasicTest extends AppTest {
 
       reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address"}, "hasNeighbourId:" + shairilId);
       replyStr = reply.getRecords()[0];
-      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"PAHARI DHIRAJ STREET S/N BLOCK Z, NAULAKHA, 110005\""),
+      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"PAHARI DHIRAJ STREET SN BLOCK Z, NAULAKHA, 110005\""),
         "Shairil's address has no number and country (Brasil) because it is International");
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -730,11 +730,19 @@ public class PVBasicTest extends AppTest {
 //    Address with no number nor district
       String noNumNoDistrict =
         com.pontusvision.utils.LocationAddress.formatAddress("avenida das julias", "", "apartamento 6", "", "Capanema", "Brasil", "81639-764");
-      assertEquals("AVENIDA DAS JULIAS S/N APARTAMENTO 6 - CAPANEMA, 81639-764, BRASIL", noNumNoDistrict);
+      assertEquals("AVENIDA DAS JULIAS SN APARTAMENTO 6 - CAPANEMA, 81639-764, BRASIL", noNumNoDistrict);
 //    Address without city
       String noCity =
         com.pontusvision.utils.LocationAddress.formatAddress("rua minerva dias", "209", "andar 9", "bairro ferraz", "", "Brasil", "87842-091");
       assertEquals("RUA MINERVA DIAS 209 ANDAR 9, BAIRRO FERRAZ, 87842-091, BRASIL", noCity);
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_parser_house_number"},
+              "hasNeighbourId:" + adpPersonRid);
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Location_Address_parser_house_number\":\"[semnumero, sinnumero, sn]\""),
+              "NLP translates SN to sem número (PT), sin numero (ES)");
+
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);

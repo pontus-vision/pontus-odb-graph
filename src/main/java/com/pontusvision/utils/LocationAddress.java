@@ -115,7 +115,7 @@ public class LocationAddress {
     } else if (numberBool && !addressBool) {
       sb.append(number.trim());
     } else {
-      sb.append(" ").append("S/N");
+      sb.append(" ").append("SN");
     }
 
     boolean complementBool = complement != null && !complement.isEmpty();
