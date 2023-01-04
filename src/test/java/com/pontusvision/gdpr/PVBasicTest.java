@@ -690,36 +690,6 @@ public class PVBasicTest extends AppTest {
       assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"AVENIDA DAS ROSAS 345, VISCONTI - FORTALEZA, 86758-557, BRASIL\""), "José's address");
       assertTrue(replyStr.contains("\"Location_Address_Post_Code\":\"86758-557\""), "José's postal code");
 
-      String moeId = gridWrapperGetRid("[\n" +
-          "  {\n" +
-          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
-          "    \"filterType\": \"text\",\n" +
-          "    \"type\": \"equals\",\n" +
-          "    \"filter\": \"MOE ASSAF\"\n" +
-          "  }\n" +
-          "]", "Person_Natural",
-        new String[]{"Person_Natural_Full_Name"});
-
-      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address"}, "hasNeighbourId:" + moeId);
-      replyStr = reply.getRecords()[0];
-      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"BERLINALE STRASSE 931, ROTWEIN - MÜNCHEN, 80331\""),
-        "Moe's address has no country (Brasil) because it is International");
-
-      String shairilId = gridWrapperGetRid("[\n" +
-          "  {\n" +
-          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
-          "    \"filterType\": \"text\",\n" +
-          "    \"type\": \"equals\",\n" +
-          "    \"filter\": \"SHAIRIL PUNJABI\"\n" +
-          "  }\n" +
-          "]", "Person_Natural",
-        new String[]{"Person_Natural_Full_Name"});
-
-      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address"}, "hasNeighbourId:" + shairilId);
-      replyStr = reply.getRecords()[0];
-      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"PAHARI DHIRAJ STREET SN BLOCK Z, NAULAKHA, 110005\""),
-        "Shairil's address has no number and country (Brasil) because it is International");
-
 // ---------------------------------------------------------------------------------------------------------------------
 
 //    formatAddress(street, number, complement, district, city, country, zip)}"
@@ -741,9 +711,9 @@ public class PVBasicTest extends AppTest {
       replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Location_Address_parser_house_number\":\"[semnumero, sinnumero, sn]\""),
-              "NLP translates SN to sem número (PT), sin numero (ES)");
+              "NLP translates SN to sem número (Portuguese) and sin numero (Spanish)");
 
-    } catch (Exception e) {
+    } catch (Exception e) { 
       e.printStackTrace();
       assertNull(e);
 

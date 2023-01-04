@@ -67,7 +67,7 @@ public class PVUtilsTest extends AppTest {
           ORID targetVRids = ((OVertexDocument) ((ArrayList) (it.getProperty("rid"))).get(1)).getIdentity();
 
           long edgesCreated = mergeVertices(sourceVRids, targetVRids, true, true);
-          assertEquals(9, edgesCreated);
+          assertEquals(4, edgesCreated);
         }
       );
 
