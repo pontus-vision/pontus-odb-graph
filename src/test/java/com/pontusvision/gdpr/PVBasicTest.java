@@ -687,12 +687,33 @@ public class PVBasicTest extends AppTest {
         "hasNeighbourId:" + adpBossRid);
 
       replyStr = reply.getRecords()[0];
-      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"AVENIDA DAS ROSAS 345 , VISCONTI - FORTALEZA, 86758-557, BRASIL\""), "José's address");
+      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"AVENIDA DAS ROSAS 345, VISCONTI - FORTALEZA, 86758-557, BRASIL\""), "José's address");
       assertTrue(replyStr.contains("\"Location_Address_Post_Code\":\"86758-557\""), "José's postal code");
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-    } catch (Exception e) {
+//    formatAddress(street, number, complement, district, city, country, zip)}"
+//    Address with no street
+      String noStreet =
+        com.pontusvision.utils.LocationAddress.formatAddress("", "312", "Casa sobre lojas", "KLP", "Foz do Iguaçu", "Brasil", "85868-000");
+      assertEquals("312 CASA SOBRE LOJAS, KLP - FOZ DO IGUAÇU, 85868-000, BRASIL", noStreet);
+//    Address with no number nor district
+      String noNumNoDistrict =
+        com.pontusvision.utils.LocationAddress.formatAddress("avenida das julias", "", "apartamento 6", "", "Capanema", "Brasil", "81639-764");
+      assertEquals("AVENIDA DAS JULIAS SN APARTAMENTO 6 - CAPANEMA, 81639-764, BRASIL", noNumNoDistrict);
+//    Address without city
+      String noCity =
+        com.pontusvision.utils.LocationAddress.formatAddress("rua minerva dias", "209", "andar 9", "bairro ferraz", "", "Brasil", "87842-091");
+      assertEquals("RUA MINERVA DIAS 209 ANDAR 9, BAIRRO FERRAZ, 87842-091, BRASIL", noCity);
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_parser_house_number"},
+              "hasNeighbourId:" + adpPersonRid);
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Location_Address_parser_house_number\":\"[semnumero, sinnumero, sn]\""),
+              "NLP translates SN to sem número (Portuguese) and sin numero (Spanish)");
+
+    } catch (Exception e) { 
       e.printStackTrace();
       assertNull(e);
 
