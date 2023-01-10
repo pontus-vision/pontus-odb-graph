@@ -1240,6 +1240,14 @@ rules:
         props:
           Name: "SHAREPOINT/PRIVACY-NOTICE"
 
+      - label: Object_Data_Procedures
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Mapeamento_x0020_de_x0020_Proces)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
       - label: Event_Ingestion
         props:
           Type:
@@ -1287,6 +1295,10 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: "Object_Privacy_Notice"
         toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Privacy_Notice
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Privacy_Notice"
 
   sharepoint_consents:
 
