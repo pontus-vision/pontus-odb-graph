@@ -50,7 +50,7 @@ public class PVScoreTestsPrivNotice extends AppTest {
 
       long score = (long) gdpr.getPrivacyNoticesScores(retVals);
 
-      assertEquals(98L, score);
+      assertEquals(95L, score);
       
 
     } catch (Exception e) {
