@@ -4483,6 +4483,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_RoPA_Privacy_Notice",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Risk",
       "multiplicity": "MULTI",
       "unidirected": false

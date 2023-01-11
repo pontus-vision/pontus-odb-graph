@@ -136,7 +136,7 @@
         "toVertexLabel": "Event_Ingestion"
       },
       {
-        "label": "Has_Privacy_Notice",
+        "label": "Has_RoPA_Privacy_Notice",
         "fromVertexLabel": "Object_Data_Procedures",
         "toVertexLabel": "Object_Privacy_Notice"
       }
