@@ -1284,7 +1284,7 @@ schema:
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
   - name: Has_Privacy_Notice # from Event_Consent to Privacy_Notice
-  - name: Has_RoPA_Privacy_Notice # from Consent to Privacy_Notice
+  - name: Has_RoPA_Privacy_Notice # from Object_Data_Procedures to Privacy_Notice
   - name: Has_Risk
   - name: Has_Salary
   - name: Has_Security_Group
