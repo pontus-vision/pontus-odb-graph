@@ -50,7 +50,25 @@
           "_ComplianceFlags": "",
           "_ComplianceTag": "",
           "_ComplianceTagWrittenTime": "",
-          "_ComplianceTagUserId": ""
+          "_ComplianceTagUserId": "",
+          "Mapeamento_x0020_de_x0020_Proces": [
+            {
+              "LookupId": 401,
+              "LookupValue": "Gestão de Rede de Distribuidores"
+            },
+            {
+              "LookupId": 402,
+              "LookupValue": "Gestão de ferramenta gerencial (PowerBI)"
+            },
+            {
+              "LookupId": 403,
+              "LookupValue": "Contratos Estratégicos"
+            },
+            {
+              "LookupId": 404,
+              "LookupValue": "Termos de Confidencialidade "
+            }
+          ]
         }
       },
       {
@@ -104,7 +122,13 @@
           "_ComplianceTag": "",
           "_ComplianceTagWrittenTime": "",
           "_ComplianceTagUserId": ""
-        }
+        },
+        "Mapeamento_x0020_de_x0020_Proces": [
+          {
+            "LookupId": 406,
+            "LookupValue": "Prestadores de Serviços e Fornecedores"
+          }
+        ]
       },
       {
         "@odata.etag": "b34d2eba-ceb2-476a-a04b-643f81b24456,5",
@@ -156,7 +180,21 @@
           "_ComplianceFlags": "",
           "_ComplianceTag": "",
           "_ComplianceTagWrittenTime": "",
-          "_ComplianceTagUserId": ""
+          "_ComplianceTagUserId": "",
+          "Mapeamento_x0020_de_x0020_Proces": [
+            {
+              "LookupId": 401,
+              "LookupValue": "Gestão de Rede de Distribuidores"
+            },
+            {
+              "LookupId": 403,
+              "LookupValue": "Contratos Estratégicos"
+            },
+            {
+              "LookupId": 406,
+              "LookupValue": "Prestadores de Serviços e Fornecedores"
+            }
+          ]
         }
       },
       {
@@ -209,7 +247,8 @@
           "_ComplianceFlags": "",
           "_ComplianceTag": "",
           "_ComplianceTagWrittenTime": "",
-          "_ComplianceTagUserId": ""
+          "_ComplianceTagUserId": "",
+          "Mapeamento_x0020_de_x0020_Proces": []
         }
       },
       {
@@ -262,7 +301,33 @@
           "_ComplianceFlags": "",
           "_ComplianceTag": "",
           "_ComplianceTagWrittenTime": "",
-          "_ComplianceTagUserId": ""
+          "_ComplianceTagUserId": "",
+          "Mapeamento_x0020_de_x0020_Proces": [
+            {
+              "LookupId": 401,
+              "LookupValue": "Gestão de Rede de Distribuidores"
+            },
+            {
+              "LookupId": 402,
+              "LookupValue": "Gestão de ferramenta gerencial (PowerBI)"
+            },
+            {
+              "LookupId": 403,
+              "LookupValue": "Contratos Estratégicos"
+            },
+            {
+              "LookupId": 404,
+              "LookupValue": "Termos de Confidencialidade "
+            },
+            {
+              "LookupId": 405,
+              "LookupValue": "Prontuário do colaborador"
+            },
+            {
+              "LookupId": 406,
+              "LookupValue": "Prestadores de Serviços e Fornecedores"
+            }
+          ]
         }
       },
       {
@@ -315,7 +380,17 @@
           "_ComplianceFlags": "",
           "_ComplianceTag": "",
           "_ComplianceTagWrittenTime": "",
-          "_ComplianceTagUserId": ""
+          "_ComplianceTagUserId": "",
+          "Mapeamento_x0020_de_x0020_Proces": [
+            {
+              "LookupId": 402,
+              "LookupValue": "Gestão de ferramenta gerencial (PowerBI)"
+            },
+            {
+              "LookupId": 404,
+              "LookupValue": "Termos de Confidencialidade "
+            }
+          ]
         }
       },
       {
@@ -368,7 +443,13 @@
           "_ComplianceFlags": "",
           "_ComplianceTag": "",
           "_ComplianceTagWrittenTime": "",
-          "_ComplianceTagUserId": ""
+          "_ComplianceTagUserId": "",
+          "Mapeamento_x0020_de_x0020_Proces": [
+            {
+              "LookupId": 405,
+              "LookupValue": "Prontuário do colaborador"
+            }
+          ]
         }
       }
     ]

@@ -2798,6 +2798,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_RoPA_Privacy_Notice
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Risk
     multiplicity: MULTI
     unidirected: False
