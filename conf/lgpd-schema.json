@@ -1444,11 +1444,6 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object_Contract_Short_Description",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
       "name": "Object_Contract_Expiry",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1479,7 +1474,32 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Contract_Info_Shared_With_Third_Parties",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Intl_Transfer",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object_Contract_Link",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Name",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Registration_Number",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Short_Description",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1814,11 +1834,6 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object_Data_Procedures_Property",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
       "name": "Object_Data_Procedures_Participants",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1830,6 +1845,21 @@
     },
     {
       "name": "Object_Data_Procedures_Participants_International",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Procedures_Property",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Procedures_Products_And_Services",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Procedures_Rights",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1980,6 +2010,11 @@
     },
     {
       "name": "Object_Data_Source_Form_Submission_Owner_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Source_Medium",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -5226,14 +5261,18 @@
       "propertyKeys": [
         "Metadata_Type_Object_Contract",
         "Object_Contract_Date",
-        "Object_Contract_Short_Description",
         "Object_Contract_Expiry",
         "Object_Contract_Form_Id",
         "Object_Contract_Form_Owner_Id",
         "Object_Contract_Form_Submission_Id",
         "Object_Contract_Form_Submission_Owner_Id",
         "Object_Contract_Id",
+        "Object_Contract_Info_Shared_With_Third_Parties",
+        "Object_Contract_Intl_Transfer",
         "Object_Contract_Link",
+        "Object_Contract_Name",
+        "Object_Contract_Registration_Number",
+        "Object_Contract_Short_Description",
         "Object_Contract_Status",
         "Object_Contract_Type"
       ],
@@ -5332,10 +5371,12 @@
         "Object_Data_Procedures_Number_Of_Natural_Person",
         "Object_Data_Procedures_Number_Of_Natural_Person_National",
         "Object_Data_Procedures_Number_Of_Natural_Person_International",
-        "Object_Data_Procedures_Property",
         "Object_Data_Procedures_Participants",
         "Object_Data_Procedures_Participants_National",
         "Object_Data_Procedures_Participants_International",
+        "Object_Data_Procedures_Property",
+        "Object_Data_Procedures_Products_And_Services",
+        "Object_Data_Procedures_Rights",
         "Object_Data_Procedures_Type_Of_Natural_Person",
         "Object_Data_Procedures_Type_Of_Natural_Person_National",
         "Object_Data_Procedures_Type_Of_Natural_Person_International",
@@ -5373,6 +5414,7 @@
         "Object_Data_Source_Form_Owner_Id",
         "Object_Data_Source_Form_Submission_Id",
         "Object_Data_Source_Form_Submission_Owner_Id",
+        "Object_Data_Source_Medium",
         "Object_Data_Source_Name",
         "Object_Data_Source_Retention_Policy_JSON",
         "Object_Data_Source_Type",

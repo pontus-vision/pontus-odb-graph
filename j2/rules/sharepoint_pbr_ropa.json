@@ -23,6 +23,156 @@
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.SharepointRef;",
             "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Object_Data_Source_Medium",
+            "val": "${(Identifiqueouespecifiqueomeio_x0 + ' ' + Identifiqueouespecifiqueomeio_x00 + ' ' + Identifiqueouespecifiqueomeio_x02).trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "hard_docs",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Description",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Medium",
+            "val": "${Especificarosmeiosutilizadospara}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "contract_source_national",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Comoosdadospessoaiss_x00e3_ocole1)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Object_Data_Source_Medium",
+            "val": "${(Identifiqueouespecifiqueomeio_x01).trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "contract_source_international",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Comoosdadospessoaiss_x00e3_ocole1)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Object_Data_Source_Medium",
+            "val": "${(Identifiqueouespecifiqueomeio_x01).trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Contract",
+        "name": "contract_national",
+        "props": [
+          {
+            "name": "Object_Contract_Form_Id",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Info_Shared_With_Third_Parties",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Short_Description",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Expiry",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Status",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Type",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Intl_Transfer",
+            "val": "${}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Contract",
+        "name": "contract_international",
+        "props": [
+          {
+            "name": "Object_Contract_Form_Id",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Info_Shared_With_Third_Parties",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Short_Description",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Expiry",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Status",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Type",
+            "val": "None",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Intl_Transfer",
+            "val": "${}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -89,12 +239,6 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Type_Of_Natural_Person_International",
-            "val": "${Quems_x00e3_oostitularesdestesda0}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Object_Data_Procedures_Type_Of_Natural_Person_National",
             "val": "${Quems_x00e3_oostitularesdestesda}",
             "mandatoryInSearch": false,
@@ -125,42 +269,9 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Participants",
-            "val": {
-              "vals": "${Sesim_x002c_especificarquaisoutr}",
-              "excludeFromSearch": true
-            },
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Participants_National",
-            "val": "${Comquemosdadoss_x00e3_ocompartil}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Participants_International",
-            "val": {
-              "vals": "${Especificarparaonde_x00e9_feitoa}",
-              "excludeFromSearch": true
-            },
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Object_Data_Procedures_Info_Shared_With_Third_Parties",
             "val": {
               "vals": "${Quaiss_x00e3_oostiposdedadospess}",
-              "excludeFromSearch": true
-            },
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Info_Shared_With_Third_Parties_International",
-            "val": {
-              "vals": "${Quaiss_x00e3_oostiposdedadospess0}",
               "excludeFromSearch": true
             },
             "mandatoryInSearch": false,
@@ -193,6 +304,18 @@
           {
             "name": "Object_Data_Procedures_Number_Of_Natural_Person_International",
             "val": "${VolumetriadosTitularesDados_x002}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Products_And_Services",
+            "val": "${Informetodososprodutos_x002f_ser}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Rights",
+            "val": "${Quaisdestesdireitospodemseratend}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -367,7 +490,7 @@
           },
           {
             "name": "Object_Privacy_Notice_How_Is_It_Collected",
-            "val": "${Comoosdadospessoaiss_x00e3_ocole}",
+            "val": "${Comoosdadospessoaiss_x00e3_ocole + ' ' + Comoosdadospessoaiss_x00e3_ocole0 + ' ' + Comoosdadospessoaiss_x00e3_ocole2}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -510,23 +633,28 @@
       },
       {
         "label": "Has_Personal_Data",
-        "fromVertexName": "Object_Data_Procedures",
+        "fromVertexLabel": "Object_Data_Procedures",
         "toVertexName": "minors_data"
       },
       {
         "label": "Has_Personal_Data",
-        "fromVertexName": "Object_Data_Procedures",
+        "fromVertexLabel": "Object_Data_Procedures",
         "toVertexName": "personal_data"
       },
       {
         "label": "Has_Sensitive_Data",
-        "fromVertexName": "Object_Data_Procedures",
+        "fromVertexLabel": "Object_Data_Procedures",
         "toVertexName": "sensitive_data"
       },
       {
         "label": "Has_Data_Source",
         "fromVertexLabel": "Object_Data_Procedures",
         "toVertexName": "attached_data_sources"
+      },
+      {
+        "label": "Has_Data_Source",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "hard_docs"
       },
       {
         "label": "Has_Data_Policy",
@@ -540,8 +668,8 @@
       },
       {
         "label": "Has_Privacy_Notice",
-        "fromVertexLabel": "Object_Privacy_Notice",
-        "toVertexLabel": "Object_Data_Procedures"
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Privacy_Notice"
       },
       {
         "label": "Is_Responsible",
@@ -557,6 +685,26 @@
         "label": "Is_Interested_Party",
         "fromVertexName": "champion",
         "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Has_Contract",
+        "fromVertexName": "contract_national",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Has_Contract",
+        "fromVertexName": "contract_international",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Has_Data_Source",
+        "fromVertexName": "contract_national",
+        "toVertexName": "contract_source_national"
+      },
+      {
+        "label": "Has_Data_Source",
+        "fromVertexName": "contract_international",
+        "toVertexName": "contract_source_international"
       }
     ]
   }

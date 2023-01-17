@@ -462,20 +462,24 @@ rules:
         toVertexName: "Object_Data_Procedures"
 
       - label: "Has_Personal_Data"
-        fromVertexName: "Object_Data_Procedures"
+        fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "minors_data"
 
       - label: "Has_Personal_Data"
-        fromVertexName: "Object_Data_Procedures"
+        fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "personal_data"
 
       - label: "Has_Sensitive_Data"
-        fromVertexName: "Object_Data_Procedures"
+        fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "sensitive_data"
 
       - label: "Has_Data_Source"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "attached_data_sources"
+
+      - label: "Has_Data_Source"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "hard_docs"
 
       - label: "Has_Data_Policy"
         fromVertexLabel: "Object_Data_Procedures"
@@ -486,8 +490,8 @@ rules:
         toVertexName: "attached_data_sources"
 
       - label: "Has_Privacy_Notice"
-        fromVertexLabel: "Object_Privacy_Notice"
-        toVertexLabel: "Object_Data_Procedures"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Privacy_Notice"
 
 #     3 below were changed from Person_Natural to Object_Email
       - label: "Is_Responsible"
@@ -501,6 +505,22 @@ rules:
       - label: "Is_Interested_Party"
         fromVertexName: "champion"
         toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Has_Contract"
+        fromVertexName: "contract_national"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Has_Contract"
+        fromVertexName: "contract_international"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Has_Data_Source"
+        fromVertexName: "contract_national"
+        toVertexName: "contract_source_national"
+
+      - label: "Has_Data_Source"
+        fromVertexName: "contract_international"
+        toVertexName: "contract_source_international"
 
 # the below rule is used only for testing purposes (testing SharepointUSerRef class)
   sharepoint_pbr_users:
