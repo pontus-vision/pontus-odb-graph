@@ -460,14 +460,18 @@ schema:
 
         - name: Description
           index: false
-        - name: Short_Description
         - name: Expiry
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
         - name: Id
+        - name: Info_Shared_With_Third_Parties
+        - name: Intl_Transfer # Abbreviation for International transference
         - name: Link
+        - name: Name
+        - name: Registration_Number
+        - name: Short_Description
         - name: Status
         - name: Type
 
@@ -559,10 +563,12 @@ schema:
         - name: Number_Of_Natural_Person
         - name: Number_Of_Natural_Person_National
         - name: Number_Of_Natural_Person_International
-        - name: Property
         - name: Participants
         - name: Participants_National
         - name: Participants_International
+        - name: Property
+        - name: Products_And_Services
+        - name: Rights
         - name: Secondary_Purpose_Of_Collection
           index: false
         - name: Type_Of_Natural_Person
@@ -601,6 +607,7 @@ schema:
         - name: Form_Owner_Id
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
+        - name: Medium
         - name: Name
         - name: Retention_Policy_JSON
         - name: Type

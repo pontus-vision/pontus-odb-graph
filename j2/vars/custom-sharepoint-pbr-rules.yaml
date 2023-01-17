@@ -139,6 +139,65 @@ rules:
             type: "[Lcom.pontusvision.utils.SharepointRef;"
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
+          Medium:
+            val: "${(Identifiqueouespecifiqueomeio_x0 + ' ' + Identifiqueouespecifiqueomeio_x00 + ' ' + Identifiqueouespecifiqueomeio_x02).trim()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        name: hard_docs
+        props:
+          Form_Id:
+          Description:
+          Medium:
+            val: "${Especificarosmeiosutilizadospara}"
+            excludeFromSearch: true
+
+#     Terceiros (third parties) are resolved with Contracts
+      - label: Object_Data_Source
+        name: contract_source_national
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Comoosdadospessoaiss_x00e3_ocole1)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Medium:
+            val: "${(Identifiqueouespecifiqueomeio_x01).trim()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        name: contract_source_international
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Comoosdadospessoaiss_x00e3_ocole1)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Medium:
+            val: "${(Identifiqueouespecifiqueomeio_x01).trim()}"
+            excludeFromSearch: true
+
+      - label: Object_Contract
+        name: contract_national
+        props:
+          Form_Id:
+          Info_Shared_With_Third_Parties:
+          Short_Description:
+          Expiry:
+          Status:
+          Type:
+          Intl_Transfer: "${}"
+
+      - label: Object_Contract
+        name: contract_international
+        props:
+          Form_Id:
+          Info_Shared_With_Third_Parties:
+          Short_Description:
+          Expiry:
+          Status:
+          Type:
+          Intl_Transfer: "${}"
 
       - label: Object_Data_Procedures # = RoPA = Mapeamento de Processos
         props:
@@ -150,7 +209,7 @@ rules:
             val: "${_x00c1_readeNeg_x00f3_cio}"
             excludeFromSearch: true
           Type:
-            val: "${RoPA_x0020_0_x0020__x002d__x0020}"
+            val: "${RoPA_x0020_0_x0020__x002d__x0020}" # Really to EXCLUDE THIS ?!
             excludeFromSearch: true
           Macro_Process_Name:
             val: "${Processo}"
@@ -170,9 +229,9 @@ rules:
           Type_Of_Natural_Person_Minors:
             val: "${Quems_x00e3_oostitularesdosdados1}"
             excludeFromSearch: true
-          Type_Of_Natural_Person_International:
-            val: "${Quems_x00e3_oostitularesdestesda0}"
-            excludeFromSearch: true
+#          Type_Of_Natural_Person_International:
+#            val: "${Quems_x00e3_oostitularesdestesda0}"
+#            excludeFromSearch: true
           Type_Of_Natural_Person_National:
             val: "${Quems_x00e3_oostitularesdestesda}"
             excludeFromSearch: true
@@ -188,21 +247,21 @@ rules:
           Country_Where_Stored:
             val: "${Transfer_x00ea_nciainternacional}"
             excludeFromSearch: true
-          Participants:
-            vals: "${Sesim_x002c_especificarquaisoutr}"
-            excludeFromSearch: true
-          Participants_National:
-            val: "${Comquemosdadoss_x00e3_ocompartil}"
-            excludeFromSearch: true
-          Participants_International:
-            vals: "${Especificarparaonde_x00e9_feitoa}"
-            excludeFromSearch: true
-          Info_Shared_With_Third_Parties:
+#          Participants:
+#            vals: "${Sesim_x002c_especificarquaisoutr}"
+#            excludeFromSearch: true
+#          Participants_National:
+#            val: "${Comquemosdadoss_x00e3_ocompartil}" REALLY GONNA EXCLUDE ?!
+#            excludeFromSearch: true
+#          Participants_International:
+#            vals: "${Especificarparaonde_x00e9_feitoa}"
+#            excludeFromSearch: true
+          Info_Shared_With_Third_Parties: # This stays here or goes to Object_Contract ?!
             vals: "${Quaiss_x00e3_oostiposdedadospess}"
             excludeFromSearch: true
-          Info_Shared_With_Third_Parties_International:
-            vals: "${Quaiss_x00e3_oostiposdedadospess0}"
-            excludeFromSearch: true
+#          Info_Shared_With_Third_Parties_International:
+#            vals: "${Quaiss_x00e3_oostiposdedadospess0}"
+#            excludeFromSearch: true
           Info_Share_Justification:
             val: "${Qual_x00e9_afinalidadedocomparti}"
             excludeFromSearch: true
@@ -217,6 +276,12 @@ rules:
             excludeFromSearch: true
           Number_Of_Natural_Person_International:
             val: "${VolumetriadosTitularesDados_x002}"
+            excludeFromSearch: true
+          Products_And_Services:
+            val: "${Informetodososprodutos_x002f_ser}"
+            excludeFromSearch: true
+          Rights:
+            val: "${Quaisdestesdireitospodemseratend}"
             excludeFromSearch: true
 
       - label: Object_Email_Address
@@ -285,7 +350,7 @@ rules:
             val: "${Qualoper_x00ed_ododereten_x00e7_}"
             excludeFromSearch: true
           Retention_Justification:
-            val: "${Qualajustificativaparaoper_x00ed}"
+            val: "${Qualajustificativaparaoper_x00ed}" # está correto aqui? Ou deve ir para RoPA_Lawful_Basis_Justification ?!
             excludeFromSearch: true
 #         PBR não tem campo para Update_Frequency ?!?!
           Uses_Automation:
@@ -318,7 +383,7 @@ rules:
             type: "java.util.Date"
             excludeFromSearch: true
           How_Is_It_Collected:
-            val: "${Comoosdadospessoaiss_x00e3_ocole}"
+            val: "${Comoosdadospessoaiss_x00e3_ocole + ' ' + Comoosdadospessoaiss_x00e3_ocole0 + ' ' + Comoosdadospessoaiss_x00e3_ocole2}"
 #            + '\\\\n' + Identifiqueouespecifiqueomeio_x0 != null ? Identifiqueouespecifiqueomeio_x0 : ''
             excludeFromSearch: true
           Description:
