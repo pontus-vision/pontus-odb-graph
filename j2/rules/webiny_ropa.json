@@ -1,0 +1,600 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Data_Source",
+        "name": "webiny",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/ROPA",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "attached_data_sources",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento?.)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Procedures",
+        "props": [
+          {
+            "name": "Object_Data_Procedures_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_ID",
+            "val": "${mapeamentoDeProcessosReferencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Business_Area_Responsible",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Macro_Process_Name",
+            "val": "${mapeamentoDeProcessosProcesso}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Collected",
+            "val": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
+            "val": "${mapeamentoDeProcessosCategoriaDosTitularesDosDados}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Provider",
+            "val": "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Why_Is_It_Collected",
+            "val": "${mapeamentoDeProcessosFinalidadeDoProcesso}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Secondary_Purpose_Of_Collection",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Country_Where_Stored",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Share_Justification",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Number_Of_Natural_Person",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Products_And_Services",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Rights",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Lawful_Basis_Justification",
+            "val": "${mapeamentoDeProcessosJustificativaDaBaseLegal}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "name": "responsible",
+        "props": [
+          {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.CPF)}",
+            "mandatoryInSearch": true,
+            "processAll": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "alt_responsible",
+        "props": [
+          {
+            "name": "Object_Email_Address_Customer_ID",
+            "val": "${new groovy.json.JsonBuilder()}",
+            "mandatoryInSearch": true,
+            "processAll": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "champion",
+        "props": [
+          {
+            "name": "Object_Email_Address_Customer_ID",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosEncarregado?.CPF)}",
+            "mandatoryInSearch": true,
+            "processAll": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Lawful_Basis",
+        "props": [
+          {
+            "name": "Object_Lawful_Basis_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosBasesLegais)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.basesLegaisReferencia?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Contract",
+        "props": [
+          {
+            "name": "Object_Contract_Registration_Number",
+            "val": "${new groovy.json.JsonBuilder()}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "personal_identification",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "financial_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "personal_characteristics",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "personal_habits",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "psychological_characteristics",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "family_composition",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "leisure_interests",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "associations",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "criminal_processes",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "consumption_habits",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "residential_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "education_and_training",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "profession_and_employment",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "image_record",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "biometric_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "sensitive_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "other_personal_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Policy",
+        "props": [
+          {
+            "name": "Object_Data_Policy_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Type",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Retention_Period",
+            "val": "${mapeamentoDeProcessosPeriodoDeRetencao?.periodosReferencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Profiling_And_Scoring",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Uses_Automation",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Is_Updated",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Is_Deleted",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Is_Anonymized",
+            "val": "${}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "webiny/ropa",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "webiny/ropa",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "webiny",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexName": "Object_Data_Procedures"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "Object_Data_Procedures",
+        "toVertexName": "minors_data"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "Object_Data_Procedures",
+        "toVertexName": "personal_data"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexName": "Object_Data_Procedures",
+        "toVertexName": "sensitive_data"
+      },
+      {
+        "label": "Has_Data_Source",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "attached_data_sources"
+      },
+      {
+        "label": "Has_Data_Policy",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Data_Policy"
+      },
+      {
+        "label": "Impacted_By_Data_Breach",
+        "fromVertexLabel": "Event_Data_Breach",
+        "toVertexName": "attached_data_sources"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Object_Privacy_Notice",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexName": "responsible",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexName": "alt_responsible",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Is_Interested_Party",
+        "fromVertexName": "champion",
+        "toVertexLabel": "Object_Data_Procedures"
+      }
+    ]
+  }
+}

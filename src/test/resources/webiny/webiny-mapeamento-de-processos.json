@@ -1,0 +1,156 @@
+{
+  "data": {
+    "listMapeamentoDeProcessos": {
+      "data": [
+        {
+          "id": "63c6f874320a910008b4e5b5#0002",
+          "entryId": "63c6f874320a910008b4e5b5",
+          "createdOn": "2023-01-18T12:49:22.056Z",
+          "savedOn": "2023-01-18T12:49:24.495Z",
+          "createdBy": {
+            "id": "6a64619a-a19a-4988-b6be-6a6442b844da",
+            "displayName": "admin admin",
+            "type": "admin"
+          },
+          "ownedBy": {
+            "id": "6a64619a-a19a-4988-b6be-6a6442b844da",
+            "displayName": "admin admin",
+            "type": "admin"
+          },
+          "mapeamentoDeProcessosReferencia": "ropa 1",
+          "mapeamentoDeProcessosDepartamento": [
+            {
+              "id": "63c6f90f320a910008b4e5b6#0001",
+              "entryId": "63c6f90f320a910008b4e5b6",
+              "createdOn": "2023-01-17T19:37:51.497Z",
+              "savedOn": "2023-01-17T19:37:54.219Z",
+              "departamentoReferencia": "TI"
+            }
+          ],
+          "mapeamentoDeProcessosProcesso": "processo 1",
+          "mapeamentoDeProcessosBasesLegais": [
+            {
+              "id": "63c6fc425f8ba5000869d773#0001",
+              "entryId": "63c6fc425f8ba5000869d773",
+              "createdOn": "2023-01-17T19:51:30.271Z",
+              "savedOn": "2023-01-17T19:51:31.592Z",
+              "basesLegaisReferencia": "Consentimento"
+            },
+            {
+              "id": "63c6fc295f8ba5000869d772#0001",
+              "entryId": "63c6fc295f8ba5000869d772",
+              "createdOn": "2023-01-17T19:51:05.590Z",
+              "savedOn": "2023-01-17T19:51:07.429Z",
+              "basesLegaisReferencia": "Legítimo Interesse"
+            }
+          ],
+          "mapeamentoDeProcessosNomeDoResponsavel": null,
+          "mapeamentoDeProcessosJustificativaDaBaseLegal": "justificativa 1",
+          "mapeamentoDeProcessosLocalDeArmazenamento": [],
+          "mapeamentoDeProcessosCategoriaDosTitularesDosDados": [
+            "Cliente"
+          ],
+          "mapeamentoDeProcessosPeriodoDeRetencao": {
+            "periodosReferencia": "10 meses"
+          },
+          "mapeamentoDeProcessosAprovacoes": [],
+          "mapeamentoDeProcessosDadosPessoaisObj": {
+            "mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal": [
+              "Nome Completo",
+              "CNH",
+              "Local de nascimento"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros": [
+              "Despesas"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais": [
+              "Detalhes Pessoais"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais": [
+              "Hábitos"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas": [
+              "Caráter"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar": [
+              "Familiares ou membros da família"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer": [
+              "Nome de usuário"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjAssociacoes": [
+              "Clubes",
+              "Parcerias"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal": [
+              "Condenações"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo": [
+              "Bens ou serviços emprestados"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais": [
+              "Custos",
+              "Tempo de habitação"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento": [
+              "Histórico escolar",
+              "Grau de formação"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego": [
+              "Matrícula",
+              "Data de admissão",
+              "Nome da empresa",
+              "INSS"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz": [
+              "Fotografia"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos": [
+              "Impressão digital"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis": [
+              "Dados que revelam origem racial ou ética"
+            ],
+            "mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar": {
+              "outrosDadosPessoaisReferencia": "outros dados 1"
+            }
+          },
+          "mapeamentoDeProcessosEncarregado": null,
+          "mapeamentoDeProcessosControladorPj": {
+            "organizacoesEmail": "lmartins@pontusnetworks.com",
+            "organizacoesCnpj": 89894673000152,
+            "organizacoesNome": "Pontus Vision Brasil",
+            "organizacoesMatriz": null,
+            "organizacoesTelefone": "112453675898",
+            "organizacoesSite": "pontusvision.com.br",
+            "organizacoesEndereco": "rua são paulo 256"
+          },
+          "mapeamentoDeProcessosControladorPf": null,
+          "mapeamentoDeProcessosOperadorPf": null,
+          "mapeamentoDeProcessosOperadorPj": {
+            "organizacoesEmail": "lmartins@pontusnetworks.com",
+            "organizacoesCnpj": 89894673000152,
+            "organizacoesNome": "Pontus Vision Brasil",
+            "organizacoesMatriz": null,
+            "organizacoesTelefone": "112453675898",
+            "organizacoesSite": "pontusvision.com.br",
+            "organizacoesEndereco": "rua são paulo 256"
+          },
+          "mapeamentoDeProcessosOutrosFundamentosLegais": "outros fundamentos",
+          "mapeamentoDeProcessosFinalidadeDoProcesso": "finalidade 1",
+          "mapeamentoDeProcessosStatus": "Pedido de Aprovação",
+          "mapeamentoDeProcessosLocalizacao": {
+            "mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas": null,
+            "mapeamentoDeProcessosLocalizacaoAbrangenciaGeograficaDoTratamento": "Estadual"
+          }
+        }
+      ],
+      "meta": {
+        "cursor": null,
+        "hasMoreItems": false,
+        "totalCount": 1
+      },
+      "error": null
+    }
+  }
+}

@@ -1,0 +1,437 @@
+rules:
+
+  webiny_ropa:
+
+    vertices:
+
+      - label: Object_Data_Source
+        name: webiny
+        props:
+          Name: "WEBINY/ROPA"
+
+      - label: Object_Data_Source
+        name: attached_data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento?.)}" #TODO
+            type: "[Lcom.pontusvision.utils;" #TODO
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Object_Data_Procedures
+        props:
+          Form_Id: "${id}"
+          ID:
+            val: "${mapeamentoDeProcessosReferencia}"
+            excludeFromSearch: true
+          Business_Area_Responsible:
+            val: "${}"
+            excludeFromSearch: true
+#          Type:
+#            val: "${}"
+#            excludeFromSearch: true
+          Macro_Process_Name:
+            val: "${mapeamentoDeProcessosProcesso}"
+            excludeFromSearch: true
+#          Description:
+#            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
+#            excludeFromSearch: true
+          Info_Collected:
+            val: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia}"
+            excludeFromSearch: true
+          Type_Of_Natural_Person:
+            val: "${mapeamentoDeProcessosCategoriaDosTitularesDosDados}"
+            excludeFromSearch: true
+          Data_Provider:
+            val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}"
+            excludeFromSearch: true
+          Why_Is_It_Collected:
+            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
+            excludeFromSearch: true
+          Secondary_Purpose_Of_Collection:
+            val: "${}"
+            excludeFromSearch: true
+          Country_Where_Stored:
+            val: "${}"
+            excludeFromSearch: true
+#          Participants:
+#            vals: "${}"              what to do with that ?!
+#            excludeFromSearch: true
+#          Info_Shared_With_Third_Parties:
+#            vals: "${}"
+#            excludeFromSearch: true
+#          Info_Shared_With_Third_Parties_International:
+#            vals: "${}"
+#            excludeFromSearch: true
+          Info_Share_Justification:
+            val: "${}"              # não temos campo para essa questão
+            excludeFromSearch: true
+#          Info_Share_Justification_International:
+#            val: "${}"
+#            excludeFromSearch: true
+          Number_Of_Natural_Person:
+            val: "${}"
+            excludeFromSearch: true
+          Products_And_Services:
+            val: "${}"
+            excludeFromSearch: true
+          Rights:
+            val: "${}"
+            excludeFromSearch: true
+          Lawful_Basis_Justification:
+            val: "${mapeamentoDeProcessosJustificativaDaBaseLegal}"
+            excludeFromSearch: true
+
+      - label: Person_Natural
+        name: responsible
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.CPF)}" #TODO
+#            type: "[Ljava.lang.String;"
+            processAll: true
+#            type: "[Lcom.pontusvision.utils;"
+#            postProcessor: "${com.pontusvision.utils.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+#            processAll: true
+
+      - label: Object_Email_Address
+        name: alt_responsible
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder()}"   # quem é o responsável alternativo ?!
+            processAll: true
+
+      - label: Object_Email_Address
+        name: champion
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosEncarregado?.CPF)}" #TODO
+#            type: "[Lcom.pontusvision.utils;"
+#            postProcessor: "${com.pontusvision.utils.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Lawful_Basis
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosBasesLegais)}" # try this !!
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.basesLegaisReferencia?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Contract  # ainda não tem campo no CMS Mapeamentos
+        props:
+          Registration_Number:
+            val: "${new groovy.json.JsonBuilder()}" #TODO (linkage only)
+            type: "[Ljava.lang.String;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: personal_identification
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: financial_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: personal_characteristics
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: personal_habits
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: psychological_characteristics
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: family_composition
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: leisure_interests
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: associations
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: criminal_processes
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: consumption_habits
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: residential_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: education_and_training
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: profession_and_employment
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: image_record
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: biometric_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: sensitive_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: other_personal_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Data_Policy
+        props:
+          Form_Id: "${id}"
+          Type:
+            val: "${}"
+            excludeFromSearch: true
+          Retention_Period:
+            val: "${mapeamentoDeProcessosPeriodoDeRetencao?.periodosReferencia}"
+            excludeFromSearch: true
+#          Retention_Justification:
+#            val: "${}"
+#            excludeFromSearch: true
+          Profiling_And_Scoring:
+            val: "${}"
+            excludeFromSearch: true
+          Uses_Automation:
+            val: "${}"
+            excludeFromSearch: true
+          Is_Updated:
+            val: "${}"
+            excludeFromSearch: true
+          Is_Deleted:
+            val: "${}"
+            excludeFromSearch: true
+#          Is_Essential:
+#            val: "${}"
+#            excludeFromSearch: true
+          Is_Anonymized:
+            val: "${}"
+            excludeFromSearch: true
+
+#      - label: Object_Privacy_Notice
+#        condition: "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}"
+#        props:
+#          Form_Id: "${id}"
+#          Metadata_Update_Date:
+#            val: "${Modified}"
+#            type: "java.util.Date"
+#            excludeFromSearch: true
+#          Metadata_Create_Date:
+#            val: "${Created}"
+#            type: "java.util.Date"
+#            excludeFromSearch: true
+#          How_Is_It_Collected:
+#            val: "${Comoosdadospessoaiss_x00e3_ocole}"
+#            excludeFromSearch: true
+#          Description:
+#            val: "${Qual_x00e9_omeioadotadoparainfor}"
+#            excludeFromSearch: true
+#          Agreements:
+#            val: "${Quaisdestesdireitospodemseratend}"
+#            excludeFromSearch: true
+
+#      - label: Event_Data_Breach
+#        condition: "${Houvealgumincidentedeseguran_x00 == 'Sim'}"
+#        props:
+#          Form_Id: "${id}"
+#          Id:
+#            val: "${Title?.trim()?.toUpperCase()}"
+#            excludeFromSearch: true
+#          Authority_Notified:
+#            val: "${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos:''}"
+#            excludeFromSearch: true
+#          Authority_Notified_Others:
+#            val: "${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0:''}"
+#            excludeFromSearch: true
+#          Metadata_Create_Date:
+#            val: "${Created}"
+#            type: java.util.Date
+#            excludeFromSearch: true
+#          Metadata_Update_Date:
+#            val: "${Modified}"
+#            type: java.util.Date
+#            excludeFromSearch: true
+#          Description:
+#            val: "${Emcasopositivo_x002c_fornecerosd}"
+#            excludeFromSearch: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "webiny/ropa"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/ropa"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "webiny"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexName: "Object_Data_Procedures"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "Object_Data_Procedures"
+        toVertexName: "minors_data"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "Object_Data_Procedures"
+        toVertexName: "personal_data"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "Object_Data_Procedures"
+        toVertexName: "sensitive_data"
+
+      - label: "Has_Data_Source"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "attached_data_sources"
+
+      - label: "Has_Data_Policy"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Data_Policy"
+
+      - label: "Impacted_By_Data_Breach"
+        fromVertexLabel: "Event_Data_Breach"
+        toVertexName: "attached_data_sources"
+
+      - label: "Has_Privacy_Notice"
+        fromVertexLabel: "Object_Privacy_Notice"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Is_Responsible"
+        fromVertexName: "responsible"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Is_Responsible"
+        fromVertexName: "alt_responsible"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Is_Interested_Party"
+        fromVertexName: "champion"
+        toVertexLabel: "Object_Data_Procedures"
+

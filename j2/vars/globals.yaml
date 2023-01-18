@@ -510,7 +510,12 @@ schema:
         - name: Form_Owner_Id
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
+        - name: Is_Anonymized
+        - name: Is_Deleted
+        - name: Is_Essential
+        - name: Is_Updated
         - name: Name
+        - name: Profiling_And_Scoring
         - name: Retention_Period
         - name: Retention_Justification
           index: false
@@ -520,10 +525,6 @@ schema:
           dataType: Date
         - name: Update_Frequency
         - name: Uses_Automation
-        - name: Is_Updated
-        - name: Is_Deleted
-        - name: Is_Essential
-        - name: Is_Anonymized
 
     - name: "Object_Data_Procedures"
       partition: false
