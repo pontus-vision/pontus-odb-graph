@@ -36,7 +36,7 @@
           },
           {
             "name": "Object_Data_Procedures_ID",
-            "val": "${mapeamentoDeProcessosReferencia}",
+            "val": "${mapeamentoDeProcessosReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

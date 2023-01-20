@@ -2,39 +2,35 @@
 updatereq:
   vertices:
     
-    - label: Object_Legal_Actions
+    - label: Object_Privacy_Docs
       props:
-        - name: Object_Legal_Actions_Form_Id
+        - name: Object_Privacy_Docs_Form_Id
           val: ${id}
           mandatoryInSearch: True
-        - name: Object_Legal_Actions_Description
-          val: ${acoesJudiciaisPpdDescricao}
+        - name: Object_Privacy_Docs_Description
+          val: ${comunicacoesPpdDescricao}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Legal_Actions_Date
-          val: ${acoesJudiciaisPpdData}
+        - name: Object_Privacy_Docs_Date
+          val: ${comunicacoesPpdData}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Object_Legal_Actions_Details
-          val: ${acoesJudiciaisPpdResultado}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Legal_Actions_Name
-          val: ${acoesJudiciaisPpdReferencia?.trim()?.toUpperCase()}
+        - name: Object_Privacy_Docs_Title
+          val: ${comunicacoesPpdReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: WEBINY/AÇÕES-JUDICIAIS
+          val: WEBINY/COMUNICAÇÕES PPD
           mandatoryInSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Ações Judiciais
+          val: Webiny Comunicações PPD
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -59,7 +55,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: webiny/ações-judiciais
+          val: webiny/comunicações-ppd
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -77,5 +73,5 @@ updatereq:
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
-    toVertexLabel: Object_Legal_Actions
+    toVertexLabel: Object_Privacy_Docs
 

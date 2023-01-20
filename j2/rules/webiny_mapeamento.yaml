@@ -25,7 +25,7 @@ updatereq:
           val: ${id}
           mandatoryInSearch: True
         - name: Object_Data_Procedures_ID
-          val: ${mapeamentoDeProcessosReferencia}
+          val: ${mapeamentoDeProcessosReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Business_Area_Responsible

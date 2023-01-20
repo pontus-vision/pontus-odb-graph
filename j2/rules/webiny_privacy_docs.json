@@ -2,35 +2,29 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object_Legal_Actions",
+        "label": "Object_Privacy_Docs",
         "props": [
           {
-            "name": "Object_Legal_Actions_Form_Id",
+            "name": "Object_Privacy_Docs_Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object_Legal_Actions_Description",
-            "val": "${acoesJudiciaisPpdDescricao}",
+            "name": "Object_Privacy_Docs_Description",
+            "val": "${comunicacoesPpdDescricao}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Legal_Actions_Date",
-            "val": "${acoesJudiciaisPpdData}",
+            "name": "Object_Privacy_Docs_Date",
+            "val": "${comunicacoesPpdData}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Legal_Actions_Details",
-            "val": "${acoesJudiciaisPpdResultado}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Legal_Actions_Name",
-            "val": "${acoesJudiciaisPpdReferencia?.trim()?.toUpperCase()}",
+            "name": "Object_Privacy_Docs_Title",
+            "val": "${comunicacoesPpdReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -41,7 +35,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/AÇÕES-JUDICIAIS",
+            "val": "WEBINY/COMUNICAÇÕES PPD",
             "mandatoryInSearch": true
           }
         ]
@@ -51,7 +45,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Ações Judiciais",
+            "val": "Webiny Comunicações PPD",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -88,7 +82,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/ações-judiciais",
+            "val": "webiny/comunicações-ppd",
             "mandatoryInSearch": true
           },
           {
@@ -118,7 +112,7 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Object_Legal_Actions"
+        "toVertexLabel": "Object_Privacy_Docs"
       }
     ]
   }

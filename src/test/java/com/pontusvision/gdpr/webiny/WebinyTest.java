@@ -130,4 +130,54 @@ public class WebinyTest extends AppTest {
 
   }
 
+  @Test
+  public void test00003WebinyComunicacoesPpd() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-comunicacoes.json", "$.data.listComunicacoesPpds.data[*]", "webiny_privacy_docs");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Docs_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63cac3f1b788960008872ee4#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Docs",
+              new String[]{"Object_Privacy_Docs_Title", "Object_Privacy_Docs_Date", "Object_Privacy_Docs_Description"});
+      String replyStr = reply.getRecords()[0];
+
+
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 2\""), "Title for this Privacy document");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"Reunião com DPO\""), "Description for this priv doc");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"\"Tue Jul 12 01:01:01 UTC 2022\"\""), "Date this event took place");
+
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Docs_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63cac3ccb788960008872ee3#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Docs",
+              new String[]{"Object_Privacy_Docs_Title", "Object_Privacy_Docs_Date", "Object_Privacy_Docs_Description"});
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 1\""), "Title for this Privacy document");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"palestra introdução LGPD\""), "Description for this priv doc");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"\"Fri Oct 09 01:01:01 UTC 2020\"\""), "Date this event took place");
+
+      String countObjectLegalActions =
+              App.executor.eval("App.g.V().has('Metadata_Type', eq('Object_Privacy_Docs'))" +
+                      ".dedup().count().next().toString()").get().toString();
+      assertEquals("2", countObjectLegalActions, "There are 2 registries for Object_Privacy_Docs");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
 }

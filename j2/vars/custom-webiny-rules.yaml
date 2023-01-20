@@ -22,7 +22,7 @@ rules:
         props:
           Form_Id: "${id}"
           ID:
-            val: "${mapeamentoDeProcessosReferencia}"
+            val: "${mapeamentoDeProcessosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Business_Area_Responsible:
             val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}"
@@ -497,12 +497,12 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/LEGAL-ACTIONS"
+          Name: "WEBINY/AÇÕES-JUDICIAIS"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Legal Actions"
+            val: "Webiny Ações Judiciais"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -521,7 +521,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/legal-actions"
+          Type: "webiny/ações-judiciais"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -539,3 +539,63 @@ rules:
         fromVertexLabel: "Event_Ingestion"
         toVertexLabel: "Object_Legal_Actions"
 
+  webiny_privacy_docs:
+
+    vertices:
+      - label: Object_Privacy_Docs
+        props:
+          Form_Id: "${id}"
+          Description:
+            val: "${comunicacoesPpdDescricao}"
+            excludeFromSearch: true
+          Date:
+            val: "${comunicacoesPpdData}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Title:
+            val: "${comunicacoesPpdReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "WEBINY/COMUNICAÇÕES PPD"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Webiny Comunicações PPD"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/comunicações-ppd"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Privacy_Docs"
