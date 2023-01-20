@@ -981,11 +981,12 @@ schema:
       partition: false
       useStatic: false
       props:
-        - name: Form_Id
         - name: Date
           dataType: Date
         - name: Description
         - name: Details
+        - name: Form_Id
+        - name: Name
 
     - name: "Object_Privacy_Notice"
       partition: false

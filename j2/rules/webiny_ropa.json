@@ -18,11 +18,11 @@
         "props": [
           {
             "name": "Object_Data_Source_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento?.)}",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "postProcessor": "${it?.id}"
           }
         ]
       },
@@ -42,13 +42,19 @@
           },
           {
             "name": "Object_Data_Procedures_Business_Area_Responsible",
-            "val": "${}",
+            "val": "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Macro_Process_Name",
             "val": "${mapeamentoDeProcessosProcesso}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Description",
+            "val": "${mapeamentoDeProcessosFinalidadeDoProcesso}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -61,18 +67,6 @@
           {
             "name": "Object_Data_Procedures_Type_Of_Natural_Person",
             "val": "${mapeamentoDeProcessosCategoriaDosTitularesDosDados}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Data_Provider",
-            "val": "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Why_Is_It_Collected",
-            "val": "${mapeamentoDeProcessosFinalidadeDoProcesso}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -133,11 +127,11 @@
         ]
       },
       {
-        "label": "Object_Email_Address",
+        "label": "Person_Natural",
         "name": "alt_responsible",
         "props": [
           {
-            "name": "Object_Email_Address_Customer_ID",
+            "name": "Person_Natural_Customer_ID",
             "val": "${new groovy.json.JsonBuilder()}",
             "mandatoryInSearch": true,
             "processAll": true
@@ -145,11 +139,11 @@
         ]
       },
       {
-        "label": "Object_Email_Address",
+        "label": "Person_Natural",
         "name": "champion",
         "props": [
           {
-            "name": "Object_Email_Address_Customer_ID",
+            "name": "Person_Natural_Customer_ID",
             "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosEncarregado?.CPF)}",
             "mandatoryInSearch": true,
             "processAll": true
@@ -420,58 +414,6 @@
         ]
       },
       {
-        "label": "Object_Data_Policy",
-        "props": [
-          {
-            "name": "Object_Data_Policy_Form_Id",
-            "val": "${id}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Type",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Retention_Period",
-            "val": "${mapeamentoDeProcessosPeriodoDeRetencao?.periodosReferencia}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Profiling_And_Scoring",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Uses_Automation",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Is_Updated",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Is_Deleted",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Is_Anonymized",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
         "label": "Event_Ingestion",
         "props": [
           {
@@ -494,14 +436,14 @@
           },
           {
             "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${Created}",
+            "val": "${createdOn}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${Modified}",
+            "val": "${savedOn}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
@@ -543,42 +485,97 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
-        "toVertexName": "Object_Data_Procedures"
+        "toVertexLabel": "Object_Data_Procedures"
       },
       {
         "label": "Has_Personal_Data",
-        "fromVertexName": "Object_Data_Procedures",
-        "toVertexName": "minors_data"
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "personal_identification"
       },
       {
         "label": "Has_Personal_Data",
-        "fromVertexName": "Object_Data_Procedures",
-        "toVertexName": "personal_data"
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "financial_data"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "personal_characteristics"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "personal_habits"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "psychological_characteristics"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "family_composition"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "leisure_interests"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "associations"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "criminal_processes"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "consumption_habits"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "residential_data"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "education_and_training"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "profession_and_employment"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "image_record"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "biometric_data"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "other_personal_data"
       },
       {
         "label": "Has_Sensitive_Data",
-        "fromVertexName": "Object_Data_Procedures",
+        "fromVertexLabel": "Object_Data_Procedures",
         "toVertexName": "sensitive_data"
       },
       {
         "label": "Has_Data_Source",
         "fromVertexLabel": "Object_Data_Procedures",
         "toVertexName": "attached_data_sources"
-      },
-      {
-        "label": "Has_Data_Policy",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Data_Policy"
-      },
-      {
-        "label": "Impacted_By_Data_Breach",
-        "fromVertexLabel": "Event_Data_Breach",
-        "toVertexName": "attached_data_sources"
-      },
-      {
-        "label": "Has_Privacy_Notice",
-        "fromVertexLabel": "Object_Privacy_Notice",
-        "toVertexLabel": "Object_Data_Procedures"
       },
       {
         "label": "Is_Responsible",
@@ -593,6 +590,16 @@
       {
         "label": "Is_Interested_Party",
         "fromVertexName": "champion",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Has_Lawful_Basis_On",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Lawful_Basis"
+      },
+      {
+        "label": "Has_Contract",
+        "fromVertexLabel": "Object_Contract",
         "toVertexLabel": "Object_Data_Procedures"
       }
     ]

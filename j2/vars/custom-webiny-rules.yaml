@@ -1,21 +1,21 @@
 rules:
 
-  webiny_ropa:
+  webiny_mapeamento:
 
     vertices:
 
       - label: Object_Data_Source
         name: webiny
         props:
-          Name: "WEBINY/ROPA"
+          Name: "WEBINY/MAPEAMENTO DE PROCESSOS"
 
       - label: Object_Data_Source
         name: attached_data_sources
         props:
           Form_Id:
-            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento?.)}" #TODO
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento)}"
             type: "[Lcom.pontusvision.utils;" #TODO
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            postProcessor: "${it?.id}"
             processAll: true
 
       - label: Object_Data_Procedures
@@ -25,7 +25,7 @@ rules:
             val: "${mapeamentoDeProcessosReferencia}"
             excludeFromSearch: true
           Business_Area_Responsible:
-            val: "${}"
+            val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}"
             excludeFromSearch: true
 #          Type:
 #            val: "${}"
@@ -33,27 +33,27 @@ rules:
           Macro_Process_Name:
             val: "${mapeamentoDeProcessosProcesso}"
             excludeFromSearch: true
-#          Description:
-#            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
-#            excludeFromSearch: true
+          Description:
+            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
+            excludeFromSearch: true
           Info_Collected:
             val: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia}"
             excludeFromSearch: true
           Type_Of_Natural_Person:
             val: "${mapeamentoDeProcessosCategoriaDosTitularesDosDados}"
             excludeFromSearch: true
-          Data_Provider:
-            val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}"
-            excludeFromSearch: true
-          Why_Is_It_Collected:
-            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
-            excludeFromSearch: true
-          Secondary_Purpose_Of_Collection:
-            val: "${}"
-            excludeFromSearch: true
-          Country_Where_Stored:
-            val: "${}"
-            excludeFromSearch: true
+#          Data_Provider:
+#            val: "${}"
+#            excludeFromSearch: true
+#          Why_Is_It_Collected:
+#            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
+#            excludeFromSearch: true
+#          Secondary_Purpose_Of_Collection:
+#            val: "${}"
+#            excludeFromSearch: true
+#          Country_Where_Stored:
+#            val: "${}"
+#            excludeFromSearch: true
 #          Participants:
 #            vals: "${}"              what to do with that ?!
 #            excludeFromSearch: true
@@ -63,21 +63,21 @@ rules:
 #          Info_Shared_With_Third_Parties_International:
 #            vals: "${}"
 #            excludeFromSearch: true
-          Info_Share_Justification:
-            val: "${}"              # não temos campo para essa questão
-            excludeFromSearch: true
+#          Info_Share_Justification:
+#            val: "${}"              # não temos campo para essa questão
+#            excludeFromSearch: true
 #          Info_Share_Justification_International:
 #            val: "${}"
 #            excludeFromSearch: true
-          Number_Of_Natural_Person:
-            val: "${}"
-            excludeFromSearch: true
+#          Number_Of_Natural_Person:
+#            val: "${}"
+#            excludeFromSearch: true
           Products_And_Services:
-            val: "${}"
+            val: "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos}"
             excludeFromSearch: true
-          Rights:
-            val: "${}"
-            excludeFromSearch: true
+#          Rights:
+#            val: "${}"               #TODO: Check with @Leo if it is needed into Webiny
+#            excludeFromSearch: true
           Lawful_Basis_Justification:
             val: "${mapeamentoDeProcessosJustificativaDaBaseLegal}"
             excludeFromSearch: true
@@ -86,28 +86,12 @@ rules:
         name: responsible
         props:
           Customer_ID:
-            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.CPF)}" #TODO
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.titularesCpfDoTitular)}" #TODO
 #            type: "[Ljava.lang.String;"
-            processAll: true
+#            processAll: true
 #            type: "[Lcom.pontusvision.utils;"
 #            postProcessor: "${com.pontusvision.utils.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
 #            processAll: true
-
-      - label: Object_Email_Address
-        name: alt_responsible
-        props:
-          Customer_ID:
-            val: "${new groovy.json.JsonBuilder()}"   # quem é o responsável alternativo ?!
-            processAll: true
-
-      - label: Object_Email_Address
-        name: champion
-        props:
-          Customer_ID:
-            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosEncarregado?.CPF)}" #TODO
-#            type: "[Lcom.pontusvision.utils;"
-#            postProcessor: "${com.pontusvision.utils.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
-            processAll: true
 
       - label: Object_Lawful_Basis
         props:
@@ -278,36 +262,36 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-      - label: Object_Data_Policy
-        props:
-          Form_Id: "${id}"
-          Type:
-            val: "${}"
-            excludeFromSearch: true
-          Retention_Period:
-            val: "${mapeamentoDeProcessosPeriodoDeRetencao?.periodosReferencia}"
-            excludeFromSearch: true
-#          Retention_Justification:
+#      - label: Object_Data_Policy
+#        props:
+#          Form_Id: "${id}"
+#          Type:
 #            val: "${}"
 #            excludeFromSearch: true
-          Profiling_And_Scoring:
-            val: "${}"
-            excludeFromSearch: true
-          Uses_Automation:
-            val: "${}"
-            excludeFromSearch: true
-          Is_Updated:
-            val: "${}"
-            excludeFromSearch: true
-          Is_Deleted:
-            val: "${}"
-            excludeFromSearch: true
-#          Is_Essential:
+#          Retention_Period:
+#            val: "${mapeamentoDeProcessosPeriodoDeRetencao?.periodosReferencia}"
+#            excludeFromSearch: true
+##          Retention_Justification:
+##            val: "${}"
+##            excludeFromSearch: true
+#          Profiling_And_Scoring:
 #            val: "${}"
 #            excludeFromSearch: true
-          Is_Anonymized:
-            val: "${}"
-            excludeFromSearch: true
+#          Uses_Automation:
+#            val: "${}"
+#            excludeFromSearch: true
+#          Is_Updated:
+#            val: "${}"
+#            excludeFromSearch: true
+#          Is_Deleted:
+#            val: "${}"
+#            excludeFromSearch: true
+##          Is_Essential:
+##            val: "${}"
+##            excludeFromSearch: true
+#          Is_Anonymized:
+#            val: "${}"
+#            excludeFromSearch: true
 
 #      - label: Object_Privacy_Notice
 #        condition: "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}"
@@ -359,7 +343,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/ropa"
+            val: "webiny/mapeamento de processos"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -368,21 +352,21 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${Created}"
+            val: "${createdOn}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${Modified}"
+            val: "${savedOn}"
             excludeFromSearch: true
             type: java.util.Date
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/ropa"
+          Type: "webiny/mapeamento de processos"
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
-    edges:
+    edges:    #TODO: fix the edges !!
       - label: "Has_Ingestion_Event"
         fromVertexName: "webiny"
         toVertexLabel: "Event_Group_Ingestion"
@@ -393,45 +377,165 @@ rules:
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Ingestion"
-        toVertexName: "Object_Data_Procedures"
+        toVertexLabel: "Object_Data_Procedures"
 
       - label: "Has_Personal_Data"
-        fromVertexName: "Object_Data_Procedures"
-        toVertexName: "minors_data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "personal_identification"
 
       - label: "Has_Personal_Data"
-        fromVertexName: "Object_Data_Procedures"
-        toVertexName: "personal_data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "financial_data"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "personal_characteristics"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "personal_habits"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "psychological_characteristics"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "family_composition"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "leisure_interests"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "associations"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "criminal_processes"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "consumption_habits"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "residential_data"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "education_and_training"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "profession_and_employment"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "image_record"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "biometric_data"
+
+      - label: "Has_Personal_Data"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexName: "other_personal_data"
 
       - label: "Has_Sensitive_Data"
-        fromVertexName: "Object_Data_Procedures"
+        fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "sensitive_data"
 
       - label: "Has_Data_Source"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "attached_data_sources"
 
-      - label: "Has_Data_Policy"
-        fromVertexLabel: "Object_Data_Procedures"
-        toVertexLabel: "Object_Data_Policy"
-
-      - label: "Impacted_By_Data_Breach"
-        fromVertexLabel: "Event_Data_Breach"
-        toVertexName: "attached_data_sources"
-
-      - label: "Has_Privacy_Notice"
-        fromVertexLabel: "Object_Privacy_Notice"
-        toVertexLabel: "Object_Data_Procedures"
+#      - label: "Has_Data_Policy"
+#        fromVertexLabel: "Object_Data_Procedures"
+#        toVertexLabel: "Object_Data_Policy"
+#
+#      - label: "Impacted_By_Data_Breach"
+#        fromVertexLabel: "Event_Data_Breach"
+#        toVertexName: "attached_data_sources"
+#
+#      - label: "Has_Privacy_Notice"
+#        fromVertexLabel: "Object_Privacy_Notice"
+#        toVertexLabel: "Object_Data_Procedures"
 
       - label: "Is_Responsible"
         fromVertexName: "responsible"
         toVertexLabel: "Object_Data_Procedures"
 
-      - label: "Is_Responsible"
-        fromVertexName: "alt_responsible"
+      - label: "Has_Lawful_Basis_On"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Lawful_Basis"
+
+      - label: "Has_Contract"
+        fromVertexLabel: "Object_Contract"
         toVertexLabel: "Object_Data_Procedures"
 
-      - label: "Is_Interested_Party"
-        fromVertexName: "champion"
-        toVertexLabel: "Object_Data_Procedures"
+  webiny_legal_actions:
+
+    vertices:
+      - label: Object_Legal_Actions
+        props:
+          Form_Id: "${id}"
+          Description:
+            val: "${acoesJudiciaisPpdDescricao}"
+            excludeFromSearch: true
+          Date:
+            val: "${acoesJudiciaisPpdData}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Details:
+            val: "${acoesJudiciaisPpdResultado}"
+            excludeFromSearch: true
+          Name:
+            val: "${acoesJudiciaisPpdReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "WEBINY/LEGAL-ACTIONS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Webiny Legal Actions"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/legal-actions"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Legal_Actions"
 

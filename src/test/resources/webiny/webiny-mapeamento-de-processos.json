@@ -44,16 +44,29 @@
               "basesLegaisReferencia": "Legítimo Interesse"
             }
           ],
-          "mapeamentoDeProcessosNomeDoResponsavel": null,
+          "mapeamentoDeProcessosNomeDoResponsavel": {
+            "titularesCpfDoTitular": 18274564789
+          },
           "mapeamentoDeProcessosJustificativaDaBaseLegal": "justificativa 1",
-          "mapeamentoDeProcessosLocalDeArmazenamento": [],
+          "mapeamentoDeProcessosLocalDeArmazenamento": [
+            {
+              "id": "63c978dfa85ed20008efe81b#0001"
+            }
+          ],
           "mapeamentoDeProcessosCategoriaDosTitularesDosDados": [
             "Cliente"
           ],
           "mapeamentoDeProcessosPeriodoDeRetencao": {
             "periodosReferencia": "10 meses"
           },
-          "mapeamentoDeProcessosAprovacoes": [],
+          "mapeamentoDeProcessosAprovacoes": [
+            {
+              "titularesNomeCompleto": "nome 1"
+            },
+            {
+              "titularesNomeCompleto": "nome 2"
+            }
+          ],
           "mapeamentoDeProcessosDadosPessoaisObj": {
             "mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal": [
               "Nome Completo",
@@ -115,7 +128,9 @@
               "outrosDadosPessoaisReferencia": "outros dados 1"
             }
           },
-          "mapeamentoDeProcessosEncarregado": null,
+          "mapeamentoDeProcessosEncarregado": {
+            "encarregadoCpf": 12345678912
+          },
           "mapeamentoDeProcessosControladorPj": {
             "organizacoesEmail": "lmartins@pontusnetworks.com",
             "organizacoesCnpj": 89894673000152,
@@ -125,8 +140,12 @@
             "organizacoesSite": "pontusvision.com.br",
             "organizacoesEndereco": "rua são paulo 256"
           },
-          "mapeamentoDeProcessosControladorPf": null,
-          "mapeamentoDeProcessosOperadorPf": null,
+          "mapeamentoDeProcessosControladorPf": {
+            "titularesCpfDoTitular": 13245623451
+          },
+          "mapeamentoDeProcessosOperadorPf": {
+            "titularesCpfDoTitular": 87462537241
+          },
           "mapeamentoDeProcessosOperadorPj": {
             "organizacoesEmail": "lmartins@pontusnetworks.com",
             "organizacoesCnpj": 89894673000152,
@@ -139,6 +158,7 @@
           "mapeamentoDeProcessosOutrosFundamentosLegais": "outros fundamentos",
           "mapeamentoDeProcessosFinalidadeDoProcesso": "finalidade 1",
           "mapeamentoDeProcessosStatus": "Pedido de Aprovação",
+          "mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos": "carro de luxo",
           "mapeamentoDeProcessosLocalizacao": {
             "mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas": null,
             "mapeamentoDeProcessosLocalizacaoAbrangenciaGeograficaDoTratamento": "Estadual"

@@ -3309,11 +3309,6 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object_Legal_Actions_Form_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
       "name": "Object_Legal_Actions_Date",
       "dataType": "Date",
       "cardinality": "SINGLE"
@@ -3325,6 +3320,16 @@
     },
     {
       "name": "Object_Legal_Actions_Details",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Legal_Actions_Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Legal_Actions_Name",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -5841,10 +5846,11 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Legal_Actions",
-        "Object_Legal_Actions_Form_Id",
         "Object_Legal_Actions_Date",
         "Object_Legal_Actions_Description",
-        "Object_Legal_Actions_Details"
+        "Object_Legal_Actions_Details",
+        "Object_Legal_Actions_Form_Id",
+        "Object_Legal_Actions_Name"
       ],
       "propertyKeysMappings": {}
     },
