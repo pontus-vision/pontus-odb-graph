@@ -21,8 +21,8 @@
             "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Lcom.pontusvision.utils;",
-            "postProcessor": "${it?.id}"
+            "type": "[Lcom.pontusvision.utils.WebinyRefId;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRefId.fromString(it)?.getId()}"
           }
         ]
       },
@@ -36,7 +36,7 @@
           },
           {
             "name": "Object_Data_Procedures_ID",
-            "val": "${mapeamentoDeProcessosReferencia}",
+            "val": "${mapeamentoDeProcessosReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -103,20 +103,8 @@
             "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosBasesLegais)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.basesLegaisReferencia?.toUpperCase()?.trim()}"
-          }
-        ]
-      },
-      {
-        "label": "Object_Contract",
-        "props": [
-          {
-            "name": "Object_Contract_Registration_Number",
-            "val": "${new groovy.json.JsonBuilder()}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Ljava.lang.String;"
+            "type": "[Lcom.pontusvision.utils.WebinyRefLawfulBasis;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRefLawfulBasis.fromString(it)?.getBasesLegaisReferencia()}"
           }
         ]
       },
@@ -350,11 +338,10 @@
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
-            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
+            "postProcessor": "${it?.toUpperCase()}"
           }
         ]
       },
@@ -531,11 +518,6 @@
         "label": "Has_Lawful_Basis_On",
         "fromVertexLabel": "Object_Data_Procedures",
         "toVertexLabel": "Object_Lawful_Basis"
-      },
-      {
-        "label": "Has_Contract",
-        "fromVertexLabel": "Object_Contract",
-        "toVertexLabel": "Object_Data_Procedures"
       }
     ]
   }

@@ -16,8 +16,8 @@ updatereq:
           val: ${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento)}
           mandatoryInSearch: True
           processAll: True
-          type: "[Lcom.pontusvision.utils;"
-          postProcessor: ${it?.id}
+          type: "[Lcom.pontusvision.utils.WebinyRefId;"
+          postProcessor: ${com.pontusvision.utils.WebinyRefId.fromString(it)?.getId()}
     
     - label: Object_Data_Procedures
       props:
@@ -25,7 +25,7 @@ updatereq:
           val: ${id}
           mandatoryInSearch: True
         - name: Object_Data_Procedures_ID
-          val: ${mapeamentoDeProcessosReferencia}
+          val: ${mapeamentoDeProcessosReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Business_Area_Responsible
@@ -70,16 +70,8 @@ updatereq:
           val: ${new groovy.json.JsonBuilder(mapeamentoDeProcessosBasesLegais)}
           mandatoryInSearch: True
           processAll: True
-          type: "[Ljava.lang.String;"
-          postProcessor: ${it?.basesLegaisReferencia?.toUpperCase()?.trim()}
-    
-    - label: Object_Contract
-      props:
-        - name: Object_Contract_Registration_Number
-          val: ${new groovy.json.JsonBuilder()}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Ljava.lang.String;"
+          type: "[Lcom.pontusvision.utils.WebinyRefLawfulBasis;"
+          postProcessor: ${com.pontusvision.utils.WebinyRefLawfulBasis.fromString(it)?.getBasesLegaisReferencia()}
     
     - label: Object_Sensitive_Data
       name: personal_identification
@@ -245,11 +237,10 @@ updatereq:
       name: other_personal_data
       props:
         - name: Object_Sensitive_Data_Description
-          val: ${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}
+          val: ${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}
           mandatoryInSearch: True
           processAll: True
-          type: "[Ljava.lang.String;"
-          postProcessor: ${it?.toUpperCase()?.trim()}
+          postProcessor: ${it?.toUpperCase()}
     
     - label: Event_Ingestion
       props:
@@ -358,7 +349,4 @@ updatereq:
   - label: Has_Lawful_Basis_On
     fromVertexLabel: Object_Data_Procedures
     toVertexLabel: Object_Lawful_Basis
-  - label: Has_Contract
-    fromVertexLabel: Object_Contract
-    toVertexLabel: Object_Data_Procedures
 

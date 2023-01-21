@@ -14,15 +14,15 @@ rules:
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento)}"
-            type: "[Lcom.pontusvision.utils;" #TODO
-            postProcessor: "${it?.id}"
+            type: "[Lcom.pontusvision.utils.WebinyRefId;"
+            postProcessor: "${com.pontusvision.utils.WebinyRefId.fromString(it)?.getId()}"
             processAll: true
 
       - label: Object_Data_Procedures
         props:
           Form_Id: "${id}"
           ID:
-            val: "${mapeamentoDeProcessosReferencia}"
+            val: "${mapeamentoDeProcessosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Business_Area_Responsible:
             val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}"
@@ -97,17 +97,17 @@ rules:
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosBasesLegais)}" # try this !!
-            type: "[Ljava.lang.String;"
-            postProcessor: "${it?.basesLegaisReferencia?.toUpperCase()?.trim()}"
+            type: "[Lcom.pontusvision.utils.WebinyRefLawfulBasis;"
+            postProcessor: "${com.pontusvision.utils.WebinyRefLawfulBasis.fromString(it)?.getBasesLegaisReferencia()}"
             processAll: true
 
-      - label: Object_Contract  # ainda não tem campo no CMS Mapeamentos
-        props:
-          Registration_Number:
-            val: "${new groovy.json.JsonBuilder()}" #TODO (linkage only)
-            type: "[Ljava.lang.String;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
+#      - label: Object_Contract  # ainda não tem campo no CMS Mapeamentos
+#        props:
+#          Registration_Number:
+#            val: "${new groovy.json.JsonBuilder()}" #TODO (linkage only)
+#            type: "[Ljava.lang.String;"
+##            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
 
       - label: Object_Sensitive_Data
         name: personal_identification
@@ -257,9 +257,9 @@ rules:
         name: other_personal_data
         props:
           Description:
-            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}"
-            type: "[Ljava.lang.String;"
-            postProcessor: "${it?.toUpperCase()?.trim()}"
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}"
+#            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()}"
             processAll: true
 
 #      - label: Object_Data_Policy
@@ -471,9 +471,9 @@ rules:
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Lawful_Basis"
 
-      - label: "Has_Contract"
-        fromVertexLabel: "Object_Contract"
-        toVertexLabel: "Object_Data_Procedures"
+#      - label: "Has_Contract"
+#        fromVertexLabel: "Object_Contract"
+#        toVertexLabel: "Object_Data_Procedures"
 
   webiny_legal_actions:
 
