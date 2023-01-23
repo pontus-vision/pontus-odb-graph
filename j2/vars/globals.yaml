@@ -259,12 +259,13 @@ schema:
       partition: false
       useStatic: false
       props:
-        - name: Form_Id
-        - name: Title
         - name: Date
           dataType: Date
         - name: Discussed_Topics  # OR Discussed_Subjects ?!
+        - name: Form_Id
+        - name: Name
         - name: Participants
+        - name: Title
 
     - name: "Event_Subject_Access_Request"
       partition: false

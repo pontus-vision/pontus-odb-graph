@@ -599,3 +599,80 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: "Event_Ingestion"
         toVertexLabel: "Object_Privacy_Docs"
+
+  webiny_meetings:
+
+    vertices:
+      - label: Event_Meeting
+        props:
+          Form_Id: "${id}"
+          Name:
+            val: "${reunioesPpdReferencia}"
+            excludeFromSearch: true
+          Title:
+            val: "${reunioesPpdTituloReuniao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Date:
+            val: "${reunioesPpdData}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Discussed_Topics:
+            val: "${reunioesPpdTopicos?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Email_Address
+        props:
+          Email:
+            val: "${new groovy.json.JsonBuilder(titularesCpfDoTitular)}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "SHAREPOINT/P-AND-PD-COMMITTEE-MEETINGS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "P & PD Committee Meetings"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "sharepoint/p-and-pd-committee-meetings"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Meeting"
+
+      - label: Is_Participant
+        fromVertexLabel: "Object_Email_Address"
+        toVertexLabel: "Event_Meeting"
+

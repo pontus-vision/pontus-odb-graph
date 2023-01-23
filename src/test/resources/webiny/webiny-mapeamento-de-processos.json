@@ -45,7 +45,7 @@
             }
           ],
           "mapeamentoDeProcessosNomeDoResponsavel": {
-            "titularesCpfDoTitular": 18274564789
+            "titularesCpfDoTitular": "18274564789"
           },
           "mapeamentoDeProcessosJustificativaDaBaseLegal": "justificativa 1",
           "mapeamentoDeProcessosLocalDeArmazenamento": [
@@ -141,10 +141,10 @@
             "organizacoesEndereco": "rua são paulo 256"
           },
           "mapeamentoDeProcessosControladorPf": {
-            "titularesCpfDoTitular": 13245623451
+            "titularesCpfDoTitular": "13245623451"
           },
           "mapeamentoDeProcessosOperadorPf": {
-            "titularesCpfDoTitular": 87462537241
+            "titularesCpfDoTitular": "87462537241"
           },
           "mapeamentoDeProcessosOperadorPj": {
             "organizacoesEmail": "lmartins@pontusnetworks.com",
