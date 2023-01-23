@@ -190,4 +190,51 @@ public class WebinyTest extends AppTest {
 
   }
 
+  @Test
+  public void test00004WebinyReunioesPpd() throws InterruptedException {
+
+//  jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_titulares");
+    jsonTestUtil("webiny/webiny-reunioes.json", "$.data.listReunioesPpds.data[*]", "webiny_meetings");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Meeting_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63ce85b5df67ec0008f29876#0001\"\n" +
+                      "  }\n" +
+                      "]", "Event_Meeting",
+              new String[]{"Event_Meeting_Name", "Event_Meeting_Title", "Event_Meeting_Date", "Event_Meeting_Discussed_Topics"});
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Event_Meeting_Name\":\"REUNIÃO 1\""));
+      assertTrue(replyStr.contains("\"Event_Meeting_Date\":\"Mon Jan 16 01:01:01 UTC 2023\""));
+      assertTrue(replyStr.contains("\"Event_Meeting_Discussed_Topics\":\"O QUE SERÁ DA LGPD NO ANO DE 2023\""));
+
+      String eventMeeting = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Meeting_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63ce85b5df67ec0008f29876#0001\"\n" +
+                      "  }\n" +
+                      "]", "Event_Meeting",
+              new String[]{"Event_Meeting_Form_Id"});
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
+              "hasNeighbourId:" + eventMeeting, 0L, 3L, "Person_Natural_Customer_ID", "+asc");
+
+      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"12309732112\""));
+      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"13245623451\""));
+      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"19439809467\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
 }

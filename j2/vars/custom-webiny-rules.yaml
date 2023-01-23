@@ -607,7 +607,7 @@ rules:
         props:
           Form_Id: "${id}"
           Name:
-            val: "${reunioesPpdReferencia}"
+            val: "${reunioesPpdReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Title:
             val: "${reunioesPpdTituloReuniao?.trim()?.toUpperCase()}"
@@ -620,22 +620,22 @@ rules:
             val: "${reunioesPpdTopicos?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
-      - label: Object_Email_Address
+      - label: Person_Natural
         props:
-          Email:
-            val: "${new groovy.json.JsonBuilder(titularesCpfDoTitular)}"
-            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(reunioesPpdParticipantes)}"
+            type: "[Lcom.pontusvision.utils.WebinyRefCpf;"
+            postProcessor: "${com.pontusvision.utils.WebinyRefCpf.fromString(it)?.getTitularesCpfDoTitular()}"
             processAll: true
 
       - label: Object_Data_Source
         props:
-          Name: "SHAREPOINT/P-AND-PD-COMMITTEE-MEETINGS"
+          Name: "WEBINY/REUNIÕES PPD"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "P & PD Committee Meetings"
+            val: "Webiny Reuniões PPD"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -644,17 +644,17 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${Created}"
+            val: "${createdOn}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${Modified}"
+            val: "${savedOn}"
             excludeFromSearch: true
             type: java.util.Date
 
       - label: Event_Group_Ingestion
         props:
-          Type: "sharepoint/p-and-pd-committee-meetings"
+          Type: "webiny/reuniões-ppd"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -673,6 +673,6 @@ rules:
         toVertexLabel: "Event_Meeting"
 
       - label: Is_Participant
-        fromVertexLabel: "Object_Email_Address"
+        fromVertexLabel: "Person_Natural"
         toVertexLabel: "Event_Meeting"
 

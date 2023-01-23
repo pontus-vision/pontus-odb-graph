@@ -455,19 +455,22 @@ propertyKeys:
   - name: Event_Meeting_Type
     dataType: String
     cardinality: SINGLE
-  - name: Event_Meeting_Form_Id
-    dataType: String
-    cardinality: SINGLE
-  - name: Event_Meeting_Title
-    dataType: String
-    cardinality: SINGLE
   - name: Event_Meeting_Date
     dataType: Date
     cardinality: SINGLE
   - name: Event_Meeting_Discussed_Topics
     dataType: String
     cardinality: SINGLE
+  - name: Event_Meeting_Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event_Meeting_Name
+    dataType: String
+    cardinality: SINGLE
   - name: Event_Meeting_Participants
+    dataType: String
+    cardinality: SINGLE
+  - name: Event_Meeting_Title
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Event_Subject_Access_Request
@@ -3235,11 +3238,12 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Meeting
-      - Event_Meeting_Form_Id
-      - Event_Meeting_Title
       - Event_Meeting_Date
       - Event_Meeting_Discussed_Topics
+      - Event_Meeting_Form_Id
+      - Event_Meeting_Name
       - Event_Meeting_Participants
+      - Event_Meeting_Title
     propertyKeysMappings:
     
       {}
