@@ -24,7 +24,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: WEBINY/COMUNICAÇÕES PPD
+          val: WEBINY/COMUNICAÇÕES-PPD
           mandatoryInSearch: True
     
     - label: Event_Ingestion

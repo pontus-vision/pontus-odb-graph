@@ -37,7 +37,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: WEBINY/REUNIÕES PPD
+          val: WEBINY/REUNIÕES-PPD
           mandatoryInSearch: True
     
     - label: Event_Ingestion

@@ -997,7 +997,7 @@ schema:
         - name: Country_Where_Stored
         - name: Delivery_Date
           dataType: Date
-
+        - name: Name
         - name: Description
           index: false # maintained because the sample data seems to have lots of words !
         - name: Effect_On_Individuals

@@ -54,7 +54,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/REUNIÕES PPD",
+            "val": "WEBINY/REUNIÕES-PPD",
             "mandatoryInSearch": true
           }
         ]

@@ -2076,6 +2076,9 @@ propertyKeys:
   - name: Object_Privacy_Notice_Delivery_Date
     dataType: Date
     cardinality: SINGLE
+  - name: Object_Privacy_Notice_Name
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Privacy_Notice_Description
     dataType: String
     cardinality: SINGLE
@@ -4138,6 +4141,7 @@ vertexIndexes:
       - Object_Privacy_Notice_Agreements
       - Object_Privacy_Notice_Country_Where_Stored
       - Object_Privacy_Notice_Delivery_Date
+      - Object_Privacy_Notice_Name
       - Object_Privacy_Notice_Effect_On_Individuals
       - Object_Privacy_Notice_Expiry_Date
       - Object_Privacy_Notice_Form_Id
