@@ -683,7 +683,7 @@ rules:
         props:
           Form_Id: "${id}"
           Name:
-            val: "${avisoDePrivacidadeReferencia}" #OR Id?
+            val: "${avisoDePrivacidadeReferencia?.trim()?.toUpperCase()}" #OR Id?
             excludeFromSearch: true
           Description:
             val: "${avisoDePrivacidadeAvisoDePrivacidade}"

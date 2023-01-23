@@ -248,35 +248,34 @@ public class WebinyTest extends AppTest {
 
       RecordReply reply = gridWrapper("[\n" +
                       "  {\n" +
-                      "    \"colId\": \"Event_Meeting_Form_Id\",\n" +
+                      "    \"colId\": \"Object_Privacy_Notice_Form_Id\",\n" +
                       "    \"filterType\": \"text\",\n" +
                       "    \"type\": \"equals\",\n" +
-                      "    \"filter\": \"63ce85b5df67ec0008f29876#0001\"\n" +
+                      "    \"filter\": \"63cedccce37f880008086531#0002\"\n" +
                       "  }\n" +
-                      "]", "Event_Meeting",
-              new String[]{"Event_Meeting_Name", "Event_Meeting_Title", "Event_Meeting_Date", "Event_Meeting_Discussed_Topics"});
+                      "]", "Object_Privacy_Notice",
+              new String[]{"Object_Privacy_Notice_Name", "Object_Privacy_Notice_Description", "Object_Privacy_Notice_Delivery_Date"});
       String replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Event_Meeting_Name\":\"REUNIÃO 1\""));
-      assertTrue(replyStr.contains("\"Event_Meeting_Date\":\"Mon Jan 16 01:01:01 UTC 2023\""));
-      assertTrue(replyStr.contains("\"Event_Meeting_Discussed_Topics\":\"O QUE SERÁ DA LGPD NO ANO DE 2023\""));
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Name\":\"AVISO 1\""));
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\":\"aviso 1\""));
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Delivery_Date\":\"Sat Oct 10 01:01:01 UTC 2020\""));
 
-      String eventMeeting = gridWrapperGetRid("[\n" +
+      String privacyNotice = gridWrapperGetRid("[\n" +
                       "  {\n" +
-                      "    \"colId\": \"Event_Meeting_Form_Id\",\n" +
+                      "    \"colId\": \"Object_Privacy_Notice_Form_Id\",\n" +
                       "    \"filterType\": \"text\",\n" +
                       "    \"type\": \"equals\",\n" +
-                      "    \"filter\": \"63ce85b5df67ec0008f29876#0001\"\n" +
+                      "    \"filter\": \"63cedccce37f880008086531#0002\"\n" +
                       "  }\n" +
-                      "]", "Event_Meeting",
-              new String[]{"Event_Meeting_Form_Id"});
+                      "]", "Object_Privacy_Notice",
+              new String[]{"Object_Privacy_Notice_Form_Id"});
 
-      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
-              "hasNeighbourId:" + eventMeeting, 0L, 3L, "Person_Natural_Customer_ID", "+asc");
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Form_Id"},
+              "hasNeighbourId:" + privacyNotice);
+      replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"12309732112\""));
-      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"13245623451\""));
-      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"19439809467\""));
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Form_Id\":\"=63c6f874320a910008b4e5b5#0005\""));
 
     } catch (Exception e) {
       e.printStackTrace();
