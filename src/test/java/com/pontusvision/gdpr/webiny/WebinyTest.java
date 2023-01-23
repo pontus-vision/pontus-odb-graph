@@ -226,9 +226,9 @@ public class WebinyTest extends AppTest {
       reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
               "hasNeighbourId:" + eventMeeting, 0L, 3L, "Person_Natural_Customer_ID", "+asc");
 
-      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"12309732112\""));
-      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"13245623451\""));
-      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"19439809467\""));
+      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"12309732112\""));
+      assertTrue(reply.getRecords()[1].contains("\"Person_Natural_Customer_ID\":\"13245623451\""));
+      assertTrue(reply.getRecords()[2].contains("\"Person_Natural_Customer_ID\":\"19439809467\""));
 
     } catch (Exception e) {
       e.printStackTrace();
