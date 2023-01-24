@@ -741,7 +741,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "sharepoint/aviso-de-privacidade"
+          Type: "webiny/aviso-de-privacidade"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
