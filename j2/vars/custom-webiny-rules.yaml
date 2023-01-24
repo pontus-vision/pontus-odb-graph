@@ -7,7 +7,7 @@ rules:
       - label: Object_Data_Source
         name: webiny
         props:
-          Name: "WEBINY/MAPEAMENTO DE PROCESSOS"
+          Name: "WEBINY/MAPEAMENTO-DE-PROCESSOS"
 
       - label: Object_Data_Source
         name: attached_data_sources
@@ -362,7 +362,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/mapeamento de processos"
+          Type: "webiny/mapeamento-de-processos"
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -497,12 +497,12 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/LEGAL-ACTIONS"
+          Name: "WEBINY/AÇÕES-JUDICIAIS"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Legal Actions"
+            val: "Webiny Ações Judiciais"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -521,7 +521,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/legal-actions"
+          Type: "webiny/ações-judiciais"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
