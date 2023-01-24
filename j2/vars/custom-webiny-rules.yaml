@@ -25,8 +25,8 @@ rules:
             val: "${mapeamentoDeProcessosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Business_Area_Responsible:
-            val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}"
-            excludeFromSearch: true
+            val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}" # it doesn't extract the data from the array,
+            excludeFromSearch: true                                             # I didn't want to create another WebinyRef just for that!
 #          Type:
 #            val: "${}"
 #            excludeFromSearch: true
@@ -55,7 +55,7 @@ rules:
 #            val: "${}"
 #            excludeFromSearch: true
 #          Participants:
-#            vals: "${}"              what to do with that ?!
+#            vals: "${}"              TODO: what to do with that ?!
 #            excludeFromSearch: true
 #          Info_Shared_With_Third_Parties:
 #            vals: "${}"
@@ -64,7 +64,7 @@ rules:
 #            vals: "${}"
 #            excludeFromSearch: true
 #          Info_Share_Justification:
-#            val: "${}"              # não temos campo para essa questão
+#            val: "${}"              TODO: não temos campo para essa questão
 #            excludeFromSearch: true
 #          Info_Share_Justification_International:
 #            val: "${}"
