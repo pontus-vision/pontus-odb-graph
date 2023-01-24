@@ -741,7 +741,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "sharepoint/aviso-de-privacidade"
+          Type: "webiny/aviso-de-privacidade"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -763,3 +763,383 @@ rules:
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Privacy_Notice"
 
+  webiny_fontes_de_dados:
+
+    #{
+    #  listFontesDeDados{
+    #    data{
+    #      id
+    #      createdOn
+    #      savedOn
+    #      fontesDeDadosReferencia
+    #      fontesDeDadosDescricao
+    #      fontesDeDadosSistema{
+    #        sistemaReferencia
+    #      }
+    #      fontesDeDadosSubSistema{
+    #        subsistemaReferencia
+    #      }
+    #      fontesDeDadosModulo{
+    #        moduloReferencia
+    #      }
+    #      fontesDeDadosPeriodoDeRetencao{
+    #        periodosReferencia
+    #      }
+    #      fontesDeDadosFrequenciaDeAtualizacao{
+    #        periodosReferencia
+    #      }
+    #      fontesDeDadosRiscosDeFontesDeDados{
+    #        riscosDeFontesDeDadosReferencia
+    #      }
+    #      fontesDeDadosDadosPessoaisObj{
+    #        fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar{
+    #          outrosDadosPessoaisReferencia
+    #        }
+    #        fontesDeDadosDadosPessoaisObjDadosBiometricos
+    #        fontesDeDadosDadosPessoaisObjDadosSensiveis
+    #        fontesDeDadosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz
+    #        fontesDeDadosDadosPessoaisObjProfissaoEEmprego
+    #        fontesDeDadosDadosPessoaisObjEducacaoETreinamento
+    #        fontesDeDadosDadosPessoaisObjDadosResidenciais
+    #        fontesDeDadosDadosPessoaisObjHabitosDeConsumo
+    #        fontesDeDadosDadosPessoaisObjProcessoJudicialAdministrativoCriminal
+    #        fontesDeDadosDadosPessoaisObjAssociacoes
+    #        fontesDeDadosDadosPessoaisObjInteressesDeLazer
+    #        fontesDeDadosDadosPessoaisObjComposicaoFamiliar
+    #        fontesDeDadosDadosPessoaisObjCaracteristicasPsicologicas
+    #        fontesDeDadosDadosPessoaisObjHabitosPessoais
+    #        fontesDeDadosDadosPessoaisObjCaracteristicasPessoais
+    #        fontesDeDadosDadosPessoaisObjDadosFinanceiros
+    #        fontesDeDadosDadosPessoaisObjDadosDeIdentificacaoPessoal
+    #      }
+    #    }
+    #  }
+    #}
+
+    vertices:
+      - label: Object_Data_Source
+        name: webiny
+        props:
+          Name: "WEBINY/FONTES-DE-DADOS"
+
+      - label: Object_Data_Source
+#        condition: "${id?.trim()?.length() > 0}" TODO: add conditions ?!?!
+        name: fontes_de_dados
+        props:
+          Form_Id: "${id}"
+          Name:
+            val: "${fontesDeDadosReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Description:
+            val: "${fontesDeDadosDescricao}"
+            excludeFromSearch: true
+#          TODO: Keep consistency ... upperCase, lowerCase, trim, etc
+#          Engine:
+#            val: "${fontesDeDadosSistema?.sistemaReferencia?}"
+#            excludeFromSearch: true
+#          Type:
+#            val: "${fontesDeDadosSubSistema?.subsistemaReferencia}"
+#            excludeFromSearch: true
+#          Domain:
+#            val: "${fontesDeDadosModulo?.moduloReferencia}"
+#            excludeFromSearch: true
+
+      - label: Object_System
+        props:
+          Name: "${fontesDeDadosSistema?.sistemaReferencia?.trim()?.toUpperCase()}"
+
+      - label: Object_Subsystem
+        props:
+          Name: "${fontesDeDadosSubSistema?.subsistemaReferencia?.trim()?.toUpperCase()}"
+
+      - label: Object_Module
+        props:
+          Name: "${fontesDeDadosModulo?.moduloReferencia?.trim()?.toLowerCase()}"
+
+      - label: Object_Sensitive_Data
+        name: personal_identification
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosDeIdentificacaoPessoal)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: financial_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosFinanceiros)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: personal_characteristics
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjCaracteristicasPessoais)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: personal_habits
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjHabitosPessoais)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: psychological_characteristics
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjCaracteristicasPsicologicas)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: family_composition
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjComposicaoFamiliar)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: leisure_interests
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjInteressesDeLazer)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: associations
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjAssociacoes)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: criminal_processes
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjProcessoJudicialAdministrativoCriminal)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: consumption_habits
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjHabitosDeConsumo)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: residential_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosResidenciais)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: education_and_training
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjEducacaoETreinamento)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: profession_and_employment
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjProfissaoEEmprego)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: image_record
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: biometric_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosBiometricos)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: sensitive_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosSensiveis)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
+            processAll: true
+
+      - label: Object_Sensitive_Data
+        name: other_personal_data
+        props:
+          Description:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()}"
+            processAll: true
+
+      - label: Object_Data_Policy
+        props:
+          Update_Frequency: "${fontesDeDadosFrequenciaDeAtualizacao?.periodosReferencia}"
+          Retention_Period: "${fontesDeDadosPeriodoDeRetencao?.periodosReferencia}"
+#          Type: "${fontesDeDadosReferencia?.trim()?.toUpperCase()}"
+
+#     TODO: não utilizamos Riscos De Fontes De Dados !!!
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: webiny/fontes-de-dados
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: webiny/fontes-de-dados
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "webiny"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexName: "fontes_de_dados"
+
+      - label: "Has_Policy"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Data_Policy"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Sensitive_Data"
+
+      - label: "Has_Module"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Module"
+
+      - label: "Has_Subsystem"
+        fromVertexLabel: "Object_Module"
+        toVertexLabel: "Object_Subsystem"
+
+      - label: "Has_System"
+        fromVertexLabel: "Object_Subsystem"
+        toVertexLabel: "Object_System"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "personal_identification"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "financial_data"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "personal_characteristics"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "personal_habits"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "psychological_characteristics"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "family_composition"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "leisure_interests"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "associations"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "criminal_processes"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "consumption_habits"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "residential_data"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "education_and_training"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "profession_and_employment"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "image_record"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "biometric_data"
+
+      - label: "Has_Personal_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "other_personal_data"
+
+      - label: "Has_Sensitive_Data"
+        fromVertexName: "fontes_de_dados"
+        toVertexName: "sensitive_data"

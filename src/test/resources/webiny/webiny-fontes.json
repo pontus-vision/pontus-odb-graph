@@ -1,0 +1,92 @@
+{
+  "data": {
+    "listFontesDeDados": {
+      "data": [
+        {
+          "id": "63c978dfa85ed20008efe81b#0002",
+          "createdOn": "2023-01-24T13:12:00.170Z",
+          "savedOn": "2023-01-24T13:12:01.754Z",
+          "fontesDeDadosReferencia": "fonte 1",
+          "fontesDeDadosDescricao": "fonte 1",
+          "fontesDeDadosSistema": {
+            "sistemaReferencia": "sistema 1"
+          },
+          "fontesDeDadosSubSistema": {
+            "subsistemaReferencia": "subsistema 1"
+          },
+          "fontesDeDadosModulo": {
+            "moduloReferencia": "modulo 1"
+          },
+          "fontesDeDadosPeriodoDeRetencao": {
+            "periodosReferencia": "10 meses"
+          },
+          "fontesDeDadosFrequenciaDeAtualizacao": {
+            "periodosReferencia": "10 meses"
+          },
+          "fontesDeDadosRiscosDeFontesDeDados": [
+            {
+              "riscosDeFontesDeDadosReferencia": "risco 1"
+            }
+          ],
+          "fontesDeDadosDadosPessoaisObj": {
+            "fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar": [
+              {
+                "outrosDadosPessoaisReferencia": "outros dados 1"
+              }
+            ],
+            "fontesDeDadosDadosPessoaisObjDadosBiometricos": [
+              "Impressão digital"
+            ],
+            "fontesDeDadosDadosPessoaisObjDadosSensiveis": [
+              "Dados que revelam convicção religiosa",
+              "Dados que revelam opinião política"
+            ],
+            "fontesDeDadosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz": [
+              "Fotografia"
+            ],
+            "fontesDeDadosDadosPessoaisObjProfissaoEEmprego": [
+              "Matrícula"
+            ],
+            "fontesDeDadosDadosPessoaisObjEducacaoETreinamento": [
+              "Certificados"
+            ],
+            "fontesDeDadosDadosPessoaisObjDadosResidenciais": [
+              "Tempo de habitação"
+            ],
+            "fontesDeDadosDadosPessoaisObjHabitosDeConsumo": null,
+            "fontesDeDadosDadosPessoaisObjProcessoJudicialAdministrativoCriminal": [
+              "Senteças"
+            ],
+            "fontesDeDadosDadosPessoaisObjAssociacoes": [
+              "Organizações"
+            ],
+            "fontesDeDadosDadosPessoaisObjInteressesDeLazer": [
+              "Nome de usuário"
+            ],
+            "fontesDeDadosDadosPessoaisObjComposicaoFamiliar": [
+              "Familiares ou membros da família",
+              "Histórico conjugal"
+            ],
+            "fontesDeDadosDadosPessoaisObjCaracteristicasPsicologicas": [
+              "Caráter"
+            ],
+            "fontesDeDadosDadosPessoaisObjHabitosPessoais": [
+              "Viagens e deslocamentos"
+            ],
+            "fontesDeDadosDadosPessoaisObjCaracteristicasPessoais": [
+              "Detalhes Militares"
+            ],
+            "fontesDeDadosDadosPessoaisObjDadosFinanceiros": [
+              "Despesas",
+              "Empréstimos"
+            ],
+            "fontesDeDadosDadosPessoaisObjDadosDeIdentificacaoPessoal": [
+              "Nome social",
+              "CPF"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
