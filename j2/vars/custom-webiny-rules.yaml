@@ -259,7 +259,7 @@ rules:
           Description:
             val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}"
             type: "[Ljava.lang.String;"
-            postProcessor: "${it?.toUpperCase()?.trim()}"
+            postProcessor: "${it?.toUpperCase()}"
             processAll: true
 
 #      - label: Object_Data_Policy
