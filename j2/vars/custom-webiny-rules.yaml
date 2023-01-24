@@ -25,8 +25,8 @@ rules:
             val: "${mapeamentoDeProcessosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Business_Area_Responsible:
-            val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}"
-            excludeFromSearch: true
+            val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}" # it doesn't extract the data from the array,
+            excludeFromSearch: true                                             # I didn't want to create another WebinyRef just for that!
 #          Type:
 #            val: "${}"
 #            excludeFromSearch: true
@@ -55,7 +55,7 @@ rules:
 #            val: "${}"
 #            excludeFromSearch: true
 #          Participants:
-#            vals: "${}"              what to do with that ?!
+#            vals: "${}"              TODO: what to do with that ?!
 #            excludeFromSearch: true
 #          Info_Shared_With_Third_Parties:
 #            vals: "${}"
@@ -64,7 +64,7 @@ rules:
 #            vals: "${}"
 #            excludeFromSearch: true
 #          Info_Share_Justification:
-#            val: "${}"              # não temos campo para essa questão
+#            val: "${}"              TODO: não temos campo para essa questão
 #            excludeFromSearch: true
 #          Info_Share_Justification_International:
 #            val: "${}"
@@ -97,17 +97,17 @@ rules:
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosBasesLegais)}" # try this !!
-            type: "[Ljava.lang.String;"
-            postProcessor: "${it?.basesLegaisReferencia?.toUpperCase()?.trim()}"
+            type: "[Lcom.pontusvision.utils.WebinyRefLawfulBasis;"
+            postProcessor: "${com.pontusvision.utils.WebinyRefLawfulBasis.fromString(it)?.getBasesLegaisReferencia()}"
             processAll: true
 
-      - label: Object_Contract  # ainda não tem campo no CMS Mapeamentos
-        props:
-          Registration_Number:
-            val: "${new groovy.json.JsonBuilder()}" #TODO (linkage only)
-            type: "[Ljava.lang.String;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
+#      - label: Object_Contract  # ainda não tem campo no CMS Mapeamentos
+#        props:
+#          Registration_Number:
+#            val: "${new groovy.json.JsonBuilder()}" #TODO (linkage only)
+#            type: "[Ljava.lang.String;"
+##            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
 
       - label: Object_Sensitive_Data
         name: personal_identification
@@ -257,9 +257,9 @@ rules:
         name: other_personal_data
         props:
           Description:
-            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}"
-            type: "[Ljava.lang.String;"
-            postProcessor: "${it?.toUpperCase()?.trim()}"
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}"
+#            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()}"
             processAll: true
 
 #      - label: Object_Data_Policy
@@ -471,9 +471,9 @@ rules:
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Lawful_Basis"
 
-      - label: "Has_Contract"
-        fromVertexLabel: "Object_Contract"
-        toVertexLabel: "Object_Data_Procedures"
+#      - label: "Has_Contract"
+#        fromVertexLabel: "Object_Contract"
+#        toVertexLabel: "Object_Data_Procedures"
 
   webiny_legal_actions:
 
