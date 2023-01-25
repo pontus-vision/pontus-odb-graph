@@ -146,6 +146,16 @@ public class WebinyTest extends AppTest {
       assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"muito bom\""), "");
       assertTrue(replyStr.contains("\"Object_Legal_Actions_Name\":\"ATO 123\""), "");
 
+      // #TODO: do it in gridWrapper !!!
+      OGremlinResultSet resSet = App.graph.executeSql(
+              "SELECT count(Object_Legal_Actions_Form_Id) as ct " +
+                      "FROM Object_Legal_Actions " +
+                      "WHERE Object_Legal_Actions_Form_Id LIKE '%#0001'", Collections.EMPTY_MAP);
+
+      Long countObjectLegalActions = resSet.iterator().next().getRawResult().getProperty("ct");
+
+      assertEquals(2, countObjectLegalActions, "There are 2 Webiny Object_Legal_Actions");
+
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e, e.getMessage());
