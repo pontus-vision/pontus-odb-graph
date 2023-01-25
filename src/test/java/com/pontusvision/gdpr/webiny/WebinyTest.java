@@ -33,48 +33,76 @@ public class WebinyTest extends AppTest {
    * @return the suite of test0000s being test0000ed
    */
 
-//  @Test
-//  public void test00001WebinyMapeamento() throws InterruptedException {
-//
-//    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_mapeamento");
-//
-//    try {
-//
-//      RecordReply reply = gridWrapper("[\n" +
-//          "  {\n" +
-//          "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
-//          "    \"filterType\": \"text\",\n" +
-//          "    \"type\": \"equals\",\n" +
-//          "    \"filter\": \"8739\"\n" +
-//          "  }\n" +
-//          "]", "Object_Data_Procedures",
-//        new String[]{"Object_Data_Procedures_Data_Controller", "Object_Data_Procedures_Data_Processor", "Object_Data_Procedures_Form_Id"});
-//      String replyStr = reply.getRecords()[0];
-//
-//      assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
-//      assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Processor\":\"PBR\""), "PBR is the data processor");
-//      assertTrue(replyStr.contains("\"Object_Data_Procedures_Data_Controller\":\"PBR\""), "PBR is the data controller");
-//
-//      String pbrRopaRid = gridWrapperGetRid("[\n" +
-//          "  {\n" +
-//          "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
-//          "    \"filterType\": \"text\",\n" +
-//          "    \"type\": \"equals\",\n" +
-//          "    \"filter\": \"FINANCEIRO 01 - PBR\"\n" +
-//          "  }\n" +
-//          "]", "Object_Data_Procedures",
-//        new String[]{"Object_Data_Procedures_ID"});
-//
-//      reply = gridWrapper(null, "Object_Lawful_Basis", new String[]{"Object_Lawful_Basis_Description"}, "hasNeighbourId:" + pbrRopaRid);
-//      assertEquals(2, reply.getTotalAvailable(),
-//        "Two types of lawful basis found: CONSENTIMENTO and LEGÍTIMO INTERESSE");
-//
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//      assertNull(e, e.getMessage());
-//    }
-//
-//  }
+  @Test
+  public void test00001WebinyMapeamento() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_mapeamento");
+
+    try {
+
+      String mapeamentoRid = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63c6f874320a910008b4e5b5#0002\"\n" +
+                      "  }\n" +
+                      "]", "Object_Data_Procedures",
+              new String[]{"Object_Data_Procedures_Form_Id"});
+
+      RecordReply reply = gridWrapper(null, "Object_Lawful_Basis", new String[]{"Object_Lawful_Basis_Description"},
+              "hasNeighbourId:" + mapeamentoRid, 0L, 2L, "Object_Lawful_Basis_Description", "+asc");
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Lawful_Basis_Description\":\"CONSENTIMENTO\""));
+      assertTrue(reply.getRecords()[1].contains("\"Object_Lawful_Basis_Description\":\"LEGÍTIMO INTERESSE\""));
+
+//      TODO: test data_source and mapeamentos
+//      {"id":"#571:0","Object_Data_Source_Form_Id":"d=63c978dfa85ed20008efe81b#0001"}
+
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63c6f874320a910008b4e5b5#0002\"\n" +
+                      "  }\n" +
+                      "]", "Object_Data_Procedures",
+              new String[]{"Object_Data_Procedures_ID", "Object_Data_Procedures_Business_Area_Responsible",
+                      "Object_Data_Procedures_Macro_Process_Name", "Object_Data_Procedures_Description",
+                      "Object_Data_Procedures_Products_And_Services", "Object_Data_Procedures_Info_Collected",
+                      "Object_Data_Procedures_Type_Of_Natural_Person", "Object_Data_Procedures_Lawful_Basis_Justification"});
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Products_And_Services\":\"carro de luxo\""), "Product attached to this RoPA");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_ID\":\"ROPA 1\""), "Name (or ID) of this process");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Lawful_Basis_Justification\":\"justificativa 1\""), "Justification for this process");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"[TI]\""), "Department responsible for this process");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Description\":\"finalidade 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Type_Of_Natural_Person\":\"[Cliente]\""), "Type of People at this process");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Macro_Process_Name\":\"processo 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Info_Collected\":\"[Nome Completo, CNH, Local de nascimento" +
+              ", Despesas, Detalhes Pessoais, Hábitos, Caráter, Familiares ou membros da família, Nome de usuário, Clubes" +
+              ", Parcerias, Condenações, Bens ou serviços emprestados, Custos, Tempo de habitação, Histórico escolar" +
+              ", Grau de formação, Matrícula, Data de admissão, Nome da empresa, INSS, Fotografia, Impressão digital" +
+              ", Dados que revelam origem racial ou ética, outros dados 1]\""), "Type of Data/Information that where collected in this RoPA process");
+
+      reply = gridWrapper(null, "Object_Sensitive_Data", new String[]{"Object_Sensitive_Data_Description"},
+              "hasNeighbourId:" + mapeamentoRid, 0L, 25L, "Object_Sensitive_Data_Description", "+asc");
+
+      assertEquals(25,reply.getTotalAvailable(), "");
+//    some of the personal/sensitive data linked to the mapeamento:
+      assertTrue(reply.getRecords()[1].contains("\"Object_Sensitive_Data_Description\":\"BENS OU SERVIÇOS EMPRESTADOS\""));
+      assertTrue(reply.getRecords()[7].contains("\"Object_Sensitive_Data_Description\":\"DADOS QUE REVELAM ORIGEM RACIAL OU ÉTICA\""));
+      assertTrue(reply.getRecords()[14].contains("\"Object_Sensitive_Data_Description\":\"HISTÓRICO ESCOLAR\""));
+      assertTrue(reply.getRecords()[18].contains("\"Object_Sensitive_Data_Description\":\"LOCAL DE NASCIMENTO\""));
+      assertTrue(reply.getRecords()[24].contains("\"Object_Sensitive_Data_Description\":\"TEMPO DE HABITAÇÃO\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
 
   @Test
   public void test00002WebinyAcoesJudiciais() throws InterruptedException {
