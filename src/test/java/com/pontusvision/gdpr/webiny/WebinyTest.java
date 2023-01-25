@@ -97,10 +97,6 @@ public class WebinyTest extends AppTest {
       assertTrue(reply.getRecords()[18].contains("\"Object_Sensitive_Data_Description\":\"LOCAL DE NASCIMENTO\""));
       assertTrue(reply.getRecords()[24].contains("\"Object_Sensitive_Data_Description\":\"TEMPO DE HABITAÇÃO\""));
 
-
-
-
-
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e, e.getMessage());
