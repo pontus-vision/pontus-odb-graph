@@ -23,6 +23,18 @@ updatereq:
           val: ${fontesDeDadosDescricao}
           mandatoryInSearch: False
           excludeFromSearch: True
+        - name: Object_Data_Source_Engine
+          val: ${fontesDeDadosSistema?.sistemaReferencia}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Source_Type
+          val: ${fontesDeDadosSubSistema?.subsistemaReferencia}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Source_Domain
+          val: ${fontesDeDadosModulo?.moduloReferencia}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_System
       props:
@@ -206,7 +218,7 @@ updatereq:
       name: other_personal_data
       props:
         - name: Object_Sensitive_Data_Description
-          val: ${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}
+          val: ${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}
           mandatoryInSearch: True
           processAll: True
           type: "[Ljava.lang.String;"

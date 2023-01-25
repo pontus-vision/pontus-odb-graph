@@ -32,6 +32,24 @@
             "val": "${fontesDeDadosDescricao}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Engine",
+            "val": "${fontesDeDadosSistema?.sistemaReferencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Type",
+            "val": "${fontesDeDadosSubSistema?.subsistemaReferencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Domain",
+            "val": "${fontesDeDadosModulo?.moduloReferencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -295,7 +313,7 @@
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
-            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Ljava.lang.String;",

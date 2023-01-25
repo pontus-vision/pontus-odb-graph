@@ -1,5 +1,6 @@
 package com.pontusvision.gdpr.webiny;
 
+import com.google.gson.JsonParser;
 import com.pontusvision.gdpr.*;
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.junit.jupiter.api.MethodOrderer;
@@ -89,7 +90,7 @@ public class WebinyTest extends AppTest {
       reply = gridWrapper(null, "Object_Sensitive_Data", new String[]{"Object_Sensitive_Data_Description"},
               "hasNeighbourId:" + mapeamentoRid, 0L, 25L, "Object_Sensitive_Data_Description", "+asc");
 
-      assertEquals(25,reply.getTotalAvailable(), "");
+      assertEquals(25,reply.getTotalAvailable(), "25 personal/sensitive data are attached to this RoPA");
 //    some of the personal/sensitive data linked to the mapeamento:
       assertTrue(reply.getRecords()[1].contains("\"Object_Sensitive_Data_Description\":\"BENS OU SERVIÇOS EMPRESTADOS\""));
       assertTrue(reply.getRecords()[7].contains("\"Object_Sensitive_Data_Description\":\"DADOS QUE REVELAM ORIGEM RACIAL OU ÉTICA\""));
@@ -124,10 +125,10 @@ public class WebinyTest extends AppTest {
       String replyStr = reply.getRecords()[0];
 
       assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Thu Dec 01 01:01:01 UTC 2022\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"Ação judicial contra o desmatamento da Amazônia.\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"nada bom\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Name\":\"JUR T33DF\""), "");
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Thu Dec 01 01:01:01 UTC 2022\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"Ação judicial contra o desmatamento da Amazônia.\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"nada bom\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Name\":\"JUR T33DF\""));
 
       reply = gridWrapper("[\n" +
                       "  {\n" +
@@ -141,10 +142,10 @@ public class WebinyTest extends AppTest {
       replyStr = reply.getRecords()[0];
 
       assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Sun Mar 21 01:01:01 UTC 2021\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"ato 123\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"muito bom\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Name\":\"ATO 123\""), "");
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Sun Mar 21 01:01:01 UTC 2021\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"ato 123\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"muito bom\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Name\":\"ATO 123\""));
 
       // #TODO: do it in gridWrapper !!!
       OGremlinResultSet resSet = App.graph.executeSql(
@@ -312,5 +313,95 @@ public class WebinyTest extends AppTest {
 
   }
 
+  @Test
+  public void test00006WebinyFontesDeDados() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_fontes_de_dados");
+
+    try {
+
+//      ----------------------- Object_Data_Source fontes_de_dados ----------------------------------------
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Data_Source_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63c978dfa85ed20008efe81b#0002\"\n" +
+                      "  }\n" +
+                      "]", "Object_Data_Source",
+              new String[]{"Object_Data_Source_Name", "Object_Data_Source_Description", "Object_Data_Source_Engine", "Object_Data_Source_Type", "Object_Data_Source_Domain"});
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Data_Source_Type\":\"subsistema 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Engine\":\"sistema 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Domain\":\"modulo 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Description\":\"fonte 1\""));
+
+//      ----------------------- Object_Module  ----------------------------------------
+
+      String dataSourceRid = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Data_Source_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63c978dfa85ed20008efe81b#0002\"\n" +
+                      "  }\n" +
+                      "]", "Object_Data_Source",
+              new String[]{"Object_Data_Source_Form_Id"}); // returned val ex: #102:43
+
+      reply = gridWrapper(null, "Object_Module", new String[]{"Object_Module_Name"},
+              "hasNeighbourId:" + dataSourceRid);
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Object_Module_Name\":\"modulo 1\""));
+      String moduleRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+
+//      ----------------------- Object_Subsystem  ----------------------------------------
+
+      reply = gridWrapper(null, "Object_Subsystem", new String[]{"Object_Subsystem_Name"},
+              "hasNeighbourId:" + moduleRid);
+      assertTrue(replyStr.contains("\"Object_Subsystem_Name\":\"SUBSISTEMA 1\""));
+      String subsystemRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+
+//      ----------------------- Object_System  ----------------------------------------
+
+      reply = gridWrapper(null, "Object_System", new String[]{"Object_System_Name"},
+              "hasNeighbourId:" + subsystemRid);
+      assertTrue(replyStr.contains("\"Object_System_Name\":\"SISTEMA 1\""));
+
+//      ----------------------- from Event_Ingestion to Object_Data_Source root  ----------------------
+
+      String eventRid = JsonParser.parseString(gridWrapper(null, "Event_Ingestion", null,
+              "hasNeighbourId:" + dataSourceRid).getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+
+      String eventGroupRid = JsonParser.parseString(gridWrapper(null, "Event_Group_Ingestion", null,
+              "hasNeighbourId:" + eventRid).getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+
+      reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"},
+              "hasNeighbourId:" + eventGroupRid);
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"WEBINY/FONTES-DE-DADOS\""));
+
+//      ----------------------- Object_Data_Policy  ----------------------
+
+      reply = gridWrapper(null, "Object_Data_Policy", new String[]{"Object_Data_Policy_Update_Frequency", "Object_Data_Policy_Retention_Period"},
+              "hasNeighbourId:" + dataSourceRid);
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Object_Data_Policy_Update_Frequency\":\"10 meses\""));
+      assertTrue(replyStr.contains("\"Object_Data_Policy_Retention_Period\":\"10 meses\""));
+
+//      ----------------------- counting Object_Sensitive_Data  ----------------------
+
+      reply = gridWrapper(null, "Object_Sensitive_Data", new String[]{"Object_Sensitive_Data_Description"},
+              "hasNeighbourId:" + dataSourceRid, 0L, 25L, "Object_Sensitive_Data_Description", "+asc");
+      assertEquals(20,reply.getTotalAvailable(), "20 personal/sensitive data are attached to this Data Source: ");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
 
 }

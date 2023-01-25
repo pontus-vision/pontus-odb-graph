@@ -834,15 +834,15 @@ rules:
             val: "${fontesDeDadosDescricao}"
             excludeFromSearch: true
 #          TODO: Keep consistency ... upperCase, lowerCase, trim, etc
-#          Engine:
-#            val: "${fontesDeDadosSistema?.sistemaReferencia?}"
-#            excludeFromSearch: true
-#          Type:
-#            val: "${fontesDeDadosSubSistema?.subsistemaReferencia}"
-#            excludeFromSearch: true
-#          Domain:
-#            val: "${fontesDeDadosModulo?.moduloReferencia}"
-#            excludeFromSearch: true
+          Engine:
+            val: "${fontesDeDadosSistema?.sistemaReferencia}"
+            excludeFromSearch: true
+          Type:
+            val: "${fontesDeDadosSubSistema?.subsistemaReferencia}"
+            excludeFromSearch: true
+          Domain:
+            val: "${fontesDeDadosModulo?.moduloReferencia}"
+            excludeFromSearch: true
 
       - label: Object_System
         props:
@@ -1004,7 +1004,7 @@ rules:
         name: other_personal_data
         props:
           Description:
-            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}"
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}"
             type: "[Ljava.lang.String;"
             postProcessor: "${it?.toUpperCase()}"
             processAll: true
