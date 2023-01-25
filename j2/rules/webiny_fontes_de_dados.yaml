@@ -271,9 +271,6 @@ updatereq:
   - label: Has_Policy
     fromVertexName: fontes_de_dados
     toVertexLabel: Object_Data_Policy
-  - label: Has_Sensitive_Data
-    fromVertexName: fontes_de_dados
-    toVertexLabel: Object_Sensitive_Data
   - label: Has_Module
     fromVertexName: fontes_de_dados
     toVertexLabel: Object_Module
