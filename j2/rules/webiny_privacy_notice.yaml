@@ -64,7 +64,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sharepoint/aviso-de-privacidade
+          val: webiny/aviso-de-privacidade
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
