@@ -28,13 +28,13 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: WEBINY/LEGAL-ACTIONS
+          val: WEBINY/AÇÕES-JUDICIAIS
           mandatoryInSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Legal Actions
+          val: Webiny Ações Judiciais
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -59,7 +59,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: webiny/legal-actions
+          val: webiny/ações-judiciais
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion

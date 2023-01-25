@@ -6,7 +6,7 @@ updatereq:
       name: webiny
       props:
         - name: Object_Data_Source_Name
-          val: WEBINY/MAPEAMENTO DE PROCESSOS
+          val: WEBINY/MAPEAMENTO-DE-PROCESSOS
           mandatoryInSearch: True
     
     - label: Object_Data_Source
@@ -270,7 +270,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: webiny/mapeamento de processos
+          val: webiny/mapeamento-de-processos
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion

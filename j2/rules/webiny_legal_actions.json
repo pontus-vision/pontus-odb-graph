@@ -41,7 +41,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/LEGAL-ACTIONS",
+            "val": "WEBINY/AÇÕES-JUDICIAIS",
             "mandatoryInSearch": true
           }
         ]
@@ -51,7 +51,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Legal Actions",
+            "val": "Webiny Ações Judiciais",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -88,7 +88,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/legal-actions",
+            "val": "webiny/ações-judiciais",
             "mandatoryInSearch": true
           },
           {
