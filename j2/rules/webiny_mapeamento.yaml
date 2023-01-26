@@ -61,8 +61,11 @@ updatereq:
       name: responsible
       props:
         - name: Person_Natural_Customer_ID
-          val: ${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.titularesCpfDoTitular)}
+          val: ${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel)}
           mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRefCpf;"
+          postProcessor: ${com.pontusvision.utils.WebinyRefCpf.fromString(it)?.getTitularesCpfDoTitular()}
     
     - label: Object_Lawful_Basis
       props:
