@@ -366,7 +366,7 @@ rules:
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
-    edges:    #TODO: fix the edges !!
+    edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "webiny"
         toVertexLabel: "Event_Group_Ingestion"
