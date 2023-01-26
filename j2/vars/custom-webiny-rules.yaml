@@ -86,12 +86,10 @@ rules:
         name: responsible
         props:
           Customer_ID:
-            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.titularesCpfDoTitular)}" #TODO
-#            type: "[Ljava.lang.String;"
-#            processAll: true
-#            type: "[Lcom.pontusvision.utils;"
-#            postProcessor: "${com.pontusvision.utils.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
-#            processAll: true
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel)}"
+            type: "[Lcom.pontusvision.utils.WebinyRefCpf;"
+            postProcessor: "${com.pontusvision.utils.WebinyRefCpf.fromString(it)?.getTitularesCpfDoTitular()}"
+            processAll: true
 
       - label: Object_Lawful_Basis
         props:
