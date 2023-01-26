@@ -1619,32 +1619,7 @@
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object_Data_Policy_Is_Anonymized",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Data_Policy_Is_Deleted",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Data_Policy_Is_Essential",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Data_Policy_Is_Updated",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
       "name": "Object_Data_Policy_Name",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Data_Policy_Profiling_And_Scoring",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -1680,6 +1655,26 @@
     },
     {
       "name": "Object_Data_Policy_Uses_Automation",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Policy_Is_Updated",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Policy_Is_Deleted",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Policy_Is_Essential",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Data_Policy_Is_Anonymized",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3309,6 +3304,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Legal_Actions_Form_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object_Legal_Actions_Date",
       "dataType": "Date",
       "cardinality": "SINGLE"
@@ -3320,16 +3320,6 @@
     },
     {
       "name": "Object_Legal_Actions_Details",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Legal_Actions_Form_Id",
-      "dataType": "String",
-      "cardinality": "SINGLE"
-    },
-    {
-      "name": "Object_Legal_Actions_Name",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -5298,18 +5288,17 @@
         "Object_Data_Policy_Form_Owner_Id",
         "Object_Data_Policy_Form_Submission_Id",
         "Object_Data_Policy_Form_Submission_Owner_Id",
-        "Object_Data_Policy_Is_Anonymized",
-        "Object_Data_Policy_Is_Deleted",
-        "Object_Data_Policy_Is_Essential",
-        "Object_Data_Policy_Is_Updated",
         "Object_Data_Policy_Name",
-        "Object_Data_Policy_Profiling_And_Scoring",
         "Object_Data_Policy_Retention_Period",
         "Object_Data_Policy_Text",
         "Object_Data_Policy_Type",
         "Object_Data_Policy_Update_Date",
         "Object_Data_Policy_Update_Frequency",
-        "Object_Data_Policy_Uses_Automation"
+        "Object_Data_Policy_Uses_Automation",
+        "Object_Data_Policy_Is_Updated",
+        "Object_Data_Policy_Is_Deleted",
+        "Object_Data_Policy_Is_Essential",
+        "Object_Data_Policy_Is_Anonymized"
       ],
       "propertyKeysMappings": {}
     },
@@ -5846,11 +5835,10 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Object_Legal_Actions",
+        "Object_Legal_Actions_Form_Id",
         "Object_Legal_Actions_Date",
         "Object_Legal_Actions_Description",
-        "Object_Legal_Actions_Details",
-        "Object_Legal_Actions_Form_Id",
-        "Object_Legal_Actions_Name"
+        "Object_Legal_Actions_Details"
       ],
       "propertyKeysMappings": {}
     },
