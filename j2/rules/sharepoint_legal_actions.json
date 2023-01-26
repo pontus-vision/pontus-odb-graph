@@ -10,6 +10,12 @@
             "mandatoryInSearch": true
           },
           {
+            "name": "Object_Legal_Actions_Name",
+            "val": "${Title?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
             "name": "Object_Legal_Actions_Description",
             "val": "${description}",
             "mandatoryInSearch": false,

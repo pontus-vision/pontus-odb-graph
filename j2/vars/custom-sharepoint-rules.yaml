@@ -1499,6 +1499,9 @@ rules:
       - label: Object_Legal_Actions
         props:
           Form_Id: "${id}"
+          Name:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Description:
             val: "${description}"
             excludeFromSearch: true
