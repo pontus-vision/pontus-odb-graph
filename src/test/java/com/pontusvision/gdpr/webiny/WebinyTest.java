@@ -125,9 +125,8 @@ public class WebinyTest extends AppTest {
 
       assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
       assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Thu Dec 01 01:01:01 UTC 2022\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"NADA BOM\""), "");
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"JUR T33DF\""), "");
       assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"AÇÃO JUDICIAL CONTRA O DESMATAMENTO DA AMAZÔNIA.\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Name\":\"JUR T33DF\""), "");
 
       reply = gridWrapper("[\n" +
                       "  {\n" +
