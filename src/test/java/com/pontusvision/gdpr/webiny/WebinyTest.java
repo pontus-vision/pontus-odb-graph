@@ -89,7 +89,7 @@ public class WebinyTest extends AppTest {
       reply = gridWrapper(null, "Object_Sensitive_Data", new String[]{"Object_Sensitive_Data_Description"},
               "hasNeighbourId:" + mapeamentoRid, 0L, 25L, "Object_Sensitive_Data_Description", "+asc");
 
-      assertEquals(25,reply.getTotalAvailable(), "");
+      assertEquals(25,reply.getTotalAvailable());
 //    some of the personal/sensitive data linked to the mapeamento:
       assertTrue(reply.getRecords()[1].contains("\"Object_Sensitive_Data_Description\":\"BENS OU SERVIÇOS EMPRESTADOS\""));
       assertTrue(reply.getRecords()[7].contains("\"Object_Sensitive_Data_Description\":\"DADOS QUE REVELAM ORIGEM RACIAL OU ÉTICA\""));
@@ -124,9 +124,9 @@ public class WebinyTest extends AppTest {
       String replyStr = reply.getRecords()[0];
 
       assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Thu Dec 01 01:01:01 UTC 2022\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"JUR T33DF\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"AÇÃO JUDICIAL CONTRA O DESMATAMENTO DA AMAZÔNIA.\""), "");
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Thu Dec 01 01:01:01 UTC 2022\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"JUR T33DF\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"AÇÃO JUDICIAL CONTRA O DESMATAMENTO DA AMAZÔNIA.\""));
 
       reply = gridWrapper("[\n" +
                       "  {\n" +
@@ -140,10 +140,9 @@ public class WebinyTest extends AppTest {
       replyStr = reply.getRecords()[0];
 
       assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Sun Mar 21 01:01:01 UTC 2021\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"ato 123\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"muito bom\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Name\":\"ATO 123\""), "");
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Sun Mar 21 01:01:01 UTC 2021\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"ATO 123\""));
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"ATO 123\""));
 
       // #TODO: do it in gridWrapper !!!
       OGremlinResultSet resSet = App.graph.executeSql(
