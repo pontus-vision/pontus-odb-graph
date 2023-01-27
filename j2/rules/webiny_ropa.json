@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/ROPA",
+            "val": "WEBINY/MAPEAMENTO-DE-PROCESSOS",
             "mandatoryInSearch": true
           }
         ]
@@ -21,8 +21,8 @@
             "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Lcom.pontusvision.utils;",
-            "postProcessor": "${it?.id}"
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
           }
         ]
       },
@@ -36,7 +36,7 @@
           },
           {
             "name": "Object_Data_Procedures_ID",
-            "val": "${mapeamentoDeProcessosReferencia}",
+            "val": "${mapeamentoDeProcessosReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -47,7 +47,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Macro_Process_Name",
+            "name": "Object_Data_Procedures_Name",
             "val": "${mapeamentoDeProcessosProcesso}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
@@ -71,38 +71,8 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Data_Procedures_Secondary_Purpose_Of_Collection",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Country_Where_Stored",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Info_Share_Justification",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Number_Of_Natural_Person",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Object_Data_Procedures_Products_And_Services",
-            "val": "${}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Procedures_Rights",
-            "val": "${}",
+            "val": "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -120,33 +90,8 @@
         "props": [
           {
             "name": "Person_Natural_Customer_ID",
-            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.CPF)}",
-            "mandatoryInSearch": true,
-            "processAll": true
-          }
-        ]
-      },
-      {
-        "label": "Person_Natural",
-        "name": "alt_responsible",
-        "props": [
-          {
-            "name": "Person_Natural_Customer_ID",
-            "val": "${new groovy.json.JsonBuilder()}",
-            "mandatoryInSearch": true,
-            "processAll": true
-          }
-        ]
-      },
-      {
-        "label": "Person_Natural",
-        "name": "champion",
-        "props": [
-          {
-            "name": "Person_Natural_Customer_ID",
-            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosEncarregado?.CPF)}",
-            "mandatoryInSearch": true,
-            "processAll": true
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.titularesCpfDoTitular)}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -158,40 +103,30 @@
             "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosBasesLegais)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.basesLegaisReferencia?.toUpperCase()?.trim()}"
-          }
-        ]
-      },
-      {
-        "label": "Object_Contract",
-        "props": [
-          {
-            "name": "Object_Contract_Registration_Number",
-            "val": "${new groovy.json.JsonBuilder()}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Ljava.lang.String;"
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it,'basesLegaisReferencia')}"
           }
         ]
       },
       {
         "label": "Object_Sensitive_Data",
         "name": "personal_identification",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
-            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal)}",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it, 'mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal')}"
           }
         ]
       },
       {
         "label": "Object_Sensitive_Data",
         "name": "financial_data",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -206,6 +141,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "personal_characteristics",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -220,6 +156,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "personal_habits",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -234,6 +171,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "psychological_characteristics",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -248,6 +186,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "family_composition",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -262,6 +201,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "leisure_interests",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -276,6 +216,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "associations",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -290,6 +231,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "criminal_processes",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -304,6 +246,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "consumption_habits",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -318,6 +261,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "residential_data",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -332,6 +276,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "education_and_training",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -346,6 +291,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "profession_and_employment",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -360,6 +306,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "image_record",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -374,6 +321,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "biometric_data",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -388,6 +336,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "sensitive_data",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -402,14 +351,14 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "other_personal_data",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar != null}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
-            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar)}",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
+            "postProcessor": "${it?.toUpperCase()}"
           }
         ]
       },
@@ -418,7 +367,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "webiny/ropa",
+            "val": "webiny/mapeamento de processos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -455,7 +404,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/ropa",
+            "val": "webiny/mapeamento-de-processos",
             "mandatoryInSearch": true
           },
           {
@@ -583,24 +532,9 @@
         "toVertexLabel": "Object_Data_Procedures"
       },
       {
-        "label": "Is_Responsible",
-        "fromVertexName": "alt_responsible",
-        "toVertexLabel": "Object_Data_Procedures"
-      },
-      {
-        "label": "Is_Interested_Party",
-        "fromVertexName": "champion",
-        "toVertexLabel": "Object_Data_Procedures"
-      },
-      {
         "label": "Has_Lawful_Basis_On",
         "fromVertexLabel": "Object_Data_Procedures",
         "toVertexLabel": "Object_Lawful_Basis"
-      },
-      {
-        "label": "Has_Contract",
-        "fromVertexLabel": "Object_Contract",
-        "toVertexLabel": "Object_Data_Procedures"
       }
     ]
   }

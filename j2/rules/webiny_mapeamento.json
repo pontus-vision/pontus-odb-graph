@@ -90,11 +90,8 @@
         "props": [
           {
             "name": "Person_Natural_Customer_ID",
-            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.WebinyRefCpf;",
-            "postProcessor": "${com.pontusvision.utils.WebinyRefCpf.fromString(it)?.getTitularesCpfDoTitular()}"
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.titularesCpfDoTitular)}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -106,8 +103,8 @@
             "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosBasesLegais)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Lcom.pontusvision.utils.WebinyRefLawfulBasis;",
-            "postProcessor": "${com.pontusvision.utils.WebinyRefLawfulBasis.fromString(it)?.getBasesLegaisReferencia()}"
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it,'basesLegaisReferencia')}"
           }
         ]
       },
