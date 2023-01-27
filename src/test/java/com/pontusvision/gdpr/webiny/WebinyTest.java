@@ -68,18 +68,18 @@ public class WebinyTest extends AppTest {
                       "  }\n" +
                       "]", "Object_Data_Procedures",
               new String[]{"Object_Data_Procedures_ID", "Object_Data_Procedures_Business_Area_Responsible",
-                      "Object_Data_Procedures_Macro_Process_Name", "Object_Data_Procedures_Description",
+                      "Object_Data_Procedures_Name", "Object_Data_Procedures_Description",
                       "Object_Data_Procedures_Products_And_Services", "Object_Data_Procedures_Info_Collected",
                       "Object_Data_Procedures_Type_Of_Natural_Person", "Object_Data_Procedures_Lawful_Basis_Justification"});
       String replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Products_And_Services\":\"carro de luxo\""), "Product attached to this RoPA");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Products_And_Services\":\"CARRO DE LUXO\""), "Product attached to this RoPA");
       assertTrue(replyStr.contains("\"Object_Data_Procedures_ID\":\"ROPA 1\""), "Name (or ID) of this process");
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Lawful_Basis_Justification\":\"justificativa 1\""), "Justification for this process");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Lawful_Basis_Justification\":\"JUSTIFICATIVA 1\""), "Justification for this process");
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"[TI]\""), "Department responsible for this process");
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Description\":\"finalidade 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Description\":\"FINALIDADE 1\""));
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Type_Of_Natural_Person\":\"[Cliente]\""), "Type of People at this process");
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Macro_Process_Name\":\"processo 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Name\":\"PROCESSO 1\""));
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Info_Collected\":\"[Nome Completo, CNH, Local de nascimento" +
               ", Despesas, Detalhes Pessoais, Hábitos, Caráter, Familiares ou membros da família, Nome de usuário, Clubes" +
               ", Parcerias, Condenações, Bens ou serviços emprestados, Custos, Tempo de habitação, Histórico escolar" +
@@ -125,8 +125,8 @@ public class WebinyTest extends AppTest {
 
       assertEquals(1, reply.getTotalAvailable(), "Expecting 1 record to come back");
       assertTrue(replyStr.contains("\"Object_Legal_Actions_Date\":\"Thu Dec 01 01:01:01 UTC 2022\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"Ação judicial contra o desmatamento da Amazônia.\""), "");
-      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"nada bom\""), "");
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Description\":\"NADA BOM\""), "");
+      assertTrue(replyStr.contains("\"Object_Legal_Actions_Details\":\"AÇÃO JUDICIAL CONTRA O DESMATAMENTO DA AMAZÔNIA.\""), "");
       assertTrue(replyStr.contains("\"Object_Legal_Actions_Name\":\"JUR T33DF\""), "");
 
       reply = gridWrapper("[\n" +

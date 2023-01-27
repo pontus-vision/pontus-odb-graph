@@ -48,13 +48,13 @@
           },
           {
             "name": "Object_Data_Procedures_Name",
-            "val": "${mapeamentoDeProcessosProcesso}",
+            "val": "${mapeamentoDeProcessosProcesso?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Description",
-            "val": "${mapeamentoDeProcessosFinalidadeDoProcesso}",
+            "val": "${mapeamentoDeProcessosFinalidadeDoProcesso?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -72,13 +72,13 @@
           },
           {
             "name": "Object_Data_Procedures_Products_And_Services",
-            "val": "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos}",
+            "val": "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Lawful_Basis_Justification",
-            "val": "${mapeamentoDeProcessosJustificativaDaBaseLegal}",
+            "val": "${mapeamentoDeProcessosJustificativaDaBaseLegal?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -111,22 +111,22 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "personal_identification",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
-            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj)}",
+            "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Lcom.pontusvision.utils.WebinyRef;",
-            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it, 'mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal')}"
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
           }
         ]
       },
       {
         "label": "Object_Sensitive_Data",
         "name": "financial_data",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -141,7 +141,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "personal_characteristics",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -156,7 +156,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "personal_habits",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -171,7 +171,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "psychological_characteristics",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -186,7 +186,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "family_composition",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -201,7 +201,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "leisure_interests",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -216,7 +216,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "associations",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -231,7 +231,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "criminal_processes",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -246,7 +246,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "consumption_habits",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -261,7 +261,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "residential_data",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -276,7 +276,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "education_and_training",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -291,7 +291,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "profession_and_employment",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -306,7 +306,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "image_record",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -321,7 +321,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "biometric_data",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",
@@ -336,7 +336,7 @@
       {
         "label": "Object_Sensitive_Data",
         "name": "sensitive_data",
-        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis.size() > 0}",
+        "condition": "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis.size() > 0}",
         "props": [
           {
             "name": "Object_Sensitive_Data_Description",

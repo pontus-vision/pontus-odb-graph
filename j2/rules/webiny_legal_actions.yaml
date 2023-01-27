@@ -17,7 +17,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Object_Legal_Actions_Details
-          val: ${acoesJudiciaisPpdDescricao}
+          val: ${acoesJudiciaisPpdDescricao?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     

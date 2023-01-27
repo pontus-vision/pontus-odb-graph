@@ -24,7 +24,7 @@
           },
           {
             "name": "Object_Legal_Actions_Details",
-            "val": "${acoesJudiciaisPpdDescricao}",
+            "val": "${acoesJudiciaisPpdDescricao?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

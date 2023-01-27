@@ -31,10 +31,10 @@ rules:
 #            val: "${}"
 #            excludeFromSearch: true
           Name:
-            val: "${mapeamentoDeProcessosProcesso}"
+            val: "${mapeamentoDeProcessosProcesso?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Description:
-            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
+            val: "${mapeamentoDeProcessosFinalidadeDoProcesso?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Info_Collected:
             val: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia}"
@@ -73,13 +73,13 @@ rules:
 #            val: "${}"
 #            excludeFromSearch: true
           Products_And_Services:
-            val: "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos}"
+            val: "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos?.trim()?.toUpperCase()}" # this field will change!
             excludeFromSearch: true
 #          Rights:
 #            val: "${}"               #TODO: Check with @Leo if it is needed into Webiny
 #            excludeFromSearch: true
           Lawful_Basis_Justification:
-            val: "${mapeamentoDeProcessosJustificativaDaBaseLegal}"
+            val: "${mapeamentoDeProcessosJustificativaDaBaseLegal?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Person_Natural
@@ -105,17 +105,17 @@ rules:
 #            processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal.size() > 0}"
         name: personal_identification
         props:
           Description:
-            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj)}"
-            type: "[Lcom.pontusvision.utils.WebinyRef;"
-            postProcessor: "${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it, 'mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal')}"
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal)}"
+            type: "[Ljava.lang.String;"
+            postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros.size() > 0}"
         name: financial_data
         props:
           Description:
@@ -125,7 +125,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais.size() > 0}"
         name: personal_characteristics
         props:
           Description:
@@ -135,7 +135,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais.size() > 0}"
         name: personal_habits
         props:
           Description:
@@ -145,7 +145,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas.size() > 0}"
         name: psychological_characteristics
         props:
           Description:
@@ -155,7 +155,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar.size() > 0}"
         name: family_composition
         props:
           Description:
@@ -165,7 +165,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer.size() > 0}"
         name: leisure_interests
         props:
           Description:
@@ -175,7 +175,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes.size() > 0}"
         name: associations
         props:
           Description:
@@ -185,7 +185,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal.size() > 0}"
         name: criminal_processes
         props:
           Description:
@@ -195,7 +195,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo.size() > 0}"
         name: consumption_habits
         props:
           Description:
@@ -205,7 +205,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais.size() > 0}"
         name: residential_data
         props:
           Description:
@@ -215,7 +215,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento.size() > 0}"
         name: education_and_training
         props:
           Description:
@@ -225,7 +225,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego.size() > 0}"
         name: profession_and_employment
         props:
           Description:
@@ -235,7 +235,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz.size() > 0}"
         name: image_record
         props:
           Description:
@@ -245,7 +245,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos.size() > 0}"
         name: biometric_data
         props:
           Description:
@@ -255,7 +255,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
-        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis.size() > 0}"
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis.size() > 0}"
         name: sensitive_data
         props:
           Description:
@@ -501,7 +501,7 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Details:
-            val: "${acoesJudiciaisPpdDescricao}" #longer
+            val: "${acoesJudiciaisPpdDescricao?.trim()?.toUpperCase()}" #longer
             excludeFromSearch: true
 #          Name:
 #            val: "${}"
