@@ -40,23 +40,23 @@ schema:
     - name: Metadata_Redaction
     - name: Metadata_Status
 
-      
+
 
   vertices:
-#    - name: "Object_Sensitive_Data"
-#      partition: false
-#      useStatic: false
-#      props:
-#        - name: "Ethnicity"
-#          dataType: "String"
-#          cardinality: "SINGLE"
-#          index: true
-#        - name: "Religion"
-#        - name: "Political_View"
-#        - name: "Union_Membership"
-#        - name: "Club_Membership"
-#        - name: "Church_Membership"
-#        - name: "Sexual_Orientation"
+    #    - name: "Object_Sensitive_Data"
+    #      partition: false
+    #      useStatic: false
+    #      props:
+    #        - name: "Ethnicity"
+    #          dataType: "String"
+    #          cardinality: "SINGLE"
+    #          index: true
+    #        - name: "Religion"
+    #        - name: "Political_View"
+    #        - name: "Union_Membership"
+    #        - name: "Club_Membership"
+    #        - name: "Church_Membership"
+    #        - name: "Sexual_Orientation"
 
     - name: "Event_Consent"
       partition: false
@@ -143,7 +143,7 @@ schema:
       props:
         - name: Ingestion_Date
         - name: Email
-        
+
     - name: "Event_Email_BCC_Group"
       partition: false
       useStatic: false
@@ -259,13 +259,12 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Form_Id
+        - name: Title
         - name: Date
           dataType: Date
         - name: Discussed_Topics  # OR Discussed_Subjects ?!
-        - name: Form_Id
-        - name: Name
         - name: Participants
-        - name: Title
 
     - name: "Event_Subject_Access_Request"
       partition: false
@@ -511,12 +510,7 @@ schema:
         - name: Form_Owner_Id
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
-        - name: Is_Anonymized
-        - name: Is_Deleted
-        - name: Is_Essential
-        - name: Is_Updated
         - name: Name
-        - name: Profiling_And_Scoring
         - name: Retention_Period
         - name: Retention_Justification
           index: false
@@ -526,6 +520,10 @@ schema:
           dataType: Date
         - name: Update_Frequency
         - name: Uses_Automation
+        - name: Is_Updated
+        - name: Is_Deleted
+        - name: Is_Essential
+        - name: Is_Anonymized
 
     - name: "Object_Data_Procedures"
       partition: false
@@ -533,7 +531,7 @@ schema:
       props:
         - name: ID
         - name: Business_Area_Responsible
-#        - name: Business_Sub_Area_Responsible
+        #        - name: Business_Sub_Area_Responsible
         - name: Type
         - name: Description
           index: false
@@ -906,7 +904,7 @@ schema:
         - name: Data_Processing_Justification
           index: false
         - name: Is_Essential
-#        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
+        #        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
         - name: Is_Required
         - name: Breach_Of_Subject_Rights_Justification
           index: false
@@ -982,12 +980,11 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Form_Id
         - name: Date
           dataType: Date
         - name: Description
         - name: Details
-        - name: Form_Id
-        - name: Name
 
     - name: "Object_Privacy_Notice"
       partition: false
@@ -997,7 +994,7 @@ schema:
         - name: Country_Where_Stored
         - name: Delivery_Date
           dataType: Date
-        - name: Name
+
         - name: Description
           index: false # maintained because the sample data seems to have lots of words !
         - name: Effect_On_Individuals
@@ -1063,7 +1060,7 @@ schema:
         - name: License_Plate
         - name: Model
         - name: Model_Year
-#        - name: CNH
+        #        - name: CNH
         - name: Brand
 
     - name: "Person_Employee"
@@ -1162,172 +1159,172 @@ schema:
         - name: URL
         - name: orgCountrySet
 
-#  - name: "Object_Health"
-#
-#
-#  - name: "Object_Biometric"
-#
-#
-#  - name: "Object_Genetic"
-#
-#
-#  - name: "Event_Consent"
-#
-#
-#  - name: "Event_Transaction"
-#
-#
-#  - name: "Event_Data_Breach"
-#
-#
-#  - name: "Event_Form_Ingestion"
-#
-#
-#  - name: "Event_Ingestion"
-#
-#  - name: "Event_Group_Ingestion"
-#
-#  - name: "Event_Subject_Access_Request"
-#
-#  - name: "Event_Training"
-#  - name: "Location_Address"
-#
-#  - name: "Object_AWS_Instance"
-#
-#  - name: "Object_AWS_Network_Interface"
-#  - name: "Object_AWS_Security_Group"
-#
-#  - name: "Object_AWS_VPC"
-#
-#  - name: "Object_Application"
-#
-#  - name: "Object_Awareness_Campaign"
-#
-#
-#  - name: "Object_Credential"
-#
-#  - name: "Object_Data_Procedures"
-#
-#  - name: "Object_Data_Source"
-#
-#  - name: "Object_Metadata_Source"
-#
-#  - name: "Object_Data_Policy"
-#
-#  - name: "Object_Email_Address"
-#
-#  - name: "Object_Form"
-#
-#
-#  - name: "Object_Identity_Card"
-#
-#  - name: "Object_Insurance_Policy"
-#
-#  - name: "Object_Lawful_Basis"
-#  - name: "Object_Contract"
-#
-#  - name: "Object_Notification_Templates"
-#
-#
-#  - name: "Object_Phone_Number"
-#
-#  - name: "Object_Privacy_Impact_Assessment"
-#
-#  - name: "Object_Privacy_Notice"
-#
-#  - name: "Person_Identity"
-#
-#
-#  - name: "Person_Natural"
-#
-#  - name: "Person_Employee"
-#
-#  - name: "Person_Organisation"
-#
+  #  - name: "Object_Health"
+  #
+  #
+  #  - name: "Object_Biometric"
+  #
+  #
+  #  - name: "Object_Genetic"
+  #
+  #
+  #  - name: "Event_Consent"
+  #
+  #
+  #  - name: "Event_Transaction"
+  #
+  #
+  #  - name: "Event_Data_Breach"
+  #
+  #
+  #  - name: "Event_Form_Ingestion"
+  #
+  #
+  #  - name: "Event_Ingestion"
+  #
+  #  - name: "Event_Group_Ingestion"
+  #
+  #  - name: "Event_Subject_Access_Request"
+  #
+  #  - name: "Event_Training"
+  #  - name: "Location_Address"
+  #
+  #  - name: "Object_AWS_Instance"
+  #
+  #  - name: "Object_AWS_Network_Interface"
+  #  - name: "Object_AWS_Security_Group"
+  #
+  #  - name: "Object_AWS_VPC"
+  #
+  #  - name: "Object_Application"
+  #
+  #  - name: "Object_Awareness_Campaign"
+  #
+  #
+  #  - name: "Object_Credential"
+  #
+  #  - name: "Object_Data_Procedures"
+  #
+  #  - name: "Object_Data_Source"
+  #
+  #  - name: "Object_Metadata_Source"
+  #
+  #  - name: "Object_Data_Policy"
+  #
+  #  - name: "Object_Email_Address"
+  #
+  #  - name: "Object_Form"
+  #
+  #
+  #  - name: "Object_Identity_Card"
+  #
+  #  - name: "Object_Insurance_Policy"
+  #
+  #  - name: "Object_Lawful_Basis"
+  #  - name: "Object_Contract"
+  #
+  #  - name: "Object_Notification_Templates"
+  #
+  #
+  #  - name: "Object_Phone_Number"
+  #
+  #  - name: "Object_Privacy_Impact_Assessment"
+  #
+  #  - name: "Object_Privacy_Notice"
+  #
+  #  - name: "Person_Identity"
+  #
+  #
+  #  - name: "Person_Natural"
+  #
+  #  - name: "Person_Employee"
+  #
+  #  - name: "Person_Organisation"
+  #
 
   edges:
-  - name: Approved_Compliance_Check
-  - name: Assigned_SAR_Request
-  - name: Consent
-  - name: Data_Impacted_By_Data_Breach
-  - name: Event_Training_Awareness_Campaign
-  - name: Event_Training_Person
-  - name: Email_To
-  - name: Email_From
-  - name: Email_CC
-  - name: Email_BCC
-  - name: Email_Body
-  - name: Email_Attachment
-  - name: Has_Address
-  - name: Has_Application
-  - name: Has_Campaign
-  - name: Has_Column
-  - name: Has_Contract
-  - name: Has_Complaint
-  - name: Has_Credential
-  - name: Has_Data_Procedures
-  - name: Has_Data_Source
-  - name: Has_Department
-  - name: Has_DSAR
-  - name: Has_Egress_Peering
-  - name: Has_Form_Ingestion_Event
-  - name: Has_Id_Card
-  - name: Has_Ingestion_Event
-  - name: Has_Ingress_Peering
-  - name: Has_Lawful_Basis_On
-  - name: Has_Legitimate_Interests_Assessment
-  - name: Has_Link
-  - name: Has_NLP_Events
-  - name: Has_Mobile
-  - name: Has_Module
-  - name: Has_Other_Lawful_Basis
-  - name: Has_Parent_Or_Guardian
-  - name: Has_Phone
-  - name: Has_Personal_Data
-  - name: Has_Policy
-  - name: Has_Privacy_Impact_Assessment
-  - name: Has_Privacy_Notice # from Event_Consent to Privacy_Notice
-  - name: Has_RoPA_Privacy_Notice # from Object_Data_Procedures to Privacy_Notice
-  - name: Has_Risk
-  - name: Has_Salary
-  - name: Has_Security_Group
-  - name: Has_Security_Group_Connectivity
-  - name: Has_Semantic
-  - name: Has_Sensitive_Data
-    multiplicity: MULTI
-    unidirected: false
-  - name: Has_Server
-  - name: Has_Subsystem
-  - name: Has_Sub_Category
-  - name: Has_System
-  - name: Has_Table
-  - name: Has_Transaction
-  - name: Has_Vehicle
-  - name: Impacted_By_Data_Breach
-  - name: Is_Alias
-  - name: Is_Client
-  - name: Is_Interested_Party
-  - name: Is_Data_Controller
-  - name: Is_Data_Owner
-  - name: Is_Data_Processor
-  - name: Is_Dependant
-  - name: Is_Family
-  - name: Is_Lead
-  - name: Is_Located
-  - name: Is_Participant
-  - name: Is_Relative
-  - name: Is_Subordinate
-  - name: Is_Responsible
-  - name: Lives
-  - name: Made_SAR_Request
-  - name: Mitigates_Risk
-  - name: Pays_Salary
-  - name: Reports_To
-  - name: Runs_On
-  - name: Sent_Email_BCC
-  - name: Sent_Email_CC
-  - name: Sent_Email_To
-  - name: Uses_Data_Source
-  - name: Uses_Email
-  - name: Works
+    - name: Approved_Compliance_Check
+    - name: Assigned_SAR_Request
+    - name: Consent
+    - name: Data_Impacted_By_Data_Breach
+    - name: Event_Training_Awareness_Campaign
+    - name: Event_Training_Person
+    - name: Email_To
+    - name: Email_From
+    - name: Email_CC
+    - name: Email_BCC
+    - name: Email_Body
+    - name: Email_Attachment
+    - name: Has_Address
+    - name: Has_Application
+    - name: Has_Campaign
+    - name: Has_Column
+    - name: Has_Contract
+    - name: Has_Complaint
+    - name: Has_Credential
+    - name: Has_Data_Procedures
+    - name: Has_Data_Source
+    - name: Has_Department
+    - name: Has_DSAR
+    - name: Has_Egress_Peering
+    - name: Has_Form_Ingestion_Event
+    - name: Has_Id_Card
+    - name: Has_Ingestion_Event
+    - name: Has_Ingress_Peering
+    - name: Has_Lawful_Basis_On
+    - name: Has_Legitimate_Interests_Assessment
+    - name: Has_Link
+    - name: Has_NLP_Events
+    - name: Has_Mobile
+    - name: Has_Module
+    - name: Has_Other_Lawful_Basis
+    - name: Has_Parent_Or_Guardian
+    - name: Has_Phone
+    - name: Has_Personal_Data
+    - name: Has_Policy
+    - name: Has_Privacy_Impact_Assessment
+    - name: Has_Privacy_Notice # from Event_Consent to Privacy_Notice
+    - name: Has_RoPA_Privacy_Notice # from Object_Data_Procedures to Privacy_Notice
+    - name: Has_Risk
+    - name: Has_Salary
+    - name: Has_Security_Group
+    - name: Has_Security_Group_Connectivity
+    - name: Has_Semantic
+    - name: Has_Sensitive_Data
+      multiplicity: MULTI
+      unidirected: false
+    - name: Has_Server
+    - name: Has_Subsystem
+    - name: Has_Sub_Category
+    - name: Has_System
+    - name: Has_Table
+    - name: Has_Transaction
+    - name: Has_Vehicle
+    - name: Impacted_By_Data_Breach
+    - name: Is_Alias
+    - name: Is_Client
+    - name: Is_Interested_Party
+    - name: Is_Data_Controller
+    - name: Is_Data_Owner
+    - name: Is_Data_Processor
+    - name: Is_Dependant
+    - name: Is_Family
+    - name: Is_Lead
+    - name: Is_Located
+    - name: Is_Participant
+    - name: Is_Relative
+    - name: Is_Subordinate
+    - name: Is_Responsible
+    - name: Lives
+    - name: Made_SAR_Request
+    - name: Mitigates_Risk
+    - name: Pays_Salary
+    - name: Reports_To
+    - name: Runs_On
+    - name: Sent_Email_BCC
+    - name: Sent_Email_CC
+    - name: Sent_Email_To
+    - name: Uses_Data_Source
+    - name: Uses_Email
+    - name: Works
 
