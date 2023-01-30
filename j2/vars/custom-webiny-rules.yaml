@@ -1,6 +1,6 @@
 rules:
 
-  webiny_mapeamento:
+  webiny_ropa:
 
     vertices:
 
@@ -14,8 +14,8 @@ rules:
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosLocalDeArmazenamento)}"
-            type: "[Lcom.pontusvision.utils.WebinyRefId;"
-            postProcessor: "${com.pontusvision.utils.WebinyRefId.fromString(it)?.getId()}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
             processAll: true
 
       - label: Object_Data_Procedures
@@ -27,14 +27,14 @@ rules:
           Business_Area_Responsible:
             val: "${mapeamentoDeProcessosDepartamento?.departamentoReferencia}" # it doesn't extract the data from the array,
             excludeFromSearch: true                                             # I didn't want to create another WebinyRef just for that!
-#          Type:
-#            val: "${}"
-#            excludeFromSearch: true
-          Macro_Process_Name:
-            val: "${mapeamentoDeProcessosProcesso}"
+          #          Type:
+          #            val: "${}"
+          #            excludeFromSearch: true
+          Name:
+            val: "${mapeamentoDeProcessosProcesso?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Description:
-            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
+            val: "${mapeamentoDeProcessosFinalidadeDoProcesso?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Info_Collected:
             val: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis + mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia}"
@@ -42,72 +42,70 @@ rules:
           Type_Of_Natural_Person:
             val: "${mapeamentoDeProcessosCategoriaDosTitularesDosDados}"
             excludeFromSearch: true
-#          Data_Provider:
-#            val: "${}"
-#            excludeFromSearch: true
-#          Why_Is_It_Collected:
-#            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
-#            excludeFromSearch: true
-#          Secondary_Purpose_Of_Collection:
-#            val: "${}"
-#            excludeFromSearch: true
-#          Country_Where_Stored:
-#            val: "${}"
-#            excludeFromSearch: true
-#          Participants:
-#            vals: "${}"              TODO: what to do with that ?!
-#            excludeFromSearch: true
-#          Info_Shared_With_Third_Parties:
-#            vals: "${}"
-#            excludeFromSearch: true
-#          Info_Shared_With_Third_Parties_International:
-#            vals: "${}"
-#            excludeFromSearch: true
-#          Info_Share_Justification:
-#            val: "${}"              TODO: não temos campo para essa questão
-#            excludeFromSearch: true
-#          Info_Share_Justification_International:
-#            val: "${}"
-#            excludeFromSearch: true
-#          Number_Of_Natural_Person:
-#            val: "${}"
-#            excludeFromSearch: true
+          #          Data_Provider:
+          #            val: "${}"
+          #            excludeFromSearch: true
+          #          Why_Is_It_Collected:
+          #            val: "${mapeamentoDeProcessosFinalidadeDoProcesso}"
+          #            excludeFromSearch: true
+          #          Secondary_Purpose_Of_Collection:
+          #            val: "${}"
+          #            excludeFromSearch: true
+          #          Country_Where_Stored:
+          #            val: "${}"
+          #            excludeFromSearch: true
+          #          Participants:
+          #            vals: "${}"              TODO: what to do with that ?!
+          #            excludeFromSearch: true
+          #          Info_Shared_With_Third_Parties:
+          #            vals: "${}"
+          #            excludeFromSearch: true
+          #          Info_Shared_With_Third_Parties_International:
+          #            vals: "${}"
+          #            excludeFromSearch: true
+          #          Info_Share_Justification:
+          #            val: "${}"              TODO: não temos campo para essa questão
+          #            excludeFromSearch: true
+          #          Info_Share_Justification_International:
+          #            val: "${}"
+          #            excludeFromSearch: true
+          #          Number_Of_Natural_Person:
+          #            val: "${}"
+          #            excludeFromSearch: true
           Products_And_Services:
-            val: "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos}"
+            val: "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos?.trim()?.toUpperCase()}" # this field will change!
             excludeFromSearch: true
-#          Rights:
-#            val: "${}"               #TODO: Check with @Leo if it is needed into Webiny
-#            excludeFromSearch: true
+          #          Rights:
+          #            val: "${}"               #TODO: Check with @Leo if it is needed into Webiny
+          #            excludeFromSearch: true
           Lawful_Basis_Justification:
-            val: "${mapeamentoDeProcessosJustificativaDaBaseLegal}"
+            val: "${mapeamentoDeProcessosJustificativaDaBaseLegal?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Person_Natural
         name: responsible
         props:
           Customer_ID:
-            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel)}"
-            type: "[Lcom.pontusvision.utils.WebinyRefCpf;"
-            postProcessor: "${com.pontusvision.utils.WebinyRefCpf.fromString(it)?.getTitularesCpfDoTitular()}"
-            processAll: true
+            val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosNomeDoResponsavel?.titularesCpfDoTitular)}"
 
       - label: Object_Lawful_Basis
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosBasesLegais)}" # try this !!
-            type: "[Lcom.pontusvision.utils.WebinyRefLawfulBasis;"
-            postProcessor: "${com.pontusvision.utils.WebinyRefLawfulBasis.fromString(it)?.getBasesLegaisReferencia()}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it,'basesLegaisReferencia')}"
             processAll: true
 
-#      - label: Object_Contract  # ainda não tem campo no CMS Mapeamentos
-#        props:
-#          Registration_Number:
-#            val: "${new groovy.json.JsonBuilder()}" #TODO (linkage only)
-#            type: "[Ljava.lang.String;"
-##            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
+      #      - label: Object_Contract  # ainda não tem campo no CMS Mapeamentos
+      #        props:
+      #          Registration_Number:
+      #            val: "${new groovy.json.JsonBuilder()}" #TODO (linkage only)
+      #            type: "[Ljava.lang.String;"
+      ##            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+      #            processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal.size() > 0}"
         name: personal_identification
         props:
           Description:
@@ -117,6 +115,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros.size() > 0}"
         name: financial_data
         props:
           Description:
@@ -126,6 +125,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais.size() > 0}"
         name: personal_characteristics
         props:
           Description:
@@ -135,6 +135,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais.size() > 0}"
         name: personal_habits
         props:
           Description:
@@ -144,6 +145,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas.size() > 0}"
         name: psychological_characteristics
         props:
           Description:
@@ -153,6 +155,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar.size() > 0}"
         name: family_composition
         props:
           Description:
@@ -162,6 +165,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer.size() > 0}"
         name: leisure_interests
         props:
           Description:
@@ -171,6 +175,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjAssociacoes.size() > 0}"
         name: associations
         props:
           Description:
@@ -180,6 +185,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal.size() > 0}"
         name: criminal_processes
         props:
           Description:
@@ -189,6 +195,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo.size() > 0}"
         name: consumption_habits
         props:
           Description:
@@ -198,6 +205,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais.size() > 0}"
         name: residential_data
         props:
           Description:
@@ -207,6 +215,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento.size() > 0}"
         name: education_and_training
         props:
           Description:
@@ -216,6 +225,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego.size() > 0}"
         name: profession_and_employment
         props:
           Description:
@@ -225,6 +235,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz.size() > 0}"
         name: image_record
         props:
           Description:
@@ -234,6 +245,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos.size() > 0}"
         name: biometric_data
         props:
           Description:
@@ -243,6 +255,7 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis != null && mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis.size() > 0}"
         name: sensitive_data
         props:
           Description:
@@ -252,91 +265,92 @@ rules:
             processAll: true
 
       - label: Object_Sensitive_Data
+        condition: "${mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar != null}"
         name: other_personal_data
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}"
-#            type: "[Ljava.lang.String;"
+            #            type: "[Ljava.lang.String;"
             postProcessor: "${it?.toUpperCase()}"
             processAll: true
 
-#      - label: Object_Data_Policy
-#        props:
-#          Form_Id: "${id}"
-#          Type:
-#            val: "${}"
-#            excludeFromSearch: true
-#          Retention_Period:
-#            val: "${mapeamentoDeProcessosPeriodoDeRetencao?.periodosReferencia}"
-#            excludeFromSearch: true
-##          Retention_Justification:
-##            val: "${}"
-##            excludeFromSearch: true
-#          Profiling_And_Scoring:
-#            val: "${}"
-#            excludeFromSearch: true
-#          Uses_Automation:
-#            val: "${}"
-#            excludeFromSearch: true
-#          Is_Updated:
-#            val: "${}"
-#            excludeFromSearch: true
-#          Is_Deleted:
-#            val: "${}"
-#            excludeFromSearch: true
-##          Is_Essential:
-##            val: "${}"
-##            excludeFromSearch: true
-#          Is_Anonymized:
-#            val: "${}"
-#            excludeFromSearch: true
+      #      - label: Object_Data_Policy
+      #        props:
+      #          Form_Id: "${id}"
+      #          Type:
+      #            val: "${}"
+      #            excludeFromSearch: true
+      #          Retention_Period:
+      #            val: "${mapeamentoDeProcessosPeriodoDeRetencao?.periodosReferencia}"
+      #            excludeFromSearch: true
+      ##          Retention_Justification:
+      ##            val: "${}"
+      ##            excludeFromSearch: true
+      #          Profiling_And_Scoring:
+      #            val: "${}"
+      #            excludeFromSearch: true
+      #          Uses_Automation:
+      #            val: "${}"
+      #            excludeFromSearch: true
+      #          Is_Updated:
+      #            val: "${}"
+      #            excludeFromSearch: true
+      #          Is_Deleted:
+      #            val: "${}"
+      #            excludeFromSearch: true
+      ##          Is_Essential:
+      ##            val: "${}"
+      ##            excludeFromSearch: true
+      #          Is_Anonymized:
+      #            val: "${}"
+      #            excludeFromSearch: true
 
-#      - label: Object_Privacy_Notice
-#        condition: "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}"
-#        props:
-#          Form_Id: "${id}"
-#          Metadata_Update_Date:
-#            val: "${Modified}"
-#            type: "java.util.Date"
-#            excludeFromSearch: true
-#          Metadata_Create_Date:
-#            val: "${Created}"
-#            type: "java.util.Date"
-#            excludeFromSearch: true
-#          How_Is_It_Collected:
-#            val: "${Comoosdadospessoaiss_x00e3_ocole}"
-#            excludeFromSearch: true
-#          Description:
-#            val: "${Qual_x00e9_omeioadotadoparainfor}"
-#            excludeFromSearch: true
-#          Agreements:
-#            val: "${Quaisdestesdireitospodemseratend}"
-#            excludeFromSearch: true
+      #      - label: Object_Privacy_Notice
+      #        condition: "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}"
+      #        props:
+      #          Form_Id: "${id}"
+      #          Metadata_Update_Date:
+      #            val: "${Modified}"
+      #            type: "java.util.Date"
+      #            excludeFromSearch: true
+      #          Metadata_Create_Date:
+      #            val: "${Created}"
+      #            type: "java.util.Date"
+      #            excludeFromSearch: true
+      #          How_Is_It_Collected:
+      #            val: "${Comoosdadospessoaiss_x00e3_ocole}"
+      #            excludeFromSearch: true
+      #          Description:
+      #            val: "${Qual_x00e9_omeioadotadoparainfor}"
+      #            excludeFromSearch: true
+      #          Agreements:
+      #            val: "${Quaisdestesdireitospodemseratend}"
+      #            excludeFromSearch: true
 
-#      - label: Event_Data_Breach
-#        condition: "${Houvealgumincidentedeseguran_x00 == 'Sim'}"
-#        props:
-#          Form_Id: "${id}"
-#          Id:
-#            val: "${Title?.trim()?.toUpperCase()}"
-#            excludeFromSearch: true
-#          Authority_Notified:
-#            val: "${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos:''}"
-#            excludeFromSearch: true
-#          Authority_Notified_Others:
-#            val: "${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0:''}"
-#            excludeFromSearch: true
-#          Metadata_Create_Date:
-#            val: "${Created}"
-#            type: java.util.Date
-#            excludeFromSearch: true
-#          Metadata_Update_Date:
-#            val: "${Modified}"
-#            type: java.util.Date
-#            excludeFromSearch: true
-#          Description:
-#            val: "${Emcasopositivo_x002c_fornecerosd}"
-#            excludeFromSearch: true
+      #      - label: Event_Data_Breach
+      #        condition: "${Houvealgumincidentedeseguran_x00 == 'Sim'}"
+      #        props:
+      #          Form_Id: "${id}"
+      #          Id:
+      #            val: "${Title?.trim()?.toUpperCase()}"
+      #            excludeFromSearch: true
+      #          Authority_Notified:
+      #            val: "${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos:''}"
+      #            excludeFromSearch: true
+      #          Authority_Notified_Others:
+      #            val: "${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0:''}"
+      #            excludeFromSearch: true
+      #          Metadata_Create_Date:
+      #            val: "${Created}"
+      #            type: java.util.Date
+      #            excludeFromSearch: true
+      #          Metadata_Update_Date:
+      #            val: "${Modified}"
+      #            type: java.util.Date
+      #            excludeFromSearch: true
+      #          Description:
+      #            val: "${Emcasopositivo_x002c_fornecerosd}"
+      #            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
@@ -364,7 +378,7 @@ rules:
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
-    edges:
+    edges:    #TODO: fix the edges !!
       - label: "Has_Ingestion_Event"
         fromVertexName: "webiny"
         toVertexLabel: "Event_Group_Ingestion"
@@ -449,17 +463,17 @@ rules:
         fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "attached_data_sources"
 
-#      - label: "Has_Policy"
-#        fromVertexLabel: "Object_Data_Procedures"
-#        toVertexLabel: "Object_Data_Policy"
-#
-#      - label: "Impacted_By_Data_Breach"
-#        fromVertexLabel: "Event_Data_Breach"
-#        toVertexName: "attached_data_sources"
-#
-#      - label: "Has_Privacy_Notice"
-#        fromVertexLabel: "Object_Privacy_Notice"
-#        toVertexLabel: "Object_Data_Procedures"
+      #      - label: "Has_Data_Policy"
+      #        fromVertexLabel: "Object_Data_Procedures"
+      #        toVertexLabel: "Object_Data_Policy"
+      #
+      #      - label: "Impacted_By_Data_Breach"
+      #        fromVertexLabel: "Event_Data_Breach"
+      #        toVertexName: "attached_data_sources"
+      #
+      #      - label: "Has_Privacy_Notice"
+      #        fromVertexLabel: "Object_Privacy_Notice"
+      #        toVertexLabel: "Object_Data_Procedures"
 
       - label: "Is_Responsible"
         fromVertexName: "responsible"
@@ -469,9 +483,9 @@ rules:
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Lawful_Basis"
 
-#      - label: "Has_Contract"
-#        fromVertexLabel: "Object_Contract"
-#        toVertexLabel: "Object_Data_Procedures"
+  #      - label: "Has_Contract"
+  #        fromVertexLabel: "Object_Contract"
+  #        toVertexLabel: "Object_Data_Procedures"
 
   webiny_legal_actions:
 
@@ -480,18 +494,18 @@ rules:
         props:
           Form_Id: "${id}"
           Description:
-            val: "${acoesJudiciaisPpdDescricao}"
+            val: "${acoesJudiciaisPpdReferencia?.trim()?.toUpperCase()}" #shorter
             excludeFromSearch: true
           Date:
             val: "${acoesJudiciaisPpdData}"
             type: java.util.Date
             excludeFromSearch: true
           Details:
-            val: "${acoesJudiciaisPpdResultado}"
+            val: "${acoesJudiciaisPpdDescricao?.trim()?.toUpperCase()}" #longer
             excludeFromSearch: true
-          Name:
-            val: "${acoesJudiciaisPpdReferencia?.trim()?.toUpperCase()}"
-            excludeFromSearch: true
+      #          Name:
+      #            val: "${}"
+      #            excludeFromSearch: true
 
       - label: Object_Data_Source
         props:

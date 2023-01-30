@@ -37,7 +37,7 @@ public class WebinyTest extends AppTest {
   @Test
   public void test00001WebinyMapeamento() throws InterruptedException {
 
-    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_mapeamento");
+    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
 
     try {
 
@@ -108,7 +108,7 @@ public class WebinyTest extends AppTest {
   @Test
   public void test00002WebinyAcoesJudiciais() throws InterruptedException {
 
-//    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_mapeamento");
+//    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
     jsonTestUtil("webiny/webiny-acoes-judiciais.json", "$.data.listAcoesJudiciaisPpds.data[*]", "webiny_legal_actions");
 
     try {
@@ -269,7 +269,7 @@ public class WebinyTest extends AppTest {
   @Test
   public void test00005WebinyAvisoDePrivacidade() throws InterruptedException {
 
-//    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_mapeamento");
+//    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
 //    jsonTestUtil("webiny/webiny-consentimento.json", "$.data.listConsentimento.data[*]", "webiny_consentimento");
     jsonTestUtil("webiny/webiny-avisos.json", "$.data.listAvisoDePrivacidades.data[*]", "webiny_privacy_notice");
 
