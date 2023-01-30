@@ -550,4 +550,3 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: "Event_Ingestion"
         toVertexLabel: "Object_Legal_Actions"
-
