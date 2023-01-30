@@ -302,7 +302,7 @@ public class WebinyTest extends AppTest {
               "hasNeighbourId:" + privacyNotice);
       replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Form_Id\":\"=63c6f874320a910008b4e5b5#0005\""));
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Form_Id\":\"63c6f874320a910008b4e5b5#0005\""));
 
     } catch (Exception e) {
       e.printStackTrace();
