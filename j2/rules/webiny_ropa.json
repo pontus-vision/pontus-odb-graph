@@ -358,7 +358,7 @@
             "val": "${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "postProcessor": "${it?.toUpperCase()}"
+            "postProcessor": "${it?.toUpperCase()?.replaceAll('^\"|\"$', '')}"
           }
         ]
       },
