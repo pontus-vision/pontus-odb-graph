@@ -636,8 +636,8 @@ rules:
         props:
           Customer_ID:
             val: "${new groovy.json.JsonBuilder(reunioesPpdParticipantes)}"
-            type: "[Lcom.pontusvision.utils.WebinyRefCpf;"
-            postProcessor: "${com.pontusvision.utils.WebinyRefCpf.fromString(it)?.getTitularesCpfDoTitular()}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
             processAll: true
 
       - label: Object_Data_Source
@@ -727,8 +727,8 @@ rules:
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(avisoDePrivacidadeIdDoProcesso)}"
-            type: "[Lcom.pontusvision.utils.WebinyRefId;"
-            postProcessor: "${com.pontusvision.utils.WebinyRefId.fromString(it)?.getId()}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it, 'id')}"
             processAll: true
 
       - label: Event_Ingestion

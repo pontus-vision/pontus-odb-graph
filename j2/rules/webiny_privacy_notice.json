@@ -48,8 +48,8 @@
             "val": "${new groovy.json.JsonBuilder(avisoDePrivacidadeIdDoProcesso)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Lcom.pontusvision.utils.WebinyRefId;",
-            "postProcessor": "${com.pontusvision.utils.WebinyRefId.fromString(it)?.getId()}"
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it, 'id')}"
           }
         ]
       },

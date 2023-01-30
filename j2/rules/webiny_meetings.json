@@ -44,8 +44,8 @@
             "val": "${new groovy.json.JsonBuilder(reunioesPpdParticipantes)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Lcom.pontusvision.utils.WebinyRefCpf;",
-            "postProcessor": "${com.pontusvision.utils.WebinyRefCpf.fromString(it)?.getTitularesCpfDoTitular()}"
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
           }
         ]
       },

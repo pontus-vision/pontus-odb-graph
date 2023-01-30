@@ -33,8 +33,8 @@ updatereq:
           val: ${new groovy.json.JsonBuilder(avisoDePrivacidadeIdDoProcesso)}
           mandatoryInSearch: True
           processAll: True
-          type: "[Lcom.pontusvision.utils.WebinyRefId;"
-          postProcessor: ${com.pontusvision.utils.WebinyRefId.fromString(it)?.getId()}
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it, 'id')}
     
     - label: Event_Ingestion
       props:
