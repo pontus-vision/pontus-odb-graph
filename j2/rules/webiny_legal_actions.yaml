@@ -8,7 +8,7 @@ updatereq:
           val: ${id}
           mandatoryInSearch: True
         - name: Object_Legal_Actions_Description
-          val: ${acoesJudiciaisPpdDescricao}
+          val: ${acoesJudiciaisPpdReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legal_Actions_Date
@@ -17,11 +17,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Object_Legal_Actions_Details
-          val: ${acoesJudiciaisPpdResultado}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Legal_Actions_Name
-          val: ${acoesJudiciaisPpdReferencia?.trim()?.toUpperCase()}
+          val: ${acoesJudiciaisPpdDescricao?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
