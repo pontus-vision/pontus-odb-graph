@@ -92,11 +92,11 @@ public class WebinyTest extends AppTest {
 
       assertEquals(25,reply.getTotalAvailable());
 //    some of the personal/sensitive data linked to the mapeamento:
-      assertTrue(reply.getRecords()[1].contains("\"Object_Sensitive_Data_Description\":\"BENS OU SERVIÇOS EMPRESTADOS\""));
-      assertTrue(reply.getRecords()[7].contains("\"Object_Sensitive_Data_Description\":\"DADOS QUE REVELAM ORIGEM RACIAL OU ÉTICA\""));
-      assertTrue(reply.getRecords()[14].contains("\"Object_Sensitive_Data_Description\":\"HISTÓRICO ESCOLAR\""));
-      assertTrue(reply.getRecords()[18].contains("\"Object_Sensitive_Data_Description\":\"LOCAL DE NASCIMENTO\""));
-      assertTrue(reply.getRecords()[24].contains("\"Object_Sensitive_Data_Description\":\"TEMPO DE HABITAÇÃO\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Sensitive_Data_Description\":\"BENS OU SERVIÇOS EMPRESTADOS\""));
+      assertTrue(reply.getRecords()[6].contains("\"Object_Sensitive_Data_Description\":\"DADOS QUE REVELAM ORIGEM RACIAL OU ÉTICA\""));
+      assertTrue(reply.getRecords()[13].contains("\"Object_Sensitive_Data_Description\":\"HISTÓRICO ESCOLAR\""));
+      assertTrue(reply.getRecords()[17].contains("\"Object_Sensitive_Data_Description\":\"LOCAL DE NASCIMENTO\""));
+      assertTrue(reply.getRecords()[22].contains("\"Object_Sensitive_Data_Description\":\"OUTROS DADOS 1\""));
 
     } catch (Exception e) {
       e.printStackTrace();

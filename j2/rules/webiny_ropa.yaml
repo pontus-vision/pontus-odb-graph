@@ -257,7 +257,7 @@ updatereq:
           val: ${new groovy.json.JsonBuilder(mapeamentoDeProcessosDadosPessoaisObj?.mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}
           mandatoryInSearch: True
           processAll: True
-          postProcessor: ${it?.toUpperCase()}
+          postProcessor: ${it?.toUpperCase()?.replaceAll('^"|"$', '')}
     
     - label: Event_Ingestion
       props:
