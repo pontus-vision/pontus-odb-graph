@@ -353,14 +353,14 @@ public class WebinyTest extends AppTest {
               "hasNeighbourId:" + dataSourceRid);
       replyStr = reply.getRecords()[0];
       assertTrue(replyStr.contains("\"Object_Module_Name\":\"modulo 1\""));
-      String moduleRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+      String moduleRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
 //      ----------------------- Object_Subsystem  ----------------------------------------
 
       reply = gridWrapper(null, "Object_Subsystem", new String[]{"Object_Subsystem_Name"},
               "hasNeighbourId:" + moduleRid);
       assertTrue(replyStr.contains("\"Object_Subsystem_Name\":\"SUBSISTEMA 1\""));
-      String subsystemRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+      String subsystemRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
 //      ----------------------- Object_System  ----------------------------------------
 
@@ -371,10 +371,10 @@ public class WebinyTest extends AppTest {
 //      ----------------------- from Event_Ingestion to Object_Data_Source root  ----------------------
 
       String eventRid = JsonParser.parseString(gridWrapper(null, "Event_Ingestion", null,
-              "hasNeighbourId:" + dataSourceRid).getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+              "hasNeighbourId:" + dataSourceRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       String eventGroupRid = JsonParser.parseString(gridWrapper(null, "Event_Group_Ingestion", null,
-              "hasNeighbourId:" + eventRid).getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+              "hasNeighbourId:" + eventRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"},
               "hasNeighbourId:" + eventGroupRid);
@@ -394,6 +394,49 @@ public class WebinyTest extends AppTest {
       reply = gridWrapper(null, "Object_Sensitive_Data", new String[]{"Object_Sensitive_Data_Description"},
               "hasNeighbourId:" + dataSourceRid, 0L, 25L, "Object_Sensitive_Data_Description", "+asc");
       assertEquals(20,reply.getTotalAvailable(), "20 personal/sensitive data are attached to this Data Source: ");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void test00007WebinyConsentimentos() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-consentimentos.json", "$.data.listConsentimentos.data[*]", "webiny_consents");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Person_Natural_Customer_ID\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63ce9ae5c064470008b72f83#0002\"\n" +
+                      "  }\n" +
+                      "]", "Person_Natural",
+              new String[]{"Person_Natural_Last_Update_Date"});
+      String replyStr = reply.getRecords()[0];
+
+      String titularRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Person_Natural_Last_Update_Date\":\"subsistema 1\""));
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
+              "hasNeighbourId:" + titularRid);
+      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"SUBSISTEMA 1\""), "The Guardian!");
+
+      reply = gridWrapper(null, "Event_Consent", new String[]{"Event_Consent_Customer_ID", "Event_Consent_Status",
+                      "Event_Consent_Metadata_Create_Date", "Event_Consent_Metadata_Update_Date", "Event_Consent_Description"},
+              "hasNeighbourId:" + titularRid);
+      assertTrue(replyStr.contains("\"Object_Subsystem_Name\":\"SUBSISTEMA 1\""));
+      String consentRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      reply = gridWrapper(null, "Object_Privacy_Notice", new String[]{"Object_Privacy_Notice_Form_Id"},
+              "hasNeighbourId:" + consentRid);
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Form_Id\":\"SUBSISTEMA 1\""));
 
     } catch (Exception e) {
       e.printStackTrace();
