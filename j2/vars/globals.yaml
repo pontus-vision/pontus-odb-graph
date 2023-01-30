@@ -259,13 +259,12 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Form_Id
+        - name: Title
         - name: Date
           dataType: Date
         - name: Discussed_Topics  # OR Discussed_Subjects ?!
-        - name: Form_Id
-        - name: Name
         - name: Participants
-        - name: Title
 
     - name: "Event_Subject_Access_Request"
       partition: false
@@ -511,12 +510,7 @@ schema:
         - name: Form_Owner_Id
         - name: Form_Submission_Id
         - name: Form_Submission_Owner_Id
-        - name: Is_Anonymized
-        - name: Is_Deleted
-        - name: Is_Essential
-        - name: Is_Updated
         - name: Name
-        - name: Profiling_And_Scoring
         - name: Retention_Period
         - name: Retention_Justification
           index: false
@@ -526,6 +520,10 @@ schema:
           dataType: Date
         - name: Update_Frequency
         - name: Uses_Automation
+        - name: Is_Updated
+        - name: Is_Deleted
+        - name: Is_Essential
+        - name: Is_Anonymized
 
     - name: "Object_Data_Procedures"
       partition: false
@@ -895,9 +893,9 @@ schema:
       useStatic: false
       props:
         - name: Form_Id
-        #        - name: Form_Owner_Id
-        #        - name: Form_Submission_Id
-        #        - name: Form_Submission_Owner_Id
+#        - name: Form_Owner_Id
+#        - name: Form_Submission_Id
+#        - name: Form_Submission_Owner_Id
         - name: Benefits
           index: false
         - name: Benefits_Relevance
@@ -906,7 +904,7 @@ schema:
         - name: Data_Processing_Justification
           index: false
         - name: Is_Essential
-#        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
+        #        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
         - name: Is_Required
         - name: Breach_Of_Subject_Rights_Justification
           index: false
@@ -982,12 +980,11 @@ schema:
       partition: false
       useStatic: false
       props:
+        - name: Form_Id
         - name: Date
           dataType: Date
         - name: Description
         - name: Details
-        - name: Form_Id
-        - name: Name
 
     - name: "Object_Privacy_Notice"
       partition: false
@@ -997,7 +994,7 @@ schema:
         - name: Country_Where_Stored
         - name: Delivery_Date
           dataType: Date
-        - name: Name
+
         - name: Description
           index: false # maintained because the sample data seems to have lots of words !
         - name: Effect_On_Individuals

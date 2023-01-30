@@ -455,22 +455,19 @@ propertyKeys:
   - name: Event_Meeting_Type
     dataType: String
     cardinality: SINGLE
+  - name: Event_Meeting_Form_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Event_Meeting_Title
+    dataType: String
+    cardinality: SINGLE
   - name: Event_Meeting_Date
     dataType: Date
     cardinality: SINGLE
   - name: Event_Meeting_Discussed_Topics
     dataType: String
     cardinality: SINGLE
-  - name: Event_Meeting_Form_Id
-    dataType: String
-    cardinality: SINGLE
-  - name: Event_Meeting_Name
-    dataType: String
-    cardinality: SINGLE
   - name: Event_Meeting_Participants
-    dataType: String
-    cardinality: SINGLE
-  - name: Event_Meeting_Title
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Event_Subject_Access_Request
@@ -1008,22 +1005,7 @@ propertyKeys:
   - name: Object_Data_Policy_Form_Submission_Owner_Id
     dataType: String
     cardinality: SINGLE
-  - name: Object_Data_Policy_Is_Anonymized
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Data_Policy_Is_Deleted
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Data_Policy_Is_Essential
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Data_Policy_Is_Updated
-    dataType: String
-    cardinality: SINGLE
   - name: Object_Data_Policy_Name
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Data_Policy_Profiling_And_Scoring
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Policy_Retention_Period
@@ -1045,6 +1027,18 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object_Data_Policy_Uses_Automation
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Updated
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Deleted
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Essential
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Data_Policy_Is_Anonymized
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Data_Procedures
@@ -2045,6 +2039,9 @@ propertyKeys:
   - name: Object_Legal_Actions_Type
     dataType: String
     cardinality: SINGLE
+  - name: Object_Legal_Actions_Form_Id
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Legal_Actions_Date
     dataType: Date
     cardinality: SINGLE
@@ -2052,12 +2049,6 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object_Legal_Actions_Details
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Legal_Actions_Form_Id
-    dataType: String
-    cardinality: SINGLE
-  - name: Object_Legal_Actions_Name
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Privacy_Notice
@@ -2075,9 +2066,6 @@ propertyKeys:
     cardinality: SINGLE
   - name: Object_Privacy_Notice_Delivery_Date
     dataType: Date
-    cardinality: SINGLE
-  - name: Object_Privacy_Notice_Name
-    dataType: String
     cardinality: SINGLE
   - name: Object_Privacy_Notice_Description
     dataType: String
@@ -3241,12 +3229,11 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Event_Meeting
+      - Event_Meeting_Form_Id
+      - Event_Meeting_Title
       - Event_Meeting_Date
       - Event_Meeting_Discussed_Topics
-      - Event_Meeting_Form_Id
-      - Event_Meeting_Name
       - Event_Meeting_Participants
-      - Event_Meeting_Title
     propertyKeysMappings:
     
       {}
@@ -3573,18 +3560,17 @@ vertexIndexes:
       - Object_Data_Policy_Form_Owner_Id
       - Object_Data_Policy_Form_Submission_Id
       - Object_Data_Policy_Form_Submission_Owner_Id
-      - Object_Data_Policy_Is_Anonymized
-      - Object_Data_Policy_Is_Deleted
-      - Object_Data_Policy_Is_Essential
-      - Object_Data_Policy_Is_Updated
       - Object_Data_Policy_Name
-      - Object_Data_Policy_Profiling_And_Scoring
       - Object_Data_Policy_Retention_Period
       - Object_Data_Policy_Text
       - Object_Data_Policy_Type
       - Object_Data_Policy_Update_Date
       - Object_Data_Policy_Update_Frequency
       - Object_Data_Policy_Uses_Automation
+      - Object_Data_Policy_Is_Updated
+      - Object_Data_Policy_Is_Deleted
+      - Object_Data_Policy_Is_Essential
+      - Object_Data_Policy_Is_Anonymized
     propertyKeysMappings:
     
       {}
@@ -4121,11 +4107,10 @@ vertexIndexes:
     mixedIndex: "search"
     propertyKeys:
       - Metadata_Type_Object_Legal_Actions
+      - Object_Legal_Actions_Form_Id
       - Object_Legal_Actions_Date
       - Object_Legal_Actions_Description
       - Object_Legal_Actions_Details
-      - Object_Legal_Actions_Form_Id
-      - Object_Legal_Actions_Name
     propertyKeysMappings:
     
       {}
@@ -4141,7 +4126,6 @@ vertexIndexes:
       - Object_Privacy_Notice_Agreements
       - Object_Privacy_Notice_Country_Where_Stored
       - Object_Privacy_Notice_Delivery_Date
-      - Object_Privacy_Notice_Name
       - Object_Privacy_Notice_Effect_On_Individuals
       - Object_Privacy_Notice_Expiry_Date
       - Object_Privacy_Notice_Form_Id
