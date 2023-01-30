@@ -31,8 +31,8 @@ updatereq:
           val: ${new groovy.json.JsonBuilder(reunioesPpdParticipantes)}
           mandatoryInSearch: True
           processAll: True
-          type: "[Lcom.pontusvision.utils.WebinyRefCpf;"
-          postProcessor: ${com.pontusvision.utils.WebinyRefCpf.fromString(it)?.getTitularesCpfDoTitular()}
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
     
     - label: Object_Data_Source
       props:
