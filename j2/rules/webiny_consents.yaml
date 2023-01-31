@@ -26,7 +26,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Consent_Description
-          val: ${consentimentosReferencia}
+          val: ${consentimentosReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     

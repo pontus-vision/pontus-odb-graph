@@ -37,7 +37,7 @@
           },
           {
             "name": "Event_Consent_Description",
-            "val": "${consentimentosReferencia}",
+            "val": "${consentimentosReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
