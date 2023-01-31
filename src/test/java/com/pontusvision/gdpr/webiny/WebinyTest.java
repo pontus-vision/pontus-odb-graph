@@ -422,21 +422,27 @@ public class WebinyTest extends AppTest {
 
       String titularRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      assertTrue(replyStr.contains("\"Person_Natural_Last_Update_Date\":\"subsistema 1\""));
+      assertTrue(replyStr.contains("\"Person_Natural_Last_Update_Date\":\"Mon Jan 23 19:16:02 UTC 2023\""));
 
       reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
               "hasNeighbourId:" + titularRid);
-      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"SUBSISTEMA 1\""), "The Guardian!");
+      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"63ce9ae5c064470008b72f83#0002\""), "The Guardian!");
 
       reply = gridWrapper(null, "Event_Consent", new String[]{"Event_Consent_Customer_ID", "Event_Consent_Status",
                       "Event_Consent_Metadata_Create_Date", "Event_Consent_Metadata_Update_Date", "Event_Consent_Description"},
               "hasNeighbourId:" + titularRid);
-      assertTrue(replyStr.contains("\"Object_Subsystem_Name\":\"SUBSISTEMA 1\""));
-      String consentRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Event_Consent_Status\":\"Consent\""));
+      assertTrue(replyStr.contains("\"Event_Consent_Metadata_Update_Date\":\"Mon Jan 23 19:16:02 UTC 2023\""));
+      assertTrue(replyStr.contains("\"Event_Consent_Description\":\"CONSENTIMENTO 1\""));
+      assertTrue(replyStr.contains("\"Event_Consent_Metadata_Create_Date\":\"Tue Mar 29 01:01:01 UTC 2022\""));
+      assertTrue(replyStr.contains("\"Event_Consent_Customer_ID\":\"90129578321\""));
+
+      String consentRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       reply = gridWrapper(null, "Object_Privacy_Notice", new String[]{"Object_Privacy_Notice_Form_Id"},
               "hasNeighbourId:" + consentRid);
-      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Form_Id\":\"SUBSISTEMA 1\""));
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Form_Id\":\"63cedccce37f880008086531#0002\""));
 
     } catch (Exception e) {
       e.printStackTrace();

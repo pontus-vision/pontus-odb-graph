@@ -1173,7 +1173,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Description:
-            val: "${consentimentosReferencia}"
+            val: "${consentimentosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Object_Privacy_Notice
