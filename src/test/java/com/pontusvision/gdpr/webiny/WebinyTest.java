@@ -427,11 +427,13 @@ public class WebinyTest extends AppTest {
 
       reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
               "hasNeighbourId:" + titularRid);
-      assertTrue(replyStr.contains("\"Person_Natural_Customer_ID\":\"63ce9ae5c064470008b72f83#0002\""), "The Guardian!");
+      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"63ce9ae5c064470008b72f83#0002\""), "The Guardian!");
 
       reply = gridWrapper(null, "Event_Consent", new String[]{"Event_Consent_Customer_ID", "Event_Consent_Status",
                       "Event_Consent_Metadata_Create_Date", "Event_Consent_Metadata_Update_Date", "Event_Consent_Description"},
               "hasNeighbourId:" + titularRid);
+
+      replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Event_Consent_Status\":\"Consent\""));
       assertTrue(replyStr.contains("\"Event_Consent_Metadata_Update_Date\":\"Mon Jan 23 19:16:02 UTC 2023\""));
