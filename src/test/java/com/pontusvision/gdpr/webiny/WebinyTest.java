@@ -353,28 +353,29 @@ public class WebinyTest extends AppTest {
               "hasNeighbourId:" + dataSourceRid);
       replyStr = reply.getRecords()[0];
       assertTrue(replyStr.contains("\"Object_Module_Name\":\"modulo 1\""));
-      String moduleRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+      String moduleRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
 //      ----------------------- Object_Subsystem  ----------------------------------------
 
       reply = gridWrapper(null, "Object_Subsystem", new String[]{"Object_Subsystem_Name"},
               "hasNeighbourId:" + moduleRid);
-      assertTrue(replyStr.contains("\"Object_Subsystem_Name\":\"SUBSISTEMA 1\""));
-      String subsystemRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Subsystem_Name\":\"SUBSISTEMA 1\""));
+      String subsystemRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
 //      ----------------------- Object_System  ----------------------------------------
 
       reply = gridWrapper(null, "Object_System", new String[]{"Object_System_Name"},
               "hasNeighbourId:" + subsystemRid);
-      assertTrue(replyStr.contains("\"Object_System_Name\":\"SISTEMA 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_System_Name\":\"SISTEMA 1\""));
 
 //      ----------------------- from Event_Ingestion to Object_Data_Source root  ----------------------
 
-      String eventRid = JsonParser.parseString(gridWrapper(null, "Event_Ingestion", null,
-              "hasNeighbourId:" + dataSourceRid).getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+      String eventRid = JsonParser.parseString(gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"},
+              "hasNeighbourId:" + dataSourceRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      String eventGroupRid = JsonParser.parseString(gridWrapper(null, "Event_Group_Ingestion", null,
-              "hasNeighbourId:" + eventRid).getRecords()[0]).getAsJsonObject().get("id").toString().replace("\"","");
+      String eventGroupRid = JsonParser.parseString(gridWrapper(null, "Event_Group_Ingestion", new String[]{"Event_Group_Ingestion_Type"},
+              "hasNeighbourId:" + eventRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"},
               "hasNeighbourId:" + eventGroupRid);
