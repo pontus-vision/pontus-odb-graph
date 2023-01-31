@@ -1,1 +1,22 @@
-
+{
+  "data": {
+    "listAvisoDePrivacidades": {
+      "data": [
+        {
+          "id": "63cedccce37f880008086531#0002",
+          "createdOn": "2023-01-23T19:16:16.767Z",
+          "savedOn": "2023-01-23T19:16:18.227Z",
+          "avisoDePrivacidadeReferencia": "aviso 1",
+          "avisoDePrivacidadeAvisoDePrivacidade": "aviso 1",
+          "avisoDePrivacidadeIdDoProcesso": {
+            "id": "63c6f874320a910008b4e5b5#0005"
+          },
+          "avisoDePrivacidadeConsentimento": {
+            "id": "63cedcf0e37f880008086532#0001"
+          },
+          "avisoDePrivacidadeDataDeInicio": "2020-10-10"
+        }
+      ]
+    }
+  }
+}
