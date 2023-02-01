@@ -712,12 +712,12 @@ rules:
             val: "${avisoDePrivacidadeDataDeInicio}"
             excludeFromSearch: true
             type: java.util.Date
-      #          Text:
-      #          Id:
-      #          Info_Collected:
-      #          How_Is_It_Collected:
-      #          How_Will_It_Be_Used:
-      #          Why_Is_It_Collected:
+#          Text:
+#          Id:
+#          Info_Collected:
+#          How_Is_It_Collected:
+#          How_Will_It_Be_Used:
+#          Why_Is_It_Collected:
 
       - label: Object_Data_Source
         props:

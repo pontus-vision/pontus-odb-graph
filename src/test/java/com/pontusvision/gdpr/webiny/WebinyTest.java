@@ -1,6 +1,9 @@
 package com.pontusvision.gdpr.webiny;
 
+<<<<<<< HEAD
 import com.google.gson.JsonParser;
+=======
+>>>>>>> origin/master
 import com.pontusvision.gdpr.*;
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.junit.jupiter.api.MethodOrderer;
@@ -198,7 +201,7 @@ public class WebinyTest extends AppTest {
 
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 1\""), "Title for this Privacy document");
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"palestra introdução LGPD\""), "Description for this priv doc");
-//      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"\"Fri Oct 09 01:01:01 UTC 2020\"\""), "Date this event took place");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"Fri Oct 09 01:01:01 UTC 2020\""), "Date this event took place");
 
       // #TODO: do it in gridWrapper !!!
       OGremlinResultSet resSet = App.graph.executeSql(
