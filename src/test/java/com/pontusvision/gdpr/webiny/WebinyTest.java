@@ -445,7 +445,7 @@ public class WebinyTest extends AppTest {
 
       reply = gridWrapper(null, "Object_Privacy_Notice", new String[]{"Object_Privacy_Notice_Form_Id"},
               "hasNeighbourId:" + consentRid);
-      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Form_Id\":\"63cedccce37f880008086531#0002\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Privacy_Notice_Form_Id\":\"63cedccce37f880008086531#0002\""));
 
     } catch (Exception e) {
       e.printStackTrace();
