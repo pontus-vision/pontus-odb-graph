@@ -1,9 +1,6 @@
 package com.pontusvision.gdpr.webiny;
 
-<<<<<<< HEAD
 import com.google.gson.JsonParser;
-=======
->>>>>>> origin/master
 import com.pontusvision.gdpr.*;
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.junit.jupiter.api.MethodOrderer;
