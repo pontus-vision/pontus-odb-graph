@@ -161,4 +161,154 @@ public class WebinyTest extends AppTest {
 
   }
 
+  @Test
+  public void test00003WebinyComunicacoesPpd() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-comunicacoes.json", "$.data.listComunicacoesPpds.data[*]", "webiny_privacy_docs");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Docs_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63cac3f1b788960008872ee4#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Docs",
+              new String[]{"Object_Privacy_Docs_Title", "Object_Privacy_Docs_Date", "Object_Privacy_Docs_Description"});
+      String replyStr = reply.getRecords()[0];
+
+
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 2\""), "Title for this Privacy document");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"Reunião com DPO\""), "Description for this priv doc");
+       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"Tue Jul 12 01:01:01 UTC 2022\""), "Date this event took place");
+
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Docs_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63cac3ccb788960008872ee3#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Docs",
+              new String[]{"Object_Privacy_Docs_Title", "Object_Privacy_Docs_Date", "Object_Privacy_Docs_Description"});
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 1\""), "Title for this Privacy document");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"palestra introdução LGPD\""), "Description for this priv doc");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"Fri Oct 09 01:01:01 UTC 2020\""), "Date this event took place");
+
+      // #TODO: do it in gridWrapper !!!
+      OGremlinResultSet resSet = App.graph.executeSql(
+              "SELECT count(Object_Privacy_Docs_Form_Id) as ct " +
+                      "FROM Object_Privacy_Docs " +
+                      "WHERE Object_Privacy_Docs_Form_Id LIKE '%#0001'", Collections.EMPTY_MAP);
+
+      Long countObjectPrivacyDocs = resSet.iterator().next().getRawResult().getProperty("ct");
+
+      assertEquals(2, countObjectPrivacyDocs, "There are 2 registries for Object_Privacy_Docs Webiny");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void test00004WebinyReunioesPpd() throws InterruptedException {
+
+//  jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_titulares");
+    jsonTestUtil("webiny/webiny-reunioes.json", "$.data.listReunioesPpds.data[*]", "webiny_meetings");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Meeting_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63ce85b5df67ec0008f29876#0001\"\n" +
+                      "  }\n" +
+                      "]", "Event_Meeting",
+              new String[]{"Event_Meeting_Name", "Event_Meeting_Title", "Event_Meeting_Date", "Event_Meeting_Discussed_Topics"});
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Event_Meeting_Name\":\"REUNIÃO 1\""));
+      assertTrue(replyStr.contains("\"Event_Meeting_Date\":\"Mon Jan 16 01:01:01 UTC 2023\""));
+      assertTrue(replyStr.contains("\"Event_Meeting_Discussed_Topics\":\"O QUE SERÁ DA LGPD NO ANO DE 2023\""));
+
+      String eventMeeting = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Meeting_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63ce85b5df67ec0008f29876#0001\"\n" +
+                      "  }\n" +
+                      "]", "Event_Meeting",
+              new String[]{"Event_Meeting_Form_Id"});
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
+              "hasNeighbourId:" + eventMeeting, 0L, 3L, "Person_Natural_Customer_ID", "+asc");
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"12309732112\""));
+      assertTrue(reply.getRecords()[1].contains("\"Person_Natural_Customer_ID\":\"13245623451\""));
+      assertTrue(reply.getRecords()[2].contains("\"Person_Natural_Customer_ID\":\"19439809467\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void test00005WebinyAvisoDePrivacidade() throws InterruptedException {
+
+//    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
+//    jsonTestUtil("webiny/webiny-consentimento.json", "$.data.listConsentimento.data[*]", "webiny_consentimento");
+    jsonTestUtil("webiny/webiny-avisos.json", "$.data.listAvisoDePrivacidades.data[*]", "webiny_privacy_notice");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Notice_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63cedccce37f880008086531#0002\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Notice",
+              new String[]{"Object_Privacy_Notice_Name", "Object_Privacy_Notice_Description", "Object_Privacy_Notice_Delivery_Date"});
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Name\":\"AVISO 1\""));
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\":\"aviso 1\""));
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Delivery_Date\":\"Sat Oct 10 01:01:01 UTC 2020\""));
+
+      String privacyNotice = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Notice_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63cedccce37f880008086531#0002\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Notice",
+              new String[]{"Object_Privacy_Notice_Form_Id"});
+
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Form_Id"},
+              "hasNeighbourId:" + privacyNotice);
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Form_Id\":\"63c6f874320a910008b4e5b5#0005\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
+
 }

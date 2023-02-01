@@ -550,3 +550,227 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: "Event_Ingestion"
         toVertexLabel: "Object_Legal_Actions"
+
+  webiny_privacy_docs:
+
+    vertices:
+      - label: Object_Privacy_Docs
+        props:
+          Form_Id: "${id}"
+          Description:
+            val: "${comunicacoesPpdDescricao}"
+            excludeFromSearch: true
+          Date:
+            val: "${comunicacoesPpdData}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Title:
+            val: "${comunicacoesPpdReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "WEBINY/COMUNICAÇÕES-PPD"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Webiny Comunicações PPD"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/comunicações-ppd"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Privacy_Docs"
+
+  webiny_meetings:
+
+    vertices:
+      - label: Event_Meeting
+        props:
+          Form_Id: "${id}"
+          Name:
+            val: "${reunioesPpdReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Title:
+            val: "${reunioesPpdTituloReuniao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Date:
+            val: "${reunioesPpdData}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Discussed_Topics:
+            val: "${reunioesPpdTopicos?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Person_Natural
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(reunioesPpdParticipantes)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+            processAll: true
+
+      - label: Object_Data_Source
+        props:
+          Name: "WEBINY/REUNIÕES-PPD"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Webiny Reuniões PPD"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/reuniões-ppd"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Meeting"
+
+      - label: Is_Participant
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Event_Meeting"
+
+  webiny_privacy_notice:
+
+    vertices:
+      - label: Object_Privacy_Notice
+        props:
+          Form_Id: "${id}"
+          Name:
+            val: "${avisoDePrivacidadeReferencia?.trim()?.toUpperCase()}" #OR Id?
+            excludeFromSearch: true
+          Description:
+            val: "${avisoDePrivacidadeAvisoDePrivacidade}"
+            excludeFromSearch: true
+#          Metadata_Create_Date:
+#            val: "${}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+#          Metadata_Update_Date:
+#            val: "${}"
+#            excludeFromSearch: true
+#            type: java.util.Date
+          Delivery_Date:
+            val: "${avisoDePrivacidadeDataDeInicio}"
+            excludeFromSearch: true
+            type: java.util.Date
+#          Text:
+#          Id:
+#          Info_Collected:
+#          How_Is_It_Collected:
+#          How_Will_It_Be_Used:
+#          Why_Is_It_Collected:
+
+      - label: Object_Data_Source
+        props:
+          Name: "WEBINY/AVISO-DE-PRIVACIDADE"
+
+      - label: Object_Data_Procedures
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(avisoDePrivacidadeIdDoProcesso)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it, 'id')}"
+            processAll: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Aviso de Privacidade"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/aviso-de-privacidade"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Privacy_Notice"
+
+      - label: Has_RoPA_Privacy_Notice
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Privacy_Notice"
