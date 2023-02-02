@@ -2,6 +2,42 @@
 updatereq:
   vertices:
     
+    - label: Person_Organisation
+      name: pj_national
+      condition: ${InformarCNPJ?.trim()?.length() > 0 && InformarCNPJ?.replaceAll('[^0-9]','')?.length() == 14}
+      props:
+        - name: Person_Organisation_Id
+          val: ${InformarCNPJ.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Registration_Number
+          val: ${InformarCNPJ.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+    
+    - label: Person_Organisation
+      name: pj_international
+      condition: ${InformarCNPJouqualqueroutroregis?.trim()?.length() > 0}
+      props:
+        - name: Person_Organisation_Id
+          val: ${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Registration_Number
+          val: ${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+    
+    - label: Person_Organisation
+      name: pbr
+      props:
+        - name: Person_Organisation_Id
+          val: ${CNPJ_PBR}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Registration_Number
+          val: ${CNPJ_PBR}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Name
+          val: ${NAME_PBR?.toUpperCase()?.trim()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
     - label: Object_Data_Source
       name: sharepoint
       props:
@@ -27,10 +63,7 @@ updatereq:
       name: hard_docs
       props:
         - name: Object_Data_Source_Form_Id
-          val: None
-          mandatoryInSearch: True
-        - name: Object_Data_Source_Description
-          val: None
+          val: ${id}
           mandatoryInSearch: True
         - name: Object_Data_Source_Medium
           val: ${Especificarosmeiosutilizadospara}
@@ -69,51 +102,53 @@ updatereq:
       name: contract_national
       props:
         - name: Object_Contract_Form_Id
-          val: None
+          val: ${id}
           mandatoryInSearch: True
         - name: Object_Contract_Info_Shared_With_Third_Parties
-          val: None
+          val: ${Odado_x00e9_armazenadopelotercei?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Contract_Registration_Number
+          val: ${InformarCNPJ?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Object_Contract_Short_Description
           val: None
           mandatoryInSearch: True
-        - name: Object_Contract_Expiry
-          val: None
-          mandatoryInSearch: True
-        - name: Object_Contract_Status
-          val: None
-          mandatoryInSearch: True
-        - name: Object_Contract_Type
-          val: None
-          mandatoryInSearch: True
-        - name: Object_Contract_Intl_Transfer
-          val: ${}
-          mandatoryInSearch: True
+        - name: Object_Contract_Name
+          val: ${Emcasodetratamentooucompartilham?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_Contract
       name: contract_international
       props:
         - name: Object_Contract_Form_Id
-          val: None
+          val: ${id}
           mandatoryInSearch: True
+        - name: Object_Contract_Name
+          val: ${Emcasodetransfer_x00ea_nciainter?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Contract_Registration_Number
+          val: ${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Contract_Info_Shared_With_Third_Parties
-          val: None
-          mandatoryInSearch: True
+          val: ${Odado_x00e9_armazenadopelotercei0}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Contract_Description
+          val: ${Qual_x00e9_afinalidadedatransfer?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
         - name: Object_Contract_Short_Description
-          val: None
-          mandatoryInSearch: True
-        - name: Object_Contract_Expiry
-          val: None
-          mandatoryInSearch: True
-        - name: Object_Contract_Status
-          val: None
-          mandatoryInSearch: True
-        - name: Object_Contract_Type
-          val: None
-          mandatoryInSearch: True
-        - name: Object_Contract_Intl_Transfer
           val: ${}
-          mandatoryInSearch: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Contract_Intl_Transfer
+          val: ${Identificaropa_x00ed_semqueoTerc?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_Data_Procedures
       props:
@@ -457,6 +492,18 @@ updatereq:
   - label: Has_Contract
     fromVertexName: contract_international
     toVertexLabel: Object_Data_Procedures
+  - label: Has_Contract
+    fromVertexName: pj_national
+    toVertexName: contract_national
+  - label: Has_Contract
+    fromVertexName: pj_international
+    toVertexName: contract_international
+  - label: Has_Contract
+    fromVertexName: pbr
+    toVertexName: contract_national
+  - label: Has_Contract
+    fromVertexName: pbr
+    toVertexName: contract_international
   - label: Has_Data_Source
     fromVertexName: contract_national
     toVertexName: contract_source_national

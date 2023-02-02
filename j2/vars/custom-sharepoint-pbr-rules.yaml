@@ -126,6 +126,29 @@ rules:
 
     vertices:
 
+      - label: Person_Organisation
+        condition: "${InformarCNPJ?.trim()?.length() > 0 && InformarCNPJ?.replaceAll('[^0-9]','')?.length() == 14}"
+        name: pj_national
+        props:
+          Id: "${InformarCNPJ.replaceAll('[^0-9]','')}"
+          Registration_Number: "${InformarCNPJ.replaceAll('[^0-9]','')}"
+
+      - label: Person_Organisation
+        condition: "${InformarCNPJouqualqueroutroregis?.trim()?.length() > 0}"
+        name: pj_international
+        props:
+          Id: "${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}"
+          Registration_Number: "${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}"
+
+      - label: Person_Organisation
+        name: pbr
+        props:
+          Id: "${CNPJ_PBR}"
+          Registration_Number: "${CNPJ_PBR}"
+          Name:
+            val: "${NAME_PBR?.toUpperCase()?.trim()}"
+            excludeFromSearch: true
+
       - label: Object_Data_Source
         name: sharepoint
         props:
@@ -146,8 +169,8 @@ rules:
       - label: Object_Data_Source
         name: hard_docs
         props:
-          Form_Id:
-          Description:
+          Form_Id: "${id}"
+#          Description:
           Medium:
             val: "${Especificarosmeiosutilizadospara}"
             excludeFromSearch: true
@@ -180,24 +203,45 @@ rules:
       - label: Object_Contract
         name: contract_national
         props:
-          Form_Id:
+          Form_Id: "${id}"
           Info_Shared_With_Third_Parties:
+            val: "${Odado_x00e9_armazenadopelotercei?.toUpperCase()}"
+            excludeFromSearch: true
+          Registration_Number:
+            val: "${InformarCNPJ?.replaceAll('[^0-9]','')}"
           Short_Description:
-          Expiry:
-          Status:
-          Type:
-          Intl_Transfer: "${}"
+          Name:
+            val: "${Emcasodetratamentooucompartilham?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+#          Expiry:
+#          Status:
+#          Type:
 
       - label: Object_Contract
         name: contract_international
         props:
-          Form_Id:
+          Form_Id: "${id}"
+          Name:
+            val: "${Emcasodetransfer_x00ea_nciainter?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Registration_Number:
+            val: "${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}"
+            excludeFromSearch: true
           Info_Shared_With_Third_Parties:
+            val: "${Odado_x00e9_armazenadopelotercei0}"
+            excludeFromSearch: true
+          Description:
+            val: "${Qual_x00e9_afinalidadedatransfer?.toUpperCase()}"
+            excludeFromSearch: true
           Short_Description:
-          Expiry:
-          Status:
-          Type:
-          Intl_Transfer: "${}"
+            val: "${}"
+            excludeFromSearch: true
+          Intl_Transfer:
+            val: "${Identificaropa_x00ed_semqueoTerc?.toUpperCase()}"  # RoPA 80 - Identificar o país em que o Terceiro está localizado
+            excludeFromSearch: true
+#          Expiry:
+#          Status:
+#          Type:
 
       - label: Object_Data_Procedures # = RoPA = Mapeamento de Processos
         props:
@@ -513,6 +557,22 @@ rules:
       - label: "Has_Contract"
         fromVertexName: "contract_international"
         toVertexLabel: "Object_Data_Procedures"
+
+      - label: "Has_Contract"
+        fromVertexName: "pj_national"
+        toVertexName: "contract_national"
+
+      - label: "Has_Contract"
+        fromVertexName: "pj_international"
+        toVertexName: "contract_international"
+
+      - label: "Has_Contract"
+        fromVertexName: "pbr"
+        toVertexName: "contract_national"
+
+      - label: "Has_Contract"
+        fromVertexName: "pbr"
+        toVertexName: "contract_international"
 
       - label: "Has_Data_Source"
         fromVertexName: "contract_national"

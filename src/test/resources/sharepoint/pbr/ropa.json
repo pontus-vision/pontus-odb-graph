@@ -48,6 +48,9 @@
         "Descri_x00e7__x00e3_odoProcesso": "Processo de criação de POLE do RoPA",
         "Processo": "Suporte Técnico",
         "RoPA_x0020_0_x0020__x002d__x0020": "Novo Processo",
+        "InformarCNPJ": "26758564000165",
+        "InformarCNPJouqualqueroutroregis": "7829019283",
+        "Odado_x00e9_armazenadopelotercei": "Sim",
         "Quaiss_x00e3_oosdadospessoaistra": [
           "Cargo/Posição",
           "Data de Nascimento",
@@ -242,6 +245,9 @@
         "Descri_x00e7__x00e3_odoProcesso": "Processo de Marketing",
         "Processo": "Processo de Marketing",
         "RoPA_x0020_0_x0020__x002d__x0020": "Descontinuação de RoPA",
+        "InformarCNPJ": "98405678000167",
+        "InformarCNPJouqualqueroutroregis": "7829019283",
+        "Odado_x00e9_armazenadopelotercei": "Não",
         "Quaiss_x00e3_oosdadospessoaistra": [
           "Cargo/Posição",
           "Data de Nascimento",
@@ -389,6 +395,9 @@
         "Descri_x00e7__x00e3_odoProcesso": "Processo de recrutamento e seleção de candidatos",
         "Processo": "Recrutamento e Seleção",
         "RoPA_x0020_0_x0020__x002d__x0020": "Novo Processo",
+        "InformarCNPJ": "98468345000182",
+        "InformarCNPJouqualqueroutroregis": "7829019283",
+        "Odado_x00e9_armazenadopelotercei": "Desconhece",
         "Quaiss_x00e3_oosdadospessoaistra": [
           "Nome",
           "E-mail",
