@@ -346,7 +346,7 @@ updatereq:
   - label: Has_Data_Source
     fromVertexLabel: Object_Data_Procedures
     toVertexName: attached_data_sources
-  - label: Has_Data_Policy
+  - label: Has_Policy
     fromVertexLabel: Object_Data_Procedures
     toVertexLabel: Object_Data_Policy
   - label: Impacted_By_Data_Breach
