@@ -1,0 +1,41 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Contract",
+        "props": [
+          {
+            "name": "Object_Contract_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Short_Description",
+            "val": "${contratosReferencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Contract_Link",
+            "val": "${contratosLinkDoContrato?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Contract_Expiry",
+            "val": "${contratosVigencia}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Contract",
+        "fromVertexLabel": "Person_Organisation",
+        "toVertexLabel": "Object_Contract"
+      }
+    ]
+  }
+}

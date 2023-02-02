@@ -470,6 +470,8 @@ schema:
         - name: Link
         - name: Status
         - name: Type
+#        - name: Country      or Object_Data_Policy
+#        - name: tranfer_Intl
 
     - name: "Object_Campaign"
       partition: false

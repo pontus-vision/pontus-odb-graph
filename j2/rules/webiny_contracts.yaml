@@ -1,0 +1,27 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Object_Contract
+      props:
+        - name: Object_Contract_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Object_Contract_Short_Description
+          val: ${contratosReferencia}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Contract_Link
+          val: ${contratosLinkDoContrato?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+        - name: Object_Contract_Expiry
+          val: ${contratosVigencia}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+
+  edges:
+  - label: Has_Contract
+    fromVertexLabel: Person_Organisation
+    toVertexLabel: Object_Contract
+

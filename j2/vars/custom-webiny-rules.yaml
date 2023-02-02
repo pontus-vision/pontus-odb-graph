@@ -1151,7 +1151,7 @@ rules:
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
         toVertexName: "sensitive_data"
-        
+
   webiny_consents:
 
     vertices:
@@ -1268,3 +1268,29 @@ rules:
       - label: Has_Parent_Or_Guardian
         fromVertexName: "titular"
         toVertexName: "guardian"
+
+  webiny_contracts:
+
+    vertices:
+
+      - label: Object_Contract
+        props:
+          Form_Id: "${id}"
+#          Type:
+#          Description:
+          Short_Description:
+            val: "${contratosReferencia}"
+            excludeFromSearch: true
+#          Date:
+#          Status:
+          Link: "${contratosLinkDoContrato?.trim()?.toLowerCase()}"
+          Expiry:
+            val: "${contratosVigencia}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+    edges:
+
+      - label: Has_Contract
+        fromVertexLabel: "Person_Organisation"
+        toVertexLabel: "Object_Contract"
