@@ -1151,7 +1151,6 @@ rules:
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
         toVertexName: "sensitive_data"
-<<<<<<< HEAD
         
   webiny_consents:
 
@@ -1269,5 +1268,3 @@ rules:
       - label: Has_Parent_Or_Guardian
         fromVertexName: "titular"
         toVertexName: "guardian"
-=======
->>>>>>> origin/master
