@@ -11,7 +11,7 @@
           },
           {
             "name": "Object_Privacy_Docs_Description",
-            "val": "${comunicacoesPpdDescricao}",
+            "val": "${comunicacoesPpdDescricao?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

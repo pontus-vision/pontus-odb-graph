@@ -134,14 +134,14 @@
           },
           {
             "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${Created}",
+            "val": "${createdOn}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${Modified}",
+            "val": "${savedOn}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true

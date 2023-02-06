@@ -558,7 +558,7 @@ rules:
         props:
           Form_Id: "${id}"
           Description:
-            val: "${comunicacoesPpdDescricao}"
+            val: "${comunicacoesPpdDescricao?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Date:
             val: "${comunicacoesPpdData}"
@@ -698,7 +698,7 @@ rules:
             val: "${avisoDePrivacidadeReferencia?.trim()?.toUpperCase()}" #OR Id?
             excludeFromSearch: true
           Description:
-            val: "${avisoDePrivacidadeAvisoDePrivacidade}"
+            val: "${avisoDePrivacidadeAvisoDePrivacidade?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 #          Metadata_Create_Date:
 #            val: "${}"
@@ -843,7 +843,7 @@ rules:
             val: "${fontesDeDadosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Description:
-            val: "${fontesDeDadosDescricao}"
+            val: "${fontesDeDadosDescricao?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 #          TODO: Keep consistency ... upperCase, lowerCase, trim, etc
           Engine:
@@ -1151,7 +1151,7 @@ rules:
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
         toVertexName: "sensitive_data"
-        
+
   webiny_consents:
 
     vertices:
@@ -1229,11 +1229,11 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${Created}"
+            val: "${createdOn}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${Modified}"
+            val: "${savedOn}"
             excludeFromSearch: true
             type: java.util.Date
 
