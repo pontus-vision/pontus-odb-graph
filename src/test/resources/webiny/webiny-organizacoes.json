@@ -1,0 +1,22 @@
+{
+  "data": {
+    "listOrganizacoes": {
+      "data": [
+        {
+          "id": "63c6fa725846920008ac2e39#0002",
+          "createdOn": "2023-01-25T20:00:25.505Z",
+          "savedOn": "2023-01-25T20:00:27.103Z",
+          "organizacoesEmail": "lmartins@pontusnetworks.com",
+          "organizacoesCnpj": "89894673000152",
+          "organizacoesNome": "Pontus Vision Brasil",
+          "organizacoesMatriz": {
+            "organizacoesNome": "Pontus Vision Brasil"
+          },
+          "organizacoesTelefone": "112453675898",
+          "organizacoesSite": "pontusvision.com.br",
+          "organizacoesEndereco": "rua são paulo 256"
+        }
+      ]
+    }
+  }
+}
