@@ -198,7 +198,7 @@ public class WebinyTest extends AppTest {
 
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 1\""), "Title for this Privacy document");
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"palestra introdução LGPD\""), "Description for this priv doc");
-//      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"\"Fri Oct 09 01:01:01 UTC 2020\"\""), "Date this event took place");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"Fri Oct 09 01:01:01 UTC 2020\""), "Date this event took place");
 
       // #TODO: do it in gridWrapper !!!
       OGremlinResultSet resSet = App.graph.executeSql(
@@ -445,7 +445,7 @@ public class WebinyTest extends AppTest {
 
       reply = gridWrapper(null, "Object_Privacy_Notice", new String[]{"Object_Privacy_Notice_Form_Id"},
               "hasNeighbourId:" + consentRid);
-      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Form_Id\":\"63cedccce37f880008086531#0002\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Privacy_Notice_Form_Id\":\"63cedccce37f880008086531#0002\""));
 
     } catch (Exception e) {
       e.printStackTrace();
