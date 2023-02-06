@@ -454,4 +454,32 @@ public class WebinyTest extends AppTest {
 
   }
 
+  @Test
+  public void test00008WebinyOrganizacoes() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-organizacoes.json", "$.data.listOrganizacoes.data[*]", "webiny_organisation");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Person_Organisation_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"89894673000152\"\n" +
+                      "  }\n" +
+                      "]", "Person_Organisation",
+              new String[]{"Person_Organisation_Name","Person_Organisation_URL"});
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Person_Organisation_Name\":\"PONTUS VISION BRASIL\""));
+      assertTrue(replyStr.contains("\"Person_Organisation_URL\":\"pontusvision.com.br\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
 }

@@ -1,0 +1,277 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Organisation",
+        "name": "pj_national",
+        "condition": "${organizacoesCnpj?.replaceAll('[^0-9]','')?.length() == 14}",
+        "props": [
+          {
+            "name": "Person_Organisation_URL",
+            "val": "${organizacoesSite?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Organisation_Name",
+            "val": "${organizacoesNome?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Organisation_Id",
+            "val": "${organizacoesCnpj.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${organizacoesCnpj.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Last_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Organisation",
+        "name": "pj_international",
+        "condition": "${organizacoesCnpj?.replaceAll('[^0-9]','')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]','')?.length() != 14}",
+        "props": [
+          {
+            "name": "Person_Organisation_URL",
+            "val": "${organizacoesSite?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Organisation_Name",
+            "val": "${organizacoesNome?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Organisation_Id",
+            "val": "${organizacoesCnpj.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${organizacoesCnpj.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Last_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "condition": "${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() == 14}",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${organizacoesCnpj?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "CNPJ",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "condition": "${organizacoesEmail?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${organizacoesEmail?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Phone_Number",
+        "condition": "${organizacoesTelefone?.replaceAll('[^0-9]','')?.length() > 0}",
+        "props": [
+          {
+            "name": "Object_Phone_Number_Raw",
+            "val": "${organizacoesTelefone}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Phone_Number_Numbers_Only",
+            "val": "${(organizacoesTelefone?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
+            "type": "[Ljava.lang.String;",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Phone_Number_Last_7_Digits",
+            "val": "${(((organizacoesTelefone?.replaceAll('[^0-9]', ''))?.length()>=7?(organizacoesTelefone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/ORGANIZAÇÕES",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Location_Address",
+        "props": [
+          {
+            "name": "Location_Address_Full_Address",
+            "val": "${organizacoesEndereco?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location_Address_parser",
+            "val": "${organizacoesEndereco?.toUpperCase()}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "Webiny Organizações",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${createdOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "webiny/organizações",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexName": "pj_national"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexName": "pj_international"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "pj_national",
+        "toVertexLabel": "Object_Identity_Card"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "pj_international",
+        "toVertexLabel": "Object_Identity_Card"
+      },
+      {
+        "label": "Is_Located",
+        "fromVertexName": "pj_national",
+        "toVertexLabel": "Location_Address"
+      },
+      {
+        "label": "Is_Located",
+        "fromVertexName": "pj_international",
+        "toVertexLabel": "Location_Address"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "pj_national",
+        "toVertexLabel": "Object_Email_Address"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "pj_international",
+        "toVertexLabel": "Object_Email_Address"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "pj_national",
+        "toVertexLabel": "Object_Phone_Number"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "pj_international",
+        "toVertexLabel": "Object_Phone_Number"
+      }
+    ]
+  }
+}
