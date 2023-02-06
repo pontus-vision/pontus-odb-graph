@@ -8,7 +8,7 @@ updatereq:
           val: ${id}
           mandatoryInSearch: True
         - name: Object_Privacy_Docs_Description
-          val: ${comunicacoesPpdDescricao}
+          val: ${comunicacoesPpdDescricao?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Privacy_Docs_Date

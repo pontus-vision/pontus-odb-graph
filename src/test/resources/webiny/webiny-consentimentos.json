@@ -1,0 +1,30 @@
+{
+  "data": {
+    "listConsentimentos": {
+      "data": [
+        {
+          "id": "63cedcf0e37f880008086532#0001",
+          "createdOn": "2023-01-23T19:16:00.814Z",
+          "savedOn": "2023-01-23T19:16:02.009Z",
+          "consentimentosReferencia": "consentimento 1",
+          "consentimentosData": "2022-03-29",
+          "consentimentosStatus": true,
+          "consentimentosIdentificacao": "90129578321",
+          "consentimentosAvisoDePrivacidade": [
+            {
+              "id": "63cedccce37f880008086531#0002"
+            }
+          ],
+          "consentimentosResponsavelPeloMenor": [
+            {
+              "id": "63ce9ae5c064470008b72f83#0002"
+            }
+          ],
+          "consentimentosTitularDoDadoPessoal": {
+            "id": "63ce9ae5c064470008b72f83#0002"
+          }
+        }
+      ]
+    }
+  }
+}

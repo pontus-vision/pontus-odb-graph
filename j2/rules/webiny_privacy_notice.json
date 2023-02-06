@@ -17,7 +17,7 @@
           },
           {
             "name": "Object_Privacy_Notice_Description",
-            "val": "${avisoDePrivacidadeAvisoDePrivacidade}",
+            "val": "${avisoDePrivacidadeAvisoDePrivacidade?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

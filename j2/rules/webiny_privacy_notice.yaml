@@ -12,7 +12,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Privacy_Notice_Description
-          val: ${avisoDePrivacidadeAvisoDePrivacidade}
+          val: ${avisoDePrivacidadeAvisoDePrivacidade?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Privacy_Notice_Delivery_Date

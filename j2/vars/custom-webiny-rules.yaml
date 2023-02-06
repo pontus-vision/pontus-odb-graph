@@ -558,7 +558,7 @@ rules:
         props:
           Form_Id: "${id}"
           Description:
-            val: "${comunicacoesPpdDescricao}"
+            val: "${comunicacoesPpdDescricao?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Date:
             val: "${comunicacoesPpdData}"
@@ -698,7 +698,7 @@ rules:
             val: "${avisoDePrivacidadeReferencia?.trim()?.toUpperCase()}" #OR Id?
             excludeFromSearch: true
           Description:
-            val: "${avisoDePrivacidadeAvisoDePrivacidade}"
+            val: "${avisoDePrivacidadeAvisoDePrivacidade?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 #          Metadata_Create_Date:
 #            val: "${}"
@@ -843,7 +843,7 @@ rules:
             val: "${fontesDeDadosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Description:
-            val: "${fontesDeDadosDescricao}"
+            val: "${fontesDeDadosDescricao?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 #          TODO: Keep consistency ... upperCase, lowerCase, trim, etc
           Engine:
@@ -1151,3 +1151,120 @@ rules:
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
         toVertexName: "sensitive_data"
+
+  webiny_consents:
+
+    vertices:
+      - label: Event_Consent
+        props:
+          Form_Id: "${id}"
+          Customer_ID:
+            val: "${consentimentosIdentificacao?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromSearch: true
+          Status:
+            val: "\"${(consentimentosStatus?.toString()?.equalsIgnoreCase('yes') || consentimentosStatus?.toString()?.equalsIgnoreCase('true') || consentimentosStatus?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }\""
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${consentimentosData}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Description:
+            val: "${consentimentosReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+
+      - label: Object_Privacy_Notice
+        condition: "${consentimentosAvisoDePrivacidade?.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(consentimentosAvisoDePrivacidade)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it, 'id')}"
+            processAll: true
+
+      - label: Person_Natural
+        condition: "${consentimentosTitularDoDadoPessoal?.size() > 0}"
+        name: titular
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(consentimentosTitularDoDadoPessoal)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+          Last_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Person_Natural
+        condition: "${consentimentosResponsavelPeloMenor?.size() > 0}"
+        name: guardian
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(consentimentosResponsavelPeloMenor)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+          Last_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object_Data_Source
+        props:
+          Name: "WEBINY/CONSENTIMENTOS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Webiny Consentimentos"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/consentimentos"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexName: "titular"
+
+      - label: Consent
+        fromVertexName: "titular"
+        toVertexLabel: "Event_Consent"
+
+      - label: Has_Privacy_Notice
+        fromVertexLabel: "Event_Consent"
+        toVertexLabel: "Object_Privacy_Notice"
+
+      - label: Has_Parent_Or_Guardian
+        fromVertexName: "titular"
+        toVertexName: "guardian"
