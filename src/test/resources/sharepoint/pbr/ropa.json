@@ -51,6 +51,21 @@
         "InformarCNPJ": "26758564000165",
         "InformarCNPJouqualqueroutroregis": "7829019283",
         "Odado_x00e9_armazenadopelotercei": "Sim",
+        "Odado_x00e9_armazenadopelotercei0": "Não",
+        "Emcasodetransfer_x00ea_nciainter": "contrato 120",
+        "Emcasodetratamentooucompartilham": "contrato x",
+        "CNPJ_PBR": "12345678000190",
+        "NAME_PBR": "PBR",
+        "Identifiqueouespecifiqueomeio_x01": "e-mail",
+        "Informetodososprodutos_x002f_ser": "produto1",
+        "Ap_x00f3_satingirasfinalidades_x": "Sim",
+        "Osdadospessoaisidentificadoss_x0": "Não",
+        "Osdadoss_x00e3_oanonimizadosnotr": "Não",
+        "Identificaropa_x00ed_semqueoTerc": [
+          "Brasil",
+          "China",
+          "USA"
+        ],
         "Quaiss_x00e3_oosdadospessoaistra": [
           "Cargo/Posição",
           "Data de Nascimento",
@@ -248,6 +263,20 @@
         "InformarCNPJ": "98405678000167",
         "InformarCNPJouqualqueroutroregis": "7829019283",
         "Odado_x00e9_armazenadopelotercei": "Não",
+        "Odado_x00e9_armazenadopelotercei0": "Sim",
+        "Emcasodetransfer_x00ea_nciainter": "contrato ef22",
+        "Emcasodetratamentooucompartilham": "contrato ua",
+        "CNPJ_PBR": "12345678000190",
+        "NAME_PBR": "PBR",
+        "Identifiqueouespecifiqueomeio_x01": "sms",
+        "Informetodososprodutos_x002f_ser": "produto2",
+        "Ap_x00f3_satingirasfinalidades_x": "Sim",
+        "Osdadospessoaisidentificadoss_x0": "Sim",
+        "Osdadoss_x00e3_oanonimizadosnotr": "Sim",
+        "Identificaropa_x00ed_semqueoTerc": [
+          "Líbano",
+          "Chipre"
+        ],
         "Quaiss_x00e3_oosdadospessoaistra": [
           "Cargo/Posição",
           "Data de Nascimento",
@@ -398,6 +427,19 @@
         "InformarCNPJ": "98468345000182",
         "InformarCNPJouqualqueroutroregis": "7829019283",
         "Odado_x00e9_armazenadopelotercei": "Desconhece",
+        "Odado_x00e9_armazenadopelotercei0": "Não",
+        "Emcasodetransfer_x00ea_nciainter": "contrato 178",
+        "Emcasodetratamentooucompartilham": "contrato 801",
+        "CNPJ_PBR": "12345678000190",
+        "NAME_PBR": "PBR",
+        "Identifiqueouespecifiqueomeio_x01": "website",
+        "Informetodososprodutos_x002f_ser": "serviço9",
+        "Ap_x00f3_satingirasfinalidades_x": "Não",
+        "Osdadospessoaisidentificadoss_x0": "Não",
+        "Osdadoss_x00e3_oanonimizadosnotr": "Sim",
+        "Identificaropa_x00ed_semqueoTerc": [
+          "Nepal"
+        ],
         "Quaiss_x00e3_oosdadospessoaistra": [
           "Nome",
           "E-mail",

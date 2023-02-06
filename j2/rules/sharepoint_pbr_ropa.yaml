@@ -7,10 +7,10 @@ updatereq:
       condition: ${InformarCNPJ?.trim()?.length() > 0 && InformarCNPJ?.replaceAll('[^0-9]','')?.length() == 14}
       props:
         - name: Person_Organisation_Id
-          val: ${InformarCNPJ.replaceAll('[^0-9]','')}
+          val: ${InformarCNPJ?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Person_Organisation_Registration_Number
-          val: ${InformarCNPJ.replaceAll('[^0-9]','')}
+          val: ${InformarCNPJ?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
     
     - label: Person_Organisation
@@ -18,20 +18,20 @@ updatereq:
       condition: ${InformarCNPJouqualqueroutroregis?.trim()?.length() > 0}
       props:
         - name: Person_Organisation_Id
-          val: ${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}
+          val: ${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Person_Organisation_Registration_Number
-          val: ${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}
+          val: ${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
     
     - label: Person_Organisation
       name: pbr
       props:
         - name: Person_Organisation_Id
-          val: ${CNPJ_PBR}
+          val: ${CNPJ_PBR?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Person_Organisation_Registration_Number
-          val: ${CNPJ_PBR}
+          val: ${CNPJ_PBR?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
         - name: Person_Organisation_Name
           val: ${NAME_PBR?.toUpperCase()?.trim()}
@@ -55,7 +55,7 @@ updatereq:
           type: "[Lcom.pontusvision.utils.SharepointRef;"
           postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
         - name: Object_Data_Source_Medium
-          val: ${(Identifiqueouespecifiqueomeio_x0 + ' ' + Identifiqueouespecifiqueomeio_x00 + ' ' + Identifiqueouespecifiqueomeio_x02).trim()}
+          val: ${Identifiqueouespecifiqueomeio_x0?.trim()?.toUpperCase() + ' ' + Identifiqueouespecifiqueomeio_x00?.trim()?.toUpperCase() + ' ' + Identifiqueouespecifiqueomeio_x02?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -80,7 +80,7 @@ updatereq:
           type: "[Lcom.pontusvision.utils.SharepointRef;"
           postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
         - name: Object_Data_Source_Medium
-          val: ${(Identifiqueouespecifiqueomeio_x01).trim()}
+          val: ${(Identifiqueouespecifiqueomeio_x01)?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -94,7 +94,7 @@ updatereq:
           type: "[Lcom.pontusvision.utils.SharepointRef;"
           postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
         - name: Object_Data_Source_Medium
-          val: ${(Identifiqueouespecifiqueomeio_x01).trim()}
+          val: ${(Identifiqueouespecifiqueomeio_x0)?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -110,9 +110,6 @@ updatereq:
           excludeFromSearch: True
         - name: Object_Contract_Registration_Number
           val: ${InformarCNPJ?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object_Contract_Short_Description
-          val: None
           mandatoryInSearch: True
         - name: Object_Contract_Name
           val: ${Emcasodetratamentooucompartilham?.trim()?.toUpperCase()}
@@ -134,15 +131,11 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Contract_Info_Shared_With_Third_Parties
-          val: ${Odado_x00e9_armazenadopelotercei0}
+          val: ${Odado_x00e9_armazenadopelotercei0?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Contract_Description
           val: ${Qual_x00e9_afinalidadedatransfer?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Contract_Short_Description
-          val: ${}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Contract_Intl_Transfer
@@ -156,7 +149,7 @@ updatereq:
           val: ${id}
           mandatoryInSearch: True
         - name: Object_Data_Procedures_ID
-          val: ${Title}
+          val: ${Title?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Business_Area_Responsible
@@ -172,7 +165,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Description
-          val: ${Descri_x00e7__x00e3_odoProcesso}
+          val: ${Descri_x00e7__x00e3_odoProcesso?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Info_Collected
@@ -200,11 +193,11 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Why_Is_It_Collected
-          val: ${Qual_x00e9_afinalidadedotratamen}
+          val: ${Qual_x00e9_afinalidadedotratamen?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Secondary_Purpose_Of_Collection
-          val: ${Paraqualfinalidadesecund_x00e1_r}
+          val: ${Paraqualfinalidadesecund_x00e1_r?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Country_Where_Stored
@@ -216,11 +209,11 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Info_Share_Justification
-          val: ${Qual_x00e9_afinalidadedocomparti}
+          val: ${Qual_x00e9_afinalidadedocomparti?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Info_Share_Justification_International
-          val: ${Qual_x00e9_afinalidadedatransfer}
+          val: ${Qual_x00e9_afinalidadedatransfer?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Number_Of_Natural_Person
@@ -236,7 +229,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Products_And_Services
-          val: ${Informetodososprodutos_x002f_ser}
+          val: ${Informetodososprodutos_x002f_ser?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Procedures_Rights
@@ -312,7 +305,7 @@ updatereq:
           val: ${id}
           mandatoryInSearch: True
         - name: Object_Data_Policy_Type
-          val: ${Title}
+          val: ${Title?.trim()toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Policy_Retention_Period
@@ -384,11 +377,11 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Data_Breach_Authority_Notified
-          val: ${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos:''}
+          val: ${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos?.trim()?.toUpperCase():''}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Data_Breach_Authority_Notified_Others
-          val: ${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0:''}
+          val: ${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0?.trim()?.toUpperCase():''}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Data_Breach_Metadata_Create_Date
@@ -402,7 +395,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Data_Breach_Description
-          val: ${Emcasopositivo_x002c_fornecerosd}
+          val: ${Emcasopositivo_x002c_fornecerosd?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     

@@ -130,7 +130,7 @@
           },
           {
             "name": "Object_Data_Policy_Type",
-            "val": "${Title}",
+            "val": "${Title?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
           }
         ]

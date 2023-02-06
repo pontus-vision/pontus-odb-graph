@@ -1,5 +1,6 @@
 package com.pontusvision.gdpr.pbr;
 
+import com.google.gson.JsonParser;
 import com.pontusvision.gdpr.*;
 import org.apache.tinkerpop.gremlin.orientdb.executor.OGremlinResultSet;
 import org.junit.jupiter.api.MethodOrderer;
@@ -158,7 +159,7 @@ public class PVPbrTest extends AppTest {
 
       String dataSourceCount = App.executor.eval("App.g.V().has('Object_Data_Procedures_Form_Id', eq('9542'))" +
         ".as('ropa-9542').out('Has_Data_Source').as('attached_data_sources').dedup().count().next().toString()").get().toString();
-      assertEquals("2", dataSourceCount, "Two Data_Sources found attached to this RoPA - ADP and Marketing");
+      assertEquals("3", dataSourceCount, "Three Data_Sources found attached to this RoPA - ADP, Marketing and hard docs");
 
       String dsName = App.executor.eval("App.g.V().has('Object_Data_Procedures_ID', endingWith(' - PBR'))" +
         ".in('Has_Ingestion_Event').as('event_ingestion').in('Has_Ingestion_Event').as('event_group')" +
@@ -252,7 +253,27 @@ public class PVPbrTest extends AppTest {
         ".dedup().count().next().toString()").get().toString();
       assertEquals("17", countPersonalData, "17 types of personal data found within three of PBR's RoPA");
 
+// -------------------------------------------------------------------------------------------------------------------------------------
+//  testing new connection Person_Organisation ------- Has_Contract ------->  Object_Contract
 
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Person_Organisation_Name\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"PBR\"\n" +
+                      "  }\n" +
+                      "]", "Person_Organisation",
+              new String[]{"Person_Organisation_Registration_Number"});
+      replyStr = reply.getRecords()[0];
+      String personOrgRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+      assertTrue(replyStr.contains("\"Person_Organisation_Registration_Number\":\"12345678000190\""));
+
+      reply = gridWrapper(null, "Object_Contract", new String[]{"Object_Contract_Form_Id", "Object_Contract_Name",
+                      "Object_Contract_Info_Shared_With_Third_Parties", "Object_Contract_Registration_Number"},
+              "hasNeighbourId:" + personOrgRid, 0L, 6L, "Object_Contract_Form_Id", "+asc");
+
+      assertEquals(6,reply.getTotalAvailable(), "Currently 6 contracts are attached to PBR");
 
     } catch (Exception e) {
       e.printStackTrace();

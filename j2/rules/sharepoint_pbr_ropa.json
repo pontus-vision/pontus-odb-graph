@@ -8,12 +8,12 @@
         "props": [
           {
             "name": "Person_Organisation_Id",
-            "val": "${InformarCNPJ.replaceAll('[^0-9]','')}",
+            "val": "${InformarCNPJ?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
-            "val": "${InformarCNPJ.replaceAll('[^0-9]','')}",
+            "val": "${InformarCNPJ?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           }
         ]
@@ -25,12 +25,12 @@
         "props": [
           {
             "name": "Person_Organisation_Id",
-            "val": "${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}",
+            "val": "${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
-            "val": "${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}",
+            "val": "${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           }
         ]
@@ -41,12 +41,12 @@
         "props": [
           {
             "name": "Person_Organisation_Id",
-            "val": "${CNPJ_PBR}",
+            "val": "${CNPJ_PBR?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
-            "val": "${CNPJ_PBR}",
+            "val": "${CNPJ_PBR?.replaceAll('[^0-9]','')}",
             "mandatoryInSearch": true
           },
           {
@@ -82,7 +82,7 @@
           },
           {
             "name": "Object_Data_Source_Medium",
-            "val": "${(Identifiqueouespecifiqueomeio_x0 + ' ' + Identifiqueouespecifiqueomeio_x00 + ' ' + Identifiqueouespecifiqueomeio_x02).trim()}",
+            "val": "${Identifiqueouespecifiqueomeio_x0?.trim()?.toUpperCase() + ' ' + Identifiqueouespecifiqueomeio_x00?.trim()?.toUpperCase() + ' ' + Identifiqueouespecifiqueomeio_x02?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -119,7 +119,7 @@
           },
           {
             "name": "Object_Data_Source_Medium",
-            "val": "${(Identifiqueouespecifiqueomeio_x01).trim()}",
+            "val": "${(Identifiqueouespecifiqueomeio_x01)?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -139,7 +139,7 @@
           },
           {
             "name": "Object_Data_Source_Medium",
-            "val": "${(Identifiqueouespecifiqueomeio_x01).trim()}",
+            "val": "${(Identifiqueouespecifiqueomeio_x0)?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -163,11 +163,6 @@
           {
             "name": "Object_Contract_Registration_Number",
             "val": "${InformarCNPJ?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Contract_Short_Description",
-            "val": "None",
             "mandatoryInSearch": true
           },
           {
@@ -201,19 +196,13 @@
           },
           {
             "name": "Object_Contract_Info_Shared_With_Third_Parties",
-            "val": "${Odado_x00e9_armazenadopelotercei0}",
+            "val": "${Odado_x00e9_armazenadopelotercei0?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Contract_Description",
             "val": "${Qual_x00e9_afinalidadedatransfer?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Contract_Short_Description",
-            "val": "${}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -235,7 +224,7 @@
           },
           {
             "name": "Object_Data_Procedures_ID",
-            "val": "${Title}",
+            "val": "${Title?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -259,7 +248,7 @@
           },
           {
             "name": "Object_Data_Procedures_Description",
-            "val": "${Descri_x00e7__x00e3_odoProcesso}",
+            "val": "${Descri_x00e7__x00e3_odoProcesso?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -301,13 +290,13 @@
           },
           {
             "name": "Object_Data_Procedures_Why_Is_It_Collected",
-            "val": "${Qual_x00e9_afinalidadedotratamen}",
+            "val": "${Qual_x00e9_afinalidadedotratamen?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Secondary_Purpose_Of_Collection",
-            "val": "${Paraqualfinalidadesecund_x00e1_r}",
+            "val": "${Paraqualfinalidadesecund_x00e1_r?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -328,13 +317,13 @@
           },
           {
             "name": "Object_Data_Procedures_Info_Share_Justification",
-            "val": "${Qual_x00e9_afinalidadedocomparti}",
+            "val": "${Qual_x00e9_afinalidadedocomparti?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Info_Share_Justification_International",
-            "val": "${Qual_x00e9_afinalidadedatransfer}",
+            "val": "${Qual_x00e9_afinalidadedatransfer?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -358,7 +347,7 @@
           },
           {
             "name": "Object_Data_Procedures_Products_And_Services",
-            "val": "${Informetodososprodutos_x002f_ser}",
+            "val": "${Informetodososprodutos_x002f_ser?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -466,7 +455,7 @@
           },
           {
             "name": "Object_Data_Policy_Type",
-            "val": "${Title}",
+            "val": "${Title?.trim()toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -574,13 +563,13 @@
           },
           {
             "name": "Event_Data_Breach_Authority_Notified",
-            "val": "${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos:''}",
+            "val": "${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos?.trim()?.toUpperCase():''}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event_Data_Breach_Authority_Notified_Others",
-            "val": "${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0:''}",
+            "val": "${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0?.trim()?.toUpperCase():''}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -600,7 +589,7 @@
           },
           {
             "name": "Event_Data_Breach_Description",
-            "val": "${Emcasopositivo_x002c_fornecerosd}",
+            "val": "${Emcasopositivo_x002c_fornecerosd?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

@@ -61,7 +61,7 @@ rules:
         props:
           Update_Frequency: "${Frequ_x00ea_nciadeAtualiza_x00e7}"
           Retention_Period: "${Pol_x00ed_ticadeReten_x00e7__x00}"
-          Type: "${Title}"
+          Type: "${Title?.trim()?.toUpperCase()}"
 
       - label: Event_Ingestion
         props:
@@ -130,21 +130,21 @@ rules:
         condition: "${InformarCNPJ?.trim()?.length() > 0 && InformarCNPJ?.replaceAll('[^0-9]','')?.length() == 14}"
         name: pj_national
         props:
-          Id: "${InformarCNPJ.replaceAll('[^0-9]','')}"
-          Registration_Number: "${InformarCNPJ.replaceAll('[^0-9]','')}"
+          Id: "${InformarCNPJ?.replaceAll('[^0-9]','')}"
+          Registration_Number: "${InformarCNPJ?.replaceAll('[^0-9]','')}"
 
       - label: Person_Organisation
         condition: "${InformarCNPJouqualqueroutroregis?.trim()?.length() > 0}"
         name: pj_international
         props:
-          Id: "${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}"
-          Registration_Number: "${InformarCNPJouqualqueroutroregis.replaceAll('[^0-9]','')}"
+          Id: "${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}"
+          Registration_Number: "${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}"
 
       - label: Person_Organisation
         name: pbr
         props:
-          Id: "${CNPJ_PBR}"
-          Registration_Number: "${CNPJ_PBR}"
+          Id: "${CNPJ_PBR?.replaceAll('[^0-9]','')}"
+          Registration_Number: "${CNPJ_PBR?.replaceAll('[^0-9]','')}"
           Name:
             val: "${NAME_PBR?.toUpperCase()?.trim()}"
             excludeFromSearch: true
@@ -163,7 +163,7 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
           Medium:
-            val: "${(Identifiqueouespecifiqueomeio_x0 + ' ' + Identifiqueouespecifiqueomeio_x00 + ' ' + Identifiqueouespecifiqueomeio_x02).trim()}"
+            val: "${Identifiqueouespecifiqueomeio_x0?.trim()?.toUpperCase() + ' ' + Identifiqueouespecifiqueomeio_x00?.trim()?.toUpperCase() + ' ' + Identifiqueouespecifiqueomeio_x02?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Object_Data_Source
@@ -185,7 +185,7 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
           Medium:
-            val: "${(Identifiqueouespecifiqueomeio_x01).trim()}"
+            val: "${(Identifiqueouespecifiqueomeio_x01)?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Object_Data_Source
@@ -197,7 +197,7 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
           Medium:
-            val: "${(Identifiqueouespecifiqueomeio_x01).trim()}"
+            val: "${(Identifiqueouespecifiqueomeio_x0)?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Object_Contract
@@ -209,7 +209,9 @@ rules:
             excludeFromSearch: true
           Registration_Number:
             val: "${InformarCNPJ?.replaceAll('[^0-9]','')}"
-          Short_Description:
+#          Short_Description:
+#            val: "${}"
+#            excludeFromSearch: true
           Name:
             val: "${Emcasodetratamentooucompartilham?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -228,14 +230,14 @@ rules:
             val: "${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}"
             excludeFromSearch: true
           Info_Shared_With_Third_Parties:
-            val: "${Odado_x00e9_armazenadopelotercei0}"
+            val: "${Odado_x00e9_armazenadopelotercei0?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Description:
             val: "${Qual_x00e9_afinalidadedatransfer?.toUpperCase()}"
             excludeFromSearch: true
-          Short_Description:
-            val: "${}"
-            excludeFromSearch: true
+#          Short_Description:
+#            val: "${}"
+#            excludeFromSearch: true
           Intl_Transfer:
             val: "${Identificaropa_x00ed_semqueoTerc?.toUpperCase()}"  # RoPA 80 - Identificar o país em que o Terceiro está localizado
             excludeFromSearch: true
@@ -247,7 +249,7 @@ rules:
         props:
           Form_Id: "${id}"
           ID:
-            val: "${Title}"
+            val: "${Title?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Business_Area_Responsible:
             val: "${_x00c1_readeNeg_x00f3_cio}"
@@ -259,7 +261,7 @@ rules:
             val: "${Processo}"
             excludeFromSearch: true
           Description:
-            val: "${Descri_x00e7__x00e3_odoProcesso}"
+            val: "${Descri_x00e7__x00e3_odoProcesso?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Info_Collected:
             val: "${Quaiss_x00e3_oosdadospessoaistra + Quaiss_x00e3_oosdadossens_x00ed_ + Quaiss_x00e3_oosdadosdecrian_x00}"
@@ -283,10 +285,10 @@ rules:
             val: "${Quemforneceuosdados_x003f_}"
             excludeFromSearch: true
           Why_Is_It_Collected:
-            val: "${Qual_x00e9_afinalidadedotratamen}"
+            val: "${Qual_x00e9_afinalidadedotratamen?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Secondary_Purpose_Of_Collection:
-            val: "${Paraqualfinalidadesecund_x00e1_r}"
+            val: "${Paraqualfinalidadesecund_x00e1_r?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Country_Where_Stored:
             val: "${Transfer_x00ea_nciainternacional}"
@@ -307,10 +309,10 @@ rules:
 #            vals: "${Quaiss_x00e3_oostiposdedadospess0}"
 #            excludeFromSearch: true
           Info_Share_Justification:
-            val: "${Qual_x00e9_afinalidadedocomparti}"
+            val: "${Qual_x00e9_afinalidadedocomparti?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Info_Share_Justification_International:
-            val: "${Qual_x00e9_afinalidadedatransfer}"
+            val: "${Qual_x00e9_afinalidadedatransfer?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Number_Of_Natural_Person:
             val: "${Qual_x00e9_quantidadedetitulares} / por ano"
@@ -322,7 +324,7 @@ rules:
             val: "${VolumetriadosTitularesDados_x002}"
             excludeFromSearch: true
           Products_And_Services:
-            val: "${Informetodososprodutos_x002f_ser}"
+            val: "${Informetodososprodutos_x002f_ser?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Rights:
             val: "${Quaisdestesdireitospodemseratend}"
@@ -388,7 +390,7 @@ rules:
         props:
           Form_Id: "${id}"
           Type:
-            val: "${Title}"
+            val: "${Title?.trim()toUpperCase()}"
             excludeFromSearch: true
           Retention_Period:
             val: "${Qualoper_x00ed_ododereten_x00e7_}"
@@ -447,10 +449,10 @@ rules:
             excludeFromSearch: true
 #         ternary operator has to have spaces or can it be all glued?
           Authority_Notified:
-            val: "${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos:''}"
+            val: "${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos?.trim()?.toUpperCase():''}"
             excludeFromSearch: true
           Authority_Notified_Others:
-            val: "${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0:''}"
+            val: "${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0?.trim()?.toUpperCase():''}"
             excludeFromSearch: true
           Metadata_Create_Date:
             val: "${Created}"
@@ -461,7 +463,7 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Description:
-            val: "${Emcasopositivo_x002c_fornecerosd}"
+            val: "${Emcasopositivo_x002c_fornecerosd?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 #          Source:
 #          Status:
