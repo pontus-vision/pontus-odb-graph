@@ -182,7 +182,7 @@ public class WebinyTest extends AppTest {
 
 
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 2\""), "Title for this Privacy document");
-      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"Reunião com DPO\""), "Description for this priv doc");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"REUNIÃO COM DPO\""), "Description for this priv doc");
        assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"Tue Jul 12 01:01:01 UTC 2022\""), "Date this event took place");
 
       reply = gridWrapper("[\n" +
@@ -197,7 +197,7 @@ public class WebinyTest extends AppTest {
       replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 1\""), "Title for this Privacy document");
-      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"palestra introdução LGPD\""), "Description for this priv doc");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"PALESTRA INTRODUÇÃO LGPD\""), "Description for this priv doc");
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"Fri Oct 09 01:01:01 UTC 2020\""), "Date this event took place");
 
       // #TODO: do it in gridWrapper !!!
@@ -285,7 +285,7 @@ public class WebinyTest extends AppTest {
       String replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Object_Privacy_Notice_Name\":\"AVISO 1\""));
-      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\":\"aviso 1\""));
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\":\"AVISO 1\""));
       assertTrue(replyStr.contains("\"Object_Privacy_Notice_Delivery_Date\":\"Sat Oct 10 01:01:01 UTC 2020\""));
 
       String privacyNotice = gridWrapperGetRid("[\n" +
@@ -335,7 +335,7 @@ public class WebinyTest extends AppTest {
       assertTrue(replyStr.contains("\"Object_Data_Source_Engine\":\"sistema 1\""));
       assertTrue(replyStr.contains("\"Object_Data_Source_Domain\":\"modulo 1\""));
       assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
-      assertTrue(replyStr.contains("\"Object_Data_Source_Description\":\"fonte 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
 
 //      ----------------------- Object_Module  ----------------------------------------
 
