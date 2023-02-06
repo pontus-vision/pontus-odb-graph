@@ -402,6 +402,7 @@ public class WebinyTest extends AppTest {
     }
 
   }
+<<<<<<< HEAD
 
   @Test
   public void test00007WebinyConsentimentos() throws InterruptedException {
@@ -453,5 +454,7 @@ public class WebinyTest extends AppTest {
     }
 
   }
+=======
+>>>>>>> origin/master
 
 }
