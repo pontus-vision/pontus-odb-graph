@@ -1,0 +1,27 @@
+{
+  "data": {
+    "listTreinamentos": {
+      "data": [
+        {
+          "id": "63e149001cb96c000893f5c1#0001",
+          "createdOn": "2023-02-06T18:37:52.608Z",
+          "savedOn": "2023-02-06T18:37:55.205Z",
+          "treinamentosReferencia": "teste",
+          "treinamentosDescricao": "teste",
+          "treinamentosHorasTreinamento": "4",
+          "treinamentosRealizadoEm": "2023-11-13",
+          "treinamentosParticipantesAprovados": [
+            {
+              "titularesCpfDoTitular": "25154545647"
+            }
+          ],
+          "treinamentosParticipantesReprovados": [
+            {
+              "titularesCpfDoTitular": "25154045647"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1422,3 +1422,119 @@ rules:
       - label: Has_Phone
         fromVertexName: "pj_international"
         toVertexLabel: "Object_Phone_Number"
+
+  webiny_awareness_campaign:
+
+#    {
+  #      listTreinamentos{
+    #      data{
+      #      id
+      #      createdOn
+      #      savedOn
+      #      treinamentosReferencia
+      #      treinamentosDescricao
+      #      treinamentosHorasTreinamento
+      #      treinamentosRealizadoEm
+      #      treinamentosParticipantesAprovados{
+      #      titularesCpfDoTitular
+      #    }
+      #      treinamentosParticipantesReprovados{
+      #      titularesCpfDoTitular
+      #    }
+    #    }
+  #    }
+#    }
+    vertices:
+
+      - label: Person_Natural
+        condition: "${treinamentosParticipantesAprovados.size() > 0}"
+        name: approved
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+            processAll: true
+
+      - label: Person_Natural
+        condition: "${treinamentosParticipantesReprovados.size() > 0}"
+        name: failed
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(treinamentosParticipantesReprovados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+            processAll: true
+
+      - label: Object_Awareness_Campaign
+        props:
+          Form_Id: "${id}"
+          Description:
+            val: "${treinamentosDescricao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Start_Date:
+            val: "${treinamentosRealizadoEm}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object_Data_Source
+        props:
+          Name: WEBINY/TREINAMENTOS
+
+      - label: Event_Training               # TODO: VERIFICAR COM LEO SE ELIMINAREMOS
+        props:
+          Form_Id: "${id}"
+#          Status:
+#            val: "${status}"
+#            excludeFromSearch: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: webiny/treinamentos
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: webiny/treinamentos
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Training"
+
+      - label: "Course_Training"
+        fromVertexLabel: "Event_Training"
+        toVertexLabel: "Object_Awareness_Campaign"
+
+      - label: "Completed_By"
+        fromVertexLabel: "Event_Training"
+        toVertexName: "approved"
+
+      - label: "Completed_By"
+        fromVertexLabel: "Event_Training"
+        toVertexName: "failed"

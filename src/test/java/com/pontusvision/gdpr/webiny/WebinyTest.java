@@ -482,4 +482,32 @@ public class WebinyTest extends AppTest {
 
   }
 
+  @Test
+  public void test00009WebinyTreinamentos() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-treinamentos.json", "$.data.listTreinamentos.data[*]", "webiny_awareness_campaign");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Awareness_Campaign_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63e149001cb96c000893f5c1#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Awareness_Campaign",
+              new String[]{"Object_Awareness_Campaign_Description", "Object_Awareness_Campaign_Start_Date"});
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Awareness_Campaign_Description\":\"TESTE\""));
+      assertTrue(replyStr.contains("\"Object_Awareness_Campaign_Start_Date\":\"Mon Nov 13 01:01:01 UTC 2023\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
 }
