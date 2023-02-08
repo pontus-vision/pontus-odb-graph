@@ -462,6 +462,7 @@ schema:
           index: false
         - name: Short_Description
         - name: Expiry
+          dataType: Date
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -1306,6 +1307,7 @@ schema:
   - name: Has_Vehicle
   - name: Impacted_By_Data_Breach
   - name: Is_Alias
+  - name: Is_Beneficiary
   - name: Is_Client
   - name: Is_Interested_Party
   - name: Is_Data_Controller
@@ -1316,6 +1318,8 @@ schema:
   - name: Is_Lead
   - name: Is_Located
   - name: Is_Participant
+  - name: Is_Promisee
+  - name: Is_Promisor
   - name: Is_Relative
   - name: Is_Subordinate
   - name: Is_Responsible

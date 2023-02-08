@@ -901,7 +901,7 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object_Contract_Expiry
-    dataType: String
+    dataType: Date
     cardinality: SINGLE
   - name: Object_Contract_Form_Id
     dataType: String
@@ -2875,6 +2875,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Is_Beneficiary
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Is_Client
     multiplicity: MULTI
     unidirected: False
@@ -2912,6 +2916,14 @@ edgeLabels:
     unidirected: False
 
   - name: Is_Participant
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Promisee
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Promisor
     multiplicity: MULTI
     unidirected: False
 

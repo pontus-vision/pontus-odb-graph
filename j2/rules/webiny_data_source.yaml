@@ -24,15 +24,15 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Source_Engine
-          val: ${fontesDeDadosSistema?.sistemaReferencia}
+          val: ${fontesDeDadosSistema?.sistemaReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Source_Type
-          val: ${fontesDeDadosSubSistema?.subsistemaReferencia}
+          val: ${fontesDeDadosSubSistema?.subsistemaReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Source_Domain
-          val: ${fontesDeDadosModulo?.moduloReferencia}
+          val: ${fontesDeDadosModulo?.moduloReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
     

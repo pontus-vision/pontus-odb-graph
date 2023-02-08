@@ -776,7 +776,7 @@ rules:
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Privacy_Notice"
 
-  webiny_fontes_de_dados:
+  webiny_data_source:
 
     #{
     #  listFontesDeDados{
@@ -848,13 +848,13 @@ rules:
             excludeFromSearch: true
 #          TODO: Keep consistency ... upperCase, lowerCase, trim, etc
           Engine:
-            val: "${fontesDeDadosSistema?.sistemaReferencia}"
+            val: "${fontesDeDadosSistema?.sistemaReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Type:
-            val: "${fontesDeDadosSubSistema?.subsistemaReferencia}"
+            val: "${fontesDeDadosSubSistema?.subsistemaReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Domain:
-            val: "${fontesDeDadosModulo?.moduloReferencia}"
+            val: "${fontesDeDadosModulo?.moduloReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
 
       - label: Object_System
@@ -1348,7 +1348,7 @@ rules:
           #          Type:
           #          Description:
           Short_Description:
-            val: "${contratosReferencia}"
+            val: "${contratosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           #          Date:
           #          Status:
@@ -1437,19 +1437,19 @@ rules:
         fromVertexLabel: "Event_Ingestion"
         toVertexLabel: "Object_Contract"
 
-      - label: Has_Contract
+      - label: Is_Promisee
         fromVertexName: "pj_contratante"
         toVertexLabel: "Object_Contract"
 
-      - label: Has_Contract
+      - label: Is_Promisor
         fromVertexName: "pj_contratada"
         toVertexLabel: "Object_Contract"
 
-      - label: Has_Contract
+      - label: Is_Data_Processor
         fromVertexName: "operador"
         toVertexLabel: "Object_Contract"
 
-      - label: Has_Contract
+      - label: Is_Data_Controller
         fromVertexName: "controlador"
         toVertexLabel: "Object_Contract"
 

@@ -116,7 +116,7 @@
           },
           {
             "name": "Object_Contract_Short_Description",
-            "val": "${contratosReferencia}",
+            "val": "${contratosReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -271,22 +271,22 @@
         "toVertexLabel": "Object_Contract"
       },
       {
-        "label": "Has_Contract",
+        "label": "Is_Promisee",
         "fromVertexName": "pj_contratante",
         "toVertexLabel": "Object_Contract"
       },
       {
-        "label": "Has_Contract",
+        "label": "Is_Promisor",
         "fromVertexName": "pj_contratada",
         "toVertexLabel": "Object_Contract"
       },
       {
-        "label": "Has_Contract",
+        "label": "Is_Data_Processor",
         "fromVertexName": "operador",
         "toVertexLabel": "Object_Contract"
       },
       {
-        "label": "Has_Contract",
+        "label": "Is_Data_Controller",
         "fromVertexName": "controlador",
         "toVertexLabel": "Object_Contract"
       },

@@ -1450,7 +1450,7 @@
     },
     {
       "name": "Object_Contract_Expiry",
-      "dataType": "String",
+      "dataType": "Date",
       "cardinality": "SINGLE"
     },
     {
@@ -4583,6 +4583,11 @@
       "unidirected": false
     },
     {
+      "name": "Is_Beneficiary",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Is_Client",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -4629,6 +4634,16 @@
     },
     {
       "name": "Is_Participant",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Promisee",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Promisor",
       "multiplicity": "MULTI",
       "unidirected": false
     },
