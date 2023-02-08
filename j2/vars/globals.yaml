@@ -470,8 +470,9 @@ schema:
         - name: Link
         - name: Status
         - name: Type
-#        - name: Country      or Object_Data_Policy
-#        - name: tranfer_Intl
+        - name: Country     # or Object_Data_Policy
+        - name: Tranfer_Intl  # abbreviation for Transference International, works for both signalizing true to Transfer and International Transfer
+        - name: Has_Minors_Data
 
     - name: "Object_Campaign"
       partition: false
@@ -1262,6 +1263,7 @@ schema:
   - name: Has_Campaign
   - name: Has_Column
   - name: Has_Contract
+  - name: Has_Approved_Contract
   - name: Has_Complaint
   - name: Has_Credential
   - name: Has_Data_Procedures

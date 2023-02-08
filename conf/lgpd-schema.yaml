@@ -927,6 +927,15 @@ propertyKeys:
   - name: Object_Contract_Type
     dataType: String
     cardinality: SINGLE
+  - name: Object_Contract_Country
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Contract_Tranfer_Intl
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Contract_Has_Minors_Data
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata_Type_Object_Campaign
     dataType: String
     cardinality: SINGLE
@@ -2702,6 +2711,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Approved_Contract
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Complaint
     multiplicity: MULTI
     unidirected: False
@@ -3508,6 +3521,9 @@ vertexIndexes:
       - Object_Contract_Link
       - Object_Contract_Status
       - Object_Contract_Type
+      - Object_Contract_Country
+      - Object_Contract_Tranfer_Intl
+      - Object_Contract_Has_Minors_Data
     propertyKeysMappings:
     
       {}

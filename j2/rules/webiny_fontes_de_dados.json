@@ -29,7 +29,7 @@
           },
           {
             "name": "Object_Data_Source_Description",
-            "val": "${fontesDeDadosDescricao}",
+            "val": "${fontesDeDadosDescricao?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

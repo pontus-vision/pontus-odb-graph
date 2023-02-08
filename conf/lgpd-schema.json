@@ -1494,6 +1494,21 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Contract_Country",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Tranfer_Intl",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Has_Minors_Data",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata_Type_Object_Campaign",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -4363,6 +4378,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_Approved_Contract",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Complaint",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -5235,7 +5255,10 @@
         "Object_Contract_Id",
         "Object_Contract_Link",
         "Object_Contract_Status",
-        "Object_Contract_Type"
+        "Object_Contract_Type",
+        "Object_Contract_Country",
+        "Object_Contract_Tranfer_Intl",
+        "Object_Contract_Has_Minors_Data"
       ],
       "propertyKeysMappings": {}
     },

@@ -9,22 +9,22 @@
           "contratosReferencia": "contrato 3",
           "contratosOrganizacaoContratante": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosOrganizacaoContratada": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosOperador": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosControlador": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosTransferenciaDeDados": true,
@@ -58,22 +58,22 @@
           "contratosReferencia": "contrato 2",
           "contratosOrganizacaoContratante": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosOrganizacaoContratada": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosOperador": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosControlador": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosTransferenciaDeDados": true,
@@ -103,22 +103,22 @@
           "contratosReferencia": "contrato 1",
           "contratosOrganizacaoContratante": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosOrganizacaoContratada": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosOperador": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosControlador": [
             {
-              "organizacoesCnpj": 89894673000152
+              "organizacoesCnpj": "89894673000152"
             }
           ],
           "contratosTransferenciaDeDados": false,
