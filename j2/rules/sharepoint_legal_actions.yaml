@@ -7,10 +7,6 @@ updatereq:
         - name: Object_Legal_Actions_Form_Id
           val: ${id}
           mandatoryInSearch: True
-        - name: Object_Legal_Actions_Name
-          val: ${Title?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Object_Legal_Actions_Description
           val: ${description}
           mandatoryInSearch: False
