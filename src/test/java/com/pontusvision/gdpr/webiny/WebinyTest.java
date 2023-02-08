@@ -331,9 +331,9 @@ public class WebinyTest extends AppTest {
               new String[]{"Object_Data_Source_Name", "Object_Data_Source_Description", "Object_Data_Source_Engine", "Object_Data_Source_Type", "Object_Data_Source_Domain"});
       String replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Object_Data_Source_Type\":\"subsistema 1\""));
-      assertTrue(replyStr.contains("\"Object_Data_Source_Engine\":\"sistema 1\""));
-      assertTrue(replyStr.contains("\"Object_Data_Source_Domain\":\"modulo 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Type\":\"SUBSISTEMA 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Engine\":\"SISTEMA 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Domain\":\"MODULO 1\""));
       assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
       assertTrue(replyStr.contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
 
