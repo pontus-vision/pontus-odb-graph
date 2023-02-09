@@ -1151,7 +1151,7 @@ rules:
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
         toVertexName: "sensitive_data"
-        
+
   webiny_consents:
 
     vertices:
