@@ -1,0 +1,212 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Person_Natural
+      props:
+        - name: Person_Natural_Customer_ID
+          val: ${new groovy.json.JsonBuilder(contratosContratoAprovado)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
+    
+    - label: Person_Organisation
+      name: pj_contratante
+      condition: ${contratosOrganizacaoContratante?.size() > 0}
+      props:
+        - name: Person_Organisation_Id
+          val: ${new groovy.json.JsonBuilder(contratosOrganizacaoContratante)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'organizacoesCnpj')}
+        - name: Person_Organisation_Registration_Number
+          val: ${new groovy.json.JsonBuilder(contratosOrganizacaoContratante)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'organizacoesCnpj')}
+    
+    - label: Person_Organisation
+      name: pj_contratada
+      condition: ${contratosOrganizacaoContratante?.size() > 0}
+      props:
+        - name: Person_Organisation_Id
+          val: ${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'organizacoesCnpj')}
+        - name: Person_Organisation_Registration_Number
+          val: ${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'organizacoesCnpj')}
+    
+    - label: Person_Organisation
+      name: operador
+      condition: ${contratosOrganizacaoContratante?.size() > 0}
+      props:
+        - name: Person_Organisation_Id
+          val: ${new groovy.json.JsonBuilder(contratosOperador)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'organizacoesCnpj')}
+        - name: Person_Organisation_Registration_Number
+          val: ${new groovy.json.JsonBuilder(contratosOperador)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'organizacoesCnpj')}
+    
+    - label: Person_Organisation
+      name: controlador
+      condition: ${contratosOrganizacaoContratante?.size() > 0}
+      props:
+        - name: Person_Organisation_Id
+          val: ${new groovy.json.JsonBuilder(contratosControlador)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'organizacoesCnpj')}
+        - name: Person_Organisation_Registration_Number
+          val: ${new groovy.json.JsonBuilder(contratosControlador)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'organizacoesCnpj')}
+    
+    - label: Object_Contract
+      props:
+        - name: Object_Contract_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Object_Contract_Short_Description
+          val: ${contratosReferencia?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Contract_Link
+          val: ${contratosLinkDoContrato?.trim()?.toLowerCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Contract_Expiry
+          val: ${contratosVigencia}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Object_Contract_Tranfer_Intl
+          val: ${new groovy.json.JsonBuilder(contratosTransferenciaInternacionalDeDados)}
+          mandatoryInSearch: False
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          excludeFromSearch: True
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it,'transferenciasInternacionaisInciso')}
+        - name: Object_Contract_Country
+          val: ${contratosTransferenciaParaQualPais?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Contract_Has_Minors_Data
+          val: "${(contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('yes') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }"
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Data_Procedures
+      condition: ${contratosRefDoProcesso?.size() > 0}
+      props:
+        - name: Object_Data_Procedures_Form_Id
+          val: ${new groovy.json.JsonBuilder(contratosRefDoProcesso)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it, 'id')}
+    
+    - label: Object_Data_Source
+      name: webiny
+      props:
+        - name: Object_Data_Source_Name
+          val: WEBINY/CONTRATOS
+          mandatoryInSearch: True
+    
+    - label: Object_Data_Source
+      name: attached_data_sources
+      condition: ${contratosRefDaFonteDeDados?.size() > 0}
+      props:
+        - name: Object_Data_Source_Form_Id
+          val: ${new groovy.json.JsonBuilder(contratosRefDaFonteDeDados)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'id')}
+    
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: Webiny Contratos
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${createdOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${savedOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: webiny/contratos
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexName: webiny
+    toVertexLabel: Event_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Object_Contract
+  - label: Is_Promisee
+    fromVertexName: pj_contratante
+    toVertexLabel: Object_Contract
+  - label: Is_Promisor
+    fromVertexName: pj_contratada
+    toVertexLabel: Object_Contract
+  - label: Is_Data_Processor
+    fromVertexName: operador
+    toVertexLabel: Object_Contract
+  - label: Is_Data_Controller
+    fromVertexName: controlador
+    toVertexLabel: Object_Contract
+  - label: Has_Approved_Contract
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Object_Contract
+  - label: Has_Contract
+    fromVertexLabel: Object_Contract
+    toVertexLabel: Object_Data_Procedures
+  - label: Has_Data_Source
+    fromVertexLabel: Object_Contract
+    toVertexName: attached_data_sources
+

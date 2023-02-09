@@ -214,6 +214,9 @@ Object_Contract_Id
 Object_Contract_Link
 Object_Contract_Status
 Object_Contract_Type
+Object_Contract_Country
+Object_Contract_Tranfer_Intl
+Object_Contract_Has_Minors_Data
 Object_Campaign_Date
 Object_Campaign_Description
 Object_Campaign_Expiry
