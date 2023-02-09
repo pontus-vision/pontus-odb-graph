@@ -517,4 +517,104 @@ public class WebinyTest extends AppTest {
 
   }
 
+  @Test
+  public void test00008WebinyOrganizacoes() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-organizacoes.json", "$.data.listOrganizacoes.data[*]", "webiny_organisation");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Person_Organisation_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"89894673000152\"\n" +
+                      "  }\n" +
+                      "]", "Person_Organisation",
+              new String[]{"Person_Organisation_Name","Person_Organisation_URL"});
+      String replyStr = reply.getRecords()[0];
+
+      String NatOrgRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Person_Organisation_Name\":\"PONTUS VISION BRASIL\""));
+      assertTrue(replyStr.contains("\"Person_Organisation_URL\":\"pontusvision.com.br\""));
+
+      reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
+              "hasNeighbourId:" + NatOrgRid);
+      assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"lmartins@pontusnetworks.com\""));
+
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Person_Organisation_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"34907\"\n" +
+                      "  }\n" +
+                      "]", "Person_Organisation",
+              new String[]{"Person_Organisation_Name"});
+      replyStr = reply.getRecords()[0];
+
+      String IntlOrgRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Person_Organisation_Name\":\"PONTUS VISION UK\""));
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address",
+                      "Location_Address_parser_city", "Location_Address_parser_country",
+                      "Location_Address_parser_road", "Location_Address_parser_postcode"},
+              "hasNeighbourId:" + IntlOrgRid);
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_city\":\"[london]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_road\":\"[lukin street, lukinstreet]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_country\":\"[united kingdom, unitedkingdom]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_postcode\":\"[e 1 0 aa, e 1 0aa, e1 0 aa, e1 0aa]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_Full_Address\":\"LUKIN STREET, #345, BISHOPSGATE, LONDON, E1 0AA, UNITED KINGDOM\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void test00009WebinyTreinamentos() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-treinamentos.json", "$.data.listTreinamentos.data[*]", "webiny_awareness_campaign");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Awareness_Campaign_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63e149001cb96c000893f5c1#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Awareness_Campaign",
+              new String[]{"Object_Awareness_Campaign_Description", "Object_Awareness_Campaign_Start_Date"});
+      String replyStr = reply.getRecords()[0];
+
+      String awarenessRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Object_Awareness_Campaign_Description\":\"TESTE\""));
+      assertTrue(replyStr.contains("\"Object_Awareness_Campaign_Start_Date\":\"Mon Nov 13 01:01:01 UTC 2023\""));
+
+      reply = gridWrapper(null, "Event_Training", new String[]{"Event_Training_Form_Id"},
+              "hasNeighbourId:" + awarenessRid);
+      assertTrue(reply.getRecords()[0].contains("\"Event_Training_Form_Id\":\"63e149001cb96c000893f5c1#0001\""));
+
+      String trainingRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
+              "hasNeighbourId:" + trainingRid);
+      assertEquals(2, reply.getTotalAvailable(), "2 people trained @ this event.");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
+
 }
