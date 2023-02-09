@@ -28,6 +28,7 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Object_Data_Procedures
+      condition: ${avisoDePrivacidadeIdDoProcesso?.id?.length() > 0}
       props:
         - name: Object_Data_Procedures_Form_Id
           val: ${new groovy.json.JsonBuilder(avisoDePrivacidadeIdDoProcesso)}
