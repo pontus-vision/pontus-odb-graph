@@ -33,12 +33,54 @@
       },
       {
         "label": "Person_Organisation",
+        "name": "pj_national",
         "condition": "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Person_Organisation_Name",
             "val": "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Type",
+            "val": "NATIONAL",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Organisation_Id",
+            "val": "${RA_CIC.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${RA_CIC.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Organisation",
+        "name": "pj_international",
+        "condition": "${RA_CIC?.replaceAll('[^0-9]','')?.length() != 11 && RA_CIC?.replaceAll('[^0-9]','')?.length() != 14}",
+        "props": [
+          {
+            "name": "Person_Organisation_Name",
+            "val": "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Type",
+            "val": "INTERNATIONAL",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Person_Organisation_Id",
@@ -308,7 +350,12 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person_Organisation",
+        "fromVertexName": "pj_national",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "pj_international",
         "toVertexLabel": "Event_Ingestion"
       },
       {
@@ -328,7 +375,12 @@
       },
       {
         "label": "Has_Phone",
-        "fromVertexLabel": "Person_Organisation",
+        "fromVertexName": "pj_national",
+        "toVertexLabel": "Object_Phone_Number"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "pj_international",
         "toVertexLabel": "Object_Phone_Number"
       },
       {
@@ -338,7 +390,12 @@
       },
       {
         "label": "Uses_Email",
-        "fromVertexLabel": "Person_Organisation",
+        "fromVertexName": "pj_national",
+        "toVertexName": "email1"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "pj_international",
         "toVertexName": "email1"
       },
       {
@@ -348,7 +405,12 @@
       },
       {
         "label": "Uses_Email",
-        "fromVertexLabel": "Person_Organisation",
+        "fromVertexName": "pj_national",
+        "toVertexName": "email2"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "pj_international",
         "toVertexName": "email2"
       },
       {
@@ -363,7 +425,12 @@
       },
       {
         "label": "Has_Id_Card",
-        "fromVertexLabel": "Person_Organisation",
+        "fromVertexName": "pj_national",
+        "toVertexName": "cnpj"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "pj_international",
         "toVertexName": "cnpj"
       },
       {
@@ -373,7 +440,12 @@
       },
       {
         "label": "Is_Located",
-        "fromVertexLabel": "Person_Organisation",
+        "fromVertexName": "pj_national",
+        "toVertexLabel": "Location_Address"
+      },
+      {
+        "label": "Is_Located",
+        "fromVertexName": "pj_international",
         "toVertexLabel": "Location_Address"
       }
     ]
