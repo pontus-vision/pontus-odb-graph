@@ -731,9 +731,7 @@ rules:
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
         name: pj_national
         props:
-          Name:
-            val: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
-            excludeFromSearch: true
+          Name: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
           Type:
             val: "NATIONAL"
             excludeFromSearch: true
@@ -749,9 +747,7 @@ rules:
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A2_CGC?.replaceAll('[^0-9]','')?.length() != 14}"
         name: pj_international
         props:
-          Name:
-            val: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
-            excludeFromSearch: true
+          Name: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
           Type:
             val: "INTERNATIONAL"
             excludeFromSearch: true

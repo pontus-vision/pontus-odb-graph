@@ -8,8 +8,7 @@ updatereq:
       props:
         - name: Person_Organisation_Name
           val: ${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
         - name: Person_Organisation_Type
           val: NATIONAL
           mandatoryInSearch: False
@@ -32,8 +31,7 @@ updatereq:
       props:
         - name: Person_Organisation_Name
           val: ${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
+          mandatoryInSearch: True
         - name: Person_Organisation_Type
           val: INTERNATIONAL
           mandatoryInSearch: False
