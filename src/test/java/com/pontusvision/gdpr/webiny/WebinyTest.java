@@ -552,22 +552,23 @@ public class WebinyTest extends AppTest {
                       "    \"filter\": \"34907\"\n" +
                       "  }\n" +
                       "]", "Person_Organisation",
-              new String[]{"Person_Organisation_Name"});
+              new String[]{"Person_Organisation_Name", "Person_Organisation_Type"});
       replyStr = reply.getRecords()[0];
 
       String IntlOrgRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       assertTrue(replyStr.contains("\"Person_Organisation_Name\":\"PONTUS VISION UK\""));
+      assertTrue(replyStr.contains("\"Person_Organisation_Type\":\"INTERNATIONAL\""));
 
       reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address",
                       "Location_Address_parser_city", "Location_Address_parser_country",
                       "Location_Address_parser_road", "Location_Address_parser_postcode"},
               "hasNeighbourId:" + IntlOrgRid);
+
       assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_city\":\"[london]\""));
-      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_road\":\"[lukin street, lukinstreet]\""));
-      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_country\":\"[united kingdom, unitedkingdom]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_road\":\"[thatcher street 345, thatcherstreet345]\""));
       assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_postcode\":\"[e 1 0 aa, e 1 0aa, e1 0 aa, e1 0aa]\""));
-      assertTrue(reply.getRecords()[0].contains("\"Location_Address_Full_Address\":\"LUKIN STREET, #345, BISHOPSGATE, LONDON, E1 0AA, UNITED KINGDOM\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_Full_Address\":\"THATCHER STREET 345 APT 1, WESTMINSTER - LONDON, E1 0AA\""));
 
     } catch (Exception e) {
       e.printStackTrace();

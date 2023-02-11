@@ -1467,6 +1467,33 @@ rules:
 
   webiny_organisation:
 
+#    {
+#      listOrganizacoes{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      organizacoesEmail
+#      organizacoesCnpj
+#      organizacoesNome
+#      organizacoesMatriz{
+#      organizacoesCnpj
+#    }
+#      organizacoesTelefone
+#      organizacoesSite
+#      organizacoesEnderecoObj{
+#      organizacoesEnderecoObjEndereco
+#      organizacoesEnderecoObjComplemento
+#      organizacoesEnderecoObjNumero
+#      organizacoesEnderecoObjBairro
+#      organizacoesEnderecoObjCep
+#      organizacoesEnderecoObjUf
+#      organizacoesEnderecoObjCidade
+#    }
+#    }
+#    }
+#    }
+
     vertices:
 
       - label: Person_Organisation
@@ -1485,6 +1512,9 @@ rules:
             val: "${savedOn}"
             excludeFromSearch: true
             type: java.util.Date
+          Type:
+            val: "NATIONAL"
+            excludeFromSearch: true
 
       - label: Person_Organisation
         condition: "${organizacoesCnpj?.replaceAll('[^0-9]','')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]','')?.length() != 14}"
@@ -1502,13 +1532,26 @@ rules:
             val: "${savedOn}"
             excludeFromSearch: true
             type: java.util.Date
+          Type:
+            val: "INTERNATIONAL"
+            excludeFromSearch: true
 
       - label: Object_Identity_Card
         condition: "${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() == 14}"
+        name: id_national
         props:
           Id_Value: "${organizacoesCnpj?.replaceAll('[^0-9]','')}"
           Id_Type:
             val: "CNPJ"
+            excludeFromSearch: true
+
+      - label: Object_Identity_Card
+        condition: "${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() != 14}"
+        name: id_international
+        props:
+          Id_Value: "${organizacoesCnpj?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "INTERNATIONAL"
             excludeFromSearch: true
 
       - label: Object_Email_Address
@@ -1537,12 +1580,12 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${organizacoesEndereco?.toUpperCase()}"
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, null, organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
             excludeFromSearch: true
           parser:
-            val: "${organizacoesEndereco?.toUpperCase()}"
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, null, organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
             type: "com.pontusvision.utils.LocationAddress"
-      #          Post_Code: "${com.pontusvision.utils.PostCode.format(organizacoesEndereco)}"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
 
       - label: Event_Ingestion
         props:
@@ -1589,11 +1632,11 @@ rules:
 
       - label: Has_Id_Card
         fromVertexName: "pj_national"
-        toVertexLabel: "Object_Identity_Card"
+        toVertexName: "id_national"
 
       - label: Has_Id_Card
         fromVertexName: "pj_international"
-        toVertexLabel: "Object_Identity_Card"
+        toVertexName: "id_international"
 
       - label: Is_Located
         fromVertexName: "pj_national"

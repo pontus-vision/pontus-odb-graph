@@ -34,6 +34,12 @@
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Organisation_Type",
+            "val": "NATIONAL",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -70,11 +76,18 @@
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Organisation_Type",
+            "val": "INTERNATIONAL",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
       {
         "label": "Object_Identity_Card",
+        "name": "id_national",
         "condition": "${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() == 14}",
         "props": [
           {
@@ -85,6 +98,24 @@
           {
             "name": "Object_Identity_Card_Id_Type",
             "val": "CNPJ",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "name": "id_international",
+        "condition": "${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() != 14}",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${organizacoesCnpj?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "INTERNATIONAL",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -141,15 +172,20 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-            "val": "${organizacoesEndereco?.toUpperCase()}",
+            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, null, organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location_Address_parser",
-            "val": "${organizacoesEndereco?.toUpperCase()}",
+            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, null, organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location_Address_Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -235,12 +271,12 @@
       {
         "label": "Has_Id_Card",
         "fromVertexName": "pj_national",
-        "toVertexLabel": "Object_Identity_Card"
+        "toVertexName": "id_national"
       },
       {
         "label": "Has_Id_Card",
         "fromVertexName": "pj_international",
-        "toVertexLabel": "Object_Identity_Card"
+        "toVertexName": "id_international"
       },
       {
         "label": "Is_Located",
