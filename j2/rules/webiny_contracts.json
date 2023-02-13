@@ -40,7 +40,7 @@
       {
         "label": "Person_Organisation",
         "name": "pj_contratada",
-        "condition": "${contratosOrganizacaoContratante?.size() > 0}",
+        "condition": "${contratosOrganizacaoContratada?.size() > 0}",
         "props": [
           {
             "name": "Person_Organisation_Id",
@@ -63,7 +63,7 @@
       {
         "label": "Person_Organisation",
         "name": "operador",
-        "condition": "${contratosOrganizacaoContratante?.size() > 0}",
+        "condition": "${contratosOperador?.size() > 0}",
         "props": [
           {
             "name": "Person_Organisation_Id",
@@ -86,7 +86,7 @@
       {
         "label": "Person_Organisation",
         "name": "controlador",
-        "condition": "${contratosOrganizacaoContratante?.size() > 0}",
+        "condition": "${contratosControlador?.size() > 0}",
         "props": [
           {
             "name": "Person_Organisation_Id",

@@ -1298,7 +1298,7 @@ rules:
             processAll: true
 
       - label: Person_Organisation
-        condition: "${contratosOrganizacaoContratante?.size() > 0}"
+        condition: "${contratosOrganizacaoContratada?.size() > 0}"
         name: pj_contratada
         props:
           Id:
@@ -1313,7 +1313,7 @@ rules:
             processAll: true
 
       - label: Person_Organisation
-        condition: "${contratosOrganizacaoContratante?.size() > 0}"
+        condition: "${contratosOperador?.size() > 0}"
         name: operador
         props:
           Id:
@@ -1328,7 +1328,7 @@ rules:
             processAll: true
 
       - label: Person_Organisation
-        condition: "${contratosOrganizacaoContratante?.size() > 0}"
+        condition: "${contratosControlador?.size() > 0}"
         name: controlador
         props:
           Id:
