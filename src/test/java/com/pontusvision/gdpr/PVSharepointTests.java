@@ -1,5 +1,6 @@
 package com.pontusvision.gdpr;
 
+import com.google.gson.JsonParser;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
@@ -132,6 +133,70 @@ public class PVSharepointTests extends AppTest {
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
+    }
+
+  }
+
+  @Test
+  public void test00003SharepointContratos() throws InterruptedException {
+
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields", "sharepoint_fontes_de_dados");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields", "sharepoint_mapeamentos");
+    jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+    jsonTestUtil("sharepoint/devtools-extract-sharepoint-contracts.json", "$.queryResp[*].fields", "sharepoint_contracts");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Contract_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63daa413efaf5f0008f6e296#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Contract",
+              new String[]{"Object_Contract_Short_Description", "Object_Contract_Tranfer_Intl", "Object_Contract_Has_Minors_Data", "Object_Contract_Expiry"});
+      String replyStr = reply.getRecords()[0];
+
+      String contractRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Object_Contract_Short_Description\":\"CONTRATO 3\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Has_Minors_Data\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Tranfer_Intl\":\"IX - QUANDO NECESSÁRIO PARA ATENDER AS HIPÓTESES PREVISTAS NOS INCISOS II\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Expiry\":\"Tue Jan 03 01:01:01 UTC 2023\""));
+
+      reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name", "Object_Data_Source_Engine", "Object_Data_Source_Description"},
+              "hasNeighbourId:" + contractRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Engine\":\"SISTEMA 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
+
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Business_Area_Responsible",
+                      "Object_Data_Procedures_Products_And_Services", "Object_Data_Procedures_Lawful_Basis_Justification"},
+              "hasNeighbourId:" + contractRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Products_And_Services\":\"CARRO DE LUXO\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Lawful_Basis_Justification\":\"JUSTIFICATIVA 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"[TI]\""));
+
+      reply = gridWrapper(null, "Person_Organisation", new String[]{"Person_Organisation_Registration_Number"},
+              "hasNeighbourId:" + contractRid, 0L, 4L, "Person_Organisation_Registration_Number", "+asc");
+
+      assertEquals(4, reply.getTotalAvailable(), "This contract has 4 Person_Orgs attached");
+      assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Registration_Number\":\"19854875000145\""));
+      assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Registration_Number\":\"49034782000123\""));
+      assertTrue(reply.getRecords()[2].contains("\"Person_Organisation_Registration_Number\":\"78675984000165\""));
+      assertTrue(reply.getRecords()[3].contains("\"Person_Organisation_Registration_Number\":\"89894673000152\""));
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
+              "hasNeighbourId:" + contractRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"01201405628\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
     }
 
   }

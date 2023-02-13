@@ -1637,3 +1637,190 @@ rules:
       - label: Is_Participant
         fromVertexLabel: "Object_Email_Address"
         toVertexLabel: "Event_Meeting"
+
+  sharepoint_contracts:
+
+    vertices:
+
+      - label: Person_Natural
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(ContratoAprovadoPor)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+#      - label: Person_Organisation
+#        condition: "${Organiza_x00e7__x00e3_oContratan?.size() > 0}"
+#        name: pj_contratante
+#        props:
+#          Id:
+#            val: "${new groovy.json.JsonBuilder(Organiza_x00e7__x00e3_oContratan)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+#          Registration_Number:
+#            val: "${new groovy.json.JsonBuilder(Organiza_x00e7__x00e3_oContratan)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+#
+#      - label: Person_Organisation
+#        condition: "${Organiza_x00e7__x00e3_oContratad?.size() > 0}"
+#        name: pj_contratada
+#        props:
+#          Id:
+#            val: "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+#          Registration_Number:
+#            val: "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+#
+#      - label: Person_Organisation
+#        condition: "${Operador?.size() > 0}"
+#        name: operador
+#        props:
+#          Id:
+#            val: "${new groovy.json.JsonBuilder(Operador)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+#          Registration_Number:
+#            val: "${new groovy.json.JsonBuilder(Operador)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+#
+#      - label: Person_Organisation
+#        condition: "${Controlador?.size() > 0}"
+#        name: controlador
+#        props:
+#          Id:
+#            val: "${new groovy.json.JsonBuilder(Controlador)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+#          Registration_Number:
+#            val: "${new groovy.json.JsonBuilder(Controlador)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+
+      - label: Object_Contract
+        props:
+          Form_Id: "${id}"
+          Short_Description:
+            val: "${Title?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Link:
+            val: "${LinkdoContrato?.trim()?.toLowerCase()}"
+            excludeFromSearch: true
+          Expiry:
+            val: "${Vig_x00ea_ncia}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Tranfer_Intl:
+            val: "${Transfer_x00ea_nciaInternacional?.collect{ it?.trim()?.toUpperCase() }}"
+            excludeFromSearch: true
+          Country:
+            val: "${Paraqualpa_x00ed_s_x00e9_realiza?.collect{ it?.trim()?.toUpperCase() }}"
+            excludeFromSearch: true
+          Has_Minors_Data:
+            val: "\"${(DadosdeCrian_x00e7_aseAdolescent?.toString()?.equalsIgnoreCase('yes') || DadosdeCrian_x00e7_aseAdolescent?.toString()?.equalsIgnoreCase('true') || DadosdeCrian_x00e7_aseAdolescent?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            excludeFromSearch: true
+
+      - label: Object_Data_Procedures
+        condition: "${Refer_x00ea_nciadoProcesso?.size() > 0}"
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Refer_x00ea_nciadoProcesso)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Object_Data_Source
+        name: sharepoint
+        props:
+          Name: "SHAREPOINT/CONTRATOS"
+
+      - label: Object_Data_Source
+        condition: "${Refer_x00ea_nciadaFontedeDados?.size() > 0}"
+        name: attached_data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(Refer_x00ea_nciadaFontedeDados)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Sharepoint Contratos"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${Created}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${Modified}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "sharepoint/contratos"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "sharepoint"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Contract"
+
+#      - label: Is_Promisee
+#        fromVertexName: "pj_contratante"
+#        toVertexLabel: "Object_Contract"
+#
+#      - label: Is_Promisor
+#        fromVertexName: "pj_contratada"
+#        toVertexLabel: "Object_Contract"
+#
+#      - label: Is_Data_Processor
+#        fromVertexName: "operador"
+#        toVertexLabel: "Object_Contract"
+#
+#      - label: Is_Data_Controller
+#        fromVertexName: "controlador"
+#        toVertexLabel: "Object_Contract"
+
+      - label: Has_Approved_Contract
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Object_Contract"
+
+      - label: Has_Contract
+        fromVertexLabel: "Object_Contract"
+        toVertexLabel: "Object_Data_Procedures"
+
+      - label: Has_Data_Source
+        fromVertexLabel: "Object_Contract"
+        toVertexName: "attached_data_sources"

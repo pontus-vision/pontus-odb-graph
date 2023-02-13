@@ -1,0 +1,84 @@
+{
+  "queryResp": [
+    {
+      "@odata.etag": "\"88888888-9999-9999-a011-888888889993,2\"",
+      "createdDateTime": "2021-11-12T16:06:27Z",
+      "eTag": "\"88888888-9999-9999-a011-888888889993,2\"",
+      "id": "1",
+      "lastModifiedDateTime": "2021-11-12T16:33:16Z",
+      "webUrl": "https://snowypeakcombr.sharepoint.com/sites/Snowypeak_LGPD/Lists/datasourcerisks/1_.000",
+      "createdBy": {
+        "user": {
+          "email": "macunaima@caca.com",
+          "id": "88888888-9993-dddd-dddd-dddddddddd",
+          "displayName": "Leonardo Martins"
+        }
+      },
+      "lastModifiedBy": {
+        "user": {
+          "email": "oMario@caca.com",
+          "id": "b891a14d-2707-49b7-8cc0-5df07a4e6b13",
+          "displayName": "Omar Mario"
+        }
+      },
+      "parentReference": {
+        "siteId": "snowypeakcombr.sharepoint.com,ffffffffffff-8888-4444-b2c9-d2b058c33118,ffffffffffff-8888-4444-bbbb-bbbbbbbbbb"
+      },
+      "contentType": {
+        "id": "0x4444444444444444444444444444449B764B700F607C233169BDD45AF2344E3136CEAA9",
+        "name": "Item"
+      },
+      "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('snowypeakcombr.sharepoint.com%2Cffffffffffff-8888-4444-b2c9-d2b058c33118%2Cffffffffffff-8888-4444-bbbb-bbbbbbbbbb')/lists('82d6c1d3-2114-465c-aa66-3c7c1d4bb257')/items('1')/fields/$entity",
+      "fields": {
+        "@odata.etag": "\"88888888-9999-9999-a011-888888889993,2\"",
+        "id": "1",
+        "ContentType": "Item",
+        "Title": "pole-contratos-2",
+        "Modified": "2021-11-12T16:33:16Z",
+        "Created": "2021-11-12T16:06:27Z",
+        "AuthorLookupId": "13",
+        "EditorLookupId": "16",
+        "_UIVersionString": "2.0",
+        "Attachments": false,
+        "Edit": "",
+        "LinkTitleNoMenu": "R01",
+        "LinkTitle": "R01",
+        "ItemChildCount": "0",
+        "FolderChildCount": "0",
+        "_ComplianceFlags": "",
+        "_ComplianceTag": "",
+        "_ComplianceTagWrittenTime": "",
+        "_ComplianceTagUserId": "",
+        "Organiza_x00e7__x00e3_oContratan": "Pontus Vision Brasil",
+        "Organiza_x00e7__x00e3_oContratad": "LEGO of Indonesia",
+        "Operador": "Dakar Inc.",
+        "Controlador": "Pontus Vision UK",
+        "Transfer_x00ea_nciadeDados": "Não",
+        "Transfer_x00ea_nciaInternacional": ["VII - quando a transferência for necessária para a execução de política pública ou atribuição legal do serviço público, sendo dada publicidade nos termos do inciso I do caput do art. 23 da LGPD"],
+        "Paraqualpa_x00ed_s_x00e9_realiza": ["Áustria","Líbano"],
+        "DadosdeCrian_x00e7_aseAdolescent": "Sim",
+        "Refer_x00ea_nciadoProcesso": [
+          {
+            "LookupId": 404,
+            "LookupValue": "4"
+          }
+        ],
+        "Refer_x00ea_nciadaFontedeDados": [
+          {
+            "LookupId": 5,
+            "LookupValue": "ERP-Funcionário"
+          }
+        ],
+        "LinkdoContrato": "https://drive.google.com/contratos",
+        "Vig_x00ea_ncia": "2026-02-02T08:00:00Z",
+        "ContratoAprovadoPor": [
+          {
+            "LookupId": 546785678,
+            "LookupValue": "Marta Marilia Marcôndes",
+            "Email": "BRUNO.SSSS@SNOWYMOUNTAIN.COM.BR"
+          }
+        ]
+      }
+    }
+  ]
+}
