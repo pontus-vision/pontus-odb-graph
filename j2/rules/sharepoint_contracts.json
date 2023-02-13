@@ -15,6 +15,98 @@
         ]
       },
       {
+        "label": "Person_Organisation",
+        "name": "pj_contratante",
+        "condition": "${org_contratante?.size() > 0}",
+        "props": [
+          {
+            "name": "Person_Organisation_Id",
+            "val": "${new groovy.json.JsonBuilder(org_contratante)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${new groovy.json.JsonBuilder(org_contratante )}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Person_Organisation",
+        "name": "pj_contratada",
+        "condition": "${org_contratada?.size() > 0}",
+        "props": [
+          {
+            "name": "Person_Organisation_Id",
+            "val": "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Person_Organisation",
+        "name": "operador",
+        "condition": "${Operador?.size() > 0}",
+        "props": [
+          {
+            "name": "Person_Organisation_Id",
+            "val": "${new groovy.json.JsonBuilder(Operador)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${new groovy.json.JsonBuilder(Operador)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Person_Organisation",
+        "name": "controlador",
+        "condition": "${Controlador?.size() > 0}",
+        "props": [
+          {
+            "name": "Person_Organisation_Id",
+            "val": "${new groovy.json.JsonBuilder(Controlador)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${new groovy.json.JsonBuilder(Controlador)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
         "label": "Object_Contract",
         "props": [
           {
@@ -173,6 +265,26 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Object_Contract"
+      },
+      {
+        "label": "Is_Promisee",
+        "fromVertexName": "pj_contratante",
+        "toVertexLabel": "Object_Contract"
+      },
+      {
+        "label": "Is_Promisor",
+        "fromVertexName": "pj_contratada",
+        "toVertexLabel": "Object_Contract"
+      },
+      {
+        "label": "Is_Data_Processor",
+        "fromVertexName": "operador",
+        "toVertexLabel": "Object_Contract"
+      },
+      {
+        "label": "Is_Data_Controller",
+        "fromVertexName": "controlador",
         "toVertexLabel": "Object_Contract"
       },
       {

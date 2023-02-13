@@ -49,10 +49,34 @@
         "_ComplianceTag": "",
         "_ComplianceTagWrittenTime": "",
         "_ComplianceTagUserId": "",
-        "Organiza_x00e7__x00e3_oContratan": "Pontus Vision Brasil",
-        "Organiza_x00e7__x00e3_oContratad": "LEGO of Indonesia",
-        "Operador": "Dakar Inc.",
-        "Controlador": "Pontus Vision UK",
+        "org_contratante": [
+          {
+            "LookupId": 346546,
+            "LookupValue": "ARMS MANUTENCAO E R",
+            "Email": "jkssias@hotmail.com"
+          }
+        ],
+        "org_contratada": [
+          {
+            "LookupId": 756589,
+            "LookupValue": "Gelonese plus",
+            "Email": "herminia@hotmail.com"
+          }
+        ],
+        "Operador": [
+          {
+            "LookupId": 346546,
+            "LookupValue": "ARMS MANUTENCAO E R",
+            "Email": "jkssias@hotmail.com"
+          }
+        ],
+        "Controlador": [
+          {
+            "LookupId": 756589,
+            "LookupValue": "Gelonese plus",
+            "Email": "herminia@hotmail.com"
+          }
+        ],
         "Transfer_x00ea_nciadeDados": "Não",
         "Transfer_x00ea_nciaInternacional": ["VII - quando a transferência for necessária para a execução de política pública ou atribuição legal do serviço público, sendo dada publicidade nos termos do inciso I do caput do art. 23 da LGPD"],
         "Paraqualpa_x00ed_s_x00e9_realiza": ["Áustria","Líbano"],
@@ -73,9 +97,9 @@
         "Vig_x00ea_ncia": "2026-02-02T08:00:00Z",
         "ContratoAprovadoPor": [
           {
-            "LookupId": 546785678,
-            "LookupValue": "Marta Marilia Marcôndes",
-            "Email": "BRUNO.SSSS@SNOWYMOUNTAIN.COM.BR"
+            "LookupId": 647595,
+            "LookupValue": "Yara Samantha",
+            "Email": "carlos@hotmail.com"
           }
         ]
       }

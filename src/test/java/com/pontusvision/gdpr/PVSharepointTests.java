@@ -142,7 +142,7 @@ public class PVSharepointTests extends AppTest {
 
     jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields", "sharepoint_fontes_de_dados");
     jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields", "sharepoint_mapeamentos");
-    jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+    jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
     jsonTestUtil("sharepoint/devtools-extract-sharepoint-contracts.json", "$.queryResp[*].fields", "sharepoint_contracts");
 
     try {

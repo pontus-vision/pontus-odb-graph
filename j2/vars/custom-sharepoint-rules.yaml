@@ -1650,65 +1650,65 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
 
-#      - label: Person_Organisation
-#        condition: "${Organiza_x00e7__x00e3_oContratan?.size() > 0}"
-#        name: pj_contratante
-#        props:
-#          Id:
-#            val: "${new groovy.json.JsonBuilder(Organiza_x00e7__x00e3_oContratan)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
-#          Registration_Number:
-#            val: "${new groovy.json.JsonBuilder(Organiza_x00e7__x00e3_oContratan)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
-#
-#      - label: Person_Organisation
-#        condition: "${Organiza_x00e7__x00e3_oContratad?.size() > 0}"
-#        name: pj_contratada
-#        props:
-#          Id:
-#            val: "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
-#          Registration_Number:
-#            val: "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
-#
-#      - label: Person_Organisation
-#        condition: "${Operador?.size() > 0}"
-#        name: operador
-#        props:
-#          Id:
-#            val: "${new groovy.json.JsonBuilder(Operador)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
-#          Registration_Number:
-#            val: "${new groovy.json.JsonBuilder(Operador)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
-#
-#      - label: Person_Organisation
-#        condition: "${Controlador?.size() > 0}"
-#        name: controlador
-#        props:
-#          Id:
-#            val: "${new groovy.json.JsonBuilder(Controlador)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
-#          Registration_Number:
-#            val: "${new groovy.json.JsonBuilder(Controlador)}"
-#            type: "[Lcom.pontusvision.utils.SharepointRef;"
-#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-#            processAll: true
+      - label: Person_Organisation
+        condition: "${org_contratante?.size() > 0}"
+        name: pj_contratante
+        props:
+          Id:
+            val: "${new groovy.json.JsonBuilder(org_contratante)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Registration_Number:
+            val: "${new groovy.json.JsonBuilder(org_contratante )}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Person_Organisation
+        condition: "${org_contratada?.size() > 0}"
+        name: pj_contratada
+        props:
+          Id:
+            val: "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Registration_Number:
+            val: "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Person_Organisation
+        condition: "${Operador?.size() > 0}"
+        name: operador
+        props:
+          Id:
+            val: "${new groovy.json.JsonBuilder(Operador)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Registration_Number:
+            val: "${new groovy.json.JsonBuilder(Operador)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+
+      - label: Person_Organisation
+        condition: "${Controlador?.size() > 0}"
+        name: controlador
+        props:
+          Id:
+            val: "${new groovy.json.JsonBuilder(Controlador)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
+          Registration_Number:
+            val: "${new groovy.json.JsonBuilder(Controlador)}"
+            type: "[Lcom.pontusvision.utils.SharepointRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            processAll: true
 
       - label: Object_Contract
         props:
@@ -1797,21 +1797,21 @@ rules:
         fromVertexLabel: "Event_Ingestion"
         toVertexLabel: "Object_Contract"
 
-#      - label: Is_Promisee
-#        fromVertexName: "pj_contratante"
-#        toVertexLabel: "Object_Contract"
-#
-#      - label: Is_Promisor
-#        fromVertexName: "pj_contratada"
-#        toVertexLabel: "Object_Contract"
-#
-#      - label: Is_Data_Processor
-#        fromVertexName: "operador"
-#        toVertexLabel: "Object_Contract"
-#
-#      - label: Is_Data_Controller
-#        fromVertexName: "controlador"
-#        toVertexLabel: "Object_Contract"
+      - label: Is_Promisee
+        fromVertexName: "pj_contratante"
+        toVertexLabel: "Object_Contract"
+
+      - label: Is_Promisor
+        fromVertexName: "pj_contratada"
+        toVertexLabel: "Object_Contract"
+
+      - label: Is_Data_Processor
+        fromVertexName: "operador"
+        toVertexLabel: "Object_Contract"
+
+      - label: Is_Data_Controller
+        fromVertexName: "controlador"
+        toVertexLabel: "Object_Contract"
 
       - label: Has_Approved_Contract
         fromVertexLabel: "Person_Natural"
