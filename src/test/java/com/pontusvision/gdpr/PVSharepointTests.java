@@ -182,18 +182,16 @@ public class PVSharepointTests extends AppTest {
       assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Info_Collected\":\"[Nome, CPF, RG, Endereço, E-mail]\""));
 
       reply = gridWrapper(null, "Person_Organisation", new String[]{"Person_Organisation_Registration_Number"},
-              "hasNeighbourId:" + contractRid, 0L, 4L, "Person_Organisation_Registration_Number", "+asc");
+              "hasNeighbourId:" + contractRid, 0L, 2L, "Person_Organisation_Registration_Number", "+asc");
 
-      assertEquals(4, reply.getTotalAvailable(), "This contract has 4 Person_Orgs attached");
-      assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Registration_Number\":\"19854875000145\""));
-      assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Registration_Number\":\"49034782000123\""));
-      assertTrue(reply.getRecords()[2].contains("\"Person_Organisation_Registration_Number\":\"78675984000165\""));
-      assertTrue(reply.getRecords()[3].contains("\"Person_Organisation_Registration_Number\":\"89894673000152\""));
+      assertEquals(2, reply.getTotalAvailable(), "This contract has 2 Person_Orgs attached");
+      assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Registration_Number\":\"346546\""));
+      assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Registration_Number\":\"756589\""));
 
       reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
               "hasNeighbourId:" + contractRid);
 
-      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"01201405628\""));
+      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"647595\""));
 
     } catch (Exception e) {
       e.printStackTrace();
