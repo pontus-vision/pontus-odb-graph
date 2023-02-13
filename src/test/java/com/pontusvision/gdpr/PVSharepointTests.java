@@ -152,7 +152,7 @@ public class PVSharepointTests extends AppTest {
                       "    \"colId\": \"Object_Contract_Form_Id\",\n" +
                       "    \"filterType\": \"text\",\n" +
                       "    \"type\": \"equals\",\n" +
-                      "    \"filter\": \"63daa413efaf5f0008f6e296#0001\"\n" +
+                      "    \"filter\": \"1\"\n" +
                       "  }\n" +
                       "]", "Object_Contract",
               new String[]{"Object_Contract_Short_Description", "Object_Contract_Tranfer_Intl", "Object_Contract_Has_Minors_Data", "Object_Contract_Expiry"});
@@ -160,25 +160,26 @@ public class PVSharepointTests extends AppTest {
 
       String contractRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      assertTrue(replyStr.contains("\"Object_Contract_Short_Description\":\"CONTRATO 3\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Short_Description\":\"POLE-CONTRATOS-2\""));
       assertTrue(replyStr.contains("\"Object_Contract_Has_Minors_Data\":\"True\""));
-      assertTrue(replyStr.contains("\"Object_Contract_Tranfer_Intl\":\"IX - QUANDO NECESSÁRIO PARA ATENDER AS HIPÓTESES PREVISTAS NOS INCISOS II\""));
-      assertTrue(replyStr.contains("\"Object_Contract_Expiry\":\"Tue Jan 03 01:01:01 UTC 2023\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Tranfer_Intl\":\"[II - QUANDO O CONTROLADOR OFERECER E COMPROVAR GARANTIAS DE CUMPRIMENTO DOS PRINCÍPIOS, DOS DIREITOS DO TITULAR E DO REGIME DE PROTEÇÃO DE DADOS PREVISTOS NA LGPD, IV - QUANDO A TRANSFERÊNCIA FOR NECESSÁRIA PARA A PROTEÇÃO DA VIDA OU DA INCOLUMIDADE FÍSICA DO TITULAR OU DE TERCEIRO]\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Expiry\":\"Mon Feb 02 08:00:00 UTC 2026\""));
 
       reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name", "Object_Data_Source_Engine", "Object_Data_Source_Description"},
               "hasNeighbourId:" + contractRid);
 
-      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Engine\":\"SISTEMA 1\""));
-      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
-      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Engine\":\"PBR\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"ERP-FUNCIONÁRIO\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Description\":\"SISTEMA DE ERP PARA CADASTRO DOS COLABORADORES\"}"));
 
-      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Business_Area_Responsible",
-                      "Object_Data_Procedures_Products_And_Services", "Object_Data_Procedures_Lawful_Basis_Justification"},
+      reply = gridWrapper(null, "Object_Data_Procedures",new String[]{"Object_Data_Procedures_Business_Area_Responsible",
+              "Object_Data_Procedures_Why_Is_It_Collected", "Object_Data_Procedures_Name", "Object_Data_Procedures_Info_Collected"},
               "hasNeighbourId:" + contractRid);
 
-      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Products_And_Services\":\"CARRO DE LUXO\""));
-      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Lawful_Basis_Justification\":\"JUSTIFICATIVA 1\""));
-      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"[TI]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Why_Is_It_Collected\":\"Necessário para gestão de termo de confidencialidade formalizados com clientes/fornecedores\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"Termos de Confidencialidade \""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"Administrativo-Financeiro - 32\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Info_Collected\":\"[Nome, CPF, RG, Endereço, E-mail]\""));
 
       reply = gridWrapper(null, "Person_Organisation", new String[]{"Person_Organisation_Registration_Number"},
               "hasNeighbourId:" + contractRid, 0L, 4L, "Person_Organisation_Registration_Number", "+asc");
