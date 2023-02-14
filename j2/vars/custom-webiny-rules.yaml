@@ -355,7 +355,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/mapeamento de processos"
+            val: "Webiny Mapeamento de Processos"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -734,7 +734,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Aviso de Privacidade"
+            val: "Webiny Aviso de Privacidade"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1032,7 +1032,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: webiny/fontes-de-dados
+            val: "Webiny Fontes de Dados"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -1491,7 +1491,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: webiny/treinamentos
+            val: "Webiny Treinamentos"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -1637,4 +1637,119 @@ rules:
         - label: Has_Phone
           fromVertexLabel: "Person_Natural"
           toVertexLabel: "Object_Phone_Number"
+
+  webiny_data_breaches:
+
+#    {
+#      listIncidentesDeSegurancaReportados{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      incidentesDeSegurancaReportadosReferencia
+#      incidentesDeSegurancaReportadosOrigem
+#      incidentesDeSegurancaReportadosDescricao
+#      incidentesDeSegurancaReportadosFontesDeDados{
+#      id
+#    }
+#      incidentesDeSegurancaReportadosImpacto
+#      incidentesDeSegurancaReportadosStatus
+#      incidentesDeSegurancaReportadosNotificacaoTitular
+#      incidentesDeSegurancaReportadosNotificacaoAnpd
+#    }
+#    }
+#    }
+
+    vertices:
+
+      - label: Object_Data_Source
+        name: data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(incidentesDeSegurancaReportadosFontesDeDados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+
+      - label: Event_Data_Breach
+        props:
+          Form_Id: "${id}"
+          Id:
+            val: "${incidentesDeSegurancaReportadosReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Authority_Notified:
+            val: "${incidentesDeSegurancaReportadosNotificacaoAnpd?.trim()}"
+            excludeFromSearch: true
+          Description:
+            val: "${incidentesDeSegurancaReportadosDescricao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Impact:
+            val: "${incidentesDeSegurancaReportadosImpacto}"  # raw because it is used internally for scoring
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Natural_Person_Notified:
+            val: "${incidentesDeSegurancaReportadosNotificacaoTitular?.trim()}"
+            excludeFromSearch: true
+          Source:
+            val: "${incidentesDeSegurancaReportadosOrigem?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Status:
+            val: "${incidentesDeSegurancaReportadosStatus}"  # raw because it is used internally for scoring
+            excludeFromSearch: true
+
+      - label: Object_Data_Source
+        name: webiny
+        props:
+          Name: "WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Webiny Incidentes de Segurança Reportados"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/incidentes-de-segurança-reportados"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "webiny"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Data_Breach"
+
+      - label: Impacted_By_Data_Breach
+        fromVertexLabel: "Event_Data_Breach"
+        toVertexName: "data_sources"
 

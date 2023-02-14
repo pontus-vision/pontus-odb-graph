@@ -9,6 +9,7 @@ import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Collections;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -538,4 +539,54 @@ public class WebinyTest extends AppTest {
     }
 
   }
+
+  @Test
+  public void test00012WebinyIncidentes() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_fontes_de_dados");
+    jsonTestUtil("webiny/webiny-incidentes.json", "$.data.listIncidentesDeSegurancaReportados.data[*]", "webiny_data_breaches");
+
+    try {
+
+      String dataBreachStatus =
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
+                      ".properties('Event_Data_Breach_Status').value().next().toString()").get().toString();
+      assertEquals("Open", dataBreachStatus, "Status for Vazamento de E-mails de Clientes");
+
+
+
+      String dataBreachDate =
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
+                      ".values('Event_Data_Breach_Metadata_Create_Date').next().toString()").get().toString();
+
+      Date dateObj = dtfmt.parse(dataBreachDate);
+      Date expDateObj = dtfmt.parse("Thu Aug 12 15:17:48 GMT 2021");
+      assertEquals(expDateObj, dateObj, "Time of the Data Breach");
+
+      String dataBreachSource =
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
+                      ".properties('Event_Data_Breach_Source').value().next().toString()").get().toString();
+      assertEquals("OUTLOOK, GMAIL, YAHOO MAIL", dataBreachSource, "Source for the Data Breach on Documents");
+
+      String dataSourceArray =
+              App.executor.eval("App.g.V().has('Event_Data_Breach_Description', " +
+                      "eq('VAZAMENTO DO HISTÓRICO DE NAVEGAÇÃO DOS COLABORADORES')).out('Impacted_By_Data_Breach')" +
+                      ".has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source')).dedup().count().next().toString()").get().toString();
+      assertEquals("3", dataSourceArray,"This Data_Breach event has 4 data_sources: " +
+              "Histórico navegador Google Chrome / Mozilla Firefox / Microsoft Edge / Apple Safari");
+
+      String opinionsBreach =
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SHAREPOINT/DATA-BREACHES'))" +
+                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+                      ".out('Impacted_By_Data_Breach').has('Object_Data_Source_Name', eq('ERP-HR'))" +
+                      ".in('Impacted_By_Data_Breach').values('Event_Data_Breach_Impact').next().toString()").get().toString();
+      assertEquals("No Impact", opinionsBreach,"Impact for breaching employees opinions");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
 }

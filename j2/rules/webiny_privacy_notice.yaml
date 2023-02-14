@@ -39,7 +39,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Aviso de Privacidade
+          val: Webiny Aviso de Privacidade
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

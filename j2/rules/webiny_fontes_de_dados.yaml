@@ -236,7 +236,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: webiny/fontes-de-dados
+          val: Webiny Fontes de Dados
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

@@ -58,7 +58,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Aviso de Privacidade",
+            "val": "Webiny Aviso de Privacidade",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
