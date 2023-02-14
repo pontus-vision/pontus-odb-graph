@@ -1,0 +1,52 @@
+{
+  "data": {
+    "listOrganizacoes": {
+      "data": [
+        {
+          "id": "63c6fa725846920008ac2e39#0002",
+          "createdOn": "2023-01-25T20:00:25.505Z",
+          "savedOn": "2023-01-25T20:00:27.103Z",
+          "organizacoesEmail": "lmartins@pontusnetworks.com",
+          "organizacoesCnpj": "89894673000152",
+          "organizacoesNome": "Pontus Vision Brasil",
+          "organizacoesMatriz": {
+            "organizacoesNome": "Pontus Vision Brasil"
+          },
+          "organizacoesTelefone": "112453675898",
+          "organizacoesSite": "pontusvision.com.br",
+          "organizacoesEnderecoObj": {
+            "organizacoesEnderecoObjEndereco": "rua almirante barroso",
+            "organizacoesEnderecoObjComplemento": "apartamento 23",
+            "organizacoesEnderecoObjNumero": "957",
+            "organizacoesEnderecoObjBairro": "ABC",
+            "organizacoesEnderecoObjCep": "87981061",
+            "organizacoesEnderecoObjUf": "SP",
+            "organizacoesEnderecoObjCidade": "São Paulo"
+          }
+        },
+        {
+          "id": "63a6fa934846923458bd2e39#0003",
+          "createdOn": "2023-01-25T20:00:25.505Z",
+          "savedOn": "2023-01-25T20:00:27.103Z",
+          "organizacoesEmail": "lmartins@pontusnetworks.co.uk",
+          "organizacoesCnpj": "34907",
+          "organizacoesNome": "Pontus Vision UK",
+          "organizacoesMatriz": {
+            "organizacoesNome": "Pontus Vision UK"
+          },
+          "organizacoesTelefone": "+44892536386473443",
+          "organizacoesSite": "pontusvision.com.br",
+          "organizacoesEnderecoObj": {
+            "organizacoesEnderecoObjEndereco": "Thatcher street",
+            "organizacoesEnderecoObjComplemento": "apt 1",
+            "organizacoesEnderecoObjNumero": "345",
+            "organizacoesEnderecoObjBairro": "Westminster",
+            "organizacoesEnderecoObjCep": "E1 0AA",
+            "organizacoesEnderecoObjUf": "Exterior",
+            "organizacoesEnderecoObjCidade": "London"
+          }
+        }
+      ]
+    }
+  }
+}

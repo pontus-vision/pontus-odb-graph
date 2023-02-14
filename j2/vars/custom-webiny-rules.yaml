@@ -1298,7 +1298,7 @@ rules:
             processAll: true
 
       - label: Person_Organisation
-        condition: "${contratosOrganizacaoContratante?.size() > 0}"
+        condition: "${contratosOrganizacaoContratada?.size() > 0}"
         name: pj_contratada
         props:
           Id:
@@ -1313,7 +1313,7 @@ rules:
             processAll: true
 
       - label: Person_Organisation
-        condition: "${contratosOrganizacaoContratante?.size() > 0}"
+        condition: "${contratosOperador?.size() > 0}"
         name: operador
         props:
           Id:
@@ -1328,7 +1328,7 @@ rules:
             processAll: true
 
       - label: Person_Organisation
-        condition: "${contratosOrganizacaoContratante?.size() > 0}"
+        condition: "${contratosControlador?.size() > 0}"
         name: controlador
         props:
           Id:
@@ -1464,3 +1464,316 @@ rules:
       - label: Has_Data_Source
         fromVertexLabel: "Object_Contract"
         toVertexName: "attached_data_sources"
+
+  webiny_organisation:
+
+#    {
+#      listOrganizacoes{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      organizacoesEmail
+#      organizacoesCnpj
+#      organizacoesNome
+#      organizacoesMatriz{
+#      organizacoesCnpj
+#    }
+#      organizacoesTelefone
+#      organizacoesSite
+#      organizacoesEnderecoObj{
+#      organizacoesEnderecoObjEndereco
+#      organizacoesEnderecoObjComplemento
+#      organizacoesEnderecoObjNumero
+#      organizacoesEnderecoObjBairro
+#      organizacoesEnderecoObjCep
+#      organizacoesEnderecoObjUf
+#      organizacoesEnderecoObjCidade
+#    }
+#    }
+#    }
+#    }
+
+    vertices:
+
+      - label: Person_Organisation
+        condition: "${organizacoesCnpj?.replaceAll('[^0-9]','')?.length() == 14}"
+        name: pj_national
+        props:
+          URL:
+            val: "${organizacoesSite?.trim()?.toLowerCase()}"
+            excludeFromSearch: true
+          Name:
+            val: "${organizacoesNome?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Id: "${organizacoesCnpj.replaceAll('[^0-9]','')}"
+          Registration_Number: "${organizacoesCnpj.replaceAll('[^0-9]','')}"
+          Last_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: "NATIONAL"
+            excludeFromSearch: true
+
+      - label: Person_Organisation
+        condition: "${organizacoesCnpj?.replaceAll('[^0-9]','')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]','')?.length() != 14}"
+        name: pj_international
+        props:
+          URL:
+            val: "${organizacoesSite?.trim()?.toLowerCase()}"
+            excludeFromSearch: true
+          Name:
+            val: "${organizacoesNome?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Id: "${organizacoesCnpj.replaceAll('[^0-9]','')}"
+          Registration_Number: "${organizacoesCnpj.replaceAll('[^0-9]','')}"
+          Last_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Type:
+            val: "INTERNATIONAL"
+            excludeFromSearch: true
+
+      - label: Object_Identity_Card
+        condition: "${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() == 14}"
+        name: id_national
+        props:
+          Id_Value: "${organizacoesCnpj?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "CNPJ"
+            excludeFromSearch: true
+
+      - label: Object_Identity_Card
+        condition: "${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() != 14}"
+        name: id_international
+        props:
+          Id_Value: "${organizacoesCnpj?.replaceAll('[^0-9]','')}"
+          Id_Type:
+            val: "INTERNATIONAL"
+            excludeFromSearch: true
+
+      - label: Object_Email_Address
+        condition: "${organizacoesEmail?.trim()?.length() > 0}"
+        props:
+          Email: "${organizacoesEmail?.trim()?.toLowerCase()}"
+
+      - label: Object_Phone_Number
+        condition: "${organizacoesTelefone?.replaceAll('[^0-9]','')?.length() > 0}"
+        props:
+          Raw:
+            val: "${organizacoesTelefone}"
+            excludeFromSearch: true
+          Numbers_Only:
+            val: "${(organizacoesTelefone?.replaceAll('[^0-9]', '')?:'00000000')}"
+            excludeFromSearch: true
+            type: "[Ljava.lang.String;"
+          Last_7_Digits:
+            val: "${(((organizacoesTelefone?.replaceAll('[^0-9]', ''))?.length()>=7?(organizacoesTelefone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}"
+            type: "[Ljava.lang.String;"
+
+      - label: Object_Data_Source
+        props:
+          Name: "WEBINY/ORGANIZAÇÕES"
+
+      - label: Location_Address
+        props:
+          Full_Address:
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade,(organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
+            excludeFromSearch: true
+          parser:
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
+            type: "com.pontusvision.utils.LocationAddress"
+          Post_Code: "${com.pontusvision.utils.PostCode.format(organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Webiny Organizações"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/organizações"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexName: "pj_national"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexName: "pj_international"
+
+      - label: Has_Id_Card
+        fromVertexName: "pj_national"
+        toVertexName: "id_national"
+
+      - label: Has_Id_Card
+        fromVertexName: "pj_international"
+        toVertexName: "id_international"
+
+      - label: Is_Located
+        fromVertexName: "pj_national"
+        toVertexLabel: "Location_Address"
+
+      - label: Is_Located
+        fromVertexName: "pj_international"
+        toVertexLabel: "Location_Address"
+
+      - label: Uses_Email
+        fromVertexName: "pj_national"
+        toVertexLabel: "Object_Email_Address"
+
+      - label: Uses_Email
+        fromVertexName: "pj_international"
+        toVertexLabel: "Object_Email_Address"
+
+      - label: Has_Phone
+        fromVertexName: "pj_national"
+        toVertexLabel: "Object_Phone_Number"
+
+      - label: Has_Phone
+        fromVertexName: "pj_international"
+        toVertexLabel: "Object_Phone_Number"
+
+  webiny_awareness_campaign:
+
+    #    {
+    #      listTreinamentos{
+    #      data{
+    #      id
+    #      createdOn
+    #      savedOn
+    #      treinamentosReferencia
+    #      treinamentosDescricao
+    #      treinamentosHorasTreinamento
+    #      treinamentosRealizadoEm
+    #      treinamentosParticipantesAprovados{
+    #      titularesCpfDoTitular
+    #    }
+    #      treinamentosParticipantesReprovados{
+    #      titularesCpfDoTitular
+    #    }
+    #    }
+    #    }
+    #    }
+    vertices:
+
+      - label: Person_Natural
+        condition: "${treinamentosParticipantesAprovados.size() > 0}"
+        name: approved
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+            processAll: true
+
+      - label: Person_Natural
+        condition: "${treinamentosParticipantesReprovados.size() > 0}"
+        name: failed
+        props:
+          Customer_ID:
+            val: "${new groovy.json.JsonBuilder(treinamentosParticipantesReprovados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+            processAll: true
+
+      - label: Object_Awareness_Campaign
+        props:
+          Form_Id: "${id}"
+          Description:
+            val: "${treinamentosDescricao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Start_Date:
+            val: "${treinamentosRealizadoEm}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Object_Data_Source
+        props:
+          Name: WEBINY/TREINAMENTOS
+
+      - label: Event_Training               # TODO: VERIFICAR COM LEO SE ELIMINAREMOS
+        props:
+          Form_Id: "${id}"
+      #          Status:
+      #            val: "${status}"
+      #            excludeFromSearch: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: webiny/treinamentos
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: webiny/treinamentos
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Training"
+
+      - label: "Course_Training"
+        fromVertexLabel: "Event_Training"
+        toVertexLabel: "Object_Awareness_Campaign"
+
+      - label: "Completed_By"
+        fromVertexLabel: "Event_Training"
+        toVertexName: "approved"
+
+      - label: "Completed_By"
+        fromVertexLabel: "Event_Training"
+        toVertexName: "failed"
