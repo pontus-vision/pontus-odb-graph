@@ -108,6 +108,7 @@
       {
         "label": "Object_Data_Source",
         "name": "contract_source_national",
+        "condition": "${InformarCNPJ?.trim()?.length() > 0 && InformarCNPJ?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Object_Data_Source_Form_Id",
@@ -128,6 +129,7 @@
       {
         "label": "Object_Data_Source",
         "name": "contract_source_international",
+        "condition": "${InformarCNPJouqualqueroutroregis?.trim()?.length() > 0}",
         "props": [
           {
             "name": "Object_Data_Source_Form_Id",
@@ -362,6 +364,7 @@
       {
         "label": "Object_Email_Address",
         "name": "responsible",
+        "condition": "${Respons_x00e1_vel?.size() > 0}",
         "props": [
           {
             "name": "Object_Email_Address_Email",
@@ -376,6 +379,7 @@
       {
         "label": "Object_Email_Address",
         "name": "alt_responsible",
+        "condition": "${Respons_x00e1_velAlternativo?.size() > 0}",
         "props": [
           {
             "name": "Object_Email_Address_Email",
@@ -390,6 +394,7 @@
       {
         "label": "Object_Email_Address",
         "name": "champion",
+        "condition": "${Nome_x0020_do_x0020_Champion_x00?.size() > 0}",
         "props": [
           {
             "name": "Object_Email_Address_Email",

@@ -141,6 +141,7 @@ rules:
           Registration_Number: "${InformarCNPJouqualqueroutroregis?.replaceAll('[^0-9]','')}"
 
       - label: Person_Organisation
+#       TODO: needs condition ?!?!
         name: pbr
         props:
           Id: "${CNPJ_PBR?.replaceAll('[^0-9]','')}"
@@ -155,6 +156,7 @@ rules:
           Name: "SHAREPOINT/PBR/ROPA"
 
       - label: Object_Data_Source
+#       TODO: needs conditions ?!?!
         name: attached_data_sources
         props:
           Form_Id:
@@ -167,6 +169,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Data_Source
+#       TODO: needs condition ?!?!
         name: hard_docs
         props:
           Form_Id: "${id}"
@@ -177,6 +180,7 @@ rules:
 
 #     Terceiros (third parties) are resolved with Contracts
       - label: Object_Data_Source
+        condition: "${InformarCNPJ?.trim()?.length() > 0 && InformarCNPJ?.replaceAll('[^0-9]','')?.length() == 14}"
         name: contract_source_national
         props:
           Form_Id:
@@ -189,6 +193,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Data_Source
+        condition: "${InformarCNPJouqualqueroutroregis?.trim()?.length() > 0}"
         name: contract_source_international
         props:
           Form_Id:
@@ -201,6 +206,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Contract
+#       TODO: needs condition ?!?!
         name: contract_national
         props:
           Form_Id: "${id}"
@@ -220,6 +226,7 @@ rules:
 #          Type:
 
       - label: Object_Contract
+#       TODO: needs condition ?!?!
         name: contract_international
         props:
           Form_Id: "${id}"
@@ -331,6 +338,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Email_Address
+        condition: "${Respons_x00e1_vel?.size() > 0}"
         name: responsible
         props:
           Email:
@@ -340,6 +348,7 @@ rules:
             processAll: true
 
       - label: Object_Email_Address
+        condition: "${Respons_x00e1_velAlternativo?.size() > 0}"
         name: alt_responsible
         props:
           Email:
@@ -349,6 +358,7 @@ rules:
             processAll: true
 
       - label: Object_Email_Address
+        condition: "${Nome_x0020_do_x0020_Champion_x00?.size() > 0}"
         name: champion
         props:
           Email:
@@ -415,7 +425,6 @@ rules:
             val: "${Osdadoss_x00e3_oanonimizadosnotr}"
             excludeFromSearch: true
 
-# TODO: work on the conditions!
       - label: Object_Privacy_Notice
         condition: "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}"
         props:
@@ -647,6 +656,7 @@ rules:
 
 #     Connecting to my RoPA Vertex and adding 2 new props Data_Processor and Data_Controller
       - label: Object_Data_Procedures
+        condition: "${ID_x0020_do_x0020_RoPA?.size() > 0}"
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(ID_x0020_do_x0020_RoPA)}"
@@ -664,6 +674,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Lawful_Basis
+        condition: "${JUR_x0020_8_x0020__x002d__x0020_?.size() > 0}"
         props:
           Description:
             val: "${new groovy.json.JsonBuilder(JUR_x0020_8_x0020__x002d__x0020_)}"
@@ -747,6 +758,7 @@ rules:
             excludeFromSearch: true
 
       - label: Object_Data_Procedures
+        condition: "${ID_x0020_do_x0020_Processo?.size() > 0}"
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(ID_x0020_do_x0020_Processo)}"

@@ -65,6 +65,7 @@
       },
       {
         "label": "Object_Data_Procedures",
+        "condition": "${ID_x0020_do_x0020_Processo?.size() > 0}",
         "props": [
           {
             "name": "Object_Data_Procedures_Form_Id",

@@ -9,6 +9,7 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Object_Data_Procedures
+      condition: ${ID_x0020_do_x0020_RoPA?.size() > 0}
       props:
         - name: Object_Data_Procedures_Form_Id
           val: ${new groovy.json.JsonBuilder(ID_x0020_do_x0020_RoPA)}
@@ -30,6 +31,7 @@ updatereq:
           excludeFromSearch: True
     
     - label: Object_Lawful_Basis
+      condition: ${JUR_x0020_8_x0020__x002d__x0020_?.size() > 0}
       props:
         - name: Object_Lawful_Basis_Description
           val: ${new groovy.json.JsonBuilder(JUR_x0020_8_x0020__x002d__x0020_)}
