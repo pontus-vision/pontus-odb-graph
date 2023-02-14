@@ -20,7 +20,7 @@
             "organizacoesEnderecoObjNumero": "957",
             "organizacoesEnderecoObjBairro": "ABC",
             "organizacoesEnderecoObjCep": "87981061",
-            "organizacoesEnderecoObjUf": "São Paulo",
+            "organizacoesEnderecoObjUf": "SP",
             "organizacoesEnderecoObjCidade": "São Paulo"
           }
         },
@@ -42,7 +42,7 @@
             "organizacoesEnderecoObjNumero": "345",
             "organizacoesEnderecoObjBairro": "Westminster",
             "organizacoesEnderecoObjCep": "E1 0AA",
-            "organizacoesEnderecoObjUf": "",
+            "organizacoesEnderecoObjUf": "Exterior",
             "organizacoesEnderecoObjCidade": "London"
           }
         }

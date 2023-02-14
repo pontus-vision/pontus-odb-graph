@@ -540,6 +540,17 @@ public class WebinyTest extends AppTest {
       assertTrue(replyStr.contains("\"Person_Organisation_Name\":\"PONTUS VISION BRASIL\""));
       assertTrue(replyStr.contains("\"Person_Organisation_URL\":\"pontusvision.com.br\""));
 
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address",
+                      "Location_Address_parser_city", "Location_Address_parser_country",
+                      "Location_Address_parser_road", "Location_Address_parser_postcode"},
+              "hasNeighbourId:" + NatOrgRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_country\":\"[brasil]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_postcode\":\"[87981061]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_city\":\"[saopaulo, são paulo]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_road\":\"[rua almirante barroso, ruaalmirantebarroso]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_Full_Address\":\"RUA ALMIRANTE BARROSO 957 APARTAMENTO 23, ABC - SÃO PAULO (SP), 87981061, BRASIL\""));
+
       reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
               "hasNeighbourId:" + NatOrgRid);
       assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"lmartins@pontusnetworks.com\""));
@@ -566,9 +577,10 @@ public class WebinyTest extends AppTest {
               "hasNeighbourId:" + IntlOrgRid);
 
       assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_city\":\"[london]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_country\":\"[exterior]\""));
       assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_road\":\"[thatcher street 345, thatcherstreet345]\""));
       assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_postcode\":\"[e 1 0 aa, e 1 0aa, e1 0 aa, e1 0aa]\""));
-      assertTrue(reply.getRecords()[0].contains("\"Location_Address_Full_Address\":\"THATCHER STREET 345 APT 1, WESTMINSTER - LONDON, E1 0AA\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_Full_Address\":\"THATCHER STREET 345 APT 1, WESTMINSTER - LONDON, E1 0AA, EXTERIOR\""));
 
     } catch (Exception e) {
       e.printStackTrace();

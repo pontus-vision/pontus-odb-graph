@@ -1580,10 +1580,10 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, null, organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade,(organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
             excludeFromSearch: true
           parser:
-            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, null, organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
 
