@@ -901,7 +901,7 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object_Contract_Expiry
-    dataType: String
+    dataType: Date
     cardinality: SINGLE
   - name: Object_Contract_Form_Id
     dataType: String
@@ -925,6 +925,15 @@ propertyKeys:
     dataType: String
     cardinality: SINGLE
   - name: Object_Contract_Type
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Contract_Country
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Contract_Tranfer_Intl
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Contract_Has_Minors_Data
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Campaign
@@ -2702,6 +2711,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Has_Approved_Contract
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Has_Complaint
     multiplicity: MULTI
     unidirected: False
@@ -2862,6 +2875,10 @@ edgeLabels:
     multiplicity: MULTI
     unidirected: False
 
+  - name: Is_Beneficiary
+    multiplicity: MULTI
+    unidirected: False
+
   - name: Is_Client
     multiplicity: MULTI
     unidirected: False
@@ -2899,6 +2916,14 @@ edgeLabels:
     unidirected: False
 
   - name: Is_Participant
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Promisee
+    multiplicity: MULTI
+    unidirected: False
+
+  - name: Is_Promisor
     multiplicity: MULTI
     unidirected: False
 
@@ -3508,6 +3533,9 @@ vertexIndexes:
       - Object_Contract_Link
       - Object_Contract_Status
       - Object_Contract_Type
+      - Object_Contract_Country
+      - Object_Contract_Tranfer_Intl
+      - Object_Contract_Has_Minors_Data
     propertyKeysMappings:
     
       {}

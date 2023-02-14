@@ -183,7 +183,7 @@ public class WebinyTest extends AppTest {
 
 
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 2\""), "Title for this Privacy document");
-      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"Reunião com DPO\""), "Description for this priv doc");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"REUNIÃO COM DPO\""), "Description for this priv doc");
        assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"Tue Jul 12 01:01:01 UTC 2022\""), "Date this event took place");
 
       reply = gridWrapper("[\n" +
@@ -198,7 +198,7 @@ public class WebinyTest extends AppTest {
       replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Title\":\"COMUNICAÇÃO 1\""), "Title for this Privacy document");
-      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"palestra introdução LGPD\""), "Description for this priv doc");
+      assertTrue(replyStr.contains("\"Object_Privacy_Docs_Description\":\"PALESTRA INTRODUÇÃO LGPD\""), "Description for this priv doc");
       assertTrue(replyStr.contains("\"Object_Privacy_Docs_Date\":\"Fri Oct 09 01:01:01 UTC 2020\""), "Date this event took place");
 
       // #TODO: do it in gridWrapper !!!
@@ -286,7 +286,7 @@ public class WebinyTest extends AppTest {
       String replyStr = reply.getRecords()[0];
 
       assertTrue(replyStr.contains("\"Object_Privacy_Notice_Name\":\"AVISO 1\""));
-      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\":\"aviso 1\""));
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\":\"AVISO 1\""));
       assertTrue(replyStr.contains("\"Object_Privacy_Notice_Delivery_Date\":\"Sat Oct 10 01:01:01 UTC 2020\""));
 
       String privacyNotice = gridWrapperGetRid("[\n" +
@@ -315,7 +315,7 @@ public class WebinyTest extends AppTest {
   @Test
   public void test00006WebinyFontesDeDados() throws InterruptedException {
 
-    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_fontes_de_dados");
+    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_data_source");
 
     try {
 
@@ -332,11 +332,11 @@ public class WebinyTest extends AppTest {
               new String[]{"Object_Data_Source_Name", "Object_Data_Source_Description", "Object_Data_Source_Engine", "Object_Data_Source_Type", "Object_Data_Source_Domain"});
       String replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Object_Data_Source_Type\":\"subsistema 1\""));
-      assertTrue(replyStr.contains("\"Object_Data_Source_Engine\":\"sistema 1\""));
-      assertTrue(replyStr.contains("\"Object_Data_Source_Domain\":\"modulo 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Type\":\"SUBSISTEMA 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Engine\":\"SISTEMA 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Domain\":\"MODULO 1\""));
       assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
-      assertTrue(replyStr.contains("\"Object_Data_Source_Description\":\"fonte 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
 
 //      ----------------------- Object_Module  ----------------------------------------
 
@@ -456,7 +456,70 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00008WebinyOrganizacoes() throws InterruptedException {
+  public void test00008WebinyContratos() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_data_source");
+    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
+    jsonTestUtil("webiny/webiny-contratos.json", "$.data.listContratos.data[*]", "webiny_contracts");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Contract_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63daa413efaf5f0008f6e296#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Contract",
+              new String[]{"Object_Contract_Short_Description", "Object_Contract_Tranfer_Intl", "Object_Contract_Has_Minors_Data", "Object_Contract_Expiry"});
+      String replyStr = reply.getRecords()[0];
+
+      String contractRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Object_Contract_Short_Description\":\"CONTRATO 3\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Has_Minors_Data\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Tranfer_Intl\":\"IX - QUANDO NECESSÁRIO PARA ATENDER AS HIPÓTESES PREVISTAS NOS INCISOS II\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Expiry\":\"Tue Jan 03 01:01:01 UTC 2023\""));
+
+      reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name", "Object_Data_Source_Engine", "Object_Data_Source_Description"},
+              "hasNeighbourId:" + contractRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Engine\":\"SISTEMA 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
+
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Business_Area_Responsible",
+                      "Object_Data_Procedures_Products_And_Services", "Object_Data_Procedures_Lawful_Basis_Justification"},
+              "hasNeighbourId:" + contractRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Products_And_Services\":\"CARRO DE LUXO\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Lawful_Basis_Justification\":\"JUSTIFICATIVA 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"[TI]\""));
+
+      reply = gridWrapper(null, "Person_Organisation", new String[]{"Person_Organisation_Registration_Number"},
+              "hasNeighbourId:" + contractRid, 0L, 4L, "Person_Organisation_Registration_Number", "+asc");
+
+      assertEquals(4, reply.getTotalAvailable(), "This contract has 4 Person_Orgs attached");
+      assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Registration_Number\":\"19854875000145\""));
+      assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Registration_Number\":\"49034782000123\""));
+      assertTrue(reply.getRecords()[2].contains("\"Person_Organisation_Registration_Number\":\"78675984000165\""));
+      assertTrue(reply.getRecords()[3].contains("\"Person_Organisation_Registration_Number\":\"89894673000152\""));
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
+              "hasNeighbourId:" + contractRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"01201405628\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void test00009WebinyOrganizacoes() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-organizacoes.json", "$.data.listOrganizacoes.data[*]", "webiny_organisation");
 
@@ -473,8 +536,52 @@ public class WebinyTest extends AppTest {
               new String[]{"Person_Organisation_Name","Person_Organisation_URL"});
       String replyStr = reply.getRecords()[0];
 
+      String NatOrgRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
       assertTrue(replyStr.contains("\"Person_Organisation_Name\":\"PONTUS VISION BRASIL\""));
       assertTrue(replyStr.contains("\"Person_Organisation_URL\":\"pontusvision.com.br\""));
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address",
+                      "Location_Address_parser_city", "Location_Address_parser_country",
+                      "Location_Address_parser_road", "Location_Address_parser_postcode"},
+              "hasNeighbourId:" + NatOrgRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_country\":\"[brasil]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_postcode\":\"[87981061]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_city\":\"[saopaulo, são paulo]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_road\":\"[rua almirante barroso, ruaalmirantebarroso]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_Full_Address\":\"RUA ALMIRANTE BARROSO 957 APARTAMENTO 23, ABC - SÃO PAULO (SP), 87981061, BRASIL\""));
+
+      reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
+              "hasNeighbourId:" + NatOrgRid);
+      assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"lmartins@pontusnetworks.com\""));
+
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Person_Organisation_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"34907\"\n" +
+                      "  }\n" +
+                      "]", "Person_Organisation",
+              new String[]{"Person_Organisation_Name", "Person_Organisation_Type"});
+      replyStr = reply.getRecords()[0];
+
+      String IntlOrgRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Person_Organisation_Name\":\"PONTUS VISION UK\""));
+      assertTrue(replyStr.contains("\"Person_Organisation_Type\":\"INTERNATIONAL\""));
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address",
+                      "Location_Address_parser_city", "Location_Address_parser_country",
+                      "Location_Address_parser_road", "Location_Address_parser_postcode"},
+              "hasNeighbourId:" + IntlOrgRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_city\":\"[london]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_country\":\"[exterior]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_road\":\"[thatcher street 345, thatcherstreet345]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_parser_postcode\":\"[e 1 0 aa, e 1 0aa, e1 0 aa, e1 0aa]\""));
+      assertTrue(reply.getRecords()[0].contains("\"Location_Address_Full_Address\":\"THATCHER STREET 345 APT 1, WESTMINSTER - LONDON, E1 0AA, EXTERIOR\""));
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -484,7 +591,7 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00009WebinyTreinamentos() throws InterruptedException {
+  public void test00010WebinyTreinamentos() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-treinamentos.json", "$.data.listTreinamentos.data[*]", "webiny_awareness_campaign");
 
@@ -512,7 +619,7 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00010WebinyTitulares() throws InterruptedException {
+  public void test00011WebinyTitulares() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner");
 
@@ -541,7 +648,7 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00012WebinyIncidentes() throws InterruptedException {
+  public void test00013WebinyIncidentes() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_fontes_de_dados");
     jsonTestUtil("webiny/webiny-incidentes.json", "$.data.listIncidentesDeSegurancaReportados.data[*]", "webiny_data_breaches");

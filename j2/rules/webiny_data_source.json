@@ -29,25 +29,25 @@
           },
           {
             "name": "Object_Data_Source_Description",
-            "val": "${fontesDeDadosDescricao}",
+            "val": "${fontesDeDadosDescricao?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Source_Engine",
-            "val": "${fontesDeDadosSistema?.sistemaReferencia}",
+            "val": "${fontesDeDadosSistema?.sistemaReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Source_Type",
-            "val": "${fontesDeDadosSubSistema?.subsistemaReferencia}",
+            "val": "${fontesDeDadosSubSistema?.subsistemaReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Source_Domain",
-            "val": "${fontesDeDadosModulo?.moduloReferencia}",
+            "val": "${fontesDeDadosModulo?.moduloReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

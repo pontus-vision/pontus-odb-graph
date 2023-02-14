@@ -25,6 +25,13 @@ updatereq:
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
+<<<<<<< HEAD
+=======
+        - name: Person_Organisation_Type
+          val: NATIONAL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+>>>>>>> origin/master
     
     - label: Person_Organisation
       name: pj_international
@@ -49,8 +56,18 @@ updatereq:
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
+<<<<<<< HEAD
     
     - label: Object_Identity_Card
+=======
+        - name: Person_Organisation_Type
+          val: INTERNATIONAL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Identity_Card
+      name: id_national
+>>>>>>> origin/master
       condition: ${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() == 14}
       props:
         - name: Object_Identity_Card_Id_Value
@@ -61,6 +78,21 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
     
+<<<<<<< HEAD
+=======
+    - label: Object_Identity_Card
+      name: id_international
+      condition: ${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() != 14}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${organizacoesCnpj?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: INTERNATIONAL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+>>>>>>> origin/master
     - label: Object_Email_Address
       condition: ${organizacoesEmail?.trim()?.length() > 0}
       props:
@@ -94,6 +126,7 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
+<<<<<<< HEAD
           val: ${organizacoesEndereco?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
@@ -101,6 +134,18 @@ updatereq:
           val: ${organizacoesEndereco?.toUpperCase()}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
+=======
+          val: ${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade,(organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location_Address_parser
+          val: ${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location_Address_Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}
+          mandatoryInSearch: True
+>>>>>>> origin/master
     
     - label: Event_Ingestion
       props:
@@ -154,10 +199,17 @@ updatereq:
     toVertexName: pj_international
   - label: Has_Id_Card
     fromVertexName: pj_national
+<<<<<<< HEAD
     toVertexLabel: Object_Identity_Card
   - label: Has_Id_Card
     fromVertexName: pj_international
     toVertexLabel: Object_Identity_Card
+=======
+    toVertexName: id_national
+  - label: Has_Id_Card
+    fromVertexName: pj_international
+    toVertexName: id_international
+>>>>>>> origin/master
   - label: Is_Located
     fromVertexName: pj_national
     toVertexLabel: Location_Address

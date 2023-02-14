@@ -1450,7 +1450,7 @@
     },
     {
       "name": "Object_Contract_Expiry",
-      "dataType": "String",
+      "dataType": "Date",
       "cardinality": "SINGLE"
     },
     {
@@ -1490,6 +1490,21 @@
     },
     {
       "name": "Object_Contract_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Country",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Tranfer_Intl",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Has_Minors_Data",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -4363,6 +4378,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_Approved_Contract",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Complaint",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -4563,6 +4583,11 @@
       "unidirected": false
     },
     {
+      "name": "Is_Beneficiary",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Is_Client",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -4609,6 +4634,16 @@
     },
     {
       "name": "Is_Participant",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Promisee",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Promisor",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -5235,7 +5270,10 @@
         "Object_Contract_Id",
         "Object_Contract_Link",
         "Object_Contract_Status",
-        "Object_Contract_Type"
+        "Object_Contract_Type",
+        "Object_Contract_Country",
+        "Object_Contract_Tranfer_Intl",
+        "Object_Contract_Has_Minors_Data"
       ],
       "propertyKeysMappings": {}
     },
