@@ -650,44 +650,46 @@ public class WebinyTest extends AppTest {
   @Test
   public void test00013WebinyIncidentes() throws InterruptedException {
 
-    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_fontes_de_dados");
+    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_data_source");
     jsonTestUtil("webiny/webiny-incidentes.json", "$.data.listIncidentesDeSegurancaReportados.data[*]", "webiny_data_breaches");
 
     try {
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Data_Breach_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63ebe782ff8b690008ad5d40#0002\"\n" +
+                      "  }\n" +
+                      "]", "Event_Data_Breach",
+              new String[]{"Event_Data_Breach_Description", "Event_Data_Breach_Status", "Event_Data_Breach_Impact",
+                      "Event_Data_Breach_Source", "Event_Data_Breach_Authority_Notified", "Event_Data_Breach_Metadata_Create_Date"});
+      String replyStr = reply.getRecords()[0];
 
-      String dataBreachStatus =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
-                      ".properties('Event_Data_Breach_Status').value().next().toString()").get().toString();
-      assertEquals("Open", dataBreachStatus, "Status for Vazamento de E-mails de Clientes");
+      String breachRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
 
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Status\":\"Suspect External Theft\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Metadata_Create_Date\":\"Tue Feb 14 20:01:59 UTC 2023\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Authority_Notified\":\"True\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Impact\":\"Data Lost\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Description\":\"CIBER ATAQUE\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Source\":\"CHINA\""));
 
-      String dataBreachDate =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
-                      ".values('Event_Data_Breach_Metadata_Create_Date').next().toString()").get().toString();
+      reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name",
+                      "Object_Data_Source_Description"}, "hasNeighbourId:" + breachRid);
 
-      Date dateObj = dtfmt.parse(dataBreachDate);
-      Date expDateObj = dtfmt.parse("Thu Aug 12 15:17:48 GMT 2021");
-      assertEquals(expDateObj, dateObj, "Time of the Data Breach");
+      assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
+      assertTrue(replyStr.contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
 
-      String dataBreachSource =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('CRM-LEADS')).in('Impacted_By_Data_Breach')" +
-                      ".properties('Event_Data_Breach_Source').value().next().toString()").get().toString();
-      assertEquals("OUTLOOK, GMAIL, YAHOO MAIL", dataBreachSource, "Source for the Data Breach on Documents");
+      String ingestionRid = JsonParser.parseString(gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"},
+              "hasNeighbourId:" + breachRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      String dataSourceArray =
-              App.executor.eval("App.g.V().has('Event_Data_Breach_Description', " +
-                      "eq('VAZAMENTO DO HISTÓRICO DE NAVEGAÇÃO DOS COLABORADORES')).out('Impacted_By_Data_Breach')" +
-                      ".has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source')).dedup().count().next().toString()").get().toString();
-      assertEquals("3", dataSourceArray,"This Data_Breach event has 4 data_sources: " +
-              "Histórico navegador Google Chrome / Mozilla Firefox / Microsoft Edge / Apple Safari");
+      String groupIngestionRid = JsonParser.parseString(gridWrapper(null, "Event_Group_Ingestion", new String[]{"Event_Group_Ingestion_Type"},
+              "hasNeighbourId:" + ingestionRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      String opinionsBreach =
-              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq('SHAREPOINT/DATA-BREACHES'))" +
-                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
-                      ".out('Impacted_By_Data_Breach').has('Object_Data_Source_Name', eq('ERP-HR'))" +
-                      ".in('Impacted_By_Data_Breach').values('Event_Data_Breach_Impact').next().toString()").get().toString();
-      assertEquals("No Impact", opinionsBreach,"Impact for breaching employees opinions");
+      reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"}, "hasNeighbourId:" + groupIngestionRid);
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS\""));
 
     } catch (Exception e) {
       e.printStackTrace();

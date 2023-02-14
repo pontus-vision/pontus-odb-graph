@@ -1917,7 +1917,7 @@ rules:
             val: "${incidentesDeSegurancaReportadosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Authority_Notified:
-            val: "${incidentesDeSegurancaReportadosNotificacaoAnpd?.trim()}"
+            val: "\"${(incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('yes') || incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true') || incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
             excludeFromSearch: true
           Description:
             val: "${incidentesDeSegurancaReportadosDescricao?.trim()?.toUpperCase()}"
@@ -1934,7 +1934,7 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Natural_Person_Notified:
-            val: "${incidentesDeSegurancaReportadosNotificacaoTitular?.trim()}"
+            val: "\"${(incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('yes') || incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true') || incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
             excludeFromSearch: true
           Source:
             val: "${incidentesDeSegurancaReportadosOrigem?.trim()?.toUpperCase()}"

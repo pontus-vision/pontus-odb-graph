@@ -34,15 +34,12 @@
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
-<<<<<<< HEAD
-=======
           },
           {
             "name": "Person_Organisation_Type",
             "val": "NATIONAL",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
->>>>>>> origin/master
           }
         ]
       },
@@ -79,24 +76,18 @@
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
-<<<<<<< HEAD
-=======
           },
           {
             "name": "Person_Organisation_Type",
             "val": "INTERNATIONAL",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
->>>>>>> origin/master
           }
         ]
       },
       {
         "label": "Object_Identity_Card",
-<<<<<<< HEAD
-=======
         "name": "id_national",
->>>>>>> origin/master
         "condition": "${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() == 14}",
         "props": [
           {
@@ -113,8 +104,6 @@
         ]
       },
       {
-<<<<<<< HEAD
-=======
         "label": "Object_Identity_Card",
         "name": "id_international",
         "condition": "${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() != 14}",
@@ -133,7 +122,6 @@
         ]
       },
       {
->>>>>>> origin/master
         "label": "Object_Email_Address",
         "condition": "${organizacoesEmail?.trim()?.length() > 0}",
         "props": [
@@ -184,21 +172,12 @@
         "props": [
           {
             "name": "Location_Address_Full_Address",
-<<<<<<< HEAD
-            "val": "${organizacoesEndereco?.toUpperCase()}",
-=======
             "val": "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade,(organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}",
->>>>>>> origin/master
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Location_Address_parser",
-<<<<<<< HEAD
-            "val": "${organizacoesEndereco?.toUpperCase()}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-=======
             "val": "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}",
             "mandatoryInSearch": true,
             "type": "com.pontusvision.utils.LocationAddress"
@@ -207,7 +186,6 @@
             "name": "Location_Address_Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}",
             "mandatoryInSearch": true
->>>>>>> origin/master
           }
         ]
       },
@@ -293,20 +271,12 @@
       {
         "label": "Has_Id_Card",
         "fromVertexName": "pj_national",
-<<<<<<< HEAD
-        "toVertexLabel": "Object_Identity_Card"
-=======
         "toVertexName": "id_national"
->>>>>>> origin/master
       },
       {
         "label": "Has_Id_Card",
         "fromVertexName": "pj_international",
-<<<<<<< HEAD
-        "toVertexLabel": "Object_Identity_Card"
-=======
         "toVertexName": "id_international"
->>>>>>> origin/master
       },
       {
         "label": "Is_Located",
