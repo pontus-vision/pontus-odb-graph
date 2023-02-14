@@ -1539,33 +1539,33 @@ rules:
         fromVertexLabel: "Event_Training"
         toVertexName: "failed"
 
-  webiny_person_natural:
+  webiny_owner:
 
     vertices:
 
       - label: Person_Natural
         condition: "${titularesCpfDoTitular?.replaceAll('[^0-9]','')?.length() == 11}"
-        name: pf_national
         props:
-          URL:
-            val: "${organizacoesSite?.trim()?.toLowerCase()}"
-            excludeFromSearch: true
-          Name:
+          Customer_ID: "${titularesCpfDoTitular.replaceAll('[^0-9]','')}"
+          Full_Name:
             val: "${titularesNomeCompleto?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-          Id: "${titularesCpfDoTitular.replaceAll('[^0-9]','')}"
-          Registration_Number: "${titularesCpfDoTitular.replaceAll('[^0-9]','')}"
           Last_Update_Date:
             val: "${savedOn}"
             excludeFromSearch: true
             type: java.util.Date
+          Type:
+            val: "${titularesCategoriaDoTitular}"
+            excludeFromSearch: true
 
       - label: Person_Employee
         props:
-          Role: "${titularesCargo?.trim()?.toUpperCase()}"
+          Role:
+            val: "${titularesCargo?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
 
       - label: Object_Identity_Card
-        condition: "${titularesCpfDoTitular?.replaceAll('[^0-9]', '')?.length() == 14}"
+        condition: "${titularesCpfDoTitular?.replaceAll('[^0-9]', '')?.length() == 11}"
         props:
           Id_Value: "${titularesCpfDoTitular?.replaceAll('[^0-9]','')}"
           Id_Type:
@@ -1582,20 +1582,11 @@ rules:
         props:
           Name: "WEBINY/TITULARES"
 
-      - label: Location_Address
-        props:
-          Full_Address:
-            val: "${organizacoesEndereco?.toUpperCase()}"
-            excludeFromSearch: true
-          parser:
-            val: "${organizacoesEndereco?.toUpperCase()}"
-            type: "com.pontusvision.utils.LocationAddress"
-      #          Post_Code: "${com.pontusvision.utils.PostCode.format(organizacoesEndereco)}"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Organizações"
+            val: "Webiny Titulares"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1614,6 +1605,36 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/organizações"
+          Type: "webiny/titulares"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+        - label: Has_Ingestion_Event
+          fromVertexLabel: "Object_Data_Source"
+          toVertexLabel: "Event_Group_Ingestion"
+
+        - label: Has_Ingestion_Event
+          fromVertexLabel: "Event_Group_Ingestion"
+          toVertexLabel: "Event_Ingestion"
+
+        - label: Has_Ingestion_Event
+          fromVertexLabel: "Event_Ingestion"
+          toVertexLabel: "Person_Natural"
+
+        - label: Is_Alias
+          fromVertexLabel: "Person_Natural"
+          toVertexLabel: "Person_Employee"
+
+        - label: Uses_Email
+          fromVertexLabel: "Person_Natural"
+          toVertexLabel: "Object_Email_Address"
+
+        - label: Has_Id_Card
+          fromVertexLabel: "Person_Natural"
+          toVertexLabel: "Object_Identity_Card"
+
+        - label: Has_Phone
+          fromVertexLabel: "Person_Natural"
+          toVertexLabel: "Object_Phone_Number"
+
