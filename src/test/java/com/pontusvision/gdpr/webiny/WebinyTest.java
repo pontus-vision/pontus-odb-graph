@@ -679,8 +679,8 @@ public class WebinyTest extends AppTest {
       reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name",
                       "Object_Data_Source_Description"}, "hasNeighbourId:" + breachRid);
 
-      assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
-      assertTrue(replyStr.contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
 
       String ingestionRid = JsonParser.parseString(gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"},
               "hasNeighbourId:" + breachRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
