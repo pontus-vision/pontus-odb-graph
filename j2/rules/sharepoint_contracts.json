@@ -2,15 +2,15 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Person_Natural",
+        "label": "Object_Email_Address",
         "props": [
           {
-            "name": "Person_Natural_Customer_ID",
+            "name": "Object_Email_Address_Email",
             "val": "${new groovy.json.JsonBuilder(ContratoAprovadoPor)}",
             "mandatoryInSearch": true,
             "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
           }
         ]
       },
@@ -21,19 +21,13 @@
         "props": [
           {
             "name": "Person_Organisation_Id",
-            "val": "${new groovy.json.JsonBuilder(org_contratante)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "val": "${org_contratante?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
-            "val": "${new groovy.json.JsonBuilder(org_contratante )}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "val": "${org_contratante?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -44,19 +38,13 @@
         "props": [
           {
             "name": "Person_Organisation_Id",
-            "val": "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "val": "${org_contratada?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
-            "val": "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "val": "${org_contratada?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -67,19 +55,13 @@
         "props": [
           {
             "name": "Person_Organisation_Id",
-            "val": "${new groovy.json.JsonBuilder(Operador)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "val": "${Operador?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
-            "val": "${new groovy.json.JsonBuilder(Operador)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "val": "${Operador?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -90,19 +72,13 @@
         "props": [
           {
             "name": "Person_Organisation_Id",
-            "val": "${new groovy.json.JsonBuilder(Controlador)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "val": "${Controlador?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
-            "val": "${new groovy.json.JsonBuilder(Controlador)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "val": "${Controlador?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -289,7 +265,7 @@
       },
       {
         "label": "Has_Approved_Contract",
-        "fromVertexLabel": "Person_Natural",
+        "fromVertexLabel": "Object_Email_Address",
         "toVertexLabel": "Object_Contract"
       },
       {

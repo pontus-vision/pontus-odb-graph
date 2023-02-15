@@ -181,17 +181,17 @@ public class PVSharepointTests extends AppTest {
       assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"Administrativo-Financeiro - 32\""));
       assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Info_Collected\":\"[Nome, CPF, RG, Endereço, E-mail]\""));
 
-      reply = gridWrapper(null, "Person_Organisation", new String[]{"Person_Organisation_Registration_Number"},
-              "hasNeighbourId:" + contractRid, 0L, 2L, "Person_Organisation_Registration_Number", "+asc");
+      reply = gridWrapper(null, "Person_Organisation", new String[]{"Person_Organisation_Name"},
+              "hasNeighbourId:" + contractRid, 0L, 2L, "Person_Organisation_Name", "+asc");
 
       assertEquals(2, reply.getTotalAvailable(), "This contract has 2 Person_Orgs attached");
-      assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Registration_Number\":\"346546\""));
-      assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Registration_Number\":\"756589\""));
+      assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Name\":\"GALLETAS GAUDÍ\""));
+      assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Name\":\"OMEGA COWORKING\""));
 
-      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Customer_ID"},
+      reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
               "hasNeighbourId:" + contractRid);
 
-      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"647595\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"marlon-souza-costa-avelar-padua-silva@hotmail.com\""));
 
     } catch (Exception e) {
       e.printStackTrace();

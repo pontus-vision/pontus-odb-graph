@@ -1642,73 +1642,41 @@ rules:
 
     vertices:
 
-      - label: Person_Natural
+      - label: Object_Email_Address
         props:
-          Customer_ID:
+          Email:
             val: "${new groovy.json.JsonBuilder(ContratoAprovadoPor)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            type: "[Lcom.pontusvision.utils.SharepointUserRef;"
+            postProcessor: "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
             processAll: true
 
       - label: Person_Organisation
         condition: "${org_contratante?.size() > 0}"
         name: pj_contratante
         props:
-          Id:
-            val: "${new groovy.json.JsonBuilder(org_contratante)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
-          Registration_Number:
-            val: "${new groovy.json.JsonBuilder(org_contratante )}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
+          Id: "${org_contratante?.replaceAll('[^0-9]', '')}"
+          Registration_Number: "${org_contratante?.replaceAll('[^0-9]', '')}"
 
       - label: Person_Organisation
         condition: "${org_contratada?.size() > 0}"
         name: pj_contratada
         props:
-          Id:
-            val: "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
-          Registration_Number:
-            val: "${new groovy.json.JsonBuilder(contratosOrganizacaoContratada)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
+          Id: "${org_contratada?.replaceAll('[^0-9]', '')}"
+          Registration_Number: "${org_contratada?.replaceAll('[^0-9]', '')}"
 
       - label: Person_Organisation
         condition: "${Operador?.size() > 0}"
         name: operador
         props:
-          Id:
-            val: "${new groovy.json.JsonBuilder(Operador)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
-          Registration_Number:
-            val: "${new groovy.json.JsonBuilder(Operador)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
+          Id: "${Operador?.replaceAll('[^0-9]', '')}"
+          Registration_Number: "${Operador?.replaceAll('[^0-9]', '')}"
 
       - label: Person_Organisation
         condition: "${Controlador?.size() > 0}"
         name: controlador
         props:
-          Id:
-            val: "${new groovy.json.JsonBuilder(Controlador)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
-          Registration_Number:
-            val: "${new groovy.json.JsonBuilder(Controlador)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
+          Id: "${Controlador?.replaceAll('[^0-9]', '')}"
+          Registration_Number: "${Controlador?.replaceAll('[^0-9]', '')}"
 
       - label: Object_Contract
         props:
@@ -1814,7 +1782,7 @@ rules:
         toVertexLabel: "Object_Contract"
 
       - label: Has_Approved_Contract
-        fromVertexLabel: "Person_Natural"
+        fromVertexLabel: "Object_Email_Address"
         toVertexLabel: "Object_Contract"
 
       - label: Has_Contract
