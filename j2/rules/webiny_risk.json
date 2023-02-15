@@ -1,0 +1,187 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Data_Source",
+        "name": "webiny",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/RISCOS-DE-FONTES-DE-DADOS",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "attached_data_sources",
+        "condition": "${riscosDeFontesDeDadosFontesDeDados?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(riscosDeFontesDeDadosFontesDeDados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Risk_Data_Source",
+        "props": [
+          {
+            "name": "Object_Risk_Data_Source_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Risk_Id",
+            "val": "${riscosDeFontesDeDadosReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Description",
+            "val": "${riscosDeFontesDeDadosDescricao?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Probability",
+            "val": "${riscosDeFontesDeDadosProbabilidade}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Impact",
+            "val": "${riscosDeFontesDeDadosImpacto}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Residual_Probability",
+            "val": "${riscosDeFontesDeDadosProbResidual}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Residual_Impact",
+            "val": "${riscosDeFontesDeDadosImpResidual}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Approved_By_DPO",
+            "val": "${(riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('yes') || riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true') || riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Approved_By_Security",
+            "val": "${(riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('yes') || riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true') || riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Risk_Mitigation_Data_Source",
+        "props": [
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(riscosDeFontesDeDadosMitigacoesDeRiscos)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "Webiny Riscos de Fontes de Dados",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${createdOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "webiny/riscos-de-fontes-de-dados",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "webiny",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Object_Risk_Data_Source"
+      },
+      {
+        "label": "Has_Risk",
+        "fromVertexName": "attached_data_sources",
+        "toVertexLabel": "Object_Risk_Data_Source"
+      },
+      {
+        "label": "Mitigates_Risk",
+        "fromVertexLabel": "Object_Risk_Mitigation_Data_Source",
+        "toVertexLabel": "Object_Risk_Data_Source"
+      }
+    ]
+  }
+}

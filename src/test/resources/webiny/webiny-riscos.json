@@ -1,0 +1,31 @@
+{
+  "data": {
+    "listRiscosDeFontesDeDados": {
+      "data": [
+        {
+          "id": "63ecec700e3fcd00083e8545#0002",
+          "createdOn": "2023-02-15T14:31:14.677Z",
+          "savedOn": "2023-02-15T14:31:16.277Z",
+          "riscosDeFontesDeDadosReferencia": "risco de roubo",
+          "riscosDeFontesDeDadosDescricao": "roubo de dados pessoais",
+          "riscosDeFontesDeDadosFontesDeDados": [
+            {
+              "id": "63ebe89c0df4b00008edde67#0001"
+            }
+          ],
+          "riscosDeFontesDeDadosMitigacoesDeRiscos": [
+            {
+              "id": "63ececa50e3fcd00083e8546#0001"
+            }
+          ],
+          "riscosDeFontesDeDadosAprovadoPelaSeguranca": true,
+          "riscosDeFontesDeDadosAprovadoPeloEncarregado": false,
+          "riscosDeFontesDeDadosProbabilidade": "Medium",
+          "riscosDeFontesDeDadosProbResidual": "Low",
+          "riscosDeFontesDeDadosImpacto": "High",
+          "riscosDeFontesDeDadosImpResidual": "Medium"
+        }
+      ]
+    }
+  }
+}
