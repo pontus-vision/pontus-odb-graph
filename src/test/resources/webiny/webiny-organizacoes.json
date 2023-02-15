@@ -14,9 +14,6 @@
           },
           "organizacoesTelefone": "112453675898",
           "organizacoesSite": "pontusvision.com.br",
-<<<<<<< HEAD
-          "organizacoesEndereco": "rua são paulo 256"
-=======
           "organizacoesEnderecoObj": {
             "organizacoesEnderecoObjEndereco": "rua almirante barroso",
             "organizacoesEnderecoObjComplemento": "apartamento 23",
@@ -48,7 +45,6 @@
             "organizacoesEnderecoObjUf": "Exterior",
             "organizacoesEnderecoObjCidade": "London"
           }
->>>>>>> origin/master
         }
       ]
     }
