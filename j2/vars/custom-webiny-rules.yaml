@@ -1816,11 +1816,9 @@ rules:
         props:
           Email: "${titularesEmail?.trim()?.toLowerCase()}"
 
-
       - label: Object_Data_Source
         props:
           Name: "WEBINY/TITULARES"
-
 
       - label: Event_Ingestion
         props:

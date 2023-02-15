@@ -635,9 +635,20 @@ public class WebinyTest extends AppTest {
               new String[]{"Person_Natural_Full_Name", "Person_Natural_Type", "Person_Natural_Last_Update_Date"});
       String replyStr = reply.getRecords()[0];
 
+      String titularRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
       assertTrue(replyStr.contains("\"Person_Natural_Full_Name\":\"MARIA SANTOS\""), "Owner's name is Maria Santos");
       assertTrue(replyStr.contains("\"Person_Natural_Type\":\"[Colaborador]\""), "Person Natural Type");
       assertTrue(replyStr.contains("\"Person_Natural_Last_Update_Date\":\"Wed Jan 25 18:22:14 UTC 2023\""), "Last Update");
+
+      reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + titularRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Identity_Card_Id_Value\":\"01201405628\""));
+
+      reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"}, "hasNeighbourId:" + titularRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"maria@pontusvision.com\""));
 
     } catch (Exception e) {
       e.printStackTrace();
