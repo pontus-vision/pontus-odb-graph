@@ -124,11 +124,11 @@ updatereq:
     - label: Location_Address
       props:
         - name: Location_Address_Full_Address
-          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}
+          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, null, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Location_Address_parser
-          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}
+          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, null, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
         - name: Location_Address_Post_Code

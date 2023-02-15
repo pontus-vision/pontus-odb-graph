@@ -98,7 +98,7 @@ public class LocationAddress {
     return tokens.toString();
   }
 
-  public static String formatAddress(String address, String number, String complement, String disctrict, String city, String country, String postCode) {
+  public static String formatAddress(String address, String number, String complement, String district, String city, String state, String country, String postCode) {
 
     StringBuilder sb = new StringBuilder();
 
@@ -124,16 +124,22 @@ public class LocationAddress {
       sb.append(" ").append(complement.trim().toUpperCase());
     }
 
-    boolean disctrictBool = disctrict != null && !disctrict.isEmpty();
+    boolean districtBool = district != null && !district.isEmpty();
 
-    if (disctrictBool) {
-      sb.append(", ").append(disctrict.trim().toUpperCase());
+    if (districtBool) {
+      sb.append(", ").append(district.trim().toUpperCase());
     }
 
     boolean cityBool = city != null && !city.isEmpty();
 
     if (cityBool) {
       sb.append(" - ").append(city.trim().toUpperCase());
+    }
+
+    boolean stateBool = state != null && !state.isEmpty();
+
+    if (stateBool) {
+      sb.append(" (").append(state.trim().toUpperCase()).append(")");
     }
 
     boolean postCodeBool = postCode != null && !postCode.isEmpty();
