@@ -704,7 +704,7 @@ public class WebinyTest extends AppTest {
 
       reply = gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"}, "hasNeighbourId:" + riskRid);
 
-      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"Webiny Riscos de Fontes de Dados\""));
+      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"webiny/riscos-de-fontes-de-dados\""));
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -749,7 +749,7 @@ public class WebinyTest extends AppTest {
 
       reply = gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"}, "hasNeighbourId:" + riskMitigationRid);
 
-      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"Webiny Mitigações de Riscos\""));
+      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"webiny/mitigações-de-riscos\""));
 
     } catch (Exception e) {
       e.printStackTrace();
