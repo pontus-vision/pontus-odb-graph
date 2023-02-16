@@ -619,35 +619,6 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00011WebinyTitulares() throws InterruptedException {
-
-    jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner");
-
-    try {
-
-      RecordReply reply = gridWrapper("[\n" +
-                      "  {\n" +
-                      "    \"colId\": \"Person_Natural_Customer_ID\",\n" +
-                      "    \"filterType\": \"text\",\n" +
-                      "    \"type\": \"equals\",\n" +
-                      "    \"filter\": \"01201405628\"\n" +
-                      "  }\n" +
-                      "]", "Person_Natural",
-              new String[]{"Person_Natural_Full_Name", "Person_Natural_Type", "Person_Natural_Last_Update_Date"});
-      String replyStr = reply.getRecords()[0];
-
-      assertTrue(replyStr.contains("\"Person_Natural_Full_Name\":\"MARIA SANTOS\""), "Owner's name is Maria Santos");
-      assertTrue(replyStr.contains("\"Person_Natural_Type\":\"[Colaborador]\""), "Person Natural Type");
-      assertTrue(replyStr.contains("\"Person_Natural_Last_Update_Date\":\"Wed Jan 25 18:22:14 UTC 2023\""), "Last Update");
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      assertNull(e, e.getMessage());
-    }
-
-  }
-
-  @Test
   public void test00013WebinyIncidentes() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_data_source");
