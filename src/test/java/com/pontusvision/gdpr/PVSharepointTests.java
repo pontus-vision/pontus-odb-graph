@@ -1,5 +1,6 @@
 package com.pontusvision.gdpr;
 
+import com.google.gson.JsonParser;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
@@ -132,6 +133,69 @@ public class PVSharepointTests extends AppTest {
     } catch (ExecutionException e) {
       e.printStackTrace();
       assertNull(e);
+    }
+
+  }
+
+  @Test
+  public void test00003SharepointContratos() throws InterruptedException {
+
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields", "sharepoint_fontes_de_dados");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields", "sharepoint_mapeamentos");
+    jsonTestUtil("totvs/totvs-sa2-real.json", "$.objs", "totvs_protheus_sa2_fornecedor");
+    jsonTestUtil("sharepoint/devtools-extract-sharepoint-contracts.json", "$.queryResp[*].fields", "sharepoint_contracts");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Contract_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"1\"\n" +
+                      "  }\n" +
+                      "]", "Object_Contract",
+              new String[]{"Object_Contract_Short_Description", "Object_Contract_Tranfer_Intl", "Object_Contract_Has_Minors_Data", "Object_Contract_Expiry"});
+      String replyStr = reply.getRecords()[0];
+
+      String contractRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Object_Contract_Short_Description\":\"POLE-CONTRATOS-2\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Has_Minors_Data\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Tranfer_Intl\":\"[II - QUANDO O CONTROLADOR OFERECER E COMPROVAR GARANTIAS DE CUMPRIMENTO DOS PRINCÍPIOS, DOS DIREITOS DO TITULAR E DO REGIME DE PROTEÇÃO DE DADOS PREVISTOS NA LGPD, IV - QUANDO A TRANSFERÊNCIA FOR NECESSÁRIA PARA A PROTEÇÃO DA VIDA OU DA INCOLUMIDADE FÍSICA DO TITULAR OU DE TERCEIRO]\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Expiry\":\"Mon Feb 02 08:00:00 UTC 2026\""));
+
+      reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name", "Object_Data_Source_Engine", "Object_Data_Source_Description"},
+              "hasNeighbourId:" + contractRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Engine\":\"PBR\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"ERP-FUNCIONÁRIO\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Description\":\"SISTEMA DE ERP PARA CADASTRO DOS COLABORADORES\"}"));
+
+      reply = gridWrapper(null, "Object_Data_Procedures",new String[]{"Object_Data_Procedures_Business_Area_Responsible",
+              "Object_Data_Procedures_Why_Is_It_Collected", "Object_Data_Procedures_Name", "Object_Data_Procedures_Info_Collected"},
+              "hasNeighbourId:" + contractRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Why_Is_It_Collected\":\"Necessário para gestão de termo de confidencialidade formalizados com clientes/fornecedores\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"Termos de Confidencialidade \""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"Administrativo-Financeiro - 32\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Info_Collected\":\"[Nome, CPF, RG, Endereço, E-mail]\""));
+
+      reply = gridWrapper(null, "Person_Organisation", new String[]{"Person_Organisation_Name"},
+              "hasNeighbourId:" + contractRid, 0L, 2L, "Person_Organisation_Name", "+asc");
+
+      assertEquals(2, reply.getTotalAvailable(), "This contract has 2 Person_Orgs attached");
+      assertTrue(reply.getRecords()[0].contains("\"Person_Organisation_Name\":\"GALLETAS GAUDÍ\""));
+      assertTrue(reply.getRecords()[1].contains("\"Person_Organisation_Name\":\"OMEGA COWORKING\""));
+
+      reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
+              "hasNeighbourId:" + contractRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"marlon-souza-costa-avelar-padua-silva@hotmail.com\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
     }
 
   }

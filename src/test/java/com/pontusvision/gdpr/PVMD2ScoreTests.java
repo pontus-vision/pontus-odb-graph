@@ -45,8 +45,9 @@ public class PVMD2ScoreTests extends AppTest {
       Type resultType = new TypeToken<List<Map<String, Object>>>(){}.getType();
       List<Map<String, Object>> result = gson.fromJson(md2Stats, resultType);
 
-      assertEquals(138,result.size());
-
+//      result.size() changed from 138 to 140 because we added more Person_Organisations
+//      assertEquals(138,result.size());
+      assertEquals(140,result.size());
 //      Map<String, Long> retVals = new HashMap<>();
 //
 //      long score =  gdpr.getAwarenessScores(retVals);
