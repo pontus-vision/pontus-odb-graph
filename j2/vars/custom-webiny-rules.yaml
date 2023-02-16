@@ -1902,6 +1902,11 @@ rules:
     vertices:
 
       - label: Object_Data_Source
+        name: webiny
+        props:
+          Name: "WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS"
+
+      - label: Object_Data_Source
         name: data_sources
         props:
           Form_Id:
@@ -1942,11 +1947,6 @@ rules:
           Status:
             val: "${incidentesDeSegurancaReportadosStatus}"  # raw because it is used internally for scoring
             excludeFromSearch: true
-
-      - label: Object_Data_Source
-        name: webiny
-        props:
-          Name: "WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS"
 
       - label: Event_Ingestion
         props:
@@ -2114,6 +2114,99 @@ rules:
       - label: "Has_Risk"
         fromVertexName: "attached_data_sources"
         toVertexLabel: "Object_Risk_Data_Source"
+
+      - label: "Mitigates_Risk"
+        fromVertexLabel: "Object_Risk_Mitigation_Data_Source"
+        toVertexLabel: "Object_Risk_Data_Source"
+
+  webiny_risk_mitigation:
+
+#    {
+#      listMitigacoesDeRiscos{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      mitigacoesDeRiscosReferencia
+#      mitigacoesDeRiscosDescricao
+#      mitigacoesDeRiscosImplementado
+#      mitigacoesDeRiscosAprovado
+#      mitigacoesDeRiscosRiscosDeFontesDeDados{
+#      id
+#    }
+#    }
+#    }
+#    }
+
+    vertices:
+
+      - label: Object_Data_Source
+        name: webiny
+        props:
+          Name: "WEBINY/MITIGAÇÕES-DE-RISCOS"
+
+      - label: Object_Risk_Data_Source
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(mitigacoesDeRiscosRiscosDeFontesDeDados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+
+      - label: Object_Risk_Mitigation_Data_Source
+        props:
+          Form_Id: "${id}"
+          Mitigation_Id:
+            val: "${mitigacoesDeRiscosReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Description:
+            val: "${mitigacoesDeRiscosDescricao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Is_Implemented:
+            val: "\"${(mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('yes') || mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true') || mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            excludeFromSearch: true
+          Is_Approved:
+            val: "\"${(mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('yes') || mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true') || mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            excludeFromSearch: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "Webiny Mitigações de Riscos"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/mitigações-de-riscos"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "webiny"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Risk_Mitigation_Data_Source"
 
       - label: "Mitigates_Risk"
         fromVertexLabel: "Object_Risk_Mitigation_Data_Source"

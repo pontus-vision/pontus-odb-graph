@@ -3,6 +3,17 @@
     "vertices": [
       {
         "label": "Object_Data_Source",
+        "name": "webiny",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
         "name": "data_sources",
         "props": [
           {
@@ -78,17 +89,6 @@
             "val": "${incidentesDeSegurancaReportadosStatus}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "name": "webiny",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS",
-            "mandatoryInSearch": true
           }
         ]
       },
