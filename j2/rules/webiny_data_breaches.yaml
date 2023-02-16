@@ -66,7 +66,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Incidentes de Segurança Reportados
+          val: webiny/incidentes-de-segurança-reportados
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

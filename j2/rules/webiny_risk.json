@@ -103,7 +103,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Riscos de Fontes de Dados",
+            "val": "webiny/riscos-de-fontes-de-dados",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

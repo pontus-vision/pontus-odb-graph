@@ -116,7 +116,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Consentimentos",
+            "val": "webiny/consentimentos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

@@ -97,7 +97,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Incidentes de Segurança Reportados",
+            "val": "webiny/incidentes-de-segurança-reportados",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

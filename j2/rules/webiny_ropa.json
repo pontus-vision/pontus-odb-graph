@@ -367,7 +367,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Mapeamento de Processos",
+            "val": "webiny/mapeamento-de-processos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

@@ -45,7 +45,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Ações Judiciais",
+            "val": "webiny/ações-judiciais",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

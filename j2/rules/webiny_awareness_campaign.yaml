@@ -54,7 +54,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Treinamentos
+          val: webiny/treinamentos
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

@@ -144,7 +144,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Contratos
+          val: webiny/contratos
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

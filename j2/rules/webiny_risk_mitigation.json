@@ -64,7 +64,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Mitigações de Riscos",
+            "val": "webiny/mitigações-de-riscos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

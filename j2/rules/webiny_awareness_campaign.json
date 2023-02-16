@@ -79,7 +79,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Treinamentos",
+            "val": "webiny/treinamentos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

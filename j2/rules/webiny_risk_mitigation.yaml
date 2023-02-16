@@ -43,7 +43,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Mitigações de Riscos
+          val: webiny/mitigações-de-riscos
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

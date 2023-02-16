@@ -341,7 +341,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Fontes de Dados",
+            "val": "webiny/fontes-de-dados",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

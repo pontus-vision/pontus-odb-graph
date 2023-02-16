@@ -81,7 +81,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Consentimentos
+          val: webiny/consentimentos
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
