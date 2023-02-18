@@ -1938,7 +1938,7 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Request_Type:
-            val: "${for(item in requisicaoTitularesQualidadeObj){return item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '') + ' : ' + item.value?.toString()?.capitalize()}}"
+            val: "${for(item in requisicaoTitularesQualidadeObj){return item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize()}}"
             excludeFromSearch: true
   #          Description:
   #            val: "${Solicita_x00e7__x00e3_o_x002d_De}"
