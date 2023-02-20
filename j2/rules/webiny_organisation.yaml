@@ -129,7 +129,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Organizações
+          val: webiny/organizações
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

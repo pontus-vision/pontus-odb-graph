@@ -262,7 +262,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: webiny/mapeamento de processos
+          val: webiny/mapeamento-de-processos
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

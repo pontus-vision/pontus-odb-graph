@@ -17,7 +17,7 @@
           },
           {
             "name": "Event_Consent_Status",
-            "val": "${(consentimentosStatus?.toString()?.equalsIgnoreCase('yes') || consentimentosStatus?.toString()?.equalsIgnoreCase('true') || consentimentosStatus?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }",
+            "val": "${consentimentosStatus?.toString()?.equalsIgnoreCase('true')?'Consent':'No Consent'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -116,7 +116,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Consentimentos",
+            "val": "webiny/consentimentos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

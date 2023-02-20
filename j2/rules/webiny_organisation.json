@@ -194,7 +194,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Organizações",
+            "val": "webiny/organizações",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
