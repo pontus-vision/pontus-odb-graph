@@ -1899,15 +1899,14 @@ rules:
 #  }
 #  }
 
-
     vertices:
 
       - label: Person_Natural
         condition: "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
         props:
-          Full_Name:
-            val: "${requisicaoTitularesNome?.trim()?.toUpperCase()}"
-            excludeFromSearch: true
+#          Full_Name:
+#            val: "${requisicaoTitularesNome?.trim()?.toUpperCase()}"
+#            excludeFromSearch: true
           Customer_ID: "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}"
 
   #      TODO: Check with Leo if this link with RoPA is necessary.
@@ -1938,7 +1937,7 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Request_Type:
-            val: "${for(item in requisicaoTitularesQualidadeObj){return item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize()}}"
+            val: "${def arr = []; for(item in requisicaoTitularesQualidadeObj){arr.add(item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize())};return arr}"
             excludeFromSearch: true
   #          Description:
   #            val: "${Solicita_x00e7__x00e3_o_x002d_De}"

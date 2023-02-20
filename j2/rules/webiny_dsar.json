@@ -6,12 +6,6 @@
         "condition": "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}",
         "props": [
           {
-            "name": "Person_Natural_Full_Name",
-            "val": "${requisicaoTitularesNome?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Person_Natural_Customer_ID",
             "val": "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}",
             "mandatoryInSearch": true
@@ -58,7 +52,7 @@
           },
           {
             "name": "Event_Subject_Access_Request_Request_Type",
-            "val": "${for(item in requisicaoTitularesQualidadeObj){return item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize()}}",
+            "val": "${def arr = []; for(item in requisicaoTitularesQualidadeObj){arr.add(item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize())};return arr}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

@@ -5,10 +5,6 @@ updatereq:
     - label: Person_Natural
       condition: ${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}
       props:
-        - name: Person_Natural_Full_Name
-          val: ${requisicaoTitularesNome?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Person_Natural_Customer_ID
           val: ${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
@@ -39,7 +35,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Request_Type
-          val: ${for(item in requisicaoTitularesQualidadeObj){return item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize()}}
+          val: ${def arr = []; for(item in requisicaoTitularesQualidadeObj){arr.add(item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize())};return arr}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Natural_Person_Type

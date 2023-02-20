@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.time.LocalDate;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -518,7 +519,7 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00008WebinyOrganizacoes() throws InterruptedException {
+  public void test00009WebinyOrganizacoes() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-organizacoes.json", "$.data.listOrganizacoes.data[*]", "webiny_organisation");
 
@@ -590,7 +591,7 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00009WebinyTreinamentos() throws InterruptedException {
+  public void test00010WebinyTreinamentos() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-treinamentos.json", "$.data.listTreinamentos.data[*]", "webiny_awareness_campaign");
 
@@ -618,7 +619,7 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00010WebinyTitulares() throws InterruptedException {
+  public void test00011WebinyTitulares() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner");
 
@@ -644,6 +645,9 @@ public class WebinyTest extends AppTest {
       reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + titularRid);
 
       assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
+
+      reply = gridWrapper(null, "Object_Identity_Card", new String[]{"Object_Identity_Card_Id_Value"}, "hasNeighbourId:" + titularRid);
+
       assertTrue(reply.getRecords()[0].contains("\"Object_Identity_Card_Id_Value\":\"01201405628\""));
 
       reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"}, "hasNeighbourId:" + titularRid);
@@ -656,4 +660,51 @@ public class WebinyTest extends AppTest {
     }
 
   }
+
+  @Test
+  public void test00012WebinyDSAR() throws InterruptedException {
+
+//    jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner"); assuming that titulares are already ingested when the tests run integrated
+    jsonTestUtil("webiny/webiny-requisicoes.json", "$.data.listRequisicaoTitulares.data[*]", "webiny_dsar");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Subject_Access_Request_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63efb10fa4e4cf0008eae52c#0002\"\n" +
+                      "  }\n" +
+                      "]", "Event_Subject_Access_Request",
+              new String[]{"Event_Subject_Access_Request_Request_Type", "Event_Subject_Access_Request_Natural_Person_Type", "Event_Subject_Access_Request_Id"});
+      String replyStr = reply.getRecords()[0];
+
+      String sarRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Natural_Person_Type\":\"Colaborador\""));
+      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Id\":\"admin@pontus.com\""));
+      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Request_Type\":\"[TratamentoDosDados:True, AcessoAosDadosAnteriores:False, AcessoAosRevogarConsentimento:False, AlterarDados:False, DadosBloqueados:False]\""));
+
+      reply = gridWrapper(null, "Event_Group_Subject_Access_Request", new String[]{"Event_Group_Subject_Access_Request_Ingestion_Date"}, "hasNeighbourId:" + sarRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Event_Group_Subject_Access_Request_Ingestion_Date\":\"" + LocalDate.now() + "\""));
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Full_Name"}, "hasNeighbourId:" + sarRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Full_Name\":\"MARIA SANTOS\""));
+
+      String pjRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + pjRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
 }
