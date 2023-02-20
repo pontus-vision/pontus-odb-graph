@@ -150,7 +150,7 @@
           },
           {
             "name": "Object_Contract_Has_Minors_Data",
-            "val": "${(contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('yes') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }",
+            "val": "${contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

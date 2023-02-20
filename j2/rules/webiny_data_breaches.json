@@ -42,7 +42,7 @@
           },
           {
             "name": "Event_Data_Breach_Authority_Notified",
-            "val": "${(incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('yes') || incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true') || incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }",
+            "val": "${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -74,7 +74,7 @@
           },
           {
             "name": "Event_Data_Breach_Natural_Person_Notified",
-            "val": "${(incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('yes') || incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true') || incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }",
+            "val": "${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

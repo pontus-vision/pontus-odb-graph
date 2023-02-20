@@ -1163,7 +1163,7 @@ rules:
             val: "${consentimentosIdentificacao?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromSearch: true
           Status:
-            val: "\"${(consentimentosStatus?.toString()?.equalsIgnoreCase('yes') || consentimentosStatus?.toString()?.equalsIgnoreCase('true') || consentimentosStatus?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }\""
+            val: "\"${consentimentosStatus?.toString()?.equalsIgnoreCase('true')?'Consent':'No Consent'}\""
             excludeFromSearch: true
           Metadata_Create_Date:
             val: "${consentimentosData}"
@@ -1370,7 +1370,7 @@ rules:
             excludeFromSearch: true
           Has_Minors_Data:
 #           or simply ${contratosDadosdeCriancasEAdolescentes}
-            val: "\"${(contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('yes') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            val: "\"${contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
 
       - label: Object_Data_Procedures
@@ -1823,7 +1823,7 @@ rules:
             val: "${incidentesDeSegurancaReportadosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Authority_Notified:
-            val: "\"${(incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('yes') || incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true') || incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            val: "\"${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
           Description:
             val: "${incidentesDeSegurancaReportadosDescricao?.trim()?.toUpperCase()}"
@@ -1840,7 +1840,7 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Natural_Person_Notified:
-            val: "\"${(incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('yes') || incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true') || incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            val: "\"${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
           Source:
             val: "${incidentesDeSegurancaReportadosOrigem?.trim()?.toUpperCase()}"
@@ -1959,10 +1959,10 @@ rules:
             val: "${riscosDeFontesDeDadosImpResidual}"
             excludeFromSearch: true
           Approved_By_DPO:
-            val: "\"${(riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('yes') || riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true') || riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            val: "\"${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
           Approved_By_Security:
-            val: "\"${(riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('yes') || riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true') || riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            val: "\"${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
 
       - label: Object_Risk_Mitigation_Data_Source
@@ -2064,10 +2064,10 @@ rules:
             val: "${mitigacoesDeRiscosDescricao?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Is_Implemented:
-            val: "\"${(mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('yes') || mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true') || mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            val: "\"${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
           Is_Approved:
-            val: "\"${(mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('yes') || mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true') || mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            val: "\"${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
 
       - label: Event_Ingestion
