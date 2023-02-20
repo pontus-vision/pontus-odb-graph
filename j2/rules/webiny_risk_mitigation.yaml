@@ -2,48 +2,48 @@
 updatereq:
   vertices:
     
-    - label: Event_Meeting
+    - label: Object_Data_Source
+      name: webiny
       props:
-        - name: Event_Meeting_Form_Id
-          val: ${id}
+        - name: Object_Data_Source_Name
+          val: WEBINY/MITIGAÇÕES-DE-RISCOS
           mandatoryInSearch: True
-        - name: Event_Meeting_Name
-          val: ${reunioesPpdReferencia?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Meeting_Title
-          val: ${reunioesPpdTituloReuniao?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Meeting_Date
-          val: ${reunioesPpdData}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Meeting_Discussed_Topics
-          val: ${reunioesPpdTopicos?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
-    - label: Person_Natural
+    - label: Object_Risk_Data_Source
       props:
-        - name: Person_Natural_Customer_ID
-          val: ${new groovy.json.JsonBuilder(reunioesPpdParticipantes)}
+        - name: Object_Risk_Data_Source_Form_Id
+          val: ${new groovy.json.JsonBuilder(mitigacoesDeRiscosRiscosDeFontesDeDados)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.WebinyRef;"
-          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'id')}
     
-    - label: Object_Data_Source
+    - label: Object_Risk_Mitigation_Data_Source
       props:
-        - name: Object_Data_Source_Name
-          val: WEBINY/REUNIÕES-PPD
+        - name: Object_Risk_Mitigation_Data_Source_Form_Id
+          val: ${id}
           mandatoryInSearch: True
+        - name: Object_Risk_Mitigation_Data_Source_Mitigation_Id
+          val: ${mitigacoesDeRiscosReferencia?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Risk_Mitigation_Data_Source_Description
+          val: ${mitigacoesDeRiscosDescricao?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Risk_Mitigation_Data_Source_Is_Implemented
+          val: "${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'True':'False'}"
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Risk_Mitigation_Data_Source_Is_Approved
+          val: "${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'True':'False'}"
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: webiny/reuniões-ppd
+          val: webiny/mitigações-de-riscos
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -68,7 +68,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: webiny/reuniões-ppd
+          val: webiny/mitigações-de-riscos
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -79,15 +79,15 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Data_Source
+    fromVertexName: webiny
     toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
-    toVertexLabel: Event_Meeting
-  - label: Is_Participant
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Event_Meeting
+    toVertexLabel: Object_Risk_Mitigation_Data_Source
+  - label: Mitigates_Risk
+    fromVertexLabel: Object_Risk_Mitigation_Data_Source
+    toVertexLabel: Object_Risk_Data_Source
 

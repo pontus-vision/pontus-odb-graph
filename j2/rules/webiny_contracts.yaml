@@ -109,7 +109,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Contract_Has_Minors_Data
-          val: "${(contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('yes') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }"
+          val: "${contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true')?'True':'False'}"
           mandatoryInSearch: False
           excludeFromSearch: True
     
@@ -144,7 +144,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Contratos
+          val: webiny/contratos
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

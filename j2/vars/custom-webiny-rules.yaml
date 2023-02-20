@@ -355,7 +355,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/mapeamento de processos"
+            val: "webiny/mapeamento-de-processos"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -514,7 +514,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Ações Judiciais"
+            val: "webiny/ações-judiciais"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -575,7 +575,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Comunicações PPD"
+            val: "webiny/comunicações-ppd"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -647,7 +647,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Reuniões PPD"
+            val: "webiny/reuniões-ppd"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -735,7 +735,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Aviso de Privacidade"
+            val: "webiny/aviso-de-privacidade"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1033,7 +1033,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: webiny/fontes-de-dados
+            val: "webiny/fontes-de-dados"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -1052,7 +1052,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: webiny/fontes-de-dados
+          Type: "webiny/fontes-de-dados"
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -1152,7 +1152,7 @@ rules:
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
         toVertexName: "sensitive_data"
-
+        
   webiny_consents:
 
     vertices:
@@ -1163,7 +1163,7 @@ rules:
             val: "${consentimentosIdentificacao?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromSearch: true
           Status:
-            val: "\"${(consentimentosStatus?.toString()?.equalsIgnoreCase('yes') || consentimentosStatus?.toString()?.equalsIgnoreCase('true') || consentimentosStatus?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }\""
+            val: "\"${consentimentosStatus?.toString()?.equalsIgnoreCase('true')?'Consent':'No Consent'}\""
             excludeFromSearch: true
           Metadata_Create_Date:
             val: "${consentimentosData}"
@@ -1221,7 +1221,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Consentimentos"
+            val: "webiny/consentimentos"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1370,7 +1370,7 @@ rules:
             excludeFromSearch: true
           Has_Minors_Data:
 #           or simply ${contratosDadosdeCriancasEAdolescentes}
-            val: "\"${(contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('yes') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true') || contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('sim')) ? 'True': 'False' }\""
+            val: "\"${contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
 
       - label: Object_Data_Procedures
@@ -1400,7 +1400,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Contratos"
+            val: "webiny/contratos"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1590,7 +1590,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Organizações"
+            val: "webiny/organizações"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1718,19 +1718,19 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: WEBINY/TREINAMENTOS
+          Name: "WEBINY/TREINAMENTOS"
 
       - label: Event_Training               # TODO: VERIFICAR COM LEO SE ELIMINAREMOS
         props:
           Form_Id: "${id}"
-      #          Status:
-      #            val: "${status}"
-      #            excludeFromSearch: true
+#          Status:
+#            val: "${status}"
+#            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
           Type:
-            val: webiny/treinamentos
+            val: "webiny/treinamentos"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -1749,7 +1749,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: webiny/treinamentos
+          Type: "webiny/treinamentos"
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -1777,3 +1777,338 @@ rules:
       - label: "Completed_By"
         fromVertexLabel: "Event_Training"
         toVertexName: "failed"
+
+  webiny_data_breaches:
+
+#    {
+#      listIncidentesDeSegurancaReportados{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      incidentesDeSegurancaReportadosReferencia
+#      incidentesDeSegurancaReportadosOrigem
+#      incidentesDeSegurancaReportadosDescricao
+#      incidentesDeSegurancaReportadosFontesDeDados{
+#      id
+#    }
+#      incidentesDeSegurancaReportadosImpacto
+#      incidentesDeSegurancaReportadosStatus
+#      incidentesDeSegurancaReportadosNotificacaoTitular
+#      incidentesDeSegurancaReportadosNotificacaoAnpd
+#    }
+#    }
+#    }
+
+    vertices:
+
+      - label: Object_Data_Source
+        name: webiny
+        props:
+          Name: "WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS"
+
+      - label: Object_Data_Source
+        name: data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(incidentesDeSegurancaReportadosFontesDeDados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+
+      - label: Event_Data_Breach
+        props:
+          Form_Id: "${id}"
+          Id:
+            val: "${incidentesDeSegurancaReportadosReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Authority_Notified:
+            val: "\"${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            excludeFromSearch: true
+          Description:
+            val: "${incidentesDeSegurancaReportadosDescricao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Impact:
+            val: "${incidentesDeSegurancaReportadosImpacto}"  # raw because it is used internally for scoring
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            type: java.util.Date
+            excludeFromSearch: true
+          Natural_Person_Notified:
+            val: "\"${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            excludeFromSearch: true
+          Source:
+            val: "${incidentesDeSegurancaReportadosOrigem?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Status:
+            val: "${incidentesDeSegurancaReportadosStatus}"  # raw because it is used internally for scoring
+            excludeFromSearch: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "webiny/incidentes-de-segurança-reportados"
+            excludeFromSearch: true
+          Operation:
+            val: "Structured Data Insertion"
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/incidentes-de-segurança-reportados"
+          Operation: "Structured Data Insertion"
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "webiny"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Event_Data_Breach"
+
+      - label: Impacted_By_Data_Breach
+        fromVertexLabel: "Event_Data_Breach"
+        toVertexName: "data_sources"
+
+  webiny_risk:
+
+#    {
+#      listRiscosDeFontesDeDados{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      riscosDeFontesDeDadosReferencia
+#      riscosDeFontesDeDadosDescricao
+#      riscosDeFontesDeDadosFontesDeDados{
+#      id
+#    }
+#      riscosDeFontesDeDadosMitigacoesDeRiscos{
+#      id
+#    }
+#      riscosDeFontesDeDadosAprovadoPelaSeguranca
+#      riscosDeFontesDeDadosAprovadoPeloEncarregado
+#      riscosDeFontesDeDadosProbabilidade
+#      riscosDeFontesDeDadosProbResidual
+#      riscosDeFontesDeDadosImpacto
+#      riscosDeFontesDeDadosImpResidual
+#
+#    }
+#    }
+#    }
+
+    vertices:
+
+      - label: Object_Data_Source
+        name: webiny
+        props:
+          Name: "WEBINY/RISCOS-DE-FONTES-DE-DADOS"
+
+      - label: Object_Data_Source
+        condition: "${riscosDeFontesDeDadosFontesDeDados?.size() > 0}"
+        name: attached_data_sources
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(riscosDeFontesDeDadosFontesDeDados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+
+      - label: Object_Risk_Data_Source
+        props:
+          Form_Id: "${id}"
+          Risk_Id:
+            val: "${riscosDeFontesDeDadosReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Description:
+            val: "${riscosDeFontesDeDadosDescricao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Probability:
+            val: "${riscosDeFontesDeDadosProbabilidade}"
+            excludeFromSearch: true
+          Impact:
+            val: "${riscosDeFontesDeDadosImpacto}"
+            excludeFromSearch: true
+          Residual_Probability:
+            val: "${riscosDeFontesDeDadosProbResidual}"
+            excludeFromSearch: true
+          Residual_Impact:
+            val: "${riscosDeFontesDeDadosImpResidual}"
+            excludeFromSearch: true
+          Approved_By_DPO:
+            val: "\"${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            excludeFromSearch: true
+          Approved_By_Security:
+            val: "\"${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            excludeFromSearch: true
+
+      - label: Object_Risk_Mitigation_Data_Source
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(riscosDeFontesDeDadosMitigacoesDeRiscos)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "webiny/riscos-de-fontes-de-dados"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/riscos-de-fontes-de-dados"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "webiny"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Risk_Data_Source"
+
+      - label: "Has_Risk"
+        fromVertexName: "attached_data_sources"
+        toVertexLabel: "Object_Risk_Data_Source"
+
+      - label: "Mitigates_Risk"
+        fromVertexLabel: "Object_Risk_Mitigation_Data_Source"
+        toVertexLabel: "Object_Risk_Data_Source"
+
+  webiny_risk_mitigation:
+
+#    {
+#      listMitigacoesDeRiscos{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      mitigacoesDeRiscosReferencia
+#      mitigacoesDeRiscosDescricao
+#      mitigacoesDeRiscosImplementado
+#      mitigacoesDeRiscosAprovado
+#      mitigacoesDeRiscosRiscosDeFontesDeDados{
+#      id
+#    }
+#    }
+#    }
+#    }
+
+    vertices:
+
+      - label: Object_Data_Source
+        name: webiny
+        props:
+          Name: "WEBINY/MITIGAÇÕES-DE-RISCOS"
+
+      - label: Object_Risk_Data_Source
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(mitigacoesDeRiscosRiscosDeFontesDeDados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+
+      - label: Object_Risk_Mitigation_Data_Source
+        props:
+          Form_Id: "${id}"
+          Mitigation_Id:
+            val: "${mitigacoesDeRiscosReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Description:
+            val: "${mitigacoesDeRiscosDescricao?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Is_Implemented:
+            val: "\"${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            excludeFromSearch: true
+          Is_Approved:
+            val: "\"${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            excludeFromSearch: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "webiny/mitigações-de-riscos"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/mitigações-de-riscos"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+      - label: "Has_Ingestion_Event"
+        fromVertexName: "webiny"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Risk_Mitigation_Data_Source"
+
+      - label: "Mitigates_Risk"
+        fromVertexLabel: "Object_Risk_Mitigation_Data_Source"
+        toVertexLabel: "Object_Risk_Data_Source"

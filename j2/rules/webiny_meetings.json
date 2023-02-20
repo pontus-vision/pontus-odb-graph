@@ -64,7 +64,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Webiny Reuniões PPD",
+            "val": "webiny/reuniões-ppd",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

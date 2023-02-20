@@ -1,0 +1,22 @@
+{
+  "data": {
+    "listMitigacoesDeRiscos": {
+      "data": [
+        {
+          "id": "63ececa50e3fcd00083e8546#0001",
+          "createdOn": "2023-02-15T14:31:01.649Z",
+          "savedOn": "2023-02-15T14:31:02.950Z",
+          "mitigacoesDeRiscosReferencia": "mitigação para roubo de celular",
+          "mitigacoesDeRiscosDescricao": "Se roubarem celular, deve-se relatar o mais rápido possível e fazer BO.",
+          "mitigacoesDeRiscosImplementado": true,
+          "mitigacoesDeRiscosAprovado": true,
+          "mitigacoesDeRiscosRiscosDeFontesDeDados": [
+            {
+              "id": "63ecec700e3fcd00083e8545#0002"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

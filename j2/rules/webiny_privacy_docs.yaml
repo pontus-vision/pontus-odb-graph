@@ -30,7 +30,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Comunicações PPD
+          val: webiny/comunicações-ppd
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
