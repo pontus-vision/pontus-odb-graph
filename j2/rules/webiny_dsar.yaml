@@ -39,7 +39,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Request_Type
-          val: ${for(item in requisicaoTitularesQualidadeObj){return item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '') + \' : \' + item.value?.toString()?.capitalize()}}
+          val: ${for(item in requisicaoTitularesQualidadeObj){return item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '') + ' : ' + item.value?.toString()?.capitalize()}}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Natural_Person_Type
