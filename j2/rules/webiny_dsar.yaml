@@ -35,9 +35,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Request_Type
-
           val: ${def arr = []; for(item in requisicaoTitularesQualidadeObj){arr.add(item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize())};return arr}
-
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Natural_Person_Type
