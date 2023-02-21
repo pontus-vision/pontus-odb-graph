@@ -30,7 +30,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: Webiny Ações Judiciais
+          val: webiny/ações-judiciais
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation

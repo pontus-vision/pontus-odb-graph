@@ -2,41 +2,60 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object_Legal_Actions",
+        "label": "Object_Data_Source",
+        "name": "webiny",
         "props": [
           {
-            "name": "Object_Legal_Actions_Form_Id",
-            "val": "${id}",
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/MITIGAÇÕES-DE-RISCOS",
             "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Legal_Actions_Description",
-            "val": "${description}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Legal_Actions_Date",
-            "val": "${date}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Legal_Actions_Details",
-            "val": "${details}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
           }
         ]
       },
       {
-        "label": "Object_Data_Source",
+        "label": "Object_Risk_Data_Source",
         "props": [
           {
-            "name": "Object_Data_Source_Name",
-            "val": "SHAREPOINT/LEGAL-ACTIONS",
+            "name": "Object_Risk_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(mitigacoesDeRiscosRiscosDeFontesDeDados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Risk_Mitigation_Data_Source",
+        "props": [
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Form_Id",
+            "val": "${id}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Mitigation_Id",
+            "val": "${mitigacoesDeRiscosReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Description",
+            "val": "${mitigacoesDeRiscosDescricao?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Is_Implemented",
+            "val": "${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Is_Approved",
+            "val": "${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
@@ -45,7 +64,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "Legal Actions",
+            "val": "webiny/mitigações-de-riscos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -63,14 +82,14 @@
           },
           {
             "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${Created}",
+            "val": "${createdOn}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
             "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${Modified}",
+            "val": "${savedOn}",
             "mandatoryInSearch": false,
             "type": "java.util.Date",
             "excludeFromSearch": true
@@ -82,7 +101,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sharepoint/legal-actions",
+            "val": "webiny/mitigações-de-riscos",
             "mandatoryInSearch": true
           },
           {
@@ -101,7 +120,7 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Data_Source",
+        "fromVertexName": "webiny",
         "toVertexLabel": "Event_Group_Ingestion"
       },
       {
@@ -112,7 +131,12 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Object_Legal_Actions"
+        "toVertexLabel": "Object_Risk_Mitigation_Data_Source"
+      },
+      {
+        "label": "Mitigates_Risk",
+        "fromVertexLabel": "Object_Risk_Mitigation_Data_Source",
+        "toVertexLabel": "Object_Risk_Data_Source"
       }
     ]
   }

@@ -2,75 +2,99 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Person_Natural",
-        "condition": "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}",
+        "label": "Object_Data_Source",
+        "name": "webiny",
         "props": [
           {
-            "name": "Person_Natural_Customer_ID",
-            "val": "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}",
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/RISCOS-DE-FONTES-DE-DADOS",
             "mandatoryInSearch": true
           }
         ]
       },
       {
         "label": "Object_Data_Source",
+        "name": "attached_data_sources",
+        "condition": "${riscosDeFontesDeDadosFontesDeDados?.size() > 0}",
         "props": [
           {
-            "name": "Object_Data_Source_Name",
-            "val": "WEBINY/REQUISIÇÕES-DOS-TITULARES",
-            "mandatoryInSearch": true
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(riscosDeFontesDeDadosFontesDeDados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
           }
         ]
       },
       {
-        "label": "Event_Subject_Access_Request",
+        "label": "Object_Risk_Data_Source",
         "props": [
           {
-            "name": "Event_Subject_Access_Request_Form_Id",
+            "name": "Object_Risk_Data_Source_Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Event_Subject_Access_Request_Id",
-            "val": "${requisicaoTitularesEmail}",
+            "name": "Object_Risk_Data_Source_Risk_Id",
+            "val": "${riscosDeFontesDeDadosReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event_Subject_Access_Request_Metadata_Update_Date",
-            "val": "${savedOn}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Metadata_Create_Date",
-            "val": "${createdOn}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Request_Type",
-            "val": "${def arr = []; for(item in requisicaoTitularesQualidadeObj){arr.add(item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize())};return arr}",
+            "name": "Object_Risk_Data_Source_Description",
+            "val": "${riscosDeFontesDeDadosDescricao?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Event_Subject_Access_Request_Natural_Person_Type",
-            "val": "${requisicaoTitularesPosicao}",
+            "name": "Object_Risk_Data_Source_Probability",
+            "val": "${riscosDeFontesDeDadosProbabilidade}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Impact",
+            "val": "${riscosDeFontesDeDadosImpacto}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Residual_Probability",
+            "val": "${riscosDeFontesDeDadosProbResidual}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Residual_Impact",
+            "val": "${riscosDeFontesDeDadosImpResidual}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Approved_By_DPO",
+            "val": "${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Data_Source_Approved_By_Security",
+            "val": "${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
       },
       {
-        "label": "Event_Group_Subject_Access_Request",
+        "label": "Object_Risk_Mitigation_Data_Source",
         "props": [
           {
-            "name": "Event_Group_Subject_Access_Request_Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
+            "name": "Object_Risk_Mitigation_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(riscosDeFontesDeDadosMitigacoesDeRiscos)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
           }
         ]
       },
@@ -79,7 +103,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "webiny/requisições-dos-titulares",
+            "val": "webiny/riscos-de-fontes-de-dados",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -116,7 +140,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/requisições-dos-titulares",
+            "val": "webiny/riscos-de-fontes-de-dados",
             "mandatoryInSearch": true
           },
           {
@@ -135,7 +159,7 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Data_Source",
+        "fromVertexName": "webiny",
         "toVertexLabel": "Event_Group_Ingestion"
       },
       {
@@ -146,17 +170,17 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Event_Subject_Access_Request"
+        "toVertexLabel": "Object_Risk_Data_Source"
       },
       {
-        "label": "Has_DSAR",
-        "fromVertexLabel": "Event_Subject_Access_Request",
-        "toVertexLabel": "Event_Group_Subject_Access_Request"
+        "label": "Has_Risk",
+        "fromVertexName": "attached_data_sources",
+        "toVertexLabel": "Object_Risk_Data_Source"
       },
       {
-        "label": "Made_SAR_Request",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Subject_Access_Request"
+        "label": "Mitigates_Risk",
+        "fromVertexLabel": "Object_Risk_Mitigation_Data_Source",
+        "toVertexLabel": "Object_Risk_Data_Source"
       }
     ]
   }

@@ -2,59 +2,71 @@
 updatereq:
   vertices:
     
-    - label: Person_Natural
-      condition: ${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}
+    - label: Object_Data_Source
+      name: webiny
       props:
-        - name: Person_Natural_Customer_ID
-          val: ${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}
+        - name: Object_Data_Source_Name
+          val: WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS
           mandatoryInSearch: True
     
     - label: Object_Data_Source
+      name: data_sources
       props:
-        - name: Object_Data_Source_Name
-          val: WEBINY/REQUISIÇÕES-DOS-TITULARES
+        - name: Object_Data_Source_Form_Id
+          val: ${new groovy.json.JsonBuilder(incidentesDeSegurancaReportadosFontesDeDados)}
           mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'id')}
     
-    - label: Event_Subject_Access_Request
+    - label: Event_Data_Breach
       props:
-        - name: Event_Subject_Access_Request_Form_Id
+        - name: Event_Data_Breach_Form_Id
           val: ${id}
           mandatoryInSearch: True
-        - name: Event_Subject_Access_Request_Id
-          val: ${requisicaoTitularesEmail}
+        - name: Event_Data_Breach_Id
+          val: ${incidentesDeSegurancaReportadosReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Metadata_Update_Date
-          val: ${savedOn}
+        - name: Event_Data_Breach_Authority_Notified
+          val: "${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'True':'False'}"
           mandatoryInSearch: False
-          type: "java.util.Date"
           excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Metadata_Create_Date
+        - name: Event_Data_Breach_Description
+          val: ${incidentesDeSegurancaReportadosDescricao?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Data_Breach_Impact
+          val: ${incidentesDeSegurancaReportadosImpacto}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Data_Breach_Metadata_Create_Date
           val: ${createdOn}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Request_Type
-
-          val: ${def arr = []; for(item in requisicaoTitularesQualidadeObj){arr.add(item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize())};return arr}
-
+        - name: Event_Data_Breach_Metadata_Update_Date
+          val: ${savedOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Data_Breach_Natural_Person_Notified
+          val: "${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}"
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Natural_Person_Type
-          val: ${requisicaoTitularesPosicao}
+        - name: Event_Data_Breach_Source
+          val: ${incidentesDeSegurancaReportadosOrigem?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
-    
-    - label: Event_Group_Subject_Access_Request
-      props:
-        - name: Event_Group_Subject_Access_Request_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
+        - name: Event_Data_Breach_Status
+          val: ${incidentesDeSegurancaReportadosStatus}
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: webiny/requisições-dos-titulares
+          val: webiny/incidentes-de-segurança-reportados
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -79,7 +91,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: webiny/requisições-dos-titulares
+          val: webiny/incidentes-de-segurança-reportados
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -90,18 +102,15 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Data_Source
+    fromVertexName: webiny
     toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
-    toVertexLabel: Event_Subject_Access_Request
-  - label: Has_DSAR
-    fromVertexLabel: Event_Subject_Access_Request
-    toVertexLabel: Event_Group_Subject_Access_Request
-  - label: Made_SAR_Request
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Event_Subject_Access_Request
+    toVertexLabel: Event_Data_Breach
+  - label: Impacted_By_Data_Breach
+    fromVertexLabel: Event_Data_Breach
+    toVertexName: data_sources
 

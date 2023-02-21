@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -518,7 +520,7 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00008WebinyOrganizacoes() throws InterruptedException {
+  public void test00009WebinyOrganizacoes() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-organizacoes.json", "$.data.listOrganizacoes.data[*]", "webiny_organisation");
 
@@ -590,7 +592,7 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00009WebinyTreinamentos() throws InterruptedException {
+  public void test00010WebinyTreinamentos() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-treinamentos.json", "$.data.listTreinamentos.data[*]", "webiny_awareness_campaign");
 
@@ -618,7 +620,7 @@ public class WebinyTest extends AppTest {
   }
 
   @Test
-  public void test00010WebinyTitulares() throws InterruptedException {
+  public void test00011WebinyTitulares() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner");
 
@@ -644,6 +646,9 @@ public class WebinyTest extends AppTest {
       reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + titularRid);
 
       assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
+
+      reply = gridWrapper(null, "Object_Identity_Card", new String[]{"Object_Identity_Card_Id_Value"}, "hasNeighbourId:" + titularRid);
+
       assertTrue(reply.getRecords()[0].contains("\"Object_Identity_Card_Id_Value\":\"01201405628\""));
 
       reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"}, "hasNeighbourId:" + titularRid);
@@ -656,4 +661,191 @@ public class WebinyTest extends AppTest {
     }
 
   }
+
+  @Test
+  public void test00012WebinyDSAR() throws InterruptedException {
+
+//    jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner"); assuming that titulares are already ingested when the tests run integrated
+    jsonTestUtil("webiny/webiny-requisicoes.json", "$.data.listRequisicaoTitulares.data[*]", "webiny_dsar");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Subject_Access_Request_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63efb10fa4e4cf0008eae52c#0002\"\n" +
+                      "  }\n" +
+                      "]", "Event_Subject_Access_Request",
+              new String[]{"Event_Subject_Access_Request_Request_Type", "Event_Subject_Access_Request_Natural_Person_Type", "Event_Subject_Access_Request_Id"});
+      String replyStr = reply.getRecords()[0];
+
+      String sarRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Natural_Person_Type\":\"Colaborador\""));
+      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Id\":\"admin@pontus.com\""));
+      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Request_Type\":\"[TratamentoDosDados:True, AcessoAosDadosAnteriores:False, AcessoAosRevogarConsentimento:False, AlterarDados:False, DadosBloqueados:False]\""));
+
+      reply = gridWrapper(null, "Event_Group_Subject_Access_Request", new String[]{"Event_Group_Subject_Access_Request_Ingestion_Date"}, "hasNeighbourId:" + sarRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Event_Group_Subject_Access_Request_Ingestion_Date\":\"" + LocalDate.now() + "\""));
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Full_Name"}, "hasNeighbourId:" + sarRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Full_Name\":\"MARIA SANTOS\""));
+
+      String pjRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + pjRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
+    @Test
+  public void test00013WebinyIncidentes() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_data_source");
+    jsonTestUtil("webiny/webiny-incidentes.json", "$.data.listIncidentesDeSegurancaReportados.data[*]", "webiny_data_breaches");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Data_Breach_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63ebe782ff8b690008ad5d40#0002\"\n" +
+                      "  }\n" +
+                      "]", "Event_Data_Breach",
+              new String[]{"Event_Data_Breach_Description", "Event_Data_Breach_Status", "Event_Data_Breach_Impact",
+                      "Event_Data_Breach_Source", "Event_Data_Breach_Authority_Notified", "Event_Data_Breach_Metadata_Create_Date"});
+      String replyStr = reply.getRecords()[0];
+
+      String breachRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Status\":\"Suspect External Theft\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Metadata_Create_Date\":\"Tue Feb 14 20:01:59 UTC 2023\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Authority_Notified\":\"True\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Impact\":\"Data Lost\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Description\":\"CIBER ATAQUE\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Source\":\"CHINA\""));
+
+      reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name",
+                      "Object_Data_Source_Description"}, "hasNeighbourId:" + breachRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"FONTE 1\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Description\":\"FONTE 1\""));
+
+      String ingestionRid = JsonParser.parseString(gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"},
+              "hasNeighbourId:" + breachRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      String groupIngestionRid = JsonParser.parseString(gridWrapper(null, "Event_Group_Ingestion", new String[]{"Event_Group_Ingestion_Type"},
+              "hasNeighbourId:" + ingestionRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"}, "hasNeighbourId:" + groupIngestionRid);
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+    }
+
+  }
+
+  @Test
+  public void test00014WebinyRiscos() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_data_source");
+    jsonTestUtil("webiny/webiny-mitigacoes.json", "$.data.listMitigacoesDeRiscos.data[*]", "webiny_risk_mitigation");
+    jsonTestUtil("webiny/webiny-riscos.json", "$.data.listRiscosDeFontesDeDados.data[*]", "webiny_risk");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Risk_Data_Source_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63ecec700e3fcd00083e8545#0002\"\n" +
+                      "  }\n" +
+                      "]", "Object_Risk_Data_Source",
+              new String[]{"Object_Risk_Data_Source_Description", "Object_Risk_Data_Source_Probability",
+                      "Object_Risk_Data_Source_Impact", "Object_Risk_Data_Source_Approved_By_DPO"});
+      String replyStr = reply.getRecords()[0];
+
+      String riskRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Probability\":\"Medium\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Impact\":\"High\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Description\":\"ROUBO DE DADOS PESSOAIS\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Approved_By_DPO\":\"False\""));
+
+      reply = gridWrapper(null, "Object_Risk_Mitigation_Data_Source",
+              new String[]{"Object_Risk_Mitigation_Data_Source_Mitigation_Id"}, "hasNeighbourId:" + riskRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Risk_Mitigation_Data_Source_Mitigation_Id\":\"MITIGAÇÃO PARA ROUBO DE CELULAR\""));
+
+      reply = gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"}, "hasNeighbourId:" + riskRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"webiny/riscos-de-fontes-de-dados\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+  }
+
+  @Test
+  public void test00015WebinyMitigacaoDeRiscos() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-riscos.json", "$.data.listRiscosDeFontesDeDados.data[*]", "webiny_risk");
+    jsonTestUtil("webiny/webiny-mitigacoes.json", "$.data.listMitigacoesDeRiscos.data[*]", "webiny_risk_mitigation");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Risk_Mitigation_Data_Source_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63ececa50e3fcd00083e8546#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Risk_Mitigation_Data_Source",
+              new String[]{"Object_Risk_Mitigation_Data_Source_Mitigation_Id", "Object_Risk_Mitigation_Data_Source_Description",
+                      "Object_Risk_Mitigation_Data_Source_Is_Implemented", "Object_Risk_Mitigation_Data_Source_Is_Approved"});
+      String replyStr = reply.getRecords()[0];
+
+      String riskMitigationRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Approved\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Implemented\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Mitigation_Id\":\"MITIGAÇÃO PARA ROUBO DE CELULAR\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Description\":\"SE ROUBAREM CELULAR, DEVE-SE RELATAR O MAIS RÁPIDO POSSÍVEL E FAZER BO.\""));
+
+      reply = gridWrapper(null, "Object_Risk_Data_Source",
+              new String[]{"Object_Risk_Data_Source_Risk_Id"}, "hasNeighbourId:" + riskMitigationRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Risk_Data_Source_Risk_Id\":\"RISCO DE ROUBO\""));
+
+      reply = gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"}, "hasNeighbourId:" + riskMitigationRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"webiny/mitigações-de-riscos\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+  }
+
 }
