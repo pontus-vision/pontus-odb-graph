@@ -135,12 +135,9 @@
           },
           {
             "name": "Object_Contract_Tranfer_Intl",
-            "val": "${new groovy.json.JsonBuilder(contratosTransferenciaInternacionalDeDados)}",
+            "val": "${contratosTransferenciaInternacionalDeDados?.transferenciasInternacionaisInciso}",
             "mandatoryInSearch": false,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.WebinyRef;",
-            "excludeFromSearch": true,
-            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it,'transferenciasInternacionaisInciso')}"
+            "excludeFromSearch": true
           },
           {
             "name": "Object_Contract_Country",

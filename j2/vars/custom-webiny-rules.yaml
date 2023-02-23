@@ -1360,10 +1360,7 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
           Tranfer_Intl:
-            val: "${new groovy.json.JsonBuilder(contratosTransferenciaInternacionalDeDados)}"
-            type: "[Lcom.pontusvision.utils.WebinyRef;"
-            postProcessor: "${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it,'transferenciasInternacionaisInciso')}"
-            processAll: true
+            val: "${contratosTransferenciaInternacionalDeDados?.transferenciasInternacionaisInciso}"
             excludeFromSearch: true
           Country:
             val: "${contratosTransferenciaParaQualPais?.trim()?.toUpperCase()}"
