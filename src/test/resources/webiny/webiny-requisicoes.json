@@ -11,12 +11,7 @@
           "requisicaoTitularesEmail": "admin@pontus.com",
           "requisicaoTitularesCpf": "01201405628",
           "requisicaoTitularesPosicao": "Colaborador",
-          "requisicaoTitularesQualidade": [
-            "Read",
-            "Update",
-            "Bloqueio",
-            "Delete"
-          ]
+          "requisicaoTitularesQualidade": "Update"
         }
       ]
     }
