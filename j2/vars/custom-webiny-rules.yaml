@@ -2112,3 +2112,78 @@ rules:
       - label: "Mitigates_Risk"
         fromVertexLabel: "Object_Risk_Mitigation_Data_Source"
         toVertexLabel: "Object_Risk_Data_Source"
+
+  webiny_lia:
+
+    vertices:
+
+      - label: Object_Data_Source
+        props:
+          Name: "WEBINY/LEGITIMATE-INTERESTS-ASSESSMENT"
+
+      - label: Object_Legitimate_Interests_Assessment
+        props:
+          Form_Id: "${id}"
+#         ${interesseLegitimoReferencia} as name / reference ... is it worth it?
+          Strategic_Impact:
+            val: "${interesseLegitimoTratamentoDeDadosPessoais?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+#         "${interesseLegitimoAspectoAntietico}"
+#         "${interesseLegitimoFinalidadeQuantidadeMenorDeDados}"
+          Breach_Of_Subject_Rights_Justification:
+            val: "${Breach_Of_Subject_Rights_Justification?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+#          ${interesseLegitimoTratamentoDeDadosTitularParaEmpresa}
+#          ${interesseLegitimoDadosPessoaisTratamentoRealizacaoAlgoNovo}
+
+      - label: Object_Data_Procedures
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(interesseLegitimoRefMapeamentoDeProcesssos)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "sharepoint/pbr/lia"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "sharepoint/pbr/lia"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
+      - label: "Has_Legitimate_Interests_Assessment"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Legitimate_Interests_Assessment"

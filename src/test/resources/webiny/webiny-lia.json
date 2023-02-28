@@ -1,0 +1,23 @@
+{
+  "data": {
+    "listInteresseLegitimos": {
+      "data": [
+        {
+          "id": "63f8f0182abe5800081b141c#0001",
+          "createdOn": "2023-02-24T17:12:56.728Z",
+          "savedOn": "2023-02-24T17:12:58.607Z",
+          "interesseLegitimoReferencia": "lia 345",
+          "interesseLegitimoRefMapeamentoDeProcesssos": {
+            "id": "63f7b142a481f70008c9e82f#0001"
+          },
+          "interesseLegitimoTratamentoDeDadosPessoais": "para atender a LGPD",
+          "interesseLegitimoAspectoAntietico": null,
+          "interesseLegitimoFinalidadeQuantidadeMenorDeDados": true,
+          "interesseLegitimoViolacaoDeTratamentoDeDadosPessoais": "fere o direito de consentimento",
+          "interesseLegitimoTratamentoDeDadosTitularParaEmpresa": false,
+          "interesseLegitimoDadosPessoaisTratamentoRealizacaoAlgoNovo": "Um novo formulário, melhor UX e UI."
+        }
+      ]
+    }
+  }
+}
