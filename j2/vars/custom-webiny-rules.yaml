@@ -1897,20 +1897,14 @@ rules:
 #    listRequisicaoTitulares{
 #    data{
 #    id
-#    savedOn
 #    createdOn
+#    savedOn
 #    requisicaoTitularesNome
 #    requisicaoTitularesSobrenome
 #    requisicaoTitularesEmail
 #    requisicaoTitularesCpf
-#    requisicaoTitularesPosicao
-#    requisicaoTitularesQualidadeObj{
-#    requisicaoTitularesQualidadeObjTratamentoDosDados
-#    requisicaoTitularesQualidadeObjAcessoAosDadosAnteriores
-#    requisicaoTitularesQualidadeObjAcessoAosRevogarConsentimento
-#    requisicaoTitularesQualidadeObjAlterarDados
-#    requisicaoTitularesQualidadeObjDadosBloqueados
-#  }
+#    requisicaoTitularesTipoTitular
+#    requisicaoTitularesTipoRequisicao
 #  }
 #  }
 #  }
@@ -1953,7 +1947,7 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Request_Type:
-            val: "${requisicaoTitularesQualidade}"
+            val: "${requisicaoTitularesTipoRequisicao}"
             excludeFromSearch: true
   #          Description:
   #            val: "${Solicita_x00e7__x00e3_o_x002d_De}"
@@ -1965,7 +1959,7 @@ rules:
   #            val: "${Status}"
   #            excludeFromSearch: true
           Natural_Person_Type:
-            val: "${requisicaoTitularesPosicao}"
+            val: "${requisicaoTitularesTipoTitular}"
             excludeFromSearch: true
 
       - label: Event_Group_Subject_Access_Request

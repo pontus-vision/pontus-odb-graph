@@ -35,11 +35,11 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Request_Type
-          val: ${requisicaoTitularesQualidade}
+          val: ${requisicaoTitularesTipoRequisicao}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Subject_Access_Request_Natural_Person_Type
-          val: ${requisicaoTitularesPosicao}
+          val: ${requisicaoTitularesTipoTitular}
           mandatoryInSearch: False
           excludeFromSearch: True
     
