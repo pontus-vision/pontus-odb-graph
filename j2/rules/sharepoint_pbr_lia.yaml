@@ -33,7 +33,7 @@ updatereq:
           val: Sim
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Is_Required
+        - name: Object_Legitimate_Interests_Assessment_Why_Is_Required
           val: Sim
           mandatoryInSearch: False
           excludeFromSearch: True

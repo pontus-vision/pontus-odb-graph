@@ -20,14 +20,44 @@
             "mandatoryInSearch": true
           },
           {
+            "name": "Object_Legitimate_Interests_Assessment_LIA_Id",
+            "val": "${interessesLegitimosReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
             "name": "Object_Legitimate_Interests_Assessment_Strategic_Impact",
-            "val": "${interesseLegitimoTratamentoDeDadosPessoais?.trim()?.toUpperCase()}",
+            "val": "${interessesLegitimosObjetivoEstrategico}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Ethical_Impact",
+            "val": "${interessesLegitimosAspectoAntietico}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
+            "val": "${interessesLegitimosFinalidadeQuantidadeMenorDeDados.toString()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification",
-            "val": "${Breach_Of_Subject_Rights_Justification?.trim()?.toUpperCase()}",
+            "val": "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person",
+            "val": "${interessesLegitimosDadosDiretosDoTitular.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation",
+            "val": "${interessesLegitimosInovacoes}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
@@ -51,7 +81,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "sharepoint/pbr/lia",
+            "val": "webiny/legitimate-interests-assessment",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -88,7 +118,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "sharepoint/pbr/lia",
+            "val": "webiny/legitimate-interests-assessment",
             "mandatoryInSearch": true
           },
           {

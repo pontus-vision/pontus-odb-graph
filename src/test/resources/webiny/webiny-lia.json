@@ -8,13 +8,13 @@
           "savedOn": "2023-02-28T18:14:37.628Z",
           "interessesLegitimosReferencia": "lia 345",
           "interessesLegitimosRefMapeamentoDeProcesssos": {
-            "id": "63f7b142a481f70008c9e82f#0001"
+            "id": "63c6f874320a910008b4e5b5#0002"
           },
-          "interessesLegitimosTratamentoDeDadosPessoais": "atender lei LGPD",
+          "interessesLegitimosObjetivoEstrategico": "atender lei LGPD",
           "interessesLegitimosAspectoAntietico": "ética",
           "interessesLegitimosFinalidadeQuantidadeMenorDeDados": true,
           "interessesLegitimosViolacaoDeTratamentoDeDadosPessoais": "liberdade de imprensa",
-          "interessesLegitimosTratamentoDeDadosTitularParaEmpresa": true,
+          "interessesLegitimosDadosDiretosDoTitular": true,
           "interessesLegitimosDadosPessoaisTratamentoRealizacaoAlgoNovo": "sim, novo iPhone"
         }
       ]

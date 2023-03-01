@@ -2115,6 +2115,24 @@ rules:
 
   webiny_lia:
 
+
+#  {
+#    listInteressesLegitimos{
+#    data{
+#    interessesLegitimosReferencia
+#    interessesLegitimosRefMapeamentoDeProcesssos{
+#    id
+#  }
+#    interessesLegitimosObjetivoEstrategico
+#    interessesLegitimosAspectoAntietico
+#    interessesLegitimosFinalidadeQuantidadeMenorDeDados
+#    interessesLegitimosViolacaoDeTratamentoDeDadosPessoais
+#    interessesLegitimosDadosDiretosDoTitular
+#    interessesLegitimosInovacoes
+#  }
+#  }
+#  }
+
     vertices:
 
       - label: Object_Data_Source
@@ -2124,17 +2142,27 @@ rules:
       - label: Object_Legitimate_Interests_Assessment
         props:
           Form_Id: "${id}"
-#         ${interesseLegitimoReferencia} as name / reference ... is it worth it?
+          LIA_Id:
+            val: "${interessesLegitimosReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
           Strategic_Impact:
-            val: "${interesseLegitimoTratamentoDeDadosPessoais?.trim()?.toUpperCase()}"
+            val: "${interessesLegitimosObjetivoEstrategico}"
             excludeFromSearch: true
-#         "${interesseLegitimoAspectoAntietico}"
-#         "${interesseLegitimoFinalidadeQuantidadeMenorDeDados}"
+          Ethical_Impact:
+            val: "${interessesLegitimosAspectoAntietico}"
+            excludeFromSearch: true
+          Is_Essential:
+            val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados.toString()}" #TODO: maybe it`ll change
+            excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:
-            val: "${Breach_Of_Subject_Rights_Justification?.trim()?.toUpperCase()}"
+            val: "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-#          ${interesseLegitimoTratamentoDeDadosTitularParaEmpresa}
-#          ${interesseLegitimoDadosPessoaisTratamentoRealizacaoAlgoNovo}
+          Is_Data_From_Natural_Person:
+            val: "${interessesLegitimosDadosDiretosDoTitular.toString()}"
+            excludeFromSearch: true
+          Why_Is_Used_For_Innovation:
+            val: "${interessesLegitimosInovacoes}"
+            excludeFromSearch: true
 
       - label: Object_Data_Procedures
         props:
@@ -2147,7 +2175,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "sharepoint/pbr/lia"
+            val: "webiny/legitimate-interests-assessment"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -2166,7 +2194,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "sharepoint/pbr/lia"
+          Type: "webiny/legitimate-interests-assessment"
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 

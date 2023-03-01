@@ -172,7 +172,7 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Legitimate_Interests_Assessment_Is_Required",
+            "name": "Object_Legitimate_Interests_Assessment_Why_Is_Required",
             "val": "${Esse_x0020_processamento_x0020_d}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true

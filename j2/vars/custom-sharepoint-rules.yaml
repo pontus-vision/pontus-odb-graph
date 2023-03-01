@@ -474,7 +474,7 @@ rules:
           Lawful_Basis_Justification:
             val: "${N_x00e3_oh_x00e1_outrabaselegalp}"
             excludeFromSearch: true
-          Is_Required:
+          Why_Is_Required:
             val: "${Esse_x0020_processamento_x0020_d}"
             excludeFromSearch: true
 

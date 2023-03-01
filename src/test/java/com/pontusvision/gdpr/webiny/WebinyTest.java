@@ -760,4 +760,40 @@ public class WebinyTest extends AppTest {
 
   }
 
+  @Test
+  public void test00016WebinyLIA() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*].data[*]", "webiny_ropa");
+    jsonTestUtil("webiny/webiny-lia.json", "$.data.listInteressesLegitimos.data[*]", "webiny_lia");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Legitimate_Interests_Assessment_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63fe448bf7f21e0008300259#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Legitimate_Interests_Assessment",
+              new String[]{"Object_Legitimate_Interests_Assessment_LIA_Id", "Object_Legitimate_Interests_Assessment_Is_Essential",
+                      "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person", "Object_Legitimate_Interests_Assessment_Ethical_Impact"});
+      String replyStr = reply.getRecords()[0];
+
+//      String riskMitigationRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA 345\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"true\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person\":\"true\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Ethical_Impact\":\"ética\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+
+  }
+
 }

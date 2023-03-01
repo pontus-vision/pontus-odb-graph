@@ -596,7 +596,7 @@ rules:
           Is_Essential:
             val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
             excludeFromSearch: true
-          Is_Required:
+          Why_Is_Required:
             val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
             excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:

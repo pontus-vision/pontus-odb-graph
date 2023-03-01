@@ -908,11 +908,18 @@ schema:
         - name: Data_Processing_Justification
           index: false
         - name: Is_Essential
+          dataType: Boolean
 #        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
-        - name: Is_Required
+        - name: Why_Is_Required
         - name: Breach_Of_Subject_Rights_Justification
           index: false
         - name: Lawful_Basis_Justification # TODO: check SV's LIA
+        - name: Ethical_Impact
+          index: false
+        - name: LIA_Id
+        - name: Is_Data_From_Natural_Person
+          dataType: Boolean
+        - name: Why_Is_Used_For_Innovation  #TODO: does this need index: false ?!?!
 
     - name: "Object_Risk_Data_Source"
       partition: false
