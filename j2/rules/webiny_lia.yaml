@@ -45,7 +45,7 @@ updatereq:
     - label: Object_Data_Procedures
       props:
         - name: Object_Data_Procedures_Form_Id
-          val: ${new groovy.json.JsonBuilder(interesseLegitimoRefMapeamentoDeProcesssos)}
+          val: ${new groovy.json.JsonBuilder(interessesLegitimosRefMapeamentoDeProcesssos)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.WebinyRef;"

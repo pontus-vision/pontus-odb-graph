@@ -298,7 +298,7 @@ rules:
             val: "${Ap_x00f3_satingirasfinalidades_x}"
             excludeFromSearch: true
           Is_Essential:
-            val: "${Osdadospessoaisidentificadoss_x0}"
+            val: "\"${Osdadospessoaisidentificadoss_x0?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}\""
             excludeFromSearch: true
           Is_Anonymized:
             val: "${Osdadoss_x00e3_oanonimizadosnotr}"
@@ -594,10 +594,10 @@ rules:
             val: "${Se_x0020_sim_x0020_descrever}"
             excludeFromSearch: true
           Is_Essential:
-            val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
+            val: "true" # Or true ... basear no Resultado do LIA ?!?!
             excludeFromSearch: true
           Why_Is_Required:
-            val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
+            val: "true" # Or true ... basear no Resultado do LIA ?!?!
             excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:
             val: "${Se_x0020_sim_x0020__x002d__x0020}"

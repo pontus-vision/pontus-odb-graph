@@ -68,7 +68,7 @@
         "props": [
           {
             "name": "Object_Data_Procedures_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(interesseLegitimoRefMapeamentoDeProcesssos)}",
+            "val": "${new groovy.json.JsonBuilder(interessesLegitimosRefMapeamentoDeProcesssos)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.WebinyRef;",

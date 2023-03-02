@@ -469,13 +469,13 @@ rules:
         props:
           Form_Id: "${id}"
           Is_Essential:
-            val: "${Essetratamentodedadospessoais_x0}"
+            val: "\"${Essetratamentodedadospessoais_x0?.toString()?.toUpperCase()?.contains('SIM')?'true':'false'}\""
             excludeFromSearch: true
           Lawful_Basis_Justification:
             val: "${N_x00e3_oh_x00e1_outrabaselegalp}"
             excludeFromSearch: true
           Why_Is_Required:
-            val: "${Esse_x0020_processamento_x0020_d}"
+            val: "\"${Esse_x0020_processamento_x0020_d?.toString()?.toUpperCase()?.contains('SIM')?'true':'false'}\""
             excludeFromSearch: true
 
       - label: Event_Ingestion
