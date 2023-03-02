@@ -1,0 +1,105 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Person_Natural
+      condition: ${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}
+      props:
+        - name: Person_Natural_Customer_ID
+          val: ${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}
+          mandatoryInSearch: True
+    
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: WEBINY/REQUISIÇÕES-DOS-TITULARES
+          mandatoryInSearch: True
+    
+    - label: Event_Subject_Access_Request
+      props:
+        - name: Event_Subject_Access_Request_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Event_Subject_Access_Request_Id
+          val: ${requisicaoTitularesEmail}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Metadata_Update_Date
+          val: ${savedOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Metadata_Create_Date
+          val: ${createdOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Request_Type
+          val: ${requisicaoTitularesTipoRequisicao}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Natural_Person_Type
+          val: ${requisicaoTitularesTipoTitular}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Event_Group_Subject_Access_Request
+      props:
+        - name: Event_Group_Subject_Access_Request_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+    
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: webiny/requisições-dos-titulares
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${createdOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${savedOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: webiny/requisições-dos-titulares
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object_Data_Source
+    toVertexLabel: Event_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: Event_Subject_Access_Request
+  - label: Has_DSAR
+    fromVertexLabel: Event_Subject_Access_Request
+    toVertexLabel: Event_Group_Subject_Access_Request
+  - label: Made_SAR_Request
+    fromVertexLabel: Person_Natural
+    toVertexLabel: Event_Subject_Access_Request
+

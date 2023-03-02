@@ -1,0 +1,32 @@
+{
+  "data": {
+    "listTitulares": {
+      "data": [
+        {
+          "id": "63d17354059cb700089aa0b5#0001",
+          "createdOn": "2023-01-25T18:22:12.538Z",
+          "savedOn": "2023-01-25T18:22:14.638Z",
+          "titularesEmail": "MARIA@PONTUSVISION.COM",
+          "titularesCpfDoTitular": "01201405628",
+          "titularesNomeCompleto": "Maria Santos",
+          "titularesCargo": "Marketing",
+          "titularesCategoriaDoTitular": [
+            "Colaborador"
+          ]
+        },
+        {
+          "id": "63ce9ae5c064470008b72f83#0002",
+          "createdOn": "2023-01-25T18:21:38.358Z",
+          "savedOn": "2023-01-25T18:21:40.617Z",
+          "titularesEmail": "joao@pontusvision.com",
+          "titularesCpfDoTitular": "01222564787",
+          "titularesNomeCompleto": "João Silva",
+          "titularesCargo": "Developer",
+          "titularesCategoriaDoTitular": [
+            "Colaborador"
+          ]
+        }
+      ]
+    }
+  }
+}
