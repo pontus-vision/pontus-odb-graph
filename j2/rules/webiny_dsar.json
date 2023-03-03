@@ -52,13 +52,13 @@
           },
           {
             "name": "Event_Subject_Access_Request_Request_Type",
-            "val": "${def arr = []; for(item in requisicaoTitularesQualidadeObj){arr.add(item.key?.toString()?.replace('requisicaoTitularesQualidadeObj', '')+':'+item.value?.toString()?.capitalize())};return arr}",
+            "val": "${requisicaoTitularesTipoRequisicao}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Event_Subject_Access_Request_Natural_Person_Type",
-            "val": "${requisicaoTitularesPosicao}",
+            "val": "${requisicaoTitularesTipoTitular}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

@@ -688,7 +688,7 @@ public class WebinyTest extends AppTest {
 
       assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Natural_Person_Type\":\"Colaborador\""));
       assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Id\":\"admin@pontus.com\""));
-      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Request_Type\":\"[TratamentoDosDados:True, AcessoAosDadosAnteriores:False, AcessoAosRevogarConsentimento:False, AlterarDados:False, DadosBloqueados:False]\""));
+      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Request_Type\":\"Update\""));
 
       reply = gridWrapper(null, "Event_Group_Subject_Access_Request", new String[]{"Event_Group_Subject_Access_Request_Ingestion_Date"}, "hasNeighbourId:" + sarRid);
 
