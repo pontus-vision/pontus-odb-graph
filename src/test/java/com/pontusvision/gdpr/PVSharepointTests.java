@@ -217,12 +217,10 @@ public class PVSharepointTests extends AppTest {
                       "  }\n" +
                       "]", "Object_Legitimate_Interests_Assessment",
               new String[]{"Object_Legitimate_Interests_Assessment_LIA_Id", "Object_Legitimate_Interests_Assessment_Strategic_Impact",
-                      "Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification",
-                      "Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation"});
+                      "Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification"});
 
       assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Strategic_Impact\":\"\""));
       assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"True\""));
-      assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation\":\"\""));
       assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA-ABERTURA-CHAMADOS\""));
       assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification\":\"\""));
 
@@ -235,8 +233,7 @@ public class PVSharepointTests extends AppTest {
                       "  }\n" +
                       "]", "Object_Legitimate_Interests_Assessment",
               new String[]{"Object_Legitimate_Interests_Assessment_LIA_Id", "Object_Legitimate_Interests_Assessment_Strategic_Impact",
-                      "Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification",
-                      "Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation"});
+                      "Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification"});
       String replyStr = reply.getRecords()[0];
 
       String LIARid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
@@ -245,7 +242,6 @@ public class PVSharepointTests extends AppTest {
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"False\""));
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification\":\"FERE O DIREITO DE LIBERDADE\""));
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA-ASSISTÊNCIA-TÉCNICA\""));
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation\":\"Sim, os dados coletados são necessários para criação de login/senha ao colaborador, para que o mesmo tenha acesso a plataforma de chamado ao time de TI ou Facilities.\""));
 
       reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"}, "hasNeighbourId:" + LIARid);
       assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"Prestadores de Serviços e Fornecedores\""));
