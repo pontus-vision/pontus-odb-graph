@@ -37,10 +37,6 @@ updatereq:
           val: "${Osdadospessoaisforamcoletadosdir?.toString()?.equalsIgnoreCase('Sim')?'True':'False'}"
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation
-          val: ${Descrevaseosdadospessoaisser_x00}
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Object_Data_Procedures
       props:

@@ -1822,9 +1822,6 @@ rules:
           Is_Data_From_Natural_Person:
             val: "\"${Osdadospessoaisforamcoletadosdir?.toString()?.equalsIgnoreCase('Sim')?'True':'False'}\""
             excludeFromSearch: true
-          Why_Is_Used_For_Innovation:
-            val: "${Descrevaseosdadospessoaisser_x00}"
-            excludeFromSearch: true
 
       - label: Object_Data_Procedures
         props:
