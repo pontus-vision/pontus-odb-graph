@@ -1,0 +1,114 @@
+{
+    "queryResp": [
+      {
+        "@odata.etag": "1238ac234-ac45bd67-ca5161047-g231128-12aa",
+        "createdDateTime": "2021-07-10T20:59:14Z",
+        "eTag": "1238ac234-ac45bd67-ca5161047-g231128-12aa",
+        "id": "1",
+        "lastModifiedDateTime": "2022-11-15T09:12:55Z",
+        "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/LIA%20%20Relatrio%20Legtimo%20Interesse/1_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ea6478-0ffe-4426-3566-83423423",
+            "displayName": "Ayyyyyy Mzzzzzz"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "qualidade.onedrive@Sxxxxxxxx.com.br",
+            "id": "7838ac44-32455-4554-458745-213123",
+            "displayName": "Qualidade OneDrive"
+          }
+        },
+        "parentReference": {
+          "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,fd97ef96-8dc8-41f2-b2c9-d2b058c33118,f40ffdd1-c535-4212-b345-19f42f764383"
+        },
+        "contentType": {
+          "id": "40834687464AC7-ca0234576ACCAB234-g234778-1237",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%ac43537d-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('a647454-5cf67-4467-a237-8ac6575d')/items('1')/fields/$entity",
+        "fields": {
+          "@odata.etag": "1238ac234-ac45bd67-ca5161047-g231128-12aa",
+          "Title": "LIA-Abertura-Chamados",
+          "Refer_x00ea_nciadoMapeamentodePr": [
+            {
+              "LookupId": 404,
+              "LookupValue": "4"
+            }
+          ],
+          "Comootratamentodedadospessoais_x": "",
+          "Descreveroaspectodotratamentodos": "",
+          "Afinalidadepoderiaseralcan_x00e7": "Sim",
+          "Descrevaseotratamentodedadospess": "",
+          "Osdadospessoaisforamcoletadosdir": "Sim",
+          "Descrevaseosdadospessoaisser_x00": "",
+          "LinkTitle": "4",
+          "Modified": "2021-08-23T13:27:08Z",
+          "id": "1",
+          "ContentType": "Item",
+          "Created": "2023-01-10T20:59:14Z",
+          "AuthorLookupId": "14",
+          "EditorLookupId": "15",
+          "_UIVersionString": "6.0",
+          "Attachments": false
+        }
+      },
+      {
+        "@odata.etag": "1238ac234-ac45bd67-ca5161047-g231128-12aa",
+        "createdDateTime": "2021-07-10T20:59:14Z",
+        "eTag": "1238ac234-ac45bd67-ca5161047-g231128-12aa",
+        "id": "2",
+        "lastModifiedDateTime": "2022-11-15T09:12:55Z",
+        "webUrl": "https://sxxxxxxxxxxxxxxx.sharepoint.com/sites/Sxxxxxxxx_LGPD/Lists/LIA%20%20Relatrio%20Legtimo%20Interesse/1_.000",
+        "createdBy": {
+          "user": {
+            "email": "axxxxxxx@pontusvision.com",
+            "id": "ea6478-0ffe-4426-3566-83423423",
+            "displayName": "Ayyyyyy Mzzzzzz"
+          }
+        },
+        "lastModifiedBy": {
+          "user": {
+            "email": "qualidade.onedrive@Sxxxxxxxx.com.br",
+            "id": "7838ac44-32455-4554-458745-213123",
+            "displayName": "Qualidade OneDrive"
+          }
+        },
+        "parentReference": {
+          "siteId": "sxxxxxxxxxxxxxxx.sharepoint.com,fd97ef96-8dc8-41f2-b2c9-d2b058c33118,f40ffdd1-c535-4212-b345-19f42f764383"
+        },
+        "contentType": {
+          "id": "40834687464AC7-ca0234576ACCAB234-g234778-1237",
+          "name": "Item"
+        },
+        "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('sxxxxxxxxxxxxxxx.sharepoint.com%ac43537d-8aaa-42c1-b2c9-ac54784g%2ffc54647-d535-4456-b398-1ac657g')/lists('a647454-5cf67-4467-a237-8ac6575d')/items('1')/fields/$entity",
+        "fields": {
+          "@odata.etag": "1238ac234-ac45bd67-ca5161047-g231128-12aa",
+          "Title": "LIA-Assistência-Técnica",
+          "Refer_x00ea_nciadoMapeamentodePr": [
+            {
+              "LookupId": 406,
+              "LookupValue": "6"
+            }
+          ],
+          "Comootratamentodedadospessoais_x": "O objetivo deste tratamento é que o próprio titular consiga registrar suas despesas e solicite seu reembolso, isso entra como uma agilidade em nossas operações.",
+          "Descreveroaspectodotratamentodos": "O tratamento em questão utilizou por um determinado período um dado sensível (Saúde) - devido a pandemia COVID-19 - para liberação de acesso, contudo, o próprio titular que preenchia a uma ficha e nos enviava. O objetivo principal era controlarmos a propagação do vírus.",
+          "Afinalidadepoderiaseralcan_x00e7": "Não",
+          "Descrevaseotratamentodedadospess": "Fere o direito de liberdade",
+          "Osdadospessoaisforamcoletadosdir": "Sim",
+          "Descrevaseosdadospessoaisser_x00": "Sim, os dados coletados são necessários para criação de login/senha ao colaborador, para que o mesmo tenha acesso a plataforma de chamado ao time de TI ou Facilities.",
+          "LinkTitle": "4",
+          "Modified": "2021-08-23T13:27:08Z",
+          "id": "2",
+          "ContentType": "Item",
+          "Created": "2023-02-28T10:34:58Z",
+          "AuthorLookupId": "8",
+          "EditorLookupId": "8",
+          "_UIVersionString": "6.0",
+          "Attachments": false
+        }
+      }
+    ]
+}
