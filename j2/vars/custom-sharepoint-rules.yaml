@@ -1843,11 +1843,11 @@ rules:
             val: "${original_request?.bytes?.encodeBase64()?.toString()}"
             excludeFromSearch: true
           Metadata_Create_Date:
-            val: "${}"
+            val: "${Created}"
             excludeFromSearch: true
             type: java.util.Date
           Metadata_Update_Date:
-            val: "${}"
+            val: "${Modified}"
             excludeFromSearch: true
             type: java.util.Date
 
