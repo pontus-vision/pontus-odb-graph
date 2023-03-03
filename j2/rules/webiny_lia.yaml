@@ -37,10 +37,6 @@ updatereq:
           val: ${interessesLegitimosDadosDiretosDoTitular.toString()}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation
-          val: ${interessesLegitimosInovacoes}
-          mandatoryInSearch: False
-          excludeFromSearch: True
     
     - label: Object_Data_Procedures
       props:

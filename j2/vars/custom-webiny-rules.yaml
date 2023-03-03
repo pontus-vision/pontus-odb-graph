@@ -2368,7 +2368,6 @@ rules:
 #    interessesLegitimosFinalidadeQuantidadeMenorDeDados
 #    interessesLegitimosViolacaoDeTratamentoDeDadosPessoais
 #    interessesLegitimosDadosDiretosDoTitular
-#    interessesLegitimosInovacoes
 #  }
 #  }
 #  }
@@ -2399,9 +2398,6 @@ rules:
             excludeFromSearch: true
           Is_Data_From_Natural_Person:
             val: "${interessesLegitimosDadosDiretosDoTitular.toString()}"
-            excludeFromSearch: true
-          Why_Is_Used_For_Innovation:
-            val: "${interessesLegitimosInovacoes}"
             excludeFromSearch: true
 
       - label: Object_Data_Procedures
