@@ -23,7 +23,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Risk_Mitigation_Data_Source_Is_Implemented
-          val: "${(field_Implemented.toLowerCase().equals('sim')|| field_Implemented.toLowerCase().equals('true'))?'true':'false' }"
+          val: ${(field_Implemented.toLowerCase().equals('sim')|| field_Implemented.toLowerCase().equals('true'))?'true':'false' }
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Risk_Mitigation_Data_Source_Is_Approved
