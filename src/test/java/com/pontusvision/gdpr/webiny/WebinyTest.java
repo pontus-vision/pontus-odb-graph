@@ -100,6 +100,19 @@ public class WebinyTest extends AppTest {
       assertTrue(reply.getRecords()[17].contains("\"Object_Sensitive_Data_Description\":\"LOCAL DE NASCIMENTO\""));
       assertTrue(reply.getRecords()[22].contains("\"Object_Sensitive_Data_Description\":\"OUTROS DADOS 1\""));
 
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63c6f874320a910008b4e5b5#0002\"\n" +
+                      "  }\n" +
+                      "]", "Object_Data_Procedures",
+              new String[]{"Object_Data_Procedures_Country_Where_Stored", "Object_Data_Procedures_Data_Geo_Scope"});
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Country_Where_Stored\":\"Brasil\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Data_Geo_Scope\":\"Estadual\""));
+
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e, e.getMessage());
@@ -511,6 +524,18 @@ public class WebinyTest extends AppTest {
               "hasNeighbourId:" + contractRid);
 
       assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"01201405628\""));
+
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Contract_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63daa413efaf5f0008f6e296#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Contract",
+              new String[]{"Object_Contract_Country"});
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Contract_Country\":\"São Vicente e Granadinas\""));
 
     } catch (Exception e) {
       e.printStackTrace();
