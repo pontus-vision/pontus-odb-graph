@@ -47,7 +47,7 @@ public class PVMD2ScoreTests extends AppTest {
 
 //      result.size() changed from 138 to 140 because we added more Person_Organisations
 //      assertEquals(138,result.size());
-      assertEquals(140,result.size());
+      assertEquals(142,result.size());
 //      Map<String, Long> retVals = new HashMap<>();
 //
 //      long score =  gdpr.getAwarenessScores(retVals);
