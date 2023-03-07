@@ -71,6 +71,18 @@
             "excludeFromSearch": true
           },
           {
+            "name": "Object_Data_Procedures_Country_Where_Stored",
+            "val": "${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas == null?'Brasil':mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Geo_Scope",
+            "val": "${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoAbrangenciaGeograficaDoTratamento}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
             "name": "Object_Data_Procedures_Products_And_Services",
             "val": "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,

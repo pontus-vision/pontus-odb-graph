@@ -144,7 +144,7 @@
           },
           {
             "name": "Object_Contract_Country",
-            "val": "${contratosTransferenciaParaQualPais?.trim()?.toUpperCase()}",
+            "val": "${contratosTransferenciaParaQualPais == null?'Brasil':contratosTransferenciaParaQualPais}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

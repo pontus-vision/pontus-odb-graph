@@ -105,7 +105,7 @@ updatereq:
           excludeFromSearch: True
           postProcessor: ${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it,'transferenciasInternacionaisInciso')}
         - name: Object_Contract_Country
-          val: ${contratosTransferenciaParaQualPais?.trim()?.toUpperCase()}
+          val: "${contratosTransferenciaParaQualPais == null?'Brasil':contratosTransferenciaParaQualPais}"
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Contract_Has_Minors_Data

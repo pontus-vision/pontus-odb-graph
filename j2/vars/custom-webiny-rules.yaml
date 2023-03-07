@@ -51,11 +51,14 @@ rules:
 #          Secondary_Purpose_Of_Collection:
 #            val: "${}"
 #            excludeFromSearch: true
-#          Country_Where_Stored:
-#            val: "${}"
-#            excludeFromSearch: true
+          Country_Where_Stored:
+            val: "\"${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas == null?'Brasil':mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas}\""
+            excludeFromSearch: true
+          Data_Geo_Scope:
+            val: "${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoAbrangenciaGeograficaDoTratamento}"
+            excludeFromSearch: true
 #          Participants:
-#            vals: "${}"              TODO: what to do with that ?!
+#            vals: "${}"
 #            excludeFromSearch: true
 #          Info_Shared_With_Third_Parties:
 #            vals: "${}"
@@ -64,7 +67,7 @@ rules:
 #            vals: "${}"
 #            excludeFromSearch: true
 #          Info_Share_Justification:
-#            val: "${}"              TODO: não temos campo para essa questão
+#            val: "${}"
 #            excludeFromSearch: true
 #          Info_Share_Justification_International:
 #            val: "${}"
@@ -76,11 +79,14 @@ rules:
             val: "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos?.trim()?.toUpperCase()}" # this field will change!
             excludeFromSearch: true
 #          Rights:
-#            val: "${}"               #TODO: Check with @Leo if it is needed into Webiny
+#            val: "${}"
 #            excludeFromSearch: true
           Lawful_Basis_Justification:
             val: "${mapeamentoDeProcessosJustificativaDaBaseLegal?.trim()?.toUpperCase()}"
             excludeFromSearch: true
+#          Status:
+#            val: "${mapeamentoDeProcessosStatus}"
+#            excludeFromSearch: true
 
       - label: Person_Natural
         name: responsible
@@ -378,7 +384,7 @@ rules:
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
-    edges:    #TODO: fix the edges !!
+    edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "webiny"
         toVertexLabel: "Event_Group_Ingestion"
@@ -1366,7 +1372,7 @@ rules:
             processAll: true
             excludeFromSearch: true
           Country:
-            val: "${contratosTransferenciaParaQualPais?.trim()?.toUpperCase()}"
+            val: "\"${contratosTransferenciaParaQualPais == null?'Brasil':contratosTransferenciaParaQualPais}\""
             excludeFromSearch: true
           Has_Minors_Data:
 #           or simply ${contratosDadosdeCriancasEAdolescentes}
@@ -1580,10 +1586,10 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade,(organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, if(organizacoesEnderecoObj?.organizacoesEnderecoObjUf == null){return 'SP'}else if(organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior'){return ''}else{return organizacoesEnderecoObj?.organizacoesEnderecoObjUf}, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
             excludeFromSearch: true
           parser:
-            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, if(organizacoesEnderecoObj?.organizacoesEnderecoObjUf == null){return 'SP'}else if(organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior'){return ''}else{return organizacoesEnderecoObj?.organizacoesEnderecoObjUf}, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
 
