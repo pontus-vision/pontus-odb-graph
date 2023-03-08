@@ -3035,11 +3035,11 @@
     },
     {
       "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
-      "dataType": "Boolean",
+      "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
-      "name": "Object_Legitimate_Interests_Assessment_Why_Is_Required",
+      "name": "Object_Legitimate_Interests_Assessment_Is_Required",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -5798,7 +5798,7 @@
         "Object_Legitimate_Interests_Assessment_Form_Id",
         "Object_Legitimate_Interests_Assessment_Benefits_Relevance",
         "Object_Legitimate_Interests_Assessment_Is_Essential",
-        "Object_Legitimate_Interests_Assessment_Why_Is_Required",
+        "Object_Legitimate_Interests_Assessment_Is_Required",
         "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
         "Object_Legitimate_Interests_Assessment_LIA_Id",
         "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person",

@@ -87,10 +87,11 @@ public class PVSharepointRoPaTests extends AppTest {
           "]", "Object_Data_Procedures",
         new String[]{"Object_Data_Procedures_ID"});
 
-      RecordReply reply = gridWrapper(null, "Object_Legitimate_Interests_Assessment", new String[]{"Object_Legitimate_Interests_Assessment_Is_Essential"}, "hasNeighbourId:" + svRopaRid);
+      RecordReply reply = gridWrapper(null, "Object_Legitimate_Interests_Assessment",
+              new String[]{"Object_Legitimate_Interests_Assessment_Is_Essential"}, "hasNeighbourId:" + svRopaRid);
       String replyStr = reply.getRecords()[0];
 
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"true\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"Sim, é indispensável - processo 4\""));
 // -------------------------------------------------------------------------------------------------------------------------------------
 
 //    testing new edge between Object_Email ------- Is_Responsible ------- > RoPA

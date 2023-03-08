@@ -353,12 +353,12 @@ public class PVPbrTest extends AppTest {
         "text for strategic impact");
 
       reply = gridWrapper(null, "Object_Legitimate_Interests_Assessment",
-        new String[]{"Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Why_Is_Required"},
+        new String[]{"Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Is_Required"},
         "hasNeighbourId:" + pbrRopaRid);
 
       replyStr = reply.getRecords()[0];
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"true\""), "LIA is essential");
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Why_Is_Required\":\"true\""), "LIA is required");
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"Sim\""), "LIA is essential");
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Why_Is_Required\":\"Sim\""), "LIA is required");
 
     } catch (Exception e) {
       e.printStackTrace();

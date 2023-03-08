@@ -2391,7 +2391,7 @@ rules:
             val: "${interessesLegitimosAspectoAntietico}"
             excludeFromSearch: true
           Is_Essential:
-            val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados.toString()}" #TODO: maybe it`ll change
+            val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados}" #TODO: maybe it`ll change
             excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:
             val: "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}"

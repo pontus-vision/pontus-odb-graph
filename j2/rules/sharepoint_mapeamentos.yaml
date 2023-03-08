@@ -108,15 +108,15 @@ updatereq:
           val: ${id}
           mandatoryInSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Essential
-          val: "${Essetratamentodedadospessoais_x0?.toString()?.toUpperCase()?.contains('SIM')?'true':'false'}"
+          val: ${Essetratamentodedadospessoais_x0}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
           val: ${N_x00e3_oh_x00e1_outrabaselegalp}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Why_Is_Required
-          val: "${Esse_x0020_processamento_x0020_d?.toString()?.toUpperCase()?.contains('SIM')?'true':'false'}"
+        - name: Object_Legitimate_Interests_Assessment_Is_Required
+          val: ${Esse_x0020_processamento_x0020_d}
           mandatoryInSearch: False
           excludeFromSearch: True
     

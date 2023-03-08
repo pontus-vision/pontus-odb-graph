@@ -161,7 +161,7 @@
           },
           {
             "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
-            "val": "${Essetratamentodedadospessoais_x0?.toString()?.toUpperCase()?.contains('SIM')?'true':'false'}",
+            "val": "${Essetratamentodedadospessoais_x0}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -172,8 +172,8 @@
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Legitimate_Interests_Assessment_Why_Is_Required",
-            "val": "${Esse_x0020_processamento_x0020_d?.toString()?.toUpperCase()?.contains('SIM')?'true':'false'}",
+            "name": "Object_Legitimate_Interests_Assessment_Is_Required",
+            "val": "${Esse_x0020_processamento_x0020_d}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

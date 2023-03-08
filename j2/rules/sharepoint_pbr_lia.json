@@ -45,7 +45,7 @@
           },
           {
             "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
-            "val": true,
+            "val": "Sim",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

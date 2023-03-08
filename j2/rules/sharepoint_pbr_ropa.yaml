@@ -217,7 +217,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Policy_Is_Essential
-          val: "${Osdadospessoaisidentificadoss_x0?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}"
+          val: ${Osdadospessoaisidentificadoss_x0}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Policy_Is_Anonymized
