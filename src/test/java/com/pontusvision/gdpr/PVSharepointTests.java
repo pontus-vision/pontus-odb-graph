@@ -200,4 +200,60 @@ public class PVSharepointTests extends AppTest {
 
   }
 
+  @Test
+  public void test00004SharepointLIA() throws InterruptedException {
+
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields", "sharepoint_mapeamentos");
+    jsonTestUtil("sharepoint/devtools-extract-sharepoint-lia.json", "$.queryResp[*].fields", "sharepoint_lia");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Legitimate_Interests_Assessment_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"1\"\n" +
+                      "  }\n" +
+                      "]", "Object_Legitimate_Interests_Assessment",
+              new String[]{"Object_Legitimate_Interests_Assessment_LIA_Id", "Object_Legitimate_Interests_Assessment_Strategic_Impact",
+                      "Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification"});
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Strategic_Impact\":\"\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"True\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA-ABERTURA-CHAMADOS\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification\":\"\""));
+
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Legitimate_Interests_Assessment_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"2\"\n" +
+                      "  }\n" +
+                      "]", "Object_Legitimate_Interests_Assessment",
+              new String[]{"Object_Legitimate_Interests_Assessment_LIA_Id", "Object_Legitimate_Interests_Assessment_Strategic_Impact",
+                      "Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification"});
+      String replyStr = reply.getRecords()[0];
+
+      String LIARid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Strategic_Impact\":\"O objetivo deste tratamento é que o próprio titular consiga registrar suas despesas e solicite seu reembolso, isso entra como uma agilidade em nossas operações.\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"False\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification\":\"FERE O DIREITO DE LIBERDADE\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA-ASSISTÊNCIA-TÉCNICA\""));
+
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"}, "hasNeighbourId:" + LIARid);
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"Prestadores de Serviços e Fornecedores\""));
+
+      reply = gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"}, "hasNeighbourId:" + LIARid);
+      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"sharepoint/legitimate-interests-assessment\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e, e.getMessage());
+    }
+
+  }
+
 }
