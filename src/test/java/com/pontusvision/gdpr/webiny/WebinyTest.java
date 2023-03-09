@@ -493,7 +493,10 @@ public class WebinyTest extends AppTest {
 
       assertTrue(replyStr.contains("\"Object_Contract_Short_Description\":\"CONTRATO 3\""));
       assertTrue(replyStr.contains("\"Object_Contract_Has_Minors_Data\":\"True\""));
-      assertTrue(replyStr.contains("\"Object_Contract_Tranfer_Intl\":\"IX - QUANDO NECESSÁRIO PARA ATENDER AS HIPÓTESES PREVISTAS NOS INCISOS II\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Tranfer_Intl\":\"[IX - quando necessário para atender as hipóteses " +
+              "previstas nos incisos II, V e VI do art. 7º da LGPD, VI - quando a transferência resultar em compromisso assumido em " +
+              "acordo de cooperação internacional, II - quando o controlador oferecer e comprovar garantias de cumprimento dos princípios, " +
+              "dos direitos do titular e do regime de proteção de dados previstos na LGPD]\""));
       assertTrue(replyStr.contains("\"Object_Contract_Expiry\":\"Tue Jan 03 01:01:01 UTC 2023\""));
 
       reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name", "Object_Data_Source_Engine", "Object_Data_Source_Description"},

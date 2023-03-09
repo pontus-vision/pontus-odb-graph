@@ -98,12 +98,9 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Object_Contract_Tranfer_Intl
-          val: ${new groovy.json.JsonBuilder(contratosTransferenciaInternacionalDeDados)}
+          val: ${contratosTransferenciaInternacionalDeDados?.transferenciasInternacionaisInciso}
           mandatoryInSearch: False
-          processAll: True
-          type: "[Lcom.pontusvision.utils.WebinyRef;"
           excludeFromSearch: True
-          postProcessor: ${com.pontusvision.utils.WebinyRef.fromStringTrimUC(it,'transferenciasInternacionaisInciso')}
         - name: Object_Contract_Country
           val: "${contratosTransferenciaParaQualPais == null?'Brasil':contratosTransferenciaParaQualPais}"
           mandatoryInSearch: False

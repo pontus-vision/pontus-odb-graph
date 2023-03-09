@@ -28,9 +28,17 @@
             }
           ],
           "contratosTransferenciaDeDados": true,
-          "contratosTransferenciaInternacionalDeDados": {
-            "transferenciasInternacionaisInciso": "IX - quando necessário para atender as hipóteses previstas nos incisos II, V e VI do art. 7º da LGPD"
-          },
+          "contratosTransferenciaInternacionalDeDados": [
+            {
+              "transferenciasInternacionaisInciso": "IX - quando necessário para atender as hipóteses previstas nos incisos II, V e VI do art. 7º da LGPD"
+            },
+            {
+              "transferenciasInternacionaisInciso": "VI - quando a transferência resultar em compromisso assumido em acordo de cooperação internacional"
+            },
+            {
+              "transferenciasInternacionaisInciso": "II - quando o controlador oferecer e comprovar garantias de cumprimento dos princípios, dos direitos do titular e do regime de proteção de dados previstos na LGPD"
+            }
+          ],
           "contratosTransferenciaParaQualPais": "São Vicente e Granadinas",
           "contratosDadosdeCriancasEAdolescentes": true,
           "contratosRefDoProcesso": [
@@ -77,9 +85,14 @@
             }
           ],
           "contratosTransferenciaDeDados": true,
-          "contratosTransferenciaInternacionalDeDados": {
-            "transferenciasInternacionaisInciso": "IX - quando necessário para atender as hipóteses previstas nos incisos II, V e VI do art. 7º da LGPD"
-          },
+          "contratosTransferenciaInternacionalDeDados": [
+            {
+              "transferenciasInternacionaisInciso": "IX - quando necessário para atender as hipóteses previstas nos incisos II, V e VI do art. 7º da LGPD"
+            },
+            {
+              "transferenciasInternacionaisInciso": "VI - quando a transferência resultar em compromisso assumido em acordo de cooperação internacional"
+            }
+          ],
           "contratosTransferenciaParaQualPais": "Brazil",
           "contratosDadosdeCriancasEAdolescentes": false,
           "contratosRefDoProcesso": [],
@@ -122,9 +135,11 @@
             }
           ],
           "contratosTransferenciaDeDados": false,
-          "contratosTransferenciaInternacionalDeDados": {
-            "transferenciasInternacionaisInciso": "IX - quando necessário para atender as hipóteses previstas nos incisos II, V e VI do art. 7º da LGPD"
-          },
+          "contratosTransferenciaInternacionalDeDados": [
+            {
+              "transferenciasInternacionaisInciso": "IX - quando necessário para atender as hipóteses previstas nos incisos II, V e VI do art. 7º da LGPD"
+            }
+          ],
           "contratosTransferenciaParaQualPais": "Lebanon",
           "contratosDadosdeCriancasEAdolescentes": true,
           "contratosRefDoProcesso": [
