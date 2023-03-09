@@ -2397,7 +2397,7 @@ rules:
             val: "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Is_Data_From_Natural_Person:
-            val: "${interessesLegitimosDadosDiretosDoTitular.toString()}"
+            val: "${interessesLegitimosDadosDiretosDoTitular}"
             excludeFromSearch: true
 
       - label: Object_Data_Procedures

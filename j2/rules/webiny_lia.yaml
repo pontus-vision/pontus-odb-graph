@@ -34,7 +34,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person
-          val: ${interessesLegitimosDadosDiretosDoTitular.toString()}
+          val: ${interessesLegitimosDadosDiretosDoTitular}
           mandatoryInSearch: False
           excludeFromSearch: True
     

@@ -594,9 +594,9 @@ rules:
             val: "${Se_x0020_sim_x0020_descrever}"
             excludeFromSearch: true
           Is_Essential:
-            val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
+            val: "true" # Or true ... basear no Resultado do LIA ?!?!
             excludeFromSearch: true
-          Why_Is_Required:
+          Is_Required:
             val: "true" # Or true ... basear no Resultado do LIA ?!?!
             excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:
