@@ -9,6 +9,13 @@ updatereq:
           val: ${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
     
+    - label: Object_Data_Procedures
+      props:
+        - name: Object_Data_Procedures_Type_Of_Natural_Person
+          val: ${requisicaoTitularesTipoTitular}
+          predicate: textContains
+          mandatoryInSearch: True
+    
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
@@ -102,4 +109,7 @@ updatereq:
   - label: Made_SAR_Request
     fromVertexLabel: Person_Natural
     toVertexLabel: Event_Subject_Access_Request
+  - label: Has_DSAR
+    fromVertexLabel: Event_Group_Subject_Access_Request
+    toVertexLabel: Object_Data_Procedures
 

@@ -72,7 +72,7 @@
           },
           {
             "name": "Object_Data_Procedures_Country_Where_Stored",
-            "val": "${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas == null?'Brasil':mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas}",
+            "val": "${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas?:'Brasil'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },

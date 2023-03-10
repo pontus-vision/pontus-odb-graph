@@ -52,7 +52,7 @@ rules:
 #            val: "${}"
 #            excludeFromSearch: true
           Country_Where_Stored:
-            val: "\"${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas == null?'Brasil':mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas}\""
+            val: "\"${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas?:'Brasil'}\""
             excludeFromSearch: true
           Data_Geo_Scope:
             val: "${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoAbrangenciaGeograficaDoTratamento}"
@@ -1369,7 +1369,7 @@ rules:
             val: "${contratosTransferenciaInternacionalDeDados?.transferenciasInternacionaisInciso}"
             excludeFromSearch: true
           Country:
-            val: "\"${contratosTransferenciaParaQualPais == null?'Brasil':contratosTransferenciaParaQualPais}\""
+            val: "\"${contratosTransferenciaParaQualPais?:'Brasil'}\""
             excludeFromSearch: true
           Has_Minors_Data:
 #           or simply ${contratosDadosdeCriancasEAdolescentes}
@@ -1723,12 +1723,31 @@ rules:
         props:
           Name: "WEBINY/TREINAMENTOS"
 
-      - label: Event_Training               # TODO: VERIFICAR COM LEO SE ELIMINAREMOS
+      - label: Event_Training
+        condition: "${treinamentosParticipantesAprovados.size() > 0}"
+        name: training_approved
         props:
-          Form_Id: "${id}"
-#          Status:
-#            val: "${status}"
-#            excludeFromSearch: true
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+            processAll: true
+          Status:
+            val: "Approved"
+            excludeFromSearch: true
+
+      - label: Event_Training
+        condition: "${treinamentosParticipantesAprovados.size() > 0}"
+        name: training_failed
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+            processAll: true
+          Status:
+            val: "Failed" #TODO:CHECK VALUES
+            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
@@ -1923,13 +1942,11 @@ rules:
           Customer_ID: "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}"
 
   #      TODO: Check with Leo if this link with RoPA is necessary.
-  #      - label: Object_Data_Procedures
-  #        props:
-  #          Form_Id:
-  #            val: "${new groovy.json.JsonBuilder(RoPA)}"
-  #            type: "[Lcom.pontusvision.utils.SharepointRef;"
-  #            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-  #            processAll: true
+      - label: Object_Data_Procedures
+        props:
+          Type_Of_Natural_Person:
+            val: "${requisicaoTitularesTipoTitular}"
+            predicate: "textContains" #TODO: TRY THIS
 
       - label: Object_Data_Source
         props:
@@ -2017,9 +2034,9 @@ rules:
         fromVertexLabel: "Person_Natural"
         toVertexLabel: "Event_Subject_Access_Request"
 
-  #      - label: Has_DSAR
-  #        fromVertexLabel: "Event_Group_Subject_Access_Request"
-  #        toVertexLabel: "Object_Data_Procedures"
+      - label: Has_DSAR
+        fromVertexLabel: "Event_Group_Subject_Access_Request"
+        toVertexLabel: "Object_Data_Procedures"
 
   webiny_data_breaches:
 

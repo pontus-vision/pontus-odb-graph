@@ -66,11 +66,43 @@
       },
       {
         "label": "Event_Training",
+        "name": "training_approved",
+        "condition": "${treinamentosParticipantesAprovados.size() > 0}",
         "props": [
           {
             "name": "Event_Training_Form_Id",
-            "val": "${id}",
-            "mandatoryInSearch": true
+            "val": "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+          },
+          {
+            "name": "Event_Training_Status",
+            "val": "Approved",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Training",
+        "name": "training_failed",
+        "condition": "${treinamentosParticipantesAprovados.size() > 0}",
+        "props": [
+          {
+            "name": "Event_Training_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+          },
+          {
+            "name": "Event_Training_Status",
+            "val": "Failed",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },
