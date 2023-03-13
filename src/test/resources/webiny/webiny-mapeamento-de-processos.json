@@ -54,7 +54,8 @@
             }
           ],
           "mapeamentoDeProcessosCategoriaDosTitularesDosDados": [
-            "Cliente"
+            "Cliente",
+            "Webiny-Colaborador"
           ],
           "mapeamentoDeProcessosPeriodoDeRetencao": {
             "periodosReferencia": "10 meses"

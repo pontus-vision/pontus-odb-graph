@@ -3,7 +3,7 @@
     "vertices": [
       {
         "label": "Person_Natural",
-        "name": "approved",
+        "name": "passed",
         "condition": "${treinamentosParticipantesAprovados.size() > 0}",
         "props": [
           {
@@ -66,7 +66,7 @@
       },
       {
         "label": "Event_Training",
-        "name": "training_approved",
+        "name": "training_passed",
         "condition": "${treinamentosParticipantesAprovados.size() > 0}",
         "props": [
           {
@@ -178,21 +178,31 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Event_Training"
+        "toVertexLabel": "training_passed"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "training_failed"
       },
       {
         "label": "Course_Training",
-        "fromVertexLabel": "Event_Training",
+        "fromVertexName": "training_passed",
+        "toVertexLabel": "Object_Awareness_Campaign"
+      },
+      {
+        "label": "Course_Training",
+        "fromVertexName": "training_failed",
         "toVertexLabel": "Object_Awareness_Campaign"
       },
       {
         "label": "Completed_By",
-        "fromVertexLabel": "Event_Training",
-        "toVertexName": "approved"
+        "fromVertexName": "training_passed",
+        "toVertexName": "passed"
       },
       {
         "label": "Completed_By",
-        "fromVertexLabel": "Event_Training",
+        "fromVertexName": "training_failed",
         "toVertexName": "failed"
       }
     ]

@@ -1690,7 +1690,7 @@ rules:
 
       - label: Person_Natural
         condition: "${treinamentosParticipantesAprovados.size() > 0}"
-        name: approved
+        name: passed
         props:
           Customer_ID:
             val: "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}"
@@ -1725,7 +1725,7 @@ rules:
 
       - label: Event_Training
         condition: "${treinamentosParticipantesAprovados.size() > 0}"
-        name: training_approved
+        name: training_passed
         props:
           Form_Id:
             val: "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}"
@@ -1786,18 +1786,26 @@ rules:
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Ingestion"
-        toVertexLabel: "Event_Training"
+        toVertexLabel: "training_passed"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "training_failed"
 
       - label: "Course_Training"
-        fromVertexLabel: "Event_Training"
+        fromVertexName: "training_passed"
+        toVertexLabel: "Object_Awareness_Campaign"
+
+      - label: "Course_Training"
+        fromVertexName: "training_failed"
         toVertexLabel: "Object_Awareness_Campaign"
 
       - label: "Completed_By"
-        fromVertexLabel: "Event_Training"
-        toVertexName: "approved"
+        fromVertexName: "training_passed"
+        toVertexName: "passed"
 
       - label: "Completed_By"
-        fromVertexLabel: "Event_Training"
+        fromVertexName: "training_failed"
         toVertexName: "failed"
 
   webiny_owner:

@@ -399,9 +399,9 @@ class MatchReq<T> {
     } else if ("lte".equals(predicateStr)) {
       return "<"
     } else if ("textContains".equals(predicateStr)) {
-      return "CONTAINSTEXT"
+      return " CONTAINSTEXT "
     } else if ("textContainsPrefix".equals(predicateStr)) {
-      return "CONTAINSTEXT"
+      return " CONTAINSTEXT "
 //    } else if ("textContainsRegex".equals(predicateStr)) {
 //      return org.janusgraph.core.attribute.Text.&textContainsRegex
 //    } else if ("textContainsFuzzy".equals(predicateStr)) {

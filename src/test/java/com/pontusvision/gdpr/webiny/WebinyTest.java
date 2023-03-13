@@ -693,7 +693,8 @@ public class WebinyTest extends AppTest {
   @Test
   public void test00012WebinyDSAR() throws InterruptedException {
 
-//    jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner"); assuming that titulares are already ingested when the tests run integrated
+    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
+    jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner");
     jsonTestUtil("webiny/webiny-requisicoes.json", "$.data.listRequisicaoTitulares.data[*]", "webiny_dsar");
 
     try {
@@ -711,7 +712,7 @@ public class WebinyTest extends AppTest {
 
       String sarRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Natural_Person_Type\":\"Colaborador\""));
+      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Natural_Person_Type\":\"Webiny-Colaborador\""));
       assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Id\":\"admin@pontus.com\""));
       assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Request_Type\":\"Update\""));
 
@@ -728,6 +729,16 @@ public class WebinyTest extends AppTest {
       reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + pjRid);
 
       assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
+
+//      ---------------------------------------- new connection with RoPA ---------------------------------------------------
+
+      String sarGroupRid = JsonParser.parseString(
+              gridWrapper(null, "Event_Group_Subject_Access_Request", new String[]{"Event_Group_Subject_Access_Request_Ingestion_Date"},
+                      "hasNeighbourId:" + sarRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"}, "hasNeighbourId:" + sarGroupRid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"PROCESSO 1\""));
 
     } catch (Exception e) {
       e.printStackTrace();
