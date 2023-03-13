@@ -55,7 +55,7 @@ rules:
 #            val: "${}"
 #            excludeFromSearch: true
 #          Participants:
-#            vals: "${}"              TODO: what to do with that ?!
+#            vals: "${}"
 #            excludeFromSearch: true
 #          Info_Shared_With_Third_Parties:
 #            vals: "${}"
@@ -64,7 +64,7 @@ rules:
 #            vals: "${}"
 #            excludeFromSearch: true
 #          Info_Share_Justification:
-#            val: "${}"              TODO: não temos campo para essa questão
+#            val: "${}"
 #            excludeFromSearch: true
 #          Info_Share_Justification_International:
 #            val: "${}"
@@ -76,7 +76,7 @@ rules:
             val: "${mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos?.trim()?.toUpperCase()}" # this field will change!
             excludeFromSearch: true
 #          Rights:
-#            val: "${}"               #TODO: Check with @Leo if it is needed into Webiny
+#            val: "${}"
 #            excludeFromSearch: true
           Lawful_Basis_Justification:
             val: "${mapeamentoDeProcessosJustificativaDaBaseLegal?.trim()?.toUpperCase()}"
@@ -99,7 +99,7 @@ rules:
 #      - label: Object_Contract  # ainda não tem campo no CMS Mapeamentos
 #        props:
 #          Registration_Number:
-#            val: "${new groovy.json.JsonBuilder()}" #TODO (linkage only)
+#            val: "${new groovy.json.JsonBuilder()}"
 #            type: "[Ljava.lang.String;"
 ##            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
 #            processAll: true
@@ -378,7 +378,7 @@ rules:
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
-    edges:    #TODO: fix the edges !!
+    edges:
       - label: "Has_Ingestion_Event"
         fromVertexName: "webiny"
         toVertexLabel: "Event_Group_Ingestion"
@@ -2398,7 +2398,7 @@ rules:
             val: "${interessesLegitimosAspectoAntietico}"
             excludeFromSearch: true
           Is_Essential:
-            val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados}" #TODO: maybe it`ll change
+            val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados}"
             excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:
             val: "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}"
