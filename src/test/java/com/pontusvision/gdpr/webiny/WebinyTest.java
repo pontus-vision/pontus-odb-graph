@@ -753,7 +753,7 @@ public class WebinyTest extends AppTest {
               "hasNeighbourId:" + ingestionRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"}, "hasNeighbourId:" + groupIngestionRid);
-      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Source_Name\":\"WEBINY/INCIDENTES-DE-SEGURANCA-REPORTADOS\""));
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -841,7 +841,7 @@ public class WebinyTest extends AppTest {
 
       reply = gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"}, "hasNeighbourId:" + riskMitigationRid);
 
-      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"webiny/mitigações-de-riscos\""));
+      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"webiny/mitigacoes-de-riscos\""));
 
     } catch (Exception e) {
       e.printStackTrace();

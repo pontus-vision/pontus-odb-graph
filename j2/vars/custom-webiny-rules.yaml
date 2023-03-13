@@ -509,12 +509,12 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/AÇÕES-JUDICIAIS"
+          Name: "WEBINY/ACOES-JUDICIAIS"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/ações-judiciais"
+            val: "webiny/acoes-judiciais"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -533,7 +533,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/ações-judiciais"
+          Type: "webiny/acoes-judiciais"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -570,12 +570,12 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/COMUNICAÇÕES-PPD"
+          Name: "WEBINY/COMUNICACOES-PPD"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/comunicações-ppd"
+            val: "webiny/comunicacoes-ppd"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -594,7 +594,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/comunicações-ppd"
+          Type: "webiny/comunicacoes-ppd"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -642,12 +642,12 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/REUNIÕES-PPD"
+          Name: "WEBINY/REUNIOES-PPD"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/reuniões-ppd"
+            val: "webiny/reunioes-ppd"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -666,7 +666,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/reuniões-ppd"
+          Type: "webiny/reunioes-ppd"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -1572,7 +1572,7 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/ORGANIZAÇÕES"
+          Name: "WEBINY/ORGANIZACOES"
 
       - label: Location_Address
         props:
@@ -1587,7 +1587,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/organizações"
+            val: "webiny/organizacoes"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1606,7 +1606,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/organizações"
+          Type: "webiny/organizacoes"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -1836,7 +1836,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Titulares"
+            val: "webiny/titulares"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1927,7 +1927,7 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/REQUISIÇÕES-DOS-TITULARES"
+          Name: "WEBINY/REQUISICOES-DOS-TITULARES"
 
       - label: Event_Subject_Access_Request
         props:
@@ -1966,7 +1966,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/requisições-dos-titulares"
+            val: "webiny/requisicoes-dos-titulares"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1985,7 +1985,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/requisições-dos-titulares"
+          Type: "webiny/requisicoes-dos-titulares"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -2042,7 +2042,7 @@ rules:
       - label: Object_Data_Source
         name: webiny
         props:
-          Name: "WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS"
+          Name: "WEBINY/INCIDENTES-DE-SEGURANCA-REPORTADOS"
 
       - label: Object_Data_Source
         name: data_sources
@@ -2089,7 +2089,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/incidentes-de-segurança-reportados"
+            val: "webiny/incidentes-de-seguranca-reportados"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -2108,7 +2108,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/incidentes-de-segurança-reportados"
+          Type: "webiny/incidentes-de-seguranca-reportados"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -2281,7 +2281,7 @@ rules:
       - label: Object_Data_Source
         name: webiny
         props:
-          Name: "WEBINY/MITIGAÇÕES-DE-RISCOS"
+          Name: "WEBINY/MITIGACOES-DE-RISCOS"
 
       - label: Object_Risk_Data_Source
         props:
@@ -2310,7 +2310,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/mitigações-de-riscos"
+            val: "webiny/mitigacoes-de-riscos"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -2329,7 +2329,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/mitigações-de-riscos"
+          Type: "webiny/mitigacoes-de-riscos"
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 

@@ -54,7 +54,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/REUNIÕES-PPD",
+            "val": "WEBINY/REUNIOES-PPD",
             "mandatoryInSearch": true
           }
         ]
@@ -64,7 +64,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "webiny/reuniões-ppd",
+            "val": "webiny/reunioes-ppd",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -101,7 +101,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/reuniões-ppd",
+            "val": "webiny/reunioes-ppd",
             "mandatoryInSearch": true
           },
           {

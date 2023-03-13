@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/MITIGAÇÕES-DE-RISCOS",
+            "val": "WEBINY/MITIGACOES-DE-RISCOS",
             "mandatoryInSearch": true
           }
         ]
@@ -64,7 +64,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "webiny/mitigações-de-riscos",
+            "val": "webiny/mitigacoes-de-riscos",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -101,7 +101,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/mitigações-de-riscos",
+            "val": "webiny/mitigacoes-de-riscos",
             "mandatoryInSearch": true
           },
           {
