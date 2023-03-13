@@ -802,7 +802,7 @@ rules:
     #        periodosReferencia
     #      }
     #      fontesDeDadosRiscosDeFontesDeDados{
-    #        riscosDeFontesDeDadosReferencia
+    #        id
     #      }
     #      fontesDeDadosDadosPessoaisObj{
     #        fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar{
@@ -1028,7 +1028,13 @@ rules:
           Retention_Period: "${fontesDeDadosPeriodoDeRetencao?.periodosReferencia}"
 #          Type: "${fontesDeDadosReferencia?.trim()?.toUpperCase()}"
 
-#     TODO: não utilizamos Riscos De Fontes De Dados !!!
+      - label: Object_Risk_Data_Source
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosRiscosDeFontesDeDados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
 
       - label: Event_Ingestion
         props:
@@ -1152,6 +1158,10 @@ rules:
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
         toVertexName: "sensitive_data"
+
+      - label: "Has_Risk"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Risk_Data_Source"
         
   webiny_consents:
 
