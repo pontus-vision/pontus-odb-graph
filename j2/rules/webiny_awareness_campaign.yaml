@@ -56,7 +56,7 @@ updatereq:
           type: "[Lcom.pontusvision.utils.WebinyRef;"
           postProcessor: ${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
         - name: Event_Training_Status
-          val: Approved
+          val: Passed
           mandatoryInSearch: False
           excludeFromSearch: True
     

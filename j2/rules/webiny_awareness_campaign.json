@@ -79,7 +79,7 @@
           },
           {
             "name": "Event_Training_Status",
-            "val": "Approved",
+            "val": "Passed",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
