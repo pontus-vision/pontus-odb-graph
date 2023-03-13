@@ -1733,7 +1733,7 @@ rules:
             postProcessor: "${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
             processAll: true
           Status:
-            val: "Approved"
+            val: "Passed"
             excludeFromSearch: true
 
       - label: Event_Training
@@ -1746,7 +1746,7 @@ rules:
             postProcessor: "${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
             processAll: true
           Status:
-            val: "Failed" #TODO:CHECK VALUES
+            val: "Failed"
             excludeFromSearch: true
 
       - label: Event_Ingestion
