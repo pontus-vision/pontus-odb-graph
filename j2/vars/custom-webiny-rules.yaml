@@ -1955,6 +1955,7 @@ rules:
           Type_Of_Natural_Person:
             val: "${requisicaoTitularesTipoTitular}"
             predicate: "textContains" #TODO: TRY THIS
+            excludeFromUpdate: true
 
       - label: Object_Data_Source
         props:
@@ -1993,6 +1994,7 @@ rules:
       - label: Event_Group_Subject_Access_Request
         props:
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Type_Of_Natural_Person: "${requisicaoTitularesTipoTitular}"
 
       - label: Event_Ingestion
         props:

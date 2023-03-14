@@ -767,6 +767,21 @@ class Matcher {
     return sb.toString()
   }
 
+  static String createSelectCols(List<MatchReq> mandatoryFields) {
+    StringBuilder sb = new StringBuilder()
+    long counter = 0
+    mandatoryFields.each { field ->
+//      if ("".equals(field.attribNativeVal) || field.attribNativeVal) {
+        if (counter > 0) {
+          sb.append(" , ")
+        }
+        counter++
+        sb.append(field.propName)
+//      }
+    }
+    return sb.toString()
+  }
+
   static String createWhereClauseAttribs(List<MatchReq> mandatoryFields) {
     StringBuilder sb = new StringBuilder()
     long counter = 0
@@ -2202,18 +2217,20 @@ class Matcher {
     List<MatchReq> mandatoryFields = uniqueProps.findAll { it2 -> it2.mandatoryInSearch }
     List<MatchReq> updateFields = uniqueProps.findAll { it2 -> !it2.excludeFromUpdate }
 
+    final boolean isPureSelect = updateFields.size() == 0
+
     def (String jsonToMerge, Map<String, Object> sqlParams) = createJsonMergeParam(updateFields, vertexLabel)
 
 
     String searchClassAttribs = createSearchClassAttribs(mandatoryFields)
     String whereClauseAttribs = createWhereClauseAttribs(mandatoryFields)
-
+    String selectCols = createSelectCols(mandatoryFields)
 
     final boolean isPureInsert = "()".equals(searchClassAttribs)
     String whereClause = "WHERE ${whereClauseAttribs}"
 //              "WHERE SEARCH_CLASS ('${searchClassAttribs}') = true"
 
-    final String sqlStr = isPureInsert ?
+    final String sqlStr = isPureSelect ? "SELECT ${selectCols} FROM ${vertexLabel} ${whereClause}" : isPureInsert ?
             "INSERT INTO `${vertexLabel}` CONTENT ${jsonToMerge}" :
             "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} LOCK record LIMIT 1 "
     final def retVals = App.graph.executeSql(sqlStr, sqlParams)

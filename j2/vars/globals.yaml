@@ -234,6 +234,7 @@ schema:
       useStatic: false
       props:
         - name: Ingestion_Date
+        - name: Type_Of_Natural_Person
 
     - name: "Event_Ingestion"
       partition: false

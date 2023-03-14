@@ -19,7 +19,8 @@
             "name": "Object_Data_Procedures_Type_Of_Natural_Person",
             "val": "${requisicaoTitularesTipoTitular}",
             "predicate": "textContains",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },
@@ -81,6 +82,11 @@
           {
             "name": "Event_Group_Subject_Access_Request_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Subject_Access_Request_Type_Of_Natural_Person",
+            "val": "${requisicaoTitularesTipoTitular}",
             "mandatoryInSearch": true
           }
         ]

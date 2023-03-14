@@ -694,7 +694,7 @@ public class WebinyTest extends AppTest {
   public void test00012WebinyDSAR() throws InterruptedException {
 
     jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
-//    jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner");
+    jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner");
     jsonTestUtil("webiny/webiny-requisicoes.json", "$.data.listRequisicaoTitulares.data[*]", "webiny_dsar");
 
     try {

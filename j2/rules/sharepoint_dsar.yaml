@@ -8,9 +8,11 @@ updatereq:
         - name: Person_Organisation_Name
           val: ${Raz_x00e3_oSocial?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Person_Organisation_Registration_Number
           val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Person_Organisation_Last_Update_Date
           val: ${Modified}
           mandatoryInSearch: False
@@ -27,6 +29,7 @@ updatereq:
         - name: Person_Natural_Customer_ID
           val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
     
     - label: Object_Data_Procedures
       props:
