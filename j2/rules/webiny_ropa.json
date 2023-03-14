@@ -67,7 +67,8 @@
           {
             "name": "Object_Data_Procedures_Type_Of_Natural_Person",
             "val": "${mapeamentoDeProcessosCategoriaDosTitularesDosDados}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Object_Data_Procedures_Country_Where_Stored",
