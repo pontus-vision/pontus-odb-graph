@@ -2398,13 +2398,13 @@ rules:
             val: "${interessesLegitimosAspectoAntietico}"
             excludeFromSearch: true
           Is_Essential:
-            val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados}"
+            val: "\"${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:
             val: "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Is_Data_From_Natural_Person:
-            val: "${interessesLegitimosDadosDiretosDoTitular}"
+            val: "\"${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
             excludeFromSearch: true
 
       - label: Object_Data_Procedures
