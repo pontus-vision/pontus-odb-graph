@@ -830,7 +830,7 @@ public class WebinyTest extends AppTest {
       String riskMitigationRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Approved\":\"true\""));
-      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Implemented\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Implemented\":\"true\""));
       assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Mitigation_Id\":\"MITIGAÇÃO PARA ROUBO DE CELULAR\""));
       assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Description\":\"SE ROUBAREM CELULAR, DEVE-SE RELATAR O MAIS RÁPIDO POSSÍVEL E FAZER BO.\""));
 
