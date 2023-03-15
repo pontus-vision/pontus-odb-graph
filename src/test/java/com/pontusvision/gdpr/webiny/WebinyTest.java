@@ -479,7 +479,7 @@ public class WebinyTest extends AppTest {
       String contractRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       assertTrue(replyStr.contains("\"Object_Contract_Short_Description\":\"CONTRATO 3\""));
-      assertTrue(replyStr.contains("\"Object_Contract_Has_Minors_Data\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Has_Minors_Data\":\"true\""));
       assertTrue(replyStr.contains("\"Object_Contract_Tranfer_Intl\":\"[IX - quando necessário para atender as hipóteses " +
               "previstas nos incisos II, V e VI do art. 7º da LGPD, VI - quando a transferência resultar em compromisso assumido em " +
               "acordo de cooperação internacional, II - quando o controlador oferecer e comprovar garantias de cumprimento dos princípios, " +
@@ -735,7 +735,7 @@ public class WebinyTest extends AppTest {
 
       assertTrue(replyStr.contains("\"Event_Data_Breach_Status\":\"Suspect External Theft\""));
       assertTrue(replyStr.contains("\"Event_Data_Breach_Metadata_Create_Date\":\"Tue Feb 14 20:01:59 UTC 2023\""));
-      assertTrue(replyStr.contains("\"Event_Data_Breach_Authority_Notified\":\"True\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Authority_Notified\":\"true\""));
       assertTrue(replyStr.contains("\"Event_Data_Breach_Impact\":\"Data Lost\""));
       assertTrue(replyStr.contains("\"Event_Data_Breach_Description\":\"CIBER ATAQUE\""));
       assertTrue(replyStr.contains("\"Event_Data_Breach_Source\":\"CHINA\""));
@@ -788,7 +788,7 @@ public class WebinyTest extends AppTest {
       assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Probability\":\"Medium\""));
       assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Impact\":\"High\""));
       assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Description\":\"ROUBO DE DADOS PESSOAIS\""));
-      assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Approved_By_DPO\":\"False\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Approved_By_DPO\":\"false\""));
 
       reply = gridWrapper(null, "Object_Risk_Mitigation_Data_Source",
               new String[]{"Object_Risk_Mitigation_Data_Source_Mitigation_Id"}, "hasNeighbourId:" + riskRid);
@@ -829,7 +829,7 @@ public class WebinyTest extends AppTest {
 
       String riskMitigationRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Approved\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Approved\":\"true\""));
       assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Implemented\":\"True\""));
       assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Mitigation_Id\":\"MITIGAÇÃO PARA ROUBO DE CELULAR\""));
       assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Description\":\"SE ROUBAREM CELULAR, DEVE-SE RELATAR O MAIS RÁPIDO POSSÍVEL E FAZER BO.\""));
