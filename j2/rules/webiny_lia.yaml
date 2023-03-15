@@ -26,7 +26,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Essential
-          val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'True':'False'}"
+          val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification
@@ -34,7 +34,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person
-          val: "${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}"
+          val: "${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
           mandatoryInSearch: False
           excludeFromSearch: True
     

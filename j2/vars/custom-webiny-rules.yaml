@@ -1377,7 +1377,7 @@ rules:
             excludeFromSearch: true
           Has_Minors_Data:
 #           or simply ${contratosDadosdeCriancasEAdolescentes}
-            val: "\"${contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
 
       - label: Object_Data_Procedures
@@ -2070,7 +2070,7 @@ rules:
             val: "${incidentesDeSegurancaReportadosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Authority_Notified:
-            val: "\"${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
           Description:
             val: "${incidentesDeSegurancaReportadosDescricao?.trim()?.toUpperCase()}"
@@ -2087,7 +2087,7 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Natural_Person_Notified:
-            val: "\"${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
           Source:
             val: "${incidentesDeSegurancaReportadosOrigem?.trim()?.toUpperCase()}"
@@ -2206,10 +2206,10 @@ rules:
             val: "${riscosDeFontesDeDadosImpResidual}"
             excludeFromSearch: true
           Approved_By_DPO:
-            val: "\"${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
           Approved_By_Security:
-            val: "\"${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
 
       - label: Object_Risk_Mitigation_Data_Source
@@ -2311,10 +2311,10 @@ rules:
             val: "${mitigacoesDeRiscosDescricao?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Is_Implemented:
-            val: "\"${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
           Is_Approved:
-            val: "\"${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
 
       - label: Event_Ingestion
@@ -2398,13 +2398,13 @@ rules:
             val: "${interessesLegitimosAspectoAntietico}"
             excludeFromSearch: true
           Is_Essential:
-            val: "\"${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:
             val: "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Is_Data_From_Natural_Person:
-            val: "\"${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
 
       - label: Object_Data_Procedures

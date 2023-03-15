@@ -874,8 +874,8 @@ public class WebinyTest extends AppTest {
       String LIARid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA 345\""));
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"True\""));
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"true\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person\":\"true\""));
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Ethical_Impact\":\"ética\""));
 
       reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"}, "hasNeighbourId:" + LIARid);

@@ -39,7 +39,7 @@
           },
           {
             "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
-            "val": "${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "val": "${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -51,7 +51,7 @@
           },
           {
             "name": "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person",
-            "val": "${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "val": "${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
