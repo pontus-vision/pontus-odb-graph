@@ -2,6 +2,84 @@ rules:
 
   webiny_ropa:
 
+#    {
+#      listMapeamentoDeProcessos{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      mapeamentoDeProcessosReferencia
+#      mapeamentoDeProcessosDepartamento{
+#      departamentoReferencia
+#    }
+#      mapeamentoDeProcessosProcesso
+#      mapeamentoDeProcessosBasesLegais{
+#      basesLegaisReferencia
+#    }
+#      mapeamentoDeProcessosNomeDoResponsavel{
+#      titularesCpfDoTitular
+#    }
+#      mapeamentoDeProcessosJustificativaDaBaseLegalPeriodoRetencao
+#      mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos{
+#      produtosServicosReferencia
+#    }
+#      mapeamentoDeProcessosLocalDeArmazenamento{
+#      id
+#    }
+#      mapeamentoDeProcessosCategoriaDosTitularesDosDados
+#      mapeamentoDeProcessosPeriodoDeRetencao{
+#      periodosReferencia
+#    }
+#      mapeamentoDeProcessosAprovacoes{
+#      id
+#    }
+#      mapeamentoDeProcessosDadosPessoaisObj{
+#      mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal
+#      mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros
+#      mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais
+#      mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais
+#      mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas
+#      mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar
+#      mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer
+#      mapeamentoDeProcessosDadosPessoaisObjAssociacoes
+#      mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal
+#      mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo
+#      mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais
+#      mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento
+#      mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego
+#      mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz
+#      mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos
+#      mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis
+#      mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar{
+#      outrosDadosPessoaisReferencia
+#    }
+#    }
+#      mapeamentoDeProcessosEncarregado{
+#      encarregadoCpf
+#    }
+#      mapeamentoDeProcessosControladorPj{
+#      organizacoesCnpj
+#    }
+#      mapeamentoDeProcessosControladorPf{
+#      titularesCpfDoTitular
+#    }
+#      mapeamentoDeProcessosOperadorPf{
+#      titularesCpfDoTitular
+#    }
+#      mapeamentoDeProcessosOperadorPj{
+#      organizacoesCnpj
+#    }
+#      mapeamentoDeProcessosOutrosFundamentosLegais
+#      mapeamentoDeProcessosFinalidadeDoProcesso
+#      mapeamentoDeProcessosStatus
+#      mapeamentoDeProcessosLocalizacao{
+#      mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas
+#      mapeamentoDeProcessosLocalizacaoAbrangenciaGeograficaDoTratamento
+#    }
+#    }
+#    }
+#    }
+
     vertices:
 
       - label: Object_Data_Source
@@ -553,6 +631,20 @@ rules:
 
   webiny_privacy_docs:
 
+#    {
+#      listComunicacoesPpds{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      comunicacoesPpdReferencia
+#      comunicacoesPpdData
+#      comunicacoesPpdDescricao
+#      comunicacoesPpdLocalDeCompartilhamento
+#    }
+#    }
+#    }
+
     vertices:
       - label: Object_Privacy_Docs
         props:
@@ -613,6 +705,23 @@ rules:
         toVertexLabel: "Object_Privacy_Docs"
 
   webiny_meetings:
+
+#    {
+#      listReunioesPpds{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      reunioesPpdReferencia
+#      reunioesPpdData
+#      reunioesPpdTituloReuniao
+#      reunioesPpdTopicos
+#      reunioesPpdParticipantes{
+#      titularesCpfDoTitular
+#    }
+#    }
+#    }
+#    }
 
     vertices:
       - label: Event_Meeting
@@ -689,6 +798,25 @@ rules:
         toVertexLabel: "Event_Meeting"
 
   webiny_privacy_notice:
+
+#    {
+#      listAvisoDePrivacidades{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      avisoDePrivacidadeReferencia
+#      avisoDePrivacidadeAvisoDePrivacidade
+#      avisoDePrivacidadeIdDoProcesso{
+#      id
+#    }
+#      avisoDePrivacidadeConsentimento{
+#      id
+#    }
+#      avisoDePrivacidadeDataDeInicio
+#    }
+#    }
+#    }
 
     vertices:
       - label: Object_Privacy_Notice
@@ -1162,8 +1290,31 @@ rules:
       - label: "Has_Risk"
         fromVertexName: "fontes_de_dados"
         toVertexLabel: "Object_Risk_Data_Source"
-        
+
   webiny_consents:
+
+#    {
+#      listConsentimentos{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      consentimentosReferencia
+#      consentimentosData
+#      consentimentosStatus
+#      consentimentosIdentificacao
+#      consentimentosAvisoDePrivacidade{
+#      id
+#    }
+#      consentimentosResponsavelPeloMenor{
+#      id
+#    }
+#      consentimentosTitularDoDadoPessoal{
+#      id
+#    }
+#    }
+#    }
+#    }
 
     vertices:
       - label: Event_Consent
@@ -1281,6 +1432,46 @@ rules:
         toVertexName: "guardian"
 
   webiny_contracts:
+
+#    {
+#      listContratos{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      contratosReferencia
+#      contratosOrganizacaoContratante{
+#      organizacoesCnpj
+#    }
+#      contratosOrganizacaoContratada{
+#      organizacoesCnpj
+#    }
+#      contratosOperador{
+#      organizacoesCnpj
+#    }
+#      contratosControlador{
+#      organizacoesCnpj
+#    }
+#      contratosTransferenciaDeDados
+#      contratosTransferenciaInternacionalDeDados{
+#      transferenciasInternacionaisInciso
+#    }
+#      contratosTransferenciaParaQualPais
+#      contratosDadosdeCriancasEAdolescentes
+#      contratosRefDoProcesso{
+#      id
+#    }
+#      contratosRefDaFonteDeDados{
+#      id
+#    }
+#      contratosLinkDoContrato
+#      contratosVigencia
+#      contratosContratoAprovado{
+#      titularesCpfDoTitular
+#    }
+#    }
+#    }
+#    }
 
     vertices:
 
