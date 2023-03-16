@@ -3859,6 +3859,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Person_Natural_Role",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Person_Natural_Title",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -6083,6 +6088,7 @@
         "Person_Natural_Nationality",
         "Person_Natural_Place_Of_Birth",
         "Person_Natural_Religion",
+        "Person_Natural_Role",
         "Person_Natural_Title",
         "Person_Natural_Type"
       ],

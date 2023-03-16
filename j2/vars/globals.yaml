@@ -1137,6 +1137,7 @@ schema:
         - name: Nationality
         - name: Place_Of_Birth
         - name: Religion
+        - name: Role
         - name: Title
         - name: Type
 

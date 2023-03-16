@@ -302,13 +302,13 @@ rules:
             type: java.util.Date
       #          Role: "${Departamento0}"
 
-      - label: Person_Employee
-        props:
-          Full_Name: "${Nome0?.trim()?.toUpperCase()}"
-          Last_Update_Date:
-            val: "${Modified}"
-            excludeFromSearch: true
-            type: java.util.Date
+#      - label: Person_Employee
+#        props:
+#          Full_Name: "${Nome0?.trim()?.toUpperCase()}"
+#          Last_Update_Date:
+#            val: "${Modified}"
+#            excludeFromSearch: true
+#            type: java.util.Date
       #          Role: "${Departamento0}"
 
       - label: Event_Ingestion
@@ -360,10 +360,10 @@ rules:
       - label: "Completed_By"
         fromVertexLabel: "Event_Training"
         toVertexLabel: "Person_Natural"
-
-      - label: "Completed_By"
-        fromVertexLabel: "Event_Training"
-        toVertexLabel: "Person_Employee"
+#
+#      - label: "Completed_By"
+#        fromVertexLabel: "Event_Training"
+#        toVertexLabel: "Person_Employee"
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Ingestion"

@@ -28,17 +28,12 @@
             "val": "${titularesCategoriaDoTitular}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Person_Employee",
-        "props": [
+          },
           {
-            "name": "Person_Employee_Role",
+            "name": "Person_Natural_Role",
             "val": "${titularesCargo?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },
@@ -153,11 +148,6 @@
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
         "toVertexLabel": "Person_Natural"
-      },
-      {
-        "label": "Is_Alias",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Person_Employee"
       },
       {
         "label": "Uses_Email",

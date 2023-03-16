@@ -845,6 +845,35 @@ class Matcher {
     return [sb.toString(), sqlParams]
   }
 
+  static Map<String, Object> createSelectParam(List<MatchReq> selectFields, String vertexLabel) {
+
+    long counter = 0
+
+    Map<String, Object> sqlParams = [:]
+    selectFields.each { field ->
+
+      counter++
+
+//      jb.addProperty(field.propName, ":${field.propName}")
+      if (field.attribType == Date.class) {
+        sqlParams.put(field.propName, sdf.format((Date) field.attribNativeVal))
+      } else {
+        sqlParams.put(field.propName, field.attribNativeVal)
+      }
+
+    }
+    if (counter > 0) {
+      String metadataTypeVertexLabel = "Metadata_Type_${vertexLabel}"
+
+      sqlParams.put(metadataTypeVertexLabel, vertexLabel)
+
+
+      sqlParams.put("Metadata_Type", vertexLabel)
+
+    }
+
+    return sqlParams
+  }
 
   static matchVertices(OrientStandardGraph graph, GraphTraversalSource gTravSource, List<MatchReq> matchReqs, int maxHitsPerType, StringBuffer sb = null) {
 
@@ -2221,6 +2250,7 @@ class Matcher {
 
     def (String jsonToMerge, Map<String, Object> sqlParams) = createJsonMergeParam(updateFields, vertexLabel)
 
+    sqlParams = isPureSelect ? createSelectParam(uniqueProps.findAll{it2 -> it2.excludeFromUpdate}, vertexLabel) : sqlParams
 
     String searchClassAttribs = createSearchClassAttribs(mandatoryFields)
     String whereClauseAttribs = createWhereClauseAttribs(mandatoryFields)

@@ -617,6 +617,7 @@ Person_Natural_Name_Qualifier
 Person_Natural_Nationality
 Person_Natural_Place_Of_Birth
 Person_Natural_Religion
+Person_Natural_Role
 Person_Natural_Title
 Person_Natural_Type
 Person_Organisation_Id

@@ -1842,12 +1842,9 @@ rules:
           Type:
             val: "${titularesCategoriaDoTitular}"
             excludeFromSearch: true
-
-      - label: Person_Employee
-        props:
           Role:
             val: "${titularesCargo?.trim()?.toUpperCase()}"
-            excludeFromSearch: true
+            excludeFromUpdate: true
 
       - label: Object_Identity_Card
         condition: "${titularesCpfDoTitular?.replaceAll('[^0-9]', '')?.length() == 11}"
@@ -1904,10 +1901,6 @@ rules:
         - label: Has_Ingestion_Event
           fromVertexLabel: "Event_Ingestion"
           toVertexLabel: "Person_Natural"
-
-        - label: Is_Alias
-          fromVertexLabel: "Person_Natural"
-          toVertexLabel: "Person_Employee"
 
         - label: Uses_Email
           fromVertexLabel: "Person_Natural"
