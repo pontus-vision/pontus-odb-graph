@@ -147,8 +147,8 @@ updatereq:
       props:
         - name: Object_Privacy_Notice_Who_Is_Collecting
           val: [CRM System]
-          mandatoryInSearch: True
-          excludeFromUpdate: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
 
   edges:
   - label: Uses_Email

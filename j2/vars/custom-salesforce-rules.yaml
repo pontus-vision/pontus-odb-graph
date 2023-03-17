@@ -155,7 +155,8 @@ rules:
         props:
           Who_Is_Collecting:
             val: "[CRM System]"
-            excludeFromUpdate: true
+            excludeFromSearch: true
+#            excludeFromUpdate: true
     edges:
       - label: "Uses_Email"
         fromVertexLabel: "Person_Natural"

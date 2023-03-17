@@ -23,8 +23,8 @@ updatereq:
           excludeFromSearch: True
         - name: Person_Natural_Role
           val: ${titularesCargo?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-          excludeFromUpdate: True
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Object_Identity_Card
       condition: ${titularesCpfDoTitular?.replaceAll('[^0-9]', '')?.length() == 11}

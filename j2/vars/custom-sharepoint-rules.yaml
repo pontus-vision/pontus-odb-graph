@@ -889,11 +889,11 @@ rules:
         props:
           Name:
             val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
           Registration_Number:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
           Last_Update_Date:
             val: "${Modified}"
@@ -908,7 +908,7 @@ rules:
             excludeFromSearch: true
           Customer_ID:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
 #          Last_Update_Date:
 #            val: "${Modified}"
@@ -1142,10 +1142,12 @@ rules:
           Form_Id: "${id}"
           Text:
             val: "${text}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
+#            excludeFromUpdate: true
           Type:
             val: "${Title}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
+#            excludeFromUpdate: true
 
       - label: Object_Data_Source
         name: sharepoint

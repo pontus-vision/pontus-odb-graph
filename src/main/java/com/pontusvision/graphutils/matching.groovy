@@ -2260,7 +2260,7 @@ class Matcher {
     String whereClause = "WHERE ${whereClauseAttribs}"
 //              "WHERE SEARCH_CLASS ('${searchClassAttribs}') = true"
 
-    final String sqlStr = isPureSelect ? "SELECT ${selectCols} FROM ${vertexLabel} ${whereClause}" : isPureInsert ?
+    final String sqlStr = isPureSelect ? "SELECT EXPAND (@rid) FROM ${vertexLabel} ${whereClause}" : isPureInsert ?
             "INSERT INTO `${vertexLabel}` CONTENT ${jsonToMerge}" :
             "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} LOCK record LIMIT 1 "
     final def retVals = App.graph.executeSql(sqlStr, sqlParams)

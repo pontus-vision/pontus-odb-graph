@@ -736,9 +736,11 @@ public class WebinyTest extends AppTest {
               gridWrapper(null, "Event_Group_Subject_Access_Request", new String[]{"Event_Group_Subject_Access_Request_Ingestion_Date"},
                       "hasNeighbourId:" + sarRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"}, "hasNeighbourId:" + sarGroupRid);
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"},
+              "hasNeighbourId:" + sarGroupRid, 0L, 2L, "Object_Data_Procedures_Name", "+asc");
 
       assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"PROCESSO 1\""));
+      assertTrue(reply.getRecords()[1].contains("\"Object_Data_Procedures_Name\":\"PROCESSO 3\""));
 
     } catch (Exception e) {
       e.printStackTrace();

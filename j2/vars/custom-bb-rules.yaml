@@ -629,11 +629,11 @@ rules:
         props:
           Name:
             val: "${Razao_Social_Nome?.trim()?.toUpperCase()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
           Registration_Number:
             val: "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
 
       - label: Person_Natural
@@ -641,11 +641,11 @@ rules:
         props:
           Full_Name:
             val: "${Razao_Social_Nome?.trim()?.toUpperCase()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
           Customer_ID:
             val: "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
 
       - label: Object_Data_Procedures
@@ -851,10 +851,12 @@ rules:
             excludeFromSearch: true
           Text:
             val: "${Texto}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
+#            excludeFromUpdate: true
           Type:
             val: "${Tipo_de_Politica}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
+#            excludeFromUpdate: true
 
       - label: Object_Data_Source
         props:

@@ -32,8 +32,8 @@
           {
             "name": "Person_Natural_Role",
             "val": "${titularesCargo?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       },

@@ -632,9 +632,9 @@ rules:
         name: colaborador
         condition: "${id?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
-          Id:
-            val: "${id?.replaceAll('[^0-9]','')}"
-            excludeFromUpdate: true # or should it be excludeFromSearch?
+          Id: "${id?.replaceAll('[^0-9]','')}"
+#            val: "${id?.replaceAll('[^0-9]','')}"
+#            excludeFromUpdate: true # or should it be excludeFromSearch?
           Last_Update_Date:
             val: "${lastUpdate}"
             excludeFromSearch: true

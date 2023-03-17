@@ -8,14 +8,12 @@
           {
             "name": "Person_Organisation_Name",
             "val": "${Razao_Social_Nome?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Registration_Number",
             "val": "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -26,14 +24,12 @@
           {
             "name": "Person_Natural_Full_Name",
             "val": "${Razao_Social_Nome?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Natural_Customer_ID",
             "val": "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           }
         ]
       },
