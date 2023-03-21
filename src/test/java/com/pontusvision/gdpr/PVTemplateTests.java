@@ -245,6 +245,8 @@ public class PVTemplateTests extends AppTest {
       jsonTestUtil("sharepoint/pv-extract-sharepoint-risk.json", "$.queryResp[*].fields",
               "sharepoint_risk");
 
+      jsonTestUtil("sharepoint/devtools-extract-sharepoint-lia.json", "$.queryResp[*].fields", "sharepoint_lia");
+
       Resource res = new Resource();
 
       ReportTemplateUpsertRequest req = new ReportTemplateUpsertRequest();
@@ -293,7 +295,7 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      assertEquals("Sim, é indispensável - processo 4", report);
+      assertEquals("True", report);
 
 
 //    Testing for LIA's Lawful Basis
@@ -302,7 +304,7 @@ public class PVTemplateTests extends AppTest {
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
                               "{% if lia %}" +
 
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification | default('Favor Preencher o campo <b>Não há outra base legal possível de se utilizar para alcançar o mesmo propósito?</b> no SharePoint') }}" +
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification | default('Favor Preencher o campo <b>Não há outra base legal possível de se utilizar para alcançar o mesmo propósito?</b> no SharePoint') }}" +
                               "{% endif %}")
 
                       .getBytes()));
@@ -318,7 +320,7 @@ public class PVTemplateTests extends AppTest {
           "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
           "    \"filterType\": \"text\",\n" +
           "    \"type\": \"equals\",\n" +
-          "    \"filter\": \"4\"\n" +
+          "    \"filter\": \"6\"\n" +
           "  }\n" +
           "]", "Object_Data_Procedures",
         new String[]{"Object_Data_Procedures_ID"});
@@ -329,7 +331,7 @@ public class PVTemplateTests extends AppTest {
       renderReply = res.reportTemplateRender(renderReq);
 
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      assertEquals("Legitimo interesse", report);
+      assertEquals("FERE O DIREITO DE LIBERDADE", report);
 
 
 //    Testing for LIA's Processing Purpose
@@ -338,7 +340,7 @@ public class PVTemplateTests extends AppTest {
                       "{% set lia= pv:neighboursByType(context.id,'Has_Legitimate_Interests_Assessment' ) %}" +
                               "{% if lia %}" +
 
-                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Is_Required | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}" +
+                              "{{ lia[0].Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person | default('Favor Preencher o campo <b>Esse processamento de fato auxilia no propósito almejado?</b> no SharePoint') }}" +
                               "{% endif %}")
 
                       .getBytes()));
@@ -352,7 +354,7 @@ public class PVTemplateTests extends AppTest {
       renderReply = res.reportTemplateRender(renderReq);
 
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      assertEquals("Sim", report);
+      assertEquals("True", report);
 
 
       // test a non-existent  LIA for entry number 5 with an empty reply (same template as before)
