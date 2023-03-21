@@ -5,10 +5,6 @@ updatereq:
     - label: Person_Natural
       condition: ${TypeId == 2 && LegalName != null}
       props:
-        - name: Person_Natural_Full_Name
-          val: ${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Person_Natural_Customer_ID
           val: ${CPF?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
@@ -24,10 +20,6 @@ updatereq:
         - name: Person_Organisation_Registration_Number
           val: ${CNPJ?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
-        - name: Person_Organisation_Name
-          val: ${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
         - name: Person_Organisation_Id
           val: ${CNPJ?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True

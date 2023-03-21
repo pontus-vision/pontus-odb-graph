@@ -1845,7 +1845,6 @@ rules:
           Role:
             val: "${titularesCargo?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-#            excludeFromUpdate: true
 
       - label: Object_Identity_Card
         condition: "${titularesCpfDoTitular?.replaceAll('[^0-9]', '')?.length() == 11}"

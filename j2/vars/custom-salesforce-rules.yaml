@@ -156,7 +156,7 @@ rules:
           Who_Is_Collecting:
             val: "[CRM System]"
             excludeFromSearch: true
-#            excludeFromUpdate: true
+
     edges:
       - label: "Uses_Email"
         fromVertexLabel: "Person_Natural"
