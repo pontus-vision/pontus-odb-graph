@@ -876,6 +876,7 @@ public class WebinyTest extends AppTest {
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA 345\""));
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"true\""));
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person\":\"true\""));
+
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Ethical_Impact\":\"ética\""));
 
       reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"}, "hasNeighbourId:" + LIARid);
