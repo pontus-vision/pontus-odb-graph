@@ -8,11 +8,9 @@ updatereq:
         - name: Person_Organisation_Name
           val: ${Raz_x00e3_oSocial?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-          excludeFromUpdate: True
         - name: Person_Organisation_Registration_Number
           val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
-          excludeFromUpdate: True
         - name: Person_Organisation_Last_Update_Date
           val: ${Modified}
           mandatoryInSearch: False
@@ -25,20 +23,17 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${Raz_x00e3_oSocial?.trim()?.toUpperCase()}
           mandatoryInSearch: True
-          excludeFromUpdate: True
         - name: Person_Natural_Customer_ID
           val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
-          excludeFromUpdate: True
     
     - label: Object_Data_Procedures
       props:
-        - name: Object_Data_Procedures_Form_Id
-          val: ${new groovy.json.JsonBuilder(RoPA)}
+        - name: Object_Data_Procedures_Type_Of_Natural_Person
+          val: ${naturalPersonType}
+          predicate: textContains
           mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
+          excludeFromUpdate: True
     
     - label: Object_Data_Source
       props:
@@ -90,6 +85,9 @@ updatereq:
       props:
         - name: Event_Group_Subject_Access_Request_Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event_Group_Subject_Access_Request_Type_Of_Natural_Person
+          val: ${naturalPersonType}
           mandatoryInSearch: True
     
     - label: Event_Ingestion

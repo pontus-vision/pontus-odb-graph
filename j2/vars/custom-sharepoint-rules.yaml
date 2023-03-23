@@ -889,11 +889,11 @@ rules:
         props:
           Name:
             val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
           Registration_Number:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
           Last_Update_Date:
             val: "${Modified}"
@@ -905,11 +905,11 @@ rules:
         props:
           Full_Name:
             val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
           Customer_ID:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
-            excludeFromUpdate: true
+#            excludeFromUpdate: true
             mandatoryInSearch: true
 #          Last_Update_Date:
 #            val: "${Modified}"
@@ -918,11 +918,15 @@ rules:
 
       - label: Object_Data_Procedures
         props:
-          Form_Id:
-            val: "${new groovy.json.JsonBuilder(RoPA)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
+#          Form_Id:
+#            val: "${new groovy.json.JsonBuilder(RoPA)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+          Type_Of_Natural_Person:
+            val: "${naturalPersonType}"
+            predicate: "textContains"
+            excludeFromUpdate: true
 
       - label: Object_Data_Source
         props:
@@ -961,6 +965,7 @@ rules:
       - label: Event_Group_Subject_Access_Request
         props:
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Type_Of_Natural_Person: "${naturalPersonType}"
 
       - label: Event_Ingestion
         props:

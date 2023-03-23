@@ -63,8 +63,8 @@ public class PVTotvsTest extends AppTest {
                       ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('totvs/protheus/sa1_clientes'))" +
                       ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural')).dedup()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("4", totvsPersonNaturalCount,
-              "Count for Person_Natural Vertices from Data_Source TOTVS/PROTHEUS/SA1_CLIENTES, 2 Person_Natural" +
+      assertEquals("5", totvsPersonNaturalCount,
+              "Count for Person_Natural Vertices from Data_Source TOTVS/PROTHEUS/SA1_CLIENTES, 3 Person_Natural" +
                       "come from totvs-sa1.json and 2 from totvs-sa1-real.json");
 
       String totvsPersonOrgCount =

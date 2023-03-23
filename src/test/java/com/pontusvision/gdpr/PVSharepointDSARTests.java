@@ -28,6 +28,8 @@ public class PVSharepointDSARTests extends AppTest {
   @Test
   public void test00001SharepointDSAR() throws InterruptedException {
 
+    jsonTestUtil("totvs/totvs-sra-real.json", "$.objs", "totvs_protheus_sra_funcionario");
+
     jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
             "$.queryResp[*].fields", "sharepoint_mapeamentos");
 
