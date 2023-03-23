@@ -8,6 +8,7 @@ updatereq:
         - name: Person_Natural_Customer_ID
           val: ${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
     
     - label: Object_Data_Procedures
       props:

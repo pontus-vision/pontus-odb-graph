@@ -46,6 +46,7 @@ updatereq:
         - name: Person_Natural_Customer_ID
           val: ${identity?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Person_Natural_Last_Update_Date
           val: ${Modified}
           mandatoryInSearch: False

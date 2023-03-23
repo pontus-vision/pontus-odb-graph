@@ -64,7 +64,8 @@
           {
             "name": "Person_Natural_Customer_ID",
             "val": "${identity?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           },
           {
             "name": "Person_Natural_Last_Update_Date",

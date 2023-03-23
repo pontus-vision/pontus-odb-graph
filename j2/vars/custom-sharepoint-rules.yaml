@@ -887,29 +887,29 @@ rules:
       - label: Person_Organisation
         condition: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}"
         props:
-          Name:
-            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
+#          Name:
+#            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
 #            excludeFromUpdate: true
-            mandatoryInSearch: true
+#            mandatoryInSearch: true
           Registration_Number:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
-#            excludeFromUpdate: true
+            excludeFromUpdate: true
             mandatoryInSearch: true
-          Last_Update_Date:
-            val: "${Modified}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Last_Update_Date:
+#            val: "${Modified}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Person_Natural
         condition: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
         props:
-          Full_Name:
-            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
+#          Full_Name:
+#            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
 #            excludeFromUpdate: true
-            mandatoryInSearch: true
+#            mandatoryInSearch: true
           Customer_ID:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
-#            excludeFromUpdate: true
+            excludeFromUpdate: true
             mandatoryInSearch: true
 #          Last_Update_Date:
 #            val: "${Modified}"
@@ -927,6 +927,7 @@ rules:
             val: "${naturalPersonType}"
             predicate: "textContains"
             excludeFromUpdate: true
+            mandatoryInSearch: true
 
       - label: Object_Data_Source
         props:
@@ -1346,7 +1347,10 @@ rules:
       - label: Person_Natural
         condition: "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
         props:
-          Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
+          Customer_ID:
+            val: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
 #          Full_Name:
 #            val: "${name?.trim()?.toUpperCase()}"
 #            excludeFromUpdate: true

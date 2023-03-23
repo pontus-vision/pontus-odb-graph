@@ -6,21 +6,10 @@
         "condition": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}",
         "props": [
           {
-            "name": "Person_Organisation_Name",
-            "val": "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person_Organisation_Registration_Number",
             "val": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Last_Update_Date",
-            "val": "${Modified}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },
@@ -29,14 +18,10 @@
         "condition": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}",
         "props": [
           {
-            "name": "Person_Natural_Full_Name",
-            "val": "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person_Natural_Customer_ID",
             "val": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },

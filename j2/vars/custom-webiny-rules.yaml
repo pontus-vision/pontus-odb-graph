@@ -1940,7 +1940,10 @@ rules:
 #          Full_Name:
 #            val: "${requisicaoTitularesNome?.trim()?.toUpperCase()}"
 #            excludeFromSearch: true
-          Customer_ID: "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}"
+          Customer_ID:
+            val: "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
 
   #      TODO: Check with Leo if this link with RoPA is necessary.
       - label: Object_Data_Procedures
