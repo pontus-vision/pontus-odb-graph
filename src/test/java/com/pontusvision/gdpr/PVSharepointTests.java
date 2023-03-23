@@ -220,7 +220,7 @@ public class PVSharepointTests extends AppTest {
                       "Object_Legitimate_Interests_Assessment_Is_Essential", "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification"});
 
       assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Strategic_Impact\":\"\""));
-      assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"True\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"true\""));
       assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA-ABERTURA-CHAMADOS\""));
       assertTrue(reply.getRecords()[0].contains("\"Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification\":\"\""));
 
@@ -239,7 +239,7 @@ public class PVSharepointTests extends AppTest {
       String LIARid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Strategic_Impact\":\"O objetivo deste tratamento é que o próprio titular consiga registrar suas despesas e solicite seu reembolso, isso entra como uma agilidade em nossas operações.\""));
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"False\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"false\""));
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification\":\"FERE O DIREITO DE LIBERDADE\""));
       assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA-ASSISTÊNCIA-TÉCNICA\""));
 

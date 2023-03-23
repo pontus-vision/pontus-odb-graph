@@ -3,94 +3,66 @@
     "vertices": [
       {
         "label": "Object_Data_Source",
-        "name": "webiny",
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/RISCOS-DE-FONTES-DE-DADOS",
+            "val": "WEBINY/LEGITIMATE-INTERESTS-ASSESSMENT",
             "mandatoryInSearch": true
           }
         ]
       },
       {
-        "label": "Object_Data_Source",
-        "name": "attached_data_sources",
-        "condition": "${riscosDeFontesDeDadosFontesDeDados?.size() > 0}",
+        "label": "Object_Legitimate_Interests_Assessment",
         "props": [
           {
-            "name": "Object_Data_Source_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(riscosDeFontesDeDadosFontesDeDados)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.WebinyRef;",
-            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
-          }
-        ]
-      },
-      {
-        "label": "Object_Risk_Data_Source",
-        "props": [
-          {
-            "name": "Object_Risk_Data_Source_Form_Id",
+            "name": "Object_Legitimate_Interests_Assessment_Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object_Risk_Data_Source_Risk_Id",
-            "val": "${riscosDeFontesDeDadosReferencia?.trim()?.toUpperCase()}",
+            "name": "Object_Legitimate_Interests_Assessment_LIA_Id",
+            "val": "${interessesLegitimosReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Risk_Data_Source_Description",
-            "val": "${riscosDeFontesDeDadosDescricao?.trim()?.toUpperCase()}",
+            "name": "Object_Legitimate_Interests_Assessment_Strategic_Impact",
+            "val": "${interessesLegitimosObjetivoEstrategico}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Risk_Data_Source_Probability",
-            "val": "${riscosDeFontesDeDadosProbabilidade}",
+            "name": "Object_Legitimate_Interests_Assessment_Ethical_Impact",
+            "val": "${interessesLegitimosAspectoAntietico}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Risk_Data_Source_Impact",
-            "val": "${riscosDeFontesDeDadosImpacto}",
+            "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
+            "val": "${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Risk_Data_Source_Residual_Probability",
-            "val": "${riscosDeFontesDeDadosProbResidual}",
+            "name": "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification",
+            "val": "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Risk_Data_Source_Residual_Impact",
-            "val": "${riscosDeFontesDeDadosImpResidual}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Risk_Data_Source_Approved_By_DPO",
-            "val": "${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Risk_Data_Source_Approved_By_Security",
-            "val": "${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
+            "name": "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person",
+            "val": "${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
       },
       {
-        "label": "Object_Risk_Mitigation_Data_Source",
+        "label": "Object_Data_Procedures",
         "props": [
           {
-            "name": "Object_Risk_Mitigation_Data_Source_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(riscosDeFontesDeDadosMitigacoesDeRiscos)}",
+            "name": "Object_Data_Procedures_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(interessesLegitimosRefMapeamentoDeProcesssos)}",
             "mandatoryInSearch": true,
             "processAll": true,
             "type": "[Lcom.pontusvision.utils.WebinyRef;",
@@ -103,7 +75,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "webiny/riscos-de-fontes-de-dados",
+            "val": "webiny/legitimate-interests-assessment",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -140,7 +112,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/riscos-de-fontes-de-dados",
+            "val": "webiny/legitimate-interests-assessment",
             "mandatoryInSearch": true
           },
           {
@@ -159,7 +131,7 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "webiny",
+        "fromVertexLabel": "Object_Data_Source",
         "toVertexLabel": "Event_Group_Ingestion"
       },
       {
@@ -170,17 +142,12 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Object_Risk_Data_Source"
+        "toVertexLabel": "Object_Legitimate_Interests_Assessment"
       },
       {
-        "label": "Has_Risk",
-        "fromVertexName": "attached_data_sources",
-        "toVertexLabel": "Object_Risk_Data_Source"
-      },
-      {
-        "label": "Mitigates_Risk",
-        "fromVertexLabel": "Object_Risk_Mitigation_Data_Source",
-        "toVertexLabel": "Object_Risk_Data_Source"
+        "label": "Has_Legitimate_Interests_Assessment",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Legitimate_Interests_Assessment"
       }
     ]
   }

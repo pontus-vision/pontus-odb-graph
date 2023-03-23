@@ -47,13 +47,13 @@
           },
           {
             "name": "Object_Risk_Mitigation_Data_Source_Is_Implemented",
-            "val": "${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "val": "${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Mitigation_Data_Source_Is_Approved",
-            "val": "${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "val": "${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

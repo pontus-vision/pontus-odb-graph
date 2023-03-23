@@ -3,47 +3,54 @@ updatereq:
   vertices:
     
     - label: Object_Data_Source
-      name: webiny
       props:
         - name: Object_Data_Source_Name
-          val: WEBINY/MITIGAÇÕES-DE-RISCOS
+          val: WEBINY/LEGITIMATE-INTERESTS-ASSESSMENT
           mandatoryInSearch: True
     
-    - label: Object_Risk_Data_Source
+    - label: Object_Legitimate_Interests_Assessment
       props:
-        - name: Object_Risk_Data_Source_Form_Id
-          val: ${new groovy.json.JsonBuilder(mitigacoesDeRiscosRiscosDeFontesDeDados)}
+        - name: Object_Legitimate_Interests_Assessment_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Object_Legitimate_Interests_Assessment_LIA_Id
+          val: ${interessesLegitimosReferencia?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Strategic_Impact
+          val: ${interessesLegitimosObjetivoEstrategico}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Ethical_Impact
+          val: ${interessesLegitimosAspectoAntietico}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Is_Essential
+          val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification
+          val: ${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person
+          val: "${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Data_Procedures
+      props:
+        - name: Object_Data_Procedures_Form_Id
+          val: ${new groovy.json.JsonBuilder(interessesLegitimosRefMapeamentoDeProcesssos)}
           mandatoryInSearch: True
           processAll: True
           type: "[Lcom.pontusvision.utils.WebinyRef;"
           postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'id')}
     
-    - label: Object_Risk_Mitigation_Data_Source
-      props:
-        - name: Object_Risk_Mitigation_Data_Source_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Object_Risk_Mitigation_Data_Source_Mitigation_Id
-          val: ${mitigacoesDeRiscosReferencia?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Risk_Mitigation_Data_Source_Description
-          val: ${mitigacoesDeRiscosDescricao?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Risk_Mitigation_Data_Source_Is_Implemented
-          val: "${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Risk_Mitigation_Data_Source_Is_Approved
-          val: "${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: webiny/mitigações-de-riscos
+          val: webiny/legitimate-interests-assessment
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -68,7 +75,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: webiny/mitigações-de-riscos
+          val: webiny/legitimate-interests-assessment
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
@@ -79,15 +86,15 @@ updatereq:
 
   edges:
   - label: Has_Ingestion_Event
-    fromVertexName: webiny
+    fromVertexLabel: Object_Data_Source
     toVertexLabel: Event_Group_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Group_Ingestion
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
-    toVertexLabel: Object_Risk_Mitigation_Data_Source
-  - label: Mitigates_Risk
-    fromVertexLabel: Object_Risk_Mitigation_Data_Source
-    toVertexLabel: Object_Risk_Data_Source
+    toVertexLabel: Object_Legitimate_Interests_Assessment
+  - label: Has_Legitimate_Interests_Assessment
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Legitimate_Interests_Assessment
 

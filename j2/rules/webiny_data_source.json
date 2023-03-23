@@ -337,6 +337,19 @@
         ]
       },
       {
+        "label": "Object_Risk_Data_Source",
+        "props": [
+          {
+            "name": "Object_Risk_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosRiscosDeFontesDeDados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+          }
+        ]
+      },
+      {
         "label": "Event_Ingestion",
         "props": [
           {
@@ -514,6 +527,11 @@
         "label": "Has_Sensitive_Data",
         "fromVertexName": "fontes_de_dados",
         "toVertexName": "sensitive_data"
+      },
+      {
+        "label": "Has_Risk",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexLabel": "Object_Risk_Data_Source"
       }
     ]
   }

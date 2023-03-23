@@ -357,8 +357,8 @@ public class PVPbrTest extends AppTest {
         "hasNeighbourId:" + pbrRopaRid);
 
       replyStr = reply.getRecords()[0];
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"Sim\""), "LIA is essential");
-      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Required\":\"Sim\""), "LIA is required");
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"true\""), "LIA is essential");
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Required\":\"true\""), "LIA is required");
 
     } catch (Exception e) {
       e.printStackTrace();

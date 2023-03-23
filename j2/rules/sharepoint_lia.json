@@ -39,7 +39,7 @@
           },
           {
             "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
-            "val": "${Afinalidadepoderiaseralcan_x00e7?.toString()?.equalsIgnoreCase('Sim')?'True':'False'}",
+            "val": "${Afinalidadepoderiaseralcan_x00e7?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -51,7 +51,7 @@
           },
           {
             "name": "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person",
-            "val": "${Osdadospessoaisforamcoletadosdir?.toString()?.equalsIgnoreCase('Sim')?'True':'False'}",
+            "val": "${Osdadospessoaisforamcoletadosdir?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
