@@ -5,7 +5,7 @@ updatereq:
     - label: Object_Data_Source
       props:
         - name: Object_Data_Source_Name
-          val: SHAREPOINT/PBR/LIA
+          val: WEBINY/LEGITIMATE-INTERESTS-ASSESSMENT
           mandatoryInSearch: True
     
     - label: Object_Legitimate_Interests_Assessment
@@ -13,48 +13,44 @@ updatereq:
         - name: Object_Legitimate_Interests_Assessment_Form_Id
           val: ${id}
           mandatoryInSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Benefits
-          val: ${Sesim_x002c_detalharosbenef_x00e}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Benefits_Relevance
-          val: ${Qualarelev_x00e2_nciadosbenef_x0}
+        - name: Object_Legitimate_Interests_Assessment_LIA_Id
+          val: ${interessesLegitimosReferencia?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Strategic_Impact
-          val: ${ (Se_x0020_sim_x002c__x0020_descre?Se_x0020_sim_x002c__x0020_descre + '; ':'') + (Quaisasconsequ_x00ea_nciasdan_x0?Quaisasconsequ_x00ea_nciasdan_x0 + '; ':'') + (Sesim_x002c_descrever?:'') }
+          val: ${interessesLegitimosObjetivoEstrategico}
           mandatoryInSearch: False
           excludeFromSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Data_Processing_Justification
-          val: ${Se_x0020_sim_x0020_descrever}
+        - name: Object_Legitimate_Interests_Assessment_Ethical_Impact
+          val: ${interessesLegitimosAspectoAntietico}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Essential
-          val: true
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Is_Required
-          val: true
+          val: "${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification
-          val: ${Se_x0020_sim_x0020__x002d__x0020}
+          val: ${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person
+          val: "${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
           mandatoryInSearch: False
           excludeFromSearch: True
     
     - label: Object_Data_Procedures
       props:
         - name: Object_Data_Procedures_Form_Id
-          val: ${new groovy.json.JsonBuilder(ID_x0020_do_x0020_Processo)}
+          val: ${new groovy.json.JsonBuilder(interessesLegitimosRefMapeamentoDeProcesssos)}
           mandatoryInSearch: True
           processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'id')}
     
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: sharepoint/pbr/lia
+          val: webiny/legitimate-interests-assessment
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -66,12 +62,12 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Metadata_Create_Date
-          val: ${Created}
+          val: ${createdOn}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Ingestion_Metadata_Update_Date
-          val: ${Modified}
+          val: ${savedOn}
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
@@ -79,7 +75,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: sharepoint/pbr/lia
+          val: webiny/legitimate-interests-assessment
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion

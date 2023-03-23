@@ -479,7 +479,7 @@ public class WebinyTest extends AppTest {
       String contractRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
       assertTrue(replyStr.contains("\"Object_Contract_Short_Description\":\"CONTRATO 3\""));
-      assertTrue(replyStr.contains("\"Object_Contract_Has_Minors_Data\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Contract_Has_Minors_Data\":\"true\""));
       assertTrue(replyStr.contains("\"Object_Contract_Tranfer_Intl\":\"[IX - quando necessário para atender as hipóteses " +
               "previstas nos incisos II, V e VI do art. 7º da LGPD, VI - quando a transferência resultar em compromisso assumido em " +
               "acordo de cooperação internacional, II - quando o controlador oferecer e comprovar garantias de cumprimento dos princípios, " +
@@ -735,7 +735,7 @@ public class WebinyTest extends AppTest {
 
       assertTrue(replyStr.contains("\"Event_Data_Breach_Status\":\"Suspect External Theft\""));
       assertTrue(replyStr.contains("\"Event_Data_Breach_Metadata_Create_Date\":\"Tue Feb 14 20:01:59 UTC 2023\""));
-      assertTrue(replyStr.contains("\"Event_Data_Breach_Authority_Notified\":\"True\""));
+      assertTrue(replyStr.contains("\"Event_Data_Breach_Authority_Notified\":\"true\""));
       assertTrue(replyStr.contains("\"Event_Data_Breach_Impact\":\"Data Lost\""));
       assertTrue(replyStr.contains("\"Event_Data_Breach_Description\":\"CIBER ATAQUE\""));
       assertTrue(replyStr.contains("\"Event_Data_Breach_Source\":\"CHINA\""));
@@ -788,7 +788,7 @@ public class WebinyTest extends AppTest {
       assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Probability\":\"Medium\""));
       assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Impact\":\"High\""));
       assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Description\":\"ROUBO DE DADOS PESSOAIS\""));
-      assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Approved_By_DPO\":\"False\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Data_Source_Approved_By_DPO\":\"false\""));
 
       reply = gridWrapper(null, "Object_Risk_Mitigation_Data_Source",
               new String[]{"Object_Risk_Mitigation_Data_Source_Mitigation_Id"}, "hasNeighbourId:" + riskRid);
@@ -829,8 +829,8 @@ public class WebinyTest extends AppTest {
 
       String riskMitigationRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Approved\":\"True\""));
-      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Implemented\":\"True\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Approved\":\"true\""));
+      assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Is_Implemented\":\"true\""));
       assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Mitigation_Id\":\"MITIGAÇÃO PARA ROUBO DE CELULAR\""));
       assertTrue(replyStr.contains("\"Object_Risk_Mitigation_Data_Source_Description\":\"SE ROUBAREM CELULAR, DEVE-SE RELATAR O MAIS RÁPIDO POSSÍVEL E FAZER BO.\""));
 
@@ -848,6 +848,51 @@ public class WebinyTest extends AppTest {
       assertNull(e);
 
     }
+
+  }
+
+  @Test
+  public void test00016WebinyLIA() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
+    jsonTestUtil("webiny/webiny-lia.json", "$.data.listInteressesLegitimos.data[*]", "webiny_lia");
+
+    try {
+
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Legitimate_Interests_Assessment_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63fe448bf7f21e0008300259#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Legitimate_Interests_Assessment",
+              new String[]{"Object_Legitimate_Interests_Assessment_LIA_Id", "Object_Legitimate_Interests_Assessment_Is_Essential",
+                      "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person", "Object_Legitimate_Interests_Assessment_Ethical_Impact"});
+      String replyStr = reply.getRecords()[0];
+
+      String LIARid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_LIA_Id\":\"LIA 345\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Essential\":\"true\""));
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person\":\"true\""));
+
+      assertTrue(replyStr.contains("\"Object_Legitimate_Interests_Assessment_Ethical_Impact\":\"ética\""));
+
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"}, "hasNeighbourId:" + LIARid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"PROCESSO 1\""));
+
+      reply = gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"}, "hasNeighbourId:" + LIARid);
+
+      assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"webiny/legitimate-interests-assessment\""));
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
 
   }
 
