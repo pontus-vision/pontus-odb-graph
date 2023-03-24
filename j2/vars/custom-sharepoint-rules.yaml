@@ -463,20 +463,20 @@ rules:
             postProcessor: "${it?.toUpperCase()?.trim()}"
             processAll: true
 
-      - label: Object_Legitimate_Interests_Assessment
-#       to uppercase string in an array we need to use .collect{ it.toUpperCase() } ... .toUpperCase() simply doesn't work
-        condition: "${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d && Base_x0020_legal?.collect{ it.toUpperCase() }?.contains('LEGÍTIMO INTERESSE')}"
-        props:
-          Form_Id: "${id}"
-          Is_Essential:
-            val: "${Essetratamentodedadospessoais_x0}"
-            excludeFromSearch: true
-          Lawful_Basis_Justification:
-            val: "${N_x00e3_oh_x00e1_outrabaselegalp}"
-            excludeFromSearch: true
-          Is_Required:
-            val: "${Esse_x0020_processamento_x0020_d}"
-            excludeFromSearch: true
+#      - label: Object_Legitimate_Interests_Assessment
+##       to uppercase string in an array we need to use .collect{ it.toUpperCase() } ... .toUpperCase() simply doesn't work
+#        condition: "${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d && Base_x0020_legal?.collect{ it.toUpperCase() }?.contains('LEGÍTIMO INTERESSE')}"
+#        props:
+#          Form_Id: "${id}"
+#          Is_Essential:
+#            val: "${Essetratamentodedadospessoais_x0}"
+#            excludeFromSearch: true
+#          Lawful_Basis_Justification:
+#            val: "${N_x00e3_oh_x00e1_outrabaselegalp}"
+#            excludeFromSearch: true
+#          Is_Required:
+#            val: "${Esse_x0020_processamento_x0020_d}"
+#            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
@@ -540,9 +540,9 @@ rules:
         fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "attached_data_sources"
 
-      - label: "Has_Legitimate_Interests_Assessment"
-        fromVertexLabel: "Object_Data_Procedures"
-        toVertexLabel: "Object_Legitimate_Interests_Assessment"
+#      - label: "Has_Legitimate_Interests_Assessment"
+#        fromVertexLabel: "Object_Data_Procedures"
+#        toVertexLabel: "Object_Legitimate_Interests_Assessment"
 
       - label: "Is_Responsible"
         fromVertexLabel: "Object_Email_Address"

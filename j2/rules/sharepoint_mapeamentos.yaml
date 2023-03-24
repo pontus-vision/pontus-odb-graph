@@ -101,25 +101,6 @@ updatereq:
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
     
-    - label: Object_Legitimate_Interests_Assessment
-      condition: ${Essetratamentodedadospessoais_x0 && N_x00e3_oh_x00e1_outrabaselegalp && Esse_x0020_processamento_x0020_d && Base_x0020_legal?.collect{ it.toUpperCase() }?.contains('LEGÍTIMO INTERESSE')}
-      props:
-        - name: Object_Legitimate_Interests_Assessment_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Is_Essential
-          val: ${Essetratamentodedadospessoais_x0}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
-          val: ${N_x00e3_oh_x00e1_outrabaselegalp}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Legitimate_Interests_Assessment_Is_Required
-          val: ${Esse_x0020_processamento_x0020_d}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
@@ -179,9 +160,6 @@ updatereq:
   - label: Has_Data_Source
     fromVertexLabel: Object_Data_Procedures
     toVertexName: attached_data_sources
-  - label: Has_Legitimate_Interests_Assessment
-    fromVertexLabel: Object_Data_Procedures
-    toVertexLabel: Object_Legitimate_Interests_Assessment
   - label: Is_Responsible
     fromVertexLabel: Object_Email_Address
     toVertexLabel: Object_Data_Procedures
