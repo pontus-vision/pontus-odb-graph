@@ -54,18 +54,9 @@ public class PVSharepointRoPaTests extends AppTest {
       assertEquals("4", numJuridicoParties, "4 registries have Jurídico Snowymountain as an Interested Party");
 
 //    new AGgrid test style ------------------------------------------------------------------------------------------------------------
-      String svRopaRid = gridWrapperGetRid("[\n" +
-          "  {\n" +
-          "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
-          "    \"filterType\": \"text\",\n" +
-          "    \"type\": \"equals\",\n" +
-          "    \"filter\": \"4\"\n" +
-          "  }\n" +
-          "]", "Object_Data_Procedures",
-        new String[]{"Object_Data_Procedures_ID"});
 
 //    testing new edge between Object_Email ------- Is_Responsible ------- > RoPA
-      svRopaRid = gridWrapperGetRid("[\n" +
+     String svRopaRid = gridWrapperGetRid("[\n" +
           "  {\n" +
           "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
           "    \"filterType\": \"text\",\n" +

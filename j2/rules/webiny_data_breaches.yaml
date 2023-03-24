@@ -6,7 +6,7 @@ updatereq:
       name: webiny
       props:
         - name: Object_Data_Source_Name
-          val: WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS
+          val: WEBINY/INCIDENTES-DE-SEGURANCA-REPORTADOS
           mandatoryInSearch: True
     
     - label: Object_Data_Source
@@ -29,7 +29,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Data_Breach_Authority_Notified
-          val: "${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'True':'False'}"
+          val: "${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Data_Breach_Description
@@ -51,7 +51,7 @@ updatereq:
           type: "java.util.Date"
           excludeFromSearch: True
         - name: Event_Data_Breach_Natural_Person_Notified
-          val: "${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}"
+          val: "${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}"
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Data_Breach_Source
@@ -66,7 +66,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: webiny/incidentes-de-segurança-reportados
+          val: webiny/incidentes-de-seguranca-reportados
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -91,7 +91,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: webiny/incidentes-de-segurança-reportados
+          val: webiny/incidentes-de-seguranca-reportados
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion

@@ -73,13 +73,13 @@
           },
           {
             "name": "Object_Risk_Data_Source_Approved_By_DPO",
-            "val": "${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "val": "${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Risk_Data_Source_Approved_By_Security",
-            "val": "${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "val": "${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }

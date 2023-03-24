@@ -1,19 +1,20 @@
 {
   "data": {
-    "listInteresseLegitimos": {
+    "listInteressesLegitimos": {
       "data": [
         {
-          "id": "63f502ddd2dfcb0008a917f3#0001",
-          "createdOn": "2023-02-21T17:43:57.752Z",
-          "savedOn": "2023-02-21T17:43:59.322Z",
-          "interesseLegitimoReferencia": "Teste",
-          "interesseLegitimoRefMapeamentoDeProcesssos": "Teste",
-          "interesseLegitimoTratamentoDeDadosPessoais": "Teste",
-          "interesseLegitimoAspectoAntietico": "Teste",
-          "interesseLegitimoFinalidadeQuantidadeMenorDeDados": true,
-          "interesseLegitimoViolacaoDeTratamentoDeDadosPessoais": "Anyone",
-          "interesseLegitimoTratamentoDeDadosTitularParaEmpresa": true,
-          "interesseLegitimoDadosPessoaisTratamentoRealizacaoAlgoNovo": "teste"
+          "id": "63fe448bf7f21e0008300259#0001",
+          "createdOn": "2023-02-28T18:14:35.671Z",
+          "savedOn": "2023-02-28T18:14:37.628Z",
+          "interessesLegitimosReferencia": "lia 345",
+          "interessesLegitimosRefMapeamentoDeProcesssos": {
+            "id": "63c6f874320a910008b4e5b5#0002"
+          },
+          "interessesLegitimosObjetivoEstrategico": "atender lei LGPD",
+          "interessesLegitimosAspectoAntietico": "ética",
+          "interessesLegitimosFinalidadeQuantidadeMenorDeDados": true,
+          "interessesLegitimosViolacaoDeTratamentoDeDadosPessoais": "liberdade de imprensa",
+          "interessesLegitimosDadosDiretosDoTitular": true
         }
       ]
     }

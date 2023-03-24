@@ -295,7 +295,7 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      assertEquals("True", report);
+      assertEquals("true", report);
 
 
 //    Testing for LIA's Lawful Basis
@@ -354,7 +354,7 @@ public class PVTemplateTests extends AppTest {
       renderReply = res.reportTemplateRender(renderReq);
 
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      assertEquals("True", report);
+      assertEquals("true", report);
 
 
       // test a non-existent  LIA for entry number 5 with an empty reply (same template as before)

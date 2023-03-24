@@ -162,7 +162,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/ORGANIZAÇÕES",
+            "val": "WEBINY/ORGANIZACOES",
             "mandatoryInSearch": true
           }
         ]
@@ -194,7 +194,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "webiny/organizações",
+            "val": "webiny/organizacoes",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -231,7 +231,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/organizações",
+            "val": "webiny/organizacoes",
             "mandatoryInSearch": true
           },
           {

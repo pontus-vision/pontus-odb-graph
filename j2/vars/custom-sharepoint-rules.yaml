@@ -1814,13 +1814,13 @@ rules:
             val: "${Descreveroaspectodotratamentodos}"
             excludeFromSearch: true
           Is_Essential:
-            val: "\"${Afinalidadepoderiaseralcan_x00e7?.toString()?.equalsIgnoreCase('Sim')?'True':'False'}\""
+            val: "\"${Afinalidadepoderiaseralcan_x00e7?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}\""
             excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:
             val: "${Descrevaseotratamentodedadospess?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Is_Data_From_Natural_Person:
-            val: "\"${Osdadospessoaisforamcoletadosdir?.toString()?.equalsIgnoreCase('Sim')?'True':'False'}\""
+            val: "\"${Osdadospessoaisforamcoletadosdir?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}\""
             excludeFromSearch: true
 
       - label: Object_Data_Procedures

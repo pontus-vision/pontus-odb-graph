@@ -1879,10 +1879,25 @@ propertyKeys:
   - name: Object_Legitimate_Interests_Assessment_Is_Required
     dataType: String
     cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Why_Is_Required
+    dataType: String
+    cardinality: SINGLE
   - name: Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification
     dataType: String
     cardinality: SINGLE
   - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Ethical_Impact
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_LIA_Id
+    dataType: String
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person
+    dataType: Boolean
+    cardinality: SINGLE
+  - name: Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation
     dataType: String
     cardinality: SINGLE
   - name: Metadata_Type_Object_Risk_Data_Source
@@ -4041,7 +4056,11 @@ vertexIndexes:
       - Object_Legitimate_Interests_Assessment_Benefits_Relevance
       - Object_Legitimate_Interests_Assessment_Is_Essential
       - Object_Legitimate_Interests_Assessment_Is_Required
+      - Object_Legitimate_Interests_Assessment_Why_Is_Required
       - Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
+      - Object_Legitimate_Interests_Assessment_LIA_Id
+      - Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person
+      - Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation
     propertyKeysMappings:
     
       {}

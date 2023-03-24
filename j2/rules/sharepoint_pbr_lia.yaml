@@ -30,11 +30,11 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Essential
-          val: Sim
+          val: true
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Required
-          val: Sim
+          val: true
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification
