@@ -6,7 +6,7 @@ updatereq:
       name: webiny
       props:
         - name: Object_Data_Source_Name
-          val: WEBINY/MITIGAÇÕES-DE-RISCOS
+          val: WEBINY/MITIGACOES-DE-RISCOS
           mandatoryInSearch: True
     
     - label: Object_Risk_Data_Source
@@ -43,7 +43,7 @@ updatereq:
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
-          val: webiny/mitigações-de-riscos
+          val: webiny/mitigacoes-de-riscos
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Event_Ingestion_Operation
@@ -68,7 +68,7 @@ updatereq:
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type
-          val: webiny/mitigações-de-riscos
+          val: webiny/mitigacoes-de-riscos
           mandatoryInSearch: True
         - name: Event_Group_Ingestion_Operation
           val: Structured Data Insertion
