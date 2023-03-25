@@ -62,10 +62,10 @@
           },
           "mapeamentoDeProcessosAprovacoes": [
             {
-              "titularesNomeCompleto": "nome 1"
+              "id": "63c978dfa85ed20008efe81b#0006"
             },
             {
-              "titularesNomeCompleto": "nome 2"
+              "id": "63c978dfa85ed20008efe81b#0009"
             }
           ],
           "mapeamentoDeProcessosDadosPessoaisObj": {

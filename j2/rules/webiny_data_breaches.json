@@ -7,7 +7,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS",
+            "val": "WEBINY/INCIDENTES-DE-SEGURANCA-REPORTADOS",
             "mandatoryInSearch": true
           }
         ]
@@ -42,7 +42,7 @@
           },
           {
             "name": "Event_Data_Breach_Authority_Notified",
-            "val": "${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "val": "${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -74,7 +74,7 @@
           },
           {
             "name": "Event_Data_Breach_Natural_Person_Notified",
-            "val": "${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}",
+            "val": "${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -97,7 +97,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "webiny/incidentes-de-segurança-reportados",
+            "val": "webiny/incidentes-de-seguranca-reportados",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -134,7 +134,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/incidentes-de-segurança-reportados",
+            "val": "webiny/incidentes-de-seguranca-reportados",
             "mandatoryInSearch": true
           },
           {

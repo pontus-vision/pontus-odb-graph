@@ -2,41 +2,71 @@
   "updatereq": {
     "vertices": [
       {
-        "label": "Object_Privacy_Docs",
+        "label": "Object_Data_Source",
         "props": [
           {
-            "name": "Object_Privacy_Docs_Form_Id",
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/LEGITIMATE-INTERESTS-ASSESSMENT",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Legitimate_Interests_Assessment",
+        "props": [
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Form_Id",
             "val": "${id}",
             "mandatoryInSearch": true
           },
           {
-            "name": "Object_Privacy_Docs_Description",
-            "val": "${comunicacoesPpdDescricao?.trim()?.toUpperCase()}",
+            "name": "Object_Legitimate_Interests_Assessment_LIA_Id",
+            "val": "${interessesLegitimosReferencia?.trim()?.toUpperCase()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Privacy_Docs_Date",
-            "val": "${comunicacoesPpdData}",
+            "name": "Object_Legitimate_Interests_Assessment_Strategic_Impact",
+            "val": "${interessesLegitimosObjetivoEstrategico}",
             "mandatoryInSearch": false,
-            "type": "java.util.Date",
             "excludeFromSearch": true
           },
           {
-            "name": "Object_Privacy_Docs_Title",
-            "val": "${comunicacoesPpdReferencia?.trim()?.toUpperCase()}",
+            "name": "Object_Legitimate_Interests_Assessment_Ethical_Impact",
+            "val": "${interessesLegitimosAspectoAntietico}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
+            "val": "${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification",
+            "val": "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person",
+            "val": "${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           }
         ]
       },
       {
-        "label": "Object_Data_Source",
+        "label": "Object_Data_Procedures",
         "props": [
           {
-            "name": "Object_Data_Source_Name",
-            "val": "WEBINY/COMUNICACOES-PPD",
-            "mandatoryInSearch": true
+            "name": "Object_Data_Procedures_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(interessesLegitimosRefMapeamentoDeProcesssos)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
           }
         ]
       },
@@ -45,7 +75,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "webiny/comunicacoes-ppd",
+            "val": "webiny/legitimate-interests-assessment",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -82,7 +112,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/comunicacoes-ppd",
+            "val": "webiny/legitimate-interests-assessment",
             "mandatoryInSearch": true
           },
           {
@@ -112,7 +142,12 @@
       {
         "label": "Has_Ingestion_Event",
         "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Object_Privacy_Docs"
+        "toVertexLabel": "Object_Legitimate_Interests_Assessment"
+      },
+      {
+        "label": "Has_Legitimate_Interests_Assessment",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Legitimate_Interests_Assessment"
       }
     ]
   }

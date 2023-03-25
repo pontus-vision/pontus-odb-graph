@@ -2,6 +2,84 @@ rules:
 
   webiny_ropa:
 
+#    {
+#      listMapeamentoDeProcessos{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      mapeamentoDeProcessosReferencia
+#      mapeamentoDeProcessosDepartamento{
+#      departamentoReferencia
+#    }
+#      mapeamentoDeProcessosProcesso
+#      mapeamentoDeProcessosBasesLegais{
+#      basesLegaisReferencia
+#    }
+#      mapeamentoDeProcessosNomeDoResponsavel{
+#      titularesCpfDoTitular
+#    }
+#      mapeamentoDeProcessosJustificativaDaBaseLegalPeriodoRetencao
+#      mapeamentoDeProcessosDadosPessoaisEstaoRelacionadosProdutosServicos{
+#      produtosServicosReferencia
+#    }
+#      mapeamentoDeProcessosLocalDeArmazenamento{
+#      id
+#    }
+#      mapeamentoDeProcessosCategoriaDosTitularesDosDados
+#      mapeamentoDeProcessosPeriodoDeRetencao{
+#      periodosReferencia
+#    }
+#      mapeamentoDeProcessosAprovacoes{
+#      id
+#    }
+#      mapeamentoDeProcessosDadosPessoaisObj{
+#      mapeamentoDeProcessosDadosPessoaisObjDadosDeIdentificacaoPessoal
+#      mapeamentoDeProcessosDadosPessoaisObjDadosFinanceiros
+#      mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPessoais
+#      mapeamentoDeProcessosDadosPessoaisObjHabitosPessoais
+#      mapeamentoDeProcessosDadosPessoaisObjCaracteristicasPsicologicas
+#      mapeamentoDeProcessosDadosPessoaisObjComposicaoFamiliar
+#      mapeamentoDeProcessosDadosPessoaisObjInteressesDeLazer
+#      mapeamentoDeProcessosDadosPessoaisObjAssociacoes
+#      mapeamentoDeProcessosDadosPessoaisObjProcessoJudicialAdministrativoCriminal
+#      mapeamentoDeProcessosDadosPessoaisObjHabitosDeConsumo
+#      mapeamentoDeProcessosDadosPessoaisObjDadosResidenciais
+#      mapeamentoDeProcessosDadosPessoaisObjEducacaoETreinamento
+#      mapeamentoDeProcessosDadosPessoaisObjProfissaoEEmprego
+#      mapeamentoDeProcessosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz
+#      mapeamentoDeProcessosDadosPessoaisObjDadosBiometricos
+#      mapeamentoDeProcessosDadosPessoaisObjDadosSensiveis
+#      mapeamentoDeProcessosDadosPessoaisObjOutrosDadosPessoaisEspecificar{
+#      outrosDadosPessoaisReferencia
+#    }
+#    }
+#      mapeamentoDeProcessosEncarregado{
+#      encarregadoCpf
+#    }
+#      mapeamentoDeProcessosControladorPj{
+#      organizacoesCnpj
+#    }
+#      mapeamentoDeProcessosControladorPf{
+#      titularesCpfDoTitular
+#    }
+#      mapeamentoDeProcessosOperadorPf{
+#      titularesCpfDoTitular
+#    }
+#      mapeamentoDeProcessosOperadorPj{
+#      organizacoesCnpj
+#    }
+#      mapeamentoDeProcessosOutrosFundamentosLegais
+#      mapeamentoDeProcessosFinalidadeDoProcesso
+#      mapeamentoDeProcessosStatus
+#      mapeamentoDeProcessosLocalizacao{
+#      mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas
+#      mapeamentoDeProcessosLocalizacaoAbrangenciaGeograficaDoTratamento
+#    }
+#    }
+#    }
+#    }
+
     vertices:
 
       - label: Object_Data_Source
@@ -105,7 +183,7 @@ rules:
 #      - label: Object_Contract  # ainda não tem campo no CMS Mapeamentos
 #        props:
 #          Registration_Number:
-#            val: "${new groovy.json.JsonBuilder()}" #TODO (linkage only)
+#            val: "${new groovy.json.JsonBuilder()}"
 #            type: "[Ljava.lang.String;"
 ##            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
 #            processAll: true
@@ -495,6 +573,23 @@ rules:
 
   webiny_legal_actions:
 
+#    {
+#      listAcoesJudiciaisPpds{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      acoesJudiciaisPpdReferencia
+#      acoesJudiciaisPpdData
+#      acoesJudiciaisPpdDescricao
+#      acoesJudiciaisPpdResultado
+#      acoesJudiciaisPpdIdDoProcesso{
+#      id
+#    }
+#    }
+#    }
+#    }
+
     vertices:
       - label: Object_Legal_Actions
         props:
@@ -515,12 +610,12 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/AÇÕES-JUDICIAIS"
+          Name: "WEBINY/ACOES-JUDICIAIS"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/ações-judiciais"
+            val: "webiny/acoes-judiciais"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -539,7 +634,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/ações-judiciais"
+          Type: "webiny/acoes-judiciais"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -559,6 +654,20 @@ rules:
 
   webiny_privacy_docs:
 
+#    {
+#      listComunicacoesPpds{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      comunicacoesPpdReferencia
+#      comunicacoesPpdData
+#      comunicacoesPpdDescricao
+#      comunicacoesPpdLocalDeCompartilhamento
+#    }
+#    }
+#    }
+
     vertices:
       - label: Object_Privacy_Docs
         props:
@@ -576,12 +685,12 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/COMUNICAÇÕES-PPD"
+          Name: "WEBINY/COMUNICACOES-PPD"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/comunicações-ppd"
+            val: "webiny/comunicacoes-ppd"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -600,7 +709,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/comunicações-ppd"
+          Type: "webiny/comunicacoes-ppd"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -619,6 +728,23 @@ rules:
         toVertexLabel: "Object_Privacy_Docs"
 
   webiny_meetings:
+
+#    {
+#      listReunioesPpds{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      reunioesPpdReferencia
+#      reunioesPpdData
+#      reunioesPpdTituloReuniao
+#      reunioesPpdTopicos
+#      reunioesPpdParticipantes{
+#      titularesCpfDoTitular
+#    }
+#    }
+#    }
+#    }
 
     vertices:
       - label: Event_Meeting
@@ -648,12 +774,12 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/REUNIÕES-PPD"
+          Name: "WEBINY/REUNIOES-PPD"
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/reuniões-ppd"
+            val: "webiny/reunioes-ppd"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -672,7 +798,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/reuniões-ppd"
+          Type: "webiny/reunioes-ppd"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -695,6 +821,25 @@ rules:
         toVertexLabel: "Event_Meeting"
 
   webiny_privacy_notice:
+
+#    {
+#      listAvisoDePrivacidades{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      avisoDePrivacidadeReferencia
+#      avisoDePrivacidadeAvisoDePrivacidade
+#      avisoDePrivacidadeIdDoProcesso{
+#      id
+#    }
+#      avisoDePrivacidadeConsentimento{
+#      id
+#    }
+#      avisoDePrivacidadeDataDeInicio
+#    }
+#    }
+#    }
 
     vertices:
       - label: Object_Privacy_Notice
@@ -808,7 +953,7 @@ rules:
     #        periodosReferencia
     #      }
     #      fontesDeDadosRiscosDeFontesDeDados{
-    #        riscosDeFontesDeDadosReferencia
+    #        id
     #      }
     #      fontesDeDadosDadosPessoaisObj{
     #        fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar{
@@ -1034,7 +1179,13 @@ rules:
           Retention_Period: "${fontesDeDadosPeriodoDeRetencao?.periodosReferencia}"
 #          Type: "${fontesDeDadosReferencia?.trim()?.toUpperCase()}"
 
-#     TODO: não utilizamos Riscos De Fontes De Dados !!!
+      - label: Object_Risk_Data_Source
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(fontesDeDadosRiscosDeFontesDeDados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
 
       - label: Event_Ingestion
         props:
@@ -1158,8 +1309,35 @@ rules:
       - label: "Has_Sensitive_Data"
         fromVertexName: "fontes_de_dados"
         toVertexName: "sensitive_data"
-        
+
+      - label: "Has_Risk"
+        fromVertexName: "fontes_de_dados"
+        toVertexLabel: "Object_Risk_Data_Source"
+
   webiny_consents:
+
+#    {
+#      listConsentimentos{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      consentimentosReferencia
+#      consentimentosData
+#      consentimentosStatus
+#      consentimentosIdentificacao
+#      consentimentosAvisoDePrivacidade{
+#      id
+#    }
+#      consentimentosResponsavelPeloMenor{
+#      id
+#    }
+#      consentimentosTitularDoDadoPessoal{
+#      id
+#    }
+#    }
+#    }
+#    }
 
     vertices:
       - label: Event_Consent
@@ -1278,6 +1456,46 @@ rules:
 
   webiny_contracts:
 
+#    {
+#      listContratos{
+#      data{
+#      id
+#      createdOn
+#      savedOn
+#      contratosReferencia
+#      contratosOrganizacaoContratante{
+#      organizacoesCnpj
+#    }
+#      contratosOrganizacaoContratada{
+#      organizacoesCnpj
+#    }
+#      contratosOperador{
+#      organizacoesCnpj
+#    }
+#      contratosControlador{
+#      organizacoesCnpj
+#    }
+#      contratosTransferenciaDeDados
+#      contratosTransferenciaInternacionalDeDados{
+#      transferenciasInternacionaisInciso
+#    }
+#      contratosTransferenciaParaQualPais
+#      contratosDadosdeCriancasEAdolescentes
+#      contratosRefDoProcesso{
+#      id
+#    }
+#      contratosRefDaFonteDeDados{
+#      id
+#    }
+#      contratosLinkDoContrato
+#      contratosVigencia
+#      contratosContratoAprovado{
+#      titularesCpfDoTitular
+#    }
+#    }
+#    }
+#    }
+
     vertices:
 
       - label: Person_Natural
@@ -1373,7 +1591,7 @@ rules:
             excludeFromSearch: true
           Has_Minors_Data:
 #           or simply ${contratosDadosdeCriancasEAdolescentes}
-            val: "\"${contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${contratosDadosdeCriancasEAdolescentes?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
 
       - label: Object_Data_Procedures
@@ -1578,7 +1796,7 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/ORGANIZAÇÕES"
+          Name: "WEBINY/ORGANIZACOES"
 
       - label: Location_Address
         props:
@@ -1593,7 +1811,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/organizações"
+            val: "webiny/organizacoes"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1612,7 +1830,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/organizações"
+          Type: "webiny/organizacoes"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -1866,7 +2084,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "Webiny Titulares"
+            val: "webiny/titulares"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -1955,7 +2173,7 @@ rules:
 
       - label: Object_Data_Source
         props:
-          Name: "WEBINY/REQUISIÇÕES-DOS-TITULARES"
+          Name: "WEBINY/REQUISICOES-DOS-TITULARES"
 
       - label: Event_Subject_Access_Request
         props:
@@ -1995,7 +2213,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/requisições-dos-titulares"
+            val: "webiny/requisicoes-dos-titulares"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -2014,7 +2232,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/requisições-dos-titulares"
+          Type: "webiny/requisicoes-dos-titulares"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -2071,7 +2289,7 @@ rules:
       - label: Object_Data_Source
         name: webiny
         props:
-          Name: "WEBINY/INCIDENTES-DE-SEGURANÇA-REPORTADOS"
+          Name: "WEBINY/INCIDENTES-DE-SEGURANCA-REPORTADOS"
 
       - label: Object_Data_Source
         name: data_sources
@@ -2089,7 +2307,7 @@ rules:
             val: "${incidentesDeSegurancaReportadosReferencia?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Authority_Notified:
-            val: "\"${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
           Description:
             val: "${incidentesDeSegurancaReportadosDescricao?.trim()?.toUpperCase()}"
@@ -2106,7 +2324,7 @@ rules:
             type: java.util.Date
             excludeFromSearch: true
           Natural_Person_Notified:
-            val: "\"${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
           Source:
             val: "${incidentesDeSegurancaReportadosOrigem?.trim()?.toUpperCase()}"
@@ -2118,7 +2336,7 @@ rules:
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/incidentes-de-segurança-reportados"
+            val: "webiny/incidentes-de-seguranca-reportados"
             excludeFromSearch: true
           Operation:
             val: "Structured Data Insertion"
@@ -2137,7 +2355,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/incidentes-de-segurança-reportados"
+          Type: "webiny/incidentes-de-seguranca-reportados"
           Operation: "Structured Data Insertion"
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -2225,10 +2443,10 @@ rules:
             val: "${riscosDeFontesDeDadosImpResidual}"
             excludeFromSearch: true
           Approved_By_DPO:
-            val: "\"${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${riscosDeFontesDeDadosAprovadoPeloEncarregado?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
           Approved_By_Security:
-            val: "\"${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${riscosDeFontesDeDadosAprovadoPelaSeguranca?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
 
       - label: Object_Risk_Mitigation_Data_Source
@@ -2310,7 +2528,7 @@ rules:
       - label: Object_Data_Source
         name: webiny
         props:
-          Name: "WEBINY/MITIGAÇÕES-DE-RISCOS"
+          Name: "WEBINY/MITIGACOES-DE-RISCOS"
 
       - label: Object_Risk_Data_Source
         props:
@@ -2330,16 +2548,16 @@ rules:
             val: "${mitigacoesDeRiscosDescricao?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Is_Implemented:
-            val: "\"${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${mitigacoesDeRiscosImplementado?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
           Is_Approved:
-            val: "\"${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'True':'False'}\""
+            val: "\"${mitigacoesDeRiscosAprovado?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
             excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
           Type:
-            val: "webiny/mitigações-de-riscos"
+            val: "webiny/mitigacoes-de-riscos"
             excludeFromSearch: true
           Operation:
             val: Structured Data Insertion
@@ -2358,7 +2576,7 @@ rules:
 
       - label: Event_Group_Ingestion
         props:
-          Type: "webiny/mitigações-de-riscos"
+          Type: "webiny/mitigacoes-de-riscos"
           Operation: Structured Data Insertion
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
 
@@ -2378,3 +2596,102 @@ rules:
       - label: "Mitigates_Risk"
         fromVertexLabel: "Object_Risk_Mitigation_Data_Source"
         toVertexLabel: "Object_Risk_Data_Source"
+
+  webiny_lia:
+
+
+#  {
+#    listInteressesLegitimos{
+#    data{
+#    interessesLegitimosReferencia
+#    interessesLegitimosRefMapeamentoDeProcesssos{
+#    id
+#  }
+#    interessesLegitimosObjetivoEstrategico
+#    interessesLegitimosAspectoAntietico
+#    interessesLegitimosFinalidadeQuantidadeMenorDeDados
+#    interessesLegitimosViolacaoDeTratamentoDeDadosPessoais
+#    interessesLegitimosDadosDiretosDoTitular
+#  }
+#  }
+#  }
+
+    vertices:
+
+      - label: Object_Data_Source
+        props:
+          Name: "WEBINY/LEGITIMATE-INTERESTS-ASSESSMENT"
+
+      - label: Object_Legitimate_Interests_Assessment
+        props:
+          Form_Id: "${id}"
+          LIA_Id:
+            val: "${interessesLegitimosReferencia?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Strategic_Impact:
+            val: "${interessesLegitimosObjetivoEstrategico}"
+            excludeFromSearch: true
+          Ethical_Impact:
+            val: "${interessesLegitimosAspectoAntietico}"
+            excludeFromSearch: true
+          Is_Essential:
+            val: "\"${interessesLegitimosFinalidadeQuantidadeMenorDeDados?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
+            excludeFromSearch: true
+          Breach_Of_Subject_Rights_Justification:
+            val: "${interessesLegitimosViolacaoDeTratamentoDeDadosPessoais?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Is_Data_From_Natural_Person:
+            val: "\"${interessesLegitimosDadosDiretosDoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}\""
+            excludeFromSearch: true
+
+      - label: Object_Data_Procedures
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(interessesLegitimosRefMapeamentoDeProcesssos)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+            processAll: true
+
+      - label: Event_Ingestion
+        props:
+          Type:
+            val: "webiny/legitimate-interests-assessment"
+            excludeFromSearch: true
+          Operation:
+            val: Structured Data Insertion
+            excludeFromSearch: true
+          Domain_b64:
+            val: "${original_request?.bytes?.encodeBase64()?.toString()}"
+            excludeFromSearch: true
+          Metadata_Create_Date:
+            val: "${createdOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+          Metadata_Update_Date:
+            val: "${savedOn}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Event_Group_Ingestion
+        props:
+          Type: "webiny/legitimate-interests-assessment"
+          Operation: Structured Data Insertion
+          Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+
+    edges:
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Object_Data_Source"
+        toVertexLabel: "Event_Group_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Group_Ingestion"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "Object_Legitimate_Interests_Assessment"
+
+      - label: "Has_Legitimate_Interests_Assessment"
+        fromVertexLabel: "Object_Data_Procedures"
+        toVertexLabel: "Object_Legitimate_Interests_Assessment"

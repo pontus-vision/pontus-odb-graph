@@ -30,7 +30,7 @@
         "props": [
           {
             "name": "Object_Data_Source_Name",
-            "val": "WEBINY/REQUISIÇÕES-DOS-TITULARES",
+            "val": "WEBINY/REQUISICOES-DOS-TITULARES",
             "mandatoryInSearch": true
           }
         ]
@@ -97,7 +97,7 @@
         "props": [
           {
             "name": "Event_Ingestion_Type",
-            "val": "webiny/requisições-dos-titulares",
+            "val": "webiny/requisicoes-dos-titulares",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -134,7 +134,7 @@
         "props": [
           {
             "name": "Event_Group_Ingestion_Type",
-            "val": "webiny/requisições-dos-titulares",
+            "val": "webiny/requisicoes-dos-titulares",
             "mandatoryInSearch": true
           },
           {
