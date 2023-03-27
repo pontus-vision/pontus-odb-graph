@@ -58,6 +58,7 @@ public class PVSharepointConsentTests extends AppTest {
       String getObjectDataSourceName =
         App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
           ".in('Consent').out('Has_Ingestion_Event').in('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+          ".has('Object_Data_Source_Name', eq('SHAREPOINT/CONSENT'))" +
           ".properties('Object_Data_Source_Name').value().next().toString()").get().toString();
       assertEquals("SHAREPOINT/CONSENT", getObjectDataSourceName, "Data Source Name.");
 
@@ -77,6 +78,9 @@ public class PVSharepointConsentTests extends AppTest {
   @Test
   public void test00002UpsertSharepointConsents() throws InterruptedException {
     try {
+//    adding people first ...
+      jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
+
       jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-consentimentos.json",
               "$.queryResp[*].fields", "sharepoint_consents");
 
@@ -154,13 +158,14 @@ public class PVSharepointConsentTests extends AppTest {
       assertEquals("SHAREPOINT/PRIVACY-NOTICE", privacyNoticeDataSourceName, "Data Source Name for Privacy Notice POLE.");
 
       String getPersonNaturalByPrivacyNotice =
-        App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq(\"" + privacyNoticeDataSourceName + "\"))" +
-          ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
-          ".has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
-          ".has('Event_Consent_Customer_ID', eq('45637846571'))" +
-          ".in('Consent').has('Person_Natural_Customer_ID', eq('45637846571'))" +
-          ".out('Has_Ingestion_Event').in('Has_Ingestion_Event')"+
-                ".values('Event_Group_Ingestion_Type').next().toString()").get().toString();
+              App.executor.eval("App.g.V().has('Object_Data_Source_Name', eq(\"" + privacyNoticeDataSourceName + "\"))" +
+                      ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
+                      ".has('Object_Privacy_Notice_Form_Id', eq('4')).in('Has_Privacy_Notice')" +
+                      ".has('Event_Consent_Customer_ID', eq('45637846571'))" +
+                      ".in('Consent').has('Person_Natural_Customer_ID', eq('45637846571'))" +
+                      ".out('Has_Ingestion_Event').in('Has_Ingestion_Event')"+
+                      ".has('Event_Group_Ingestion_Type', eq('sharepoint/consent'))" +
+                      ".values('Event_Group_Ingestion_Type').next().toString()").get().toString();
       assertEquals("sharepoint/consent", getPersonNaturalByPrivacyNotice,
         "From privacy notice to consent");
 

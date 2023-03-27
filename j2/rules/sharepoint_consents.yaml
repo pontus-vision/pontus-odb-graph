@@ -47,11 +47,6 @@ updatereq:
           val: ${identity?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
           excludeFromUpdate: True
-        - name: Person_Natural_Last_Update_Date
-          val: ${Modified}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
     
     - label: Object_Data_Source
       props:

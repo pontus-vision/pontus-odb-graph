@@ -1344,7 +1344,7 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
 
-      - label: Person_Natural
+      - label: Person_Natural # it's just a linkage/connection
         condition: "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
         props:
           Customer_ID:
@@ -1354,10 +1354,10 @@ rules:
 #          Full_Name:
 #            val: "${name?.trim()?.toUpperCase()}"
 #            excludeFromUpdate: true
-          Last_Update_Date:
-            val: "${Modified}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Last_Update_Date:
+#            val: "${Modified}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Object_Data_Source
         props:

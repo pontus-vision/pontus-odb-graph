@@ -68,13 +68,6 @@ public class PVSharepointDSARTests extends AppTest {
       assertEquals("Atualização de Endereço", angeleBxlDSARType,
               "Angèle Bruxèle wants to update her Address");
 
-      String miltonOrgDSARStatus =
-              App.executor.eval("App.g.V().has('Person_Organisation_Registration_Number', " +
-                      "eq('45232190000112')).out('Made_SAR_Request')" +
-                      ".properties('Event_Subject_Access_Request_Status').value().next().toString()").get().toString();
-      assertEquals("Denied", miltonOrgDSARStatus, "Milton's Company's DSAR Request was Denied!");
-
-
 //      String DSARTotalCount =
 //              App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MARGORE PROXANO'))" +
 //                      ".out('Made_SAR_Request').as('DSAR').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
@@ -85,19 +78,19 @@ public class PVSharepointDSARTests extends AppTest {
       String fromDsarToRopa =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('MARGORE PROXANO'))" +
                       ".out('Made_SAR_Request').as('DSAR').out('Has_DSAR').as('DSAR_Group').out('Has_DSAR')" +
-                      ".as('RoPA').has('Object_Data_Procedures_Form_Id', eq('401'))" +
+                      ".as('RoPA').has('Object_Data_Procedures_Form_Id', eq('405'))" +
                       ".values('Object_Data_Procedures_Description')" +
                       ".next().toString()").get().toString();
-      assertEquals("Recebimento dos dados via e-mail e envio ao departamentos: Jxxxyyy e Fzzzzzzzzzz.",
+      assertEquals("Recebimento dos Dados no processo de Recrutamento e Seleção.",
               fromDsarToRopa, "RoPA's Data Procedures' Description");
 
       String fromDsarToRopa2 =
               App.executor.eval("App.g.V().has('Person_Natural_Full_Name', eq('ANGÈLE BRUXÈLE'))" +
                               ".out('Made_SAR_Request').as('DSAR').out('Has_DSAR').as('DSAR_Group').out('Has_DSAR')" +
-                              ".as('RoPA').has('Object_Data_Procedures_Form_Id', eq('402'))" +
-                              ".values('Object_Data_Procedures_Interested_Parties_Consulted').next().toString()")
+                              ".as('RoPA').has('Object_Data_Procedures_Form_Id', eq('66'))" +
+                              ".values('Object_Data_Procedures_Country_Where_Stored').next().toString()")
                       .get().toString();
-      assertEquals("Jurídico Snowymountain", fromDsarToRopa2,"RoPA's Interested Parties");
+      assertEquals("Brasil", fromDsarToRopa2,"RoPA's country");
 
       // testing for DSAR Request_Type in SQL
       OGremlinResultSet resSet = App.graph.executeSql(

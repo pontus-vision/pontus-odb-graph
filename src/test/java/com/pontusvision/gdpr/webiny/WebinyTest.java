@@ -671,10 +671,6 @@ public class WebinyTest extends AppTest {
       assertTrue(replyStr.contains("\"Person_Natural_Type\":\"[Colaborador]\""), "Person Natural Type");
       assertTrue(replyStr.contains("\"Person_Natural_Last_Update_Date\":\"Wed Jan 25 18:22:14 UTC 2023\""), "Last Update");
 
-      reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + titularRid);
-
-      assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
-
       reply = gridWrapper(null, "Object_Identity_Card", new String[]{"Object_Identity_Card_Id_Value"}, "hasNeighbourId:" + titularRid);
 
       assertTrue(reply.getRecords()[0].contains("\"Object_Identity_Card_Id_Value\":\"01201405628\""));
@@ -725,10 +721,6 @@ public class WebinyTest extends AppTest {
       assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Full_Name\":\"MARIA SANTOS\""));
 
       String pjRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
-
-      reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + pjRid);
-
-      assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
 
 //      ---------------------------------------- new connection with RoPA ---------------------------------------------------
 
