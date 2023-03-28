@@ -736,6 +736,10 @@ public class PVTemplateTests extends AppTest {
               "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>LARA CROFT</td></tr>\n" +
               "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>COMIDAS 2</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>LAKSHMI</td></tr>\n" +
+              "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>COMIDAS 1</td></tr>\n" +
               "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>JANOS GÁBOR</td></tr>\n" +
@@ -748,15 +752,11 @@ public class PVTemplateTests extends AppTest {
               "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MODIFIED</td></tr>\n" +
               "    \n" +
-              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>LAKSHMI</td></tr>\n" +
-              "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>BOB NAKAMURA</td></tr>\n" +
               "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>ZIAD SILVA</td></tr>\n" +
               "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MATHEUS ROCHA</td></tr>\n" +
-              "    \n" +
-              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>COMIDAS 2</td></tr>\n" +
               "    \n" +
               "</table>\n";
       assertEquals(expectedReport, report, "Lista de Titulares Impactados' HTML Table");
