@@ -551,6 +551,35 @@ class PontusJ2ReportingFunctions {
 
   }
 
+  static String liaScore(String lia_id) {
+    
+//    pg_id starting point is always LIA
+
+    def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+
+    //      RoPA.each {
+
+//    String queryStrLIAStrategy = "SELECT * FROM :pg_id WHERE `Object_Legitimate_Interests_Assessment_Strategic_Impact.length()` > 0"
+    def liaStrategicImpactScore = (lia?.get("Object_Legitimate_Interests_Assessment_Strategic_Impact")?.toString()?.length() > 0)?5:10
+
+    String queryStrLIAEthics = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Ethical_Impact.length()` > 0"
+
+    String queryStrLIAEssential = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Is_Essential` = true"
+
+    String queryStrLIABreachJustification = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification.length()` > 0"
+
+    String queryStrRopaSensitiveData = "SELECT COUNT (*) FROM `Object_Data_Procedures` WHERE `out('Has_Sensitive_Data').size()` > 0"
+
+    String queryStrRopaTypePerson = "SELECT COUNT (*) FROM `Object_Data_Procedures` WHERE `Object_Data_Procedures_Type_Of_Natural_Person` = 'COLABORADOR' OR `Object_Data_Procedures_Type_Of_Natural_Person` = 'FORNECEDOR'"
+
+    String queryStrLIADataOrigin = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person` = true"
+
+//      }
+
+    return ""
+
+  }
+
   static Pattern sqlPattern =
           Pattern.compile(".*(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|UPDATE|UNION( +ALL){0,1})(\\s).*")
 
