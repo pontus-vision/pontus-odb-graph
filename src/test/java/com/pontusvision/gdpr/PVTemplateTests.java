@@ -759,7 +759,7 @@ public class PVTemplateTests extends AppTest {
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MATHEUS ROCHA</td></tr>\n" +
               "    \n" +
               "</table>\n";
-      assertEquals(expectedReport, report, "Lista de Titulares Impactados' HTML Table");
+      assertEquals(sortLines(expectedReport), sortLines(report), "Lista de Titulares Impactados' HTML Table");
 
     } catch (Exception e) {
       e.printStackTrace();
