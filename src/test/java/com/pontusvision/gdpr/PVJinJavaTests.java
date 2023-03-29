@@ -140,4 +140,59 @@ public class PVJinJavaTests extends AppTest {
 //
 //  }
 
+  @Test
+  public void test00002liaScore() throws InterruptedException {
+
+    jsonTestUtil("webiny/webiny-fontes.json", "$.data.listFontesDeDados.data[*]", "webiny_data_source");
+    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
+    jsonTestUtil("webiny/webiny-contratos.json", "$.data.listContratos.data[*]", "webiny_contracts");
+    jsonTestUtil("webiny/webiny-incidentes.json", "$.data.listIncidentesDeSegurancaReportados.data[*]", "webiny_data_breaches");
+    jsonTestUtil("webiny/webiny-lia.json", "$.data.listInteressesLegitimos.data[*]", "webiny_lia");
+
+    try {
+
+      // The greater the Score ... THE WORSE !!!!!!!!!
+
+      String liaRid = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Legitimate_Interests_Assessment_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63fe448bf7f21e0008300259#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Legitimate_Interests_Assessment",
+              new String[]{"Object_Legitimate_Interests_Assessment_Form_Id"});
+
+      int liaEthicsScore = PontusJ2ReportingFunctions.liaEthics(liaRid);
+      assertEquals(120, liaEthicsScore);
+
+      PontusJ2ReportingFunctions.contractHasMinors(liaRid);
+
+      int liaStrategicImpactScore = PontusJ2ReportingFunctions.liaStrategicImpactScore(liaRid);
+      assertEquals(5, liaStrategicImpactScore);
+
+      int liaEssential = PontusJ2ReportingFunctions.liaEssential(liaRid);
+      assertEquals(120, liaEssential);
+
+      int liaBreachJustification = PontusJ2ReportingFunctions.liaBreachJustification(liaRid);
+      assertEquals(120, liaBreachJustification);
+
+      int ropaSensitiveData = PontusJ2ReportingFunctions.ropaSensitiveData(liaRid);
+      assertEquals(5, ropaSensitiveData);
+
+      PontusJ2ReportingFunctions.ropaTypePerson(liaRid);
+
+      int liaDataOrigin = PontusJ2ReportingFunctions.liaDataOrigin(liaRid);
+      assertEquals(5, liaDataOrigin);
+
+      PontusJ2ReportingFunctions.ripdAuthorityNotified(liaRid);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+  }
+
 }

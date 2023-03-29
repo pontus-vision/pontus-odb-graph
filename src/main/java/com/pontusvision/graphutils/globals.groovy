@@ -33,7 +33,11 @@ import java.time.format.DateTimeFormatter
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Pattern
 
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.both
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.bothV
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.inE
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.inV
+import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.out
 
 class ODBSchemaManager {
   static def loadSchema(OrientStandardGraph graph, String... files) {
@@ -551,34 +555,71 @@ class PontusJ2ReportingFunctions {
 
   }
 
-  static String liaScore(String lia_id) {
+//  static class liaScore {
+
+//    each def will have its own jinjava function
     
 //    pg_id starting point is always LIA
 
-    def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+//    def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
 
-    //      RoPA.each {
+//      RoPA.each {
 
 //    String queryStrLIAStrategy = "SELECT * FROM :pg_id WHERE `Object_Legitimate_Interests_Assessment_Strategic_Impact.length()` > 0"
-    def liaStrategicImpactScore = (lia?.get("Object_Legitimate_Interests_Assessment_Strategic_Impact")?.toString()?.length() > 0)?5:10
+    static int liaStrategicImpactScore(String lia_id){
+      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+      return (lia?.get("Object_Legitimate_Interests_Assessment_Strategic_Impact")?.toString()?.length() > 0)?5:10
+    }
 
-    String queryStrLIAEthics = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Ethical_Impact.length()` > 0"
+//    String queryStrLIAEthics = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Ethical_Impact.length()` > 0"
+    static int liaEthics(String lia_id){
+      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+      return (lia?.get("Object_Legitimate_Interests_Assessment_Ethical_Impact")?.toString()?.length() > 0)?120:5
+    }
 
-    String queryStrLIAEssential = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Is_Essential` = true"
+//    String queryStrLIAEssential = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Is_Essential` = true"
+    static int liaEssential(String lia_id){
+      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+      return (lia?.get("Object_Legitimate_Interests_Assessment_Is_Essential")?.toString() == 'true')?120:5
+    }
 
-    String queryStrLIABreachJustification = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification.length()` > 0"
+//    String queryStrLIABreachJustification = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification.length()` > 0"
+    static int liaBreachJustification(String lia_id){
+      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+      return (lia?.get("Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification")?.toString()?.length() > 0)?120:5
+    }
 
-    String queryStrRopaSensitiveData = "SELECT COUNT (*) FROM `Object_Data_Procedures` WHERE `out('Has_Sensitive_Data').size()` > 0"
+//    String queryStrRopaSensitiveData = "SELECT COUNT (*) FROM `Object_Data_Procedures` WHERE `out('Has_Sensitive_Data').size()` > 0"
+    static int ropaSensitiveData(String lia_id){
+      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+      return (lia?.get(out("Has_Sensitive_Data")?.getProperties())?.size() > 0)?120:5
+    }
 
-    String queryStrRopaTypePerson = "SELECT COUNT (*) FROM `Object_Data_Procedures` WHERE `Object_Data_Procedures_Type_Of_Natural_Person` = 'COLABORADOR' OR `Object_Data_Procedures_Type_Of_Natural_Person` = 'FORNECEDOR'"
+    static int contractHasMinors(String lia_id){
+      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+      return (lia?.get(both("Has_Legitimate_Interests_Assessment")?.both("Has_Contract")?.getAt("Object_Contract_Has_Minors_Data"))?.toString() == "true")?120:5
+    }
 
-    String queryStrLIADataOrigin = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person` = true"
+//    String queryStrRopaTypePerson = "SELECT COUNT (*) FROM `Object_Data_Procedures` WHERE `Object_Data_Procedures_Type_Of_Natural_Person` = 'COLABORADOR' OR `Object_Data_Procedures_Type_Of_Natural_Person` = 'FORNECEDOR'"
+    static int ropaTypePerson(String lia_id){
+      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+      def ropaTypePerson = lia?.get(both("Has_Legitimate_Interests_Assessment")?.getAt("Object_Data_Procedures_Type_Of_Natural_Person"))?.toString()
+      return (ropaTypePerson == "COLABORADOR" || ropaTypePerson == "FORNECEDOR")?5:10
+    }
+//    String queryStrLIADataOrigin = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person` = true"
+    static int liaDataOrigin(String lia_id){
+      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+      return (lia?.get("Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person")?.toString() == 'true')?5:20
+    }
+
+    static int ripdAuthorityNotified(String lia_id){
+      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+      return (lia?.get(both("Has_Legitimate_Interests_Assessment")?.out("Has_Data_Source")?.in("Impacted_By_Data_Breach")?.getAt("Event_Data_Breach_Authority_Notified"))?.toString() == "true")?5:20
+    }
 
 //      }
 
-    return ""
-
-  }
+//  }
 
   static Pattern sqlPattern =
           Pattern.compile(".*(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|UPDATE|UNION( +ALL){0,1})(\\s).*")
@@ -1353,6 +1394,33 @@ class PontusJ2ReportingFunctions {
             PontusJ2ReportingFunctions.class, "getConsentDataProceduresWithoutEvents", String.class))
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "runSql",
             PontusJ2ReportingFunctions.class, "runSql", String.class, Map.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaStrategicImpactScore",
+            PontusJ2ReportingFunctions.class, "liaStrategicImpactScore", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaEthics",
+            PontusJ2ReportingFunctions.class, "liaEthics", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaEssential",
+            PontusJ2ReportingFunctions.class, "liaEssential", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaBreachJustification",
+            PontusJ2ReportingFunctions.class, "liaBreachJustification", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "ropaSensitiveData",
+            PontusJ2ReportingFunctions.class, "ropaSensitiveData", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "contractHasMinors",
+            PontusJ2ReportingFunctions.class, "contractHasMinors", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "ropaTypePerson",
+            PontusJ2ReportingFunctions.class, "ropaTypePerson", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaDataOrigin",
+            PontusJ2ReportingFunctions.class, "liaDataOrigin", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "ripdAuthorityNotified",
+            PontusJ2ReportingFunctions.class, "ripdAuthorityNotified", String.class))
 
   }
 }
