@@ -1,19 +1,10 @@
 package com.pontusvision.gdpr;
 
-import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
-import com.pontusvision.gdpr.report.ReportTemplateRenderResponse;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
-import com.pontusvision.graphutils.PVConvMixin;
 import com.pontusvision.graphutils.PontusJ2ReportingFunctions;
-import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
-
-import java.util.Base64;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -163,29 +154,29 @@ public class PVJinJavaTests extends AppTest {
                       "]", "Object_Legitimate_Interests_Assessment",
               new String[]{"Object_Legitimate_Interests_Assessment_Form_Id"});
 
-      int liaEthicsScore = PontusJ2ReportingFunctions.liaEthics(liaRid);
+      int liaEthicsScore = PontusJ2ReportingFunctions.liaScoreEthics(liaRid);
       assertEquals(120, liaEthicsScore);
 
-      PontusJ2ReportingFunctions.contractHasMinors(liaRid);
+      PontusJ2ReportingFunctions.liaScoreContractHasMinors(liaRid);
 
-      int liaStrategicImpactScore = PontusJ2ReportingFunctions.liaStrategicImpactScore(liaRid);
+      int liaStrategicImpactScore = PontusJ2ReportingFunctions.liaScoreStrategicImpact(liaRid);
       assertEquals(5, liaStrategicImpactScore);
 
-      int liaEssential = PontusJ2ReportingFunctions.liaEssential(liaRid);
-      assertEquals(120, liaEssential);
+      int liaScoreEssential = PontusJ2ReportingFunctions.liaScoreEssential(liaRid);
+      assertEquals(120, liaScoreEssential);
 
-      int liaBreachJustification = PontusJ2ReportingFunctions.liaBreachJustification(liaRid);
+      int liaBreachJustification = PontusJ2ReportingFunctions.liaScoreBreachJustification(liaRid);
       assertEquals(120, liaBreachJustification);
 
-      int ropaSensitiveData = PontusJ2ReportingFunctions.ropaSensitiveData(liaRid);
+      int ropaSensitiveData = PontusJ2ReportingFunctions.liaScoreRopaSensitiveData(liaRid);
       assertEquals(5, ropaSensitiveData);
 
-      PontusJ2ReportingFunctions.ropaTypePerson(liaRid);
+      PontusJ2ReportingFunctions.liaScoreRopaTypePerson(liaRid);
 
-      int liaDataOrigin = PontusJ2ReportingFunctions.liaDataOrigin(liaRid);
+      int liaDataOrigin = PontusJ2ReportingFunctions.liaScoreDataOrigin(liaRid);
       assertEquals(5, liaDataOrigin);
 
-      PontusJ2ReportingFunctions.ripdAuthorityNotified(liaRid);
+      PontusJ2ReportingFunctions.liaScoreRipdAuthorityNotified(liaRid);
 
     } catch (Exception e) {
       e.printStackTrace();
