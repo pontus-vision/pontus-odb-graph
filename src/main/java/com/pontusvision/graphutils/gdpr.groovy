@@ -5649,9 +5649,10 @@ the end of the process.
 //    TODO: add if statement to avoid null values
       def results = App.graph.executeSql(
           """
-        SELECT Person_Natural_Customer_ID as rid 
+        SELECT count(1) as rid 
         FROM Person_Natural
         WHERE Person_Natural_Last_Update_Date.asLong() <= (:today - :threshold)
+        LIMIT 1
         """, ["threshold": retVal, "today": today])
 
 
