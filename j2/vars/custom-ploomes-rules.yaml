@@ -12,7 +12,10 @@ rules:
 #            excludeFromSearch: true
             # excludeFromUpdate cannot be used because it will not allow to fill the property, not even in the first run
             # a condition to check first run is needed ... if first time set excludeFromUpdate to false, otherwise true
-          Customer_ID: "${CPF?.replaceAll('[^0-9]', '')}"
+          Customer_ID:
+            val: "${CPF?.replaceAll('[^0-9]', '')}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
           Last_Update_Date:
             val: "${LastUpdateDate}"
             excludeFromSearch: true
@@ -24,12 +27,18 @@ rules:
       - label: Person_Organisation
         condition: "${TypeId == 1 && CNPJ != null}"
         props:
-          Registration_Number: "${CNPJ?.replaceAll('[^0-9]', '')}"
+          Registration_Number:
+            val: "${CNPJ?.replaceAll('[^0-9]', '')}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
 #          Name:
 #            val: "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}"
 #            excludeFromUpdate: true
 #            excludeFromSearch: true
-          Id: "${CNPJ?.replaceAll('[^0-9]', '')}"
+          Id:
+            val: "${CNPJ?.replaceAll('[^0-9]', '')}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
           Last_Update_Date:
             val: "${LastUpdateDate}"
             excludeFromSearch: true
@@ -42,7 +51,10 @@ rules:
         condition: "${TypeId == 2  && CPF != null}"
         name: cpf
         props:
-          Id_Value: "${CPF?.replaceAll('[^0-9]', '')}"
+          Id_Value:
+            val: "${CPF?.replaceAll('[^0-9]', '')}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
           Id_Type:
             val: "CPF"
             excludeFromSearch: true
@@ -51,7 +63,10 @@ rules:
         condition: "${TypeId == 1  && CNPJ != null}"
         name: cnpj
         props:
-          Id_Value: "${CNPJ?.replaceAll('[^0-9]', '')}"
+          Id_Value:
+            val: "${CNPJ?.replaceAll('[^0-9]', '')}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
           Id_Type:
             val: "CNPJ"
             excludeFromSearch: true
@@ -60,7 +75,10 @@ rules:
       - label: Object_Email_Address
         condition: "${Email?.trim()?.length() > 0 }"
         props:
-          Email: "${Email?.trim()?.toLowerCase()}"
+          Email:
+            val: "${Email?.trim()?.toLowerCase()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location_Address
@@ -75,7 +93,12 @@ rules:
           parser:
             val: "${StreetAddress?.trim()?.toUpperCase()}, ${Neighborhood?.trim()?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}, ${Country?.Name?.toUpperCase()?:'BRASIL'}"
             type: "com.pontusvision.utils.LocationAddress"
-          Post_Code: "${com.pontusvision.utils.PostCode.format(ZipCode)}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
+          Post_Code:
+            val: "${com.pontusvision.utils.PostCode.format(ZipCode)}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
 
       - label: Event_Ingestion
         props:

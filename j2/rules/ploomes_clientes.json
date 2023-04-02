@@ -8,7 +8,8 @@
           {
             "name": "Person_Natural_Customer_ID",
             "val": "${CPF?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           },
           {
             "name": "Person_Natural_Last_Update_Date",
@@ -26,12 +27,14 @@
           {
             "name": "Person_Organisation_Registration_Number",
             "val": "${CNPJ?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           },
           {
             "name": "Person_Organisation_Id",
             "val": "${CNPJ?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           },
           {
             "name": "Person_Organisation_Last_Update_Date",
@@ -50,7 +53,8 @@
           {
             "name": "Object_Identity_Card_Id_Value",
             "val": "${CPF?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           },
           {
             "name": "Object_Identity_Card_Id_Type",
@@ -68,7 +72,8 @@
           {
             "name": "Object_Identity_Card_Id_Value",
             "val": "${CNPJ?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           },
           {
             "name": "Object_Identity_Card_Id_Type",
@@ -85,7 +90,8 @@
           {
             "name": "Object_Email_Address_Email",
             "val": "${Email?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },
@@ -102,12 +108,14 @@
             "name": "Location_Address_parser",
             "val": "${StreetAddress?.trim()?.toUpperCase()}, ${Neighborhood?.trim()?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}, ${Country?.Name?.toUpperCase()?:'BRASIL'}",
             "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
+            "type": "com.pontusvision.utils.LocationAddress",
+            "excludeFromUpdate": true
           },
           {
             "name": "Location_Address_Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(ZipCode)}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },

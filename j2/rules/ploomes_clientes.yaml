@@ -8,6 +8,7 @@ updatereq:
         - name: Person_Natural_Customer_ID
           val: ${CPF?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Person_Natural_Last_Update_Date
           val: ${LastUpdateDate}
           mandatoryInSearch: False
@@ -20,9 +21,11 @@ updatereq:
         - name: Person_Organisation_Registration_Number
           val: ${CNPJ?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Person_Organisation_Id
           val: ${CNPJ?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Person_Organisation_Last_Update_Date
           val: ${LastUpdateDate}
           mandatoryInSearch: False
@@ -36,6 +39,7 @@ updatereq:
         - name: Object_Identity_Card_Id_Value
           val: ${CPF?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Object_Identity_Card_Id_Type
           val: CPF
           mandatoryInSearch: False
@@ -48,6 +52,7 @@ updatereq:
         - name: Object_Identity_Card_Id_Value
           val: ${CNPJ?.replaceAll('[^0-9]', '')}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Object_Identity_Card_Id_Type
           val: CNPJ
           mandatoryInSearch: False
@@ -59,6 +64,7 @@ updatereq:
         - name: Object_Email_Address_Email
           val: ${Email?.trim()?.toLowerCase()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
     
     - label: Location_Address
       props:
@@ -70,9 +76,11 @@ updatereq:
           val: ${StreetAddress?.trim()?.toUpperCase()}, ${Neighborhood?.trim()?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}, ${Country?.Name?.toUpperCase()?:'BRASIL'}
           mandatoryInSearch: True
           type: "com.pontusvision.utils.LocationAddress"
+          excludeFromUpdate: True
         - name: Location_Address_Post_Code
           val: ${com.pontusvision.utils.PostCode.format(ZipCode)}
           mandatoryInSearch: True
+          excludeFromUpdate: True
     
     - label: Event_Ingestion
       props:
