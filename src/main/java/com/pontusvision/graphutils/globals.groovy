@@ -33,11 +33,8 @@ import java.time.format.DateTimeFormatter
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Pattern
 
-import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.both
+
 import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.bothV
-import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.inE
-import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.inV
-import static org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__.out
 
 class ODBSchemaManager {
   static def loadSchema(OrientStandardGraph graph, String... files) {
