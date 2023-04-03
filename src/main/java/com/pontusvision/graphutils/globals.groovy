@@ -582,7 +582,7 @@ class PontusJ2ReportingFunctions {
 
 //    String queryStrLIABreachJustification = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification.length()` > 0"
     static int liaScoreBreachJustification(String lia_id){
-      return (App.g.V(new ORecordId(lia_id)).elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification")?.toString()?.length() > 0)?120:5
+      return (App.g.V(new ORecordId(lia_id)).elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification")?.toString()?.length() > 0) ? 120 : 5
     }
 
 //    String queryStrRopaSensitiveData = "SELECT COUNT (*) FROM `Object_Data_Procedures` WHERE `out('Has_Sensitive_Data').size()` > 0"
@@ -608,16 +608,16 @@ class PontusJ2ReportingFunctions {
       return (App.g.V(new ORecordId(lia_id)).elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person")?.toString() == 'true') ? 5 : 20
     }
 
-    static int liaScoreRipdAuthorityNotified(String lia_id){
-      // could have many (array of RIPDs) ... get to filter it!
-      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
-      return (lia?.get(both("Has_Legitimate_Interests_Assessment")?.out("Has_Data_Source")?.in("Impacted_By_Data_Breach")?.getAt("Event_Data_Breach_Authority_Notified"))?.toString() == "true")?5:20
-
-//      getRiskLevelColour
-//      getRisksForDataProcess
-//      getRiskMitigationsForRiskAsHTMLTable
-
-    }
+//    static int liaScoreRipdAuthorityNotified(String lia_id){
+//      // could have many (array of RIPDs) ... get to filter it!
+//      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
+//      return (lia?.get(both("Has_Legitimate_Interests_Assessment")?.out("Has_Data_Source")?.in("Impacted_By_Data_Breach")?.getAt("Event_Data_Breach_Authority_Notified"))?.toString() == "true")?5:20
+//
+////      getRiskLevelColour
+////      getRisksForDataProcess
+////      getRiskMitigationsForRiskAsHTMLTable
+//
+//    }
 
 //      }
 
@@ -1421,8 +1421,8 @@ class PontusJ2ReportingFunctions {
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaScoreDataOrigin",
             PontusJ2ReportingFunctions.class, "liaScoreDataOrigin", String.class))
 
-    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaScoreRipdAuthorityNotified",
-            PontusJ2ReportingFunctions.class, "liaScoreRipdAuthorityNotified", String.class))
+//    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaScoreRipdAuthorityNotified",
+//            PontusJ2ReportingFunctions.class, "liaScoreRipdAuthorityNotified", String.class))
 
   }
 }

@@ -156,27 +156,33 @@ public class PVJinJavaTests extends AppTest {
 
       int liaEthicsScore = PontusJ2ReportingFunctions.liaScoreEthics(liaRid);
       assertEquals(120, liaEthicsScore);
+      // Object_Legitimate_Interests_Assessment_Ethical_Impact is not empty = "ética"
 
       PontusJ2ReportingFunctions.liaScoreContractHasMinors(liaRid);
 
       int liaStrategicImpactScore = PontusJ2ReportingFunctions.liaScoreStrategicImpact(liaRid);
       assertEquals(5, liaStrategicImpactScore);
+      // Object_Legitimate_Interests_Assessment_Strategic_Impact is not empty = "atender lei LGPD"
 
       int liaScoreEssential = PontusJ2ReportingFunctions.liaScoreEssential(liaRid);
       assertEquals(120, liaScoreEssential);
+      // Object_Legitimate_Interests_Assessment_Is_Essential = true
 
       int liaBreachJustification = PontusJ2ReportingFunctions.liaScoreBreachJustification(liaRid);
       assertEquals(120, liaBreachJustification);
+      // Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification is not empty = "liberdade de imprensa"
 
       int ropaSensitiveData = PontusJ2ReportingFunctions.liaScoreRopaSensitiveData(liaRid);
-      assertEquals(5, ropaSensitiveData);
+      assertEquals(120, ropaSensitiveData);
+      // Webiny RoPA attached has Object_Sensitive_Data
 
       PontusJ2ReportingFunctions.liaScoreRopaTypePerson(liaRid);
 
       int liaDataOrigin = PontusJ2ReportingFunctions.liaScoreDataOrigin(liaRid);
       assertEquals(5, liaDataOrigin);
+      // Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person = true
 
-      PontusJ2ReportingFunctions.liaScoreRipdAuthorityNotified(liaRid);
+//      PontusJ2ReportingFunctions.liaScoreRipdAuthorityNotified(liaRid);
 
     } catch (Exception e) {
       e.printStackTrace();
