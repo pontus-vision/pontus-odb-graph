@@ -54,6 +54,8 @@ public class PVMD2ScoreTests extends AppTest {
 //
 //      assertEquals(54L, score);
 
+      // insert liaScore ...
+
 
     } catch (Exception e) {
       e.printStackTrace();
