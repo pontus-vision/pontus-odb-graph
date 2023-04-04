@@ -564,22 +564,26 @@ class PontusJ2ReportingFunctions {
 
 //    String queryStrLIAStrategy = "SELECT * FROM :pg_id WHERE `Object_Legitimate_Interests_Assessment_Strategic_Impact.length()` > 0"
     static int liaScoreStrategicImpact(String lia_id){
-      return (App.g.V(new ORecordId(lia_id)).elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Strategic_Impact")?.toString()?.length() > 0) ? 5 : 10
+      try{
+        return (App.g.V(new ORecordId(lia_id))?.elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Strategic_Impact")?.toString()?.length() > 0) ? 5 : 10
+      }catch (Throwable t){
+        t.toString()
+      }
     }
 
 //    String queryStrLIAEthics = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Ethical_Impact.length()` > 0"
     static int liaScoreEthics(String lia_id){
-      return (App.g.V(new ORecordId(lia_id)).elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Ethical_Impact")?.toString()?.length() > 0 ) ? 120 : 5
+      return (App.g.V(new ORecordId(lia_id))?.elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Ethical_Impact")?.toString()?.length() > 0 ) ? 120 : 5
     }
 
 //    String liaScoreEssential = "SELECT COUNT(*) FROM `Object_Legitimate _Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Is_Essential` = true"
     static int liaScoreEssential(String lia_id){
-      return (App.g.V(new ORecordId(lia_id)).elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Is_Essential")?.toString() == 'true') ? 120 : 5
+      return (App.g.V(new ORecordId(lia_id))?.elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Is_Essential")?.toString() == 'true') ? 120 : 5
     }
 
 //    String queryStrLIABreachJustification = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification.length()` > 0"
     static int liaScoreBreachJustification(String lia_id){
-      return (App.g.V(new ORecordId(lia_id)).elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification")?.toString()?.length() > 0) ? 120 : 5
+      return (App.g.V(new ORecordId(lia_id))?.elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification")?.toString()?.length() > 0) ? 120 : 5
     }
 
 //    String queryStrRopaSensitiveData = "SELECT COUNT (*) FROM `Object_Data_Procedures` WHERE `out('Has_Sensitive_Data').size()` > 0"
@@ -602,7 +606,7 @@ class PontusJ2ReportingFunctions {
     }
 //    String queryStrLIADataOrigin = "SELECT COUNT(*) FROM `Object_Legitimate_Interests_Assessment` WHERE `Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person` = true"
     static int liaScoreDataOrigin(String lia_id){
-      return (App.g.V(new ORecordId(lia_id)).elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person")?.toString() == 'true') ? 5 : 20
+      return (App.g.V(new ORecordId(lia_id))?.elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person")?.toString() == 'true') ? 5 : 20
     }
 
 //    static int liaScoreRipdAuthorityNotified(String lia_id){
