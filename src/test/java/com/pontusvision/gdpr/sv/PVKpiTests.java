@@ -45,7 +45,7 @@ public class PVKpiTests extends AppTest {
 //    fixed @ 1667569252000L = 2022-11-04T13:40:52Z [Friday, 4 November 2022 13:40:52] for testing purposes
       String expectedOutput = (String) getDataRetentionKpis(true);
 
-//    metricvalues decreased because nulls where removed !q
+//    metricvalues decreased because nulls where removed !
       assertTrue(expectedOutput.contains("{ \"metricname\": \"6 Months\", \"metricvalue\": 26, \"metrictype\": \"Data Retention\" }"));
       assertTrue(expectedOutput.contains("{ \"metricname\": \"1 Year\", \"metricvalue\": 23, \"metrictype\": \"Data Retention\" }"));
       assertTrue(expectedOutput.contains("{ \"metricname\": \"2 years\", \"metricvalue\": 6, \"metrictype\": \"Data Retention\" }"));
