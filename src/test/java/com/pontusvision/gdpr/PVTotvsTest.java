@@ -76,7 +76,7 @@ public class PVTotvsTest extends AppTest {
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').in('Has_Ingestion_Event')" +
                       ".has('Metadata_Type_Person_Organisation', eq('Person_Organisation')).dedup()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("4", totvsPersonOrgCount, "Count for Person_Organisation Vertices from Data_Source TOTVS_SA1_CLIENTES");
+      assertEquals("5", totvsPersonOrgCount, "Count for Person_Organisation Vertices from Data_Source TOTVS_SA1_CLIENTES");
       // now including International companies
 
       // Test Person_Natural_Last_Update_Date Matheus Rocha

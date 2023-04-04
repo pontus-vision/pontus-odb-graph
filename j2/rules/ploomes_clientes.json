@@ -6,10 +6,16 @@
         "condition": "${TypeId == 2 && LegalName != null}",
         "props": [
           {
+            "name": "Person_Natural_Full_Name",
+            "val": "${(Name?.trim()?.length() > 0)?Name?.trim()?.toUpperCase():LegalName?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true,
+            "excludeFromUpdate": true
+          },
+          {
             "name": "Person_Natural_Customer_ID",
             "val": "${CPF?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Natural_Last_Update_Date",
@@ -27,14 +33,19 @@
           {
             "name": "Person_Organisation_Registration_Number",
             "val": "${CNPJ?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true,
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Name",
+            "val": "${(LegalName?.trim()?.length() > 0)?LegalName?.trim()?.toUpperCase():Name?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true,
             "excludeFromUpdate": true
           },
           {
             "name": "Person_Organisation_Id",
             "val": "${CNPJ?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Person_Organisation_Last_Update_Date",
@@ -53,8 +64,7 @@
           {
             "name": "Object_Identity_Card_Id_Value",
             "val": "${CPF?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Object_Identity_Card_Id_Type",
@@ -72,8 +82,7 @@
           {
             "name": "Object_Identity_Card_Id_Value",
             "val": "${CNPJ?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           },
           {
             "name": "Object_Identity_Card_Id_Type",
@@ -90,8 +99,7 @@
           {
             "name": "Object_Email_Address_Email",
             "val": "${Email?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           }
         ]
       },
@@ -108,14 +116,12 @@
             "name": "Location_Address_parser",
             "val": "${StreetAddress?.trim()?.toUpperCase()}, ${Neighborhood?.trim()?.toUpperCase()}, ${City?.Name?.toUpperCase()} - ${State?.Short?.toUpperCase()}, ${ZipCode}, ${Country?.Name?.toUpperCase()?:'BRASIL'}",
             "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress",
-            "excludeFromUpdate": true
+            "type": "com.pontusvision.utils.LocationAddress"
           },
           {
             "name": "Location_Address_Post_Code",
             "val": "${com.pontusvision.utils.PostCode.format(ZipCode)}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
+            "mandatoryInSearch": true
           }
         ]
       },
