@@ -81,7 +81,7 @@ public class WebinyTest extends AppTest {
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Lawful_Basis_Justification\":\"JUSTIFICATIVA 1\""), "Justification for this process");
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Business_Area_Responsible\":\"[TI]\""), "Department responsible for this process");
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Description\":\"FINALIDADE 1\""));
-      assertTrue(replyStr.contains("\"Object_Data_Procedures_Type_Of_Natural_Person\":\"[Cliente]\""), "Type of People at this process");
+      assertTrue(replyStr.contains("\"Object_Data_Procedures_Type_Of_Natural_Person\":\"[Cliente, Webiny-Colaborador]\""), "Types of People at this process");
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Name\":\"PROCESSO 1\""));
       assertTrue(replyStr.contains("\"Object_Data_Procedures_Info_Collected\":\"[Nome Completo, CNH, Local de nascimento" +
               ", Despesas, Detalhes Pessoais, Hábitos, Caráter, Familiares ou membros da família, Nome de usuário, Clubes" +
@@ -99,6 +99,19 @@ public class WebinyTest extends AppTest {
       assertTrue(reply.getRecords()[13].contains("\"Object_Sensitive_Data_Description\":\"HISTÓRICO ESCOLAR\""));
       assertTrue(reply.getRecords()[17].contains("\"Object_Sensitive_Data_Description\":\"LOCAL DE NASCIMENTO\""));
       assertTrue(reply.getRecords()[22].contains("\"Object_Sensitive_Data_Description\":\"OUTROS DADOS 1\""));
+
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Data_Procedures_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63c6f874320a910008b4e5b5#0002\"\n" +
+                      "  }\n" +
+                      "]", "Object_Data_Procedures",
+              new String[]{"Object_Data_Procedures_Country_Where_Stored", "Object_Data_Procedures_Data_Geo_Scope"});
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Country_Where_Stored\":\"Brasil\""));
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Data_Geo_Scope\":\"Estadual\""));
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -515,6 +528,18 @@ public class WebinyTest extends AppTest {
 
       assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Customer_ID\":\"01201405628\""));
 
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Contract_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63daa413efaf5f0008f6e296#0001\"\n" +
+                      "  }\n" +
+                      "]", "Object_Contract",
+              new String[]{"Object_Contract_Country"});
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Contract_Country\":\"São Vicente e Granadinas\""));
+
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e, e.getMessage());
@@ -646,10 +671,6 @@ public class WebinyTest extends AppTest {
       assertTrue(replyStr.contains("\"Person_Natural_Type\":\"[Colaborador]\""), "Person Natural Type");
       assertTrue(replyStr.contains("\"Person_Natural_Last_Update_Date\":\"Wed Jan 25 18:22:14 UTC 2023\""), "Last Update");
 
-      reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + titularRid);
-
-      assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
-
       reply = gridWrapper(null, "Object_Identity_Card", new String[]{"Object_Identity_Card_Id_Value"}, "hasNeighbourId:" + titularRid);
 
       assertTrue(reply.getRecords()[0].contains("\"Object_Identity_Card_Id_Value\":\"01201405628\""));
@@ -668,7 +689,8 @@ public class WebinyTest extends AppTest {
   @Test
   public void test00012WebinyDSAR() throws InterruptedException {
 
-//    jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner"); assuming that titulares are already ingested when the tests run integrated
+    jsonTestUtil("webiny/webiny-mapeamento-de-processos.json", "$.data.listMapeamentoDeProcessos.data[*]", "webiny_ropa");
+    jsonTestUtil("webiny/webiny-titulares.json", "$.data.listTitulares.data[*]", "webiny_owner");
     jsonTestUtil("webiny/webiny-requisicoes.json", "$.data.listRequisicaoTitulares.data[*]", "webiny_dsar");
 
     try {
@@ -686,7 +708,7 @@ public class WebinyTest extends AppTest {
 
       String sarRid = JsonParser.parseString(replyStr).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Natural_Person_Type\":\"Colaborador\""));
+      assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Natural_Person_Type\":\"Webiny-Colaborador\""));
       assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Id\":\"admin@pontus.com\""));
       assertTrue(replyStr.contains("\"Event_Subject_Access_Request_Request_Type\":\"Update\""));
 
@@ -700,9 +722,17 @@ public class WebinyTest extends AppTest {
 
       String pjRid = JsonParser.parseString(reply.getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
 
-      reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_Role"}, "hasNeighbourId:" + pjRid);
+//      ---------------------------------------- new connection with RoPA ---------------------------------------------------
 
-      assertTrue(reply.getRecords()[0].contains("\"Person_Employee_Role\":\"MARKETING\""));
+      String sarGroupRid = JsonParser.parseString(
+              gridWrapper(null, "Event_Group_Subject_Access_Request", new String[]{"Event_Group_Subject_Access_Request_Ingestion_Date"},
+                      "hasNeighbourId:" + sarRid).getRecords()[0]).getAsJsonObject().get("id").toString().replaceAll("^\"|\"$", "");
+
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"},
+              "hasNeighbourId:" + sarGroupRid, 0L, 2L, "Object_Data_Procedures_Name", "+asc");
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"PROCESSO 1\""));
+      assertTrue(reply.getRecords()[1].contains("\"Object_Data_Procedures_Name\":\"PROCESSO 3\""));
 
     } catch (Exception e) {
       e.printStackTrace();

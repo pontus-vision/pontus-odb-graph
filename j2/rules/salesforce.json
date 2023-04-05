@@ -226,7 +226,8 @@
             "val": [
               "CRM System"
             ],
-            "mandatoryInSearch": true
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           }
         ]
       }

@@ -102,7 +102,7 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Contract_Country
-          val: ${contratosTransferenciaParaQualPais?.trim()?.toUpperCase()}
+          val: "${contratosTransferenciaParaQualPais?:'Brasil'}"
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Contract_Has_Minors_Data

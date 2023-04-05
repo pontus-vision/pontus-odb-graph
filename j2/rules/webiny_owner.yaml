@@ -21,10 +21,7 @@ updatereq:
           val: ${titularesCategoriaDoTitular}
           mandatoryInSearch: False
           excludeFromSearch: True
-    
-    - label: Person_Employee
-      props:
-        - name: Person_Employee_Role
+        - name: Person_Natural_Role
           val: ${titularesCargo?.trim()?.toUpperCase()}
           mandatoryInSearch: False
           excludeFromSearch: True
@@ -100,9 +97,6 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
     toVertexLabel: Person_Natural
-  - label: Is_Alias
-    fromVertexLabel: Person_Natural
-    toVertexLabel: Person_Employee
   - label: Uses_Email
     fromVertexLabel: Person_Natural
     toVertexLabel: Object_Email_Address

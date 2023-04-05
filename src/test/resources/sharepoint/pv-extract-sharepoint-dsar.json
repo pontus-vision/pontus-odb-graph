@@ -35,7 +35,7 @@
         "Modified": "2021-12-06T22:12:08Z",
         "Created": "2021-12-03T07:22:44Z",
         "Raz_x00e3_oSocial": "Palmitos SA",
-        "CustomerId": "88.212.098/0001-93",
+        "CustomerId": "98657875000125",
         "Solicita_x00e7__x00e3_o_x002d_Da": "18/05/2021 - 12:01",
         "Solicita_x00e7__x00e3_o_x002d_Ca": "Via e-mail",
         "Solicita_x00e7__x00e3_o_x002d_De": "Exclusão de e-mail",
@@ -53,7 +53,7 @@
             "LookupValue": "1"
           }
         ],
-        "naturalPersonType": "COLABORADOR",
+        "naturalPersonType": "SV-COLABORADOR",
         "Author": "Oxxxxxx@pontusvision.com",
         "Editor": "Oxxxxxx@pontusvision.com"
       }
@@ -114,7 +114,7 @@
             "LookupValue": "2"
           }
         ],
-        "naturalPersonType": "FORNECEDOR",
+        "naturalPersonType": "SV-COLABORADOR",
         "Author": "Oxxxxxx@pontusvision.com",
         "Editor": "Oxxxxxx@pontusvision.com"
       }

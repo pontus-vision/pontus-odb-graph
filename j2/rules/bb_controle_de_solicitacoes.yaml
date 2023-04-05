@@ -8,9 +8,11 @@ updatereq:
         - name: Person_Organisation_Name
           val: ${Razao_Social_Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Person_Organisation_Registration_Number
           val: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
     
     - label: Person_Natural
       condition: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() != 14}
@@ -18,9 +20,11 @@ updatereq:
         - name: Person_Natural_Full_Name
           val: ${Razao_Social_Nome?.trim()?.toUpperCase()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
         - name: Person_Natural_Customer_ID
           val: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
     
     - label: Object_Data_Procedures
       props:

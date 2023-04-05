@@ -8,6 +8,15 @@ updatereq:
         - name: Person_Natural_Customer_ID
           val: ${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}
           mandatoryInSearch: True
+          excludeFromUpdate: True
+    
+    - label: Object_Data_Procedures
+      props:
+        - name: Object_Data_Procedures_Type_Of_Natural_Person
+          val: ${requisicaoTitularesTipoTitular}
+          predicate: textContains
+          mandatoryInSearch: True
+          excludeFromUpdate: True
     
     - label: Object_Data_Source
       props:
@@ -47,6 +56,9 @@ updatereq:
       props:
         - name: Event_Group_Subject_Access_Request_Ingestion_Date
           val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event_Group_Subject_Access_Request_Type_Of_Natural_Person
+          val: ${requisicaoTitularesTipoTitular}
           mandatoryInSearch: True
     
     - label: Event_Ingestion
@@ -102,4 +114,7 @@ updatereq:
   - label: Made_SAR_Request
     fromVertexLabel: Person_Natural
     toVertexLabel: Event_Subject_Access_Request
+  - label: Has_DSAR
+    fromVertexLabel: Event_Group_Subject_Access_Request
+    toVertexLabel: Object_Data_Procedures
 

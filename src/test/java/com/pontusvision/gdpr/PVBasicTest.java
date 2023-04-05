@@ -497,18 +497,19 @@ public class PVBasicTest extends AppTest {
   @Test
   public void test00010PloomesClientes() throws InterruptedException {
 
+    jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
     jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
 //    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
 
     try {
       String userId =
-              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()")
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('COMIDAS 2')).next().id().toString()")
                       .get().toString();
 
       Resource res = new Resource();
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-              "App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()");
+              "App.g.V().has('Person_Natural_Full_Name',eq('COMIDAS 2')).next().id().toString()");
       JsonObject obj = JsonParser.parseString(res.gremlinQuery(fakeContainerReqContext,
               gson.toJson(gremlinReq))).getAsJsonObject();
 //      Gson gson = new Gson();

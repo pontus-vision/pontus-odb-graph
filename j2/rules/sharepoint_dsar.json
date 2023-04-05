@@ -6,21 +6,10 @@
         "condition": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}",
         "props": [
           {
-            "name": "Person_Organisation_Name",
-            "val": "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
             "name": "Person_Organisation_Registration_Number",
             "val": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Last_Update_Date",
-            "val": "${Modified}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },
@@ -29,15 +18,10 @@
         "condition": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}",
         "props": [
           {
-            "name": "Person_Natural_Full_Name",
-            "val": "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
             "name": "Person_Natural_Customer_ID",
             "val": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },
@@ -45,12 +29,11 @@
         "label": "Object_Data_Procedures",
         "props": [
           {
-            "name": "Object_Data_Procedures_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(RoPA)}",
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
+            "val": "${naturalPersonType}",
+            "predicate": "textContains",
             "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "excludeFromUpdate": true
           }
         ]
       },
@@ -130,6 +113,11 @@
           {
             "name": "Event_Group_Subject_Access_Request_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Subject_Access_Request_Type_Of_Natural_Person",
+            "val": "${naturalPersonType}",
             "mandatoryInSearch": true
           }
         ]

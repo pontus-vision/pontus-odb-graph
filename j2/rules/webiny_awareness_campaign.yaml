@@ -3,7 +3,7 @@ updatereq:
   vertices:
     
     - label: Person_Natural
-      name: approved
+      name: passed
       condition: ${treinamentosParticipantesAprovados.size() > 0}
       props:
         - name: Person_Natural_Customer_ID
@@ -46,10 +46,34 @@ updatereq:
           mandatoryInSearch: True
     
     - label: Event_Training
+      name: training_passed
+      condition: ${treinamentosParticipantesAprovados.size() > 0}
       props:
         - name: Event_Training_Form_Id
-          val: ${id}
+          val: ${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}
           mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
+        - name: Event_Training_Status
+          val: Passed
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Event_Training
+      name: training_failed
+      condition: ${treinamentosParticipantesAprovados.size() > 0}
+      props:
+        - name: Event_Training_Form_Id
+          val: ${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
+        - name: Event_Training_Status
+          val: Failed
+          mandatoryInSearch: False
+          excludeFromSearch: True
     
     - label: Event_Ingestion
       props:
@@ -97,14 +121,20 @@ updatereq:
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Event_Ingestion
-    toVertexLabel: Event_Training
+    toVertexLabel: training_passed
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: training_failed
   - label: Course_Training
-    fromVertexLabel: Event_Training
+    fromVertexName: training_passed
+    toVertexLabel: Object_Awareness_Campaign
+  - label: Course_Training
+    fromVertexName: training_failed
     toVertexLabel: Object_Awareness_Campaign
   - label: Completed_By
-    fromVertexLabel: Event_Training
-    toVertexName: approved
+    fromVertexName: training_passed
+    toVertexName: passed
   - label: Completed_By
-    fromVertexLabel: Event_Training
+    fromVertexName: training_failed
     toVertexName: failed
 

@@ -302,13 +302,13 @@ rules:
             type: java.util.Date
       #          Role: "${Departamento0}"
 
-      - label: Person_Employee
-        props:
-          Full_Name: "${Nome0?.trim()?.toUpperCase()}"
-          Last_Update_Date:
-            val: "${Modified}"
-            excludeFromSearch: true
-            type: java.util.Date
+#      - label: Person_Employee
+#        props:
+#          Full_Name: "${Nome0?.trim()?.toUpperCase()}"
+#          Last_Update_Date:
+#            val: "${Modified}"
+#            excludeFromSearch: true
+#            type: java.util.Date
       #          Role: "${Departamento0}"
 
       - label: Event_Ingestion
@@ -360,10 +360,10 @@ rules:
       - label: "Completed_By"
         fromVertexLabel: "Event_Training"
         toVertexLabel: "Person_Natural"
-
-      - label: "Completed_By"
-        fromVertexLabel: "Event_Training"
-        toVertexLabel: "Person_Employee"
+#
+#      - label: "Completed_By"
+#        fromVertexLabel: "Event_Training"
+#        toVertexLabel: "Person_Employee"
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Ingestion"
@@ -887,25 +887,26 @@ rules:
       - label: Person_Organisation
         condition: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}"
         props:
-          Name:
-            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
-            excludeFromUpdate: true
-            mandatoryInSearch: true
+#          Name:
+#            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
+#            excludeFromUpdate: true
+#            mandatoryInSearch: true
           Registration_Number:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromUpdate: true
             mandatoryInSearch: true
-          Last_Update_Date:
-            val: "${Modified}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Last_Update_Date:
+#            val: "${Modified}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Person_Natural
         condition: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
         props:
-          Full_Name:
-            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
-            excludeFromSearch: true
+#          Full_Name:
+#            val: "${Raz_x00e3_oSocial?.trim()?.toUpperCase()}"
+#            excludeFromUpdate: true
+#            mandatoryInSearch: true
           Customer_ID:
             val: "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}"
             excludeFromUpdate: true
@@ -917,11 +918,16 @@ rules:
 
       - label: Object_Data_Procedures
         props:
-          Form_Id:
-            val: "${new groovy.json.JsonBuilder(RoPA)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
+#          Form_Id:
+#            val: "${new groovy.json.JsonBuilder(RoPA)}"
+#            type: "[Lcom.pontusvision.utils.SharepointRef;"
+#            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+#            processAll: true
+          Type_Of_Natural_Person:
+            val: "${naturalPersonType}"
+            predicate: "textContains"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
 
       - label: Object_Data_Source
         props:
@@ -960,6 +966,7 @@ rules:
       - label: Event_Group_Subject_Access_Request
         props:
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Type_Of_Natural_Person: "${naturalPersonType}"
 
       - label: Event_Ingestion
         props:
@@ -1142,10 +1149,11 @@ rules:
           Form_Id: "${id}"
           Text:
             val: "${text}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
+
           Type:
             val: "${Title}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
 
       - label: Object_Data_Source
         name: sharepoint
@@ -1336,17 +1344,20 @@ rules:
             postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
             processAll: true
 
-      - label: Person_Natural
+      - label: Person_Natural # it's just a linkage/connection
         condition: "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}"
         props:
-          Customer_ID: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
+          Customer_ID:
+            val: "${identity?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
 #          Full_Name:
 #            val: "${name?.trim()?.toUpperCase()}"
 #            excludeFromUpdate: true
-          Last_Update_Date:
-            val: "${Modified}"
-            excludeFromSearch: true
-            type: java.util.Date
+#          Last_Update_Date:
+#            val: "${Modified}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Object_Data_Source
         props:

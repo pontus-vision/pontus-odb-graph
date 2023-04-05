@@ -628,17 +628,18 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Person_Natural
+      - label: Person_Natural # just a connection
         name: colaborador
         condition: "${id?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
           Id:
             val: "${id?.replaceAll('[^0-9]','')}"
             excludeFromUpdate: true # or should it be excludeFromSearch?
-          Last_Update_Date:
-            val: "${lastUpdate}"
-            excludeFromSearch: true
-            type: java.util.Date
+            mandatoryInSearch: true
+#          Last_Update_Date:
+#            val: "${lastUpdate}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Event_Ingestion
         props:
