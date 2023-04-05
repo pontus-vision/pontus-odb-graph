@@ -43,7 +43,8 @@ public class PVLiaScoreTests extends AppTest {
       assertEquals(120, liaEthicsScore);
       // Object_Legitimate_Interests_Assessment_Ethical_Impact is not empty = "ética"
 
-      PontusJ2ReportingFunctions.liaScoreContractHasMinors(liaRid);
+      int liaContractHasMinorsScore = PontusJ2ReportingFunctions.liaScoreContractHasMinors(liaRid);
+      assertEquals(120, liaContractHasMinorsScore);
 
       int liaStrategicImpactScore = PontusJ2ReportingFunctions.liaScoreStrategicImpact(liaRid);
       assertEquals(5, liaStrategicImpactScore);
@@ -68,6 +69,33 @@ public class PVLiaScoreTests extends AppTest {
       // Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person = true
 
 //      PontusJ2ReportingFunctions.liaScoreRipdAuthorityNotified(liaRid);
+
+//-------------------------------------------- Testing on NULL values -------------------------------------------------
+
+      liaRid = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Legitimate_Interests_Assessment_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"63fe448bf7f21e0008300259#0356\"\n" +
+                      "  }\n" +
+                      "]", "Object_Legitimate_Interests_Assessment",
+              new String[]{"Object_Legitimate_Interests_Assessment_Form_Id"});
+
+      liaEthicsScore = PontusJ2ReportingFunctions.liaScoreEthics(liaRid);
+      assertEquals(5, liaEthicsScore);
+
+      liaStrategicImpactScore = PontusJ2ReportingFunctions.liaScoreStrategicImpact(liaRid);
+      assertEquals(10, liaStrategicImpactScore);
+
+      liaScoreEssential = PontusJ2ReportingFunctions.liaScoreEssential(liaRid);
+      assertEquals(5, liaScoreEssential);
+
+      liaBreachJustification = PontusJ2ReportingFunctions.liaScoreBreachJustification(liaRid);
+      assertEquals(5, liaBreachJustification);
+
+      liaDataOrigin = PontusJ2ReportingFunctions.liaScoreDataOrigin(liaRid);
+      assertEquals(20, liaDataOrigin);
 
     } catch (Exception e) {
       e.printStackTrace();

@@ -15,6 +15,20 @@
           "interessesLegitimosFinalidadeQuantidadeMenorDeDados": true,
           "interessesLegitimosViolacaoDeTratamentoDeDadosPessoais": "liberdade de imprensa",
           "interessesLegitimosDadosDiretosDoTitular": true
+        },
+        {
+          "id": "63fe448bf7f21e0008300259#0356",
+          "createdOn": "2023-02-28T18:14:35.671Z",
+          "savedOn": "2023-02-28T18:14:37.628Z",
+          "interessesLegitimosReferencia": null,
+          "interessesLegitimosRefMapeamentoDeProcesssos": {
+            "id": "63c6f874320a910008b4e5b5#0002"
+          },
+          "interessesLegitimosObjetivoEstrategico": null,
+          "interessesLegitimosAspectoAntietico": null,
+          "interessesLegitimosFinalidadeQuantidadeMenorDeDados": null,
+          "interessesLegitimosViolacaoDeTratamentoDeDadosPessoais": null,
+          "interessesLegitimosDadosDiretosDoTitular": null
         }
       ]
     }

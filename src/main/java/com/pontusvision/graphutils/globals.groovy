@@ -576,7 +576,7 @@ class PontusJ2ReportingFunctions {
       try {
         return (App.g.V(new ORecordId(lia_id))?.elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Ethical_Impact")?.toString()?.length() > 0 ) ? 120 : 5
       } catch (Throwable t) {
-        return 120
+        return 5
       }
     }
 
@@ -585,7 +585,7 @@ class PontusJ2ReportingFunctions {
       try {
         return (App.g.V(new ORecordId(lia_id))?.elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Is_Essential")?.toString() == 'true') ? 120 : 5
       } catch (Throwable t) {
-        return 120
+        return 5
       }
     }
 
@@ -594,7 +594,7 @@ class PontusJ2ReportingFunctions {
       try {
         return (App.g.V(new ORecordId(lia_id))?.elementMap()[0]?.get("Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification")?.toString()?.length() > 0) ? 120 : 5
       } catch (Throwable t) {
-        return 120
+        return 5
       }
     }
 
@@ -605,7 +605,7 @@ class PontusJ2ReportingFunctions {
       try {
         return (App.g.V(new ORecordId(lia_id))?.in("Has_Legitimate_Interests_Assessment")?.out("Has_Sensitive_Data")?.count()?.next()) > 0 ? 120 : 5
       } catch (Throwable t) {
-        return 120
+        return 5
       }
     }
 
@@ -615,7 +615,7 @@ class PontusJ2ReportingFunctions {
       try {
         return App.g.V(new ORecordId(lia_id))?.in("Has_Legitimate_Interests_Assessment")?.in("Has_Contract")?.elementMap("Object_Contract_Has_Minors_Data")?.next()?.toString()?.contains("true") ? 120 : 5
       } catch (Throwable t) {
-        return 120
+        return 5
       }
     }
 
