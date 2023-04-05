@@ -420,6 +420,9 @@ propertyKeys:
   - name: Event_Group_Subject_Access_Request_Ingestion_Date
     dataType: String
     cardinality: SINGLE
+  - name: Event_Group_Subject_Access_Request_Type_Of_Natural_Person
+    dataType: String
+    cardinality: SINGLE
   - name: Metadata_Type_Event_Ingestion
     dataType: String
     cardinality: SINGLE
@@ -2393,6 +2396,9 @@ propertyKeys:
   - name: Person_Natural_Religion
     dataType: String
     cardinality: SINGLE
+  - name: Person_Natural_Role
+    dataType: String
+    cardinality: SINGLE
   - name: Person_Natural_Title
     dataType: String
     cardinality: SINGLE
@@ -3241,6 +3247,7 @@ vertexIndexes:
     propertyKeys:
       - Metadata_Type_Event_Group_Subject_Access_Request
       - Event_Group_Subject_Access_Request_Ingestion_Date
+      - Event_Group_Subject_Access_Request_Type_Of_Natural_Person
     propertyKeysMappings:
     
       {}
@@ -4353,6 +4360,7 @@ vertexIndexes:
       - Person_Natural_Nationality
       - Person_Natural_Place_Of_Birth
       - Person_Natural_Religion
+      - Person_Natural_Role
       - Person_Natural_Title
       - Person_Natural_Type
     propertyKeysMappings:

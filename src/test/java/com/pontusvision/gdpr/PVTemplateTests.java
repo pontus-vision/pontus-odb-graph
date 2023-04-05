@@ -566,9 +566,8 @@ public class PVTemplateTests extends AppTest {
               "GESTÃO DE ACESSO (RECEPÇÃO)-RG, Nome\n" +
               "GESTÃO DE CURRÍCULOS-Endereço, Nome Completo, Data de Nascimento, Estado Civil, E-mail\n" +
               "GESTÃO DE LEADS - SITE-E-mail, Nome Completo, Telefone, Ocupação, Estado Civil\n" +
-              "Gestão de Rede de Distribuidores-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
-              "Gestão de ferramenta gerencial (PowerBI)-Nome, CPF, RG, Endereço, E-mail, Ocupação\n" +
-              "HOMOLOGAÇÃO DE FORNECEDORES-Nome, CPF, RG, Telefone, Endereço, E-mail, Responsáveis Legais da Empresa Fornecedora\n";
+              "HOMOLOGAÇÃO DE FORNECEDORES-Nome, CPF, RG, Telefone, Endereço, E-mail, Responsáveis Legais da Empresa Fornecedora\n" +
+              "Prontuário do colaborador-Nome Completo, Data de Nascimento, Local de Nascimento, Estado Civil, RG, CPF, Comprovante de Residência, Certificado de Escolaridade, PIS, Certidão de Casamento, Certidão de Nascimento, Dados Bancários\n";
       assertEquals(sortLines(expectedReport), sortLines(report), "Expecting ROPA to have a Lawful Basis");
 
 
@@ -634,7 +633,7 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      String expectedReport = "People: 4\nData Sources: 2\nServers: 2\n";
+      String expectedReport = "People: 13\nData Sources: 2\nServers: 2\n";
       assertEquals(expectedReport, report, "Data Breache's statistics/numbers");
 
       req.setReportTextBase64(
@@ -733,16 +732,34 @@ public class PVTemplateTests extends AppTest {
               "<h2> Lista de Titulares impactados </h2>\n" +
               "<table style='margin: 5px'><tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><th style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>Nome</th></tr>\n" +
               "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>PETRUS PAPASTATHOPOULOS</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>LARA CROFT</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>COMIDAS 2</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>LAKSHMI</td></tr>\n" +
+              "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>COMIDAS 1</td></tr>\n" +
               "    \n" +
-              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>JONAS LEO BATISTA</td></tr>\n" +
-              "    \n" +
-              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MATHEUS ROCHA</td></tr>\n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>JANOS GÁBOR</td></tr>\n" +
               "    \n" +
               "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>GLÓRIA KRACKOVSZI</td></tr>\n" +
               "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>KARLA GIULIA</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>JONAS LEO BATISTA</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MODIFIED</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>BOB NAKAMURA</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>ZIAD SILVA</td></tr>\n" +
+              "    \n" +
+              "    <tr style='border: 1px solid #dddddd;text-align: left;padding: 8px;'><td style='border: 1px solid #dddddd;text-align: left;padding: 8px;'>MATHEUS ROCHA</td></tr>\n" +
+              "    \n" +
               "</table>\n";
-      assertEquals(expectedReport, report, "Lista de Titulares Impactados' HTML Table");
+      assertEquals(sortLines(expectedReport), sortLines(report), "Lista de Titulares Impactados' HTML Table");
 
     } catch (Exception e) {
       e.printStackTrace();

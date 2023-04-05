@@ -45,12 +45,13 @@ public class PVKpiTests extends AppTest {
 //    fixed @ 1667569252000L = 2022-11-04T13:40:52Z [Friday, 4 November 2022 13:40:52] for testing purposes
       String expectedOutput = (String) getDataRetentionKpis(true);
 
-      assertTrue(expectedOutput.contains("{ \"metricname\": \"6 Months\", \"metricvalue\": 30, \"metrictype\": \"Data Retention\" }"));
-      assertTrue(expectedOutput.contains("{ \"metricname\": \"1 Year\", \"metricvalue\": 25, \"metrictype\": \"Data Retention\" }"));
-      assertTrue(expectedOutput.contains("{ \"metricname\": \"2 years\", \"metricvalue\": 8, \"metrictype\": \"Data Retention\" }"));
-      assertTrue(expectedOutput.contains("{ \"metricname\": \"3 years\", \"metricvalue\": 7, \"metrictype\": \"Data Retention\" }"));
-      assertTrue(expectedOutput.contains("{ \"metricname\": \"5 years\", \"metricvalue\": 7, \"metrictype\": \"Data Retention\" }"));
-      assertTrue(expectedOutput.contains("{ \"metricname\": \"7 years\", \"metricvalue\": 3, \"metrictype\": \"Data Retention\" }"));
+//    metricvalues decreased because nulls where removed !
+      assertTrue(expectedOutput.contains("{ \"metricname\": \"6 Months\", \"metricvalue\": 26, \"metrictype\": \"Data Retention\" }"));
+      assertTrue(expectedOutput.contains("{ \"metricname\": \"1 Year\", \"metricvalue\": 23, \"metrictype\": \"Data Retention\" }"));
+      assertTrue(expectedOutput.contains("{ \"metricname\": \"2 years\", \"metricvalue\": 6, \"metrictype\": \"Data Retention\" }"));
+      assertTrue(expectedOutput.contains("{ \"metricname\": \"3 years\", \"metricvalue\": 5, \"metrictype\": \"Data Retention\" }"));
+      assertTrue(expectedOutput.contains("{ \"metricname\": \"5 years\", \"metricvalue\": 5, \"metrictype\": \"Data Retention\" }"));
+      assertTrue(expectedOutput.contains("{ \"metricname\": \"7 years\", \"metricvalue\": 2, \"metrictype\": \"Data Retention\" }"));
 
     } catch (Exception e) {
       e.printStackTrace();

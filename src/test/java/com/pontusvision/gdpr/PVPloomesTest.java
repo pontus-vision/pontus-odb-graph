@@ -52,7 +52,7 @@ public class PVPloomesTest extends AppTest {
       // test Person_Organisation_Last_Update_Date for Pessoa Nova5
         String getPersonOrganisationLastUpdateDate =
                 App.executor.eval("App.g.V().has('Event_Ingestion_Type', eq('ploomes/clientes'))" +
-                        ".in('Has_Ingestion_Event').has('Person_Organisation_Name', eq('PESSOA NOVA5'))" +
+                        ".in('Has_Ingestion_Event').has('Person_Organisation_Id', eq('41232123000189'))" +
                         ".properties('Person_Organisation_Last_Update_Date').value().next().toString()").get().toString();
         assertEquals(dtfmt.parse("Sat May 29 11:47:46 UTC 2021"), dtfmt.parse(getPersonOrganisationLastUpdateDate),
                 "A data de atualização de Pessoa Nova5 é Sat May 29 11:47:46 UTC 2021");

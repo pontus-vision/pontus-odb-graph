@@ -63,9 +63,9 @@ public class PVTotvsTest extends AppTest {
                       ".out('Has_Ingestion_Event').has('Event_Ingestion_Type', eq('totvs/protheus/sa1_clientes'))" +
                       ".in('Has_Ingestion_Event').has('Metadata_Type_Person_Natural', eq('Person_Natural')).dedup()" +
                       ".count().next().toString()").get().toString();
-      assertEquals("4", totvsPersonNaturalCount,
-              "Count for Person_Natural Vertices from Data_Source TOTVS/PROTHEUS/SA1_CLIENTES, 2 Person_Natural" +
-                      "come from totvs-sa1.json and 2 from totvs-sa1-real.json");
+      assertEquals("13", totvsPersonNaturalCount,
+              "COMIDAS 1, COMIDAS 2, JONAS LEO BATISTA, KARLA GIULIA, BOB NAKAMURA, ZIAD SILVA, LARA CROFT," +
+                      "PETRUS PAPASTATHOPOULOS, JANOS GÁBOR, LAKSHMI, MODIFIED, MATHEUS ROCHA and GLÓRIA KRACKOVSZI");
 
       String totvsPersonOrgCount =
               App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('85647243000154'))" +
@@ -77,6 +77,7 @@ public class PVTotvsTest extends AppTest {
                       ".has('Metadata_Type_Person_Organisation', eq('Person_Organisation')).dedup()" +
                       ".count().next().toString()").get().toString();
       assertEquals("5", totvsPersonOrgCount, "Count for Person_Organisation Vertices from Data_Source TOTVS_SA1_CLIENTES");
+      // now including International companies
 
       // Test Person_Natural_Last_Update_Date Matheus Rocha
       String matheusRochaLastUpdateDate =

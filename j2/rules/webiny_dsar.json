@@ -8,7 +8,20 @@
           {
             "name": "Person_Natural_Customer_ID",
             "val": "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Procedures",
+        "props": [
+          {
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
+            "val": "${requisicaoTitularesTipoTitular}",
+            "predicate": "textContains",
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },
@@ -70,6 +83,11 @@
           {
             "name": "Event_Group_Subject_Access_Request_Ingestion_Date",
             "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Subject_Access_Request_Type_Of_Natural_Person",
+            "val": "${requisicaoTitularesTipoTitular}",
             "mandatoryInSearch": true
           }
         ]
@@ -157,6 +175,11 @@
         "label": "Made_SAR_Request",
         "fromVertexLabel": "Person_Natural",
         "toVertexLabel": "Event_Subject_Access_Request"
+      },
+      {
+        "label": "Has_DSAR",
+        "fromVertexLabel": "Event_Group_Subject_Access_Request",
+        "toVertexLabel": "Object_Data_Procedures"
       }
     ]
   }

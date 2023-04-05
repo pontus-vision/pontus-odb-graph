@@ -129,9 +129,12 @@ rules:
 #          Secondary_Purpose_Of_Collection:
 #            val: "${}"
 #            excludeFromSearch: true
-#          Country_Where_Stored:
-#            val: "${}"
-#            excludeFromSearch: true
+          Country_Where_Stored:
+            val: "\"${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoPaisOndeAsPessoasEstaoLocalizadas?:'Brasil'}\""
+            excludeFromSearch: true
+          Data_Geo_Scope:
+            val: "${mapeamentoDeProcessosLocalizacao?.mapeamentoDeProcessosLocalizacaoAbrangenciaGeograficaDoTratamento}"
+            excludeFromSearch: true
 #          Participants:
 #            vals: "${}"
 #            excludeFromSearch: true
@@ -159,6 +162,9 @@ rules:
           Lawful_Basis_Justification:
             val: "${mapeamentoDeProcessosJustificativaDaBaseLegal?.trim()?.toUpperCase()}"
             excludeFromSearch: true
+#          Status:
+#            val: "${mapeamentoDeProcessosStatus}"
+#            excludeFromSearch: true
 
       - label: Person_Natural
         name: responsible
@@ -1581,7 +1587,7 @@ rules:
             val: "${contratosTransferenciaInternacionalDeDados?.transferenciasInternacionaisInciso}"
             excludeFromSearch: true
           Country:
-            val: "${contratosTransferenciaParaQualPais?.trim()?.toUpperCase()}"
+            val: "\"${contratosTransferenciaParaQualPais?:'Brasil'}\""
             excludeFromSearch: true
           Has_Minors_Data:
 #           or simply ${contratosDadosdeCriancasEAdolescentes}
@@ -1795,10 +1801,10 @@ rules:
       - label: Location_Address
         props:
           Full_Address:
-            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade,(organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf==null)?'SP':((organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'':organizacoesEnderecoObj?.organizacoesEnderecoObjUf), (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
             excludeFromSearch: true
           parser:
-            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf!='Exterior')?organizacoesEnderecoObj?.organizacoesEnderecoObjUf:'', (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
+            val: "${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf==null)?'SP':((organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'':organizacoesEnderecoObj?.organizacoesEnderecoObjUf), (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
             type: "com.pontusvision.utils.LocationAddress"
           Post_Code: "${com.pontusvision.utils.PostCode.format(organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}"
 
@@ -1902,7 +1908,7 @@ rules:
 
       - label: Person_Natural
         condition: "${treinamentosParticipantesAprovados.size() > 0}"
-        name: approved
+        name: passed
         props:
           Customer_ID:
             val: "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}"
@@ -1935,12 +1941,31 @@ rules:
         props:
           Name: "WEBINY/TREINAMENTOS"
 
-      - label: Event_Training               # TODO: VERIFICAR COM LEO SE ELIMINAREMOS
+      - label: Event_Training
+        condition: "${treinamentosParticipantesAprovados.size() > 0}"
+        name: training_passed
         props:
-          Form_Id: "${id}"
-#          Status:
-#            val: "${status}"
-#            excludeFromSearch: true
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+            processAll: true
+          Status:
+            val: "Passed"
+            excludeFromSearch: true
+
+      - label: Event_Training
+        condition: "${treinamentosParticipantesAprovados.size() > 0}"
+        name: training_failed
+        props:
+          Form_Id:
+            val: "${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}"
+            type: "[Lcom.pontusvision.utils.WebinyRef;"
+            postProcessor: "${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}"
+            processAll: true
+          Status:
+            val: "Failed"
+            excludeFromSearch: true
 
       - label: Event_Ingestion
         props:
@@ -1979,18 +2004,26 @@ rules:
 
       - label: "Has_Ingestion_Event"
         fromVertexLabel: "Event_Ingestion"
-        toVertexLabel: "Event_Training"
+        toVertexLabel: "training_passed"
+
+      - label: "Has_Ingestion_Event"
+        fromVertexLabel: "Event_Ingestion"
+        toVertexLabel: "training_failed"
 
       - label: "Course_Training"
-        fromVertexLabel: "Event_Training"
+        fromVertexName: "training_passed"
+        toVertexLabel: "Object_Awareness_Campaign"
+
+      - label: "Course_Training"
+        fromVertexName: "training_failed"
         toVertexLabel: "Object_Awareness_Campaign"
 
       - label: "Completed_By"
-        fromVertexLabel: "Event_Training"
-        toVertexName: "approved"
+        fromVertexName: "training_passed"
+        toVertexName: "passed"
 
       - label: "Completed_By"
-        fromVertexLabel: "Event_Training"
+        fromVertexName: "training_failed"
         toVertexName: "failed"
 
   webiny_owner:
@@ -2027,9 +2060,6 @@ rules:
           Type:
             val: "${titularesCategoriaDoTitular}"
             excludeFromSearch: true
-
-      - label: Person_Employee
-        props:
           Role:
             val: "${titularesCargo?.trim()?.toUpperCase()}"
             excludeFromSearch: true
@@ -2090,10 +2120,6 @@ rules:
           fromVertexLabel: "Event_Ingestion"
           toVertexLabel: "Person_Natural"
 
-        - label: Is_Alias
-          fromVertexLabel: "Person_Natural"
-          toVertexLabel: "Person_Employee"
-
         - label: Uses_Email
           fromVertexLabel: "Person_Natural"
           toVertexLabel: "Object_Email_Address"
@@ -2132,16 +2158,18 @@ rules:
 #          Full_Name:
 #            val: "${requisicaoTitularesNome?.trim()?.toUpperCase()}"
 #            excludeFromSearch: true
-          Customer_ID: "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}"
+          Customer_ID:
+            val: "${requisicaoTitularesCpf?.replaceAll('[^0-9]', '')?.trim()}"
+            excludeFromUpdate: true
+            mandatoryInSearch: true
 
   #      TODO: Check with Leo if this link with RoPA is necessary.
-  #      - label: Object_Data_Procedures
-  #        props:
-  #          Form_Id:
-  #            val: "${new groovy.json.JsonBuilder(RoPA)}"
-  #            type: "[Lcom.pontusvision.utils.SharepointRef;"
-  #            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-  #            processAll: true
+      - label: Object_Data_Procedures
+        props:
+          Type_Of_Natural_Person:
+            val: "${requisicaoTitularesTipoTitular}"
+            predicate: "textContains" #TODO: TRY THIS
+            excludeFromUpdate: true
 
       - label: Object_Data_Source
         props:
@@ -2180,6 +2208,7 @@ rules:
       - label: Event_Group_Subject_Access_Request
         props:
           Ingestion_Date: "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}"
+          Type_Of_Natural_Person: "${requisicaoTitularesTipoTitular}"
 
       - label: Event_Ingestion
         props:
@@ -2229,9 +2258,9 @@ rules:
         fromVertexLabel: "Person_Natural"
         toVertexLabel: "Event_Subject_Access_Request"
 
-  #      - label: Has_DSAR
-  #        fromVertexLabel: "Event_Group_Subject_Access_Request"
-  #        toVertexLabel: "Object_Data_Procedures"
+      - label: Has_DSAR
+        fromVertexLabel: "Event_Group_Subject_Access_Request"
+        toVertexLabel: "Object_Data_Procedures"
 
   webiny_data_breaches:
 
