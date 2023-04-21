@@ -1,0 +1,26 @@
+{
+  "data": {
+    "listComunicacoesPpds": {
+      "data": [
+        {
+          "id": "63cac3f1b788960008872ee4#0001",
+          "createdOn": "2023-01-20T16:40:17.349Z",
+          "savedOn": "2023-01-20T16:40:18.747Z",
+          "comunicacoesPpdReferencia": "comunicação 2",
+          "comunicacoesPpdData": "2022-07-12",
+          "comunicacoesPpdDescricao": "Reunião com DPO",
+          "comunicacoesPpdLocalDeCompartilhamento": "auditorio 22"
+        },
+        {
+          "id": "63cac3ccb788960008872ee3#0001",
+          "createdOn": "2023-01-20T16:39:40.228Z",
+          "savedOn": "2023-01-20T16:39:42.286Z",
+          "comunicacoesPpdReferencia": "comunicação 1",
+          "comunicacoesPpdData": "2020-10-09",
+          "comunicacoesPpdDescricao": "palestra introdução LGPD",
+          "comunicacoesPpdLocalDeCompartilhamento": "auditorio 209"
+        }
+      ]
+    }
+  }
+}

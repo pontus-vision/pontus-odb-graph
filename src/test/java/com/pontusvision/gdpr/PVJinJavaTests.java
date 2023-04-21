@@ -1,19 +1,10 @@
 package com.pontusvision.gdpr;
 
-import com.pontusvision.gdpr.report.ReportTemplateRenderRequest;
-import com.pontusvision.gdpr.report.ReportTemplateRenderResponse;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertRequest;
-import com.pontusvision.gdpr.report.ReportTemplateUpsertResponse;
-import com.pontusvision.graphutils.PVConvMixin;
 import com.pontusvision.graphutils.PontusJ2ReportingFunctions;
-import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
-
-import java.util.Base64;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -851,10 +851,11 @@ rules:
             excludeFromSearch: true
           Text:
             val: "${Texto}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
+
           Type:
             val: "${Tipo_de_Politica}"
-            excludeFromUpdate: true
+            excludeFromSearch: true
 
       - label: Object_Data_Source
         props:

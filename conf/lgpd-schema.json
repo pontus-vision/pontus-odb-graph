@@ -674,6 +674,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Event_Group_Subject_Access_Request_Type_Of_Natural_Person",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Metadata_Type_Event_Ingestion",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -1450,7 +1455,7 @@
     },
     {
       "name": "Object_Contract_Expiry",
-      "dataType": "String",
+      "dataType": "Date",
       "cardinality": "SINGLE"
     },
     {
@@ -1490,6 +1495,21 @@
     },
     {
       "name": "Object_Contract_Type",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Country",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Tranfer_Intl",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Contract_Has_Minors_Data",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3029,12 +3049,37 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Object_Legitimate_Interests_Assessment_Why_Is_Required",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
     {
       "name": "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Legitimate_Interests_Assessment_Ethical_Impact",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Legitimate_Interests_Assessment_LIA_Id",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person",
+      "dataType": "Boolean",
+      "cardinality": "SINGLE"
+    },
+    {
+      "name": "Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation",
       "dataType": "String",
       "cardinality": "SINGLE"
     },
@@ -3839,6 +3884,11 @@
       "cardinality": "SINGLE"
     },
     {
+      "name": "Person_Natural_Role",
+      "dataType": "String",
+      "cardinality": "SINGLE"
+    },
+    {
       "name": "Person_Natural_Title",
       "dataType": "String",
       "cardinality": "SINGLE"
@@ -4363,6 +4413,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_Approved_Contract",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Complaint",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -4483,6 +4538,11 @@
       "unidirected": false
     },
     {
+      "name": "Has_RoPA_Privacy_Notice",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Has_Risk",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -4558,6 +4618,11 @@
       "unidirected": false
     },
     {
+      "name": "Is_Beneficiary",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
       "name": "Is_Client",
       "multiplicity": "MULTI",
       "unidirected": false
@@ -4604,6 +4669,16 @@
     },
     {
       "name": "Is_Participant",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Promisee",
+      "multiplicity": "MULTI",
+      "unidirected": false
+    },
+    {
+      "name": "Is_Promisor",
       "multiplicity": "MULTI",
       "unidirected": false
     },
@@ -4923,7 +4998,8 @@
       "mixedIndex": "search",
       "propertyKeys": [
         "Metadata_Type_Event_Group_Subject_Access_Request",
-        "Event_Group_Subject_Access_Request_Ingestion_Date"
+        "Event_Group_Subject_Access_Request_Ingestion_Date",
+        "Event_Group_Subject_Access_Request_Type_Of_Natural_Person"
       ],
       "propertyKeysMappings": {}
     },
@@ -5230,7 +5306,10 @@
         "Object_Contract_Id",
         "Object_Contract_Link",
         "Object_Contract_Status",
-        "Object_Contract_Type"
+        "Object_Contract_Type",
+        "Object_Contract_Country",
+        "Object_Contract_Tranfer_Intl",
+        "Object_Contract_Has_Minors_Data"
       ],
       "propertyKeysMappings": {}
     },
@@ -5736,7 +5815,11 @@
         "Object_Legitimate_Interests_Assessment_Benefits_Relevance",
         "Object_Legitimate_Interests_Assessment_Is_Essential",
         "Object_Legitimate_Interests_Assessment_Is_Required",
-        "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification"
+        "Object_Legitimate_Interests_Assessment_Why_Is_Required",
+        "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
+        "Object_Legitimate_Interests_Assessment_LIA_Id",
+        "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person",
+        "Object_Legitimate_Interests_Assessment_Why_Is_Used_For_Innovation"
       ],
       "propertyKeysMappings": {}
     },
@@ -6034,6 +6117,7 @@
         "Person_Natural_Nationality",
         "Person_Natural_Place_Of_Birth",
         "Person_Natural_Religion",
+        "Person_Natural_Role",
         "Person_Natural_Title",
         "Person_Natural_Type"
       ],

@@ -1,0 +1,140 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Person_Natural
+      name: passed
+      condition: ${treinamentosParticipantesAprovados.size() > 0}
+      props:
+        - name: Person_Natural_Customer_ID
+          val: ${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
+    
+    - label: Person_Natural
+      name: failed
+      condition: ${treinamentosParticipantesReprovados.size() > 0}
+      props:
+        - name: Person_Natural_Customer_ID
+          val: ${new groovy.json.JsonBuilder(treinamentosParticipantesReprovados)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
+    
+    - label: Object_Awareness_Campaign
+      props:
+        - name: Object_Awareness_Campaign_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Object_Awareness_Campaign_Description
+          val: ${treinamentosDescricao?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Awareness_Campaign_Start_Date
+          val: ${treinamentosRealizadoEm}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: WEBINY/TREINAMENTOS
+          mandatoryInSearch: True
+    
+    - label: Event_Training
+      name: training_passed
+      condition: ${treinamentosParticipantesAprovados.size() > 0}
+      props:
+        - name: Event_Training_Form_Id
+          val: ${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
+        - name: Event_Training_Status
+          val: Passed
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Event_Training
+      name: training_failed
+      condition: ${treinamentosParticipantesAprovados.size() > 0}
+      props:
+        - name: Event_Training_Form_Id
+          val: ${new groovy.json.JsonBuilder(treinamentosParticipantesAprovados)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.WebinyRef;"
+          postProcessor: ${id}-${com.pontusvision.utils.WebinyRef.fromString(it,'titularesCpfDoTitular')}
+        - name: Event_Training_Status
+          val: Failed
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: webiny/treinamentos
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${createdOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${savedOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: webiny/treinamentos
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object_Data_Source
+    toVertexLabel: Event_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: training_passed
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexLabel: training_failed
+  - label: Course_Training
+    fromVertexName: training_passed
+    toVertexLabel: Object_Awareness_Campaign
+  - label: Course_Training
+    fromVertexName: training_failed
+    toVertexLabel: Object_Awareness_Campaign
+  - label: Completed_By
+    fromVertexName: training_passed
+    toVertexName: passed
+  - label: Completed_By
+    fromVertexName: training_failed
+    toVertexName: failed
+

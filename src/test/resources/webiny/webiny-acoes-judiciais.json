@@ -1,0 +1,54 @@
+{
+  "data": {
+    "listAcoesJudiciaisPpds": {
+      "data": [
+        {
+          "id": "63c9480f9ac28f000901f8eb#0001",
+          "entryId": "63c9480f9ac28f000901f8eb",
+          "createdOn": "2023-01-19T13:39:27.623Z",
+          "savedOn": "2023-01-19T13:39:29.282Z",
+          "createdBy": {
+            "id": "6a64619a-a19a-4988-b6be-6a6442b844da",
+            "displayName": "admin admin",
+            "type": "admin"
+          },
+          "ownedBy": {
+            "id": "6a64619a-a19a-4988-b6be-6a6442b844da",
+            "displayName": "admin admin",
+            "type": "admin"
+          },
+          "acoesJudiciaisPpdReferencia": "jur T33DF",
+          "acoesJudiciaisPpdData": "2022-12-01",
+          "acoesJudiciaisPpdDescricao": "Ação judicial contra o desmatamento da Amazônia.",
+          "acoesJudiciaisPpdResultado": "nada bom",
+          "acoesJudiciaisPpdIdDoProcesso": {
+            "mapeamentoDeProcessosReferencia": "ropa 1"
+          }
+        },
+        {
+          "id": "63c947d79ac28f000901f8ea#0001",
+          "entryId": "63c947d79ac28f000901f8ea",
+          "createdOn": "2023-01-19T13:38:31.006Z",
+          "savedOn": "2023-01-19T13:38:32.584Z",
+          "createdBy": {
+            "id": "6a64619a-a19a-4988-b6be-6a6442b844da",
+            "displayName": "admin admin",
+            "type": "admin"
+          },
+          "ownedBy": {
+            "id": "6a64619a-a19a-4988-b6be-6a6442b844da",
+            "displayName": "admin admin",
+            "type": "admin"
+          },
+          "acoesJudiciaisPpdReferencia": "ato 123",
+          "acoesJudiciaisPpdData": "2021-03-21",
+          "acoesJudiciaisPpdDescricao": "ato 123",
+          "acoesJudiciaisPpdResultado": "muito bom",
+          "acoesJudiciaisPpdIdDoProcesso": {
+            "mapeamentoDeProcessosReferencia": "ropa 1"
+          }
+        }
+      ]
+    }
+  }
+}

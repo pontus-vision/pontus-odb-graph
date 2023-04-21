@@ -30,51 +30,114 @@ public class PVSharepointPrivacyNoticeTests extends AppTest {
   @Test
   public void test00001SharepointPrivacyNotice() throws InterruptedException {
     try {
+      jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json",
+              "$.queryResp[*].fields", "sharepoint_mapeamentos");
       jsonTestUtil("sharepoint/non-official-pv-extract-sharepoint-aviso-de-privacidade.json",
               "$.queryResp[*].fields", "sharepoint_privacy_notice");
 
-      String getPrivacyNoticeDescription =
-              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('1'))" +
-                      ".properties('Object_Privacy_Notice_Description').value()" +
-                      ".next().toString()").get().toString();
-      assertEquals("O Titular foi avisado e concordou com os termos", getPrivacyNoticeDescription,
-              "Privacy Notice's Description for Title 'abc'.");
+//      String getPrivacyNoticeDescription =
+//              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('1'))" +
+//                      ".properties('Object_Privacy_Notice_Description').value()" +
+//                      ".next().toString()").get().toString();
 
-      String getPrivacyNoticeCreateDate =
-              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('5'))" +
-                      ".properties('Object_Privacy_Notice_Metadata_Create_Date').value()" +
-                      ".next().toString()").get().toString();
+      RecordReply reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Notice_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"1\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Notice",
+              new String[]{"Object_Privacy_Notice_Description"});
+      String replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Description\":\"O Titular foi avisado e concordou com os termos\""));
+
+//      String getPrivacyNoticeCreateDate =
+//              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('5'))" +
+//                      ".properties('Object_Privacy_Notice_Metadata_Create_Date').value()" +
+//                      ".next().toString()").get().toString();
 //      getPrivacyNoticeCreateDate = getPrivacyNoticeCreateDate.replaceAll("... 2022", "GMT 2022");
-      assertEquals(dtfmt.parse("Wed Jan 05 19:18:05 GMT 2022"), dtfmt.parse(getPrivacyNoticeCreateDate),
-              "Privacy Notice's creation date.");
 
-//      String getPrivacyNoticeCountryWhereStored =
-//              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('2'))" +
-//                      ".properties('Object_Privacy_Notice_Country_Where_Stored').value()" +
+      reply = gridWrapper("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Notice_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"5\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Notice",
+              new String[]{"Object_Privacy_Notice_Metadata_Create_Date"});
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Privacy_Notice_Metadata_Create_Date\":\"Wed Jan 05 19:18:05 UTC 2022\""));
+
+//      String getObjectDataSourceName =
+//              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('4')).out('Has_Ingestion_Event')" +
+//                      ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').properties('Object_Data_Source_Name').value()" +
 //                      ".next().toString()").get().toString();
-//      assertEquals("Brazil", getPrivacyNoticeCountryWhereStored,
-//              "Privacy Notice's Data's Country Storage.");
 
-//      String getPrivacyNoticeWhoIsCollecting =
-//              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('4'))" +
-//                      ".properties('Object_Privacy_Notice_Who_Is_Collecting').value()" +
-//                      ".next().toString()").get().toString();
-//      assertEquals("Sxxxxxxxe", getPrivacyNoticeWhoIsCollecting,
-//              "Privacy Notice's Data's Company Collector.");
+      String svFormId = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Notice_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"4\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Notice",
+              new String[]{"Object_Privacy_Notice_Form_Id'"});
 
-      String getObjectDataSourceName =
-              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('4')).out('Has_Ingestion_Event')" +
-                      ".in('Has_Ingestion_Event').in('Has_Ingestion_Event').properties('Object_Data_Source_Name').value()" +
-                      ".next().toString()").get().toString();
-      assertEquals("SHAREPOINT/PRIVACY-NOTICE", getObjectDataSourceName, "Data Source Name.");
+//    from Object_Privacy_Notice to Event_Ingestion
+      String svFormId2 = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Ingestion_Type\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"Privacy Notice\"\n" +
+                      "  }\n" +
+                      "]", "Event_Ingestion",
+              new String[]{"Event_Ingestion_Type'"}, "hasNeighbourId:" + svFormId);
 
-//      String getPrivacyNoticeDeliveryDate =
-//              App.executor.eval("App.g.V().has('Object_Privacy_Notice_Form_Id', eq('7'))" +
-//                      ".properties('Object_Privacy_Notice_Delivery_Date').value()" +
-//                      ".next().toString()").get().toString();
-//      assertEquals(dtfmt.parse("Fri Dec 10 01:01:01 GMT 2021"), dtfmt.parse(getPrivacyNoticeDeliveryDate), "Privacy Notice's delivery date for id 'stuvw'.");
+//    from Event_Ingestion to Event_Group_Ingestion
+      String svFormId3 = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Event_Group_Ingestion_Type\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"sharepoint/privacy-notice\"\n" +
+                      "  }\n" +
+                      "]", "Event_Group_Ingestion",
+              new String[]{"Event_Group_Ingestion_Type'"}, "hasNeighbourId:" + svFormId2);
 
-    } catch (ExecutionException | ParseException e) {
+//    and finally from Event_Group_Ingestion to Object_Data_Source
+      reply = gridWrapper(null, "Object_Data_Source", new String[]{"Object_Data_Source_Name"}, "hasNeighbourId:" + svFormId3);
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Object_Data_Source_Name\":\"SHAREPOINT/PRIVACY-NOTICE\""));
+
+//    testing new connection from Object_Data_Procedures ------ Has_Privacy_Notice -------> Object_Privacy_Notice
+
+      String privNoticeRid = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Privacy_Notice_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"5\"\n" +
+                      "  }\n" +
+                      "]", "Object_Privacy_Notice",
+              new String[]{"Object_Privacy_Notice_Form_Id'"});
+
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"}, "hasNeighbourId:" + privNoticeRid, 0L, 10L, "Object_Data_Procedures_Name", "+asc");
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"Contratos Estratégicos\""));
+      assertTrue(reply.getRecords()[1].contains("\"Object_Data_Procedures_Name\":\"Gestão de Rede de Distribuidores\""));
+      assertTrue(reply.getRecords()[2].contains("\"Object_Data_Procedures_Name\":\"Gestão de ferramenta gerencial (PowerBI)\""));
+      assertTrue(reply.getRecords()[3].contains("\"Object_Data_Procedures_Name\":\"Prestadores de Serviços e Fornecedores\""));
+      assertTrue(reply.getRecords()[4].contains("\"Object_Data_Procedures_Name\":\"Prontuário do colaborador\""));
+      assertTrue(reply.getRecords()[5].contains("\"Object_Data_Procedures_Name\":\"Termos de Confidencialidade \""));
+      assertEquals(6, reply.getTotalAvailable(), "This Privacy Notice has 6 RoPAs attaches to it.");
+
+    } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);
     }

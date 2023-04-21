@@ -22,11 +22,7 @@ updatereq:
         - name: Person_Natural_Id
           val: ${id?.replaceAll('[^0-9]','')}
           mandatoryInSearch: True
-        - name: Person_Natural_Last_Update_Date
-          val: ${lastUpdate}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
+          excludeFromUpdate: True
     
     - label: Event_Ingestion
       props:

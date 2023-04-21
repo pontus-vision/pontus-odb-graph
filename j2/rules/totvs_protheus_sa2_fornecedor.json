@@ -3,13 +3,54 @@
     "vertices": [
       {
         "label": "Person_Organisation",
-        "name": "fornecedor",
+        "name": "pj_national",
         "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
         "props": [
           {
             "name": "Person_Organisation_Name",
             "val": "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}",
             "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Type",
+            "val": "NATIONAL",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Organisation_Id",
+            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Last_Update_Date",
+            "val": "${lastUpdate}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Organisation",
+        "name": "pj_international",
+        "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A2_CGC?.replaceAll('[^0-9]','')?.length() != 14}",
+        "props": [
+          {
+            "name": "Person_Organisation_Name",
+            "val": "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Organisation_Type",
+            "val": "INTERNATIONAL",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
           },
           {
             "name": "Person_Organisation_Id",
@@ -222,7 +263,12 @@
     "edges": [
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexName": "fornecedor",
+        "fromVertexName": "pj_national",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "pj_international",
         "toVertexLabel": "Event_Ingestion"
       },
       {
@@ -262,22 +308,42 @@
       },
       {
         "label": "Has_Id_Card",
-        "fromVertexName": "fornecedor",
+        "fromVertexName": "pj_national",
+        "toVertexName": "cnpj"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "pj_international",
         "toVertexName": "cnpj"
       },
       {
         "label": "Uses_Email",
-        "fromVertexName": "fornecedor",
+        "fromVertexName": "pj_national",
+        "toVertexName": "email"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "pj_international",
         "toVertexName": "email"
       },
       {
         "label": "Has_Phone",
-        "fromVertexName": "fornecedor",
+        "fromVertexName": "pj_national",
+        "toVertexName": "phone"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "pj_international",
         "toVertexName": "phone"
       },
       {
         "label": "Is_Located",
-        "fromVertexName": "fornecedor",
+        "fromVertexName": "pj_national",
+        "toVertexLabel": "Location_Address"
+      },
+      {
+        "label": "Is_Located",
+        "fromVertexName": "pj_international",
         "toVertexLabel": "Location_Address"
       }
     ]

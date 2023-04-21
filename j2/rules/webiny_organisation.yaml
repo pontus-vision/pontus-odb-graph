@@ -1,0 +1,203 @@
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    
+    - label: Person_Organisation
+      name: pj_national
+      condition: ${organizacoesCnpj?.replaceAll('[^0-9]','')?.length() == 14}
+      props:
+        - name: Person_Organisation_URL
+          val: ${organizacoesSite?.trim()?.toLowerCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Organisation_Name
+          val: ${organizacoesNome?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Organisation_Id
+          val: ${organizacoesCnpj.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Registration_Number
+          val: ${organizacoesCnpj.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Last_Update_Date
+          val: ${savedOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Person_Organisation_Type
+          val: NATIONAL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Person_Organisation
+      name: pj_international
+      condition: ${organizacoesCnpj?.replaceAll('[^0-9]','')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]','')?.length() != 14}
+      props:
+        - name: Person_Organisation_URL
+          val: ${organizacoesSite?.trim()?.toLowerCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Organisation_Name
+          val: ${organizacoesNome?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Organisation_Id
+          val: ${organizacoesCnpj.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Registration_Number
+          val: ${organizacoesCnpj.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Last_Update_Date
+          val: ${savedOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Person_Organisation_Type
+          val: INTERNATIONAL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Identity_Card
+      name: id_national
+      condition: ${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() == 14}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${organizacoesCnpj?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CNPJ
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Identity_Card
+      name: id_international
+      condition: ${organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() > 0 && organizacoesCnpj?.replaceAll('[^0-9]', '')?.length() != 14}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${organizacoesCnpj?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: INTERNATIONAL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    
+    - label: Object_Email_Address
+      condition: ${organizacoesEmail?.trim()?.length() > 0}
+      props:
+        - name: Object_Email_Address_Email
+          val: ${organizacoesEmail?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+    
+    - label: Object_Phone_Number
+      condition: ${organizacoesTelefone?.replaceAll('[^0-9]','')?.length() > 0}
+      props:
+        - name: Object_Phone_Number_Raw
+          val: ${organizacoesTelefone}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Numbers_Only
+          val: ${(organizacoesTelefone?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Last_7_Digits
+          val: ${(((organizacoesTelefone?.replaceAll('[^0-9]', ''))?.length()>=7?(organizacoesTelefone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: WEBINY/ORGANIZACOES
+          mandatoryInSearch: True
+    
+    - label: Location_Address
+      props:
+        - name: Location_Address_Full_Address
+          val: ${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf==null)?'SP':((organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'':organizacoesEnderecoObj?.organizacoesEnderecoObjUf), (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location_Address_parser
+          val: ${com.pontusvision.utils.LocationAddress.formatAddress(organizacoesEnderecoObj?.organizacoesEnderecoObjEndereco, organizacoesEnderecoObj?.organizacoesEnderecoObjNumero, organizacoesEnderecoObj?.organizacoesEnderecoObjComplemento, organizacoesEnderecoObj?.organizacoesEnderecoObjBairro, organizacoesEnderecoObj?.organizacoesEnderecoObjCidade, (organizacoesEnderecoObj?.organizacoesEnderecoObjUf==null)?'SP':((organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'':organizacoesEnderecoObj?.organizacoesEnderecoObjUf), (organizacoesEnderecoObj?.organizacoesEnderecoObjUf=='Exterior')?'EXTERIOR':'BRASIL', organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location_Address_Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(organizacoesEnderecoObj?.organizacoesEnderecoObjCep)}
+          mandatoryInSearch: True
+    
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: webiny/organizacoes
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${createdOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${savedOn}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: webiny/organizacoes
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+
+  edges:
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Object_Data_Source
+    toVertexLabel: Event_Group_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Group_Ingestion
+    toVertexLabel: Event_Ingestion
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexName: pj_national
+  - label: Has_Ingestion_Event
+    fromVertexLabel: Event_Ingestion
+    toVertexName: pj_international
+  - label: Has_Id_Card
+    fromVertexName: pj_national
+    toVertexName: id_national
+  - label: Has_Id_Card
+    fromVertexName: pj_international
+    toVertexName: id_international
+  - label: Is_Located
+    fromVertexName: pj_national
+    toVertexLabel: Location_Address
+  - label: Is_Located
+    fromVertexName: pj_international
+    toVertexLabel: Location_Address
+  - label: Uses_Email
+    fromVertexName: pj_national
+    toVertexLabel: Object_Email_Address
+  - label: Uses_Email
+    fromVertexName: pj_international
+    toVertexLabel: Object_Email_Address
+  - label: Has_Phone
+    fromVertexName: pj_national
+    toVertexLabel: Object_Phone_Number
+  - label: Has_Phone
+    fromVertexName: pj_international
+    toVertexLabel: Object_Phone_Number
+

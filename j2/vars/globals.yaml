@@ -234,6 +234,7 @@ schema:
       useStatic: false
       props:
         - name: Ingestion_Date
+        - name: Type_Of_Natural_Person
 
     - name: "Event_Ingestion"
       partition: false
@@ -462,6 +463,7 @@ schema:
           index: false
         - name: Short_Description
         - name: Expiry
+          dataType: Date
         - name: Form_Id
         - name: Form_Owner_Id
         - name: Form_Submission_Id
@@ -470,6 +472,9 @@ schema:
         - name: Link
         - name: Status
         - name: Type
+        - name: Country     # or Object_Data_Policy
+        - name: Tranfer_Intl  # abbreviation for Transference International, works for both signalizing true to Transfer and International Transfer
+        - name: Has_Minors_Data
 
     - name: "Object_Campaign"
       partition: false
@@ -906,9 +911,16 @@ schema:
         - name: Is_Essential
 #        - name: Info_Shared_With_Third_Parties  TODO: add it to Object_Contract (LIA 15)
         - name: Is_Required
+        - name: Why_Is_Required
         - name: Breach_Of_Subject_Rights_Justification
           index: false
         - name: Lawful_Basis_Justification # TODO: check SV's LIA
+        - name: Ethical_Impact
+          index: false
+        - name: LIA_Id
+        - name: Is_Data_From_Natural_Person
+          dataType: Boolean
+        - name: Why_Is_Used_For_Innovation  #TODO: does this need index: false ?!?!
 
     - name: "Object_Risk_Data_Source"
       partition: false
@@ -1132,6 +1144,7 @@ schema:
         - name: Nationality
         - name: Place_Of_Birth
         - name: Religion
+        - name: Role
         - name: Title
         - name: Type
 
@@ -1260,6 +1273,7 @@ schema:
   - name: Has_Campaign
   - name: Has_Column
   - name: Has_Contract
+  - name: Has_Approved_Contract
   - name: Has_Complaint
   - name: Has_Credential
   - name: Has_Data_Procedures
@@ -1283,7 +1297,8 @@ schema:
   - name: Has_Personal_Data
   - name: Has_Policy
   - name: Has_Privacy_Impact_Assessment
-  - name: Has_Privacy_Notice
+  - name: Has_Privacy_Notice # from Event_Consent to Privacy_Notice
+  - name: Has_RoPA_Privacy_Notice # from Object_Data_Procedures to Privacy_Notice
   - name: Has_Risk
   - name: Has_Salary
   - name: Has_Security_Group
@@ -1301,6 +1316,7 @@ schema:
   - name: Has_Vehicle
   - name: Impacted_By_Data_Breach
   - name: Is_Alias
+  - name: Is_Beneficiary
   - name: Is_Client
   - name: Is_Interested_Party
   - name: Is_Data_Controller
@@ -1311,6 +1327,8 @@ schema:
   - name: Is_Lead
   - name: Is_Located
   - name: Is_Participant
+  - name: Is_Promisee
+  - name: Is_Promisor
   - name: Is_Relative
   - name: Is_Subordinate
   - name: Is_Responsible

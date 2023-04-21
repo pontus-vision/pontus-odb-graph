@@ -1,0 +1,176 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Data_Source",
+        "name": "webiny",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/INCIDENTES-DE-SEGURANCA-REPORTADOS",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "data_sources",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(incidentesDeSegurancaReportadosFontesDeDados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+          }
+        ]
+      },
+      {
+        "label": "Event_Data_Breach",
+        "props": [
+          {
+            "name": "Event_Data_Breach_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Id",
+            "val": "${incidentesDeSegurancaReportadosReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Authority_Notified",
+            "val": "${incidentesDeSegurancaReportadosNotificacaoAnpd?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Description",
+            "val": "${incidentesDeSegurancaReportadosDescricao?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Impact",
+            "val": "${incidentesDeSegurancaReportadosImpacto}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Metadata_Create_Date",
+            "val": "${createdOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Metadata_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Natural_Person_Notified",
+            "val": "${incidentesDeSegurancaReportadosNotificacaoTitular?.toString()?.equalsIgnoreCase('true')?'true':'false'}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Source",
+            "val": "${incidentesDeSegurancaReportadosOrigem?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Status",
+            "val": "${incidentesDeSegurancaReportadosStatus}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "webiny/incidentes-de-seguranca-reportados",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${createdOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "webiny/incidentes-de-seguranca-reportados",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "webiny",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Event_Data_Breach"
+      },
+      {
+        "label": "Impacted_By_Data_Breach",
+        "fromVertexLabel": "Event_Data_Breach",
+        "toVertexName": "data_sources"
+      }
+    ]
+  }
+}

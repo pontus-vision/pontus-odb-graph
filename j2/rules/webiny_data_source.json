@@ -1,0 +1,538 @@
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Data_Source",
+        "name": "webiny",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/FONTES-DE-DADOS",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "fontes_de_dados",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "${fontesDeDadosReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Description",
+            "val": "${fontesDeDadosDescricao?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Engine",
+            "val": "${fontesDeDadosSistema?.sistemaReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Type",
+            "val": "${fontesDeDadosSubSistema?.subsistemaReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Domain",
+            "val": "${fontesDeDadosModulo?.moduloReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_System",
+        "props": [
+          {
+            "name": "Object_System_Name",
+            "val": "${fontesDeDadosSistema?.sistemaReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Subsystem",
+        "props": [
+          {
+            "name": "Object_Subsystem_Name",
+            "val": "${fontesDeDadosSubSistema?.subsistemaReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Module",
+        "props": [
+          {
+            "name": "Object_Module_Name",
+            "val": "${fontesDeDadosModulo?.moduloReferencia?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "personal_identification",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosDeIdentificacaoPessoal)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "financial_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosFinanceiros)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "personal_characteristics",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjCaracteristicasPessoais)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "personal_habits",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjHabitosPessoais)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "psychological_characteristics",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjCaracteristicasPsicologicas)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "family_composition",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjComposicaoFamiliar)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "leisure_interests",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjInteressesDeLazer)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "associations",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjAssociacoes)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "criminal_processes",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjProcessoJudicialAdministrativoCriminal)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "consumption_habits",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjHabitosDeConsumo)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "residential_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosResidenciais)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "education_and_training",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjEducacaoETreinamento)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "profession_and_employment",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjProfissaoEEmprego)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "image_record",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjRegistrosGravacoesDeVideoImagemEVoz)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "biometric_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosBiometricos)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "sensitive_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjDadosSensiveis)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "other_personal_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosDadosPessoaisObj?.fontesDeDadosDadosPessoaisObjOutrosDadosPessoaisEspecificar?.outrosDadosPessoaisReferencia)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Policy",
+        "props": [
+          {
+            "name": "Object_Data_Policy_Update_Frequency",
+            "val": "${fontesDeDadosFrequenciaDeAtualizacao?.periodosReferencia}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Retention_Period",
+            "val": "${fontesDeDadosPeriodoDeRetencao?.periodosReferencia}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Risk_Data_Source",
+        "props": [
+          {
+            "name": "Object_Risk_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(fontesDeDadosRiscosDeFontesDeDados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "webiny/fontes-de-dados",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${createdOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "webiny/fontes-de-dados",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "webiny",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexName": "fontes_de_dados"
+      },
+      {
+        "label": "Has_Policy",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexLabel": "Object_Data_Policy"
+      },
+      {
+        "label": "Has_Module",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexLabel": "Object_Module"
+      },
+      {
+        "label": "Has_Subsystem",
+        "fromVertexLabel": "Object_Module",
+        "toVertexLabel": "Object_Subsystem"
+      },
+      {
+        "label": "Has_System",
+        "fromVertexLabel": "Object_Subsystem",
+        "toVertexLabel": "Object_System"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "personal_identification"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "financial_data"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "personal_characteristics"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "personal_habits"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "psychological_characteristics"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "family_composition"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "leisure_interests"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "associations"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "criminal_processes"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "consumption_habits"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "residential_data"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "education_and_training"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "profession_and_employment"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "image_record"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "biometric_data"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "other_personal_data"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexName": "sensitive_data"
+      },
+      {
+        "label": "Has_Risk",
+        "fromVertexName": "fontes_de_dados",
+        "toVertexLabel": "Object_Risk_Data_Source"
+      }
+    ]
+  }
+}

@@ -412,7 +412,7 @@ rules:
         fromVertexLabel: "Object_Data_Procedures"
         toVertexName: "attached_data_sources"
 
-      - label: "Has_Data_Policy"
+      - label: "Has_Policy"
         fromVertexLabel: "Object_Data_Procedures"
         toVertexLabel: "Object_Data_Policy"
 
@@ -594,10 +594,10 @@ rules:
             val: "${Se_x0020_sim_x0020_descrever}"
             excludeFromSearch: true
           Is_Essential:
-            val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
+            val: "true" # Or true ... basear no Resultado do LIA ?!?!
             excludeFromSearch: true
           Is_Required:
-            val: "Sim" # Or true ... basear no Resultado do LIA ?!?!
+            val: "true" # Or true ... basear no Resultado do LIA ?!?!
             excludeFromSearch: true
           Breach_Of_Subject_Rights_Justification:
             val: "${Se_x0020_sim_x0020__x002d__x0020}"

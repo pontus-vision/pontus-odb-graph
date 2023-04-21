@@ -40,17 +40,37 @@ rules:
 
       - label: Person_Organisation
         condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
+        name: pj_national
         props:
 #         better to keep Name excluded from search, because it is not a good search field since it isn't unique
           Name:
             val: "${A1_NOME?.trim()?.toUpperCase()}"
             excludeFromSearch: true
-#          Type:
-#            val: "Clientes"
-#            excludeFromSearch: true
+          Type:
+            val: "NATIONAL"
+            excludeFromSearch: true
           Id: "${A1_CGC.replaceAll('[^0-9]','')}"
           Registration_Number: "${A1_CGC.replaceAll('[^0-9]','')}"
 #          Contact: "${A1_CONTATO?.trim()}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Person_Organisation
+        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A1_CGC?.replaceAll('[^0-9]','')?.length() != 14}"
+        name: pj_international
+        props:
+          #         better to keep Name excluded from search, because it is not a good search field since it isn't unique
+          Name:
+            val: "${A1_NOME?.trim()?.toUpperCase()}"
+            excludeFromSearch: true
+          Type:
+            val: "INTERNATIONAL"
+            excludeFromSearch: true
+          Id: "${A1_CGC.replaceAll('[^0-9]','')}"
+          Registration_Number: "${A1_CGC.replaceAll('[^0-9]','')}"
+          #          Contact: "${A1_CONTATO?.trim()}"
           Last_Update_Date:
             val: "${lastUpdate}"
             excludeFromSearch: true
@@ -176,7 +196,11 @@ rules:
         toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "pj_international"
         toVertexLabel: "Event_Ingestion"
 
       - label: Uses_Email
@@ -184,7 +208,11 @@ rules:
         toVertexLabel: "Object_Email_Address"
 
       - label: Uses_Email
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexLabel: "Object_Email_Address"
+
+      - label: Uses_Email
+        fromVertexName: "pj_international"
         toVertexLabel: "Object_Email_Address"
 
       - label: Has_Id_Card
@@ -196,7 +224,11 @@ rules:
         toVertexName: "cpf"
 
       - label: Has_Id_Card
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexName: "cnpj"
+
+      - label: Has_Id_Card
+        fromVertexName: "pj_international"
         toVertexName: "cnpj"
 
       - label: Is_Located
@@ -204,7 +236,11 @@ rules:
         toVertexLabel: "Location_Address"
 
       - label: Is_Located
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexLabel: "Location_Address"
+
+      - label: Is_Located
+        fromVertexName: "pj_international"
         toVertexLabel: "Location_Address"
 
       - label: Has_Phone
@@ -212,7 +248,11 @@ rules:
         toVertexLabel: "Object_Phone_Number"
 
       - label: Has_Phone
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexLabel: "Object_Phone_Number"
+
+      - label: Has_Phone
+        fromVertexName: "pj_international"
         toVertexLabel: "Object_Phone_Number"
 
 #    {
@@ -308,11 +348,27 @@ rules:
 
       - label: Person_Organisation
         condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() == 14}"
+        name: pj_national
         props:
           Name: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
-#          Type:
-#            val: "Colaborador"
-#            excludeFromSearch: true
+          Type:
+            val: "NATIONAL"
+            excludeFromSearch: true
+          Id: "${RA_CIC.replaceAll('[^0-9]','')}"
+          Registration_Number: "${RA_CIC.replaceAll('[^0-9]','')}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Person_Organisation
+        condition: "${RA_CIC?.replaceAll('[^0-9]','')?.length() != 11 && RA_CIC?.replaceAll('[^0-9]','')?.length() != 14}"
+        name: pj_international
+        props:
+          Name: "${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}"
+          Type:
+            val: "INTERNATIONAL"
+            excludeFromSearch: true
           Id: "${RA_CIC.replaceAll('[^0-9]','')}"
           Registration_Number: "${RA_CIC.replaceAll('[^0-9]','')}"
           Last_Update_Date:
@@ -481,7 +537,11 @@ rules:
         toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "pj_international"
         toVertexLabel: "Event_Ingestion"
 
       - label: Is_Family
@@ -497,7 +557,11 @@ rules:
         toVertexLabel: "Object_Phone_Number"
 
       - label: Has_Phone
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexLabel: "Object_Phone_Number"
+
+      - label: Has_Phone
+        fromVertexName: "pj_international"
         toVertexLabel: "Object_Phone_Number"
 
       - label: Uses_Email
@@ -505,7 +569,11 @@ rules:
         toVertexName: "email1"
 
       - label: Uses_Email
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexName: "email1"
+
+      - label: Uses_Email
+        fromVertexName: "pj_international"
         toVertexName: "email1"
 
       - label: Uses_Email
@@ -513,7 +581,11 @@ rules:
         toVertexName: "email2"
 
       - label: Uses_Email
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexName: "email2"
+
+      - label: Uses_Email
+        fromVertexName: "pj_international"
         toVertexName: "email2"
 
       - label: Has_Id_Card
@@ -525,7 +597,11 @@ rules:
         toVertexName: "cpf"
 
       - label: Has_Id_Card
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexName: "cnpj"
+
+      - label: Has_Id_Card
+        fromVertexName: "pj_international"
         toVertexName: "cnpj"
 
       - label: Is_Located
@@ -533,7 +609,11 @@ rules:
         toVertexLabel: "Location_Address"
 
       - label: Is_Located
-        fromVertexLabel: "Person_Organisation"
+        fromVertexName: "pj_national"
+        toVertexLabel: "Location_Address"
+
+      - label: Is_Located
+        fromVertexName: "pj_international"
         toVertexLabel: "Location_Address"
 
   totvs_protheus_srb_dependente:
@@ -548,17 +628,18 @@ rules:
             excludeFromSearch: true
             type: java.util.Date
 
-      - label: Person_Natural
+      - label: Person_Natural # just a connection
         name: colaborador
         condition: "${id?.replaceAll('[^0-9]','')?.length() > 0}"
         props:
           Id:
             val: "${id?.replaceAll('[^0-9]','')}"
             excludeFromUpdate: true # or should it be excludeFromSearch?
-          Last_Update_Date:
-            val: "${lastUpdate}"
-            excludeFromSearch: true
-            type: java.util.Date
+            mandatoryInSearch: true
+#          Last_Update_Date:
+#            val: "${lastUpdate}"
+#            excludeFromSearch: true
+#            type: java.util.Date
 
       - label: Event_Ingestion
         props:
@@ -649,15 +730,31 @@ rules:
     vertices:
       - label: Person_Organisation
         condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}"
-        name: fornecedor
+        name: pj_national
         props:
           Name: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
-#          Type:
-#            val: "Fornecedor"
-#            excludeFromSearch: true
+          Type:
+            val: "NATIONAL"
+            excludeFromSearch: true
           Id: "${A2_CGC.replaceAll('[^0-9]','')}"
           Registration_Number: "${A2_CGC.replaceAll('[^0-9]','')}"
 #          Contact: "${A2_CONTATO?.trim()}"
+          Last_Update_Date:
+            val: "${lastUpdate}"
+            excludeFromSearch: true
+            type: java.util.Date
+
+      - label: Person_Organisation
+        condition: "${A2_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A2_CGC?.replaceAll('[^0-9]','')?.length() != 14}"
+        name: pj_international
+        props:
+          Name: "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}"
+          Type:
+            val: "INTERNATIONAL"
+            excludeFromSearch: true
+          Id: "${A2_CGC.replaceAll('[^0-9]','')}"
+          Registration_Number: "${A2_CGC.replaceAll('[^0-9]','')}"
+          #          Contact: "${A2_CONTATO?.trim()}"
           Last_Update_Date:
             val: "${lastUpdate}"
             excludeFromSearch: true
@@ -778,7 +875,11 @@ rules:
 
     edges:
       - label: Has_Ingestion_Event
-        fromVertexName: "fornecedor"
+        fromVertexName: "pj_national"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "pj_international"
         toVertexLabel: "Event_Ingestion"
 
       - label: Has_Ingestion_Event
@@ -810,17 +911,33 @@ rules:
         toVertexName: "cpf"
 
       - label: Has_Id_Card
-        fromVertexName: "fornecedor"
+        fromVertexName: "pj_national"
+        toVertexName: "cnpj"
+
+      - label: Has_Id_Card
+        fromVertexName: "pj_international"
         toVertexName: "cnpj"
 
       - label: Uses_Email
-        fromVertexName: "fornecedor"
+        fromVertexName: "pj_national"
+        toVertexName: "email"
+
+      - label: Uses_Email
+        fromVertexName: "pj_international"
         toVertexName: "email"
 
       - label: Has_Phone
-        fromVertexName: "fornecedor"
+        fromVertexName: "pj_national"
+        toVertexName: "phone"
+
+      - label: Has_Phone
+        fromVertexName: "pj_international"
         toVertexName: "phone"
 
       - label: Is_Located
-        fromVertexName: "fornecedor"
+        fromVertexName: "pj_national"
+        toVertexLabel: "Location_Address"
+
+      - label: Is_Located
+        fromVertexName: "pj_international"
         toVertexLabel: "Location_Address"

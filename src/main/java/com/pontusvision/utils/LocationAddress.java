@@ -98,4 +98,63 @@ public class LocationAddress {
     return tokens.toString();
   }
 
+  public static String formatAddress(String address, String number, String complement, String district, String city, String state, String country, String postCode) {
+
+    StringBuilder sb = new StringBuilder();
+
+    boolean addressBool = address != null && !address.isEmpty();
+
+    if (addressBool) {
+      sb.append(address.trim().toUpperCase());
+    }
+
+    boolean numberBool = number != null && !number.isEmpty();
+
+    if (numberBool && addressBool) {
+      sb.append(" ").append(number.trim());
+    } else if (numberBool && !addressBool) {
+      sb.append(number.trim());
+    } else {
+      sb.append(" ").append("SN");
+    }
+
+    boolean complementBool = complement != null && !complement.isEmpty();
+
+    if (complementBool) {
+      sb.append(" ").append(complement.trim().toUpperCase());
+    }
+
+    boolean districtBool = district != null && !district.isEmpty();
+
+    if (districtBool) {
+      sb.append(", ").append(district.trim().toUpperCase());
+    }
+
+    boolean cityBool = city != null && !city.isEmpty();
+
+    if (cityBool) {
+      sb.append(" - ").append(city.trim().toUpperCase());
+    }
+
+    boolean stateBool = state != null && !state.isEmpty();
+
+    if (stateBool) {
+      sb.append(" (").append(state.trim().toUpperCase()).append(")");
+    }
+
+    boolean postCodeBool = postCode != null && !postCode.isEmpty();
+
+    if (postCodeBool) {
+      sb.append(", ").append(postCode.trim());
+    }
+
+    boolean countryBool = country != null && !country.isEmpty();
+
+    if (countryBool) {
+      sb.append(", ").append(country.trim().toUpperCase());
+    }
+
+    return sb.toString();
+  }
+
 }

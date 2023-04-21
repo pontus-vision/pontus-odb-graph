@@ -497,18 +497,19 @@ public class PVBasicTest extends AppTest {
   @Test
   public void test00010PloomesClientes() throws InterruptedException {
 
+    jsonTestUtil("totvs/totvs-sa1.json", "$.objs", "totvs_protheus_sa1_clientes");
     jsonTestUtil("ploomes/ploomes1.json", "$.value", "ploomes_clientes");
 //    jsonTestUtil("ploomes1.json", "$.value", "ploomes_clientes");
 
     try {
       String userId =
-              App.executor.eval("App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()")
+              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('COMIDAS 2')).next().id().toString()")
                       .get().toString();
 
       Resource res = new Resource();
       GremlinRequest gremlinReq = new GremlinRequest();
       gremlinReq.setGremlin(
-              "App.g.V().has('Person_Organisation_Name',eq('PESSOA NOVA5')).next().id().toString()");
+              "App.g.V().has('Person_Natural_Full_Name',eq('COMIDAS 2')).next().id().toString()");
       JsonObject obj = JsonParser.parseString(res.gremlinQuery(fakeContainerReqContext,
               gson.toJson(gremlinReq))).getAsJsonObject();
 //      Gson gson = new Gson();
@@ -618,28 +619,102 @@ public class PVBasicTest extends AppTest {
   @Test
   public void test00012ADP() throws InterruptedException {
     try {
-      csvTestUtil("ADP-real.csv", "ADP");
+      csvTestUtil("ADP-real.csv", "ADP_pole");
 
+//    new AGgrid test style --------------------------------------------------------------------------------------------
 
-      String mariaBDay =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARIA DA SILVA SANTOS'))" +
-                      ".properties('Person_Natural_Date_Of_Birth').value().next().toString()").get().toString();
-//      mariaBDay = mariaBDay.replaceAll("... 1980", "GMT 1980");
-      assertEquals(dtfmt.parse("Mon Dec 08 01:01:01 GMT 1980"), dtfmt.parse(mariaBDay), "MAria's Birthday");
+      RecordReply reply = gridWrapper("[\n" +
+        "  {\n" +
+        "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+        "    \"filterType\": \"text\",\n" +
+        "    \"type\": \"equals\",\n" +
+        "    \"filter\": \"MARIA DA SILVA SANTOS\"\n" +
+        "  }\n" +
+        "]", "Person_Natural", new String[]{"Person_Natural_Date_Of_Birth"});
 
-      String getBossId =
-              App.executor.eval("App.g.V().has('Person_Natural_Full_Name',eq('MARIA DA SILVA SANTOS'))" +
-                      ".out('Is_Alias').out('Is_Subordinate').properties('Person_Employee_ID').value().next().toString()").get().toString();
-      assertEquals("5", getBossId, "Maria's Boss (José Dorival) has an Id of 5");
+      String replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Person_Natural_Date_Of_Birth\":\"Mon Dec 08 01:01:01 UTC 1980\""), "Maria's bday");
 
-      String getBossName =
-              App.executor.eval("App.g.V().has('Object_Identity_Card_Id_Value',eq('12345678901'))" +
-                      ".in('Has_Id_Card').out('Is_Alias').out('Is_Subordinate').in('Is_Alias')" +
-                      ".properties('Person_Natural_Full_Name').value().next().toString()").get().toString();
-      assertEquals("JOSÉ DORIVAL", getBossName, "Maria's Boss' Full Name");
+      String adpEmployeeRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Employee_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"MARIA DA SILVA SANTOS\"\n" +
+          "  }\n" +
+          "]", "Person_Employee",
+        new String[]{"Person_Employee_Full_Name"});
 
+      reply = gridWrapper(null, "Person_Employee", new String[]{"Person_Employee_ID", "Person_Employee_Full_Name"},
+        "hasNeighbourId:" + adpEmployeeRid);
 
-    } catch (ExecutionException | ParseException e) {
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Person_Employee_ID\":\"5\""), "Maria's Boss (José Dorival) has an Id of 5");
+      assertTrue(replyStr.contains("\"Person_Employee_Full_Name\":\"JOSÉ DORIVAL\""), "Maria's Boss' Full Name");
+
+      String adpPersonRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"MARIA DA SILVA SANTOS\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Full_Name"});
+
+      reply = gridWrapper(null, "Person_Natural", new String[]{"Person_Natural_Full_Name"},
+        "hasNeighbourId:" + adpPersonRid, 0L, 2L, "Person_Natural_Full_Name", "+asc");
+
+      assertTrue(reply.getRecords()[0].contains("\"Person_Natural_Full_Name\":\"JOSÉ SANTOS SILVA\""), "Maria's dad");
+      assertTrue(reply.getRecords()[1].contains("\"Person_Natural_Full_Name\":\"JULIANA SILVA SANTOS\""), "Maria's mom");
+
+      reply = gridWrapper(null, "Object_Email_Address", new String[]{"Object_Email_Address_Email"},
+        "hasNeighbourId:" + adpPersonRid, 0L, 2L, "Object_Email_Address_Email", "+asc");
+
+      assertTrue(reply.getRecords()[0].contains("\"Object_Email_Address_Email\":\"maria@gmail.com\""), "Maria's email");
+      assertTrue(reply.getRecords()[1].contains("\"Object_Email_Address_Email\":\"maria@pbr.com.br\""), "Maria's email");
+
+      String adpBossRid = gridWrapperGetRid("[\n" +
+          "  {\n" +
+          "    \"colId\": \"Person_Natural_Full_Name\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"equals\",\n" +
+          "    \"filter\": \"JOSÉ DORIVAL\"\n" +
+          "  }\n" +
+          "]", "Person_Natural",
+        new String[]{"Person_Natural_Full_Name"});
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_Full_Address", "Location_Address_Post_Code"},
+        "hasNeighbourId:" + adpBossRid);
+
+      replyStr = reply.getRecords()[0];
+      assertTrue(replyStr.contains("\"Location_Address_Full_Address\":\"AVENIDA DAS ROSAS 345, VISCONTI - FORTALEZA, 86758-557, BRASIL\""), "José's address");
+      assertTrue(replyStr.contains("\"Location_Address_Post_Code\":\"86758-557\""), "José's postal code");
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+//    formatAddress(street, number, complement, district, city, country, zip)}"
+//    Address with no street
+      String noStreet =
+        com.pontusvision.utils.LocationAddress.formatAddress("", "312", "Casa sobre lojas", "KLP", "Foz do Iguaçu", null, "Brasil", "85868-000");
+      assertEquals("312 CASA SOBRE LOJAS, KLP - FOZ DO IGUAÇU, 85868-000, BRASIL", noStreet);
+//    Address with no number nor district
+      String noNumNoDistrict =
+        com.pontusvision.utils.LocationAddress.formatAddress("avenida das julias", "", "apartamento 6", "", "Capanema", null, "Brasil", "81639-764");
+      assertEquals("AVENIDA DAS JULIAS SN APARTAMENTO 6 - CAPANEMA, 81639-764, BRASIL", noNumNoDistrict);
+//    Address without city
+      String noCity =
+        com.pontusvision.utils.LocationAddress.formatAddress("rua minerva dias", "209", "andar 9", "bairro ferraz", "", null, "Brasil", "87842-091");
+      assertEquals("RUA MINERVA DIAS 209 ANDAR 9, BAIRRO FERRAZ, 87842-091, BRASIL", noCity);
+
+      reply = gridWrapper(null, "Location_Address", new String[]{"Location_Address_parser_house_number"},
+              "hasNeighbourId:" + adpPersonRid);
+      replyStr = reply.getRecords()[0];
+
+      assertTrue(replyStr.contains("\"Location_Address_parser_house_number\":\"[semnumero, sinnumero, sn]\""),
+              "NLP translates SN to sem número (Portuguese) and sin numero (Spanish)");
+
+    } catch (Exception e) { 
       e.printStackTrace();
       assertNull(e);
 

@@ -33,6 +33,15 @@ updatereq:
           val: SHAREPOINT/PRIVACY-NOTICE
           mandatoryInSearch: True
     
+    - label: Object_Data_Procedures
+      props:
+        - name: Object_Data_Procedures_Form_Id
+          val: ${new groovy.json.JsonBuilder(Mapeamento_x0020_de_x0020_Proces)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
+    
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
@@ -80,4 +89,7 @@ updatereq:
   - label: Has_Ingestion_Event
     fromVertexLabel: Object_Privacy_Notice
     toVertexLabel: Event_Ingestion
+  - label: Has_RoPA_Privacy_Notice
+    fromVertexLabel: Object_Data_Procedures
+    toVertexLabel: Object_Privacy_Notice
 

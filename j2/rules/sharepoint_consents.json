@@ -64,14 +64,8 @@
           {
             "name": "Person_Natural_Customer_ID",
             "val": "${identity?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Natural_Last_Update_Date",
-            "val": "${Modified}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
           }
         ]
       },
