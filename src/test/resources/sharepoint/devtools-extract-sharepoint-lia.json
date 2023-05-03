@@ -32,12 +32,7 @@
         "fields": {
           "@odata.etag": "1238ac234-ac45bd67-ca5161047-g231128-12aa",
           "Title": "LIA-Abertura-Chamados",
-          "Refer_x00ea_nciadoMapeamentodePr": [
-            {
-              "LookupId": 404,
-              "LookupValue": "4"
-            }
-          ],
+          "Refer_x00ea_nciadoMapeamentodePrLookupId": "404",
           "Comootratamentodedadospessoais_x": "",
           "Descreveroaspectodotratamentodos": "",
           "Afinalidadepoderiaseralcan_x00e7": "Sim",
@@ -86,12 +81,7 @@
         "fields": {
           "@odata.etag": "1238ac234-ac45bd67-ca5161047-g231128-12aa",
           "Title": "LIA-Assistência-Técnica",
-          "Refer_x00ea_nciadoMapeamentodePr": [
-            {
-              "LookupId": 406,
-              "LookupValue": "6"
-            }
-          ],
+          "Refer_x00ea_nciadoMapeamentodePrLookupId": "406",
           "Comootratamentodedadospessoais_x": "O objetivo deste tratamento é que o próprio titular consiga registrar suas despesas e solicite seu reembolso, isso entra como uma agilidade em nossas operações.",
           "Descreveroaspectodotratamentodos": "O tratamento em questão utilizou por um determinado período um dado sensível (Saúde) - devido a pandemia COVID-19 - para liberação de acesso, contudo, o próprio titular que preenchia a uma ficha e nos enviava. O objetivo principal era controlarmos a propagação do vírus.",
           "Afinalidadepoderiaseralcan_x00e7": "Não",
