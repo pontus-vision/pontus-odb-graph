@@ -249,6 +249,9 @@ public class PVSharepointTests extends AppTest {
       reply = gridWrapper(null, "Event_Ingestion", new String[]{"Event_Ingestion_Type"}, "hasNeighbourId:" + LIARid);
       assertTrue(reply.getRecords()[0].contains("\"Event_Ingestion_Type\":\"sharepoint/legitimate-interests-assessment\""));
 
+      reply = gridWrapper(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_Name"}, "hasNeighbourId:" + LIARid);
+      assertTrue(reply.getRecords()[0].contains("\"Object_Data_Procedures_Name\":\"Prestadores de Serviços e Fornecedores\""), "LIA connected to RoPA 6");
+
     } catch (Exception e) {
       e.printStackTrace();
       assertNull(e, e.getMessage());

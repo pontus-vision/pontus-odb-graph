@@ -27,13 +27,13 @@
           },
           {
             "name": "Object_Legitimate_Interests_Assessment_Strategic_Impact",
-            "val": "${Comootratamentodedadospessoais_x}",
+            "val": "${Comootratamentodedadospessoais_x?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
           {
             "name": "Object_Legitimate_Interests_Assessment_Ethical_Impact",
-            "val": "${Descreveroaspectodotratamentodos}",
+            "val": "${Descreveroaspectodotratamentodos?.trim()}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
@@ -62,11 +62,8 @@
         "props": [
           {
             "name": "Object_Data_Procedures_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Refer_x00ea_nciadoMapeamentodePr)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+            "val": "${Refer_x00ea_nciadoMapeamentodePrLookupId}",
+            "mandatoryInSearch": true
           }
         ]
       },

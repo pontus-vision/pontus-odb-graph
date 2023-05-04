@@ -1819,10 +1819,10 @@ rules:
             val: "${Title?.trim()?.toUpperCase()}"
             excludeFromSearch: true
           Strategic_Impact:
-            val: "${Comootratamentodedadospessoais_x}"
+            val: "${Comootratamentodedadospessoais_x?.trim()}"
             excludeFromSearch: true
           Ethical_Impact:
-            val: "${Descreveroaspectodotratamentodos}"
+            val: "${Descreveroaspectodotratamentodos?.trim()}"
             excludeFromSearch: true
           Is_Essential:
             val: "\"${Afinalidadepoderiaseralcan_x00e7?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}\""
@@ -1836,11 +1836,7 @@ rules:
 
       - label: Object_Data_Procedures
         props:
-          Form_Id:
-            val: "${new groovy.json.JsonBuilder(Refer_x00ea_nciadoMapeamentodePr)}"
-            type: "[Lcom.pontusvision.utils.SharepointRef;"
-            postProcessor: "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-            processAll: true
+          Form_Id: "${Refer_x00ea_nciadoMapeamentodePrLookupId}"
 
       - label: Event_Ingestion
         props:
