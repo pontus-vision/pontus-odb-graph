@@ -69,7 +69,6 @@ public class TestAWSCloudDirectory {
     client.createObject(CreateObjectRequest.builder().directoryArn("arn:aws:clouddirectory:us-west-2:723510791261:directory/AVdQcSCGPkWAs4G9B9dMiD4")
       .objectAttributeList(objectAttributeList)
       .schemaFacets(schemaFacet)
-                            .
 //      .parentReference(objectReference).linkName("")
       .build());
 
