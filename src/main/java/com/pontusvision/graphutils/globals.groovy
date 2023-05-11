@@ -12,6 +12,7 @@ import com.orientechnologies.orient.core.metadata.schema.OType
 import com.orientechnologies.orient.core.record.impl.ODocument
 import com.orientechnologies.orient.core.sql.executor.OResultSet
 import com.pontusvision.gdpr.App
+import com.pontusvision.graphutils.gdpr
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import groovy.json.StringEscapeUtils
@@ -608,6 +609,27 @@ class PontusJ2ReportingFunctions {
         return 5
       }
     }
+
+  static int liaSVScoreRopaSensitiveData(String lia_id){
+    try {
+      OResultSet resultSet = App.graph.executeSql(
+      """
+      SELECT count(*) as ct
+      FROM Object_Legitimate_Interests_Assessment
+      WHERE @rid = :lia_id
+      AND (in('Has_Legitimate_Interests_Assessment').out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (in('Has_Legitimate_Interests_Assessment').out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())
+      """,
+      ['sd': gdpr.sensitiveData, 'lia_id': lia_id])?.getRawResultSet()
+
+      long numDataProcsWithSensitiveData = resultSet?.next()?.getProperty('ct')
+      resultSet.close()
+
+      return numDataProcsWithSensitiveData > 0 ? 120 : 5
+
+    } catch (Throwable t) {
+      return 5
+    }
+  }
 
     static int liaScoreContractHasMinors(String lia_id){
 //      def lia = App.g.V(new ORecordId(lia_id)).elementMap()[0]
@@ -1440,6 +1462,9 @@ class PontusJ2ReportingFunctions {
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaScoreRopaSensitiveData",
             PontusJ2ReportingFunctions.class, "liaScoreRopaSensitiveData", String.class))
+
+    PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaSVScoreRopaSensitiveData",
+            PontusJ2ReportingFunctions.class, "liaSVScoreRopaSensitiveData", String.class))
 
     PontusJ2ReportingFunctions.jinJava.getGlobalContext().registerFunction(new ELFunctionDefinition("pv", "liaScoreContractHasMinors",
             PontusJ2ReportingFunctions.class, "liaScoreContractHasMinors", String.class))
