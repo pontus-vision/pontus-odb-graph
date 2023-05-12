@@ -105,4 +105,52 @@ public class PVLiaScoreTests extends AppTest {
 
   }
 
+  @Test
+  public void test00002liaScoreSV() throws InterruptedException {
+
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-fontes-de-dados.json", "$.queryResp[*].fields", "sharepoint_fontes_de_dados");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-mapeamento-de-processo.json", "$.queryResp[*].fields", "sharepoint_mapeamentos");
+    jsonTestUtil("sharepoint/devtools-extract-sharepoint-contracts.json", "$.queryResp[*].fields", "sharepoint_contracts");
+    jsonTestUtil("sharepoint/pv-extract-sharepoint-incidentes-de-seguranca-reportados.json", "$.queryResp[*].fields", "sharepoint_data_breaches");
+    jsonTestUtil("sharepoint/devtools-extract-sharepoint-lia.json", "$.queryResp[*].fields", "sharepoint_lia");
+
+    try {
+
+      // The greater the Score ... THE WORSE !!!!!!!!!
+
+      String liaRid1 = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Legitimate_Interests_Assessment_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"3\"\n" +
+                      "  }\n" +
+                      "]", "Object_Legitimate_Interests_Assessment",
+              new String[]{"Object_Legitimate_Interests_Assessment_Form_Id"});
+
+      int lia1SVScoreRopaSensitiveData = PontusJ2ReportingFunctions.liaSVScoreRopaSensitiveData(liaRid1);
+      assertEquals(120, lia1SVScoreRopaSensitiveData, "this LIA is attached to a RoPA WITH sensitive data");
+      // Object_Legitimate_Interests_Assessment_Ethical_Impact is not empty = "ética"
+
+      String liaRid2 = gridWrapperGetRid("[\n" +
+                      "  {\n" +
+                      "    \"colId\": \"Object_Legitimate_Interests_Assessment_Form_Id\",\n" +
+                      "    \"filterType\": \"text\",\n" +
+                      "    \"type\": \"equals\",\n" +
+                      "    \"filter\": \"1\"\n" +
+                      "  }\n" +
+                      "]", "Object_Legitimate_Interests_Assessment",
+              new String[]{"Object_Legitimate_Interests_Assessment_Form_Id"});
+
+      int lia2SVScoreRopaSensitiveData = PontusJ2ReportingFunctions.liaSVScoreRopaSensitiveData(liaRid2);
+      assertEquals(5, lia2SVScoreRopaSensitiveData, "this LIA is attached to a RoPA WITHOUT sensitive data");
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      assertNull(e);
+
+    }
+
+  }
+
 }

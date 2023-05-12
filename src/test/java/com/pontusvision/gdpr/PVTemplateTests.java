@@ -365,7 +365,7 @@ public class PVTemplateTests extends AppTest {
       renderReply = res.reportTemplateRender(renderReq);
 
       report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
-      assertEquals("", report);
+      assertEquals("true", report);
 
 
       // test a non-existent  LIA for entry number 5 with a bad template without bounds checks
@@ -559,15 +559,15 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      String expectedReport = "123-Nome do Usuário, E-mail Corporativo\n" +
-              "CADASTRAMENTO DE CLIENTES PJ-E-mail Corporativo, Nome da Empresa, Telefone, Dados Bancários\n" +
+      String expectedReport = "Prontuário do colaborador-Nome Completo, Data de Nascimento, Local de Nascimento, Estado Civil, RG, CPF, Comprovante de Residência, Certificado de Escolaridade, PIS, Certidão de Casamento, Certidão de Nascimento, Dados Bancários, Raça, Filiação a sindicato, Dados de saúde\n" +
               "GERENCIAMENTO DE PRESTADORES DE SERVIÇOS EXTERNOS-CPF, Nome, RG, Ocupação, E-mail, Endereço\n" +
-              "GERENCIAMENTO DO E-MAIL MARKETING - CLIENTES-Endereço, Nome, Telefone, Ocupação, E-mail\n" +
               "GESTÃO DE ACESSO (RECEPÇÃO)-RG, Nome\n" +
-              "GESTÃO DE CURRÍCULOS-Endereço, Nome Completo, Data de Nascimento, Estado Civil, E-mail\n" +
-              "GESTÃO DE LEADS - SITE-E-mail, Nome Completo, Telefone, Ocupação, Estado Civil\n" +
+              "CADASTRAMENTO DE CLIENTES PJ-E-mail Corporativo, Nome da Empresa, Telefone, Dados Bancários\n" +
+              "123-Nome do Usuário, E-mail Corporativo\n" +
+              "GERENCIAMENTO DO E-MAIL MARKETING - CLIENTES-Endereço, Nome, Telefone, Ocupação, E-mail\n" +
               "HOMOLOGAÇÃO DE FORNECEDORES-Nome, CPF, RG, Telefone, Endereço, E-mail, Responsáveis Legais da Empresa Fornecedora\n" +
-              "Prontuário do colaborador-Nome Completo, Data de Nascimento, Local de Nascimento, Estado Civil, RG, CPF, Comprovante de Residência, Certificado de Escolaridade, PIS, Certidão de Casamento, Certidão de Nascimento, Dados Bancários\n";
+              "GESTÃO DE CURRÍCULOS-Endereço, Nome Completo, Data de Nascimento, Estado Civil, E-mail\n" +
+              "GESTÃO DE LEADS - SITE-E-mail, Nome Completo, Telefone, Ocupação, Estado Civil\n";
       assertEquals(sortLines(expectedReport), sortLines(report), "Expecting ROPA to have a Lawful Basis");
 
 
