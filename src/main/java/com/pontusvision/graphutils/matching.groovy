@@ -2262,7 +2262,7 @@ class Matcher {
 
     final String sqlStr = isPureSelect ? "SELECT EXPAND (@rid) FROM ${vertexLabel} ${whereClause}" : isPureInsert ?
             "INSERT INTO `${vertexLabel}` CONTENT ${jsonToMerge}" :
-            "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT  RETURN AFTER ${whereClause} LOCK record LIMIT 1 "
+            "UPDATE `${vertexLabel}` MERGE ${jsonToMerge}  UPSERT RETURN AFTER ${whereClause} LOCK record LIMIT 1"
     final def retVals = App.graph.executeSql(sqlStr, sqlParams)
     retVals.each { OGremlinResult result ->
 
