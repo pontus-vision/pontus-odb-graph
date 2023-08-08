@@ -106,11 +106,11 @@
 <!--      <artifactId>clouddirectory</artifactId>-->
 <!--      <version>2.20.26</version>-->
 <!--    </dependency>-->
-    <dependency>
+    <!--dependency>
       <groupId>software.amazon.awssdk</groupId>
       <artifactId>auth</artifactId>
       <version>2.20.26</version>
-    </dependency>
+    </dependency -->
     <dependency>
 
       <groupId>com.amazonaws.serverless</groupId>
