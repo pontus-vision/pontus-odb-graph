@@ -427,7 +427,10 @@
             "PIS",
             "Certidão de Casamento",
             "Certidão de Nascimento",
-            "Dados Bancários"
+            "Dados Bancários",
+            "Raça",
+            "Filiação a sindicato",
+            "Dados de saúde"
           ],
           "Local_x0020_de_x0020_Armazenamen": [
             {

@@ -18,11 +18,11 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Strategic_Impact
-          val: ${Comootratamentodedadospessoais_x}
+          val: ${Comootratamentodedadospessoais_x?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Ethical_Impact
-          val: ${Descreveroaspectodotratamentodos}
+          val: ${Descreveroaspectodotratamentodos?.trim()}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Legitimate_Interests_Assessment_Is_Essential
@@ -41,11 +41,8 @@ updatereq:
     - label: Object_Data_Procedures
       props:
         - name: Object_Data_Procedures_Form_Id
-          val: ${new groovy.json.JsonBuilder(Refer_x00ea_nciadoMapeamentodePr)}
+          val: ${Refer_x00ea_nciadoMapeamentodePrLookupId}
           mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
     
     - label: Event_Ingestion
       props:
