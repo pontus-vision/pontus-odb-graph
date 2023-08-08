@@ -467,25 +467,31 @@ class FileNLPRequest implements Serializable {
     int count = 0
     for (ORID orid : (retVal as Set<ORID>)) {
 
-      String custId = App.g.V(orid).values('Person_Natural_Customer_ID').next().toString()
-      def nlpGroupTrav =
-              App.g.V().has('Event_NLP_Group_Person_Id', custId)
-                      .has('Event_NLP_Group_Ingestion_Date', currDate)
-                      .id()
+      def custIdTrav = App.g.V(orid).values('Person_Natural_Customer_ID')
 
-      def nlpGroupVtxId
-      if (nlpGroupTrav.hasNext()) {
-        nlpGroupVtxId = nlpGroupTrav.next()
-      } else {
-        nlpGroupVtxId = App.g.addV('Event_NLP_Group')
-                .property('Event_NLP_Group_Person_Id', custId)
-                .property('Event_NLP_Group_Ingestion_Date', currDate).id().next()
-      }
-      upsertEdge(emailBodyOrAttachment, nlpGroupVtxId, 'Has_NLP_Events')
-      upsertEdge(nlpGroupVtxId, orid, 'Has_NLP_Events')
-      count++
-      if (count >= maxThreshold) {
-        break
+      if (custIdTrav?.hasNext()) {
+
+
+        String custId = custIdTrav.next().toString()
+        def nlpGroupTrav =
+                App.g.V().has('Event_NLP_Group_Person_Id', custId)
+                        .has('Event_NLP_Group_Ingestion_Date', currDate)
+                        .id()
+
+        def nlpGroupVtxId
+        if (nlpGroupTrav.hasNext()) {
+          nlpGroupVtxId = nlpGroupTrav.next()
+        } else {
+          nlpGroupVtxId = App.g.addV('Event_NLP_Group')
+                  .property('Event_NLP_Group_Person_Id', custId)
+                  .property('Event_NLP_Group_Ingestion_Date', currDate).id().next()
+        }
+        upsertEdge(emailBodyOrAttachment, nlpGroupVtxId, 'Has_NLP_Events')
+        upsertEdge(nlpGroupVtxId, orid, 'Has_NLP_Events')
+        count++
+        if (count >= maxThreshold) {
+          break
+        }
       }
     }
     if (retVal.size() == 0) {

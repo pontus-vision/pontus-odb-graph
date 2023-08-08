@@ -1,1043 +1,1055 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>pv-gdpr</groupId>
-    <artifactId>pontus-odb-graph</artifactId>
-    <version>2.0.0</version>
-    <packaging>jar</packaging>
+  <groupId>pv-gdpr</groupId>
+  <artifactId>pontus-odb-graph</artifactId>
+  <version>2.0.0</version>
+  <packaging>jar</packaging>
 
-    <name>com.pontusvision.gdpr</name>
-    <url>https://maven.apache.org</url>
+  <name>com.pontusvision.gdpr</name>
+  <url>https://maven.apache.org</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
 
-        <jetty-version>9.4.39.v20210325</jetty-version>
-        <jersey-version>2.33</jersey-version>
-        <tinkerpop-version>3.4.7</tinkerpop-version>
-        <slf4j.version>1.7.25</slf4j.version>
-        <jackson2.version>2.13.3</jackson2.version>
-        <hadoop2.version>2.7.2</hadoop2.version>
+    <jetty-version>9.4.39.v20210325</jetty-version>
+    <jersey-version>2.33</jersey-version>
+    <tinkerpop-version>3.4.7</tinkerpop-version>
+    <slf4j.version>1.7.25</slf4j.version>
+    <jackson2.version>2.13.3</jackson2.version>
+    <hadoop2.version>2.7.2</hadoop2.version>
 
-        <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
-        <junit.jupiter.version>5.8.1</junit.jupiter.version>
-        <junit.pioneer.version>1.5.0</junit.pioneer.version>
-        <junit.platform.version>1.8.1</junit.platform.version>
-        <!--        <junit.version>4.12</junit.version>-->
-        <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
-        <fmt-maven-plugin.version>2.1.0</fmt-maven-plugin.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
-        <mockito-all.version>3.6.28</mockito-all.version>
-        <jukito.version>1.5</jukito.version>
-        <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
-        <pontus-natty.version>100.15</pontus-natty.version>
-        <netty-version>4.1.70.Final</netty-version>
-        <orientdb-version>3.2.8</orientdb-version>
-        <!--guava-version>30.1.1-jre</guava-version-->
-        <guava-version>25.0-jre</guava-version>
-        <aws-lambda-version>1.6.1</aws-lambda-version>
-        <apache-commons-configuration.version>2.7</apache-commons-configuration.version>
-        <apache-commons-csv.version>1.8</apache-commons-csv.version>
-        <!--<apache.directory-api-version>
-            1.0.0
-        </apache.directory-api-version>-->
+    <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
+    <junit.jupiter.version>5.8.1</junit.jupiter.version>
+    <junit.pioneer.version>1.5.0</junit.pioneer.version>
+    <junit.platform.version>1.8.1</junit.platform.version>
+    <!--        <junit.version>4.12</junit.version>-->
+    <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
+    <fmt-maven-plugin.version>2.1.0</fmt-maven-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+    <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
+    <mockito-all.version>3.6.28</mockito-all.version>
+    <jukito.version>1.5</jukito.version>
+    <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
+    <pontus-natty.version>100.15</pontus-natty.version>
+    <netty-version>4.1.70.Final</netty-version>
+    <orientdb-version>3.2.8</orientdb-version>
+    <!--guava-version>30.1.1-jre</guava-version-->
+    <guava-version>25.0-jre</guava-version>
+    <aws-lambda-version>1.6.1</aws-lambda-version>
+    <aws-cloud-directory></aws-cloud-directory>
+    <apache-commons-configuration.version>2.7</apache-commons-configuration.version>
+    <apache-commons-csv.version>1.8</apache-commons-csv.version>
+    <!--<apache.directory-api-version>
+        1.0.0
+    </apache.directory-api-version>-->
 
-        <java-jwt.version>3.18.2</java-jwt.version>
-        <jnr-posix.version>3.0.50</jnr-posix.version>
-        <openhtmltopdf-core.version>1.0.10</openhtmltopdf-core.version>
-        <openhtmltopdf-pdfbox.version>1.0.10</openhtmltopdf-pdfbox.version>
-        <jsoup.version>1.15.3</jsoup.version>
-    </properties>
-    <!--    <dependencyManagement>-->
-    <!--        <dependencies>-->
-    <!--            <dependency>-->
-    <!--                <groupId>org.junit</groupId>-->
-    <!--                <artifactId>junit-bom</artifactId>-->
-    <!--                <version>${junit.jupiter.version}</version>-->
-    <!--                <scope>import</scope>-->
-    <!--                <type>pom</type>-->
-    <!--            </dependency>-->
-    <!--        </dependencies>-->
-    <!--    </dependencyManagement>-->
+    <java-jwt.version>3.18.2</java-jwt.version>
+    <jnr-posix.version>3.0.50</jnr-posix.version>
+    <openhtmltopdf-core.version>1.0.10</openhtmltopdf-core.version>
+    <openhtmltopdf-pdfbox.version>1.0.10</openhtmltopdf-pdfbox.version>
+    <jsoup.version>1.15.3</jsoup.version>
+  </properties>
+  <!--    <dependencyManagement>-->
+  <!--        <dependencies>-->
+  <!--            <dependency>-->
+  <!--                <groupId>org.junit</groupId>-->
+  <!--                <artifactId>junit-bom</artifactId>-->
+  <!--                <version>${junit.jupiter.version}</version>-->
+  <!--                <scope>import</scope>-->
+  <!--                <type>pom</type>-->
+  <!--            </dependency>-->
+  <!--        </dependencies>-->
+  <!--    </dependencyManagement>-->
 
-    <dependencies>
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.commons</groupId>-->
-        <!--            <artifactId>commons-csv</artifactId>-->
-        <!--            <version>${apache-commons-csv.version}</version>-->
-        <!--        </dependency>-->
-        <dependency>
-            <!-- ALWAYS required, usually included transitively. -->
-            <groupId>com.openhtmltopdf</groupId>
-            <artifactId>openhtmltopdf-core</artifactId>
-            <version>${openhtmltopdf-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
-        </dependency>
-        <dependency>
-            <!-- Required for PDF output. -->
-            <groupId>com.openhtmltopdf</groupId>
-            <artifactId>openhtmltopdf-pdfbox</artifactId>
-            <version>${openhtmltopdf-pdfbox.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>${java-jwt.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.amazonaws.serverless</groupId>
-            <artifactId>aws-serverless-java-container-jersey</artifactId>
-            <version>${aws-lambda-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-io</groupId>
-                    <artifactId>commons-io</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpcore</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.glassfish.jersey.core</groupId>
-                    <artifactId>jersey-server</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+  <dependencies>
+    <!--        <dependency>-->
+    <!--            <groupId>org.apache.commons</groupId>-->
+    <!--            <artifactId>commons-csv</artifactId>-->
+    <!--            <version>${apache-commons-csv.version}</version>-->
+    <!--        </dependency>-->
+    <dependency>
+      <!-- ALWAYS required, usually included transitively. -->
+      <groupId>com.openhtmltopdf</groupId>
+      <artifactId>openhtmltopdf-core</artifactId>
+      <version>${openhtmltopdf-core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>${jsoup.version}</version>
+    </dependency>
+    <dependency>
+      <!-- Required for PDF output. -->
+      <groupId>com.openhtmltopdf</groupId>
+      <artifactId>openhtmltopdf-pdfbox</artifactId>
+      <version>${openhtmltopdf-pdfbox.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.auth0</groupId>
+      <artifactId>java-jwt</artifactId>
+      <version>${java-jwt.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>software.amazon.awssdk</groupId>-->
+<!--      <artifactId>clouddirectory</artifactId>-->
+<!--      <version>2.20.26</version>-->
+<!--    </dependency>-->
+    <!--dependency>
+      <groupId>software.amazon.awssdk</groupId>
+      <artifactId>auth</artifactId>
+      <version>2.20.26</version>
+    </dependency -->
+    <dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-configuration2 -->
-        <!--dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-configuration2</artifactId>
-            <version>${apache-commons-configuration.version}</version>
-            <exclusions>
-                <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></exclusion>
-            </exclusions>
-        </dependency-->
+      <groupId>com.amazonaws.serverless</groupId>
+      <artifactId>aws-serverless-java-container-jersey</artifactId>
+      <version>${aws-lambda-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-io</groupId>
+          <artifactId>commons-io</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpclient</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpcore</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.glassfish.jersey.core</groupId>
+          <artifactId>jersey-server</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-        <!--        by Omar Ghoche-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.commons</groupId>-->
-        <!--            <artifactId>commons-lang3</artifactId>-->
-        <!--            <version>3.1</version>-->
-        <!--        </dependency>-->
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-configuration2 -->
+    <!--dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-configuration2</artifactId>
+        <version>${apache-commons-configuration.version}</version>
+        <exclusions>
+            <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></exclusion>
+        </exclusions>
+    </dependency-->
 
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava-version}</version>
-            <!--            <type>bundle</type>-->
-        </dependency>
-        <dependency>
-            <groupId>com.orientechnologies</groupId>
-            <artifactId>orientdb-client</artifactId>
-            <version>${orientdb-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.github.jnr</groupId>
-                    <artifactId>jnr-posix</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.graalvm.js</groupId>
-                    <artifactId>js</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.github.jnr</groupId>
-            <artifactId>jnr-posix</artifactId>
-            <version>${jnr-posix.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.orientechnologies</groupId>
-            <artifactId>orientdb-community</artifactId>
-            <version>${orientdb-version}</version>
-            <!--exclusions>
-                <exclusion><groupId>javax.xml.bind</groupId><artifactId>jaxb-api</artifactId></exclusion>
-                <exclusion><groupId>com.carrotsearch</groupId><artifactId>hppc</artifactId></exclusion>
-            </exclusions!-->
-        </dependency>
-        <dependency>
-            <groupId>com.orientechnologies</groupId>
-            <artifactId>orientdb-object</artifactId>
-            <version>${orientdb-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.orientechnologies</groupId>
-            <artifactId>orientdb-lucene</artifactId>
-            <version>${orientdb-version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.orientechnologies</groupId>
-            <artifactId>orientdb-gremlin</artifactId>
-            <version>${orientdb-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.carrotsearch</groupId>
-                    <artifactId>hppc</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
-                </exclusion>
-
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-                <!--exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-server</artifactId></exclusion>
-                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-driver</artifactId></exclusion>
-                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-core</artifactId></exclusion>
-                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-groovy</artifactId></exclusion>
-                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>tinkergraph-gremlin</artifactId></exclusion>
-                <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></exclusion-->
-            </exclusions>
-
-        </dependency>
-
-        <dependency>
-            <groupId>com.carrotsearch</groupId>
-            <artifactId>hppc</artifactId>
-            <version>0.7.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.orientechnologies</groupId>
-            <artifactId>orientdb-gremlin-server</artifactId>
-            <version>${orientdb-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>jcl-over-slf4j</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.carrotsearch</groupId>
-                    <artifactId>hppc</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
-                </exclusion>
-
-                <!--exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-server</artifactId></exclusion>
-                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-driver</artifactId></exclusion>
-                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-core</artifactId></exclusion>
-                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-groovy</artifactId></exclusion>
-                <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>tinkergraph-gremlin</artifactId></exclusion>
-                <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></exclusion-->
+    <!--        by Omar Ghoche-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.apache.commons</groupId>-->
+    <!--            <artifactId>commons-lang3</artifactId>-->
+    <!--            <version>3.1</version>-->
+    <!--        </dependency>-->
 
 
-            </exclusions>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava-version}</version>
+      <!--            <type>bundle</type>-->
+    </dependency>
+    <dependency>
+      <groupId>com.orientechnologies</groupId>
+      <artifactId>orientdb-client</artifactId>
+      <version>${orientdb-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.github.jnr</groupId>
+          <artifactId>jnr-posix</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.graalvm.js</groupId>
+          <artifactId>js</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.github.jnr</groupId>
+      <artifactId>jnr-posix</artifactId>
+      <version>${jnr-posix.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.orientechnologies</groupId>
+      <artifactId>orientdb-community</artifactId>
+      <version>${orientdb-version}</version>
+      <!--exclusions>
+          <exclusion><groupId>javax.xml.bind</groupId><artifactId>jaxb-api</artifactId></exclusion>
+          <exclusion><groupId>com.carrotsearch</groupId><artifactId>hppc</artifactId></exclusion>
+      </exclusions!-->
+    </dependency>
+    <dependency>
+      <groupId>com.orientechnologies</groupId>
+      <artifactId>orientdb-object</artifactId>
+      <version>${orientdb-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.orientechnologies</groupId>
+      <artifactId>orientdb-lucene</artifactId>
+      <version>${orientdb-version}</version>
+    </dependency>
 
-        </dependency>
+    <dependency>
+      <groupId>com.orientechnologies</groupId>
+      <artifactId>orientdb-gremlin</artifactId>
+      <version>${orientdb-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.carrotsearch</groupId>
+          <artifactId>hppc</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.yaml</groupId>
+          <artifactId>snakeyaml</artifactId>
+        </exclusion>
 
-        <dependency>
-            <groupId>org.apache.tinkerpop</groupId>
-            <artifactId>gremlin-driver</artifactId>
-            <version>${tinkerpop-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.carrotsearch</groupId>
-                    <artifactId>hppc</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-lang3</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-configuration</groupId>
-                    <artifactId>commons-configuration</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.netty</groupId>
-                    <artifactId>netty-all</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+        <!--exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-server</artifactId></exclusion>
+        <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-driver</artifactId></exclusion>
+        <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-core</artifactId></exclusion>
+        <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-groovy</artifactId></exclusion>
+        <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>tinkergraph-gremlin</artifactId></exclusion>
+        <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></exclusion-->
+      </exclusions>
 
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.tinkerpop</groupId>-->
-        <!--            <artifactId>spark-gremlin</artifactId>-->
-        <!--            <version>${tinkerpop-version}</version>-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.glassfish.jersey.core</groupId>-->
-        <!--                    <artifactId>jersey-client</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>com.google.code.gson</groupId>-->
-        <!--                    <artifactId>gson</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>com.fasterxml.jackson.core</groupId>-->
-        <!--                    <artifactId>jackson-core</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.glassfish.jersey.containers</groupId>-->
-        <!--                    <artifactId>jersey-container-servlet-core</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.glassfish.jersey.core</groupId>-->
-        <!--                    <artifactId>jersey-common</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.glassfish.jersey.core</groupId>-->
-        <!--                    <artifactId>jersey-server</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>commons-codec</groupId>-->
-        <!--                    <artifactId>commons-codec</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>commons-configuration</groupId>-->
-        <!--                    <artifactId>commons-configuration</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>io.netty</groupId>-->
-        <!--                    <artifactId>netty-all</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>javax.ws.rs</groupId>-->
-        <!--                    <artifactId>javax.ws.rs-api</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.apache.commons</groupId>-->
-        <!--                    <artifactId>commons-math3</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.apache.httpcomponents</groupId>-->
-        <!--                    <artifactId>httpclient</artifactId>-->
-        <!--                </exclusion>-->
+    </dependency>
 
-        <!--                <exclusion>-->
-        <!--                    <groupId>commons-configuration</groupId>-->
-        <!--                    <artifactId>commons-configuration</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>com.google.guava</groupId>-->
-        <!--                    <artifactId>guava</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>javax.ws.rs</groupId>-->
-        <!--                    <artifactId>javax.ws.rs-api</artifactId>-->
-        <!--                </exclusion>-->
+    <dependency>
+      <groupId>com.carrotsearch</groupId>
+      <artifactId>hppc</artifactId>
+      <version>0.7.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.orientechnologies</groupId>
+      <artifactId>orientdb-gremlin-server</artifactId>
+      <version>${orientdb-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.carrotsearch</groupId>
+          <artifactId>hppc</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.yaml</groupId>
+          <artifactId>snakeyaml</artifactId>
+        </exclusion>
 
-        <!--                <exclusion>-->
-        <!--                    <groupId>commons-collections</groupId>-->
-        <!--                    <artifactId>commons-collections</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>commons-lang</groupId>-->
-        <!--                    <artifactId>commons-lang</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.apache.commons</groupId>-->
-        <!--                    <artifactId>commons-lang3</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.slf4j</groupId>-->
-        <!--                    <artifactId>slf4j-api</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
-
-        <!-- LPPM - adding additional dependencies to enable epoll on Linux -->
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-transport</artifactId>
-            <version>${netty-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-transport-native-epoll</artifactId>
-            <version>${netty-version}</version>
-            <classifier>linux-x86_64</classifier>
-        </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>${netty-version}</version>
-        </dependency>
+        <!--exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-server</artifactId></exclusion>
+        <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-driver</artifactId></exclusion>
+        <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-core</artifactId></exclusion>
+        <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>gremlin-groovy</artifactId></exclusion>
+        <exclusion><groupId>org.apache.tinkerpop</groupId><artifactId>tinkergraph-gremlin</artifactId></exclusion>
+        <exclusion><groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId></exclusion-->
 
 
-        <dependency>
-            <groupId>com.pontusvision</groupId>
-            <artifactId>pontus-jpostal</artifactId>
-            <version>${pontus-jpostal.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.pontusvision</groupId>
-            <artifactId>pontus-natty</artifactId>
-            <version>${pontus-natty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-            <version>[7.9,)</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.ow2.asm</groupId>
-                    <artifactId>asm</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
+      </exclusions>
 
-            </exclusions>
+    </dependency>
 
-        </dependency>
+    <dependency>
+      <groupId>org.apache.tinkerpop</groupId>
+      <artifactId>gremlin-driver</artifactId>
+      <version>${tinkerpop-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.carrotsearch</groupId>
+          <artifactId>hppc</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-configuration</groupId>
+          <artifactId>commons-configuration</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-all</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>2.6.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.ow2.asm</groupId>
-                    <artifactId>asm</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
+    <!--        <dependency>-->
+    <!--            <groupId>org.apache.tinkerpop</groupId>-->
+    <!--            <artifactId>spark-gremlin</artifactId>-->
+    <!--            <version>${tinkerpop-version}</version>-->
+    <!--            <exclusions>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.glassfish.jersey.core</groupId>-->
+    <!--                    <artifactId>jersey-client</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>com.google.code.gson</groupId>-->
+    <!--                    <artifactId>gson</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>com.fasterxml.jackson.core</groupId>-->
+    <!--                    <artifactId>jackson-core</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.glassfish.jersey.containers</groupId>-->
+    <!--                    <artifactId>jersey-container-servlet-core</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.glassfish.jersey.core</groupId>-->
+    <!--                    <artifactId>jersey-common</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.glassfish.jersey.core</groupId>-->
+    <!--                    <artifactId>jersey-server</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>commons-codec</groupId>-->
+    <!--                    <artifactId>commons-codec</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>commons-configuration</groupId>-->
+    <!--                    <artifactId>commons-configuration</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>io.netty</groupId>-->
+    <!--                    <artifactId>netty-all</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>javax.ws.rs</groupId>-->
+    <!--                    <artifactId>javax.ws.rs-api</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.apache.commons</groupId>-->
+    <!--                    <artifactId>commons-math3</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.apache.httpcomponents</groupId>-->
+    <!--                    <artifactId>httpclient</artifactId>-->
+    <!--                </exclusion>-->
 
-            </exclusions>
-        </dependency>
+    <!--                <exclusion>-->
+    <!--                    <groupId>commons-configuration</groupId>-->
+    <!--                    <artifactId>commons-configuration</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>com.google.guava</groupId>-->
+    <!--                    <artifactId>guava</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>javax.ws.rs</groupId>-->
+    <!--                    <artifactId>javax.ws.rs-api</artifactId>-->
+    <!--                </exclusion>-->
+
+    <!--                <exclusion>-->
+    <!--                    <groupId>commons-collections</groupId>-->
+    <!--                    <artifactId>commons-collections</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>commons-lang</groupId>-->
+    <!--                    <artifactId>commons-lang</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.apache.commons</groupId>-->
+    <!--                    <artifactId>commons-lang3</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.slf4j</groupId>-->
+    <!--                    <artifactId>slf4j-api</artifactId>-->
+    <!--                </exclusion>-->
+    <!--            </exclusions>-->
+    <!--        </dependency>-->
+
+    <!-- LPPM - adding additional dependencies to enable epoll on Linux -->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-transport</artifactId>
+      <version>${netty-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-transport-native-epoll</artifactId>
+      <version>${netty-version}</version>
+      <classifier>linux-x86_64</classifier>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>${netty-version}</version>
+    </dependency>
 
 
-        <dependency>
-            <groupId>com.hubspot.jinjava</groupId>
-            <artifactId>jinjava</artifactId>
-            <version>[2.6.0,)</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jsoup</groupId>
-                    <artifactId>jsoup</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.dataformat</groupId>
-                    <artifactId>jackson-dataformat-yaml</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
+    <dependency>
+      <groupId>com.pontusvision</groupId>
+      <artifactId>pontus-jpostal</artifactId>
+      <version>${pontus-jpostal.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.pontusvision</groupId>
+      <artifactId>pontus-natty</artifactId>
+      <version>${pontus-natty.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <version>[7.9,)</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.ow2.asm</groupId>
+          <artifactId>asm</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
 
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
+      </exclusions>
 
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-annotations</artifactId>
-                </exclusion>
-                <!--exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.dataformat</groupId>
-                    <artifactId>jackson-dataformat-yaml</artifactId>
-                </exclusion-->
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.javassist</groupId>
-                    <artifactId>javassist</artifactId>
-                </exclusion>
+    </dependency>
 
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-lang3</artifactId>
-                </exclusion>
+    <dependency>
+      <groupId>com.jayway.jsonpath</groupId>
+      <artifactId>json-path</artifactId>
+      <version>2.6.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.ow2.asm</groupId>
+          <artifactId>asm</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
 
-                <exclusion>
-                    <groupId>commons-net</groupId>
-                    <artifactId>commons-net</artifactId>
-                </exclusion>
-
-                <!-- exclusion><groupId>org.yaml</groupId><artifactId>snakeyaml</artifactId></exclusion-->
-            </exclusions>
-        </dependency>
+      </exclusions>
+    </dependency>
 
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>3.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20210307</version>
-        </dependency>
+    <dependency>
+      <groupId>com.hubspot.jinjava</groupId>
+      <artifactId>jinjava</artifactId>
+      <version>[2.6.0,)</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.jsoup</groupId>
+          <artifactId>jsoup</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.dataformat</groupId>
+          <artifactId>jackson-dataformat-yaml</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.17.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.17.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson2.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-annotations</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+        </exclusion>
+
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+        </exclusion>
+        <!--exclusion>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>${jackson2.version}</version>
-        </dependency>
-        <dependency>
+        </exclusion>
+        <exclusion>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>${jackson2.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson2.version}</version>
-        </dependency>
+        </exclusion-->
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.javassist</groupId>
+          <artifactId>javassist</artifactId>
+        </exclusion>
 
-        <dependency>
-            <groupId>org.jhades</groupId>
-            <artifactId>jhades</artifactId>
-            <version>1.0.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
-            <version>${jersey-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.javassist</groupId>
-                    <artifactId>javassist</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+        </exclusion>
 
-        <!--        <dependency>-->
-        <!--            <groupId>io.dropwizard.metrics</groupId>-->
-        <!--            <artifactId>metrics-core</artifactId>-->
-        <!--            <version>4.1.2</version>-->
-        <!--            <type>bundle</type>-->
-        <!--        </dependency>-->
-        <dependency>
-            <groupId>org.apache.tinkerpop</groupId>
-            <artifactId>gremlin-server</artifactId>
-            <version>${tinkerpop-version}</version>
-            <!--            <exclusions>-->
-            <!--                <exclusion>-->
-            <!--                    <groupId>com.codahale.metrics</groupId>-->
-            <!--                    <artifactId>metrics-core</artifactId>-->
-            <!--                </exclusion>-->
-            <!--            </exclusions>-->
+        <exclusion>
+          <groupId>commons-net</groupId>
+          <artifactId>commons-net</artifactId>
+        </exclusion>
 
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit.jupiter.version}</version>
-
-            <scope>test</scope>
-        </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.junit-pioneer</groupId>-->
-        <!--            <artifactId>junit-pioneer</artifactId>-->
-        <!--            <version>${junit.pioneer.version}</version>-->
-        <!--            <scope>test</scope>-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.junit.platform</groupId>-->
-        <!--                    <artifactId>junit-platform-launcher</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.junit.platform</groupId>-->
-        <!--                    <artifactId>junit-platform-commons</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.junit.jupiter</groupId>-->
-        <!--                    <artifactId>junit-jupiter-api</artifactId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.junit.jupiter</groupId>-->
-        <!--                    <artifactId>junit-jupiter-params</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-
-        <!--        </dependency>-->
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <version>${junit.platform.version}</version>
-            <scope>test</scope>
-
-        </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.junit.platform</groupId>-->
-        <!--            <artifactId>junit-platform-runner</artifactId>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.junit.jupiter</groupId>-->
-        <!--            <artifactId>junit-jupiter-api</artifactId>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
+        <!-- exclusion><groupId>org.yaml</groupId><artifactId>snakeyaml</artifactId></exclusion-->
+      </exclusions>
+    </dependency>
 
 
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-moxy</artifactId>
-            <version>${jersey-version}</version>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math3</artifactId>
+      <version>3.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20230227</version>
+    </dependency>
 
-        </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.17.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.17.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson2.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+      <version>${jackson2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>${jackson2.version}</version>
+    </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <version>${jersey-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-annotations</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>jakarta.activation</groupId>
-                    <artifactId>jakarta.activation-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>jakarta.xml.bind</groupId>
-                    <artifactId>jakarta.xml.bind-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+    <dependency>
+      <groupId>org.jhades</groupId>
+      <artifactId>jhades</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+      <version>${jersey-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.javassist</groupId>
+          <artifactId>javassist</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>${jersey-version}</version>
-        </dependency>
+    <!--        <dependency>-->
+    <!--            <groupId>io.dropwizard.metrics</groupId>-->
+    <!--            <artifactId>metrics-core</artifactId>-->
+    <!--            <version>4.1.2</version>-->
+    <!--            <type>bundle</type>-->
+    <!--        </dependency>-->
+    <dependency>
+      <groupId>org.apache.tinkerpop</groupId>
+      <artifactId>gremlin-server</artifactId>
+      <version>${tinkerpop-version}</version>
+      <!--            <exclusions>-->
+      <!--                <exclusion>-->
+      <!--                    <groupId>com.codahale.metrics</groupId>-->
+      <!--                    <artifactId>metrics-core</artifactId>-->
+      <!--                </exclusion>-->
+      <!--            </exclusions>-->
 
+    </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet-core</artifactId>
-            <version>${jersey-version}</version>
-        </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.jupiter.version}</version>
 
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlet</artifactId>
-            <version>${jetty-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-jetty-http</artifactId>
-            <version>${jersey-version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.eclipse.jetty</groupId>
-                    <artifactId>jetty-server</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.eclipse.jetty</groupId>
-                    <artifactId>jetty-util</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+    <!--        <dependency>-->
+    <!--            <groupId>org.junit-pioneer</groupId>-->
+    <!--            <artifactId>junit-pioneer</artifactId>-->
+    <!--            <version>${junit.pioneer.version}</version>-->
+    <!--            <scope>test</scope>-->
+    <!--            <exclusions>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.junit.platform</groupId>-->
+    <!--                    <artifactId>junit-platform-launcher</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.junit.platform</groupId>-->
+    <!--                    <artifactId>junit-platform-commons</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.junit.jupiter</groupId>-->
+    <!--                    <artifactId>junit-jupiter-api</artifactId>-->
+    <!--                </exclusion>-->
+    <!--                <exclusion>-->
+    <!--                    <groupId>org.junit.jupiter</groupId>-->
+    <!--                    <artifactId>junit-jupiter-params</artifactId>-->
+    <!--                </exclusion>-->
+    <!--            </exclusions>-->
 
+    <!--        </dependency>-->
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>${junit.platform.version}</version>
+      <scope>test</scope>
 
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
-            <version>${mockito-all.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.hamcrest</groupId>
-                    <artifactId>hamcrest-core</artifactId>
-                </exclusion>
-            </exclusions>
-
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <version>1.8.1</version>
-            <scope>test</scope>
-        </dependency>
-
-
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-                <version>${maven-compiler-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>1.3.1</version>
-                <executions>
-                    <execution>
-                        <id>enforce-dependency-convergence</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <DependencyConvergence/>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.3</version>
-
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <filters>
-                                <filter>
-                                    <artifact>pv-gdpr:pontus-odb-graph</artifact>
-                                    <includes>
-                                        <include>org/**</include>
-                                        <include>com/**</include>
-                                        <include>uk/**</include>
-                                        <include>META-INF/*</include>
-
-                                    </includes>
-                                </filter>
-                                <!--                                <filter>-->
-                                <!--                                    <artifact>org.janusgraph:*</artifact>-->
-                                <!--                                    <excludes>-->
-                                <!--                                        <exclude>META-INF/*.SF</exclude>-->
-                                <!--                                        <exclude>META-INF/*.DSA</exclude>-->
-                                <!--                                        <exclude>META-INF/*.RSA</exclude>-->
-                                <!--                                        &lt;!&ndash;<exclude>org/slf4j/**</exclude>&ndash;&gt;-->
-                                <!--                                        &lt;!&ndash;<exclude>ch/qos/**</exclude>&ndash;&gt;-->
-                                <!--                                        &lt;!&ndash; LPPM - WARNING: THE OLAP jobs NEED our own custom version of this class: &ndash;&gt;-->
-                                <!--                                        <exclude>org/apache/hadoop/conf/Configuration.class</exclude>-->
-                                <!--                                        <exclude>org/apache/hadoop/conf/Configuration</exclude>-->
-                                <!--                                        <exclude>org/apache/hadoop/conf/Configuration*</exclude>-->
-                                <!--                                        <exclude>org/apache/hadoop/conf/Configuration**</exclude>-->
-                                <!--                                        <exclude>org/apache/hadoop/conf/Configuratio*</exclude>-->
-
-                                <!--                                    </excludes>-->
-                                <!--                                </filter>-->
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                        <!--                                        <exclude>META-INF/*</exclude>-->
-                                        <!--<exclude>org/slf4j/**</exclude>-->
-                                        <!--<exclude>ch/qos/**</exclude>-->
+    </dependency>
+    <!--        <dependency>-->
+    <!--            <groupId>org.junit.platform</groupId>-->
+    <!--            <artifactId>junit-platform-runner</artifactId>-->
+    <!--            <scope>test</scope>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.junit.jupiter</groupId>-->
+    <!--            <artifactId>junit-jupiter-api</artifactId>-->
+    <!--            <scope>test</scope>-->
+    <!--        </dependency>-->
 
 
-                                    </excludes>
-                                </filter>
-                                <filter>
-                                    <artifact>org.apache.hbase:hbase-shaded-client</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                        <!--<exclude>org/slf4j/**</exclude>-->
-                                        <!--<exclude>ch/qos/**</exclude>-->
-                                        <!-- LPPM - WARNING: THE OLAP jobs NEED our own custom version of this class: -->
-                                        <exclude>org/apache/hadoop/conf/Configuration.class</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration*</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuration**</exclude>
-                                        <exclude>org/apache/hadoop/conf/Configuratio*</exclude>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-moxy</artifactId>
+      <version>${jersey-version}</version>
+
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <version>${jersey-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jakarta.activation</groupId>
+          <artifactId>jakarta.activation-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jakarta.xml.bind</groupId>
+          <artifactId>jakarta.xml.bind-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-server</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
 
 
-                                    </excludes>
-                                </filter>
-                                <filter>
-                                    <artifact>pv-gdpr:pontus-odb-graph</artifact>
-                                    <includes>
-                                        <include>org/**</include>
-                                        <include>org/apache/hadoop/conf/Configuratio*</include>
-                                        <include>org/apache/hadoop/conf/Configuration**</include>
-                                        <include>org/apache/hadoop/conf/Configuration</include>
-                                        <include>org/apache/hadoop/conf/Configuratio.class</include>
-                                        <include>org/apache/hadoop/conf/**</include>
-                                        <include>com/**</include>
-                                        <include>uk/**</include>
-                                    </includes>
-                                </filter>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet-core</artifactId>
+      <version>${jersey-version}</version>
+    </dependency>
 
-                            </filters>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-servlet</artifactId>
+      <version>${jetty-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <manifestEntries>
-                                        <Main-Class>com.pontusvision.gdpr.App</Main-Class>
-                                        <X-Compile-Source-JDK>1.8</X-Compile-Source-JDK>
-                                        <X-Compile-Target-JDK>1.8</X-Compile-Target-JDK>
-
-                                        <Manifest-Version>1.0</Manifest-Version>
-                                        <Bundle-License>https://www.opensource.org/licenses/Apache-2.0</Bundle-License>
-                                        <Bundle-SymbolicName>com.orientechnologies.orientdb-gremlin
-                                        </Bundle-SymbolicName>
-                                        <Archiver-Version>Plexus Archiver</Archiver-Version>
-                                        <Built-By>pontus-vision</Built-By>
-                                        <Bundle-RequiredExecutionEnvironment>JavaSE-1.8
-                                        </Bundle-RequiredExecutionEnvironment>
-                                        <Specification-Title>Apache TinkerPop :: OrientDB Gremlin</Specification-Title>
-                                        <Implementation-Vendor-Id>com.orientechnologies</Implementation-Vendor-Id>
-                                        <Import-Package>com.orientechnologies.common.concur.resource,com.orien
-                                            technologies.common.exception,com.orientechnologies.common.listener,c
-                                            om.orientechnologies.common.log,com.orientechnologies.common.util,com
-                                            .orientechnologies.orient.core.command,com.orientechnologies.orient.c
-                                            ore.command.script,com.orientechnologies.orient.core.command.script.f
-                                            ormatter,com.orientechnologies.orient.core.command.script.transformer
-                                            ,com.orientechnologies.orient.core.command.script.transformer.result,
-                                            com.orientechnologies.orient.core.command.script.transformer.resultse
-                                            t,com.orientechnologies.orient.core.config,com.orientechnologies.orie
-                                            nt.core.db,com.orientechnologies.orient.core.db.document,com.orientec
-                                            hnologies.orient.core.db.record,com.orientechnologies.orient.core.db.
-                                            record.ridbag,com.orientechnologies.orient.core.exception,com.oriente
-                                            chnologies.orient.core.id,com.orientechnologies.orient.core.index,com
-                                            .orientechnologies.orient.core.iterator,com.orientechnologies.orient.
-                                            core.metadata,com.orientechnologies.orient.core.metadata.schema,com.o
-                                            rientechnologies.orient.core.record,com.orientechnologies.orient.core
-                                            .record.impl,com.orientechnologies.orient.core.sql.executor,com.orien
-                                            technologies.orient.core.storage,com.orientechnologies.orient.core.tx
-                                            ,com.orientechnologies.orient.core.util,com.google.common.base,com.go
-                                            ogle.common.collect,javax.script,org.apache.commons.configuration,org
-                                            .apache.commons.lang,org.apache.tinkerpop.gremlin.groovy.jsr223,org.a
-                                            pache.tinkerpop.gremlin.jsr223,org.apache.tinkerpop.gremlin.process.c
-                                            omputer,org.apache.tinkerpop.gremlin.process.traversal,org.apache.tin
-                                            kerpop.gremlin.process.traversal.dsl.graph,org.apache.tinkerpop.greml
-                                            in.process.traversal.step,org.apache.tinkerpop.gremlin.process.traver
-                                            sal.step.map,org.apache.tinkerpop.gremlin.process.traversal.step.util
-                                            ,org.apache.tinkerpop.gremlin.process.traversal.strategy,org.apache.t
-                                            inkerpop.gremlin.process.traversal.util,org.apache.tinkerpop.gremlin.
-                                            structure,org.apache.tinkerpop.gremlin.structure.io,org.apache.tinker
-                                            pop.gremlin.structure.io.graphson,org.apache.tinkerpop.gremlin.struct
-                                            ure.io.gryo,org.apache.tinkerpop.gremlin.structure.util,org.apache.ti
-                                            nkerpop.gremlin.structure.util.detached,org.apache.tinkerpop.gremlin.
-                                            util.function,org.apache.tinkerpop.gremlin.util.iterator,org.apache.t
-                                            inkerpop.shaded.jackson.core,org.apache.tinkerpop.shaded.jackson.data
-                                            bind,org.apache.tinkerpop.shaded.jackson.databind.deser.std,org.apach
-                                            e.tinkerpop.shaded.jackson.databind.jsontype,org.apache.tinkerpop.sha
-                                            ded.jackson.databind.module,org.apache.tinkerpop.shaded.kryo,org.apac
-                                            he.tinkerpop.shaded.kryo.io
-                                        </Import-Package>
-                                        <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.8))"
-                                        </Require-Capability>
-                                        <Implementation-Build-Date>2019-10-28 11:50:57+0000</Implementation-Build-Date>
-                                        <Bundle-Name>Apache TinkerPop :: OrientDB Gremlin</Bundle-Name>
-                                        <Implementation-Title>Apache TinkerPop :: OrientDB Gremlin
-                                        </Implementation-Title>
-                                        <Bundle-Description>TinkerPop3 Graph Structure Implementation for OrientDB
-                                        </Bundle-Description>
-                                        <Implementation-Version>3.1.0</Implementation-Version>
-                                        <Specification-Vendor>OrientDB</Specification-Vendor>
-                                        <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
-                                        <Bundle-Vendor>PontusVision</Bundle-Vendor>
-                                        <Implementation-Vendor>OrientDB</Implementation-Vendor>
-                                        <Bundle-Version>3.1.0</Bundle-Version>
-                                        <Implementation-Build>00f3a221bcbff2871f3f55506752dbd851c484e8
-                                        </Implementation-Build>
-                                        <Created-By>Apache Maven 3.5.0</Created-By>
-                                        <Build-Jdk>1.8.0_212</Build-Jdk>
-                                        <Specification-Version>3.1.0</Specification-Version>
-                                        <Implementation-URL>https://www.pontusvision.com</Implementation-URL>
-                                        <version>3.4.3</version>
-
-                                    </manifestEntries>
-                                </transformer>
-
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>addSources</goal>
-                            <goal>generateStubs</goal>
-                            <goal>compile</goal>
-                            <goal>removeStubs</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <sources>
-                        <source>
-                            <directory>${project.basedir}/src/main/java/com/pontusvision/</directory>
-                            <includes>
-                                <include>**/*.groovy</include>
-                            </includes>
-                        </source>
-                    </sources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <!--                    <ignoreVersions>-->
-                    <!--                        <ignoreVersion type="regex">.*atlassian-2</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">.*Alpha2</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">.*alpha1</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">alpha1</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">.*ALPHA</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">.*alpha</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">.*alpha[0-9]</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">.*beta[0-9]</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">.*beta</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">.*BETA</ignoreVersion>-->
-                    <!--                        <ignoreVersion type="regex">20030203.*</ignoreVersion>-->
-                    <!--                    </ignoreVersions>-->
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.2</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <!-- configure the plugin here -->
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <runOrder>alphabetical</runOrder>
-                    <printSummary>true</printSummary>
-                </configuration>
-
-            </plugin>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-jetty-http</artifactId>
+      <version>${jersey-version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-server</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-util</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
 
-        </plugins>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-inline</artifactId>
+      <version>${mockito-all.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-core</artifactId>
+        </exclusion>
+      </exclusions>
 
-    </build>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>1.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+        <version>${maven-compiler-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.3.1</version>
+        <executions>
+          <execution>
+            <id>enforce-dependency-convergence</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <DependencyConvergence/>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.3</version>
+
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <filters>
+                <filter>
+                  <artifact>pv-gdpr:pontus-odb-graph</artifact>
+                  <includes>
+                    <include>org/**</include>
+                    <include>com/**</include>
+                    <include>uk/**</include>
+                    <include>META-INF/*</include>
+
+                  </includes>
+                </filter>
+                <!--                                <filter>-->
+                <!--                                    <artifact>org.janusgraph:*</artifact>-->
+                <!--                                    <excludes>-->
+                <!--                                        <exclude>META-INF/*.SF</exclude>-->
+                <!--                                        <exclude>META-INF/*.DSA</exclude>-->
+                <!--                                        <exclude>META-INF/*.RSA</exclude>-->
+                <!--                                        &lt;!&ndash;<exclude>org/slf4j/**</exclude>&ndash;&gt;-->
+                <!--                                        &lt;!&ndash;<exclude>ch/qos/**</exclude>&ndash;&gt;-->
+                <!--                                        &lt;!&ndash; LPPM - WARNING: THE OLAP jobs NEED our own custom version of this class: &ndash;&gt;-->
+                <!--                                        <exclude>org/apache/hadoop/conf/Configuration.class</exclude>-->
+                <!--                                        <exclude>org/apache/hadoop/conf/Configuration</exclude>-->
+                <!--                                        <exclude>org/apache/hadoop/conf/Configuration*</exclude>-->
+                <!--                                        <exclude>org/apache/hadoop/conf/Configuration**</exclude>-->
+                <!--                                        <exclude>org/apache/hadoop/conf/Configuratio*</exclude>-->
+
+                <!--                                    </excludes>-->
+                <!--                                </filter>-->
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <!--                                        <exclude>META-INF/*</exclude>-->
+                    <!--<exclude>org/slf4j/**</exclude>-->
+                    <!--<exclude>ch/qos/**</exclude>-->
+
+
+                  </excludes>
+                </filter>
+                <filter>
+                  <artifact>org.apache.hbase:hbase-shaded-client</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <!--<exclude>org/slf4j/**</exclude>-->
+                    <!--<exclude>ch/qos/**</exclude>-->
+                    <!-- LPPM - WARNING: THE OLAP jobs NEED our own custom version of this class: -->
+                    <exclude>org/apache/hadoop/conf/Configuration.class</exclude>
+                    <exclude>org/apache/hadoop/conf/Configuration</exclude>
+                    <exclude>org/apache/hadoop/conf/Configuration*</exclude>
+                    <exclude>org/apache/hadoop/conf/Configuration**</exclude>
+                    <exclude>org/apache/hadoop/conf/Configuratio*</exclude>
+
+
+                  </excludes>
+                </filter>
+                <filter>
+                  <artifact>pv-gdpr:pontus-odb-graph</artifact>
+                  <includes>
+                    <include>org/**</include>
+                    <include>org/apache/hadoop/conf/Configuratio*</include>
+                    <include>org/apache/hadoop/conf/Configuration**</include>
+                    <include>org/apache/hadoop/conf/Configuration</include>
+                    <include>org/apache/hadoop/conf/Configuratio.class</include>
+                    <include>org/apache/hadoop/conf/**</include>
+                    <include>com/**</include>
+                    <include>uk/**</include>
+                  </includes>
+                </filter>
+
+              </filters>
+              <transformers>
+                <transformer
+                    implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+
+                <transformer
+                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Main-Class>com.pontusvision.gdpr.App</Main-Class>
+                    <X-Compile-Source-JDK>1.8</X-Compile-Source-JDK>
+                    <X-Compile-Target-JDK>1.8</X-Compile-Target-JDK>
+
+                    <Manifest-Version>1.0</Manifest-Version>
+                    <Bundle-License>https://www.opensource.org/licenses/Apache-2.0</Bundle-License>
+                    <Bundle-SymbolicName>com.orientechnologies.orientdb-gremlin
+                    </Bundle-SymbolicName>
+                    <Archiver-Version>Plexus Archiver</Archiver-Version>
+                    <Built-By>pontus-vision</Built-By>
+                    <Bundle-RequiredExecutionEnvironment>JavaSE-1.8
+                    </Bundle-RequiredExecutionEnvironment>
+                    <Specification-Title>Apache TinkerPop :: OrientDB Gremlin</Specification-Title>
+                    <Implementation-Vendor-Id>com.orientechnologies</Implementation-Vendor-Id>
+                    <Import-Package>com.orientechnologies.common.concur.resource,com.orien
+                      technologies.common.exception,com.orientechnologies.common.listener,c
+                      om.orientechnologies.common.log,com.orientechnologies.common.util,com
+                      .orientechnologies.orient.core.command,com.orientechnologies.orient.c
+                      ore.command.script,com.orientechnologies.orient.core.command.script.f
+                      ormatter,com.orientechnologies.orient.core.command.script.transformer
+                      ,com.orientechnologies.orient.core.command.script.transformer.result,
+                      com.orientechnologies.orient.core.command.script.transformer.resultse
+                      t,com.orientechnologies.orient.core.config,com.orientechnologies.orie
+                      nt.core.db,com.orientechnologies.orient.core.db.document,com.orientec
+                      hnologies.orient.core.db.record,com.orientechnologies.orient.core.db.
+                      record.ridbag,com.orientechnologies.orient.core.exception,com.oriente
+                      chnologies.orient.core.id,com.orientechnologies.orient.core.index,com
+                      .orientechnologies.orient.core.iterator,com.orientechnologies.orient.
+                      core.metadata,com.orientechnologies.orient.core.metadata.schema,com.o
+                      rientechnologies.orient.core.record,com.orientechnologies.orient.core
+                      .record.impl,com.orientechnologies.orient.core.sql.executor,com.orien
+                      technologies.orient.core.storage,com.orientechnologies.orient.core.tx
+                      ,com.orientechnologies.orient.core.util,com.google.common.base,com.go
+                      ogle.common.collect,javax.script,org.apache.commons.configuration,org
+                      .apache.commons.lang,org.apache.tinkerpop.gremlin.groovy.jsr223,org.a
+                      pache.tinkerpop.gremlin.jsr223,org.apache.tinkerpop.gremlin.process.c
+                      omputer,org.apache.tinkerpop.gremlin.process.traversal,org.apache.tin
+                      kerpop.gremlin.process.traversal.dsl.graph,org.apache.tinkerpop.greml
+                      in.process.traversal.step,org.apache.tinkerpop.gremlin.process.traver
+                      sal.step.map,org.apache.tinkerpop.gremlin.process.traversal.step.util
+                      ,org.apache.tinkerpop.gremlin.process.traversal.strategy,org.apache.t
+                      inkerpop.gremlin.process.traversal.util,org.apache.tinkerpop.gremlin.
+                      structure,org.apache.tinkerpop.gremlin.structure.io,org.apache.tinker
+                      pop.gremlin.structure.io.graphson,org.apache.tinkerpop.gremlin.struct
+                      ure.io.gryo,org.apache.tinkerpop.gremlin.structure.util,org.apache.ti
+                      nkerpop.gremlin.structure.util.detached,org.apache.tinkerpop.gremlin.
+                      util.function,org.apache.tinkerpop.gremlin.util.iterator,org.apache.t
+                      inkerpop.shaded.jackson.core,org.apache.tinkerpop.shaded.jackson.data
+                      bind,org.apache.tinkerpop.shaded.jackson.databind.deser.std,org.apach
+                      e.tinkerpop.shaded.jackson.databind.jsontype,org.apache.tinkerpop.sha
+                      ded.jackson.databind.module,org.apache.tinkerpop.shaded.kryo,org.apac
+                      he.tinkerpop.shaded.kryo.io
+                    </Import-Package>
+                    <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.8))"
+                    </Require-Capability>
+                    <Implementation-Build-Date>2019-10-28 11:50:57+0000</Implementation-Build-Date>
+                    <Bundle-Name>Apache TinkerPop :: OrientDB Gremlin</Bundle-Name>
+                    <Implementation-Title>Apache TinkerPop :: OrientDB Gremlin
+                    </Implementation-Title>
+                    <Bundle-Description>TinkerPop3 Graph Structure Implementation for OrientDB
+                    </Bundle-Description>
+                    <Implementation-Version>3.1.0</Implementation-Version>
+                    <Specification-Vendor>OrientDB</Specification-Vendor>
+                    <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+                    <Bundle-Vendor>PontusVision</Bundle-Vendor>
+                    <Implementation-Vendor>OrientDB</Implementation-Vendor>
+                    <Bundle-Version>3.1.0</Bundle-Version>
+                    <Implementation-Build>00f3a221bcbff2871f3f55506752dbd851c484e8
+                    </Implementation-Build>
+                    <Created-By>Apache Maven 3.5.0</Created-By>
+                    <Build-Jdk>1.8.0_212</Build-Jdk>
+                    <Specification-Version>3.1.0</Specification-Version>
+                    <Implementation-URL>https://www.pontusvision.com</Implementation-URL>
+                    <version>3.4.3</version>
+
+                  </manifestEntries>
+                </transformer>
+
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>addSources</goal>
+              <goal>generateStubs</goal>
+              <goal>compile</goal>
+              <goal>removeStubs</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <sources>
+            <source>
+              <directory>${project.basedir}/src/main/java/com/pontusvision/</directory>
+              <includes>
+                <include>**/*.groovy</include>
+              </includes>
+            </source>
+          </sources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <!--                    <ignoreVersions>-->
+          <!--                        <ignoreVersion type="regex">.*atlassian-2</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">.*Alpha2</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">.*alpha1</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">alpha1</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">.*ALPHA</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">.*alpha</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">.*alpha[0-9]</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">.*beta[0-9]</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">.*beta</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">.*BETA</ignoreVersion>-->
+          <!--                        <ignoreVersion type="regex">20030203.*</ignoreVersion>-->
+          <!--                    </ignoreVersions>-->
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.2</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <!-- configure the plugin here -->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
+        <configuration>
+          <runOrder>alphabetical</runOrder>
+          <printSummary>true</printSummary>
+        </configuration>
+
+      </plugin>
+
+
+    </plugins>
+
+  </build>
 </project>
