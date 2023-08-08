@@ -20,22 +20,23 @@ public class TestAWSCloudDirectory {
           "location, and is in valid format.",
         e);
     }
-    CloudDirectoryClient client = CloudDirectoryClient.builder().credentialsProvider(credentials).build();
+    try (CloudDirectoryClient client = CloudDirectoryClient.builder().credentialsProvider(credentials).build()) {
 
-    ApplySchemaResponse schemaResponse = client.applySchema( ApplySchemaRequest.builder().directoryArn("directory_arn").build());
-    schemaResponse.sdkHttpResponse().isSuccessful();
+      ApplySchemaResponse schemaResponse = client.applySchema(ApplySchemaRequest.builder().directoryArn("directory_arn").build());
+      schemaResponse.sdkHttpResponse().isSuccessful();
 
-    CreateFacetResponse resp = client.createFacet(CreateFacetRequest.builder().facetStyle(FacetStyle.fromValue("")).build());
-    resp.sdkHttpResponse().isSuccessful();
-    AttributeKey attributeKey = AttributeKey.builder().facetName("Person_Natural").name("Person_Natural_Full_Name").build();
-    client.createIndex(CreateIndexRequest.builder().orderedIndexedAttributeList(attributeKey).build());
+      CreateFacetResponse resp = client.createFacet(CreateFacetRequest.builder().facetStyle(FacetStyle.fromValue("")).build());
+      resp.sdkHttpResponse().isSuccessful();
+      AttributeKey attributeKey = AttributeKey.builder().facetName("Person_Natural").name("Person_Natural_Full_Name").build();
+      client.createIndex(CreateIndexRequest.builder().orderedIndexedAttributeList(attributeKey).build());
 
-    TypedAttributeValue attributeValue = TypedAttributeValue.fromStringValue("Leo");
-    AttributeKeyAndValue attrib = AttributeKeyAndValue.builder().key(attributeKey).value(attributeValue).build();
+      TypedAttributeValue attributeValue = TypedAttributeValue.fromStringValue("Leo");
+      AttributeKeyAndValue attrib = AttributeKeyAndValue.builder().key(attributeKey).value(attributeValue).build();
 
-    client.createObject(CreateObjectRequest.builder().directoryArn("")
-      .objectAttributeList((Collection<AttributeKeyAndValue>) Collections.singletonList(attrib))
-      .build());
+      client.createObject(CreateObjectRequest.builder().directoryArn("")
+        .objectAttributeList((Collection<AttributeKeyAndValue>) Collections.singletonList(attrib))
+        .build());
+    }
 
   }
 }
