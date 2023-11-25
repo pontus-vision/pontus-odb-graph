@@ -1157,10 +1157,10 @@ status: "success", message: "Data source is working", title: "Success"
             if (isOut) {
 //            sqlParams.put("fromId", newEntry.toString());
 //            sqlParams.put("toId", data);
-              App.g.addE(parsedName).from(App.g.V(newEntry.toString()).next()).to(App.g.V(data).next()).iterate();
+              App.g.addE(parsedName).from(__.V(newEntry.toString())).to(__.V(data)).iterate();
 
             } else {
-              App.g.addE(parsedName).from(App.g.V(data).next()).to(App.g.V(newEntry.toString()).next()).iterate();
+              App.g.addE(parsedName).from(__.V(data)).to(__.V(newEntry.toString())).iterate();
 
 //            sqlParams.put("toId", newEntry.toString());
 //            sqlParams.put("fromId", data);

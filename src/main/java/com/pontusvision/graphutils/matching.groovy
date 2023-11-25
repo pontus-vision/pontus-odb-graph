@@ -31,7 +31,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSo
 import org.apache.tinkerpop.gremlin.structure.Transaction
 import org.apache.tinkerpop.gremlin.structure.Vertex
 import org.codehaus.groovy.runtime.StringGroovyMethods
-
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__
 import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.util.concurrent.ConcurrentHashMap
@@ -1299,7 +1299,7 @@ class Matcher {
             .property('Event_Ingestion_Metadata_Create_Date', new Date())
             .next()
 
-    App.g.addE('Has_Ingestion_Event').from(groupIngestionVertex).to(eventIngestionVertex).iterate()
+    App.g.addE('Has_Ingestion_Event').from(__.V(groupIngestionVertex)).to(__.V(eventIngestionVertex)).iterate()
 
     return eventIngestionVertex
   }
@@ -1376,7 +1376,7 @@ class Matcher {
 
     Vertex dataSource = getObjectDataSource(dataSourceName)
 
-    App.g.addE('Has_Ingestion_Event').from(dataSource).to(groupIngestionVertex)
+    App.g.addE('Has_Ingestion_Event').from(__.V(dataSource)).to(__.V(groupIngestionVertex))
 
     return groupIngestionVertex
 
@@ -1508,9 +1508,9 @@ class Matcher {
 
         Vertex eventIngestionVertex = addEventIngestion(dataSourceName, groupIngestionVertex)
 
-        App.g.addE('Has_Ingestion').from(eventIngestionVertex).to(personNaturalVertex).iterate()
-        App.g.addE('Uses_Email').from(personNaturalVertex).to(emailVertex).iterate()
-        App.g.addE('Has_Id_Card').from(personNaturalVertex).to(documentVertex).iterate()
+        App.g.addE('Has_Ingestion').from(__.V(eventIngestionVertex)).to(__.V(personNaturalVertex)).iterate()
+        App.g.addE('Uses_Email').from(__.V(personNaturalVertex)).to(__.V(emailVertex)).iterate()
+        App.g.addE('Has_Id_Card').from(__.V(personNaturalVertex)).to(__.V(documentVertex)).iterate()
 
         successCount++
       }
@@ -2192,11 +2192,11 @@ class Matcher {
 
             if (foundIds.size() == 0) {
 
-              def fromV = gTrav.V(fromId)
-              def toV = gTrav.V(toId)
+//              def fromV = gTrav.V(fromId)
+//              def toV = gTrav.V(toId)
 
               gTrav.addE(it.label)
-                      .from(fromV).to(toV)
+                      .from(__.V(fromId)).to(__.V(toId))
                       .next()
 
 
@@ -2394,7 +2394,7 @@ class Matcher {
                 def toV = gTrav.V(toId)
                 sb?.append("\n in createEdges about to create new Edges from  $fromId to $toId (fromV = ${fromV}; toV= ${toV}; maxFromScore = $maxFromScore; fromScore = $fromScoreDouble; maxToScore = $maxToScore; toScore: $toScoreDouble")
                 gTrav.addE(it.label)
-                        .from(fromV).to(toV)
+                        .from(__.V(fromV)).to(__.V(toV))
                         .property('maxFromScore', maxFromScore)
                         .property('fromScore', fromScoreDouble)
                         .property('fromScorePercent', fromScorePercent)

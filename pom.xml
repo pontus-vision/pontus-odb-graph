@@ -522,10 +522,24 @@
 
     </dependency>
 
+    <!-- net.minidev:json-smart version 2.4.9 is causing the following error:
+    [ERROR] Tests run: 19, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 66.514 s <<< FAILURE! - in com.pontusvision.gdpr.PVBasicTest
+[ERROR] test00014SharepointProcessMapping{String, String, String, String, String}[2]  Time elapsed: 0.123 s  <<< ERROR!
+com.jayway.jsonpath.InvalidJsonException: net.minidev.json.parser.ParseException: Malicious payload, having non natural depths, parsing stoped on { at position 133131.
+        at com.pontusvision.gdpr.PVBasicTest.test00014SharepointProcessMapping(PVBasicTest.java:772)
+Caused by: net.minidev.json.parser.ParseException: Malicious payload, having non natural depths, parsing stoped on { at position 133131.
+        at com.pontusvision.gdpr.PVBasicTest.test00014SharepointProcessMapping(PVBasicTest.java:772)
+    -->
     <dependency>
       <groupId>net.minidev</groupId>
       <artifactId>json-smart</artifactId>
-      <version>2.4.9</version>
+      <version>2.4.8</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.ow2.asm</groupId>
+          <artifactId>asm</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>

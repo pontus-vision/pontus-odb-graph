@@ -6,7 +6,7 @@ import com.orientechnologies.orient.core.metadata.schema.OProperty
 import com.pontusvision.gdpr.App
 import groovy.json.JsonSlurper
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource
-
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 //
 //// describeSchema()
 //// g.V().has('Metadata_Type_Object_Credential','Object_Credential')
@@ -238,10 +238,8 @@ class FormData {
       def ownerVid = getOrCreateOwnerVid(localgTrav, submissionOwner, sb)
       sb.append("\nIn createIngestionEventId; after getOrCreateOwnerVid = ")
         .append(ownerVid)
-      def fromV = gtrans.V(ownerVid).next()
-      def toV = gtrans.V(ingestionEventId).next()
 
-      localgTrav2.addE('Has_Form_Ingestion_Event').from(fromV).to(toV).next()
+      localgTrav2.addE('Has_Form_Ingestion_Event').from(__.V(ownerVid).to(__.V(ingestionEventId))).next()
       sb.append("\nIn createIngestionEventId; after creating edge Has_Form_Ingestion_Event between ownerVid ")
         .append(ownerVid).append(" and ingestionEventId ").append(ingestionEventId)
 
@@ -249,7 +247,7 @@ class FormData {
     }
     if (formDataId != null) {
 
-      localgTrav.addE('Has_Form_Ingestion_Event').from(gtrans.V(ingestionEventId)).to(gtrans.V(formDataId)).next()
+      localgTrav.addE('Has_Form_Ingestion_Event').from(__.V(ingestionEventId)).to(__.V(formDataId)).next()
       sb.append("\nIn createIngestionEventId; after creating edge Has_Form_Ingestion_Event between ingestionEventId ")
         .append(ingestionEventId).append(" and formDataId ").append(formDataId)
 
@@ -303,7 +301,7 @@ class FormData {
 
           if (foundIds.isEmpty())
           {
-            gtrav.addE(relationshipName).from(gtrav.V(retVal)).to(gtrav.V(otherTypeId)).next()
+            gtrav.addE(relationshipName).from(__.V(retVal)).to(__.V(otherTypeId)).next()
             sb.append("\nAfter creating new relationship $relationshipName")
           }
         }
