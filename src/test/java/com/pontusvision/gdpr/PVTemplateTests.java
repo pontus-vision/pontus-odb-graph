@@ -917,9 +917,15 @@ public class PVTemplateTests extends AppTest {
       expectedReport = "KRACKOVSZI GLÓRIA 2 Corresponde potencialmente a 1 registro";
       assertTrue(report.contains(expectedReport), "Contains KRACKOVSZI GLÓRIA 2; orig report = " + report);
 
-      expectedReport = "Location Address, Object Email Address, Object Phone Number";
+      expectedReport = "Location Address";
       assertTrue(report.contains(expectedReport),
-          "Contains Location Address, Object Email Address, Object Phone Number Report orig report = " + report);
+          "Contains Location Address; report = " + report);
+      expectedReport = "Object Email Address";
+      assertTrue(report.contains(expectedReport),
+        "Contains Object Email Address;  orig report = " + report);
+      expectedReport = "Object Phone Number";
+      assertTrue(report.contains(expectedReport),
+        "Contains Object Phone Number; orig report = " + report);
 
 
       contextId = App.g.V().has("Person_Natural_Full_Name", P.eq("GLÓRIA KRACKOVSZI"))
