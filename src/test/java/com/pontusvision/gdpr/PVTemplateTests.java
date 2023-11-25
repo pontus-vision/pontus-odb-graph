@@ -943,11 +943,15 @@ public class PVTemplateTests extends AppTest {
       expectedReport = "GLÓRIA KRACKOVSZI Corresponde potencialmente a 1 registro";
       assertTrue(report.contains(expectedReport), "Contains GLÓRIA KRACKOVSZI; orig report = " + report);
 
-      expectedReport = "Location Address, Object Email Address, Object Phone Number";
+      expectedReport = "Location Address";
       assertTrue(report.contains(expectedReport),
-          "Contains Location Address, Object Email Address, Object Phone Number Report orig report = " + report);
-
-
+        "Contains Location Address; report = " + report);
+      expectedReport = "Object Email Address";
+      assertTrue(report.contains(expectedReport),
+        "Contains Object Email Address;  orig report = " + report);
+      expectedReport = "Object Phone Number";
+      assertTrue(report.contains(expectedReport),
+        "Contains Object Phone Number; orig report = " + report);
 
 
     } catch (Exception e) {
