@@ -669,6 +669,15 @@
       <artifactId>jackson-core</artifactId>
       <version>${jackson2.version}</version>
     </dependency>
+    <!-- note: there are CVEs w/ snakeyaml; however, version 2.0 breaks this:
+    method: testPlanExecutionStarted(org.junit.platform.launcher.core.InternalTestPlan@60d84f61)
+#21 16.46 java.lang.NoSuchMethodError: org.yaml.snakeyaml.constructor.Constructor.<init>(Ljava/lang/Class;)V
+#21 16.46 	at org.apache.tinkerpop.gremlin.server.Settings.createDefaultYamlConstructor(Settings.java:339)
+#21 16.46 	at org.apache.tinkerpop.gremlin.server.Settings.read(Settings.java:398)
+#21 16.46 	at org.apache.tinkerpop.gremlin.server.Settings.read(Settings.java:329)
+#21 16.46 	at com.pontusvision.gdpr.App.init(App.java:79)
+#21 16.46 	at
+   -->
     <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
