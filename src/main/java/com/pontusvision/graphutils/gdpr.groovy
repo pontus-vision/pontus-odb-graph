@@ -3983,120 +3983,16 @@ the end of the process.
 
   static def getChildrenScores(scoresMap) {
 
-//    long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L))
-//    def dateThreshold = new Date(ageThresholdMs)
-//
-//
-//    long numChildren = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//            .where(
-//                    __.and(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                    )
-//            )
-//            .count().next()
-//
-//    long numNoGuardian = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//            .where(
-//                    __.and(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                            , __.outE('Has_Parent_Or_Guardian').count().is(eq(0) as P<Long>)
-//                    )
-//            )
-//            .count().next()
-//
-//    long numWithoutAnyConsent = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//            .where(
-//                    __.and(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                            , __.outE('Consent').count().is(eq(0) as P<Long>)
-//                    )
-//            )
-//            .count().next()
-//
-//
-//    long numNegativeConsent =
-//
-//            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//                    .where(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                    ).as('children')
-//                    .match(
-//                            __.as('children').outE('Consent').as('consentEdges')
-//                            , __.as('consentEdges').count().as('consentEdgesCount')
-//                            , __.as('consentEdges').inV().as('consentEvents')
-//                            , __.as('consentEvents').has('Event_Consent_Status', eq('No Consent ')).count().as('negConsentCount')
-//                            , __.as('children').id().as('childId')
-//
-//                    )
-//                    .select('consentEdgesCount', 'negConsentCount', 'childId')
-//                    .where('consentEdgesCount', eq('negConsentCount'))
-//                    .where(__.as('consentEdgesCount').is(gt(0)))
-//
-//                    .count().next()
-//
-//
-//    long numPendingConsent =
-//
-//            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//                    .where(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                    ).as('children')
-//                    .match(
-//                            __.as('children').outE('Consent').as('consentEdges')
-//                            , __.as('consentEdges').count().as('consentEdgesCount')
-//                            , __.as('consentEdges').inV().as('consentEvents')
-//                            , __.as('consentEvents').has('Event_Consent_Status', eq('Consent Pending')).count().as('pendingConsentCount')
-//                            , __.as('children').id().as('childId')
-//
-//                    )
-//                    .select('consentEdgesCount', 'pendingConsentCount', 'childId')
-//                    .where('consentEdgesCount', eq('pendingConsentCount'))
-//                    .where(__.as('consentEdgesCount').is(gt(0)))
-//
-//                    .count().next()
-//
-//
-//    long scoreValue = 100L
-//    if (numChildren > 0) {
-//
-//      long pcntWithoutAnyConsent = (long) (100L * numWithoutAnyConsent / numChildren)
-//      if (pcntWithoutAnyConsent > 10) {
-//        scoreValue -= 32L
-//      } else if (numWithoutAnyConsent > 0) {
-//        scoreValue -= (22L + pcntWithoutAnyConsent)
-//      }
-//
-//
-//      long pcntWithoutAnyGuardian = (long) (100L * numNoGuardian / numChildren)
-//      if (pcntWithoutAnyGuardian > 10) {
-//        scoreValue -= 32L
-//      } else if (numNoGuardian > 0) {
-//        scoreValue -= (22L + pcntWithoutAnyGuardian)
-//      }
-//
-//      long pcntWithNegativeConsent = (long) (100L * numNegativeConsent / numChildren)
-//      if (pcntWithNegativeConsent > 10) {
-//        scoreValue -= 32L
-//      } else if (numNegativeConsent > 0) {
-//        scoreValue -= (22L + pcntWithNegativeConsent)
-//      }
-//
-//      scoreValue -= (7L * numPendingConsent / numChildren)
-//
-//
-//    }
-
 
     Long scoreValue = 100L
 
-    OResultSet resultSet = App.graph.executeSql(
-        "SELECT count(*) as ct  FROM  Object_Data_Procedures where (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())  ",
-        ['sd': sensitiveData]).getRawResultSet()
+    OResultSet resultSet = App.graph.executeSql("""
+        SELECT count(*) as ct  FROM  Object_Data_Procedures where 
+           (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())
+        AND (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )
+        """,
+            ['sd': sensitiveData, 'con': consentData]).getRawResultSet()
 
-//            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).where(
-//                    __.out('Has_Sensitive_Data').has('Object_Sensitive_Data_Description', within(sensitiveData))
-//            )
-//            .count().next()
 
     long numDataProcsWithSensitiveData = resultSet.next().getProperty('ct')
 
@@ -4113,11 +4009,14 @@ the end of the process.
 
     }
 
+
+
     resultSet = App.graph.executeSql(
         """
         SELECT count(*) as ct  FROM  Object_Data_Procedures where 
            (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())
-        AND (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
+        AND (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )
+        and ( in('Consent').size() > 0)    
         """,
         ['sd': sensitiveData, 'con': consentData]).getRawResultSet()
 
