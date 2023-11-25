@@ -884,7 +884,7 @@ status: "success", message: "Data source is working", title: "Success"
     } catch (InterruptedException | ExecutionException | SerializationException e) {
       e.printStackTrace();
 
-      final ResponseMessage msg = ResponseMessage.build(uuid).statusMessage(e.getMessage()).code(ResponseStatusCode.SERVER_ERROR_SCRIPT_EVALUATION).create();
+      final ResponseMessage msg = ResponseMessage.build(uuid).statusMessage(e.getMessage()).code(ResponseStatusCode.SERVER_ERROR_EVALUATION).create();
 
       try {
         return serializer.serializeResponseAsString(msg);
