@@ -53,7 +53,7 @@ public class PVFormTests extends AppTest {
 
       FormDataRequest req = new FormDataRequest();
       int idx = -1;
-      PVFormData[] components = new PVFormData[7];
+      PVFormData[] components = new PVFormData[6];
       components[++idx] = new PVFormData().setName("Object_Data_Procedures_Interested_Parties_Consulted");
       components[++idx] = new PVFormData().setName(">out_Has_Lawful_Basis_On");
       components[++idx] = new PVFormData().setName(">out_Has_Sensitive_Data");
@@ -137,7 +137,7 @@ public class PVFormTests extends AppTest {
         "Object_Data_Procedures_Why_Is_It_Collected" -> "Necessário para contratação de prestadores de serviços e/ou fornecedores pessoas físicas"
         "Object_Data_Procedures_Country_Where_Stored" -> "Bxxxx"
        */
-      PVFormData[] components2 = new PVFormData[20];
+      PVFormData[] components2 = new PVFormData[19];
       idx = -1;
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Interested_Parties_Consulted").setUserData(new String[]{"EPG Advogados"});
       components2[++idx] = new PVFormData().setName(">out_Has_Lawful_Basis_On").setUserData(orig.getComponents()[idx].getUserData());
