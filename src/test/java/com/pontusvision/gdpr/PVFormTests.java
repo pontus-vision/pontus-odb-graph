@@ -8,9 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.util.concurrent.ExecutionException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -76,38 +75,38 @@ public class PVFormTests extends AppTest {
 
       FormDataResponse orig = resp.clone();
 
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString());
 
       req.getComponents()[0].setName("#Object_Data_Procedures_Interested_Parties_Consulted").setUserData(null);
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString());
 
 
       req.getComponents()[0].setUserData(new String[]{"EPG Advogados2"});
       req.setOperation("update");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
 
 
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals("EPG Advogados2",resp.getComponents()[0].getUserData()[0]);
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals("EPG Advogados2",resp.getComponents()[0].getUserData()[0],"req was "+req.toString());
 
 
       req.getComponents()[0].setUserData(new String[]{"EPG Advogados"});
       req.setOperation("update");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
 
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString());
 
 
 
@@ -119,8 +118,8 @@ public class PVFormTests extends AppTest {
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals(null,resp.getComponents()[0].getUserData());
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals(null,resp.getComponents()[0].getUserData(),"req was "+req.toString());
 
 //      assertEquals("Object_Data_Procedures",resp.dataType);
 //      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);

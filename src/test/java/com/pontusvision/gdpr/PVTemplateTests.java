@@ -295,7 +295,7 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      assertEquals("true", report);
+      assertEquals("true", report,"Failed to get the correct render value; renderReq = "+renderReq.toString() + "; reply = "+ renderReply.toString());
 
 
 //    Testing for LIA's Lawful Basis

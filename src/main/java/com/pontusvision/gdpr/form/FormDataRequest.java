@@ -3,12 +3,23 @@ package com.pontusvision.gdpr.form;
 
 import com.pontusvision.gdpr.BaseReply;
 
+import java.util.Arrays;
+
 public class FormDataRequest extends BaseReply {
   public String dataType;
   String rid;
   PVFormData[] components;
   String operation;
 
+  @Override
+  public String toString() {
+    return "FormDataRequest{" +
+      "dataType='" + dataType + '\'' +
+      ", rid='" + rid + '\'' +
+      ", components=" + Arrays.toString(components) +
+      ", operation='" + operation + '\'' +
+      '}';
+  }
 
   public FormDataRequest() {
     this(Status.OK);

@@ -14,9 +14,19 @@ public class ReportTemplateRenderResponse extends BaseReply {
   public ReportTemplateRenderResponse(Status status) {
     super(status);
   }
+
   public ReportTemplateRenderResponse(Status status, String errorMsg) {
     super(status);
     this.setErrorStr(errorMsg);
+  }
+
+  @Override
+  public String toString() {
+    return "ReportTemplateRenderResponse{" +
+      "base64Report='" + base64Report + '\'' +
+      ", refEntryId='" + refEntryId + '\'' +
+      ", templateId='" + templateId + '\'' +
+      '}';
   }
 
   public String getBase64Report() {

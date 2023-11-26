@@ -1,14 +1,14 @@
 # DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
 updatereq:
   vertices:
-    
+
     - label: Object_Data_Source
       name: sharepoint
       props:
         - name: Object_Data_Source_Name
           val: SHAREPOINT/PBR/ROPA
           mandatoryInSearch: True
-    
+
     - label: Object_Data_Source
       name: attached_data_sources
       props:
@@ -18,7 +18,7 @@ updatereq:
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointRef;"
           postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
-    
+
     - label: Object_Data_Procedures
       props:
         - name: Object_Data_Procedures_Form_Id
@@ -124,7 +124,7 @@ updatereq:
           val: ${VolumetriadosTitularesDados_x002}
           mandatoryInSearch: False
           excludeFromSearch: True
-    
+
     - label: Object_Email_Address
       name: responsible
       props:
@@ -134,7 +134,7 @@ updatereq:
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointUserRef;"
           postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
-    
+
     - label: Object_Email_Address
       name: alt_responsible
       props:
@@ -144,7 +144,7 @@ updatereq:
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointUserRef;"
           postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
-    
+
     - label: Object_Email_Address
       name: champion
       props:
@@ -154,7 +154,7 @@ updatereq:
           processAll: True
           type: "[Lcom.pontusvision.utils.SharepointUserRef;"
           postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
-    
+
     - label: Object_Sensitive_Data
       name: personal_data
       props:
@@ -164,7 +164,7 @@ updatereq:
           processAll: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
-    
+
     - label: Object_Sensitive_Data
       name: sensitive_data
       condition: ${_x00c9_realizadotratamentodedado0 == 'Sim'}
@@ -175,7 +175,7 @@ updatereq:
           processAll: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
-    
+
     - label: Object_Sensitive_Data
       name: minors_data
       condition: ${_x00c9_realizadotratamentodedado2 == 'Sim'}
@@ -186,7 +186,7 @@ updatereq:
           processAll: True
           type: "[Ljava.lang.String;"
           postProcessor: ${it?.toUpperCase()?.trim()}
-    
+
     - label: Object_Data_Policy
       props:
         - name: Object_Data_Policy_Form_Id
@@ -213,18 +213,18 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Policy_Is_Deleted
-          val: ${Ap_x00f3_satingirasfinalidades_x}
+          val: ${Ap_x00f3_satingirasfinalidades_x00}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Policy_Is_Essential
-          val: ${Osdadospessoaisidentificadoss_x0}
+          val: ${Osdadospessoaisidentificadoss_x00}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Policy_Is_Anonymized
-          val: ${Osdadoss_x00e3_oanonimizadosnotr}
+          val: ${Osdadoss_x00e3_oanonimizadosnotra}
           mandatoryInSearch: False
           excludeFromSearch: True
-    
+
     - label: Object_Privacy_Notice
       condition: ${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}
       props:
@@ -253,7 +253,7 @@ updatereq:
           val: ${Quaisdestesdireitospodemseratend}
           mandatoryInSearch: False
           excludeFromSearch: True
-    
+
     - label: Event_Data_Breach
       condition: ${Houvealgumincidentedeseguran_x00 == 'Sim'}
       props:
@@ -286,7 +286,7 @@ updatereq:
           val: ${Emcasopositivo_x002c_fornecerosd}
           mandatoryInSearch: False
           excludeFromSearch: True
-    
+
     - label: Event_Ingestion
       props:
         - name: Event_Ingestion_Type
@@ -311,7 +311,7 @@ updatereq:
           mandatoryInSearch: False
           type: "java.util.Date"
           excludeFromSearch: True
-    
+
     - label: Event_Group_Ingestion
       props:
         - name: Event_Group_Ingestion_Type

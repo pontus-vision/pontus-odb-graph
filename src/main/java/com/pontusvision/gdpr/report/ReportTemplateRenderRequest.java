@@ -4,6 +4,14 @@ public class ReportTemplateRenderRequest {
   String refEntryId;
   String templateId;
 
+  @Override
+  public String toString() {
+    return "ReportTemplateRenderRequest{" +
+      "refEntryId='" + refEntryId + '\'' +
+      ", templateId='" + templateId + '\'' +
+      '}';
+  }
+
   public String getRefEntryId() {
     return refEntryId;
   }

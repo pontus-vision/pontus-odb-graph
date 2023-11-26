@@ -1895,7 +1895,7 @@ class Matcher {
 
       }
       catch (Exception e) {
-        System.err.println("Got an exception ${e.getMessage()} processing ${prop.name} (${prop.val}); ignoring error for now")
+        System.err.println("Got an exception ${e.getMessage()}  processing ${prop.name} (${prop.val}); vtxName/Label = ${vertexName}/${vertexLabel} ignoring error for now")
 //        e.printStackTrace()
       }
 
