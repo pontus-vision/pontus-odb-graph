@@ -76,38 +76,40 @@ public class PVFormTests extends AppTest {
       FormDataResponse orig = resp.clone();
 
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
-      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString());
+      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString() +
+        "; REPLY was " + resp);
 
       req.getComponents()[0].setName("#Object_Data_Procedures_Interested_Parties_Consulted").setUserData(null);
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
-      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString());
-
+      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
+        "; REPLY was " + resp);
 
       req.getComponents()[0].setUserData(new String[]{"EPG Advogados2"});
       req.setOperation("update");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
-
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString()+
+        "; REPLY was " + resp);
 
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
-      assertEquals("EPG Advogados2",resp.getComponents()[0].getUserData()[0],"req was "+req.toString());
-
+      assertEquals("EPG Advogados2",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
+        "; REPLY was " + resp);
 
       req.getComponents()[0].setUserData(new String[]{"EPG Advogados"});
       req.setOperation("update");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString()+
+        "; REPLY was " + resp);
 
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
-      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString());
-
+      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
+        "; REPLY was " + resp);
 
 
       req.getComponents()[0].setUserData(null);
@@ -118,8 +120,10 @@ public class PVFormTests extends AppTest {
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
-      assertEquals(null,resp.getComponents()[0].getUserData(),"req was "+req.toString());
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString()+
+        "; REPLY was " + resp);
+      assertEquals(null,resp.getComponents()[0].getUserData(),"req was "+req.toString()+
+        "; REPLY was " + resp);
 
 //      assertEquals("Object_Data_Procedures",resp.dataType);
 //      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);

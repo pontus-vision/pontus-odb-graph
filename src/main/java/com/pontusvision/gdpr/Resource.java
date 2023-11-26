@@ -1215,18 +1215,29 @@ status: "success", message: "Data source is working", title: "Success"
           if (componentName.startsWith(">out_")) {
             List<String> userDataLst = new LinkedList<>();
             ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
-            if(bag != null) bag.forEach((entry) -> {
-              userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("in")).getIdentity().toString());
-            });
+            if(bag != null) {
+              bag.forEach((entry) -> {
+                userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("in")).getIdentity().toString());
+              });
+            }
+            else {
+              System.out.println("Failed to get property "+ component.getName().substring(1) + "; props = " +
+                props.toString());
+            }
 
             userData = userDataLst.toArray(new String[0]);
           } else if (componentName.startsWith("<in_")) {
             List<String> userDataLst = new LinkedList<>();
             ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
-            if (bag != null) bag.forEach((entry) -> {
-              userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("out")).getIdentity().toString());
-            });
-
+            if (bag != null) {
+              bag.forEach((entry) -> {
+                userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("out")).getIdentity().toString());
+              });
+            }
+            else {
+              System.out.println("Failed to get property "+ component.getName().substring(1) + "; props = " +
+                props.toString());
+            }
             userData = userDataLst.toArray(new String[0]);
 
 
@@ -1257,9 +1268,13 @@ status: "success", message: "Data source is working", title: "Success"
         if (isCreate) {
           OGremlinResultSet resSet = App.graph.executeSql("UPDATE :table MERGE " + jsonToMerge + " UPSERT RETURN AFTER LOCK record LIMIT 1 ", sqlParams);
           if (resSet.getRawResultSet().hasNext()) {
-            ORID newItem = resSet.getRawResultSet().next().getIdentity().get();
-            request.setRid(newItem.toString());
-            createEdgesFromFormRequest(newItem, request);
+
+            Optional<ORID> newItem = resSet.getRawResultSet().next().getIdentity();
+            if (newItem.isPresent()) {
+              ORID newItemObj = newItem.get();
+              request.setRid(newItemObj.toString());
+              createEdgesFromFormRequest(newItemObj, request);
+            }
           }
           resSet.close();
         } else {

@@ -24,6 +24,16 @@ public class FormDataResponse extends FormDataRequest {
   }
 
   @Override
+  public String toString() {
+    return "FormDataResponse{" +
+      "dataType='" + dataType + '\'' +
+      ", rid='" + rid + '\'' +
+      ", components=" + Arrays.toString(components) +
+      ", operation='" + operation + '\'' +
+      '}';
+  }
+
+  @Override
   public FormDataResponse clone() {
     FormDataResponse ret = new FormDataResponse();
     ret.setComponents(Arrays.copyOf(this.components,this.components.length));
