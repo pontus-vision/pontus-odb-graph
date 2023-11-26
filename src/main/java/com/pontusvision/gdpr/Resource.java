@@ -1215,7 +1215,7 @@ status: "success", message: "Data source is working", title: "Success"
           if (componentName.startsWith(">out_")) {
             List<String> userDataLst = new LinkedList<>();
             ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
-            bag.forEach((entry) -> {
+            if(bag != null) bag.forEach((entry) -> {
               userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("in")).getIdentity().toString());
             });
 
@@ -1223,7 +1223,7 @@ status: "success", message: "Data source is working", title: "Success"
           } else if (componentName.startsWith("<in_")) {
             List<String> userDataLst = new LinkedList<>();
             ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
-            bag.forEach((entry) -> {
+            if (bag != null) bag.forEach((entry) -> {
               userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("out")).getIdentity().toString());
             });
 
