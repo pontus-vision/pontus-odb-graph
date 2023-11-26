@@ -1213,7 +1213,7 @@ status: "success", message: "Data source is working", title: "Success"
           String componentName = component.getName();
           String[] userData = null;
           if (componentName.startsWith(">out_")) {
-            List<String> userDataLst = new LinkedList<>();
+            final List<String> userDataLst = new LinkedList<>();
             ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
             if(bag != null) {
               bag.forEach((entry) -> {
@@ -1226,8 +1226,9 @@ status: "success", message: "Data source is working", title: "Success"
             }
 
             userData = userDataLst.toArray(new String[0]);
-          } else if (componentName.startsWith("<in_")) {
-            List<String> userDataLst = new LinkedList<>();
+          }
+          else if (componentName.startsWith("<in_")) {
+            final List<String> userDataLst = new LinkedList<>();
             ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
             if (bag != null) {
               bag.forEach((entry) -> {
