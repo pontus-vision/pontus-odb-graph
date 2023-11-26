@@ -330,7 +330,7 @@
           },
           {
             "name": "Object_Data_Policy_Is_Essential",
-            "val": "${Osdadospessoaisidentificadoss_x0}",
+            "val": "${Osdadospessoaisidentificadoss_x00}",
             "mandatoryInSearch": false,
             "excludeFromSearch": true
           },
