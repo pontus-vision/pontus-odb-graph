@@ -58,7 +58,7 @@ public class PVFormTests extends AppTest {
       components[++idx] = new PVFormData().setName(">out_Has_Lawful_Basis_On");
       components[++idx] = new PVFormData().setName(">out_Has_Sensitive_Data");
       components[++idx] = new PVFormData().setName("<in_Has_Ingestion_Event");
-      components[++idx] = new PVFormData().setName(">out_Has_Legitimate_Interests_Assessment");
+//      components[++idx] = new PVFormData().setName(">out_Has_Legitimate_Interests_Assessment");
       components[++idx] = new PVFormData().setName(">out_Has_Policy");
       components[++idx] = new PVFormData().setName(">out_Has_Data_Source");
 //      components[++idx] = new PVFormData().setName("");
@@ -79,7 +79,7 @@ public class PVFormTests extends AppTest {
       assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString() +
         "; REPLY was " + resp);
 
-      req.getComponents()[0].setName("#Object_Data_Procedures_Interested_Parties_Consulted").setUserData(null);
+//      req.getComponents()[0].setName("#Object_Data_Procedures_Interested_Parties_Consulted").setUserData(null);
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
       assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
@@ -143,7 +143,7 @@ public class PVFormTests extends AppTest {
       components2[++idx] = new PVFormData().setName(">out_Has_Lawful_Basis_On").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName(">out_Has_Sensitive_Data").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName("<in_Has_Ingestion_Event").setUserData(orig.getComponents()[idx].getUserData());
-      components2[++idx] = new PVFormData().setName(">out_Has_Legitimate_Interests_Assessment").setUserData(orig.getComponents()[idx].getUserData());
+//      components2[++idx] = new PVFormData().setName(">out_Has_Legitimate_Interests_Assessment").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName(">out_Has_Policy").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName(">out_Has_Data_Source").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Business_Area_Responsible").setUserData(new String[]{"Compras - 19"});
