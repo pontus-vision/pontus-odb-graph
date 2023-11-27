@@ -277,6 +277,12 @@ public class PVTemplateTests extends AppTest {
           "    \"type\": \"equals\",\n" +
           "    \"filter\": \"4\"\n" +
           "  }\n" +
+          "  ,{\n" +
+          "    \"colId\": \"Object_Data_Procedures_Interested_Parties_Consulted\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"contains\",\n" +
+          "    \"filter\": \"EPG Advogados\"\n" +
+          "  }\n" +
           "]", "Object_Data_Procedures",
         new String[]{"Object_Data_Procedures_ID"});
 // -------------------------------------------------------------------------------------------------------------------------------------
