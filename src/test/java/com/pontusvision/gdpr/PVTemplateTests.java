@@ -367,7 +367,7 @@ public class PVTemplateTests extends AppTest {
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
       contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
-        .has("Object_Data_Procedures_Name", P.eq("Termos de Confidencialidade"))
+        .has("Object_Data_Procedures_Name", P.eq("Termos de Confidencialidade "))
               .id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
