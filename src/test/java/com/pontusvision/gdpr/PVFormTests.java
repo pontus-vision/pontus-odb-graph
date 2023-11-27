@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -47,7 +49,14 @@ public class PVFormTests extends AppTest {
           "]", "Object_Data_Policy",
         new String[]{"Object_Data_Policy_Type"});
 
-      String rid = gridWrapperGetRid(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_ID"}, "hasNeighbourId:" + dataPolicyRid);
+        Map<String, Object> dataProcs = gridWrapperGetMap (null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_ID"}, "hasNeighbourId:" + dataPolicyRid);
+
+
+        String rid = (String) dataProcs.get("id");
+
+//          gridWrapperGetRid(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_ID"}, "hasNeighbourId:" + dataPolicyRid);
+
+
 
 // -------------------------------------------------------------------------------------------------------------------------------------
 
@@ -77,39 +86,39 @@ public class PVFormTests extends AppTest {
 
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
       assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString() +
-        "; REPLY was " + resp);
+        "; REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
 //      req.getComponents()[0].setName("#Object_Data_Procedures_Interested_Parties_Consulted").setUserData(null);
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
       assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
-        "; REPLY was " + resp);
+        "; REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
       req.getComponents()[0].setUserData(new String[]{"EPG Advogados2"});
       req.setOperation("update");
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString()+
-        "; REPLY was " + resp);
+        "; REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
       assertEquals("EPG Advogados2",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
-        "; REPLY was " + resp);
+        "; REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
       req.getComponents()[0].setUserData(new String[]{"EPG Advogados"});
       req.setOperation("update");
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString()+
-        "; REPLY was " + resp);
+        "; REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
       assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
-        "; REPLY was " + resp);
+        "; REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
 
       req.getComponents()[0].setUserData(null);
@@ -121,9 +130,9 @@ public class PVFormTests extends AppTest {
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
       assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString()+
-        "; REPLY was " + resp);
+        "; REPLY was " + resp + "; \n Data Proc was " + dataProcs);
       assertEquals(null,resp.getComponents()[0].getUserData(),"req was "+req.toString()+
-        "; REPLY was " + resp);
+        "; REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
 //      assertEquals("Object_Data_Procedures",resp.dataType);
 //      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);

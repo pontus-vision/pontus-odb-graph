@@ -187,7 +187,11 @@ public class AppTest {
     RecordReply reply = this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter,  0L, 1L);
     return (String) gson.fromJson(reply.records[0], Map.class).get("id");
   }
-
+  public Map<String,Object> gridWrapperGetMap (String filters, String table, String[] cols, String customFilter) {
+    String search = "{\"searchStr\": \"\"}";
+    RecordReply reply = this.gridWrapper(gson.fromJson(search,PVGridSearch.class), gson.fromJson(filters,PVGridFilters[].class), table, cols, customFilter,  0L, 1L);
+    return  gson.fromJson(reply.records[0], Map.class);
+  }
 // method / function to retrieve a vertex's @rid as a Map
   public Map<String, Object> gridWrapperGetMap (String filters, String table, String[] cols) {
     String search = "{\"searchStr\": \"\"}";
