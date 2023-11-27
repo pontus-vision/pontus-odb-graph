@@ -46,6 +46,12 @@ public class PVFormTests extends AppTest {
           "    \"type\": \"equals\",\n" +
           "    \"filter\": \"4\"\n" +
           "  }\n" +
+          "  ,{\n" +
+          "    \"colId\": \"Object_Data_Policy_Retention_Period\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"contains\",\n" +
+          "    \"filter\": \"9 anos\"\n" +
+          "  }\n" +
           "]", "Object_Data_Policy",
         new String[]{"Object_Data_Policy_Type"});
 
