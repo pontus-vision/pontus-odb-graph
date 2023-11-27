@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Locale;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -270,7 +271,7 @@ public class PVTemplateTests extends AppTest {
 //              .id().next().toString();
 
 //    new AGgrid test style ------------------------------------------------------------------------------------------------------------
-      String contextId = gridWrapperGetRid("[\n" +
+      Map<String,Object> contextMap = gridWrapperGetMap("[\n" +
           "  {\n" +
           "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
           "    \"filterType\": \"text\",\n" +
@@ -285,6 +286,8 @@ public class PVTemplateTests extends AppTest {
           "  }\n" +
           "]", "Object_Data_Procedures",
         new String[]{"Object_Data_Procedures_ID"});
+
+      String contextId = (String) contextMap.get("id");
 // -------------------------------------------------------------------------------------------------------------------------------------
 
 //      MockedStatic<PontusJ2ReportingFunctions> mocked = mockStatic(PontusJ2ReportingFunctions.class);
@@ -301,7 +304,11 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      assertEquals("true", report,"Failed to get the correct render value; renderReq = "+renderReq.toString() + "; reply = "+ renderReply.toString());
+      assertEquals("true", report,
+        "Failed to get the correct render value; renderReq = "+renderReq.toString() +
+          ";\n reply = "+ renderReply.toString() +
+          "\n contextMap = " + contextMap.toString()
+      );
 
 
 //    Testing for LIA's Lawful Basis
@@ -327,6 +334,12 @@ public class PVTemplateTests extends AppTest {
           "    \"filterType\": \"text\",\n" +
           "    \"type\": \"equals\",\n" +
           "    \"filter\": \"6\"\n" +
+          "  }\n" +
+          " ,{\n" +
+          "    \"colId\": \"Object_Data_Procedures_Interested_Parties_Consulted\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"contains\",\n" +
+          "    \"filter\": \"EPG Advogados\"\n" +
           "  }\n" +
           "]", "Object_Data_Procedures",
         new String[]{"Object_Data_Procedures_ID"});
