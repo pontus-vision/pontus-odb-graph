@@ -367,6 +367,7 @@ public class PVTemplateTests extends AppTest {
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
       contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
+        .has("Object_Data_Procedures_Name", P.eq("Termos de Confidencialidade"))
               .id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
@@ -378,6 +379,8 @@ public class PVTemplateTests extends AppTest {
 
       // test a non-existent  LIA for entry number 5 with an empty reply (same template as before)
       contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("5"))
+
+        .has("Object_Data_Procedures_Name", P.eq("Prontuário do colaborador"))
               .id().next().toString();
 
       renderReq.setRefEntryId(contextId);
