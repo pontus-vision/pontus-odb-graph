@@ -104,43 +104,43 @@
                     <Specification-Title>Apache TinkerPop :: OrientDB Gremlin</Specification-Title>
                     <Implementation-Vendor-Id>com.orientechnologies</Implementation-Vendor-Id>
                     <Import-Package>com.orientechnologies.common.concur.resource,com.orien
-                                            technologies.common.exception,com.orientechnologies.common.listener,c
-                                            om.orientechnologies.common.log,com.orientechnologies.common.util,com
-                                            .orientechnologies.orient.core.command,com.orientechnologies.orient.c
-                                            ore.command.script,com.orientechnologies.orient.core.command.script.f
-                                            ormatter,com.orientechnologies.orient.core.command.script.transformer
-                                            ,com.orientechnologies.orient.core.command.script.transformer.result,
-                                            com.orientechnologies.orient.core.command.script.transformer.resultse
-                                            t,com.orientechnologies.orient.core.config,com.orientechnologies.orie
-                                            nt.core.db,com.orientechnologies.orient.core.db.document,com.orientec
-                                            hnologies.orient.core.db.record,com.orientechnologies.orient.core.db.
-                                            record.ridbag,com.orientechnologies.orient.core.exception,com.oriente
-                                            chnologies.orient.core.id,com.orientechnologies.orient.core.index,com
-                                            .orientechnologies.orient.core.iterator,com.orientechnologies.orient.
-                                            core.metadata,com.orientechnologies.orient.core.metadata.schema,com.o
-                                            rientechnologies.orient.core.record,com.orientechnologies.orient.core
-                                            .record.impl,com.orientechnologies.orient.core.sql.executor,com.orien
-                                            technologies.orient.core.storage,com.orientechnologies.orient.core.tx
-                                            ,com.orientechnologies.orient.core.util,com.google.common.base,com.go
-                                            ogle.common.collect,javax.script,org.apache.commons.configuration,org
-                                            .apache.commons.lang,org.apache.tinkerpop.gremlin.groovy.jsr223,org.a
-                                            pache.tinkerpop.gremlin.jsr223,org.apache.tinkerpop.gremlin.process.c
-                                            omputer,org.apache.tinkerpop.gremlin.process.traversal,org.apache.tin
-                                            kerpop.gremlin.process.traversal.dsl.graph,org.apache.tinkerpop.greml
-                                            in.process.traversal.step,org.apache.tinkerpop.gremlin.process.traver
-                                            sal.step.map,org.apache.tinkerpop.gremlin.process.traversal.step.util
-                                            ,org.apache.tinkerpop.gremlin.process.traversal.strategy,org.apache.t
-                                            inkerpop.gremlin.process.traversal.util,org.apache.tinkerpop.gremlin.
-                                            structure,org.apache.tinkerpop.gremlin.structure.io,org.apache.tinker
-                                            pop.gremlin.structure.io.graphson,org.apache.tinkerpop.gremlin.struct
-                                            ure.io.gryo,org.apache.tinkerpop.gremlin.structure.util,org.apache.ti
-                                            nkerpop.gremlin.structure.util.detached,org.apache.tinkerpop.gremlin.
-                                            util.function,org.apache.tinkerpop.gremlin.util.iterator,org.apache.t
-                                            inkerpop.shaded.jackson.core,org.apache.tinkerpop.shaded.jackson.data
-                                            bind,org.apache.tinkerpop.shaded.jackson.databind.deser.std,org.apach
-                                            e.tinkerpop.shaded.jackson.databind.jsontype,org.apache.tinkerpop.sha
-                                            ded.jackson.databind.module,org.apache.tinkerpop.shaded.kryo,org.apac
-                                            he.tinkerpop.shaded.kryo.io</Import-Package>
+                      technologies.common.exception,com.orientechnologies.common.listener,c
+                      om.orientechnologies.common.log,com.orientechnologies.common.util,com
+                      .orientechnologies.orient.core.command,com.orientechnologies.orient.c
+                      ore.command.script,com.orientechnologies.orient.core.command.script.f
+                      ormatter,com.orientechnologies.orient.core.command.script.transformer
+                      ,com.orientechnologies.orient.core.command.script.transformer.result,
+                      com.orientechnologies.orient.core.command.script.transformer.resultse
+                      t,com.orientechnologies.orient.core.config,com.orientechnologies.orie
+                      nt.core.db,com.orientechnologies.orient.core.db.document,com.orientec
+                      hnologies.orient.core.db.record,com.orientechnologies.orient.core.db.
+                      record.ridbag,com.orientechnologies.orient.core.exception,com.oriente
+                      chnologies.orient.core.id,com.orientechnologies.orient.core.index,com
+                      .orientechnologies.orient.core.iterator,com.orientechnologies.orient.
+                      core.metadata,com.orientechnologies.orient.core.metadata.schema,com.o
+                      rientechnologies.orient.core.record,com.orientechnologies.orient.core
+                      .record.impl,com.orientechnologies.orient.core.sql.executor,com.orien
+                      technologies.orient.core.storage,com.orientechnologies.orient.core.tx
+                      ,com.orientechnologies.orient.core.util,com.google.common.base,com.go
+                      ogle.common.collect,javax.script,org.apache.commons.configuration,org
+                      .apache.commons.lang,org.apache.tinkerpop.gremlin.groovy.jsr223,org.a
+                      pache.tinkerpop.gremlin.jsr223,org.apache.tinkerpop.gremlin.process.c
+                      omputer,org.apache.tinkerpop.gremlin.process.traversal,org.apache.tin
+                      kerpop.gremlin.process.traversal.dsl.graph,org.apache.tinkerpop.greml
+                      in.process.traversal.step,org.apache.tinkerpop.gremlin.process.traver
+                      sal.step.map,org.apache.tinkerpop.gremlin.process.traversal.step.util
+                      ,org.apache.tinkerpop.gremlin.process.traversal.strategy,org.apache.t
+                      inkerpop.gremlin.process.traversal.util,org.apache.tinkerpop.gremlin.
+                      structure,org.apache.tinkerpop.gremlin.structure.io,org.apache.tinker
+                      pop.gremlin.structure.io.graphson,org.apache.tinkerpop.gremlin.struct
+                      ure.io.gryo,org.apache.tinkerpop.gremlin.structure.util,org.apache.ti
+                      nkerpop.gremlin.structure.util.detached,org.apache.tinkerpop.gremlin.
+                      util.function,org.apache.tinkerpop.gremlin.util.iterator,org.apache.t
+                      inkerpop.shaded.jackson.core,org.apache.tinkerpop.shaded.jackson.data
+                      bind,org.apache.tinkerpop.shaded.jackson.databind.deser.std,org.apach
+                      e.tinkerpop.shaded.jackson.databind.jsontype,org.apache.tinkerpop.sha
+                      ded.jackson.databind.module,org.apache.tinkerpop.shaded.kryo,org.apac
+                      he.tinkerpop.shaded.kryo.io</Import-Package>
                     <Require-Capability>osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=1.8))"</Require-Capability>
                     <Implementation-Build-Date>2019-10-28 11:50:57+0000</Implementation-Build-Date>
                     <Bundle-Name>Apache TinkerPop :: OrientDB Gremlin</Bundle-Name>
@@ -275,35 +275,39 @@
     </dependency>
   </dependencies>
   <properties>
+    <openhtmltopdf-pdfbox.version>1.0.10</openhtmltopdf-pdfbox.version>
     <junit.pioneer.version>1.5.0</junit.pioneer.version>
-    <orientdb-version>3.1.12</orientdb-version>
+    <orientdb-version>3.2.24</orientdb-version>
     <java-jwt.version>3.18.2</java-jwt.version>
     <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
     <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-    <aws-lambda-version>1.6</aws-lambda-version>
+    <aws-lambda-version>1.6.1</aws-lambda-version>
     <apache-commons-configuration.version>2.7</apache-commons-configuration.version>
-    <jetty-version>9.4.39.v20210325</jetty-version>
+    <jetty-version>9.4.51.v20230217</jetty-version>
     <junit.jupiter.version>5.8.1</junit.jupiter.version>
+    <openhtmltopdf-core.version>1.0.10</openhtmltopdf-core.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <hadoop2.version>2.7.2</hadoop2.version>
-    <jersey-version>2.33</jersey-version>
+    <jersey-version>2.34</jersey-version>
     <fmt-maven-plugin.version>2.1.0</fmt-maven-plugin.version>
+    <jnr-posix.version>3.1.15</jnr-posix.version>
     <jukito.version>1.5</jukito.version>
-    <slf4j.version>1.7.25</slf4j.version>
+    <slf4j.version>1.7.32</slf4j.version>
     <pontus-natty.version>100.15</pontus-natty.version>
     <mockito-all.version>3.6.28</mockito-all.version>
     <guava-version>25.0-jre</guava-version>
     <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
+    <jsoup.version>1.15.3</jsoup.version>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-    <tinkerpop-version>3.4.6</tinkerpop-version>
+    <tinkerpop-version>3.6.2</tinkerpop-version>
     <junit.platform.version>1.8.1</junit.platform.version>
     <pontus-jpostal.version>1.0.0</pontus-jpostal.version>
-    <netty-version>4.1.70.Final</netty-version>
+    <netty-version>4.1.86.Final</netty-version>
     <apache-commons-csv.version>1.8</apache-commons-csv.version>
-    <jackson2.version>2.13.0</jackson2.version>
+    <jackson2.version>2.13.5</jackson2.version>
   </properties>
 </project>
 

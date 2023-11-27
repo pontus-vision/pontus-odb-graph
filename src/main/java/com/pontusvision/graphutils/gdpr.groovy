@@ -163,10 +163,10 @@ class gdpr {
           property("Location_Address_Post_Code", pg_location_postcode).next()
 
 
-      App.g.addE("Uses_Email").from(person).to(email).next()
-      App.g.addE("Has_Credential").from(person).to(credential).next()
-      App.g.addE("Has_Id_Card").from(person).to(idCard).next()
-      App.g.addE("Lives").from(person).to(location).next()
+      App.g.addE("Uses_Email").from(__.V(person)).to(__.V(email)).next()
+      App.g.addE("Has_Credential").from(__.V(person)).to(__.V(credential)).next()
+      App.g.addE("Has_Id_Card").from(__.V(person)).to(__.V(idCard)).next()
+      App.g.addE("Lives").from(__.V(person)).to(__.V(location)).next()
       trans.commit()
 
     } catch (Throwable t) {
@@ -341,7 +341,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
         App.g.addE("Event_Training_Awareness_Campaign")
             .from(trainingEvent)
-            .to(g.V(awarenessCampaignId).next())
+            .to(__.V(awarenessCampaignId))
             .property("Metadata_Type", "Event_Training_Awareness_Campaign")
             .property("Metadata_Create_Date", metadataCreateDate)
             .next()
@@ -350,8 +350,8 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
         person = App.g.V(personId).next()
 
         App.g.addE("Event_Training_Person")
-            .from(trainingEvent)
-            .to(person)
+            .from(__.V(trainingEvent))
+            .to(__.V(person))
         //        .property("Metadata_Type", "Event_Training_Awareness_Campaign")
 //        .property("Metadata_Create_Date", metadataCreateDate)
             .next()
@@ -367,7 +367,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
                 .range(0, 1)
                 .next()
 
-            App.g.addE("Reports_To").from(person).to(boss).next()
+            App.g.addE("Reports_To").from(__.V(person)).to(__.V(boss)).next()
           } catch (e) { /* ignore */
           }
         }
@@ -514,10 +514,10 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
             property("Location_Address_Post_Code", item.get("pg_location_postcode")).next()
 
 
-        App.g.addE("Uses_Email").from(person).to(email).next()
-        App.g.addE("Has_Credential").from(person).to(credential).next()
-        App.g.addE("Has_Id_Card").from(person).to(idCard).next()
-        App.g.addE("Lives").from(person).to(location).next()
+        App.g.addE("Uses_Email").from(__.V(person)).to(__.V(email)).next()
+        App.g.addE("Has_Credential").from(__.V(person)).to(__.V(credential)).next()
+        App.g.addE("Has_Id_Card").from(__.V(person)).to(__.V(idCard)).next()
+        App.g.addE("Lives").from(__.V(person)).to(__.V(location)).next()
       }
 
 
@@ -729,13 +729,13 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
         if (person && email) {
           sb?.append("\nadding email to person link ")
-          App.g.addE("Uses_Email").from(person).to(email).next()
+          App.g.addE("Uses_Email").from(__.V(person)).to(__.V(email)).next()
 
         }
         if (person && location) {
           sb?.append("\nadding person to location link ")
 
-          App.g.addE("Lives").from(person).to(location).next()
+          App.g.addE("Lives").from(__.V(person)).to(__.V(location)).next()
 
         }
       }
@@ -865,7 +865,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
           for (int k = 0; k < randValK; k++) {
             Vertex pia = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment')).order().by(Order.shuffle).range(0, 1).next()
-            App.g.addE("Has_Data_Procedures").from(pia).to(dp).next()
+            App.g.addE("Has_Data_Procedures").from(__.V(pia)).to(__.V(dp)).next()
 
 
           }
@@ -908,7 +908,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
         App.g.V().has('Metadata_Type_Object_AWS_Instance', eq('Object_AWS_Instance'))
             .order().by(Order.shuffle).range(0, numServersImpacted).each { awsInstance ->
-          App.g.addE("Runs_On").from(dataSource).to(awsInstance).next()
+          App.g.addE("Runs_On").from(__.V(dataSource)).to(__.V(awsInstance)).next()
 
         }
 //
@@ -965,8 +965,8 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
         for (int j = 0; j < randVal2; j++) {
 
-          App.g.V().addE("Has_Privacy_Notice").from(pia).to(privacyNotice).next()
-          App.g.V().addE("Has_Privacy_Impact_Assessment").from(dataSource).to(pia).next()
+          App.g.V().addE("Has_Privacy_Notice").from(__.V(pia)).to(__.V(privacyNotice)).next()
+          App.g.V().addE("Has_Privacy_Impact_Assessment").from(__.V(dataSource)).to(__.V(pia)).next()
 
 
         }
@@ -1136,11 +1136,11 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
 
 
         if (person.isPresent()) {
-          App.g.addE("Made_SAR_Request").from(person.get()).to(sar).next()
+          App.g.addE("Made_SAR_Request").from(__.V(person.get())).to(__.V(sar)).next()
 
         }
         if (employee.isPresent()) {
-          App.g.addE("Assigned_SAR_Request").from(employee.get()).to(sar).next()
+          App.g.addE("Assigned_SAR_Request").from(__.V(employee.get())).to(__.V(sar)).next()
 
         }
 
@@ -1186,7 +1186,7 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
             Vertex awsInstance = App.g.V().has('Metadata_Type_Object_AWS_Instance', eq('Object_AWS_Instance'))
                 .order().by(Order.shuffle).range(0, 1).next()
 
-            App.g.addE("Impacted_By_Data_Breach").from(awsInstance).to(dataSource).next()
+            App.g.addE("Impacted_By_Data_Breach").from(__.V(awsInstance)).to(__.V(dataSource)).next()
           }
 
         }
@@ -1336,12 +1336,12 @@ addCampaignAwarenessBulk(graph,g, listOfMaps) */
             .order().by(Order.shuffle).range(0, 1).next()
 
 
-        App.g.addE("Uses_Email").from(person).to(email).next()
-        App.g.addE("Has_Credential").from(person).to(credential).next()
-        App.g.addE("Has_Id_Card").from(person).to(idCard).next()
-        App.g.addE("Lives").from(person).to(location).next()
+        App.g.addE("Uses_Email").from(__.V(person)).to(__.V(email)).next()
+        App.g.addE("Has_Credential").from(__.V(person)).to(__.V(credential)).next()
+        App.g.addE("Has_Id_Card").from(__.V(person)).to(__.V(idCard)).next()
+        App.g.addE("Lives").from(__.V(person)).to(__.V(location)).next()
 
-        App.g.addE("Has_Parent_Or_Guardian").from(person).to(parentOrGuardian).next()
+        App.g.addE("Has_Parent_Or_Guardian").from(__.V(person)).to(__.V(parentOrGuardian)).next()
       }
 
 //    trans.commit()
@@ -1441,8 +1441,8 @@ eventConsentStatus = createProp(mgmt, "Event_Consent_Status", String.class, org.
       def person = App.g.V().has('Metadata_Type', eq('Person_Natural')).order().by(Order.shuffle).range(0, 1).next()
 
 
-      App.g.addE("Consent").from(person).to(consent).next()
-      App.g.addE("Has_Privacy_Notice").from(consent).to(privNoticeVertex).next()
+      App.g.addE("Consent").from(__.V(person)).to(__.V(consent)).next()
+      App.g.addE("Has_Privacy_Notice").from(__.V(consent)).to(__.V(privNoticeVertex)).next()
 
 
     }
@@ -1492,10 +1492,10 @@ eventConsentStatus = createProp(mgmt, "Event_Consent_Status", String.class, org.
         Vertex dataSource = App.g.V().has('Metadata_Type_Object_Data_Source', eq('Object_Data_Source'))
             .order().by(Order.shuffle).range(0, 1).next()
 
-        App.g.addE("Has_Contract").from(dataSource).to(contract).next()
-        App.g.addE("Is_Data_Processor").from(org).to(contract).next()
-        App.g.addE("Is_Data_Controller").from(org2).to(contract).next()
-        App.g.addE("Is_Data_Owner").from(org3).to(contract).next()
+        App.g.addE("Has_Contract").from(__.V(dataSource)).to(__.V(contract)).next()
+        App.g.addE("Is_Data_Processor").from(__.V(org)).to(__.V(contract)).next()
+        App.g.addE("Is_Data_Controller").from(__.V(org2)).to(__.V(contract)).next()
+        App.g.addE("Is_Data_Owner").from(__.V(org3)).to(__.V(contract)).next()
 
       }
 
@@ -1816,7 +1816,7 @@ the end of the process.
 
       int index = new Random().nextInt(numLawfulBasis)
 
-      App.g.addE("Has_Lawful_Basis_On").from(pn).to(lawfulBasisVertices[index]).next()
+      App.g.addE("Has_Lawful_Basis_On").from(__.V(pn)).to(__.V(lawfulBasisVertices[index])).next()
 
 
 //        __addConsentForPrivacyNotice(graph, g, App.g.V(pnId0).next())
@@ -1957,7 +1957,7 @@ the end of the process.
 
       int index = new Random().nextInt(numLawfulBasis)
 
-      App.g.addE("Has_Lawful_Basis_On").from(pn).to(lawfulBasisVertices[index]).next()
+      App.g.addE("Has_Lawful_Basis_On").from(__.V(pn)).to(__.V(lawfulBasisVertices[index])).next()
 
 
 //        __addConsentForPrivacyNotice(graph, g, App.g.V(pnId0).next())
@@ -2131,7 +2131,7 @@ the end of the process.
             property("Person_Organisation_Fax", orgDataObj.orgFax).
             next()
 
-        App.g.addE("Is_Located").from(org).to(location)
+        App.g.addE("Is_Located").from(__.V(org)).to(__.V(location))
 
 
       }
@@ -2615,7 +2615,7 @@ the end of the process.
             property("Person_Organisation_Fax", authDataObj.orgFax).
             next()
 
-        App.g.V().addE('Is_Located').from(org).to(location).next()
+        App.g.V().addE('Is_Located').from(__.V(org)).to(__.V(location)).next()
 
 
         if ((randValK % 5) == 0) {
@@ -2623,7 +2623,7 @@ the end of the process.
           Vertex pia = App.g.V().has('Metadata_Type_Object_Privacy_Impact_Assessment', eq('Object_Privacy_Impact_Assessment'))
               .order().by(Order.shuffle).range(0, 1).next()
 
-          App.g.addE("Has_Data_Procedures").from(pia).to(org).next()
+          App.g.addE("Has_Data_Procedures").from(__.V(pia)).to(__.V(org)).next()
 
         }
 
@@ -3295,8 +3295,8 @@ the end of the process.
           def origVPC = App.g.V(origVpcVid).next()
 
           App.g.addE(isEgress ? "Has_Egress_Peering" : "Has_Ingress_Peering")
-              .from(origVPC)
-              .to(peerVpc)
+              .from(__.V(origVPC))
+              .to(__.V(peerVpc))
               .property('Metadata_Lineage', origGroupIdStr)
               .next()
 
@@ -3336,8 +3336,8 @@ the end of the process.
           def origSecGroup = App.g.V(origSecGroupVid).next()
 
           App.g.addE(isEgress ? "Has_Egress_Peering" : "Has_Ingress_Peering")
-              .from(origSecGroup)
-              .to(peerSecGroup)
+              .from(__.V(origSecGroup))
+              .to(__.V(peerSecGroup))
               .property('Metadata_Lineage', origGroupIdStr)
               .next()
           sb.append('in __addSecGroupEdgesFromUserIdGroupPairs -')
@@ -3704,15 +3704,15 @@ the end of the process.
               def vpc = App.g.V(vpcId).next()
 
               App.g.addE("Has_Server")
-                  .from(sgv)
-                  .to(awsi)
+                  .from(__.V(sgv))
+                  .to(__.V(awsi))
                   .next()
 
               sgv = App.g.V(sgvId).next()
 
               App.g.addE("Has_Security_Group")
-                  .from(vpc)
-                  .to(sgv).next()
+                  .from(__.V(vpc))
+                  .to(__.V(sgv)).next()
             }
 //    trans.commit()
           } catch (Throwable t) {
@@ -3983,120 +3983,16 @@ the end of the process.
 
   static def getChildrenScores(scoresMap) {
 
-//    long ageThresholdMs = (long) (System.currentTimeMillis() - (3600000L * 24L * 365L * 18L))
-//    def dateThreshold = new Date(ageThresholdMs)
-//
-//
-//    long numChildren = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//            .where(
-//                    __.and(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                    )
-//            )
-//            .count().next()
-//
-//    long numNoGuardian = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//            .where(
-//                    __.and(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                            , __.outE('Has_Parent_Or_Guardian').count().is(eq(0) as P<Long>)
-//                    )
-//            )
-//            .count().next()
-//
-//    long numWithoutAnyConsent = App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//            .where(
-//                    __.and(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                            , __.outE('Consent').count().is(eq(0) as P<Long>)
-//                    )
-//            )
-//            .count().next()
-//
-//
-//    long numNegativeConsent =
-//
-//            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//                    .where(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                    ).as('children')
-//                    .match(
-//                            __.as('children').outE('Consent').as('consentEdges')
-//                            , __.as('consentEdges').count().as('consentEdgesCount')
-//                            , __.as('consentEdges').inV().as('consentEvents')
-//                            , __.as('consentEvents').has('Event_Consent_Status', eq('No Consent ')).count().as('negConsentCount')
-//                            , __.as('children').id().as('childId')
-//
-//                    )
-//                    .select('consentEdgesCount', 'negConsentCount', 'childId')
-//                    .where('consentEdgesCount', eq('negConsentCount'))
-//                    .where(__.as('consentEdgesCount').is(gt(0)))
-//
-//                    .count().next()
-//
-//
-//    long numPendingConsent =
-//
-//            App.g.V().has('Metadata_Type_Person_Natural', eq('Person_Natural'))
-//                    .where(
-//                            __.values('Person_Natural_Date_Of_Birth').is(gte(dateThreshold))
-//                    ).as('children')
-//                    .match(
-//                            __.as('children').outE('Consent').as('consentEdges')
-//                            , __.as('consentEdges').count().as('consentEdgesCount')
-//                            , __.as('consentEdges').inV().as('consentEvents')
-//                            , __.as('consentEvents').has('Event_Consent_Status', eq('Consent Pending')).count().as('pendingConsentCount')
-//                            , __.as('children').id().as('childId')
-//
-//                    )
-//                    .select('consentEdgesCount', 'pendingConsentCount', 'childId')
-//                    .where('consentEdgesCount', eq('pendingConsentCount'))
-//                    .where(__.as('consentEdgesCount').is(gt(0)))
-//
-//                    .count().next()
-//
-//
-//    long scoreValue = 100L
-//    if (numChildren > 0) {
-//
-//      long pcntWithoutAnyConsent = (long) (100L * numWithoutAnyConsent / numChildren)
-//      if (pcntWithoutAnyConsent > 10) {
-//        scoreValue -= 32L
-//      } else if (numWithoutAnyConsent > 0) {
-//        scoreValue -= (22L + pcntWithoutAnyConsent)
-//      }
-//
-//
-//      long pcntWithoutAnyGuardian = (long) (100L * numNoGuardian / numChildren)
-//      if (pcntWithoutAnyGuardian > 10) {
-//        scoreValue -= 32L
-//      } else if (numNoGuardian > 0) {
-//        scoreValue -= (22L + pcntWithoutAnyGuardian)
-//      }
-//
-//      long pcntWithNegativeConsent = (long) (100L * numNegativeConsent / numChildren)
-//      if (pcntWithNegativeConsent > 10) {
-//        scoreValue -= 32L
-//      } else if (numNegativeConsent > 0) {
-//        scoreValue -= (22L + pcntWithNegativeConsent)
-//      }
-//
-//      scoreValue -= (7L * numPendingConsent / numChildren)
-//
-//
-//    }
-
 
     Long scoreValue = 100L
 
-    OResultSet resultSet = App.graph.executeSql(
-        "SELECT count(*) as ct  FROM  Object_Data_Procedures where (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())  ",
-        ['sd': sensitiveData]).getRawResultSet()
+    OResultSet resultSet = App.graph.executeSql("""
+        SELECT count(*) as ct  FROM  Object_Data_Procedures where 
+           (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())
+        AND (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )
+        """,
+            ['sd': sensitiveData, 'con': consentData]).getRawResultSet()
 
-//            App.g.V().has('Metadata_Type_Object_Data_Procedures', eq('Object_Data_Procedures')).where(
-//                    __.out('Has_Sensitive_Data').has('Object_Sensitive_Data_Description', within(sensitiveData))
-//            )
-//            .count().next()
 
     long numDataProcsWithSensitiveData = resultSet.next().getProperty('ct')
 
@@ -4113,11 +4009,14 @@ the end of the process.
 
     }
 
+
+
     resultSet = App.graph.executeSql(
         """
         SELECT count(*) as ct  FROM  Object_Data_Procedures where 
            (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.removeAll(:sd).size()) != (out('Has_Sensitive_Data').Object_Sensitive_Data_Description.size())
-        AND (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )    
+        AND (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.removeAll(:con).size() ) != (out('Has_Lawful_Basis_On').Object_Lawful_Basis_Description.size() )
+        and ( in('Consent').size() > 0)    
         """,
         ['sd': sensitiveData, 'con': consentData]).getRawResultSet()
 
@@ -6235,7 +6134,7 @@ the end of the process.
             g,
             "${dbURL}.${dbTableName}", 'data source from discovery',
             "DB_TABLE", null, null)
-        g.addE('Has_Table').from(dataSourceVertex).to(dataSrcTableVertex).next()
+        g.addE('Has_Table').from(__.V(dataSourceVertex)).to(__.V(dataSrcTableVertex)).next()
 
         def colMap = [:]
 
@@ -6282,11 +6181,11 @@ the end of the process.
                 "DB_COLUMN_SEMANTIC" as String,
                 semanticTranslation as String,
                 semantics.frequency as Double)
-            App.g.addE('Has_Semantic').from(dataSrcColVertex).to(dataSrcColSemanticVertex).next()
+            App.g.addE('Has_Semantic').from(__.V(dataSrcColVertex)).to(__.V(dataSrcColSemanticVertex)).next()
 
           }
 
-          App.g.addE('Has_Column').from(dataSrcTableVertex).to(dataSrcColVertex).next()
+          App.g.addE('Has_Column').from(__.V(dataSrcTableVertex)).to(__.V(dataSrcColVertex)).next()
         }
 
 
@@ -6302,7 +6201,7 @@ the end of the process.
               def foreignKeyColName = "${dbURL}.${col.foreignKeyName.trim()}"
               def foreignKeyColVertex = getDbCol(g, foreignKeyColName)
 
-              App.g.addE('Has_Link').from(colVertex).to(foreignKeyColVertex).next()
+              App.g.addE('Has_Link').from(__.V(colVertex)).to(__.V(foreignKeyColVertex)).next()
 
 
             }

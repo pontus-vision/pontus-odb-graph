@@ -10,7 +10,7 @@ import groovy.util.slurpersupport.GPathResult
 import java.nio.charset.StandardCharsets
 import java.util.zip.DataFormatException
 import java.util.zip.Inflater;
-
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 
 public class DrawIOGremlin {
 
@@ -103,7 +103,7 @@ public class DrawIOGremlin {
       if (sourceType) {
         sb.append("${label} - from: ${source} (${sourceType}) to: ${target} (${targetType})\n")
 
-        App.g.addE(label).from(vertexMap[source]).to(vertexMap[target]).next()
+        App.g.addE(label).from(__.V(vertexMap[source])).to(__.V(vertexMap[target])).next()
 
       }
 

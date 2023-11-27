@@ -510,7 +510,7 @@ class FileNLPRequest implements Serializable {
 
 
     if (foundIds.size() == 0) {
-      App.g.addE(label).from(App.g.V(fromId)).to(App.g.V(toId)).next()
+      App.g.addE(label).from(__.V(fromId)).to(__.V(toId)).next()
 
     }
 

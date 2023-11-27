@@ -24,11 +24,25 @@ public class FormDataResponse extends FormDataRequest {
   }
 
   @Override
+  public String toString() {
+    return "FormDataResponse{" +
+      "dataType='" + dataType + '\'' +
+      ", rid='" + rid + '\'' +
+      ", components=" + Arrays.toString(components) +
+      ", operation='" + operation + '\'' +
+      '}';
+  }
+
+  @Override
   public FormDataResponse clone() {
     FormDataResponse ret = new FormDataResponse();
-    ret.setComponents(Arrays.copyOf(this.components,this.components.length));
-    for (int i = 0, ilen = ret.components.length; i < ilen; i++){
-      ret.components[i] = new PVFormData(ret.components[i]);
+    if (this.components != null) {
+      ret.setComponents(Arrays.copyOf(this.components, this.components.length));
+      for (int i = 0, ilen = ret.components.length; i < ilen; i++) {
+        if (ret.components[i] != null) {
+          ret.components[i] = new PVFormData(ret.components[i]);
+        }
+      }
     }
     ret.setOperation(this.operation);
     ret.setRid(this.rid);

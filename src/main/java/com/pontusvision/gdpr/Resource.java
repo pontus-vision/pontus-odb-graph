@@ -884,7 +884,7 @@ status: "success", message: "Data source is working", title: "Success"
     } catch (InterruptedException | ExecutionException | SerializationException e) {
       e.printStackTrace();
 
-      final ResponseMessage msg = ResponseMessage.build(uuid).statusMessage(e.getMessage()).code(ResponseStatusCode.SERVER_ERROR_SCRIPT_EVALUATION).create();
+      final ResponseMessage msg = ResponseMessage.build(uuid).statusMessage(e.getMessage()).code(ResponseStatusCode.SERVER_ERROR_EVALUATION).create();
 
       try {
         return serializer.serializeResponseAsString(msg);
@@ -1157,10 +1157,10 @@ status: "success", message: "Data source is working", title: "Success"
             if (isOut) {
 //            sqlParams.put("fromId", newEntry.toString());
 //            sqlParams.put("toId", data);
-              App.g.addE(parsedName).from(App.g.V(newEntry.toString()).next()).to(App.g.V(data).next()).iterate();
+              App.g.addE(parsedName).from(__.V(newEntry.toString())).to(__.V(data)).iterate();
 
             } else {
-              App.g.addE(parsedName).from(App.g.V(data).next()).to(App.g.V(newEntry.toString()).next()).iterate();
+              App.g.addE(parsedName).from(__.V(data)).to(__.V(newEntry.toString())).iterate();
 
 //            sqlParams.put("toId", newEntry.toString());
 //            sqlParams.put("fromId", data);
@@ -1213,20 +1213,32 @@ status: "success", message: "Data source is working", title: "Success"
           String componentName = component.getName();
           String[] userData = null;
           if (componentName.startsWith(">out_")) {
-            List<String> userDataLst = new LinkedList<>();
+            final List<String> userDataLst = new LinkedList<>();
             ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
-            bag.forEach((entry) -> {
-              userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("in")).getIdentity().toString());
-            });
+            if(bag != null) {
+              bag.forEach((entry) -> {
+                userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("in")).getIdentity().toString());
+              });
+            }
+            else {
+              System.out.println("Failed to get property "+ component.getName().substring(1) + "; props = " +
+                props.toString());
+            }
 
             userData = userDataLst.toArray(new String[0]);
-          } else if (componentName.startsWith("<in_")) {
-            List<String> userDataLst = new LinkedList<>();
+          }
+          else if (componentName.startsWith("<in_")) {
+            final List<String> userDataLst = new LinkedList<>();
             ORidBag bag = (ORidBag) props.get(component.getName().substring(1));
-            bag.forEach((entry) -> {
-              userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("out")).getIdentity().toString());
-            });
-
+            if (bag != null) {
+              bag.forEach((entry) -> {
+                userDataLst.add(((OVertexDocument) ((OEdgeDocument) entry).field("out")).getIdentity().toString());
+              });
+            }
+            else {
+              System.out.println("Failed to get property "+ component.getName().substring(1) + "; props = " +
+                props.toString());
+            }
             userData = userDataLst.toArray(new String[0]);
 
 
@@ -1257,9 +1269,13 @@ status: "success", message: "Data source is working", title: "Success"
         if (isCreate) {
           OGremlinResultSet resSet = App.graph.executeSql("UPDATE :table MERGE " + jsonToMerge + " UPSERT RETURN AFTER LOCK record LIMIT 1 ", sqlParams);
           if (resSet.getRawResultSet().hasNext()) {
-            ORID newItem = resSet.getRawResultSet().next().getIdentity().get();
-            request.setRid(newItem.toString());
-            createEdgesFromFormRequest(newItem, request);
+
+            Optional<ORID> newItem = resSet.getRawResultSet().next().getIdentity();
+            if (newItem.isPresent()) {
+              ORID newItemObj = newItem.get();
+              request.setRid(newItemObj.toString());
+              createEdgesFromFormRequest(newItemObj, request);
+            }
           }
           resSet.close();
         } else {

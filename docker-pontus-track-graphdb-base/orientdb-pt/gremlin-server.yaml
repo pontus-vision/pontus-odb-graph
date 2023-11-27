@@ -1,7 +1,7 @@
 
 host: 0.0.0.0
 port: 8183
-scriptEvaluationTimeout: 30000
+evaluationTimeout: 30000
 threadPoolWorker: 3
 gremlinPool: 3
 

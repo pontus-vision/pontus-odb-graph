@@ -213,15 +213,15 @@ updatereq:
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Policy_Is_Deleted
-          val: ${Ap_x00f3_satingirasfinalidades_x}
+          val: ${Ap_x00f3_satingirasfinalidades_x00}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Policy_Is_Essential
-          val: ${Osdadospessoaisidentificadoss_x0}
+          val: ${Osdadospessoaisidentificadoss_x00}
           mandatoryInSearch: False
           excludeFromSearch: True
         - name: Object_Data_Policy_Is_Anonymized
-          val: ${Osdadoss_x00e3_oanonimizadosnotr}
+          val: ${Osdadoss_x00e3_oanonimizadosnotra}
           mandatoryInSearch: False
           excludeFromSearch: True
     

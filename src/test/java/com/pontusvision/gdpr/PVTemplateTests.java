@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Locale;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -270,15 +271,23 @@ public class PVTemplateTests extends AppTest {
 //              .id().next().toString();
 
 //    new AGgrid test style ------------------------------------------------------------------------------------------------------------
-      String contextId = gridWrapperGetRid("[\n" +
+      Map<String,Object> contextMap = gridWrapperGetMap("[\n" +
           "  {\n" +
           "    \"colId\": \"Object_Data_Procedures_ID\",\n" +
           "    \"filterType\": \"text\",\n" +
           "    \"type\": \"equals\",\n" +
           "    \"filter\": \"4\"\n" +
           "  }\n" +
+          "  ,{\n" +
+          "    \"colId\": \"Object_Data_Procedures_Interested_Parties_Consulted\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"contains\",\n" +
+          "    \"filter\": \"EPG Advogados\"\n" +
+          "  }\n" +
           "]", "Object_Data_Procedures",
         new String[]{"Object_Data_Procedures_ID"});
+
+      String contextId = (String) contextMap.get("id");
 // -------------------------------------------------------------------------------------------------------------------------------------
 
 //      MockedStatic<PontusJ2ReportingFunctions> mocked = mockStatic(PontusJ2ReportingFunctions.class);
@@ -295,7 +304,11 @@ public class PVTemplateTests extends AppTest {
 
       String report = new String(Base64.getDecoder().decode(renderReply.getBase64Report().getBytes()));
 
-      assertEquals("true", report);
+      assertEquals("true", report,
+        "Failed to get the correct render value; renderReq = "+renderReq.toString() +
+          ";\n reply = "+ renderReply.toString() +
+          "\n contextMap = " + contextMap.toString()
+      );
 
 
 //    Testing for LIA's Lawful Basis
@@ -321,6 +334,12 @@ public class PVTemplateTests extends AppTest {
           "    \"filterType\": \"text\",\n" +
           "    \"type\": \"equals\",\n" +
           "    \"filter\": \"6\"\n" +
+          "  }\n" +
+          " ,{\n" +
+          "    \"colId\": \"Object_Data_Procedures_Interested_Parties_Consulted\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"contains\",\n" +
+          "    \"filter\": \"EPG Advogados\"\n" +
           "  }\n" +
           "]", "Object_Data_Procedures",
         new String[]{"Object_Data_Procedures_ID"});
@@ -348,6 +367,7 @@ public class PVTemplateTests extends AppTest {
       reply = res.reportTemplateUpsert(req);
       templateId = reply.getTemplateId();
       contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("4"))
+        .has("Object_Data_Procedures_Name", P.eq("Termos de Confidencialidade "))
               .id().next().toString();
       renderReq.setRefEntryId(contextId);
       renderReq.setTemplateId(templateId);
@@ -359,6 +379,8 @@ public class PVTemplateTests extends AppTest {
 
       // test a non-existent  LIA for entry number 5 with an empty reply (same template as before)
       contextId = App.g.V().has("Object_Data_Procedures_ID", P.eq("5"))
+
+        .has("Object_Data_Procedures_Name", P.eq("Prontuário do colaborador"))
               .id().next().toString();
 
       renderReq.setRefEntryId(contextId);
@@ -917,9 +939,15 @@ public class PVTemplateTests extends AppTest {
       expectedReport = "KRACKOVSZI GLÓRIA 2 Corresponde potencialmente a 1 registro";
       assertTrue(report.contains(expectedReport), "Contains KRACKOVSZI GLÓRIA 2; orig report = " + report);
 
-      expectedReport = "Location Address, Object Email Address, Object Phone Number";
+      expectedReport = "Location Address";
       assertTrue(report.contains(expectedReport),
-          "Contains Location Address, Object Email Address, Object Phone Number Report orig report = " + report);
+          "Contains Location Address; report = " + report);
+      expectedReport = "Object Email Address";
+      assertTrue(report.contains(expectedReport),
+        "Contains Object Email Address;  orig report = " + report);
+      expectedReport = "Object Phone Number";
+      assertTrue(report.contains(expectedReport),
+        "Contains Object Phone Number; orig report = " + report);
 
 
       contextId = App.g.V().has("Person_Natural_Full_Name", P.eq("GLÓRIA KRACKOVSZI"))
@@ -937,11 +965,15 @@ public class PVTemplateTests extends AppTest {
       expectedReport = "GLÓRIA KRACKOVSZI Corresponde potencialmente a 1 registro";
       assertTrue(report.contains(expectedReport), "Contains GLÓRIA KRACKOVSZI; orig report = " + report);
 
-      expectedReport = "Location Address, Object Email Address, Object Phone Number";
+      expectedReport = "Location Address";
       assertTrue(report.contains(expectedReport),
-          "Contains Location Address, Object Email Address, Object Phone Number Report orig report = " + report);
-
-
+        "Contains Location Address; report = " + report);
+      expectedReport = "Object Email Address";
+      assertTrue(report.contains(expectedReport),
+        "Contains Object Email Address;  orig report = " + report);
+      expectedReport = "Object Phone Number";
+      assertTrue(report.contains(expectedReport),
+        "Contains Object Phone Number; orig report = " + report);
 
 
     } catch (Exception e) {

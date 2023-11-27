@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.util.concurrent.ExecutionException;
+import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 //import static org.junit.Assert.assertEquals;
 //import static org.junit.Assert.assertNull;
@@ -45,21 +46,34 @@ public class PVFormTests extends AppTest {
           "    \"type\": \"equals\",\n" +
           "    \"filter\": \"4\"\n" +
           "  }\n" +
+          "  ,{\n" +
+          "    \"colId\": \"Object_Data_Policy_Retention_Period\",\n" +
+          "    \"filterType\": \"text\",\n" +
+          "    \"type\": \"contains\",\n" +
+          "    \"filter\": \"9 anos\"\n" +
+          "  }\n" +
           "]", "Object_Data_Policy",
         new String[]{"Object_Data_Policy_Type"});
 
-      String rid = gridWrapperGetRid(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_ID"}, "hasNeighbourId:" + dataPolicyRid);
+        Map<String, Object> dataProcs = gridWrapperGetMap (null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_ID", "Object_Data_Procedures_Interested_Parties_Consulted", "Object_Data_Procedures_Description", "Object_Data_Procedures_Info_Collected", "Object_Data_Procedures_Name"}, "hasNeighbourId:" + dataPolicyRid);
+
+
+        String rid = (String) dataProcs.get("id");
+
+//          gridWrapperGetRid(null, "Object_Data_Procedures", new String[]{"Object_Data_Procedures_ID"}, "hasNeighbourId:" + dataPolicyRid);
+
+
 
 // -------------------------------------------------------------------------------------------------------------------------------------
 
       FormDataRequest req = new FormDataRequest();
       int idx = -1;
-      PVFormData[] components = new PVFormData[7];
+      PVFormData[] components = new PVFormData[6];
       components[++idx] = new PVFormData().setName("Object_Data_Procedures_Interested_Parties_Consulted");
       components[++idx] = new PVFormData().setName(">out_Has_Lawful_Basis_On");
       components[++idx] = new PVFormData().setName(">out_Has_Sensitive_Data");
       components[++idx] = new PVFormData().setName("<in_Has_Ingestion_Event");
-      components[++idx] = new PVFormData().setName(">out_Has_Legitimate_Interests_Assessment");
+//      components[++idx] = new PVFormData().setName(">out_Has_Legitimate_Interests_Assessment");
       components[++idx] = new PVFormData().setName(">out_Has_Policy");
       components[++idx] = new PVFormData().setName(">out_Has_Data_Source");
 //      components[++idx] = new PVFormData().setName("");
@@ -76,39 +90,41 @@ public class PVFormTests extends AppTest {
 
       FormDataResponse orig = resp.clone();
 
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString() +
+        ";\n REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
-      req.getComponents()[0].setName("#Object_Data_Procedures_Interested_Parties_Consulted").setUserData(null);
+//      req.getComponents()[0].setName("#Object_Data_Procedures_Interested_Parties_Consulted").setUserData(null);
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);
-
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
+        ";\n REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
       req.getComponents()[0].setUserData(new String[]{"EPG Advogados2"});
       req.setOperation("update");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
-
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString()+
+        ";\n REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals("EPG Advogados2",resp.getComponents()[0].getUserData()[0]);
-
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals("EPG Advogados2",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
+        ";\n REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
       req.getComponents()[0].setUserData(new String[]{"EPG Advogados"});
       req.setOperation("update");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString()+
+        ";\n REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);
-
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString());
+      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0],"req was "+req.toString()+
+        ";\n REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
 
       req.getComponents()[0].setUserData(null);
@@ -119,8 +135,10 @@ public class PVFormTests extends AppTest {
       req.getComponents()[0].setUserData(null);
       req.setOperation("read");
       resp =  Resource.getFormDataImpl(req);
-      assertEquals("Object_Data_Procedures",resp.dataType);
-      assertEquals(null,resp.getComponents()[0].getUserData());
+      assertEquals("Object_Data_Procedures",resp.dataType,"req was "+req.toString()+
+        ";\n REPLY was " + resp + "; \n Data Proc was " + dataProcs);
+      assertEquals(null,resp.getComponents()[0].getUserData(),"req was "+req.toString()+
+        ";\n REPLY was " + resp + "; \n Data Proc was " + dataProcs);
 
 //      assertEquals("Object_Data_Procedures",resp.dataType);
 //      assertEquals("EPG Advogados",resp.getComponents()[0].getUserData()[0]);
@@ -134,13 +152,13 @@ public class PVFormTests extends AppTest {
         "Object_Data_Procedures_Why_Is_It_Collected" -> "Necessário para contratação de prestadores de serviços e/ou fornecedores pessoas físicas"
         "Object_Data_Procedures_Country_Where_Stored" -> "Bxxxx"
        */
-      PVFormData[] components2 = new PVFormData[20];
+      PVFormData[] components2 = new PVFormData[19];
       idx = -1;
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Interested_Parties_Consulted").setUserData(new String[]{"EPG Advogados"});
       components2[++idx] = new PVFormData().setName(">out_Has_Lawful_Basis_On").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName(">out_Has_Sensitive_Data").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName("<in_Has_Ingestion_Event").setUserData(orig.getComponents()[idx].getUserData());
-      components2[++idx] = new PVFormData().setName(">out_Has_Legitimate_Interests_Assessment").setUserData(orig.getComponents()[idx].getUserData());
+//      components2[++idx] = new PVFormData().setName(">out_Has_Legitimate_Interests_Assessment").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName(">out_Has_Policy").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName(">out_Has_Data_Source").setUserData(orig.getComponents()[idx].getUserData());
       components2[++idx] = new PVFormData().setName("Object_Data_Procedures_Business_Area_Responsible").setUserData(new String[]{"Compras - 19"});

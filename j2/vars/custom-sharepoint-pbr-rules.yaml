@@ -295,13 +295,13 @@ rules:
             val: "${Osdadoss_x00e3_oatualizadosnotra}"
             excludeFromSearch: true
           Is_Deleted:
-            val: "${Ap_x00f3_satingirasfinalidades_x}"
+            val: "${Ap_x00f3_satingirasfinalidades_x00}"
             excludeFromSearch: true
           Is_Essential:
-            val: "${Osdadospessoaisidentificadoss_x0}"
+            val: "${Osdadospessoaisidentificadoss_x00}"
             excludeFromSearch: true
           Is_Anonymized:
-            val: "${Osdadoss_x00e3_oanonimizadosnotr}"
+            val: "${Osdadoss_x00e3_oanonimizadosnotra}"
             excludeFromSearch: true
 
 # TODO: work on the conditions!

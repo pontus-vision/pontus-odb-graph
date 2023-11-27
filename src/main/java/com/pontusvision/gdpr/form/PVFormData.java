@@ -266,6 +266,35 @@ public class PVFormData {
     return userData;
   }
 
+  @Override
+  public String toString() {
+    return "PVFormData{" +
+      "type='" + type + '\'' +
+      ", subtype='" + subtype + '\'' +
+      ", labels='" + labels + '\'' +
+      ", className='" + className + '\'' +
+      ", name='" + name + '\'' +
+      ", access=" + access +
+      ", requireValidOption=" + requireValidOption +
+      ", inline=" + inline +
+      ", multiple=" + multiple +
+      ", values=" + Arrays.toString(values) +
+      ", other=" + other +
+      ", description='" + description + '\'' +
+      ", placeholder='" + placeholder + '\'' +
+      ", value='" + value + '\'' +
+      ", maxlength=" + maxlength +
+      ", rows=" + rows +
+      ", role='" + role + '\'' +
+      ", toggle=" + toggle +
+      ", required=" + required +
+      ", min=" + min +
+      ", max=" + max +
+      ", step=" + step +
+      ", userData=" + Arrays.toString(userData) +
+      '}';
+  }
+
   public PVFormData setUserData(String[] userData) {
     this.userData = userData;
     return this;
