@@ -287,6 +287,36 @@
         "toVertexLabel": "Event_Group_Ingestion"
       },
       {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Phone_Number",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Email_Address",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Location_Address",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "rg",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "cpf",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "cnpj",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
         "label": "Has_Phone",
         "fromVertexName": "rep",
         "toVertexName": "phone"

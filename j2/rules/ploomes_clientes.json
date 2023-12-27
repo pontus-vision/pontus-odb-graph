@@ -215,6 +215,26 @@
         "toVertexLabel": "Event_Ingestion"
       },
       {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Phone_Number",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Email_Address",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Location_Address",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Identity_Card",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
         "label": "Uses_Email",
         "fromVertexLabel": "Person_Natural",
         "toVertexLabel": "Object_Email_Address"

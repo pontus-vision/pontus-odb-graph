@@ -23,7 +23,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -250,7 +249,7 @@ public class PVBasicTest extends AppTest {
       ).get().toString();
 
       assertEquals(expectedModuleCount, numModules, "Number of Object_Module Vertices");
-      
+
       String numSubsystem = App.executor.eval(queryPrefix +
                       ".out('Has_Ingestion_Event').out('Has_Ingestion_Event').out('Has_Ingestion_Event')" +
                       ".out('Has_Module').out('Has_Subsystem').dedup()" +
@@ -306,7 +305,7 @@ public class PVBasicTest extends AppTest {
       String userId4 =
               App.executor.eval("App.g.V().has('Object_Email_Address_Email',eq('jonas@comida1.com.br'))" +
                       ".next().id().toString()").get().toString();
-      String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE().dedup().count().next().toString()";
+      String emailConnectionsQuery = "App.g.V(\"" + userId4 + "\").bothE('Uses_Email').dedup().count().next().toString()";
       String emailConnections = App.executor.eval(emailConnectionsQuery).get().toString();
       assertEquals("1", emailConnections);
 
@@ -314,7 +313,7 @@ public class PVBasicTest extends AppTest {
       String userId5 =
               App.executor.eval("App.g.V().has('Object_Phone_Number_Numbers_Only',eq('111111111'))" +
                       ".next().id().toString()").get().toString();
-      String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE().count().next().toString()";
+      String phoneConnectionsQuery = "App.g.V(\"" + userId5 + "\").bothE('Has_Phone').count().next().toString()";
       String phoneConnections = App.executor.eval(phoneConnectionsQuery).get().toString();
       assertEquals("1", phoneConnections);
 
@@ -714,7 +713,7 @@ public class PVBasicTest extends AppTest {
       assertTrue(replyStr.contains("\"Location_Address_parser_house_number\":\"[semnumero, sinnumero, sn]\""),
               "NLP translates SN to sem número (Portuguese) and sin numero (Spanish)");
 
-    } catch (Exception e) { 
+    } catch (Exception e) {
       e.printStackTrace();
       assertNull(e);
 
