@@ -1,77 +1,132 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Person_Natural
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${pg_NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person_Natural_Full_Name_fuzzy
-          val: ${pg_NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person_Natural_Type
-          val: corretor
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Person_Natural_Name_Qualifier
-          val: ${pg_CORRETOR}
-          mandatoryInSearch: True
-        - name: Person_Natural_Natural.Date_Of_Birth
-          val: ${pg_DATA_NASCIMENTO}
-          predicate: eq
-          mandatoryInSearch: True
-          type: "java.util.Date"
-    - label: Object_Phone_Number
-      props:
-        - name: Object_Phone_Number_Raw
-          val: ${pg_CELULAR}
-          mandatoryInSearch: True
-        - name: Object_Phone_Number_Type
-          val: Celular
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
-        - name: Object_Phone_Number_Numbers_Only
-          val: ${(pg_CELULAR?.replaceAll('[^0-9]', '')?:'00000000')}
-          mandatoryInSearch: False
-          type: "[Ljava.lang.String;"
-          excludeFromSearch: True
-        - name: Object_Phone_Number_Last_7_Digits
-          val: ${(((pg_CELULAR?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}
-          mandatoryInSearch: True
-          type: "[Ljava.lang.String;"
-    - label: Object_Identity_Card
-      props:
-        - name: Object_Identity_Card_Id_Value
-          val: ${pg_CPF.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object_Identity_Card_Id_Type
-          val: CPF
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Email_Address
-      props:
-        - name: Object_Email_Address_Email
-          val: ${pg_EMAIL?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
-    - label: Location_Address
-      props:
-        - name: Location_Address_Full_Address
-          val: ${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP}
-          mandatoryInSearch: True
-        - name: Location_Address_Type
-          val: Business
-          mandatoryInSearch: False
-          excludeFromSearch: True
-  edges:
-    - label: Uses_Email
-      fromVertexLabel: Person_Natural
-      toVertexLabel: Object_Email_Address
-    - label: Has_Id_Card
-      fromVertexLabel: Person_Natural
-      toVertexLabel: Object_Identity_Card
-    - label: Works
-      fromVertexLabel: Person_Natural
-      toVertexLabel: Location_Address
-    - label: Lives
-      fromVertexLabel: Person_Natural
-      toVertexLabel: Location_Address
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Natural",
+        "props": [
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${pg_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Full_Name_fuzzy",
+            "val": "${pg_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Type",
+            "val": "corretor",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Natural_Name_Qualifier",
+            "val": "${pg_CORRETOR}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Natural.Date_Of_Birth",
+            "val": "${pg_DATA_NASCIMENTO}",
+            "predicate": "eq",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
+          }
+        ]
+      },
+      {
+        "label": "Object_Phone_Number",
+        "props": [
+          {
+            "name": "Object_Phone_Number_Raw",
+            "val": "${pg_CELULAR}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Phone_Number_Type",
+            "val": "Celular",
+            "mandatoryInSearch": true,
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Object_Phone_Number_Numbers_Only",
+            "val": "${(pg_CELULAR?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
+            "type": "[Ljava.lang.String;",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Phone_Number_Last_7_Digits",
+            "val": "${(((pg_CELULAR?.replaceAll('[^0-9]', ''))?:'0000000')[-7..-1])}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;"
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${pg_CPF.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "CPF",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${pg_EMAIL?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Location_Address",
+        "props": [
+          {
+            "name": "Location_Address_Full_Address",
+            "val": "${pg_ENDERECO}, ${pg_BAIRRO},  ${pg_CIDADE} - ${pg_UF}, ${pg_CEP}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Location_Address_Type",
+            "val": "Business",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Uses_Email",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Object_Email_Address"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Object_Identity_Card"
+      },
+      {
+        "label": "Works",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Location_Address"
+      },
+      {
+        "label": "Lives",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Location_Address"
+      }
+    ]
+  }
+}

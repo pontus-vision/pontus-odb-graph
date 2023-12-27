@@ -1,97 +1,157 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Person_Natural
-      percentageThreshold: 10
-      props:
-        - name: Person_Natural_Full_Name_fuzzy
-          val: ${pg_nlp_res_person}
-          predicate: textContainsFuzzy
-          mandatoryInSearch: True
-          type: "[Ljava.lang.String;"
-          excludeFromUpdate: True
-          postProcessor: ${it?.toUpperCase()?.trim()}
-        - name: Person_Natural_Full_Name
-          val: ${pg_nlp_res_person}
-          predicate: textContainsFuzzy
-          mandatoryInSearch: True
-          type: "[Ljava.lang.String;"
-          excludeFromUpdate: True
-          postProcessor: ${it?.toUpperCase()?.trim()}
-    - label: Location_Address
-      props:
-        - name: Location_Address_parser_postcode
-          val: ${pg_nlp_res_post_code}
-          mandatoryInSearch: True
-          type: "[Ljava.lang.String;"
-          excludeFromUpdate: True
-          postProcessor: ${com.pontusvision.utils.PostCode.format(eachPostCode)}
-          postProcessorVar: eachPostCode
-    - label: Object_Email_Address
-      props:
-        - name: Object_Email_Address_Email
-          val: ${pg_nlp_res_emailaddress?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
-          type: "[Ljava.lang.String;"
-          excludeFromUpdate: True
-    - label: Event_Ingestion
-      props:
-        - name: Event_Ingestion_Type
-          val: PDF Form Files
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Operation
-          val: Unstructured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Domain_b64
-          val: ${original_request?.bytes?.encodeBase64()?.toString()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Create_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Object_Data_Source
-      props:
-        - name: Object_Data_Source_Name
-          val: CONTRATOS
-          mandatoryInSearch: True
-        - name: Object_Data_Source_Description
-          val: Contratos em AWS S3
-          mandatoryInSearch: True
-        - name: Object_Data_Source_Type
-          val: Structured
-          mandatoryInSearch: True
-    - label: Event_Group_Ingestion
-      props:
-        - name: Event_Group_Ingestion_Type
-          val: Contratos em AWS S3
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Operation
-          val: Unstructured Data Insertion
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Metadata_Start_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Group_Ingestion_Metadata_End_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-  edges:
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Person_Natural
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Group_Ingestion
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Object_Data_Source
-      toVertexLabel: Event_Group_Ingestion
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Natural",
+        "percentageThreshold": 10,
+        "props": [
+          {
+            "name": "Person_Natural_Full_Name_fuzzy",
+            "val": "${pg_nlp_res_person}",
+            "predicate": "textContainsFuzzy",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;",
+            "excludeFromUpdate": true,
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          },
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${pg_nlp_res_person}",
+            "predicate": "textContainsFuzzy",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;",
+            "excludeFromUpdate": true,
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Location_Address",
+        "props": [
+          {
+            "name": "Location_Address_parser_postcode",
+            "val": "${pg_nlp_res_post_code}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;",
+            "excludeFromUpdate": true,
+            "postProcessor": "${com.pontusvision.utils.PostCode.format(eachPostCode)}",
+            "postProcessorVar": "eachPostCode"
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${pg_nlp_res_emailaddress?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true,
+            "type": "[Ljava.lang.String;",
+            "excludeFromUpdate": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "PDF Form Files",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Unstructured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "CONTRATOS",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Description",
+            "val": "Contratos em AWS S3",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Source_Type",
+            "val": "Structured",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "Contratos em AWS S3",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Unstructured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Metadata_Start_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Metadata_End_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      }
+    ]
+  }
+}

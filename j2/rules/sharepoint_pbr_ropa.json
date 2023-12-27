@@ -1,351 +1,563 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Object_Data_Source
-      name: sharepoint
-      props:
-        - name: Object_Data_Source_Name
-          val: SHAREPOINT/PBR/ROPA
-          mandatoryInSearch: True
-    - label: Object_Data_Source
-      name: attached_data_sources
-      props:
-        - name: Object_Data_Source_Form_Id
-          val: ${new groovy.json.JsonBuilder(RoPA_x0020_84_x0020__x002d__x002)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
-    - label: Object_Data_Procedures
-      props:
-        - name: Object_Data_Procedures_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Object_Data_Procedures_ID
-          val: ${Title}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Business_Area_Responsible
-          val: ${_x00c1_readeNeg_x00f3_cio}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Type
-          val: ${RoPA_x0020_0_x0020__x002d__x0020}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Macro_Process_Name
-          val: ${Processo}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Description
-          val: ${Descri_x00e7__x00e3_odoProcesso}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Info_Collected
-          val: ${Quaiss_x00e3_oosdadospessoaistra + Quaiss_x00e3_oosdadossens_x00ed_ + Quaiss_x00e3_oosdadosdecrian_x00}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Type_Of_Natural_Person
-          val: ${Quems_x00e3_oostitularesdosdados}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Type_Of_Natural_Person_Sensitive_Data
-          val: ${Quems_x00e3_oostitularesdosdados0}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Type_Of_Natural_Person_Minors
-          val: ${Quems_x00e3_oostitularesdosdados1}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Type_Of_Natural_Person_International
-          val: ${Quems_x00e3_oostitularesdestesda0}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Type_Of_Natural_Person_National
-          val: ${Quems_x00e3_oostitularesdestesda}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Data_Provider
-          val: ${Quemforneceuosdados_x003f_}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Why_Is_It_Collected
-          val: ${Qual_x00e9_afinalidadedotratamen}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Secondary_Purpose_Of_Collection
-          val: ${Paraqualfinalidadesecund_x00e1_r}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Country_Where_Stored
-          val: ${Transfer_x00ea_nciainternacional}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Participants
-          val: {'vals': '${Sesim_x002c_especificarquaisoutr}', 'excludeFromSearch': True}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Participants_National
-          val: ${Comquemosdadoss_x00e3_ocompartil}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Participants_International
-          val: {'vals': '${Especificarparaonde_x00e9_feitoa}', 'excludeFromSearch': True}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Info_Shared_With_Third_Parties
-          val: {'vals': '${Quaiss_x00e3_oostiposdedadospess}', 'excludeFromSearch': True}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Info_Shared_With_Third_Parties_International
-          val: {'vals': '${Quaiss_x00e3_oostiposdedadospess0}', 'excludeFromSearch': True}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Info_Share_Justification
-          val: ${Qual_x00e9_afinalidadedocomparti}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Info_Share_Justification_International
-          val: ${Qual_x00e9_afinalidadedatransfer}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Number_Of_Natural_Person
-          val: ${Qual_x00e9_quantidadedetitulares} / por ano
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Number_Of_Natural_Person_National
-          val: ${VolumetriadosTitularesDados}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Number_Of_Natural_Person_International
-          val: ${VolumetriadosTitularesDados_x002}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Email_Address
-      name: responsible
-      props:
-        - name: Object_Email_Address_Email
-          val: ${new groovy.json.JsonBuilder(Respons_x00e1_vel)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
-    - label: Object_Email_Address
-      name: alt_responsible
-      props:
-        - name: Object_Email_Address_Email
-          val: ${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
-    - label: Object_Email_Address
-      name: champion
-      props:
-        - name: Object_Email_Address_Email
-          val: ${new groovy.json.JsonBuilder(Nome_x0020_do_x0020_Champion_x00)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.SharepointUserRef;"
-          postProcessor: ${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}
-    - label: Object_Sensitive_Data
-      name: personal_data
-      props:
-        - name: Object_Sensitive_Data_Description
-          val: ${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadospessoaistra)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Ljava.lang.String;"
-          postProcessor: ${it?.toUpperCase()?.trim()}
-    - label: Object_Sensitive_Data
-      name: sensitive_data
-      condition: ${_x00c9_realizadotratamentodedado0 == 'Sim'}
-      props:
-        - name: Object_Sensitive_Data_Description
-          val: ${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadossens_x00ed_)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Ljava.lang.String;"
-          postProcessor: ${it?.toUpperCase()?.trim()}
-    - label: Object_Sensitive_Data
-      name: minors_data
-      condition: ${_x00c9_realizadotratamentodedado2 == 'Sim'}
-      props:
-        - name: Object_Sensitive_Data_Description
-          val: ${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadosdecrian_x00)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Ljava.lang.String;"
-          postProcessor: ${it?.toUpperCase()?.trim()}
-    - label: Object_Data_Policy
-      props:
-        - name: Object_Data_Policy_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Object_Data_Policy_Type
-          val: ${Title}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Policy_Retention_Period
-          val: ${Qualoper_x00ed_ododereten_x00e7_}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Policy_Retention_Justification
-          val: ${Qualajustificativaparaoper_x00ed}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Policy_Uses_Automation
-          val: ${Osdadoss_x00e3_osubmetidos_x00e0}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Policy_Is_Updated
-          val: ${Osdadoss_x00e3_oatualizadosnotra}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Policy_Is_Deleted
-          val: ${Ap_x00f3_satingirasfinalidades_x00}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Policy_Is_Essential
-          val: ${Osdadospessoaisidentificadoss_x00}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Policy_Is_Anonymized
-          val: ${Osdadoss_x00e3_oanonimizadosnotra}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Privacy_Notice
-      condition: ${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}
-      props:
-        - name: Object_Privacy_Notice_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Object_Privacy_Notice_Metadata_Update_Date
-          val: ${Modified}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_Metadata_Create_Date
-          val: ${Created}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_How_Is_It_Collected
-          val: ${Comoosdadospessoaiss_x00e3_ocole}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_Description
-          val: ${Qual_x00e9_omeioadotadoparainfor}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Privacy_Notice_Agreements
-          val: ${Quaisdestesdireitospodemseratend}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Event_Data_Breach
-      condition: ${Houvealgumincidentedeseguran_x00 == 'Sim'}
-      props:
-        - name: Event_Data_Breach_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Event_Data_Breach_Id
-          val: ${Title?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Data_Breach_Authority_Notified
-          val: ${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos:''}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Data_Breach_Authority_Notified_Others
-          val: ${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0:''}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Data_Breach_Metadata_Create_Date
-          val: ${Created}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Data_Breach_Metadata_Update_Date
-          val: ${Modified}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Data_Breach_Description
-          val: ${Emcasopositivo_x002c_fornecerosd}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Event_Ingestion
-      props:
-        - name: Event_Ingestion_Type
-          val: sharepoint/pbr/ropa
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Domain_b64
-          val: ${original_request?.bytes?.encodeBase64()?.toString()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Create_Date
-          val: ${Created}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Update_Date
-          val: ${Modified}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Event_Group_Ingestion
-      props:
-        - name: Event_Group_Ingestion_Type
-          val: sharepoint/pbr/ropa
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-  edges:
-    - label: Has_Ingestion_Event
-      fromVertexName: sharepoint
-      toVertexLabel: Event_Group_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Group_Ingestion
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Ingestion
-      toVertexName: Object_Data_Procedures
-    - label: Has_Personal_Data
-      fromVertexName: Object_Data_Procedures
-      toVertexName: minors_data
-    - label: Has_Personal_Data
-      fromVertexName: Object_Data_Procedures
-      toVertexName: personal_data
-    - label: Has_Sensitive_Data
-      fromVertexName: Object_Data_Procedures
-      toVertexName: sensitive_data
-    - label: Has_Data_Source
-      fromVertexLabel: Object_Data_Procedures
-      toVertexName: attached_data_sources
-    - label: Has_Policy
-      fromVertexLabel: Object_Data_Procedures
-      toVertexLabel: Object_Data_Policy
-    - label: Impacted_By_Data_Breach
-      fromVertexLabel: Event_Data_Breach
-      toVertexName: attached_data_sources
-    - label: Has_Privacy_Notice
-      fromVertexLabel: Object_Privacy_Notice
-      toVertexLabel: Object_Data_Procedures
-    - label: Is_Responsible
-      fromVertexName: responsible
-      toVertexLabel: Object_Data_Procedures
-    - label: Is_Responsible
-      fromVertexName: alt_responsible
-      toVertexLabel: Object_Data_Procedures
-    - label: Is_Interested_Party
-      fromVertexName: champion
-      toVertexLabel: Object_Data_Procedures
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Data_Source",
+        "name": "sharepoint",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "SHAREPOINT/PBR/ROPA",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "attached_data_sources",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(RoPA_x0020_84_x0020__x002d__x002)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Procedures",
+        "props": [
+          {
+            "name": "Object_Data_Procedures_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_ID",
+            "val": "${Title}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Business_Area_Responsible",
+            "val": "${_x00c1_readeNeg_x00f3_cio}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Type",
+            "val": "${RoPA_x0020_0_x0020__x002d__x0020}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Macro_Process_Name",
+            "val": "${Processo}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Description",
+            "val": "${Descri_x00e7__x00e3_odoProcesso}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Collected",
+            "val": "${Quaiss_x00e3_oosdadospessoaistra + Quaiss_x00e3_oosdadossens_x00ed_ + Quaiss_x00e3_oosdadosdecrian_x00}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
+            "val": "${Quems_x00e3_oostitularesdosdados}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person_Sensitive_Data",
+            "val": "${Quems_x00e3_oostitularesdosdados0}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person_Minors",
+            "val": "${Quems_x00e3_oostitularesdosdados1}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person_International",
+            "val": "${Quems_x00e3_oostitularesdestesda0}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person_National",
+            "val": "${Quems_x00e3_oostitularesdestesda}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Provider",
+            "val": "${Quemforneceuosdados_x003f_}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Why_Is_It_Collected",
+            "val": "${Qual_x00e9_afinalidadedotratamen}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Secondary_Purpose_Of_Collection",
+            "val": "${Paraqualfinalidadesecund_x00e1_r}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Country_Where_Stored",
+            "val": "${Transfer_x00ea_nciainternacional}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Participants",
+            "val": {
+              "vals": "${Sesim_x002c_especificarquaisoutr}",
+              "excludeFromSearch": true
+            },
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Participants_National",
+            "val": "${Comquemosdadoss_x00e3_ocompartil}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Participants_International",
+            "val": {
+              "vals": "${Especificarparaonde_x00e9_feitoa}",
+              "excludeFromSearch": true
+            },
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Shared_With_Third_Parties",
+            "val": {
+              "vals": "${Quaiss_x00e3_oostiposdedadospess}",
+              "excludeFromSearch": true
+            },
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Shared_With_Third_Parties_International",
+            "val": {
+              "vals": "${Quaiss_x00e3_oostiposdedadospess0}",
+              "excludeFromSearch": true
+            },
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Share_Justification",
+            "val": "${Qual_x00e9_afinalidadedocomparti}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Share_Justification_International",
+            "val": "${Qual_x00e9_afinalidadedatransfer}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Number_Of_Natural_Person",
+            "val": "${Qual_x00e9_quantidadedetitulares} / por ano",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Number_Of_Natural_Person_National",
+            "val": "${VolumetriadosTitularesDados}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Number_Of_Natural_Person_International",
+            "val": "${VolumetriadosTitularesDados_x002}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "responsible",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_vel)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "alt_responsible",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${new groovy.json.JsonBuilder(Respons_x00e1_velAlternativo)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "champion",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${new groovy.json.JsonBuilder(Nome_x0020_do_x0020_Champion_x00)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.SharepointUserRef;",
+            "postProcessor": "${com.pontusvision.utils.SharepointUserRef.fromString(it)?.getEmail()?.toLowerCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "personal_data",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadospessoaistra)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "sensitive_data",
+        "condition": "${_x00c9_realizadotratamentodedado0 == 'Sim'}",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadossens_x00ed_)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "minors_data",
+        "condition": "${_x00c9_realizadotratamentodedado2 == 'Sim'}",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(Quaiss_x00e3_oosdadosdecrian_x00)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Policy",
+        "props": [
+          {
+            "name": "Object_Data_Policy_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Type",
+            "val": "${Title}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Retention_Period",
+            "val": "${Qualoper_x00ed_ododereten_x00e7_}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Retention_Justification",
+            "val": "${Qualajustificativaparaoper_x00ed}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Uses_Automation",
+            "val": "${Osdadoss_x00e3_osubmetidos_x00e0}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Is_Updated",
+            "val": "${Osdadoss_x00e3_oatualizadosnotra}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Is_Deleted",
+            "val": "${Ap_x00f3_satingirasfinalidades_x00}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Is_Essential",
+            "val": "${Osdadospessoaisidentificadoss_x00}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Is_Anonymized",
+            "val": "${Osdadoss_x00e3_oanonimizadosnotra}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Privacy_Notice",
+        "condition": "${H_x00e1_informa_x00e7__x00e3_oao == 'Sim'}",
+        "props": [
+          {
+            "name": "Object_Privacy_Notice_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Privacy_Notice_Metadata_Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Privacy_Notice_Metadata_Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Privacy_Notice_How_Is_It_Collected",
+            "val": "${Comoosdadospessoaiss_x00e3_ocole}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Privacy_Notice_Description",
+            "val": "${Qual_x00e9_omeioadotadoparainfor}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Privacy_Notice_Agreements",
+            "val": "${Quaisdestesdireitospodemseratend}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Data_Breach",
+        "condition": "${Houvealgumincidentedeseguran_x00 == 'Sim'}",
+        "props": [
+          {
+            "name": "Event_Data_Breach_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Id",
+            "val": "${Title?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Authority_Notified",
+            "val": "${ropa100=='Sim'?Fornecerosdetalhes_x002c_casopos:''}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Authority_Notified_Others",
+            "val": "${ropa102=='Sim'?Emcasopositivo_x002c_fornecerosd0:''}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Metadata_Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Metadata_Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Data_Breach_Description",
+            "val": "${Emcasopositivo_x002c_fornecerosd}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "sharepoint/pbr/ropa",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "sharepoint/pbr/ropa",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "sharepoint",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexName": "Object_Data_Procedures"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "Object_Data_Procedures",
+        "toVertexName": "minors_data"
+      },
+      {
+        "label": "Has_Personal_Data",
+        "fromVertexName": "Object_Data_Procedures",
+        "toVertexName": "personal_data"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexName": "Object_Data_Procedures",
+        "toVertexName": "sensitive_data"
+      },
+      {
+        "label": "Has_Data_Source",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "attached_data_sources"
+      },
+      {
+        "label": "Has_Policy",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Data_Policy"
+      },
+      {
+        "label": "Impacted_By_Data_Breach",
+        "fromVertexLabel": "Event_Data_Breach",
+        "toVertexName": "attached_data_sources"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Object_Privacy_Notice",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexName": "responsible",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexName": "alt_responsible",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Is_Interested_Party",
+        "fromVertexName": "champion",
+        "toVertexLabel": "Object_Data_Procedures"
+      }
+    ]
+  }
+}

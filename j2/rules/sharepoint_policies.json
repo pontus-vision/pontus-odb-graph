@@ -1,67 +1,113 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Object_Policies
-      props:
-        - name: Object_Policies_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Object_Policies_Text
-          val: ${text}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Policies_Type
-          val: ${Title}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Data_Source
-      name: sharepoint
-      props:
-        - name: Object_Data_Source_Name
-          val: SHAREPOINT/POLICIES
-          mandatoryInSearch: True
-    - label: Event_Ingestion
-      props:
-        - name: Event_Ingestion_Type
-          val: Policies
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Domain_b64
-          val: ${original_request?.bytes?.encodeBase64()?.toString()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Create_Date
-          val: ${Created}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Update_Date
-          val: ${Modified}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Event_Group_Ingestion
-      props:
-        - name: Event_Group_Ingestion_Type
-          val: sharepoint/policies
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-  edges:
-    - label: Has_Ingestion_Event
-      fromVertexName: sharepoint
-      toVertexLabel: Event_Group_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Group_Ingestion
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexName: Object_Policies
-      toVertexLabel: Event_Ingestion
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Policies",
+        "props": [
+          {
+            "name": "Object_Policies_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Policies_Text",
+            "val": "${text}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Policies_Type",
+            "val": "${Title}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "sharepoint",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "SHAREPOINT/POLICIES",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "Policies",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "sharepoint/policies",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "sharepoint",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "Object_Policies",
+        "toVertexLabel": "Event_Ingestion"
+      }
+    ]
+  }
+}

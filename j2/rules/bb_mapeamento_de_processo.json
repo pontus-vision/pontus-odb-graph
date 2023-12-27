@@ -1,262 +1,420 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Object_Data_Source
-      name: budibase
-      props:
-        - name: Object_Data_Source_Name
-          val: BUDIBASE/MAPEAMENTO-DE-PROCESSO
-          mandatoryInSearch: True
-    - label: Object_Data_Source
-      name: attached_data_sources
-      props:
-        - name: Object_Data_Source_Form_Id
-          val: ${new groovy.json.JsonBuilder(Local_de_Armazenamento)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.BudibaseRef;"
-          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
-    - label: Object_Data_Policy
-      props:
-        - name: Object_Data_Policy_Type
-          val: ${Referencia}
-          mandatoryInSearch: True
-        - name: Object_Data_Policy_Retention_Period
-          val: ${Periodo_de_retencao}
-          mandatoryInSearch: True
-    - label: Object_Policies
-      props:
-        - name: Object_Policies_Form_Id
-          val: ${new groovy.json.JsonBuilder(Politicas)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.BudibaseRef;"
-          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
-    - label: Object_Data_Procedures
-      props:
-        - name: Object_Data_Procedures_Form_Id
-          val: ${_id}
-          mandatoryInSearch: True
-        - name: Object_Data_Procedures_ID
-          val: ${Referencia?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Name
-          val: ${Processo?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Type_Of_Natural_Person
-          val: ${Categoria_dos_Titulares_dos_Dados}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Business_Area_Responsible
-          val: ${Area_Responsavel}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Country_Where_Stored
-          val: ${Pais_Onde_as_Pessoas_Estao_Localizadas}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Data_Origin
-          val: ${Origem_de_coleta_dos_dados?.toUpperCase()?.trim()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Data_Geo_Scope
-          val: ${Abrangencia_geografica_do_tratamento?.toUpperCase()?.trim()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Data_Owner
-          val: ${Encarregado?.toUpperCase()?.trim()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Data_Controller
-          val: ${Controlador?.toUpperCase()?.trim()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Why_Is_It_Collected
-          val: ${Finalidade_do_Processo}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Info_Collected
-          val: ${Dados_Pessoais_Utilizados}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Description
-          val: ${Fluxo_dos_Dados}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Info_Shared_With_Third_Parties
-          val: ${Dados_Pessoais_Compartilhados_com_Terceiros}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Info_Share_Justification
-          val: ${Finalidade_de_Compartilhamento_com_Terceiros}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Data_Procedures_Macro_Process_Name
-          val: ${Macroprocesso}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Sensitive_Data
-      name: personal_data
-      condition: ${Dados_Pessoais_Utilizados?.size() > 0}
-      props:
-        - name: Object_Sensitive_Data_Description
-          val: ${new groovy.json.JsonBuilder(Dados_Pessoais_Utilizados)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Ljava.lang.String;"
-          postProcessor: ${it?.toUpperCase()?.trim()}
-    - label: Object_Sensitive_Data
-      name: sensitive_data
-      condition: ${Dados_Pessoais_Sensiveis?.size() > 0}
-      props:
-        - name: Object_Sensitive_Data_Description
-          val: ${new groovy.json.JsonBuilder(Dados_Pessoais_Sensiveis)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Ljava.lang.String;"
-          postProcessor: ${it?.toUpperCase()?.trim()}
-    - label: Object_Sensitive_Data
-      name: shared_data
-      condition: ${Dados_Pessoais_Compartilhados_com_Terceiros?.size() > 0}
-      props:
-        - name: Object_Sensitive_Data_Description
-          val: ${new groovy.json.JsonBuilder(Dados_Pessoais_Compartilhados_com_Terceiros)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Ljava.lang.String;"
-          postProcessor: ${it?.toUpperCase()?.trim()}
-    - label: Object_Lawful_Basis
-      name: lawful_basis
-      props:
-        - name: Object_Lawful_Basis_Description
-          val: ${new groovy.json.JsonBuilder(Base_Legal)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Ljava.lang.String;"
-          postProcessor: ${it?.toUpperCase()?.trim()}
-    - label: Object_Lawful_Basis
-      name: other_lawful_basis
-      condition: ${Outros_Fundamentos_Legais?.trim()?.length() > 0}
-      props:
-        - name: Object_Lawful_Basis_Description
-          val: ${Outros_Fundamentos_Legais?.toUpperCase()?.trim()}
-          mandatoryInSearch: True
-    - label: Object_Legitimate_Interests_Assessment
-      condition: ${Justificativa_da_Base_Legal?.trim()?.length() > 0}
-      props:
-        - name: Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification
-          val: ${Justificativa_da_Base_Legal}
-          mandatoryInSearch: True
-    - label: Object_Email_Address
-      name: responsavel
-      condition: ${Responsavel?.size() > 0}
-      props:
-        - name: Object_Email_Address_Form_Id
-          val: ${new groovy.json.JsonBuilder(Responsavel)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.BudibaseRef;"
-          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupValue()}
-    - label: Object_Email_Address
-      name: operador
-      condition: ${Operador?.size() > 0}
-      props:
-        - name: Object_Email_Address_Form_Id
-          val: ${new groovy.json.JsonBuilder(Operador)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.BudibaseRef;"
-          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupValue()}
-    - label: Object_Email_Address
-      name: partes_consultadas
-      condition: ${Partes_Interessadas_Consultadas?.size() > 0}
-      props:
-        - name: Object_Email_Address_Email
-          val: ${new groovy.json.JsonBuilder(Partes_Interessadas_Consultadas)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.BudibaseRef;"
-          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupValue()}
-    - label: Event_Ingestion
-      props:
-        - name: Event_Ingestion_Type
-          val: budibase/mapeamento-de-processo
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Domain_b64
-          val: ${original_request?.bytes?.encodeBase64()?.toString()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Create_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Update_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Event_Group_Ingestion
-      props:
-        - name: Event_Group_Ingestion_Type
-          val: budibase/mapeamento-de-processo
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-  edges:
-    - label: Has_Ingestion_Event
-      fromVertexName: budibase
-      toVertexLabel: Event_Group_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Group_Ingestion
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Ingestion
-      toVertexLabel: Object_Data_Procedures
-    - label: Has_Sensitive_Data
-      fromVertexLabel: Object_Data_Procedures
-      toVertexName: personal_data
-    - label: Has_Sensitive_Data
-      fromVertexLabel: Object_Data_Procedures
-      toVertexName: sensitive_data
-    - label: Has_Sensitive_Data
-      fromVertexLabel: Object_Data_Procedures
-      toVertexName: shared_data
-    - label: Has_Lawful_Basis_On
-      fromVertexLabel: Object_Data_Procedures
-      toVertexName: lawful_basis
-    - label: Has_Other_Lawful_Basis
-      fromVertexLabel: Object_Data_Procedures
-      toVertexName: other_lawful_basis
-    - label: Has_Policy
-      fromVertexLabel: Object_Data_Procedures
-      toVertexLabel: Object_Data_Policy
-    - label: Has_Policy
-      fromVertexLabel: Object_Data_Procedures
-      toVertexLabel: Object_Policies
-    - label: Has_Data_Source
-      fromVertexLabel: Object_Data_Procedures
-      toVertexName: attached_data_sources
-    - label: Has_Legitimate_Interests_Assessment
-      fromVertexLabel: Object_Data_Procedures
-      toVertexLabel: Object_Legitimate_Interests_Assessment
-    - label: Is_Responsible
-      fromVertexName: responsavel
-      toVertexLabel: Object_Data_Procedures
-    - label: Is_Responsible
-      fromVertexName: operador
-      toVertexLabel: Object_Data_Procedures
-    - label: Is_Interested_Party
-      fromVertexName: partes_consultadas
-      toVertexLabel: Object_Data_Procedures
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Data_Source",
+        "name": "budibase",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "BUDIBASE/MAPEAMENTO-DE-PROCESSO",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "name": "attached_data_sources",
+        "props": [
+          {
+            "name": "Object_Data_Source_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Local_de_Armazenamento)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Policy",
+        "props": [
+          {
+            "name": "Object_Data_Policy_Type",
+            "val": "${Referencia}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Policy_Retention_Period",
+            "val": "${Periodo_de_retencao}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Policies",
+        "props": [
+          {
+            "name": "Object_Policies_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Politicas)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Procedures",
+        "props": [
+          {
+            "name": "Object_Data_Procedures_Form_Id",
+            "val": "${_id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_ID",
+            "val": "${Referencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Name",
+            "val": "${Processo?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
+            "val": "${Categoria_dos_Titulares_dos_Dados}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Business_Area_Responsible",
+            "val": "${Area_Responsavel}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Country_Where_Stored",
+            "val": "${Pais_Onde_as_Pessoas_Estao_Localizadas}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Origin",
+            "val": "${Origem_de_coleta_dos_dados?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Geo_Scope",
+            "val": "${Abrangencia_geografica_do_tratamento?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Owner",
+            "val": "${Encarregado?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Data_Controller",
+            "val": "${Controlador?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Why_Is_It_Collected",
+            "val": "${Finalidade_do_Processo}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Collected",
+            "val": "${Dados_Pessoais_Utilizados}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Description",
+            "val": "${Fluxo_dos_Dados}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Shared_With_Third_Parties",
+            "val": "${Dados_Pessoais_Compartilhados_com_Terceiros}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Info_Share_Justification",
+            "val": "${Finalidade_de_Compartilhamento_com_Terceiros}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Data_Procedures_Macro_Process_Name",
+            "val": "${Macroprocesso}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "personal_data",
+        "condition": "${Dados_Pessoais_Utilizados?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(Dados_Pessoais_Utilizados)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "sensitive_data",
+        "condition": "${Dados_Pessoais_Sensiveis?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(Dados_Pessoais_Sensiveis)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Sensitive_Data",
+        "name": "shared_data",
+        "condition": "${Dados_Pessoais_Compartilhados_com_Terceiros?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Sensitive_Data_Description",
+            "val": "${new groovy.json.JsonBuilder(Dados_Pessoais_Compartilhados_com_Terceiros)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Lawful_Basis",
+        "name": "lawful_basis",
+        "props": [
+          {
+            "name": "Object_Lawful_Basis_Description",
+            "val": "${new groovy.json.JsonBuilder(Base_Legal)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Ljava.lang.String;",
+            "postProcessor": "${it?.toUpperCase()?.trim()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Lawful_Basis",
+        "name": "other_lawful_basis",
+        "condition": "${Outros_Fundamentos_Legais?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object_Lawful_Basis_Description",
+            "val": "${Outros_Fundamentos_Legais?.toUpperCase()?.trim()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Legitimate_Interests_Assessment",
+        "condition": "${Justificativa_da_Base_Legal?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object_Legitimate_Interests_Assessment_Lawful_Basis_Justification",
+            "val": "${Justificativa_da_Base_Legal}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "responsavel",
+        "condition": "${Responsavel?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Responsavel)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupValue()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "operador",
+        "condition": "${Operador?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(Operador)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupValue()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "partes_consultadas",
+        "condition": "${Partes_Interessadas_Consultadas?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${new groovy.json.JsonBuilder(Partes_Interessadas_Consultadas)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupValue()}"
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "budibase/mapeamento-de-processo",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "budibase/mapeamento-de-processo",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "budibase",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "personal_data"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "sensitive_data"
+      },
+      {
+        "label": "Has_Sensitive_Data",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "shared_data"
+      },
+      {
+        "label": "Has_Lawful_Basis_On",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "lawful_basis"
+      },
+      {
+        "label": "Has_Other_Lawful_Basis",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "other_lawful_basis"
+      },
+      {
+        "label": "Has_Policy",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Data_Policy"
+      },
+      {
+        "label": "Has_Policy",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Policies"
+      },
+      {
+        "label": "Has_Data_Source",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexName": "attached_data_sources"
+      },
+      {
+        "label": "Has_Legitimate_Interests_Assessment",
+        "fromVertexLabel": "Object_Data_Procedures",
+        "toVertexLabel": "Object_Legitimate_Interests_Assessment"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexName": "responsavel",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Is_Responsible",
+        "fromVertexName": "operador",
+        "toVertexLabel": "Object_Data_Procedures"
+      },
+      {
+        "label": "Is_Interested_Party",
+        "fromVertexName": "partes_consultadas",
+        "toVertexLabel": "Object_Data_Procedures"
+      }
+    ]
+  }
+}

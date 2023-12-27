@@ -1,135 +1,223 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Person_Organisation
-      condition: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}
-      props:
-        - name: Person_Organisation_Name
-          val: ${Razao_Social_Nome?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-          excludeFromUpdate: True
-        - name: Person_Organisation_Registration_Number
-          val: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}
-          mandatoryInSearch: True
-          excludeFromUpdate: True
-    - label: Person_Natural
-      condition: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() != 14}
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${Razao_Social_Nome?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-          excludeFromUpdate: True
-        - name: Person_Natural_Customer_ID
-          val: ${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}
-          mandatoryInSearch: True
-          excludeFromUpdate: True
-    - label: Object_Data_Procedures
-      props:
-        - name: Object_Data_Procedures_Form_Id
-          val: ${new groovy.json.JsonBuilder(ID_do_Processo)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.BudibaseRef;"
-          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
-    - label: Object_Data_Source
-      props:
-        - name: Object_Data_Source_Name
-          val: BUDIBASE/CONTROLE-DE-SOLICITAÇÕES
-          mandatoryInSearch: True
-    - label: Event_Subject_Access_Request
-      props:
-        - name: Event_Subject_Access_Request_Form_Id
-          val: ${_id}
-          mandatoryInSearch: True
-        - name: Event_Subject_Access_Request_Id
-          val: ${Referencia}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Metadata_Update_Date
-          val: ${Resposta___Data}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Metadata_Create_Date
-          val: ${Solicitacao___Data}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Request_Type
-          val: ${Solicitacao___Tipo}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Request_Channel
-          val: ${Solicitacao___Canal}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Status
-          val: ${Status}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Subject_Access_Request_Natural_Person_Type
-          val: ${Categoria_dos_Titulares_dos_Dados?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Event_Group_Subject_Access_Request
-      props:
-        - name: Event_Group_Subject_Access_Request_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-    - label: Event_Ingestion
-      props:
-        - name: Event_Ingestion_Type
-          val: budibase/controle-de-solicitações
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Domain_b64
-          val: ${original_request?.bytes?.encodeBase64()?.toString()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Create_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Update_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Event_Group_Ingestion
-      props:
-        - name: Event_Group_Ingestion_Type
-          val: budibase/controle-de-solicitações
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-  edges:
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Object_Data_Source
-      toVertexLabel: Event_Group_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Group_Ingestion
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Subject_Access_Request
-      toVertexLabel: Event_Ingestion
-    - label: Has_DSAR
-      fromVertexLabel: Event_Subject_Access_Request
-      toVertexLabel: Event_Group_Subject_Access_Request
-    - label: Made_SAR_Request
-      fromVertexLabel: Person_Natural
-      toVertexLabel: Event_Subject_Access_Request
-    - label: Made_SAR_Request
-      fromVertexLabel: Person_Organisation
-      toVertexLabel: Event_Subject_Access_Request
-    - label: Has_DSAR
-      fromVertexLabel: Event_Group_Subject_Access_Request
-      toVertexLabel: Object_Data_Procedures
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Organisation",
+        "condition": "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}",
+        "props": [
+          {
+            "name": "Person_Organisation_Name",
+            "val": "${Razao_Social_Nome?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
+          },
+          {
+            "name": "Person_Organisation_Registration_Number",
+            "val": "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "condition": "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()?.length() != 14}",
+        "props": [
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${Razao_Social_Nome?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
+          },
+          {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${CNPJ_CPF_ID?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": true,
+            "excludeFromUpdate": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Procedures",
+        "props": [
+          {
+            "name": "Object_Data_Procedures_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(ID_do_Processo)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
+            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "BUDIBASE/CONTROLE-DE-SOLICITAÇÕES",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Subject_Access_Request",
+        "props": [
+          {
+            "name": "Event_Subject_Access_Request_Form_Id",
+            "val": "${_id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Subject_Access_Request_Id",
+            "val": "${Referencia}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Subject_Access_Request_Metadata_Update_Date",
+            "val": "${Resposta___Data}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Subject_Access_Request_Metadata_Create_Date",
+            "val": "${Solicitacao___Data}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Subject_Access_Request_Request_Type",
+            "val": "${Solicitacao___Tipo}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Subject_Access_Request_Request_Channel",
+            "val": "${Solicitacao___Canal}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Subject_Access_Request_Status",
+            "val": "${Status}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Subject_Access_Request_Natural_Person_Type",
+            "val": "${Categoria_dos_Titulares_dos_Dados?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Subject_Access_Request",
+        "props": [
+          {
+            "name": "Event_Group_Subject_Access_Request_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "budibase/controle-de-solicitações",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "budibase/controle-de-solicitações",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Subject_Access_Request",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_DSAR",
+        "fromVertexLabel": "Event_Subject_Access_Request",
+        "toVertexLabel": "Event_Group_Subject_Access_Request"
+      },
+      {
+        "label": "Made_SAR_Request",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Event_Subject_Access_Request"
+      },
+      {
+        "label": "Made_SAR_Request",
+        "fromVertexLabel": "Person_Organisation",
+        "toVertexLabel": "Event_Subject_Access_Request"
+      },
+      {
+        "label": "Has_DSAR",
+        "fromVertexLabel": "Event_Group_Subject_Access_Request",
+        "toVertexLabel": "Object_Data_Procedures"
+      }
+    ]
+  }
+}

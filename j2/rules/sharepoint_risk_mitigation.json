@@ -1,75 +1,125 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Object_Data_Source
-      name: sharepoint
-      props:
-        - name: Object_Data_Source_Name
-          val: SHAREPOINT/RISK-MITIGATIONS
-          mandatoryInSearch: True
-    - label: Object_Risk_Mitigation_Data_Source
-      props:
-        - name: Object_Risk_Mitigation_Data_Source_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Object_Risk_Mitigation_Data_Source_Mitigation_Id
-          val: ${Title?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Risk_Mitigation_Data_Source_Description
-          val: ${field_Description}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Risk_Mitigation_Data_Source_Is_Implemented
-          val: ${(field_Implemented.toLowerCase().equals('sim')|| field_Implemented.toLowerCase().equals('true'))?'true':'false' }
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Risk_Mitigation_Data_Source_Is_Approved
-          val: ${(field_Approved.toLowerCase().equals('sim')|| field_Approved.toLowerCase().equals('true'))?'true':'false' }
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Event_Ingestion
-      props:
-        - name: Event_Ingestion_Type
-          val: risk-mitigations
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Domain_b64
-          val: ${original_request?.bytes?.encodeBase64()?.toString()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Create_Date
-          val: ${Created}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Update_Date
-          val: ${Modified}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Event_Group_Ingestion
-      props:
-        - name: Event_Group_Ingestion_Type
-          val: sharepoint/risk-mitigations
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-  edges:
-    - label: Has_Ingestion_Event
-      fromVertexName: sharepoint
-      toVertexLabel: Event_Group_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Group_Ingestion
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Ingestion
-      toVertexLabel: Object_Risk_Mitigation_Data_Source
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Object_Data_Source",
+        "name": "sharepoint",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "SHAREPOINT/RISK-MITIGATIONS",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Risk_Mitigation_Data_Source",
+        "props": [
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Mitigation_Id",
+            "val": "${Title?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Description",
+            "val": "${field_Description}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Is_Implemented",
+            "val": "${(field_Implemented.toLowerCase().equals('sim')|| field_Implemented.toLowerCase().equals('true'))?'true':'false' }",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Risk_Mitigation_Data_Source_Is_Approved",
+            "val": "${(field_Approved.toLowerCase().equals('sim')|| field_Approved.toLowerCase().equals('true'))?'true':'false' }",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "risk-mitigations",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${Created}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${Modified}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "sharepoint/risk-mitigations",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "sharepoint",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexLabel": "Object_Risk_Mitigation_Data_Source"
+      }
+    ]
+  }
+}

@@ -1,213 +1,354 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Person_Natural
-      name: titular
-      condition: ${CPF != null}
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${Nome?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Person_Natural_Customer_ID
-          val: ${CPF?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
-        - name: Person_Natural_Date_Of_Birth
-          val: ${Data_de_Nascimento_Idade?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
-          predicate: eq
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Person_Natural
-      name: mae
-      condition: ${Nome_da_Mae?.trim()?.length() > 0}
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${Nome_da_Mae?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    - label: Person_Natural
-      name: pai
-      condition: ${Nome_do_Pai?.trim()?.length() > 0}
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${Nome_do_Pai?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-    - label: Person_Employee
-      name: colaborador
-      condition: ${Matricula != null}
-      props:
-        - name: Person_Employee_ID
-          val: ${Matricula?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
-        - name: Person_Employee_Full_Name
-          val: ${Nome?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Person_Employee_Role
-          val: ${Funcao?.trim()?.toUpperCase()} ${Cargo?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Person_Employee_Date_Of_Birth
-          val: ${Data_de_Nascimento_Idade?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Person_Employee
-      name: chefe
-      condition: ${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')?.length() > 0}
-      props:
-        - name: Person_Employee_ID
-          val: ${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}
-          mandatoryInSearch: True
-    - label: Object_Identity_Card
-      name: rne
-      condition: ${RNE != null}
-      props:
-        - name: Object_Identity_Card_Id_Value
-          val: ${RNE.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object_Identity_Card_Id_Type
-          val: RNE
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Identity_Card
-      name: cpf
-      condition: ${CPF != null}
-      props:
-        - name: Object_Identity_Card_Id_Value
-          val: ${CPF?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object_Identity_Card_Id_Type
-          val: CPF
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Identity_Card
-      name: rg
-      condition: ${Identidade___Orgao_Emissor___UF != null}
-      props:
-        - name: Object_Identity_Card_Id_Value
-          val: ${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object_Identity_Card_Id_Text
-          val: ${Identidade___Orgao_Emissor___UF}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Identity_Card_Id_Type
-          val: RG
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Email_Address
-      name: email
-      condition: ${(Email != null) && !(Email.isEmpty())}
-      props:
-        - name: Object_Email_Address_Email
-          val: ${Email?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
-    - label: Object_Email_Address
-      name: email_opcional
-      condition: ${(E_Mail_Opcional != null) && !(E_Mail_Opcional.isEmpty())}
-      props:
-        - name: Object_Email_Address_Email
-          val: ${E_Mail_Opcional?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
-    - label: Location_Address
-      props:
-        - name: Location_Address_Full_Address
-          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, null, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Location_Address_parser
-          val: ${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, null, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}
-          mandatoryInSearch: True
-          type: "com.pontusvision.utils.LocationAddress"
-        - name: Location_Address_Post_Code
-          val: ${com.pontusvision.utils.PostCode.format(CEP)}
-          mandatoryInSearch: True
-    - label: Object_Phone_Number
-      condition: ${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}
-      props:
-        - name: Object_Phone_Number_Raw
-          val: ${Telefone}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Phone_Number_Numbers_Only
-          val: ${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Object_Phone_Number_Last_7_Digits
-          val: ${(((Telefone?.replaceAll('[^0-9]', ''))?.length()>=7?(Telefone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
-          mandatoryInSearch: True
-    - label: Event_Ingestion
-      props:
-        - name: Event_Ingestion_Type
-          val: ADP
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Create_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Object_Data_Source
-      props:
-        - name: Object_Data_Source_Name
-          val: ADP
-          mandatoryInSearch: True
-    - label: Event_Group_Ingestion
-      props:
-        - name: Event_Group_Ingestion_Type
-          val: ADP
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-  edges:
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Object_Data_Source
-      toVertexLabel: Event_Group_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Group_Ingestion
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexName: titular
-      toVertexLabel: Event_Ingestion
-    - label: Is_Alias
-      fromVertexName: titular
-      toVertexLabel: colaborador
-    - label: Is_Subordinate
-      fromVertexName: colaborador
-      toVertexName: chefe
-    - label: Uses_Email
-      fromVertexName: titular
-      toVertexName: email
-    - label: Uses_Email
-      fromVertexName: titular
-      toVertexName: email_opcional
-    - label: Is_Located
-      fromVertexName: titular
-      toVertexLabel: Location_Address
-    - label: Has_Id_Card
-      fromVertexName: titular
-      toVertexName: cpf
-    - label: Has_Id_Card
-      fromVertexName: titular
-      toVertexName: rg
-    - label: Has_Id_Card
-      fromVertexName: titular
-      toVertexName: rne
-    - label: Has_Phone
-      fromVertexName: titular
-      toVertexLabel: Object_Phone_Number
-    - label: Is_Family
-      fromVertexName: titular
-      toVertexName: mae
-    - label: Is_Family
-      fromVertexName: titular
-      toVertexName: pai
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Natural",
+        "name": "titular",
+        "condition": "${CPF != null}",
+        "props": [
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${Nome?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${CPF?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Date_Of_Birth",
+            "val": "${Data_de_Nascimento_Idade?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
+            "predicate": "eq",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "name": "mae",
+        "condition": "${Nome_da_Mae?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${Nome_da_Mae?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "name": "pai",
+        "condition": "${Nome_do_Pai?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${Nome_do_Pai?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Employee",
+        "name": "colaborador",
+        "condition": "${Matricula != null}",
+        "props": [
+          {
+            "name": "Person_Employee_ID",
+            "val": "${Matricula?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Employee_Full_Name",
+            "val": "${Nome?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Employee_Role",
+            "val": "${Funcao?.trim()?.toUpperCase()} ${Cargo?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Employee_Date_Of_Birth",
+            "val": "${Data_de_Nascimento_Idade?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Employee",
+        "name": "chefe",
+        "condition": "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')?.length() > 0}",
+        "props": [
+          {
+            "name": "Person_Employee_ID",
+            "val": "${Matricula_da_Chefia_Imediata?.replaceAll('[^0-9]', '')}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "name": "rne",
+        "condition": "${RNE != null}",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${RNE.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "RNE",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "name": "cpf",
+        "condition": "${CPF != null}",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${CPF?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "CPF",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "name": "rg",
+        "condition": "${Identidade___Orgao_Emissor___UF != null}",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${Identidade___Orgao_Emissor___UF?.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Text",
+            "val": "${Identidade___Orgao_Emissor___UF}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "RG",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "email",
+        "condition": "${(Email != null) && !(Email.isEmpty())}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${Email?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "name": "email_opcional",
+        "condition": "${(E_Mail_Opcional != null) && !(E_Mail_Opcional.isEmpty())}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${E_Mail_Opcional?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Location_Address",
+        "props": [
+          {
+            "name": "Location_Address_Full_Address",
+            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, null, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Location_Address_parser",
+            "val": "${com.pontusvision.utils.LocationAddress.formatAddress(Tipo___Endereco, N_, Complemento, Bairro, Municipio02, null, (Domiciliado_no_Exterior=='Não')?'Brasil':'', CEP)}",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location_Address_Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(CEP)}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Phone_Number",
+        "condition": "${Telefone?.replaceAll('[^0-9]', '')?.length() >= 7}",
+        "props": [
+          {
+            "name": "Object_Phone_Number_Raw",
+            "val": "${Telefone}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Phone_Number_Numbers_Only",
+            "val": "${(Telefone?.replaceAll('[^0-9]', '')?:'00000000')}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Object_Phone_Number_Last_7_Digits",
+            "val": "${(((Telefone?.replaceAll('[^0-9]', ''))?.length()>=7?(Telefone?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "ADP",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "ADP",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "ADP",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "titular",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Is_Alias",
+        "fromVertexName": "titular",
+        "toVertexLabel": "colaborador"
+      },
+      {
+        "label": "Is_Subordinate",
+        "fromVertexName": "colaborador",
+        "toVertexName": "chefe"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "titular",
+        "toVertexName": "email"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "titular",
+        "toVertexName": "email_opcional"
+      },
+      {
+        "label": "Is_Located",
+        "fromVertexName": "titular",
+        "toVertexLabel": "Location_Address"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "titular",
+        "toVertexName": "cpf"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "titular",
+        "toVertexName": "rg"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "titular",
+        "toVertexName": "rne"
+      },
+      {
+        "label": "Has_Phone",
+        "fromVertexName": "titular",
+        "toVertexLabel": "Object_Phone_Number"
+      },
+      {
+        "label": "Is_Family",
+        "fromVertexName": "titular",
+        "toVertexName": "mae"
+      },
+      {
+        "label": "Is_Family",
+        "fromVertexName": "titular",
+        "toVertexName": "pai"
+      }
+    ]
+  }
+}

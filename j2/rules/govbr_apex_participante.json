@@ -1,102 +1,175 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Person_Employee
-      props:
-        - name: Person_Employee_ID
-          val: ${MATRICULA?.replaceAll('[^0-9]', '')?.trim()}
-          mandatoryInSearch: True
-        - name: Person_Employee_Role
-          val: ${FUNCAO?.trim()?.toUpperCase()} - ${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Person_Employee_Full_Name
-          val: ${NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Person_Natural
-      props:
-        - name: Person_Natural_Customer_ID
-          val: ${MATRICULA?.replaceAll('[^0-9]', '')?.trim()}
-          mandatoryInSearch: True
-        - name: Person_Natural_Full_Name
-          val: ${NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Data_Source
-      props:
-        - name: Object_Data_Source_Name
-          val: SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET
-          mandatoryInSearch: True
-    - label: Object_Email_Address
-      condition: ${EMAIL?.trim()?.length() > 0}
-      props:
-        - name: Object_Email_Address_Email
-          val: ${EMAIL?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
-    - label: Location_Address
-      props:
-        - name: Location_Address_Full_Address
-          val: ${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL
-          mandatoryInSearch: True
-        - name: Location_Address_parser
-          val: ${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL
-          mandatoryInSearch: True
-          type: "com.pontusvision.utils.LocationAddress"
-        - name: Location_Address_Post_Code
-          val: ${com.pontusvision.utils.PostCode.format(LOTACAO_NR_CLASS)}
-          mandatoryInSearch: True
-    - label: Event_Ingestion
-      props:
-        - name: Event_Ingestion_Type
-          val: SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Domain_b64
-          val: ${original_request?.bytes?.encodeBase64()?.toString()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Create_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Update_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Event_Group_Ingestion
-      props:
-        - name: Event_Group_Ingestion_Type
-          val: SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-  edges:
-    - label: Has_Ingestion_Event
-      fromVertexName: Object_Data_Source
-      toVertexLabel: Event_Group_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Group_Ingestion
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Ingestion
-      toVertexName: Person_Natural
-    - label: Is_Alias
-      fromVertexName: Person_Natural
-      toVertexName: Person_Employee
-    - label: Uses_Email
-      fromVertexName: Person_Natural
-      toVertexName: Object_Email_Address
-    - label: Is_Located
-      fromVertexLabel: Person_Natural
-      toVertexLabel: Location_Address
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Employee",
+        "props": [
+          {
+            "name": "Person_Employee_ID",
+            "val": "${MATRICULA?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Employee_Role",
+            "val": "${FUNCAO?.trim()?.toUpperCase()} - ${CARGO_EFETIVO_DS?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Employee_Full_Name",
+            "val": "${NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "props": [
+          {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${MATRICULA?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "condition": "${EMAIL?.trim()?.length() > 0}",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${EMAIL?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Location_Address",
+        "props": [
+          {
+            "name": "Location_Address_Full_Address",
+            "val": "${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Location_Address_parser",
+            "val": "${LOTACAO_MACRO_SG?.trim()?.toUpperCase()}, ${LOTACAO_DS?.trim()?.toUpperCase()} - ${LOTACAO_UF?.trim()?.toUpperCase()}, ${LOTACAO_NR_CLASS}, BRASIL",
+            "mandatoryInSearch": true,
+            "type": "com.pontusvision.utils.LocationAddress"
+          },
+          {
+            "name": "Location_Address_Post_Code",
+            "val": "${com.pontusvision.utils.PostCode.format(LOTACAO_NR_CLASS)}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "SISTEMA DE GESTÃO POR COMPETÊNCIAS-COMPET",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexName": "Person_Natural"
+      },
+      {
+        "label": "Is_Alias",
+        "fromVertexName": "Person_Natural",
+        "toVertexName": "Person_Employee"
+      },
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "Person_Natural",
+        "toVertexName": "Object_Email_Address"
+      },
+      {
+        "label": "Is_Located",
+        "fromVertexLabel": "Person_Natural",
+        "toVertexLabel": "Location_Address"
+      }
+    ]
+  }
+}

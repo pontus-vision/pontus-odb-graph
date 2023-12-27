@@ -1,128 +1,205 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Event_Consent
-      props:
-        - name: Event_Consent_Form_Id
-          val: ${id}
-          mandatoryInSearch: True
-        - name: Event_Consent_Customer_ID
-          val: ${consentimentosIdentificacao?.replaceAll('[^0-9]', '')?.trim()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Consent_Status
-          val: "${consentimentosStatus?.toString()?.equalsIgnoreCase('true')?'Consent':'No Consent'}"
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Consent_Metadata_Create_Date
-          val: ${consentimentosData}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Consent_Metadata_Update_Date
-          val: ${savedOn}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Consent_Description
-          val: ${consentimentosReferencia?.trim()?.toUpperCase()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Privacy_Notice
-      condition: ${consentimentosAvisoDePrivacidade?.size() > 0}
-      props:
-        - name: Object_Privacy_Notice_Form_Id
-          val: ${new groovy.json.JsonBuilder(consentimentosAvisoDePrivacidade)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.WebinyRef;"
-          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it, 'id')}
-    - label: Person_Natural
-      name: titular
-      condition: ${consentimentosTitularDoDadoPessoal?.size() > 0}
-      props:
-        - name: Person_Natural_Customer_ID
-          val: ${new groovy.json.JsonBuilder(consentimentosTitularDoDadoPessoal)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.WebinyRef;"
-          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'id')}
-        - name: Person_Natural_Last_Update_Date
-          val: ${savedOn}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Person_Natural
-      name: guardian
-      condition: ${consentimentosResponsavelPeloMenor?.size() > 0}
-      props:
-        - name: Person_Natural_Customer_ID
-          val: ${new groovy.json.JsonBuilder(consentimentosResponsavelPeloMenor)}
-          mandatoryInSearch: True
-          processAll: True
-          type: "[Lcom.pontusvision.utils.WebinyRef;"
-          postProcessor: ${com.pontusvision.utils.WebinyRef.fromString(it,'id')}
-        - name: Person_Natural_Last_Update_Date
-          val: ${savedOn}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Object_Data_Source
-      props:
-        - name: Object_Data_Source_Name
-          val: WEBINY/CONSENTIMENTOS
-          mandatoryInSearch: True
-    - label: Event_Ingestion
-      props:
-        - name: Event_Ingestion_Type
-          val: webiny/consentimentos
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Domain_b64
-          val: ${original_request?.bytes?.encodeBase64()?.toString()}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Create_Date
-          val: ${createdOn}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Ingestion_Metadata_Update_Date
-          val: ${savedOn}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-    - label: Event_Group_Ingestion
-      props:
-        - name: Event_Group_Ingestion_Type
-          val: webiny/consentimentos
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Operation
-          val: Structured Data Insertion
-          mandatoryInSearch: True
-        - name: Event_Group_Ingestion_Ingestion_Date
-          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
-          mandatoryInSearch: True
-  edges:
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Object_Data_Source
-      toVertexLabel: Event_Group_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Group_Ingestion
-      toVertexLabel: Event_Ingestion
-    - label: Has_Ingestion_Event
-      fromVertexLabel: Event_Ingestion
-      toVertexName: titular
-    - label: Consent
-      fromVertexName: titular
-      toVertexLabel: Event_Consent
-    - label: Has_Privacy_Notice
-      fromVertexLabel: Event_Consent
-      toVertexLabel: Object_Privacy_Notice
-    - label: Has_Parent_Or_Guardian
-      fromVertexName: titular
-      toVertexName: guardian
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Event_Consent",
+        "props": [
+          {
+            "name": "Event_Consent_Form_Id",
+            "val": "${id}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Consent_Customer_ID",
+            "val": "${consentimentosIdentificacao?.replaceAll('[^0-9]', '')?.trim()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Consent_Status",
+            "val": "${consentimentosStatus?.toString()?.equalsIgnoreCase('true')?'Consent':'No Consent'}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Consent_Metadata_Create_Date",
+            "val": "${consentimentosData}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Consent_Metadata_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Consent_Description",
+            "val": "${consentimentosReferencia?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Privacy_Notice",
+        "condition": "${consentimentosAvisoDePrivacidade?.size() > 0}",
+        "props": [
+          {
+            "name": "Object_Privacy_Notice_Form_Id",
+            "val": "${new groovy.json.JsonBuilder(consentimentosAvisoDePrivacidade)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it, 'id')}"
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "name": "titular",
+        "condition": "${consentimentosTitularDoDadoPessoal?.size() > 0}",
+        "props": [
+          {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${new groovy.json.JsonBuilder(consentimentosTitularDoDadoPessoal)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+          },
+          {
+            "name": "Person_Natural_Last_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "name": "guardian",
+        "condition": "${consentimentosResponsavelPeloMenor?.size() > 0}",
+        "props": [
+          {
+            "name": "Person_Natural_Customer_ID",
+            "val": "${new groovy.json.JsonBuilder(consentimentosResponsavelPeloMenor)}",
+            "mandatoryInSearch": true,
+            "processAll": true,
+            "type": "[Lcom.pontusvision.utils.WebinyRef;",
+            "postProcessor": "${com.pontusvision.utils.WebinyRef.fromString(it,'id')}"
+          },
+          {
+            "name": "Person_Natural_Last_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Data_Source",
+        "props": [
+          {
+            "name": "Object_Data_Source_Name",
+            "val": "WEBINY/CONSENTIMENTOS",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Ingestion",
+        "props": [
+          {
+            "name": "Event_Ingestion_Type",
+            "val": "webiny/consentimentos",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Domain_b64",
+            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Create_Date",
+            "val": "${createdOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Ingestion_Metadata_Update_Date",
+            "val": "${savedOn}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Group_Ingestion",
+        "props": [
+          {
+            "name": "Event_Group_Ingestion_Type",
+            "val": "webiny/consentimentos",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Operation",
+            "val": "Structured Data Insertion",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Event_Group_Ingestion_Ingestion_Date",
+            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
+            "mandatoryInSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Object_Data_Source",
+        "toVertexLabel": "Event_Group_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Group_Ingestion",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexLabel": "Event_Ingestion",
+        "toVertexName": "titular"
+      },
+      {
+        "label": "Consent",
+        "fromVertexName": "titular",
+        "toVertexLabel": "Event_Consent"
+      },
+      {
+        "label": "Has_Privacy_Notice",
+        "fromVertexLabel": "Event_Consent",
+        "toVertexLabel": "Object_Privacy_Notice"
+      },
+      {
+        "label": "Has_Parent_Or_Guardian",
+        "fromVertexName": "titular",
+        "toVertexName": "guardian"
+      }
+    ]
+  }
+}

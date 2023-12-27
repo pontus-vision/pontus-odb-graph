@@ -1,107 +1,180 @@
-# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
-updatereq:
-  vertices:
-    - label: Person_Natural
-      name: TITULAR
-      props:
-        - name: Person_Natural_Full_Name
-          val: ${pg_NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person_Natural_Full_Name_fuzzy
-          val: ${pg_NOME?.trim()?.toUpperCase()}
-          mandatoryInSearch: True
-        - name: Person_Natural_Type
-          val: cliente
-          mandatoryInSearch: False
-          excludeFromSearch: True
-        - name: Person_Natural_Date_Of_Birth
-          val: ${pg_DATA_NASCIMENTO}
-          predicate: eq
-          mandatoryInSearch: True
-          type: "java.util.Date"
-    - label: Event_Consent
-      props:
-        - name: Event_Consent_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Consent_Metadata_Create_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Consent_Status
-          val: ${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Identity_Card
-      props:
-        - name: Object_Identity_Card_Id_Value
-          val: ${pg_CPF.replaceAll('[^0-9]','')}
-          mandatoryInSearch: True
-        - name: Object_Identity_Card_Id_Type
-          val: CPF
-          mandatoryInSearch: False
-          excludeFromSearch: True
-    - label: Object_Email_Address
-      props:
-        - name: Object_Email_Address_Email
-          val: ${pg_EMAIL?.trim()?.toLowerCase()}
-          mandatoryInSearch: True
-    - label: Location_Address
-      props:
-        - name: Location_Address_Full_Address
-          val: ${pg_IMOVEL} ${pg_BAIRRO}, Sao Paulo, SP
-          mandatoryInSearch: True
-    - label: Event_Transaction
-      props:
-        - name: Event_Transaction_Type
-          val: Venda
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
-        - name: Event_Transaction_Description
-          val: Venda da Propriedade
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
-        - name: Event_Transaction_Date
-          val: ${new Date()}
-          mandatoryInSearch: False
-          type: "java.util.Date"
-          excludeFromSearch: True
-        - name: Event_Transaction_Currency
-          val: BRL
-          mandatoryInSearch: True
-          excludeFromSubsequenceSearch: True
-        - name: Event_Transaction_Value
-          val: ${pg_VALOR?.replaceAll('[^0-9\\.]','')}
-          mandatoryInSearch: True
-    - label: Person_Natural
-      name: CORRETOR
-      props:
-        - name: Person_Natural_Name_Qualifier
-          val: ${pg_CORRETOR}
-          mandatoryInSearch: True
-        - name: Person_Natural_Type
-          val: corretor
-          mandatoryInSearch: False
-          excludeFromSearch: True
-  edges:
-    - label: Uses_Email
-      fromVertexName: TITULAR
-      toVertexLabel: Object_Email_Address
-    - label: Has_Id_Card
-      fromVertexName: TITULAR
-      toVertexLabel: Object_Identity_Card
-    - label: Has_Transaction
-      fromVertexName: TITULAR
-      toVertexLabel: Event_Transaction
-    - label: Has_Transaction
-      fromVertexName: CORRETOR
-      toVertexLabel: Event_Transaction
-    - label: Has_Transaction
-      fromVertexLabel: Location_Address
-      toVertexLabel: Event_Transaction
-    - label: Consent
-      fromVertexName: TITULAR
-      toVertexLabel: Event_Consent
+{
+  "updatereq": {
+    "vertices": [
+      {
+        "label": "Person_Natural",
+        "name": "TITULAR",
+        "props": [
+          {
+            "name": "Person_Natural_Full_Name",
+            "val": "${pg_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Full_Name_fuzzy",
+            "val": "${pg_NOME?.trim()?.toUpperCase()}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Type",
+            "val": "cliente",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Person_Natural_Date_Of_Birth",
+            "val": "${pg_DATA_NASCIMENTO}",
+            "predicate": "eq",
+            "mandatoryInSearch": true,
+            "type": "java.util.Date"
+          }
+        ]
+      },
+      {
+        "label": "Event_Consent",
+        "props": [
+          {
+            "name": "Event_Consent_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Consent_Metadata_Create_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Consent_Status",
+            "val": "${'X'.equals(pg_CONSENTIMENTO?.toUpperCase())?'Consentimento':'Sem Consentimento'}",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Identity_Card",
+        "props": [
+          {
+            "name": "Object_Identity_Card_Id_Value",
+            "val": "${pg_CPF.replaceAll('[^0-9]','')}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Object_Identity_Card_Id_Type",
+            "val": "CPF",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Object_Email_Address",
+        "props": [
+          {
+            "name": "Object_Email_Address_Email",
+            "val": "${pg_EMAIL?.trim()?.toLowerCase()}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Location_Address",
+        "props": [
+          {
+            "name": "Location_Address_Full_Address",
+            "val": "${pg_IMOVEL} ${pg_BAIRRO}, Sao Paulo, SP",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Event_Transaction",
+        "props": [
+          {
+            "name": "Event_Transaction_Type",
+            "val": "Venda",
+            "mandatoryInSearch": true,
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Event_Transaction_Description",
+            "val": "Venda da Propriedade",
+            "mandatoryInSearch": true,
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Event_Transaction_Date",
+            "val": "${new Date()}",
+            "mandatoryInSearch": false,
+            "type": "java.util.Date",
+            "excludeFromSearch": true
+          },
+          {
+            "name": "Event_Transaction_Currency",
+            "val": "BRL",
+            "mandatoryInSearch": true,
+            "excludeFromSubsequenceSearch": true
+          },
+          {
+            "name": "Event_Transaction_Value",
+            "val": "${pg_VALOR?.replaceAll('[^0-9\\\\.]','')}",
+            "mandatoryInSearch": true
+          }
+        ]
+      },
+      {
+        "label": "Person_Natural",
+        "name": "CORRETOR",
+        "props": [
+          {
+            "name": "Person_Natural_Name_Qualifier",
+            "val": "${pg_CORRETOR}",
+            "mandatoryInSearch": true
+          },
+          {
+            "name": "Person_Natural_Type",
+            "val": "corretor",
+            "mandatoryInSearch": false,
+            "excludeFromSearch": true
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "label": "Uses_Email",
+        "fromVertexName": "TITULAR",
+        "toVertexLabel": "Object_Email_Address"
+      },
+      {
+        "label": "Has_Id_Card",
+        "fromVertexName": "TITULAR",
+        "toVertexLabel": "Object_Identity_Card"
+      },
+      {
+        "label": "Has_Transaction",
+        "fromVertexName": "TITULAR",
+        "toVertexLabel": "Event_Transaction"
+      },
+      {
+        "label": "Has_Transaction",
+        "fromVertexName": "CORRETOR",
+        "toVertexLabel": "Event_Transaction"
+      },
+      {
+        "label": "Has_Transaction",
+        "fromVertexLabel": "Location_Address",
+        "toVertexLabel": "Event_Transaction"
+      },
+      {
+        "label": "Consent",
+        "fromVertexName": "TITULAR",
+        "toVertexLabel": "Event_Consent"
+      }
+    ]
+  }
+}

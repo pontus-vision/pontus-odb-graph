@@ -13,6 +13,6 @@ cat $1 | jinja2 --strict \
    -DfileHeaders='DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES' \
    -o "${DIR}/rules/{{currRule}}.yaml" templates/rules.yaml.j2
 
-yq . "${DIR}/rules/{{currRule}}.yaml"  >  "${DIR}/rules/{{currRule}}.json"
+yq -o json . "${DIR}/rules/{{currRule}}.yaml"  >  "${DIR}/rules/{{currRule}}.json"
 
 {%- endfor %}
