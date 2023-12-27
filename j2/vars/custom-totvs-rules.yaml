@@ -195,6 +195,38 @@ rules:
         fromVertexLabel: "Person_Natural"
         toVertexLabel: "Event_Ingestion"
 
+
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "rg"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "cpf"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "cnpj"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Phone_Number"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Email_Address"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Location_Address"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Id_Card
+        fromVertexName: "pj_international"
+        toVertexName: "cnpj"
+
+      - label: Is_Located
+        fromVertexLabel: "Person_Natural"
+        toVertexLabel: "Location_Address"
+
       - label: Has_Ingestion_Event
         fromVertexName: "pj_national"
         toVertexLabel: "Event_Ingestion"
@@ -542,6 +574,25 @@ rules:
 
       - label: Has_Ingestion_Event
         fromVertexName: "pj_international"
+        toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Phone_Number"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Email_Address"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Location_Address"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexName: "rg"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexName: "cpf"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexName: "cnpj"
         toVertexLabel: "Event_Ingestion"
 
       - label: Is_Family
@@ -893,6 +944,26 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: "Object_Data_Source"
         toVertexLabel: "Event_Group_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Phone_Number"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Object_Email_Address"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexLabel: "Location_Address"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexName: "rg"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexName: "cpf"
+        toVertexLabel: "Event_Ingestion"
+      - label: Has_Ingestion_Event
+        fromVertexName: "cnpj"
+        toVertexLabel: "Event_Ingestion"
+
 
       - label: Has_Phone
         fromVertexName: "rep"

@@ -1,351 +1,232 @@
-{
-  "updatereq": {
-    "vertices": [
-      {
-        "label": "Person_Organisation",
-        "name": "pj_national",
-        "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}",
-        "props": [
-          {
-            "name": "Person_Organisation_Name",
-            "val": "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Type",
-            "val": "NATIONAL",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person_Organisation_Id",
-            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Registration_Number",
-            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Last_Update_Date",
-            "val": "${lastUpdate}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Person_Organisation",
-        "name": "pj_international",
-        "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A2_CGC?.replaceAll('[^0-9]','')?.length() != 14}",
-        "props": [
-          {
-            "name": "Person_Organisation_Name",
-            "val": "${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Type",
-            "val": "INTERNATIONAL",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person_Organisation_Id",
-            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Registration_Number",
-            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Organisation_Last_Update_Date",
-            "val": "${lastUpdate}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Person_Natural",
-        "name": "rep",
-        "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
-        "props": [
-          {
-            "name": "Person_Natural_Full_Name",
-            "val": "${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person_Natural_Customer_ID",
-            "val": "${A2_CGC.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Natural_Last_Update_Date",
-            "val": "${lastUpdate}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Location_Address",
-        "props": [
-          {
-            "name": "Location_Address_Full_Address",
-            "val": "${A2_END?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUN?.trim()?.toUpperCase()} - ${A2_EST?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Location_Address_parser",
-            "val": "${A2_END?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUN?.trim()?.toUpperCase()} - ${A2_EST?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-          },
-          {
-            "name": "Location_Address_Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(A2_CEP)}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Identity_Card",
-        "name": "cnpj",
-        "condition": "${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}",
-        "props": [
-          {
-            "name": "Object_Identity_Card_Id_Value",
-            "val": "${A2_CGC?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Identity_Card_Id_Type",
-            "val": "CNPJ",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Identity_Card",
-        "name": "cpf",
-        "condition": "${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}",
-        "props": [
-          {
-            "name": "Object_Identity_Card_Id_Value",
-            "val": "${A2_CGC?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Identity_Card_Id_Type",
-            "val": "CPF",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Phone_Number",
-        "name": "phone",
-        "condition": "${A2_TEL?.replaceAll('[^0-9]','')?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Phone_Number_Raw",
-            "val": "${A2_TEL}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "type": "[Ljava.lang.String;",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((A2_TEL?.replaceAll('[^0-9]', ''))?.length()>=7?(A2_TEL?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
-          }
-        ]
-      },
-      {
-        "label": "Object_Email_Address",
-        "name": "email",
-        "condition": "${A2_EMAIL?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Email_Address_Email",
-            "val": "${A2_EMAIL?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Ingestion",
-        "props": [
-          {
-            "name": "Event_Ingestion_Type",
-            "val": "totvs/protheus/sa2_fornecedor",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Domain_b64",
-            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${firstUpdate}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${lastUpdate}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Group_Ingestion",
-        "props": [
-          {
-            "name": "Event_Group_Ingestion_Type",
-            "val": "totvs/protheus/sa2_fornecedor",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "TOTVS/PROTHEUS/SA2_FORNECEDOR",
-            "mandatoryInSearch": true
-          }
-        ]
-      }
-    ],
-    "edges": [
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexName": "pj_national",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexName": "pj_international",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexName": "rep",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Group_Ingestion",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Data_Source",
-        "toVertexLabel": "Event_Group_Ingestion"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "rep",
-        "toVertexName": "phone"
-      },
-      {
-        "label": "Uses_Email",
-        "fromVertexName": "rep",
-        "toVertexName": "email"
-      },
-      {
-        "label": "Is_Located",
-        "fromVertexName": "rep",
-        "toVertexLabel": "Location_Address"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexName": "rep",
-        "toVertexName": "cpf"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexName": "pj_national",
-        "toVertexName": "cnpj"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexName": "pj_international",
-        "toVertexName": "cnpj"
-      },
-      {
-        "label": "Uses_Email",
-        "fromVertexName": "pj_national",
-        "toVertexName": "email"
-      },
-      {
-        "label": "Uses_Email",
-        "fromVertexName": "pj_international",
-        "toVertexName": "email"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "pj_national",
-        "toVertexName": "phone"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexName": "pj_international",
-        "toVertexName": "phone"
-      },
-      {
-        "label": "Is_Located",
-        "fromVertexName": "pj_national",
-        "toVertexLabel": "Location_Address"
-      },
-      {
-        "label": "Is_Located",
-        "fromVertexName": "pj_international",
-        "toVertexLabel": "Location_Address"
-      }
-    ]
-  }
-}
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    - label: Person_Organisation
+      name: pj_national
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 14}
+      props:
+        - name: Person_Organisation_Name
+          val: ${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Type
+          val: NATIONAL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Organisation_Id
+          val: ${A2_CGC.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Registration_Number
+          val: ${A2_CGC.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Person_Organisation
+      name: pj_international
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A2_CGC?.replaceAll('[^0-9]','')?.length() != 14}
+      props:
+        - name: Person_Organisation_Name
+          val: ${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Type
+          val: INTERNATIONAL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Organisation_Id
+          val: ${A2_CGC.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Registration_Number
+          val: ${A2_CGC.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Organisation_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Person_Natural
+      name: rep
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}
+      props:
+        - name: Person_Natural_Full_Name
+          val: ${(A2_NOME?.trim()?.length() > 0)?A2_NOME?.trim()?.toUpperCase():A2_NOMRESP?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Natural_Customer_ID
+          val: ${A2_CGC.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Natural_Last_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Location_Address
+      props:
+        - name: Location_Address_Full_Address
+          val: ${A2_END?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUN?.trim()?.toUpperCase()} - ${A2_EST?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location_Address_parser
+          val: ${A2_END?.trim()?.toUpperCase()}, ${A2_BAIRRO?.trim()?.toUpperCase()}, ${A2_MUN?.trim()?.toUpperCase()} - ${A2_EST?.trim()?.toUpperCase()}, ${A2_CEP}, BRASIL
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location_Address_Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(A2_CEP)}
+          mandatoryInSearch: True
+    - label: Object_Identity_Card
+      name: cnpj
+      condition: ${A2_CGC?.replaceAll('[^0-9]', '')?.length() == 14}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${A2_CGC?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CNPJ
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Object_Identity_Card
+      name: cpf
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() == 11}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${A2_CGC?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CPF
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Object_Phone_Number
+      name: phone
+      condition: ${A2_TEL?.replaceAll('[^0-9]','')?.length() > 0}
+      props:
+        - name: Object_Phone_Number_Raw
+          val: ${A2_TEL}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Numbers_Only
+          val: ${(A2_TEL?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Last_7_Digits
+          val: ${(((A2_TEL?.replaceAll('[^0-9]', ''))?.length()>=7?(A2_TEL?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    - label: Object_Email_Address
+      name: email
+      condition: ${A2_EMAIL?.trim()?.length() > 0}
+      props:
+        - name: Object_Email_Address_Email
+          val: ${A2_EMAIL?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: totvs/protheus/sa2_fornecedor
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${firstUpdate}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${lastUpdate}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: totvs/protheus/sa2_fornecedor
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: TOTVS/PROTHEUS/SA2_FORNECEDOR
+          mandatoryInSearch: True
+  edges:
+    - label: Has_Ingestion_Event
+      fromVertexName: pj_national
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexName: pj_international
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexName: rep
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Group_Ingestion
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Object_Data_Source
+      toVertexLabel: Event_Group_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Object_Phone_Number
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Object_Email_Address
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Location_Address
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexName: rg
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexName: cpf
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexName: cnpj
+      toVertexLabel: Event_Ingestion
+    - label: Has_Phone
+      fromVertexName: rep
+      toVertexName: phone
+    - label: Uses_Email
+      fromVertexName: rep
+      toVertexName: email
+    - label: Is_Located
+      fromVertexName: rep
+      toVertexLabel: Location_Address
+    - label: Has_Id_Card
+      fromVertexName: rep
+      toVertexName: cpf
+    - label: Has_Id_Card
+      fromVertexName: pj_national
+      toVertexName: cnpj
+    - label: Has_Id_Card
+      fromVertexName: pj_international
+      toVertexName: cnpj
+    - label: Uses_Email
+      fromVertexName: pj_national
+      toVertexName: email
+    - label: Uses_Email
+      fromVertexName: pj_international
+      toVertexName: email
+    - label: Has_Phone
+      fromVertexName: pj_national
+      toVertexName: phone
+    - label: Has_Phone
+      fromVertexName: pj_international
+      toVertexName: phone
+    - label: Is_Located
+      fromVertexName: pj_national
+      toVertexLabel: Location_Address
+    - label: Is_Located
+      fromVertexName: pj_international
+      toVertexLabel: Location_Address

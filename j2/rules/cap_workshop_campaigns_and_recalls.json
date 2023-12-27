@@ -1,222 +1,134 @@
-{
-  "updatereq": {
-    "vertices": [
-      {
-        "label": "Person_Natural",
-        "props": [
-          {
-            "name": "Person_Natural_Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Natural_Full_Name_fuzzy",
-            "val": "${Name_at_Birth?:''}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person_Natural_Title",
-            "val": "${Title}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Phone_Number",
-        "name": "telephone",
-        "condition": "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Phone_Number_Raw",
-            "val": "${Telephone_No_}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "type": "[Ljava.lang.String;",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
-          }
-        ]
-      },
-      {
-        "label": "Object_Phone_Number",
-        "name": "mobile",
-        "condition": "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Phone_Number_Raw",
-            "val": "${Mobile_Number}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "type": "[Ljava.lang.String;",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
-          }
-        ]
-      },
-      {
-        "label": "Location_Address",
-        "props": [
-          {
-            "name": "Location_Address_Full_Address",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Location_Address_parser",
-            "val": "${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-          },
-          {
-            "name": "Location_Address_Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Email_Address",
-        "condition": "${E_Mail_Address?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Email_Address_Email",
-            "val": "${E_Mail_Address?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Ingestion",
-        "props": [
-          {
-            "name": "Event_Ingestion_Type",
-            "val": "sap/c@p Workshop Campaigns and Recalls",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Domain_b64",
-            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Group_Ingestion",
-        "props": [
-          {
-            "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p Workshop Campaigns and Recalls",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P WORKSHOP CAMPAIGNS AND RECALLS",
-            "mandatoryInSearch": true
-          }
-        ]
-      }
-    ],
-    "edges": [
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Data_Source",
-        "toVertexLabel": "Event_Group_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Group_Ingestion",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Is_Located",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Location_Address"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "telephone"
-      },
-      {
-        "label": "Has_Mobile",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "mobile"
-      },
-      {
-        "label": "Uses_Email",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Object_Email_Address"
-      },
-      {
-        "label": "Has_Campaign",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Object_Campaign"
-      }
-    ]
-  }
-}
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    - label: Person_Natural
+      props:
+        - name: Person_Natural_Full_Name
+          val: ${First_Name?.trim()?.toUpperCase()} ${Last_Name?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Person_Natural_Full_Name_fuzzy
+          val: ${Name_at_Birth?:''}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Natural_Title
+          val: ${Title}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Object_Phone_Number
+      name: telephone
+      condition: ${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}
+      props:
+        - name: Object_Phone_Number_Raw
+          val: ${Telephone_No_}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Numbers_Only
+          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Last_7_Digits
+          val: ${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    - label: Object_Phone_Number
+      name: mobile
+      condition: ${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}
+      props:
+        - name: Object_Phone_Number_Raw
+          val: ${Mobile_Number}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Numbers_Only
+          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Last_7_Digits
+          val: ${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    - label: Location_Address
+      props:
+        - name: Location_Address_Full_Address
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location_Address_parser
+          val: ${Street} ${House_Number} ${Street_2?:''}, ${Region} ${District?:''}, ${City} - ${Country}, ${Postal_Code}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location_Address_Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
+          mandatoryInSearch: True
+    - label: Object_Email_Address
+      condition: ${E_Mail_Address?.trim()?.length() > 0}
+      props:
+        - name: Object_Email_Address_Email
+          val: ${E_Mail_Address?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: sap/c@p Workshop Campaigns and Recalls
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: sap/c@p Workshop Campaigns and Recalls
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: SAP/C@P WORKSHOP CAMPAIGNS AND RECALLS
+          mandatoryInSearch: True
+  edges:
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Object_Data_Source
+      toVertexLabel: Event_Group_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Group_Ingestion
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Event_Ingestion
+    - label: Is_Located
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Location_Address
+    - label: Has_Phone
+      fromVertexLabel: Person_Natural
+      toVertexName: telephone
+    - label: Has_Mobile
+      fromVertexLabel: Person_Natural
+      toVertexName: mobile
+    - label: Uses_Email
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Object_Email_Address
+    - label: Has_Campaign
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Object_Campaign

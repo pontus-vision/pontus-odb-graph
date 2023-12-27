@@ -1,221 +1,133 @@
-{
-  "updatereq": {
-    "vertices": [
-      {
-        "label": "Person_Organisation",
-        "condition": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}",
-        "props": [
-          {
-            "name": "Person_Organisation_Registration_Number",
-            "val": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
-          }
-        ]
-      },
-      {
-        "label": "Person_Natural",
-        "condition": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}",
-        "props": [
-          {
-            "name": "Person_Natural_Customer_ID",
-            "val": "${CustomerId?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Procedures",
-        "props": [
-          {
-            "name": "Object_Data_Procedures_Type_Of_Natural_Person",
-            "val": "${naturalPersonType}",
-            "predicate": "textContains",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "SHAREPOINT/DSAR",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Subject_Access_Request",
-        "props": [
-          {
-            "name": "Event_Subject_Access_Request_Form_Id",
-            "val": "${id}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Id",
-            "val": "${Title}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Metadata_Update_Date",
-            "val": "${Resposta_x002d_DataeHor_x00e1_ri}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Metadata_Create_Date",
-            "val": "${Solicita_x00e7__x00e3_o_x002d_Da}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Request_Type",
-            "val": "${RequestType}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Description",
-            "val": "${Solicita_x00e7__x00e3_o_x002d_De}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Request_Channel",
-            "val": "${Solicita_x00e7__x00e3_o_x002d_Ca}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Status",
-            "val": "${Status}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Subject_Access_Request_Natural_Person_Type",
-            "val": "${naturalPersonType?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Group_Subject_Access_Request",
-        "props": [
-          {
-            "name": "Event_Group_Subject_Access_Request_Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Subject_Access_Request_Type_Of_Natural_Person",
-            "val": "${naturalPersonType}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Ingestion",
-        "props": [
-          {
-            "name": "Event_Ingestion_Type",
-            "val": "Controle de Solicitações",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Domain_b64",
-            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${Created}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${Modified}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Group_Ingestion",
-        "props": [
-          {
-            "name": "Event_Group_Ingestion_Type",
-            "val": "sharepoint/dsar",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      }
-    ],
-    "edges": [
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Data_Source",
-        "toVertexLabel": "Event_Group_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Group_Ingestion",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Subject_Access_Request",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_DSAR",
-        "fromVertexLabel": "Event_Subject_Access_Request",
-        "toVertexLabel": "Event_Group_Subject_Access_Request"
-      },
-      {
-        "label": "Made_SAR_Request",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Subject_Access_Request"
-      },
-      {
-        "label": "Made_SAR_Request",
-        "fromVertexLabel": "Person_Organisation",
-        "toVertexLabel": "Event_Subject_Access_Request"
-      },
-      {
-        "label": "Has_DSAR",
-        "fromVertexLabel": "Event_Group_Subject_Access_Request",
-        "toVertexLabel": "Object_Data_Procedures"
-      }
-    ]
-  }
-}
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    - label: Person_Organisation
+      condition: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 14}
+      props:
+        - name: Person_Organisation_Registration_Number
+          val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
+          mandatoryInSearch: True
+          excludeFromUpdate: True
+    - label: Person_Natural
+      condition: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}
+      props:
+        - name: Person_Natural_Customer_ID
+          val: ${CustomerId?.replaceAll('[^0-9]', '')?.trim()}
+          mandatoryInSearch: True
+          excludeFromUpdate: True
+    - label: Object_Data_Procedures
+      props:
+        - name: Object_Data_Procedures_Type_Of_Natural_Person
+          val: ${naturalPersonType}
+          predicate: textContains
+          mandatoryInSearch: True
+          excludeFromUpdate: True
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: SHAREPOINT/DSAR
+          mandatoryInSearch: True
+    - label: Event_Subject_Access_Request
+      props:
+        - name: Event_Subject_Access_Request_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Event_Subject_Access_Request_Id
+          val: ${Title}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Metadata_Update_Date
+          val: ${Resposta_x002d_DataeHor_x00e1_ri}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Metadata_Create_Date
+          val: ${Solicita_x00e7__x00e3_o_x002d_Da}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Request_Type
+          val: ${RequestType}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Description
+          val: ${Solicita_x00e7__x00e3_o_x002d_De}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Request_Channel
+          val: ${Solicita_x00e7__x00e3_o_x002d_Ca}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Status
+          val: ${Status}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Subject_Access_Request_Natural_Person_Type
+          val: ${naturalPersonType?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Event_Group_Subject_Access_Request
+      props:
+        - name: Event_Group_Subject_Access_Request_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+        - name: Event_Group_Subject_Access_Request_Type_Of_Natural_Person
+          val: ${naturalPersonType}
+          mandatoryInSearch: True
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: Controle de Solicitações
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${Created}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: sharepoint/dsar
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+  edges:
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Object_Data_Source
+      toVertexLabel: Event_Group_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Group_Ingestion
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Subject_Access_Request
+      toVertexLabel: Event_Ingestion
+    - label: Has_DSAR
+      fromVertexLabel: Event_Subject_Access_Request
+      toVertexLabel: Event_Group_Subject_Access_Request
+    - label: Made_SAR_Request
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Event_Subject_Access_Request
+    - label: Made_SAR_Request
+      fromVertexLabel: Person_Organisation
+      toVertexLabel: Event_Subject_Access_Request
+    - label: Has_DSAR
+      fromVertexLabel: Event_Group_Subject_Access_Request
+      toVertexLabel: Object_Data_Procedures

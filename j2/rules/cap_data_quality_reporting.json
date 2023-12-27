@@ -1,519 +1,316 @@
-{
-  "updatereq": {
-    "vertices": [
-      {
-        "label": "Person_Natural",
-        "props": [
-          {
-            "name": "Person_Natural_Full_Name",
-            "val": "${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Natural_Customer_ID",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Person_Natural_Title",
-            "val": "${Title}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Person_Natural_Date_Of_Birth",
-            "val": "${Date_of_Birth?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Person_Natural_Nationality",
-            "val": "${Nationality?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Identity_Card",
-        "name": "cnpj",
-        "condition": "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}",
-        "props": [
-          {
-            "name": "Object_Identity_Card_Id_Value",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Identity_Card_Id_Type",
-            "val": "CNPJ",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Identity_Card",
-        "name": "cpf",
-        "condition": "${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}",
-        "props": [
-          {
-            "name": "Object_Identity_Card_Id_Value",
-            "val": "${Tax_Number?.replaceAll('[^0-9]','')}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Identity_Card_Id_Type",
-            "val": "CPF",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Phone_Number",
-        "name": "telephone",
-        "condition": "${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Phone_Number_Raw",
-            "val": "${Telephone_No_}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "type": "[Ljava.lang.String;",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
-          }
-        ]
-      },
-      {
-        "label": "Object_Phone_Number",
-        "name": "mobile",
-        "condition": "${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Phone_Number_Raw",
-            "val": "${Mobile_Number}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Numbers_Only",
-            "val": "${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}",
-            "mandatoryInSearch": false,
-            "type": "[Ljava.lang.String;",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Phone_Number_Last_7_Digits",
-            "val": "${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}",
-            "mandatoryInSearch": true,
-            "type": "[Ljava.lang.String;"
-          }
-        ]
-      },
-      {
-        "label": "Location_Address",
-        "props": [
-          {
-            "name": "Location_Address_Full_Address",
-            "val": "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Location_Address_parser",
-            "val": "${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}",
-            "mandatoryInSearch": true,
-            "type": "com.pontusvision.utils.LocationAddress"
-          },
-          {
-            "name": "Location_Address_Post_Code",
-            "val": "${com.pontusvision.utils.PostCode.format(Postal_Code)}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Email_Address",
-        "condition": "${E_Mail_Address?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Email_Address_Email",
-            "val": "${E_Mail_Address?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Consent",
-        "name": "mail_consent",
-        "condition": "${Mail_Consent?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Event_Consent_Created_By",
-            "val": "${Created_By?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Changed_By",
-            "val": "${Changed_by?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Metadata_Create_Date",
-            "val": "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Metadata_Update_Date",
-            "val": "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Description",
-            "val": "Mail Consent",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Status",
-            "val": "${Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Customer_ID",
-            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Consent",
-        "name": "email_consent",
-        "condition": "${E_Mail_Consent?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Event_Consent_Created_By",
-            "val": "${Created_By?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Changed_By",
-            "val": "${Changed_by?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Metadata_Create_Date",
-            "val": "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Metadata_Update_Date",
-            "val": "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Description",
-            "val": "E-Mail Consent",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Status",
-            "val": "${E_Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Customer_ID",
-            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Consent",
-        "name": "telephone_consent",
-        "condition": "${Telephone_Consent?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Event_Consent_Created_By",
-            "val": "${Created_By?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Changed_By",
-            "val": "${Changed_by?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Metadata_Create_Date",
-            "val": "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Metadata_Update_Date",
-            "val": "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Description",
-            "val": "Telephone Consent",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Status",
-            "val": "${Telephone_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Customer_ID",
-            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Consent",
-        "name": "fax_sms_consent",
-        "condition": "${Fax_SMS_Consent?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Event_Consent_Created_By",
-            "val": "${Created_By?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Changed_By",
-            "val": "${Changed_by?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Metadata_Create_Date",
-            "val": "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Metadata_Update_Date",
-            "val": "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Description",
-            "val": "Fax/SMS Consent",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Status",
-            "val": "${Fax_SMS_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Customer_ID",
-            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Consent",
-        "name": "social_media_consent",
-        "condition": "${Social_Media_Consent?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Event_Consent_Created_By",
-            "val": "${Created_By?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Changed_By",
-            "val": "${Changed_by?.trim()}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Metadata_Create_Date",
-            "val": "${Created_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Metadata_Update_Date",
-            "val": "${Changed_on?.replaceAll('\\\\.','/')?.trim()?:'01/01/1666'}",
-            "mandatoryInSearch": true,
-            "type": "java.util.Date"
-          },
-          {
-            "name": "Event_Consent_Description",
-            "val": "Social Media Consent",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Status",
-            "val": "${Social_Media_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Customer_ID",
-            "val": "${Tax_Number?.replaceAll('[^0-9]', '')}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Ingestion",
-        "props": [
-          {
-            "name": "Event_Ingestion_Type",
-            "val": "sap/c@p Data Quality Reporting",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Domain_b64",
-            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Group_Ingestion",
-        "props": [
-          {
-            "name": "Event_Group_Ingestion_Type",
-            "val": "sap/c@p Data Quality Reporting",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "SAP/C@P DATA QUALITY REPORTING",
-            "mandatoryInSearch": true
-          }
-        ]
-      }
-    ],
-    "edges": [
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Data_Source",
-        "toVertexLabel": "Event_Group_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Group_Ingestion",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Is_Located",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Location_Address"
-      },
-      {
-        "label": "Has_Phone",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "telephone"
-      },
-      {
-        "label": "Has_Mobile",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "mobile"
-      },
-      {
-        "label": "Uses_Email",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Object_Email_Address"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "cnpj"
-      },
-      {
-        "label": "Has_Id_Card",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "cpf"
-      },
-      {
-        "label": "Has_Consent",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "mail_consent"
-      },
-      {
-        "label": "Has_Consent",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "email_consent"
-      },
-      {
-        "label": "Has_Consent",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "telephone_consent"
-      },
-      {
-        "label": "Has_Consent",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "fax_sms_consent"
-      },
-      {
-        "label": "Has_Consent",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexName": "social_media_consent"
-      }
-    ]
-  }
-}
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    - label: Person_Natural
+      props:
+        - name: Person_Natural_Full_Name
+          val: ${First_Name?.trim()?.toUpperCase()}${Last_Name?.trim() && First_Name?.trim()?' ':''}${Last_Name?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+        - name: Person_Natural_Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Person_Natural_Title
+          val: ${Title}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Person_Natural_Date_Of_Birth
+          val: ${Date_of_Birth?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Person_Natural_Nationality
+          val: ${Nationality?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Object_Identity_Card
+      name: cnpj
+      condition: ${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 14}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CNPJ
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Object_Identity_Card
+      name: cpf
+      condition: ${Tax_Number?.replaceAll('[^0-9]', '')?.length() == 11}
+      props:
+        - name: Object_Identity_Card_Id_Value
+          val: ${Tax_Number?.replaceAll('[^0-9]','')}
+          mandatoryInSearch: True
+        - name: Object_Identity_Card_Id_Type
+          val: CPF
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Object_Phone_Number
+      name: telephone
+      condition: ${Telephone_No_?.replaceAll('[^0-9]', '')?.length() > 0}
+      props:
+        - name: Object_Phone_Number_Raw
+          val: ${Telephone_No_}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Numbers_Only
+          val: ${(Telephone_No_?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Last_7_Digits
+          val: ${(((Telephone_No_?.replaceAll('[^0-9]', ''))?.length()>=7?(Telephone_No_?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    - label: Object_Phone_Number
+      name: mobile
+      condition: ${Mobile_Number?.replaceAll('[^0-9]', '')?.length() > 0}
+      props:
+        - name: Object_Phone_Number_Raw
+          val: ${Mobile_Number}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Numbers_Only
+          val: ${(Mobile_Number?.replaceAll('[^0-9]', '')?:'00000000')}
+          mandatoryInSearch: False
+          type: "[Ljava.lang.String;"
+          excludeFromSearch: True
+        - name: Object_Phone_Number_Last_7_Digits
+          val: ${(((Mobile_Number?.replaceAll('[^0-9]', ''))?.length()>=7?(Mobile_Number?.replaceAll('[^0-9]', '')):'0000000')[-7..-1])}
+          mandatoryInSearch: True
+          type: "[Ljava.lang.String;"
+    - label: Location_Address
+      props:
+        - name: Location_Address_Full_Address
+          val: ${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Location_Address_parser
+          val: ${Street} ${House_Number} ${Street_2?:''} ${Address_Number?:''}, ${Region}, ${City} - ${Country}, ${Postal_Code}
+          mandatoryInSearch: True
+          type: "com.pontusvision.utils.LocationAddress"
+        - name: Location_Address_Post_Code
+          val: ${com.pontusvision.utils.PostCode.format(Postal_Code)}
+          mandatoryInSearch: True
+    - label: Object_Email_Address
+      condition: ${E_Mail_Address?.trim()?.length() > 0}
+      props:
+        - name: Object_Email_Address_Email
+          val: ${E_Mail_Address?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+    - label: Event_Consent
+      name: mail_consent
+      condition: ${Mail_Consent?.trim()?.length() > 0}
+      props:
+        - name: Event_Consent_Created_By
+          val: ${Created_By?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Changed_By
+          val: ${Changed_by?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Metadata_Create_Date
+          val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Metadata_Update_Date
+          val: ${Changed_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Description
+          val: Mail Consent
+          mandatoryInSearch: True
+        - name: Event_Consent_Status
+          val: ${Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
+          mandatoryInSearch: True
+        - name: Event_Consent_Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
+    - label: Event_Consent
+      name: email_consent
+      condition: ${E_Mail_Consent?.trim()?.length() > 0}
+      props:
+        - name: Event_Consent_Created_By
+          val: ${Created_By?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Changed_By
+          val: ${Changed_by?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Metadata_Create_Date
+          val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Metadata_Update_Date
+          val: ${Changed_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Description
+          val: E-Mail Consent
+          mandatoryInSearch: True
+        - name: Event_Consent_Status
+          val: ${E_Mail_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
+          mandatoryInSearch: True
+        - name: Event_Consent_Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
+    - label: Event_Consent
+      name: telephone_consent
+      condition: ${Telephone_Consent?.trim()?.length() > 0}
+      props:
+        - name: Event_Consent_Created_By
+          val: ${Created_By?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Changed_By
+          val: ${Changed_by?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Metadata_Create_Date
+          val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Metadata_Update_Date
+          val: ${Changed_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Description
+          val: Telephone Consent
+          mandatoryInSearch: True
+        - name: Event_Consent_Status
+          val: ${Telephone_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
+          mandatoryInSearch: True
+        - name: Event_Consent_Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
+    - label: Event_Consent
+      name: fax_sms_consent
+      condition: ${Fax_SMS_Consent?.trim()?.length() > 0}
+      props:
+        - name: Event_Consent_Created_By
+          val: ${Created_By?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Changed_By
+          val: ${Changed_by?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Metadata_Create_Date
+          val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Metadata_Update_Date
+          val: ${Changed_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Description
+          val: Fax/SMS Consent
+          mandatoryInSearch: True
+        - name: Event_Consent_Status
+          val: ${Fax_SMS_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
+          mandatoryInSearch: True
+        - name: Event_Consent_Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
+    - label: Event_Consent
+      name: social_media_consent
+      condition: ${Social_Media_Consent?.trim()?.length() > 0}
+      props:
+        - name: Event_Consent_Created_By
+          val: ${Created_By?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Changed_By
+          val: ${Changed_by?.trim()}
+          mandatoryInSearch: True
+        - name: Event_Consent_Metadata_Create_Date
+          val: ${Created_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Metadata_Update_Date
+          val: ${Changed_on?.replaceAll('\\.','/')?.trim()?:'01/01/1666'}
+          mandatoryInSearch: True
+          type: "java.util.Date"
+        - name: Event_Consent_Description
+          val: Social Media Consent
+          mandatoryInSearch: True
+        - name: Event_Consent_Status
+          val: ${Social_Media_Consent?.trim()?.equals('Y')?'Consent':'No Consent'}
+          mandatoryInSearch: True
+        - name: Event_Consent_Customer_ID
+          val: ${Tax_Number?.replaceAll('[^0-9]', '')}
+          mandatoryInSearch: True
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: sap/c@p Data Quality Reporting
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: sap/c@p Data Quality Reporting
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: SAP/C@P DATA QUALITY REPORTING
+          mandatoryInSearch: True
+  edges:
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Object_Data_Source
+      toVertexLabel: Event_Group_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Group_Ingestion
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Event_Ingestion
+    - label: Is_Located
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Location_Address
+    - label: Has_Phone
+      fromVertexLabel: Person_Natural
+      toVertexName: telephone
+    - label: Has_Mobile
+      fromVertexLabel: Person_Natural
+      toVertexName: mobile
+    - label: Uses_Email
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Object_Email_Address
+    - label: Has_Id_Card
+      fromVertexLabel: Person_Natural
+      toVertexName: cnpj
+    - label: Has_Id_Card
+      fromVertexLabel: Person_Natural
+      toVertexName: cpf
+    - label: Has_Consent
+      fromVertexLabel: Person_Natural
+      toVertexName: mail_consent
+    - label: Has_Consent
+      fromVertexLabel: Person_Natural
+      toVertexName: email_consent
+    - label: Has_Consent
+      fromVertexLabel: Person_Natural
+      toVertexName: telephone_consent
+    - label: Has_Consent
+      fromVertexLabel: Person_Natural
+      toVertexName: fax_sms_consent
+    - label: Has_Consent
+      fromVertexLabel: Person_Natural
+      toVertexName: social_media_consent

@@ -1,187 +1,114 @@
-{
-  "updatereq": {
-    "vertices": [
-      {
-        "label": "Event_Consent",
-        "props": [
-          {
-            "name": "Event_Consent_Form_Id",
-            "val": "${id}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Consent_Customer_ID",
-            "val": "${identity?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Consent_Status",
-            "val": "${(consent_status?.toString()?.equalsIgnoreCase('yes') || consent_status?.toString()?.equalsIgnoreCase('true') || consent_status?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Consent_Metadata_Create_Date",
-            "val": "${date}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Consent_Metadata_Update_Date",
-            "val": "${Modified}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Consent_Description",
-            "val": "${Descri_x00e7__x00e3_o}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Privacy_Notice",
-        "condition": "${privacy_notice.size() > 0}",
-        "props": [
-          {
-            "name": "Object_Privacy_Notice_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(privacy_notice)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-          }
-        ]
-      },
-      {
-        "label": "Person_Natural",
-        "condition": "${identity?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}",
-        "props": [
-          {
-            "name": "Person_Natural_Customer_ID",
-            "val": "${identity?.replaceAll('[^0-9]', '')?.trim()}",
-            "mandatoryInSearch": true,
-            "excludeFromUpdate": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "SHAREPOINT/CONSENT",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Ingestion",
-        "props": [
-          {
-            "name": "Event_Ingestion_Type",
-            "val": "Consent",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Domain_b64",
-            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${Created}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${Modified}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Group_Ingestion",
-        "props": [
-          {
-            "name": "Event_Group_Ingestion_Type",
-            "val": "sharepoint/consent",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Procedures",
-        "condition": "${data_procedures.size() > 0}",
-        "props": [
-          {
-            "name": "Object_Data_Procedures_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(data_procedures)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.SharepointRef;",
-            "postProcessor": "${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}"
-          }
-        ]
-      }
-    ],
-    "edges": [
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Data_Source",
-        "toVertexLabel": "Event_Group_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Group_Ingestion",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Consent",
-        "fromVertexLabel": "Person_Natural",
-        "toVertexLabel": "Event_Consent"
-      },
-      {
-        "label": "Has_Privacy_Notice",
-        "fromVertexLabel": "Event_Consent",
-        "toVertexLabel": "Object_Privacy_Notice"
-      },
-      {
-        "label": "Consent",
-        "fromVertexLabel": "Event_Consent",
-        "toVertexLabel": "Object_Data_Procedures"
-      }
-    ]
-  }
-}
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    - label: Event_Consent
+      props:
+        - name: Event_Consent_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Event_Consent_Customer_ID
+          val: ${identity?.replaceAll('[^0-9]', '')?.trim()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Consent_Status
+          val: "${(consent_status?.toString()?.equalsIgnoreCase('yes') || consent_status?.toString()?.equalsIgnoreCase('true') || consent_status?.toString()?.equalsIgnoreCase('sim')) ? 'Consent': 'No Consent' }"
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Consent_Metadata_Create_Date
+          val: ${date}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Consent_Metadata_Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Consent_Description
+          val: ${Descri_x00e7__x00e3_o}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Object_Privacy_Notice
+      condition: ${privacy_notice.size() > 0}
+      props:
+        - name: Object_Privacy_Notice_Form_Id
+          val: ${new groovy.json.JsonBuilder(privacy_notice)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
+    - label: Person_Natural
+      condition: ${identity?.replaceAll('[^0-9]', '')?.trim()?.length() == 11}
+      props:
+        - name: Person_Natural_Customer_ID
+          val: ${identity?.replaceAll('[^0-9]', '')?.trim()}
+          mandatoryInSearch: True
+          excludeFromUpdate: True
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: SHAREPOINT/CONSENT
+          mandatoryInSearch: True
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: Consent
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${Created}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: sharepoint/consent
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+    - label: Object_Data_Procedures
+      condition: ${data_procedures.size() > 0}
+      props:
+        - name: Object_Data_Procedures_Form_Id
+          val: ${new groovy.json.JsonBuilder(data_procedures)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.SharepointRef;"
+          postProcessor: ${com.pontusvision.utils.SharepointRef.fromString(it)?.getLookupId()}
+  edges:
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Object_Data_Source
+      toVertexLabel: Event_Group_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Group_Ingestion
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Event_Ingestion
+    - label: Consent
+      fromVertexLabel: Person_Natural
+      toVertexLabel: Event_Consent
+    - label: Has_Privacy_Notice
+      fromVertexLabel: Event_Consent
+      toVertexLabel: Object_Privacy_Notice
+    - label: Consent
+      fromVertexLabel: Event_Consent
+      toVertexLabel: Object_Data_Procedures

@@ -1,258 +1,154 @@
-{
-  "updatereq": {
-    "vertices": [
-      {
-        "label": "Object_Data_Source",
-        "name": "budibase",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "BUDIBASE/FONTES-DE-DADOS",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Source",
-        "name": "fontes_de_dados",
-        "condition": "${Descricao?.trim()?.length() > 0}",
-        "props": [
-          {
-            "name": "Object_Data_Source_Form_Id",
-            "val": "${_id}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "${Referencia?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Source_Description",
-            "val": "${Descricao?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Source_Engine",
-            "val": "${Sistema}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Source_Type",
-            "val": "${Subsistema}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Source_Domain",
-            "val": "${Modulo}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Source_URI_Delete",
-            "val": "${URL_Prefixo_Delete}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Source_URI_Update",
-            "val": "${URL_Prefixo_Update}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Data_Source_URI_Read",
-            "val": "${URL_Prefixo_Read}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_System",
-        "props": [
-          {
-            "name": "Object_System_Name",
-            "val": "${Sistema?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Subsystem",
-        "props": [
-          {
-            "name": "Object_Subsystem_Name",
-            "val": "${Subsistema?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Module",
-        "props": [
-          {
-            "name": "Object_Module_Name",
-            "val": "${Modulo?.trim()?.toLowerCase()}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Sensitive_Data",
-        "props": [
-          {
-            "name": "Object_Sensitive_Data_Description",
-            "val": "${new groovy.json.JsonBuilder(Dados_Pessoais)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Ljava.lang.String;",
-            "postProcessor": "${it?.toUpperCase()?.trim()}"
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Policy",
-        "props": [
-          {
-            "name": "Object_Data_Policy_Update_Frequency",
-            "val": "${Frequencia_de_Atualizacao}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Retention_Period",
-            "val": "${Periodo_de_Retencao}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Data_Policy_Type",
-            "val": "${Referencia}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Ingestion",
-        "props": [
-          {
-            "name": "Event_Ingestion_Type",
-            "val": "budibase/fontes-de-dados",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Domain_b64",
-            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${new Date()}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Group_Ingestion",
-        "props": [
-          {
-            "name": "Event_Group_Ingestion_Type",
-            "val": "budibase/fontes-de-dados",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Email_Address",
-        "condition": "${Responsavel?.size() > 0}",
-        "props": [
-          {
-            "name": "Object_Email_Address_Form_Id",
-            "val": "${new groovy.json.JsonBuilder(Responsavel)}",
-            "mandatoryInSearch": true,
-            "processAll": true,
-            "type": "[Lcom.pontusvision.utils.BudibaseRef;",
-            "postProcessor": "${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}"
-          }
-        ]
-      }
-    ],
-    "edges": [
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexName": "budibase",
-        "toVertexLabel": "Event_Group_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Group_Ingestion",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Ingestion",
-        "toVertexName": "fontes_de_dados"
-      },
-      {
-        "label": "Has_Policy",
-        "fromVertexName": "fontes_de_dados",
-        "toVertexLabel": "Object_Data_Policy"
-      },
-      {
-        "label": "Has_Sensitive_Data",
-        "fromVertexName": "fontes_de_dados",
-        "toVertexLabel": "Object_Sensitive_Data"
-      },
-      {
-        "label": "Has_Module",
-        "fromVertexName": "fontes_de_dados",
-        "toVertexLabel": "Object_Module"
-      },
-      {
-        "label": "Has_Subsystem",
-        "fromVertexLabel": "Object_Module",
-        "toVertexLabel": "Object_Subsystem"
-      },
-      {
-        "label": "Has_System",
-        "fromVertexLabel": "Object_Subsystem",
-        "toVertexLabel": "Object_System"
-      },
-      {
-        "label": "Is_Responsible",
-        "fromVertexLabel": "Object_Email_Address",
-        "toVertexLabel": "fontes_de_dados"
-      }
-    ]
-  }
-}
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    - label: Object_Data_Source
+      name: budibase
+      props:
+        - name: Object_Data_Source_Name
+          val: BUDIBASE/FONTES-DE-DADOS
+          mandatoryInSearch: True
+    - label: Object_Data_Source
+      name: fontes_de_dados
+      condition: ${Descricao?.trim()?.length() > 0}
+      props:
+        - name: Object_Data_Source_Form_Id
+          val: ${_id}
+          mandatoryInSearch: True
+        - name: Object_Data_Source_Name
+          val: ${Referencia?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Source_Description
+          val: ${Descricao?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Source_Engine
+          val: ${Sistema}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Source_Type
+          val: ${Subsistema}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Source_Domain
+          val: ${Modulo}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Source_URI_Delete
+          val: ${URL_Prefixo_Delete}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Source_URI_Update
+          val: ${URL_Prefixo_Update}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Data_Source_URI_Read
+          val: ${URL_Prefixo_Read}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Object_System
+      props:
+        - name: Object_System_Name
+          val: ${Sistema?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    - label: Object_Subsystem
+      props:
+        - name: Object_Subsystem_Name
+          val: ${Subsistema?.trim()?.toUpperCase()}
+          mandatoryInSearch: True
+    - label: Object_Module
+      props:
+        - name: Object_Module_Name
+          val: ${Modulo?.trim()?.toLowerCase()}
+          mandatoryInSearch: True
+    - label: Object_Sensitive_Data
+      props:
+        - name: Object_Sensitive_Data_Description
+          val: ${new groovy.json.JsonBuilder(Dados_Pessoais)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Ljava.lang.String;"
+          postProcessor: ${it?.toUpperCase()?.trim()}
+    - label: Object_Data_Policy
+      props:
+        - name: Object_Data_Policy_Update_Frequency
+          val: ${Frequencia_de_Atualizacao}
+          mandatoryInSearch: True
+        - name: Object_Data_Policy_Retention_Period
+          val: ${Periodo_de_Retencao}
+          mandatoryInSearch: True
+        - name: Object_Data_Policy_Type
+          val: ${Referencia}
+          mandatoryInSearch: True
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: budibase/fontes-de-dados
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${new Date()}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: budibase/fontes-de-dados
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+    - label: Object_Email_Address
+      condition: ${Responsavel?.size() > 0}
+      props:
+        - name: Object_Email_Address_Form_Id
+          val: ${new groovy.json.JsonBuilder(Responsavel)}
+          mandatoryInSearch: True
+          processAll: True
+          type: "[Lcom.pontusvision.utils.BudibaseRef;"
+          postProcessor: ${com.pontusvision.utils.BudibaseRef.fromString(it)?.getLookupId()}
+  edges:
+    - label: Has_Ingestion_Event
+      fromVertexName: budibase
+      toVertexLabel: Event_Group_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Group_Ingestion
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Ingestion
+      toVertexName: fontes_de_dados
+    - label: Has_Policy
+      fromVertexName: fontes_de_dados
+      toVertexLabel: Object_Data_Policy
+    - label: Has_Sensitive_Data
+      fromVertexName: fontes_de_dados
+      toVertexLabel: Object_Sensitive_Data
+    - label: Has_Module
+      fromVertexName: fontes_de_dados
+      toVertexLabel: Object_Module
+    - label: Has_Subsystem
+      fromVertexLabel: Object_Module
+      toVertexLabel: Object_Subsystem
+    - label: Has_System
+      fromVertexLabel: Object_Subsystem
+      toVertexLabel: Object_System
+    - label: Is_Responsible
+      fromVertexLabel: Object_Email_Address
+      toVertexLabel: fontes_de_dados

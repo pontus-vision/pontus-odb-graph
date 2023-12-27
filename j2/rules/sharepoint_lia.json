@@ -1,151 +1,90 @@
-{
-  "updatereq": {
-    "vertices": [
-      {
-        "label": "Object_Data_Source",
-        "props": [
-          {
-            "name": "Object_Data_Source_Name",
-            "val": "SHAREPOINT/LEGITIMATE-INTERESTS-ASSESSMENT",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Legitimate_Interests_Assessment",
-        "props": [
-          {
-            "name": "Object_Legitimate_Interests_Assessment_Form_Id",
-            "val": "${id}",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Object_Legitimate_Interests_Assessment_LIA_Id",
-            "val": "${Title?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Legitimate_Interests_Assessment_Strategic_Impact",
-            "val": "${Comootratamentodedadospessoais_x?.trim()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Legitimate_Interests_Assessment_Ethical_Impact",
-            "val": "${Descreveroaspectodotratamentodos?.trim()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Legitimate_Interests_Assessment_Is_Essential",
-            "val": "${Afinalidadepoderiaseralcan_x00e7?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification",
-            "val": "${Descrevaseotratamentodedadospess?.trim()?.toUpperCase()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person",
-            "val": "${Osdadospessoaisforamcoletadosdir?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Object_Data_Procedures",
-        "props": [
-          {
-            "name": "Object_Data_Procedures_Form_Id",
-            "val": "${Refer_x00ea_nciadoMapeamentodePrLookupId}",
-            "mandatoryInSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Ingestion",
-        "props": [
-          {
-            "name": "Event_Ingestion_Type",
-            "val": "sharepoint/legitimate-interests-assessment",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Domain_b64",
-            "val": "${original_request?.bytes?.encodeBase64()?.toString()}",
-            "mandatoryInSearch": false,
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Create_Date",
-            "val": "${Created}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          },
-          {
-            "name": "Event_Ingestion_Metadata_Update_Date",
-            "val": "${Modified}",
-            "mandatoryInSearch": false,
-            "type": "java.util.Date",
-            "excludeFromSearch": true
-          }
-        ]
-      },
-      {
-        "label": "Event_Group_Ingestion",
-        "props": [
-          {
-            "name": "Event_Group_Ingestion_Type",
-            "val": "sharepoint/legitimate-interests-assessment",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Operation",
-            "val": "Structured Data Insertion",
-            "mandatoryInSearch": true
-          },
-          {
-            "name": "Event_Group_Ingestion_Ingestion_Date",
-            "val": "${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}",
-            "mandatoryInSearch": true
-          }
-        ]
-      }
-    ],
-    "edges": [
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Data_Source",
-        "toVertexLabel": "Event_Group_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Group_Ingestion",
-        "toVertexLabel": "Event_Ingestion"
-      },
-      {
-        "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Event_Ingestion",
-        "toVertexLabel": "Object_Legitimate_Interests_Assessment"
-      },
-      {
-        "label": "Has_Legitimate_Interests_Assessment",
-        "fromVertexLabel": "Object_Data_Procedures",
-        "toVertexLabel": "Object_Legitimate_Interests_Assessment"
-      }
-    ]
-  }
-}
+# DO NOT UPDATE THIS FILE MANUALLY; ANY CHANGES WILL BE OVERRIDDEN BY THE J2 DIR TEMPLATES
+updatereq:
+  vertices:
+    - label: Object_Data_Source
+      props:
+        - name: Object_Data_Source_Name
+          val: SHAREPOINT/LEGITIMATE-INTERESTS-ASSESSMENT
+          mandatoryInSearch: True
+    - label: Object_Legitimate_Interests_Assessment
+      props:
+        - name: Object_Legitimate_Interests_Assessment_Form_Id
+          val: ${id}
+          mandatoryInSearch: True
+        - name: Object_Legitimate_Interests_Assessment_LIA_Id
+          val: ${Title?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Strategic_Impact
+          val: ${Comootratamentodedadospessoais_x?.trim()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Ethical_Impact
+          val: ${Descreveroaspectodotratamentodos?.trim()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Is_Essential
+          val: "${Afinalidadepoderiaseralcan_x00e7?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}"
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Breach_Of_Subject_Rights_Justification
+          val: ${Descrevaseotratamentodedadospess?.trim()?.toUpperCase()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Object_Legitimate_Interests_Assessment_Is_Data_From_Natural_Person
+          val: "${Osdadospessoaisforamcoletadosdir?.toString()?.equalsIgnoreCase('Sim')?'true':'false'}"
+          mandatoryInSearch: False
+          excludeFromSearch: True
+    - label: Object_Data_Procedures
+      props:
+        - name: Object_Data_Procedures_Form_Id
+          val: ${Refer_x00ea_nciadoMapeamentodePrLookupId}
+          mandatoryInSearch: True
+    - label: Event_Ingestion
+      props:
+        - name: Event_Ingestion_Type
+          val: sharepoint/legitimate-interests-assessment
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Domain_b64
+          val: ${original_request?.bytes?.encodeBase64()?.toString()}
+          mandatoryInSearch: False
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Create_Date
+          val: ${Created}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+        - name: Event_Ingestion_Metadata_Update_Date
+          val: ${Modified}
+          mandatoryInSearch: False
+          type: "java.util.Date"
+          excludeFromSearch: True
+    - label: Event_Group_Ingestion
+      props:
+        - name: Event_Group_Ingestion_Type
+          val: sharepoint/legitimate-interests-assessment
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Operation
+          val: Structured Data Insertion
+          mandatoryInSearch: True
+        - name: Event_Group_Ingestion_Ingestion_Date
+          val: ${new java.text.SimpleDateFormat('yyyy-MM-dd').format(new Date())}
+          mandatoryInSearch: True
+  edges:
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Object_Data_Source
+      toVertexLabel: Event_Group_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Group_Ingestion
+      toVertexLabel: Event_Ingestion
+    - label: Has_Ingestion_Event
+      fromVertexLabel: Event_Ingestion
+      toVertexLabel: Object_Legitimate_Interests_Assessment
+    - label: Has_Legitimate_Interests_Assessment
+      fromVertexLabel: Object_Data_Procedures
+      toVertexLabel: Object_Legitimate_Interests_Assessment
