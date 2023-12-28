@@ -27,7 +27,7 @@ updatereq:
     
     - label: Person_Organisation
       name: pj_international
-      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A2_CGC?.replaceAll('[^0-9]','')?.length() != 14}
+      condition: ${A2_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A2_CGC?.replaceAll('[^0-9]','')?.length() != 14 && A2_CGC?.replaceAll('[^0-9]','')?.length() > 0}
       props:
         - name: Person_Organisation_Name
           val: ${(A2_NOMRESP?.trim()?.length() > 0)?A2_NOMRESP?.trim()?.toUpperCase():A2_NOME?.trim()?.toUpperCase()}

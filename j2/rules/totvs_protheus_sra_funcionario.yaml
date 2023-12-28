@@ -47,7 +47,7 @@ updatereq:
     
     - label: Person_Organisation
       name: pj_international
-      condition: ${RA_CIC?.replaceAll('[^0-9]','')?.length() != 11 && RA_CIC?.replaceAll('[^0-9]','')?.length() != 14}
+      condition: ${RA_CIC?.replaceAll('[^0-9]','')?.length() != 11 && RA_CIC?.replaceAll('[^0-9]','')?.length() != 14 && RA_CIC?.replaceAll('[^0-9]','')?.length() > 0 }
       props:
         - name: Person_Organisation_Name
           val: ${(RA_NOMECMP?.trim()?.length() > 0)?RA_NOMECMP?.trim()?.toUpperCase():RA_NOME?.trim()?.toUpperCase()}
