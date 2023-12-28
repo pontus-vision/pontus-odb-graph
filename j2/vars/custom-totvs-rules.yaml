@@ -58,7 +58,7 @@ rules:
             type: java.util.Date
 
       - label: Person_Organisation
-        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A1_CGC?.replaceAll('[^0-9]','')?.length() != 14}"
+        condition: "${A1_CGC?.replaceAll('[^0-9]','')?.length() != 11 && A1_CGC?.replaceAll('[^0-9]','')?.length() != 14 && A1_CGC?.replaceAll('[^0-9]','')?.length() > 0}"
         name: pj_international
         props:
           #         better to keep Name excluded from search, because it is not a good search field since it isn't unique

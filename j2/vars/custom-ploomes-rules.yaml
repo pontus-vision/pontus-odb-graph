@@ -60,7 +60,7 @@ rules:
       - label: Object_Email_Address
         condition: "${Email?.trim()?.length() > 0 }"
         props:
-          Email: "${Email?.trim()?.toLowerCase()}"
+          Email: ${Email?.trim()?.toLowerCase()?.replaceAll( "'", '"' )}
 
       #ENDERECO,BAIRRO,CIDADE,UF,CEP
       - label: Location_Address

@@ -67,7 +67,7 @@ updatereq:
       condition: ${Email?.trim()?.length() > 0 }
       props:
         - name: Object_Email_Address_Email
-          val: ${Email?.trim()?.toLowerCase()}
+          val: ${Email?.trim()?.toLowerCase()?.replaceAll( "'", '"' )}
           mandatoryInSearch: True
     
     - label: Location_Address
