@@ -579,9 +579,15 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: "Object_Phone_Number"
         toVertexLabel: "Event_Ingestion"
+
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object_Email_Address"
+        fromVertexName: "email1"
         toVertexLabel: "Event_Ingestion"
+
+      - label: Has_Ingestion_Event
+        fromVertexName: "email2"
+        toVertexLabel: "Event_Ingestion"
+
       - label: Has_Ingestion_Event
         fromVertexLabel: "Location_Address"
         toVertexLabel: "Event_Ingestion"
@@ -948,9 +954,11 @@ rules:
       - label: Has_Ingestion_Event
         fromVertexLabel: "Object_Phone_Number"
         toVertexLabel: "Event_Ingestion"
+
       - label: Has_Ingestion_Event
-        fromVertexLabel: "Object_Email_Address"
+        fromVertexName: "email"
         toVertexLabel: "Event_Ingestion"
+
       - label: Has_Ingestion_Event
         fromVertexLabel: "Location_Address"
         toVertexLabel: "Event_Ingestion"

@@ -192,7 +192,7 @@ updatereq:
     fromVertexLabel: Object_Phone_Number
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
-    fromVertexLabel: Object_Email_Address
+    fromVertexName: email
     toVertexLabel: Event_Ingestion
   - label: Has_Ingestion_Event
     fromVertexLabel: Location_Address
