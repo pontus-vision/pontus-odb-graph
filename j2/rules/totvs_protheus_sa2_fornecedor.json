@@ -293,7 +293,7 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Email_Address",
+        "fromVertexName": "email",
         "toVertexLabel": "Event_Ingestion"
       },
       {

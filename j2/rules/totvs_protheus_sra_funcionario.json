@@ -365,7 +365,12 @@
       },
       {
         "label": "Has_Ingestion_Event",
-        "fromVertexLabel": "Object_Email_Address",
+        "fromVertexName": "email1",
+        "toVertexLabel": "Event_Ingestion"
+      },
+      {
+        "label": "Has_Ingestion_Event",
+        "fromVertexName": "email2",
         "toVertexLabel": "Event_Ingestion"
       },
       {
